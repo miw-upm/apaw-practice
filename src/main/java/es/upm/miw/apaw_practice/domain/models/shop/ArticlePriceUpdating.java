@@ -4,23 +4,23 @@ import java.math.BigDecimal;
 
 public class ArticlePriceUpdating {
 
-    private Long barcode;
+    private String barcode;
     private BigDecimal price;
 
     public ArticlePriceUpdating() {
         //empty for framework
     }
 
-    public ArticlePriceUpdating(Long barcode, BigDecimal price) {
+    public ArticlePriceUpdating(String barcode, BigDecimal price) {
         this.barcode = barcode;
         this.price = price;
     }
 
-    public Long getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(Long barcode) {
+    public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
 

@@ -22,7 +22,7 @@ class TagPersistenceMongodbIT {
         assertEquals("tag 2", tag.getDescription());
         assertTrue(tag.getFavourite());
         assertEquals(2, tag.getArticlesBarcode().size());
-        assertTrue(tag.getArticlesBarcode().containsAll(List.of(84001L, 84004L)));
+        assertTrue(tag.getArticlesBarcode().containsAll(List.of("84001", "84004")));
     }
 
 }

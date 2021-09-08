@@ -20,7 +20,7 @@ public class LexicalAnalyzer {
         return token.length > KEY_INDEX ? token[KEY_INDEX] : "";
     }
 
-    public <T> T extractWithAssure(String q, String key, Function<String, T> convert) {
+    public < T > T extractWithAssure(String q, String key, Function< String, T > convert) {
         String value = this.extractWithAssure(q, key);
         try {
             return convert.apply(value);

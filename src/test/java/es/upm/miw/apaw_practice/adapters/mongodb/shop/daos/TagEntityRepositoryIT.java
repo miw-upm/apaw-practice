@@ -27,7 +27,7 @@ class TagEntityRepositoryIT {
         assertTrue(tag.getArticleEntities().stream()
                 .map(ArticleEntity::getBarcode)
                 .collect(Collectors.toList())
-                .containsAll(Arrays.asList(84001L, 84004L)));
+                .containsAll(Arrays.asList("84001", "84004")));
         assertTrue(tag.getFavourite());
 
     }

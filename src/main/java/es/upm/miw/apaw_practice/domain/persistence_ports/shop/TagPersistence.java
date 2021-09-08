@@ -10,7 +10,7 @@ public interface TagPersistence {
 
     Tag readById(String id);
 
-    void deleteById(String id);
+    void delete(String id);
 
-    Stream<Tag> readAll();
+    Stream< Tag > readAll();
 }

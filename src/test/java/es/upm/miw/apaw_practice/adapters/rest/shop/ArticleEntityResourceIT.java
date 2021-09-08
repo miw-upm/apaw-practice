@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.rest.shop;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.shop.Article;
-import es.upm.miw.apaw_practice.domain.models.shop.ArticleCreation;
 import es.upm.miw.apaw_practice.domain.models.shop.ArticlePriceUpdating;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,27 +24,26 @@ class ArticleEntityResourceIT {
 
     @Test
     void testCreate() {
-        ArticleCreation articleCreation =
-                new ArticleCreation(666004L, "art rest", new BigDecimal("3.00"), null);
+        Article article =
+                new Article("666004", "art rest", new BigDecimal("3.00"), null);
         this.webTestClient
                 .post()
                 .uri(ArticleResource.ARTICLES)
-                .body(BodyInserters.fromValue(articleCreation))
+                .body(BodyInserters.fromValue(article))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Article.class)
-                .value(Assertions::assertNotNull)
-                .value(articleData -> assertNotNull(articleData.getId()));
+                .value(Assertions::assertNotNull);
     }
 
     @Test
     void testCreateConflict() {
-        ArticleCreation articleCreation =
-                new ArticleCreation(84001L, "repeated", new BigDecimal("3.00"), null);
+        Article article =
+                new Article("84001", "repeated", new BigDecimal("3.00"), null);
         this.webTestClient
                 .post()
                 .uri(ArticleResource.ARTICLES)
-                .body(BodyInserters.fromValue(articleCreation))
+                .body(BodyInserters.fromValue(article))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
@@ -53,7 +51,7 @@ class ArticleEntityResourceIT {
     @Test
     void testUpdatePricesNotFound() {
         List<ArticlePriceUpdating> articlePriceUpdatingList = Arrays.asList(
-                new ArticlePriceUpdating(0L, BigDecimal.ONE)
+                new ArticlePriceUpdating("0", BigDecimal.ONE)
         );
         this.webTestClient
                 .patch()

@@ -23,17 +23,17 @@ class ArticleServiceIT {
     @Test
     void testUpdatePrices() {
         List<ArticlePriceUpdating> articlePriceUpdatingList = List.of(
-                new ArticlePriceUpdating(84002L, BigDecimal.ONE),
-                new ArticlePriceUpdating(84003L, BigDecimal.TEN)
+                new ArticlePriceUpdating("84002", BigDecimal.ONE),
+                new ArticlePriceUpdating("84003", BigDecimal.TEN)
         );
-        this.articleService.updatePrices(articlePriceUpdatingList);
-        assertEquals(0, BigDecimal.ONE.compareTo(this.articlePersistence.readByBarcode(84002L).getPrice()));
-        assertEquals(0, BigDecimal.TEN.compareTo(this.articlePersistence.readByBarcode(84003L).getPrice()));
+        this.articleService.updatePrices(articlePriceUpdatingList.stream());
+        assertEquals(0, BigDecimal.ONE.compareTo(this.articlePersistence.read("84002").getPrice()));
+        assertEquals(0, BigDecimal.TEN.compareTo(this.articlePersistence.read("84003").getPrice()));
         articlePriceUpdatingList = List.of(
-                new ArticlePriceUpdating(84002L, new BigDecimal("0.27")),
-                new ArticlePriceUpdating(84003L, new BigDecimal("12.13"))
+                new ArticlePriceUpdating("84002", new BigDecimal("0.27")),
+                new ArticlePriceUpdating("84003", new BigDecimal("12.13"))
         );
-        this.articleService.updatePrices(articlePriceUpdatingList);
+        this.articleService.updatePrices(articlePriceUpdatingList.stream());
     }
 
 }

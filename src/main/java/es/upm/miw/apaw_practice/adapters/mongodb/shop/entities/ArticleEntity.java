@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.shop.entities;
 
 import es.upm.miw.apaw_practice.domain.models.shop.Article;
-import es.upm.miw.apaw_practice.domain.models.shop.ArticleCreation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -15,21 +14,20 @@ import java.util.UUID;
 public class ArticleEntity {
     @Id
     private String id;
-    private LocalDate registrationDate;
     @Indexed(unique = true)
-    private Long barcode;
+    private String barcode;
     private String description;
     private BigDecimal price;
+    private LocalDate registrationDate;
     private String provider;
 
     public ArticleEntity() {
         //empty from framework
     }
 
-    public ArticleEntity(ArticleCreation articleCreation) {
-        BeanUtils.copyProperties(articleCreation, this);
+    public ArticleEntity(Article article) {
+        BeanUtils.copyProperties(article, this);
         this.id = UUID.randomUUID().toString();
-        this.registrationDate = LocalDate.now();
     }
 
     public String getId() {
@@ -40,11 +38,11 @@ public class ArticleEntity {
         this.id = id;
     }
 
-    public Long getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(Long barcode) {
+    public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
 
@@ -106,8 +104,8 @@ public class ArticleEntity {
                 "id='" + id + '\'' +
                 ", barcode='" + barcode + '\'' +
                 ", description='" + description + '\'' +
-                ", registrationDate=" + registrationDate +
                 ", price=" + price +
+                ", registrationDate=" + registrationDate +
                 ", provider='" + provider + '\'' +
                 '}';
     }

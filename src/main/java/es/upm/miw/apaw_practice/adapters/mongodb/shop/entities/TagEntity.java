@@ -14,10 +14,10 @@ public class TagEntity {
     private String id;
     private String description;
     @DBRef
-    private List<ArticleEntity> articleEntities;
+    private List< ArticleEntity > articleEntities;
     private Boolean favourite;
 
-    public TagEntity(String id, String description, List<ArticleEntity> articleEntities, Boolean favourite) {
+    public TagEntity(String id, String description, List< ArticleEntity > articleEntities, Boolean favourite) {
         this.id = id;
         this.description = description;
         this.articleEntities = articleEntities;
@@ -36,11 +36,11 @@ public class TagEntity {
         this.description = description;
     }
 
-    public List<ArticleEntity> getArticleEntities() {
+    public List< ArticleEntity > getArticleEntities() {
         return articleEntities;
     }
 
-    public void setArticleEntities(List<ArticleEntity> articleEntities) {
+    public void setArticleEntities(List< ArticleEntity > articleEntities) {
         this.articleEntities = articleEntities;
     }
 
@@ -53,7 +53,7 @@ public class TagEntity {
     }
 
     public Tag toTag() {
-        List<Long> barcodes = this.articleEntities.stream()
+        List< String > barcodes = this.articleEntities.stream()
                 .map(ArticleEntity::getBarcode)
                 .collect(Collectors.toList());
         return new Tag(id, description, barcodes, favourite);

@@ -2,32 +2,37 @@ package es.upm.miw.apaw_practice.domain.models.shop;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Article {
-    private String id;
-    private Long barcode;
+    private String barcode;
     private String description;
-    private LocalDate registrationDate;
     private BigDecimal price;
+    private LocalDate registrationDate;
     private String provider;
 
     public Article() {
         //empty for framework
     }
 
-    public String getId() {
-        return id;
+    public Article(String barcode, String description, BigDecimal price, String provider) {
+        this.barcode = barcode;
+        this.description = description;
+        this.price = price;
+        this.provider = provider;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void doDefault() {
+        if (Objects.isNull(provider)) {
+            this.provider = "various";
+        }
     }
 
-    public Long getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
-    public void setBarcode(Long barcode) {
+    public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
 
@@ -65,12 +70,11 @@ public class Article {
 
     @Override
     public String toString() {
-        return "ArticleEntity{" +
-                "id='" + id + '\'' +
-                ", barcode='" + barcode + '\'' +
+        return "Article{" +
+                "barcode=" + barcode +
                 ", description='" + description + '\'' +
-                ", registrationDate=" + registrationDate +
                 ", price=" + price +
+                ", registrationDate=" + registrationDate +
                 ", provider='" + provider + '\'' +
                 '}';
     }

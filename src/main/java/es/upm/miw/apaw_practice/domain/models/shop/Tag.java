@@ -3,28 +3,28 @@ package es.upm.miw.apaw_practice.domain.models.shop;
 import java.util.List;
 
 public class Tag {
-    private String id;
+    private String name;
     private String description;
-    private List<Long> articlesBarcode;
+    private List< String > articlesBarcode;
     private Boolean favourite;
 
     public Tag() {
         //empty for framework
     }
 
-    public Tag(String id, String description, List<Long> articlesBarcode, Boolean favourite) {
-        this.id = id;
+    public Tag(String name, String description, List< String > articlesBarcode, Boolean favourite) {
+        this.name = name;
         this.description = description;
         this.articlesBarcode = articlesBarcode;
         this.favourite = favourite;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -35,11 +35,11 @@ public class Tag {
         this.description = description;
     }
 
-    public List<Long> getArticlesBarcode() {
+    public List< String > getArticlesBarcode() {
         return articlesBarcode;
     }
 
-    public void setArticlesBarcode(List<Long> articlesBarcode) {
+    public void setArticlesBarcode(List< String > articlesBarcode) {
         this.articlesBarcode = articlesBarcode;
     }
 
@@ -54,7 +54,7 @@ public class Tag {
     @Override
     public String toString() {
         return "Tag{" +
-                "id='" + id + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", articlesBarcode=" + articlesBarcode +
                 ", favourite=" + favourite +

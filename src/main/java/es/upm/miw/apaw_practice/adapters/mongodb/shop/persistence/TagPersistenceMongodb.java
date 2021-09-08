@@ -21,7 +21,7 @@ public class TagPersistenceMongodb implements TagPersistence {
     }
 
     @Override
-    public Stream<Tag> readAll() {
+    public Stream< Tag > readAll() {
         return this.tagRepository.findAll().stream()
                 .map(TagEntity::toTag);
     }
@@ -34,7 +34,7 @@ public class TagPersistenceMongodb implements TagPersistence {
     }
 
     @Override
-    public void deleteById(String id) {
+    public void delete(String id) {
         this.tagRepository.deleteById(id);
     }
 }

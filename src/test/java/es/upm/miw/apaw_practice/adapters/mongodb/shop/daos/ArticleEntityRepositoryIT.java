@@ -18,8 +18,8 @@ class ArticleEntityRepositoryIT {
 
     @Test
     void testFindByBarcode() {
-        assertTrue(this.articleRepository.findByBarcode(84003L).isPresent());
-        ArticleEntity article = this.articleRepository.findByBarcode(84003L).get();
+        assertTrue(this.articleRepository.findByBarcode("84003").isPresent());
+        ArticleEntity article = this.articleRepository.findByBarcode("84003").get();
         assertEquals("art 003", article.getDescription());
         assertEquals(0, new BigDecimal("12.13").compareTo(article.getPrice()));
         assertEquals("prov 3", article.getProvider());

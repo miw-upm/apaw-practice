@@ -7,7 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.ArticleEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.ArticleItemEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.ShoppingCartEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.TagEntity;
-import es.upm.miw.apaw_practice.domain.models.shop.ArticleCreation;
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,11 +29,11 @@ public class ShopSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Shop Initial Load -----------");
         ArticleEntity[] articles = {
-                new ArticleEntity(new ArticleCreation(84001L, "art 001", new BigDecimal("1.23"), "prov 1")),
-                new ArticleEntity(new ArticleCreation(84002L, "art 002", new BigDecimal("0.27"), "prov 2")),
-                new ArticleEntity(new ArticleCreation(84003L, "art 003", new BigDecimal("12.13"), "prov 3")),
-                new ArticleEntity(new ArticleCreation(84004L, "art 004", new BigDecimal("4.00"), "prov 4")),
-                new ArticleEntity(new ArticleCreation(84005L, "art 005", new BigDecimal("0.45"), "prov 5"))
+                new ArticleEntity(new Article("84001", "art 001", new BigDecimal("1.23"), "prov 1")),
+                new ArticleEntity(new Article("84002", "art 002", new BigDecimal("0.27"), "prov 2")),
+                new ArticleEntity(new Article("84003", "art 003", new BigDecimal("12.13"), "prov 3")),
+                new ArticleEntity(new Article("84004", "art 004", new BigDecimal("4.00"), "prov 4")),
+                new ArticleEntity(new Article("84005", "art 005", new BigDecimal("0.45"), "prov 5"))
         };
         this.articleRepository.saveAll(Arrays.asList(articles));
         TagEntity[] tags = {

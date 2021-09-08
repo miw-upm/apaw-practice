@@ -40,7 +40,7 @@ class ShoppingCartPersistenceMongodbIT {
         assertTrue(shoppingCart.isPresent());
         List<ArticleItem> articleItems = shoppingCart.get().getArticleItems();
         articleItems.clear();
-        articleItems.add(new ArticleItem(84003L, 3, BigDecimal.ZERO));
+        articleItems.add(new ArticleItem("84003", 3, BigDecimal.ZERO));
         this.shoppingCartPersistenceMongodb.update(shoppingCart.get());
         Optional<ShoppingCart> newShoppingCart = this.shoppingCartPersistenceMongodb.readAll()
                 .filter(cart -> "user1".equals(cart.getUser()))
@@ -48,7 +48,7 @@ class ShoppingCartPersistenceMongodbIT {
         assertTrue(newShoppingCart.isPresent());
         assertEquals(shoppingCart.get().getCreationDate(), newShoppingCart.get().getCreationDate());
         assertEquals(1, newShoppingCart.get().getArticleItems().size());
-        assertEquals(84003L, newShoppingCart.get().getArticleItems().get(0).getBarcode());
+        assertEquals("84003", newShoppingCart.get().getArticleItems().get(0).getBarcode());
         shopSeederService.deleteAll();
         shopSeederService.seedDatabase();
     }

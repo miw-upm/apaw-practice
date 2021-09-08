@@ -24,16 +24,16 @@ public class TagService {
         this.shoppingCartPersistence = shoppingCartPersistence;
     }
 
-    public Tag read(String id) {
-        return this.tagPersistence.readById(id);
+    public Tag read(String name) {
+        return this.tagPersistence.readById(name);
     }
 
-    public void delete(String id) {
-        this.tagPersistence.deleteById(id);
+    public void delete(String name) {
+        this.tagPersistence.delete(name);
     }
 
-    public Stream<Tag> findByArticlesInShoppingCarts() {
-        List<Long> barcodes = this.shoppingCartPersistence.readAll()
+    public Stream< Tag > findByArticlesInShoppingCarts() {
+        List< String > barcodes = this.shoppingCartPersistence.readAll()
                 .flatMap(shoppingCart -> shoppingCart.getArticleItems().stream())
                 .map(ArticleItem::getBarcode)
                 .collect(Collectors.toList());

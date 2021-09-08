@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.rest.shop;
 
 import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.shop.Article;
-import es.upm.miw.apaw_practice.domain.models.shop.ArticleCreation;
 import es.upm.miw.apaw_practice.domain.models.shop.ArticlePriceUpdating;
 import es.upm.miw.apaw_practice.domain.services.shop.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +26,18 @@ public class ArticleResource {
     }
 
     @PostMapping
-    public Article create(@RequestBody ArticleCreation articleCreation) {
-        return this.articleService.create(articleCreation);
+    public Article create(@RequestBody Article article) {
+        article.doDefault();
+        return this.articleService.create(article);
     }
 
     @PatchMapping
-    public void updatePrices(@RequestBody List<ArticlePriceUpdating> articlePriceUpdatingList) {
-        this.articleService.updatePrices(articlePriceUpdatingList);
+    public void updatePrices(@RequestBody List< ArticlePriceUpdating > articlePriceUpdatingList) {
+        this.articleService.updatePrices(articlePriceUpdatingList.stream());
     }
 
     @GetMapping(SEARCH)
-    public Stream<Article> findByProviderAndPriceGreaterThan(@RequestParam String q) {
+    public Stream< Article > findByProviderAndPriceGreaterThan(@RequestParam String q) {
         String provider = new LexicalAnalyzer().extractWithAssure(q, "provider");
         BigDecimal price = new LexicalAnalyzer().extractWithAssure(q, "price", BigDecimal::new);
         return this.articleService.findByProviderAndPriceGreaterThan(provider, price);

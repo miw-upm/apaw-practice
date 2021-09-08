@@ -25,7 +25,7 @@ class ShoppingCartEntityRepositoryIT {
                                 cart.getCreationDate() != null &&
                                 cart.getCreationDate().isBefore(LocalDateTime.now()) &&
                                 2 == cart.getArticleItemEntities().size() &&
-                                84001L == cart.getArticleItemEntities().get(0).getArticleEntity().getBarcode() &&
+                                "84001".equals(cart.getArticleItemEntities().get(0).getArticleEntity().getBarcode()) &&
                                 1 == cart.getArticleItemEntities().get(0).getAmount() &&
                                 0 == BigDecimal.ZERO.compareTo(cart.getArticleItemEntities().get(0).getDiscount())
                 ));

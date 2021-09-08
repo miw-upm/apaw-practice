@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class TagResource {
     static final String TAGS = "/shop/tags";
 
-    static final String ID_ID = "/{id}";
+    static final String NAME_ID = "/{name}";
     static final String SEARCH = "/search";
 
     private TagService tagService;
@@ -24,18 +24,18 @@ public class TagResource {
         this.tagService = tagService;
     }
 
-    @GetMapping(ID_ID)
-    public Tag read(@PathVariable String id) {
-        return this.tagService.read(id);
+    @GetMapping(NAME_ID)
+    public Tag read(@PathVariable String name) {
+        return this.tagService.read(name);
     }
 
-    @DeleteMapping(ID_ID)
-    public void delete(@PathVariable String id) {
-        this.tagService.delete(id);
+    @DeleteMapping(NAME_ID)
+    public void delete(@PathVariable String name) {
+        this.tagService.delete(name);
     }
 
     @GetMapping(SEARCH)
-    public Stream<Tag> findByArticlesInShoppingCarts(@RequestParam String q) {
+    public Stream< Tag > findByArticlesInShoppingCarts(@RequestParam String q) {
         if (!"in".equals(new LexicalAnalyzer().extractWithAssure(q, "shopping-carts"))) {
             throw new BadRequestException("q incorrect, expected in");
         }

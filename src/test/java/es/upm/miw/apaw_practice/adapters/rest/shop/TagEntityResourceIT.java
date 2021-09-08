@@ -24,7 +24,7 @@ class TagEntityResourceIT {
     void testRead() {
         this.webTestClient
                 .get()
-                .uri(TAGS + ID_ID, "tag3")
+                .uri(TAGS + NAME_ID, "tag3")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Tag.class)
@@ -32,7 +32,7 @@ class TagEntityResourceIT {
                 .value(tagData -> {
                     assertEquals("tag 3", tagData.getDescription());
                     assertEquals(1, tagData.getArticlesBarcode().size());
-                    assertEquals(84002L, tagData.getArticlesBarcode().get(0));
+                    assertEquals("84002", tagData.getArticlesBarcode().get(0));
                     assertFalse(tagData.getFavourite());
                 });
     }
@@ -41,7 +41,7 @@ class TagEntityResourceIT {
     void testReadNotFound() {
         this.webTestClient
                 .get()
-                .uri(TAGS + ID_ID, "kk")
+                .uri(TAGS + NAME_ID, "kk")
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -50,7 +50,7 @@ class TagEntityResourceIT {
     void testDelete() {
         this.webTestClient
                 .delete()
-                .uri(TAGS + ID_ID, "kk")
+                .uri(TAGS + NAME_ID, "kk")
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -69,7 +69,7 @@ class TagEntityResourceIT {
                 .consumeWith(entityList -> {
                     assertNotNull(entityList.getResponseBody());
                     List<String> tagList = entityList.getResponseBody().stream()
-                            .map(Tag::getId)
+                            .map(Tag::getName)
                             .collect(Collectors.toList());
                     assertTrue(tagList.containsAll(Arrays.asList("tag1", "tag2", "tag3")));
                     assertFalse(tagList.contains("tag4"));

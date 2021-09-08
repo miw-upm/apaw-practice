@@ -6,12 +6,19 @@ import java.util.List;
 public class ShoppingCart {
     private String id;
     private LocalDateTime creationDate;
-    private List<ArticleItem> articleItems;
+    private List< ArticleItem > articleItems;
     private String user;
     private String address;
 
     public ShoppingCart() {
         //empty from framework
+    }
+
+    public static ShoppingCart ofIdUser(ShoppingCart shoppingCart) {
+        ShoppingCart shoppingCartDto = new ShoppingCart();
+        shoppingCartDto.setId(shoppingCart.getId());
+        shoppingCartDto.setUser(shoppingCart.getUser());
+        return shoppingCartDto;
     }
 
     public String getId() {
@@ -30,11 +37,11 @@ public class ShoppingCart {
         this.creationDate = creationDate;
     }
 
-    public List<ArticleItem> getArticleItems() {
+    public List< ArticleItem > getArticleItems() {
         return articleItems;
     }
 
-    public void setArticleItems(List<ArticleItem> articleItems) {
+    public void setArticleItems(List< ArticleItem > articleItems) {
         this.articleItems = articleItems;
     }
 

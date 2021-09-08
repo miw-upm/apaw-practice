@@ -16,7 +16,7 @@ public class ShoppingCartEntity {
     @Id
     private String id;
     private LocalDateTime creationDate;
-    private List<ArticleItemEntity> articleItemEntities;
+    private List< ArticleItemEntity > articleItemEntities;
     private String user;
     private String address;
 
@@ -24,7 +24,7 @@ public class ShoppingCartEntity {
         //empty from framework
     }
 
-    public ShoppingCartEntity(List<ArticleItemEntity> articleItemEntities, String user, String address) {
+    public ShoppingCartEntity(List< ArticleItemEntity > articleItemEntities, String user, String address) {
         this.id = UUID.randomUUID().toString();
         this.creationDate = LocalDateTime.now();
         this.articleItemEntities = articleItemEntities;
@@ -40,11 +40,11 @@ public class ShoppingCartEntity {
         return creationDate;
     }
 
-    public List<ArticleItemEntity> getArticleItemEntities() {
+    public List< ArticleItemEntity > getArticleItemEntities() {
         return articleItemEntities;
     }
 
-    public void setArticleItemEntities(List<ArticleItemEntity> articleItemEntities) {
+    public void setArticleItemEntities(List< ArticleItemEntity > articleItemEntities) {
         this.articleItemEntities = articleItemEntities;
     }
 
@@ -67,7 +67,7 @@ public class ShoppingCartEntity {
     public ShoppingCart toShoppingCart() {
         ShoppingCart shoppingCart = new ShoppingCart();
         BeanUtils.copyProperties(this, shoppingCart, "articleItemEntities");
-        List<ArticleItem> articleItems = this.articleItemEntities.stream()
+        List< ArticleItem > articleItems = this.articleItemEntities.stream()
                 .map(ArticleItemEntity::toArticleItem)
                 .collect(Collectors.toList());
         shoppingCart.setArticleItems(articleItems);

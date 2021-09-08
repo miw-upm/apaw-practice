@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.domain.services.shop;
 
 import es.upm.miw.apaw_practice.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
-import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCartReference;
 import es.upm.miw.apaw_practice.domain.persistence_ports.shop.ArticlePersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.shop.ShoppingCartPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class ShoppingCartService {
         this.articlePersistence = articlePersistence;
     }
 
-    public ShoppingCart updateArticleItems(String id, List<ArticleItem> articleItemList) {
+    public ShoppingCart updateArticleItems(String id, List< ArticleItem > articleItemList) {
         ShoppingCart shoppingCart = this.shoppingCartPersistence.readById(id);
         shoppingCart.setArticleItems(articleItemList);
         return this.shoppingCartPersistence.update(shoppingCart);
@@ -37,7 +36,7 @@ public class ShoppingCartService {
                     BigDecimal discount = BigDecimal.ONE.subtract(
                             articleItem.getDiscount().divide(new BigDecimal(100), 4, RoundingMode.HALF_UP)
                     );
-                    BigDecimal articlePrice = this.articlePersistence.readByBarcode(articleItem.getBarcode()).getPrice();
+                    BigDecimal articlePrice = this.articlePersistence.read(articleItem.getBarcode()).getPrice();
                     return articlePrice.multiply(BigDecimal.valueOf(articleItem.getAmount())
                             .multiply(discount)
                     );
@@ -46,9 +45,8 @@ public class ShoppingCartService {
 
     }
 
-    public Stream<ShoppingCartReference> findByPriceGreaterThan(BigDecimal price) {
+    public Stream< ShoppingCart > findByPriceGreaterThan(BigDecimal price) {
         return this.shoppingCartPersistence.readAll()
-                .filter(shoppingCart -> price.compareTo(this.total(shoppingCart)) < 0)
-                .map(ShoppingCartReference::new);
+                .filter(shoppingCart -> price.compareTo(this.total(shoppingCart)) < 0);
     }
 }
