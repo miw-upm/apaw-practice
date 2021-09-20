@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @Service
 public class ArticleService {
 
-    private ArticlePersistence articlePersistence;
+    private final ArticlePersistence articlePersistence;
 
     @Autowired
     public ArticleService(ArticlePersistence articlePersistence) {

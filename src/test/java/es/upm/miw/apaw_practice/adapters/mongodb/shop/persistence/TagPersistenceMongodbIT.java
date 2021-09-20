@@ -19,8 +19,8 @@ class TagPersistenceMongodbIT {
     private TagPersistenceMongodb tagPersistence;
 
     @Test
-    void testReadById() {
-        Tag tag = this.tagPersistence.readById("tag2");
+    void testReadByName() {
+        Tag tag = this.tagPersistence.readByName("tag2");
         assertEquals("tag 2", tag.getDescription());
         assertTrue(tag.getFavourite());
         assertEquals(2, tag.getArticles().size());

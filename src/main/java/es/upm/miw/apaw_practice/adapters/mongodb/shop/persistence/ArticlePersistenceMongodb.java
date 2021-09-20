@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @Repository("articlePersistence")
 public class ArticlePersistenceMongodb implements ArticlePersistence {
 
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
     @Autowired
     public ArticlePersistenceMongodb(ArticleRepository articleRepository) {

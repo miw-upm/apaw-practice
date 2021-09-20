@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 @Repository("tagPersistence")
 public class TagPersistenceMongodb implements TagPersistence {
 
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
     @Autowired
     public TagPersistenceMongodb(TagRepository tagRepository) {
@@ -27,14 +27,14 @@ public class TagPersistenceMongodb implements TagPersistence {
     }
 
     @Override
-    public Tag readById(String id) {
-        return this.tagRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(" Tag id: " + id))
+    public Tag readByName(String name) {
+        return this.tagRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException(" Tag name: " + name))
                 .toTag();
     }
 
     @Override
-    public void delete(String id) {
-        this.tagRepository.deleteById(id);
+    public void delete(String name) {
+        this.tagRepository.deleteByName(name);
     }
 }

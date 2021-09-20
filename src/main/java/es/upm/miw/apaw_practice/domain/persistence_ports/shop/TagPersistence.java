@@ -8,9 +8,9 @@ import java.util.stream.Stream;
 @Repository
 public interface TagPersistence {
 
-    Tag readById(String id);
+    Tag readByName(String name);
 
-    void delete(String id);
+    void delete(String name);
 
     Stream< Tag > readAll();
 }

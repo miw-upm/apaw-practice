@@ -15,8 +15,8 @@ import java.util.stream.Stream;
 @Service
 public class ShoppingCartService {
 
-    private ShoppingCartPersistence shoppingCartPersistence;
-    private ArticlePersistence articlePersistence;
+    private final ShoppingCartPersistence shoppingCartPersistence;
+    private final ArticlePersistence articlePersistence;
 
     @Autowired
     public ShoppingCartService(ShoppingCartPersistence shoppingCartPersistence, ArticlePersistence articlePersistence) {

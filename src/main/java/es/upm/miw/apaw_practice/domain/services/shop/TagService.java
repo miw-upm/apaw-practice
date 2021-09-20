@@ -15,9 +15,9 @@ import java.util.stream.Stream;
 @Service
 public class TagService {
 
-    private TagPersistence tagPersistence;
+    private final TagPersistence tagPersistence;
 
-    private ShoppingCartPersistence shoppingCartPersistence;
+    private final ShoppingCartPersistence shoppingCartPersistence;
 
     @Autowired
     public TagService(TagPersistence tagPersistence, ShoppingCartPersistence shoppingCartPersistence) {
@@ -26,7 +26,7 @@ public class TagService {
     }
 
     public Tag read(String name) {
-        return this.tagPersistence.readById(name);
+        return this.tagPersistence.readByName(name);
     }
 
     public void delete(String name) {

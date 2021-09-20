@@ -13,16 +13,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-class TagEntityRepositoryIT {
+class TagRepositoryIT {
 
     @Autowired
     private TagRepository tagRepository;
 
     @Test
     void testCreateAndRead() {
-        assertTrue(this.tagRepository.findById("tag2").isPresent());
-        TagEntity tag = this.tagRepository.findById("tag2").get();
-        assertEquals("tag2", tag.getId());
+        assertTrue(this.tagRepository.findByName("tag2").isPresent());
+        TagEntity tag = this.tagRepository.findByName("tag2").get();
+        assertEquals("tag2", tag.getName());
         assertEquals("tag 2", tag.getDescription());
         assertTrue(tag.getArticleEntities().stream()
                 .map(ArticleEntity::getBarcode)

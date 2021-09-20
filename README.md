@@ -3,7 +3,7 @@
 > Este proyecto es un apoyo docente de la asignatura y un ejemplo práctico del desarrollo de una aplicación Web siguiendo una Arquitectura por capas
 
 ### Estado del código
-[![Build Status](https://travis-ci.org/miw-upm/apaw-practice.svg?branch=develop)](https://travis-ci.org/miw-upm/apaw-practice)
+[![DevOps](https://github.com/miw-upm/apaw-practice/actions/workflows/test-sonar.yml/badge.svg)](https://github.com/miw-upm/apaw-practice/actions/workflows/test-sonar.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=es.upm.miw%3Aapaw-practice&metric=alert_status)](https://sonarcloud.io/dashboard?id=es.upm.miw%3Aapaw-practice)
 [![BCH compliance](https://bettercodehub.com/edge/badge/miw-upm/apaw-practice?branch=develop)](https://bettercodehub.com/results/miw-upm/apaw-practice)
 [![Heroku broken](https://apaw-practice.herokuapp.com/system/version-badge)](https://apaw-practice.herokuapp.com/swagger-ui.html)

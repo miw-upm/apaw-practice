@@ -17,9 +17,9 @@ import java.util.stream.Stream;
 @Repository("shoppingCartPersistence")
 public class ShoppingCartPersistenceMongodb implements ShoppingCartPersistence {
 
-    private ShoppingCartRepository shoppingCartRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
 
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
     @Autowired
     public ShoppingCartPersistenceMongodb(ShoppingCartRepository shoppingCartRepository, ArticleRepository articleRepository) {
