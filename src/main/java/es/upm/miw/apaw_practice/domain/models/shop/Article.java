@@ -22,6 +22,12 @@ public class Article {
         this.provider = provider;
     }
 
+    public static Article ofBarcode(Article article){
+        Article articleDto = new Article();
+        articleDto.setBarcode(article.getBarcode());
+        return article;
+    }
+
     public void doDefault() {
         if (Objects.isNull(provider)) {
             this.provider = "various";

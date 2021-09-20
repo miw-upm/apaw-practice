@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.shop.entities;
 
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import es.upm.miw.apaw_practice.domain.models.shop.Tag;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -53,10 +54,10 @@ public class TagEntity {
     }
 
     public Tag toTag() {
-        List< String > barcodes = this.articleEntities.stream()
-                .map(ArticleEntity::getBarcode)
+        List<Article> articles = this.articleEntities.stream()
+                .map(ArticleEntity::toArticle)
                 .collect(Collectors.toList());
-        return new Tag(id, description, barcodes, favourite);
+        return new Tag(id, description, articles, favourite);
     }
 
     @Override

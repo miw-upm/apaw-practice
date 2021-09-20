@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.shop;
 
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import es.upm.miw.apaw_practice.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw_practice.domain.models.shop.Tag;
 import es.upm.miw.apaw_practice.domain.persistence_ports.shop.ShoppingCartPersistence;
@@ -38,6 +39,8 @@ public class TagService {
                 .map(ArticleItem::getBarcode)
                 .collect(Collectors.toList());
         return this.tagPersistence.readAll()
-                .filter(tag -> tag.getArticlesBarcode().stream().anyMatch(barcodes::contains));
+                .filter(tag -> tag.getArticles().stream()
+                        .map(Article::getBarcode)
+                        .anyMatch(barcodes::contains));
     }
 }

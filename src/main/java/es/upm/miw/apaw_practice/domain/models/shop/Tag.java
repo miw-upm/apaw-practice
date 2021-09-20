@@ -1,22 +1,42 @@
 package es.upm.miw.apaw_practice.domain.models.shop;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Tag {
     private String name;
     private String description;
-    private List< String > articlesBarcode;
+    private List<Article> articles;
     private Boolean favourite;
 
     public Tag() {
         //empty for framework
     }
 
-    public Tag(String name, String description, List< String > articlesBarcode, Boolean favourite) {
+    public Tag(String name, String description, List<Article> articles, Boolean favourite) {
         this.name = name;
         this.description = description;
-        this.articlesBarcode = articlesBarcode;
+        this.articles = articles;
         this.favourite = favourite;
+    }
+
+    public static Tag ofTagArticleBarcode(Tag tag) {
+        tag.setArticles(
+                tag.articles.stream()
+                        .map(Article::ofBarcode)
+                        .collect(Collectors.toList())
+        );
+        return tag;
+    }
+    public static Tag ofNameArticleBarcode(Tag tag) {
+        Tag tagDto = new Tag();
+        tagDto.setName(tag.getName());
+        tagDto.setArticles(
+                tag.articles.stream()
+                        .map(Article::ofBarcode)
+                        .collect(Collectors.toList())
+        );
+        return tagDto;
     }
 
     public String getName() {
@@ -35,12 +55,12 @@ public class Tag {
         this.description = description;
     }
 
-    public List< String > getArticlesBarcode() {
-        return articlesBarcode;
+    public List<Article> getArticles() {
+        return this.articles;
     }
 
-    public void setArticlesBarcode(List< String > articlesBarcode) {
-        this.articlesBarcode = articlesBarcode;
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
     public Boolean getFavourite() {
@@ -56,7 +76,7 @@ public class Tag {
         return "Tag{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", articlesBarcode=" + articlesBarcode +
+                ", articlesBarcode=" + articles.stream().map(Article::getBarcode) +
                 ", favourite=" + favourite +
                 '}';
     }

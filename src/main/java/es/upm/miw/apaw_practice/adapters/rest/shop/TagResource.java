@@ -26,7 +26,7 @@ public class TagResource {
 
     @GetMapping(NAME_ID)
     public Tag read(@PathVariable String name) {
-        return this.tagService.read(name);
+        return Tag.ofTagArticleBarcode(this.tagService.read(name));
     }
 
     @DeleteMapping(NAME_ID)

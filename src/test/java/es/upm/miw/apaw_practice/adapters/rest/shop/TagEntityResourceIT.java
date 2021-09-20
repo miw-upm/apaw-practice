@@ -31,8 +31,8 @@ class TagEntityResourceIT {
                 .value(Assertions::assertNotNull)
                 .value(tagData -> {
                     assertEquals("tag 3", tagData.getDescription());
-                    assertEquals(1, tagData.getArticlesBarcode().size());
-                    assertEquals("84002", tagData.getArticlesBarcode().get(0));
+                    assertEquals(1, tagData.getArticles().size());
+                    assertEquals("84002", tagData.getArticles().get(0).getBarcode());
                     assertFalse(tagData.getFavourite());
                 });
     }
