@@ -16,7 +16,7 @@ public class ArticleEntity {
     private String id;
     @Indexed(unique = true)
     private String barcode;
-    private String description;
+    private String summary;
     private BigDecimal price;
     private LocalDate registrationDate;
     private String provider;
@@ -46,12 +46,12 @@ public class ArticleEntity {
         this.barcode = barcode;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public LocalDate getRegistrationDate() {
@@ -103,7 +103,7 @@ public class ArticleEntity {
         return "ArticleEntity{" +
                 "id='" + id + '\'' +
                 ", barcode='" + barcode + '\'' +
-                ", description='" + description + '\'' +
+                ", summary='" + summary + '\'' +
                 ", price=" + price +
                 ", registrationDate=" + registrationDate +
                 ", provider='" + provider + '\'' +

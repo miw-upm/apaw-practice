@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Article {
     private String barcode;
-    private String description;
+    private String summary;
     private BigDecimal price;
     private LocalDate registrationDate;
     private String provider;
@@ -15,9 +15,9 @@ public class Article {
         //empty for framework
     }
 
-    public Article(String barcode, String description, BigDecimal price, String provider) {
+    public Article(String barcode, String summary, BigDecimal price, String provider) {
         this.barcode = barcode;
-        this.description = description;
+        this.summary = summary;
         this.price = price;
         this.provider = provider;
     }
@@ -36,12 +36,12 @@ public class Article {
         this.barcode = barcode;
     }
 
-    public String getDescription() {
-        return description;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public LocalDate getRegistrationDate() {
@@ -72,7 +72,7 @@ public class Article {
     public String toString() {
         return "Article{" +
                 "barcode=" + barcode +
-                ", description='" + description + '\'' +
+                ", summary='" + summary + '\'' +
                 ", price=" + price +
                 ", registrationDate=" + registrationDate +
                 ", provider='" + provider + '\'' +

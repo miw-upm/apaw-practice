@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.shop.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import org.junit.jupiter.api.Test;
@@ -38,7 +37,7 @@ class ArticlePersistenceMongodbIT {
                 new Article("6661001", "art per", new BigDecimal("3.00"), "prov per");
         this.articlePersistence.create(article);
         Article articleBD = this.articlePersistence.read("6661001");
-        assertEquals("art per", articleBD.getDescription());
+        assertEquals("art per", articleBD.getSummary());
         assertEquals(0, new BigDecimal("3.00").compareTo(articleBD.getPrice()));
         assertEquals("prov per", articleBD.getProvider());
     }
