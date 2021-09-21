@@ -76,7 +76,7 @@ public class Tag {
         return "Tag{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", articlesBarcode=" + articles.stream().map(Article::getBarcode) +
+                ", articlesBarcode=" + articles.stream().map(Article::getBarcode).collect(Collectors.toList()) +
                 ", favourite=" + favourite +
                 '}';
     }
