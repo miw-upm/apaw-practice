@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DatabaseSeederService {
 
-    private ShopSeederService shopSeederService;
+    private final ShopSeederService shopSeederService;
 
     @Autowired
     public DatabaseSeederService(ShopSeederService shopSeederService) {

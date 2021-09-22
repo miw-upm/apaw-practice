@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.shop;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import es.upm.miw.apaw_practice.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
 import org.junit.jupiter.api.Test;
@@ -23,9 +24,11 @@ class ShoppingCartEntityResourceIT {
 
     @Test
     void testUpdate() {
+        Article article1 = new Article("84002", "art 002", new BigDecimal("0.27"), "prov 2");
+        Article article2 = new Article("84003", "art 003", new BigDecimal("12.13"), "prov 3");
         List<ArticleItem> articleItemArray = Arrays.asList(
-                new ArticleItem("84002", 2, BigDecimal.ONE),
-                new ArticleItem("84003", 3, BigDecimal.TEN)
+                new ArticleItem(article1, 2, BigDecimal.ONE),
+                new ArticleItem(article2, 3, BigDecimal.TEN)
         );
         this.webTestClient
                 .put()

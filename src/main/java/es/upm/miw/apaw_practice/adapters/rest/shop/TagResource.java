@@ -17,7 +17,7 @@ public class TagResource {
     static final String NAME_ID = "/{name}";
     static final String SEARCH = "/search";
 
-    private TagService tagService;
+    private final TagService tagService;
 
     @Autowired
     public TagResource(TagService tagService) {

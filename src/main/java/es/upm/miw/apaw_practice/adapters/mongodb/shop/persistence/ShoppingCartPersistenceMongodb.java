@@ -50,8 +50,9 @@ public class ShoppingCartPersistenceMongodb implements ShoppingCartPersistence {
         List<ArticleItemEntity> articleItemEntities = shoppingCart.getArticleItems().stream()
                 .map(articleItem -> new ArticleItemEntity(
                         this.articleRepository
-                                .findByBarcode(articleItem.getBarcode())
-                                .orElseThrow(() -> new NotFoundException("Article barcode: " + articleItem.getBarcode())),
+                                .findByBarcode(articleItem.getArticle().getBarcode())
+                                .orElseThrow(() -> new NotFoundException("Article barcode: "
+                                        + articleItem.getArticle().getBarcode())),
                         articleItem.getAmount(),
                         articleItem.getDiscount())
 

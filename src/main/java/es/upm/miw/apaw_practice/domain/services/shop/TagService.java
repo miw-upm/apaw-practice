@@ -36,7 +36,9 @@ public class TagService {
     public Stream<Tag> findByArticlesInShoppingCarts() {
         List<String> barcodes = this.shoppingCartPersistence.readAll()
                 .flatMap(shoppingCart -> shoppingCart.getArticleItems().stream())
-                .map(ArticleItem::getBarcode)
+                .map(ArticleItem::getArticle)
+                .map(Article::getBarcode)
+                .distinct()
                 .collect(Collectors.toList());
         return this.tagPersistence.readAll()
                 .filter(tag -> tag.getArticles().stream()

@@ -48,7 +48,7 @@ class ArticlePersistenceMongodbIT {
                 new Article("6661002", "art per", new BigDecimal("3.00"), "prov per");
         Article articleBD = this.articlePersistence.create(articleCreation);
         articleBD.setPrice(BigDecimal.TEN);
-        this.articlePersistence.update("6661002",articleBD);
+        this.articlePersistence.update("6661002", articleBD);
         articleBD = this.articlePersistence.read("6661002");
         assertEquals(0, BigDecimal.TEN.compareTo(articleBD.getPrice()));
     }

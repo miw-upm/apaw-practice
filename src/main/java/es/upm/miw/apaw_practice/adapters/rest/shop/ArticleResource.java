@@ -18,7 +18,7 @@ public class ArticleResource {
 
     static final String SEARCH = "/search";
 
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     @Autowired
     public ArticleResource(ArticleService articleService) {

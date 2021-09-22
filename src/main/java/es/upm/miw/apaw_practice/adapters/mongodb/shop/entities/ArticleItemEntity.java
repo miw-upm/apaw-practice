@@ -42,7 +42,7 @@ public class ArticleItemEntity {
     }
 
     public ArticleItem toArticleItem() {
-        return new ArticleItem(this.articleEntity.getBarcode(), this.amount, this.discount);
+        return new ArticleItem(this.articleEntity.toArticle(), this.amount, this.discount);
     }
 
     @Override

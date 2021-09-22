@@ -20,7 +20,7 @@ public class ShoppingCartResource {
     static final String ARTICLE_ITEMS = "/article-items";
     static final String SEARCH = "/search";
 
-    private ShoppingCartService shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
 
     @Autowired
     public ShoppingCartResource(ShoppingCartService shoppingCartService) {

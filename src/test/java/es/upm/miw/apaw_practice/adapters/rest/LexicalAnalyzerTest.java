@@ -24,7 +24,8 @@ class LexicalAnalyzerTest {
     void testExtractWithAssureSecond() {
         assertEquals("gil", new LexicalAnalyzer().extractWithAssure("name:ana;surname:gil", "surname"));
         assertEquals("", new LexicalAnalyzer().extractWithAssure("name:ana;surname", "surname"));
-        assertEquals("", new LexicalAnalyzer().extractWithAssure("name:ana;surname:", "surname"));    }
+        assertEquals("", new LexicalAnalyzer().extractWithAssure("name:ana;surname:", "surname"));
+    }
 
     @Test
     void testExtractWithAssureBadRequestConverting() {

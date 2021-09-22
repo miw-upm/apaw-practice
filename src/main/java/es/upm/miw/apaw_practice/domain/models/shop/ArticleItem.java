@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.shop;
 import java.math.BigDecimal;
 
 public class ArticleItem {
-    private String barcode;
+    private Article article;
     private Integer amount;
     private BigDecimal discount;
 
@@ -11,18 +11,18 @@ public class ArticleItem {
         //empty for framework
     }
 
-    public ArticleItem(String barcode, Integer amount, BigDecimal discount) {
-        this.barcode = barcode;
+    public ArticleItem(Article article, Integer amount, BigDecimal discount) {
+        this.article = article;
         this.amount = amount;
         this.discount = discount;
     }
 
-    public String getBarcode() {
-        return barcode;
+    public Article getArticle() {
+        return article;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public Integer getAmount() {
@@ -44,7 +44,7 @@ public class ArticleItem {
     @Override
     public String toString() {
         return "ArticleItem{" +
-                "barcode=" + barcode +
+                "article=" + article +
                 ", amount=" + amount +
                 ", discount=" + discount +
                 '}';
