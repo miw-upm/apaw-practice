@@ -24,7 +24,7 @@ public class ShoppingCartService {
         this.articlePersistence = articlePersistence;
     }
 
-    public ShoppingCart updateArticleItems(String id, List< ArticleItem > articleItemList) {
+    public ShoppingCart updateArticleItems(String id, List<ArticleItem> articleItemList) {
         ShoppingCart shoppingCart = this.shoppingCartPersistence.readById(id);
         shoppingCart.setArticleItems(articleItemList);
         return this.shoppingCartPersistence.update(shoppingCart);
@@ -45,7 +45,7 @@ public class ShoppingCartService {
 
     }
 
-    public Stream< ShoppingCart > findByPriceGreaterThan(BigDecimal price) {
+    public Stream<ShoppingCart> findByPriceGreaterThan(BigDecimal price) {
         return this.shoppingCartPersistence.readAll()
                 .filter(shoppingCart -> price.compareTo(this.total(shoppingCart)) < 0);
     }

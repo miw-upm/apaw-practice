@@ -21,7 +21,7 @@ public class TagPersistenceMongodb implements TagPersistence {
     }
 
     @Override
-    public Stream< Tag > readAll() {
+    public Stream<Tag> readAll() {
         return this.tagRepository.findAll().stream()
                 .map(TagEntity::toTag);
     }

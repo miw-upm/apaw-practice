@@ -20,7 +20,7 @@ public class Tag {
         this.favourite = favourite;
     }
 
-    public static Tag ofTagArticleBarcode(Tag tag) {
+    public static Tag ofArticleBarcode(Tag tag) {
         tag.setArticles(
                 tag.articles.stream()
                         .map(Article::ofBarcode)
@@ -28,6 +28,7 @@ public class Tag {
         );
         return tag;
     }
+
     public static Tag ofNameArticleBarcode(Tag tag) {
         Tag tagDto = new Tag();
         tagDto.setName(tag.getName());

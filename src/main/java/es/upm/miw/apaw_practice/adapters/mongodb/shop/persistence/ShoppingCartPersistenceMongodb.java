@@ -29,7 +29,7 @@ public class ShoppingCartPersistenceMongodb implements ShoppingCartPersistence {
 
 
     @Override
-    public Stream< ShoppingCart > readAll() {
+    public Stream<ShoppingCart> readAll() {
         return this.shoppingCartRepository.findAll().stream()
                 .map(ShoppingCartEntity::toShoppingCart);
     }
@@ -47,7 +47,7 @@ public class ShoppingCartPersistenceMongodb implements ShoppingCartPersistence {
         ShoppingCartEntity shoppingCartEntity = this.shoppingCartRepository
                 .findById(shoppingCart.getId())
                 .orElseThrow(() -> new NotFoundException("ShoppingCart id:" + shoppingCart.getId()));
-        List< ArticleItemEntity > articleItemEntities = shoppingCart.getArticleItems().stream()
+        List<ArticleItemEntity> articleItemEntities = shoppingCart.getArticleItems().stream()
                 .map(articleItem -> new ArticleItemEntity(
                         this.articleRepository
                                 .findByBarcode(articleItem.getBarcode())

@@ -6,7 +6,7 @@ import java.util.List;
 public class ShoppingCart {
     private String id;
     private LocalDateTime creationDate;
-    private List< ArticleItem > articleItems;
+    private List<ArticleItem> articleItems;
     private String user;
     private String address;
 
@@ -37,11 +37,11 @@ public class ShoppingCart {
         this.creationDate = creationDate;
     }
 
-    public List< ArticleItem > getArticleItems() {
+    public List<ArticleItem> getArticleItems() {
         return articleItems;
     }
 
-    public void setArticleItems(List< ArticleItem > articleItems) {
+    public void setArticleItems(List<ArticleItem> articleItems) {
         this.articleItems = articleItems;
     }
 

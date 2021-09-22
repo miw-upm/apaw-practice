@@ -33,16 +33,16 @@ public class ArticleService {
         }
     }
 
-    public void updatePrices(Stream< ArticlePriceUpdating > articlePriceUpdatingList) {
+    public void updatePrices(Stream<ArticlePriceUpdating> articlePriceUpdatingList) {
         articlePriceUpdatingList.map(articleNewPrice -> {
-            Article article = this.articlePersistence.read(articleNewPrice.getBarcode());
-            article.setPrice(articleNewPrice.getPrice());
-            return article;
-        })
+                    Article article = this.articlePersistence.read(articleNewPrice.getBarcode());
+                    article.setPrice(articleNewPrice.getPrice());
+                    return article;
+                })
                 .forEach(article -> this.articlePersistence.update(article.getBarcode(), article));
     }
 
-    public Stream< Article > findByProviderAndPriceGreaterThan(String provider, BigDecimal price) {
+    public Stream<Article> findByProviderAndPriceGreaterThan(String provider, BigDecimal price) {
         return this.articlePersistence.findByProviderAndPriceGreaterThan(provider, price);
     }
 }

@@ -19,10 +19,10 @@ public class TagEntity {
     private String name;
     private String description;
     @DBRef
-    private List< ArticleEntity > articleEntities;
+    private List<ArticleEntity> articleEntities;
     private Boolean favourite;
 
-    public TagEntity(String name, String description, List< ArticleEntity > articleEntities, Boolean favourite) {
+    public TagEntity(String name, String description, List<ArticleEntity> articleEntities, Boolean favourite) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
@@ -54,11 +54,11 @@ public class TagEntity {
         this.description = description;
     }
 
-    public List< ArticleEntity > getArticleEntities() {
+    public List<ArticleEntity> getArticleEntities() {
         return articleEntities;
     }
 
-    public void setArticleEntities(List< ArticleEntity > articleEntities) {
+    public void setArticleEntities(List<ArticleEntity> articleEntities) {
         this.articleEntities = articleEntities;
     }
 

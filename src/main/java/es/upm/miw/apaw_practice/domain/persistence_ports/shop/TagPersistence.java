@@ -12,5 +12,5 @@ public interface TagPersistence {
 
     void delete(String name);
 
-    Stream< Tag > readAll();
+    Stream<Tag> readAll();
 }

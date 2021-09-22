@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 @Repository
 public interface ArticlePersistence {
 
-    Stream< Article > readAll();
+    Stream<Article> readAll();
 
     Article create(Article article);
 
@@ -19,5 +19,5 @@ public interface ArticlePersistence {
 
     boolean existBarcode(String barcode);
 
-    Stream< Article > findByProviderAndPriceGreaterThan(String provider, BigDecimal price);
+    Stream<Article> findByProviderAndPriceGreaterThan(String provider, BigDecimal price);
 }

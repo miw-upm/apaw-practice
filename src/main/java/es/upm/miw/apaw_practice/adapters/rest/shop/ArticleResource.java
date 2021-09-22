@@ -32,12 +32,12 @@ public class ArticleResource {
     }
 
     @PatchMapping
-    public void updatePrices(@RequestBody List< ArticlePriceUpdating > articlePriceUpdatingList) {
+    public void updatePrices(@RequestBody List<ArticlePriceUpdating> articlePriceUpdatingList) {
         this.articleService.updatePrices(articlePriceUpdatingList.stream());
     }
 
     @GetMapping(SEARCH)
-    public Stream< Article > findByProviderAndPriceGreaterThan(@RequestParam String q) {
+    public Stream<Article> findByProviderAndPriceGreaterThan(@RequestParam String q) { // q=provider:prov1;price:1.3
         String provider = new LexicalAnalyzer().extractWithAssure(q, "provider");
         BigDecimal price = new LexicalAnalyzer().extractWithAssure(q, "price", BigDecimal::new);
         return this.articleService.findByProviderAndPriceGreaterThan(provider, price);

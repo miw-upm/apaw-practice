@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
-class ArticleEntityResourceIT {
+class ArticleResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -46,6 +46,20 @@ class ArticleEntityResourceIT {
                 .body(BodyInserters.fromValue(article))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void testUpdatePrices() {
+        List<ArticlePriceUpdating> articlePriceUpdatingList = Arrays.asList(
+                new ArticlePriceUpdating("84001", new BigDecimal("1.23")),
+                new ArticlePriceUpdating("84002", new BigDecimal("0.27"))
+        );
+        this.webTestClient
+                .patch()
+                .uri(ArticleResource.ARTICLES)
+                .body(BodyInserters.fromValue(articlePriceUpdatingList))
+                .exchange()
+                .expectStatus().isOk();
     }
 
     @Test

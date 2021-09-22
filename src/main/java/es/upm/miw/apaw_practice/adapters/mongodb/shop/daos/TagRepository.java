@@ -5,7 +5,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface TagRepository extends MongoRepository< TagEntity, String > {
+public interface TagRepository extends MongoRepository<TagEntity, String> {
     Optional<TagEntity> findByName(String name);
+
     int deleteByName(String name);
 }

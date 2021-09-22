@@ -28,12 +28,12 @@ public class ShoppingCartResource {
     }
 
     @PutMapping(ID_ID + ARTICLE_ITEMS)
-    public ShoppingCart updateArticleItems(@PathVariable String id, @RequestBody List< ArticleItem > articleItemList) {
+    public ShoppingCart updateArticleItems(@PathVariable String id, @RequestBody List<ArticleItem> articleItemList) {
         return this.shoppingCartService.updateArticleItems(id, articleItemList);
     }
 
     @GetMapping(SEARCH)
-    public Stream< ShoppingCart > findByPriceGreaterThan(@RequestParam String q) {
+    public Stream<ShoppingCart> findByPriceGreaterThan(@RequestParam String q) {
         BigDecimal price = new LexicalAnalyzer().extractWithAssure(q, "price", BigDecimal::new);
         return this.shoppingCartService.findByPriceGreaterThan(price)
                 .map(ShoppingCart::ofIdUser);

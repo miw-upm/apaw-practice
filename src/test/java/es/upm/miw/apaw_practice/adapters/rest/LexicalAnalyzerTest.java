@@ -16,13 +16,15 @@ class LexicalAnalyzerTest {
         assertEquals("ana", new LexicalAnalyzer().extractWithAssure("name:ana;surname:gil", "name"));
         assertEquals("", new LexicalAnalyzer().extractWithAssure("name", "name"));
         assertEquals("", new LexicalAnalyzer().extractWithAssure("name;surname:gil", "name"));
+        assertEquals("", new LexicalAnalyzer().extractWithAssure("name:", "name"));
+        assertEquals("", new LexicalAnalyzer().extractWithAssure("name:;surname:gil", "name"));
     }
 
     @Test
     void testExtractWithAssureSecond() {
         assertEquals("gil", new LexicalAnalyzer().extractWithAssure("name:ana;surname:gil", "surname"));
         assertEquals("", new LexicalAnalyzer().extractWithAssure("name:ana;surname", "surname"));
-    }
+        assertEquals("", new LexicalAnalyzer().extractWithAssure("name:ana;surname:", "surname"));    }
 
     @Test
     void testExtractWithAssureBadRequestConverting() {

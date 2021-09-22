@@ -22,10 +22,10 @@ public class Article {
         this.provider = provider;
     }
 
-    public static Article ofBarcode(Article article){
+    public static Article ofBarcode(Article article) {
         Article articleDto = new Article();
         articleDto.setBarcode(article.getBarcode());
-        return article;
+        return articleDto;
     }
 
     public void doDefault() {

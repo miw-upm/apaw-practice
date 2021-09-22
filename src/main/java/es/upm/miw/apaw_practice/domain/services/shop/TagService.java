@@ -33,8 +33,8 @@ public class TagService {
         this.tagPersistence.delete(name);
     }
 
-    public Stream< Tag > findByArticlesInShoppingCarts() {
-        List< String > barcodes = this.shoppingCartPersistence.readAll()
+    public Stream<Tag> findByArticlesInShoppingCarts() {
+        List<String> barcodes = this.shoppingCartPersistence.readAll()
                 .flatMap(shoppingCart -> shoppingCart.getArticleItems().stream())
                 .map(ArticleItem::getBarcode)
                 .collect(Collectors.toList());

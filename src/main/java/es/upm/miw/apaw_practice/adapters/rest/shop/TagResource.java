@@ -26,7 +26,7 @@ public class TagResource {
 
     @GetMapping(NAME_ID)
     public Tag read(@PathVariable String name) {
-        return Tag.ofTagArticleBarcode(this.tagService.read(name));
+        return Tag.ofArticleBarcode(this.tagService.read(name));
     }
 
     @DeleteMapping(NAME_ID)
@@ -35,7 +35,7 @@ public class TagResource {
     }
 
     @GetMapping(SEARCH)
-    public Stream< Tag > findByArticlesInShoppingCarts(@RequestParam String q) {
+    public Stream<Tag> findByArticlesInShoppingCarts(@RequestParam String q) {
         if (!"in".equals(new LexicalAnalyzer().extractWithAssure(q, "shopping-carts"))) {
             throw new BadRequestException("q incorrect, expected in");
         }
