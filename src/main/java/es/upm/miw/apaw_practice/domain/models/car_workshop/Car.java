@@ -6,19 +6,19 @@ import java.util.Objects;
 public class Car {
 
     private String licensePlate;
-    private boolean needsRevision;
+    private Boolean needsRevision;
     private Owner owner;
-    private List<Tyre> tyres;
+    private List<TyreSpecification> tyreSpecs;
 
     public Car() {
         // empty for framework
     }
 
-    public Car(String licensePlate, boolean needsRevision, Owner owner, List<Tyre> tyres) {
+    public Car(String licensePlate, Boolean needsRevision, Owner owner, List<TyreSpecification> tyreSpecs) {
         this.licensePlate = licensePlate;
         this.needsRevision = needsRevision;
         this.owner = owner;
-        this.tyres = tyres;
+        this.tyreSpecs = tyreSpecs;
     }
 
     public String getLicensePlate() {
@@ -33,7 +33,7 @@ public class Car {
         return needsRevision;
     }
 
-    public void setNeedsRevision(boolean needsRevision) {
+    public void setNeedsRevision(Boolean needsRevision) {
         this.needsRevision = needsRevision;
     }
 
@@ -45,12 +45,16 @@ public class Car {
         this.owner = owner;
     }
 
-    public List<Tyre> getTyres() {
-        return tyres;
+    public Boolean getNeedsRevision() {
+        return needsRevision;
     }
 
-    public void setTyres(List<Tyre> tyres) {
-        this.tyres = tyres;
+    public List<TyreSpecification> getTyreSpecs() {
+        return tyreSpecs;
+    }
+
+    public void setTyreSpecs(List<TyreSpecification> tyreSpecs) {
+        this.tyreSpecs = tyreSpecs;
     }
 
     @Override
@@ -71,7 +75,7 @@ public class Car {
                 "licensePlate='" + this.licensePlate + '\'' +
                 ", needsRevision=" + this.needsRevision +
                 ", owner=" + this.owner.toString() +
-                ", tyres=" + this.tyres.toString() +
+                ", tyreSpecifications=" + this.tyreSpecs.toString() +
                 '}';
     }
 }

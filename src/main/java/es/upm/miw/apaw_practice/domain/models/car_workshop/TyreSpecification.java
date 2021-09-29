@@ -1,59 +1,60 @@
 package es.upm.miw.apaw_practice.domain.models.car_workshop;
 
+import java.util.List;
 import java.util.Objects;
 
 public class TyreSpecification {
-    private int width;
-    private int diameter;
-    private int weightIndex;
-    private String speedRating;
+    private Integer width;
+    private Integer diameter;
+    private String loadSpeedIndex;
+    private List<Tyre> tyres;
 
     public TyreSpecification() {
         //empty for framework
     }
 
-    public TyreSpecification(int width, int diameter, int weightIndex, String speedRating) {
+    public TyreSpecification(Integer width, Integer diameter, String loadSpeedIndex, List<Tyre> tyres) {
         this.width = width;
         this.diameter = diameter;
-        this.weightIndex = weightIndex;
-        this.speedRating = speedRating;
+        this.loadSpeedIndex = loadSpeedIndex;
+        this.tyres = tyres;
     }
 
-    public int getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 
-    public int getDiameter() {
+    public Integer getDiameter() {
         return diameter;
     }
 
-    public void setDiameter(int diameter) {
+    public void setDiameter(Integer diameter) {
         this.diameter = diameter;
     }
 
-    public int getWeightIndex() {
-        return weightIndex;
+    public String getLoadSpeedIndex() {
+        return loadSpeedIndex;
     }
 
-    public void setWeightIndex(int weightIndex) {
-        this.weightIndex = weightIndex;
+    public void setLoadSpeedIndex(String loadSpeedIndex) {
+        this.loadSpeedIndex = loadSpeedIndex;
     }
 
-    public String getSpeedRating() {
-        return speedRating;
+    public List<Tyre> getTyres() {
+        return tyres;
     }
 
-    public void setSpeedRating(String speedRating) {
-        this.speedRating = speedRating;
+    public void setTyres(List<Tyre> tyres) {
+        this.tyres = tyres;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.width, this.diameter, this.weightIndex, this.speedRating);
+        return Objects.hash(this.width, this.diameter, this.loadSpeedIndex);
     }
 
     @Override
@@ -61,10 +62,9 @@ public class TyreSpecification {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TyreSpecification tyreSpec = (TyreSpecification) o;
-        return this.width == tyreSpec.width &&
-                this.diameter == tyreSpec.diameter &&
-                this.weightIndex == tyreSpec.weightIndex &&
-                Objects.equals(this.speedRating, tyreSpec.speedRating);
+        return Objects.equals(this.width, tyreSpec.width) &&
+                Objects.equals(this.diameter, tyreSpec.diameter) &&
+                Objects.equals(this.loadSpeedIndex, tyreSpec.loadSpeedIndex);
     }
 
     @Override
@@ -72,8 +72,8 @@ public class TyreSpecification {
         return "TyreSpecification{" +
                 "width=" + this.width +
                 ", diameter=" + this.diameter +
-                ", weightIndex=" + this.weightIndex +
-                ", speedRating='" + this.speedRating + '\'' +
+                ", loadSpeedIndex='" + this.loadSpeedIndex + '\'' +
+                ", tyres=" + this.tyres.toString() +
                 '}';
     }
 }
