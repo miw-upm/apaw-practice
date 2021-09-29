@@ -7,11 +7,11 @@ public class Owner {
     private String name;
     private LocalDate registrationDate;
 
-    public Owner(){
+    public Owner() {
         //empty for framework
     }
 
-    public Owner(String DNI, String name, LocalDate registrationDate){
+    public Owner(String DNI, String name, LocalDate registrationDate) {
         this.DNI = DNI;
         this.name = name;
         this.registrationDate = registrationDate;
