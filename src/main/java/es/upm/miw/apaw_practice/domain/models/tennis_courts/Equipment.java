@@ -6,16 +6,16 @@ public class Equipment {
 
     private String type;
     private Integer number;
-    private final BigDecimal PRICE_PER_UNIT;
+    private BigDecimal pricePerUnit;
 
     public Equipment(String type, Integer number){
         this.type = type;
         this.number = number;
-        this.PRICE_PER_UNIT = new BigDecimal(5.0);
+        this.pricePerUnit = new BigDecimal(5.0);
     }
 
     public BigDecimal getTotalPrice(){
-        return this.PRICE_PER_UNIT.multiply(new BigDecimal(number));
+        return this.pricePerUnit.multiply(new BigDecimal(number));
     }
 
     public String getType() {
@@ -34,7 +34,11 @@ public class Equipment {
         this.number = number;
     }
 
+    public void setPricePerUnit(BigDecimal price){
+        this.pricePerUnit = price;
+    }
+
     public BigDecimal getPricePerUnit() {
-        return PRICE_PER_UNIT;
+        return pricePerUnit;
     }
 }

@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 
 public class Court {
     private Integer number;
-    private final BigDecimal PRICE;
+    private BigDecimal price;
     private Boolean occupied;
 
-    public Court(Integer number, boolean occupied){
+    public Court(Integer number, boolean occupied, BigDecimal price){
         this.number = number;
-        this.PRICE = new BigDecimal(10.5);
+        this.price = price;
         this.occupied = occupied;
     }
 
@@ -22,7 +22,11 @@ public class Court {
     }
 
     public BigDecimal getPrice(){
-        return this.PRICE;
+        return this.price;
+    }
+
+    public void setPrice(BigDecimal price){
+        this.price = price;
     }
 
     public Boolean isOccupied() {
