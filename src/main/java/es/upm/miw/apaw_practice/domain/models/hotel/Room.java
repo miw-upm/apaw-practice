@@ -1,20 +1,21 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Room {
     private Integer nbrRoom;
     private BigDecimal priceRoom;
-    private Boolean isOccupied;
+    private List<HotelGuest> hotelGuests;
 
-    Room(){
+    Room() {
         //Empty for framework
     }
 
-    Room(Integer nbrRoom, BigDecimal priceRoom, Boolean isOccupied){
+    Room(Integer nbrRoom, BigDecimal priceRoom,  List<HotelGuest> hotelGuests) {
         this.nbrRoom = nbrRoom;
         this.priceRoom = priceRoom;
-        this.isOccupied = isOccupied;
+        this.hotelGuests = hotelGuests;
     }
 
 
@@ -34,12 +35,16 @@ public class Room {
         this.priceRoom = priceRoom;
     }
 
-    public Boolean getOccupied() {
-        return isOccupied;
+    public List<HotelGuest> getHotelGuests() {
+        return hotelGuests;
     }
 
-    public void setOccupied(Boolean occupied) {
-        isOccupied = occupied;
+    public void setHotelGuests(List<HotelGuest> hotelGuests) {
+        this.hotelGuests = hotelGuests;
+    }
+
+    public boolean isOccupied(){
+        return this.hotelGuests.size() > 0;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class Room {
         return "Room{" +
                 "nbrRoom=" + nbrRoom +
                 ", priceRoom=" + priceRoom +
-                ", isOccupied=" + isOccupied +
+                ", hotelGuests=" + hotelGuests +
                 '}';
     }
 }

@@ -5,19 +5,17 @@ import java.time.LocalDateTime;
 public class HotelGuest {
     private String name;
     private String DNI;
-    private Long telephone;
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
 
-    HotelGuest(){
+    HotelGuest() {
         //empty for framework
     }
 
-    HotelGuest(String name, String DNI, Long telephone, LocalDateTime entryDate, LocalDateTime departureDate){
+    HotelGuest(String name, String DNI, Long telephone, LocalDateTime entryDate, LocalDateTime departureDate) {
         this.name = name;
         this.DNI = DNI;
-        this.telephone = telephone;
         this.entryDate = entryDate;
         this.departureDate = departureDate;
     }
@@ -38,13 +36,6 @@ public class HotelGuest {
         this.DNI = DNI;
     }
 
-    public Long getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(Long telephone) {
-        this.telephone = telephone;
-    }
 
     public LocalDateTime getEntryDate() {
         return entryDate;
@@ -67,7 +58,6 @@ public class HotelGuest {
         return "HotelGuest{" +
                 "name='" + name + '\'' +
                 ", DNI='" + DNI + '\'' +
-                ", telephone=" + telephone +
                 ", entryDate=" + entryDate +
                 ", departureDate=" + departureDate +
                 '}';
