@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Owner {
-    private String DNI;
+    private String dni;
     private String name;
     private LocalDate registrationDate;
 
@@ -12,18 +12,18 @@ public class Owner {
         //empty for framework
     }
 
-    public Owner(String DNI, String name, LocalDate registrationDate) {
-        this.DNI = DNI;
+    public Owner(String dni, String name, LocalDate registrationDate) {
+        this.dni = dni;
         this.name = name;
         this.registrationDate = registrationDate;
     }
 
-    public String getDNI() {
-        return DNI;
+    public String getDni() {
+        return dni;
     }
 
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getName() {
@@ -44,20 +44,20 @@ public class Owner {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.DNI);
+        return Objects.hashCode(this.dni);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        return Objects.equals(this.DNI, ((Owner) o).DNI);
+        return Objects.equals(this.dni, ((Owner) o).dni);
     }
 
     @Override
     public String toString() {
         return "Owner{" +
-                "DNI='" + this.DNI + '\'' +
+                "DNI='" + this.dni + '\'' +
                 ", name='" + this.name + '\'' +
                 ", registrationDate=" + this.registrationDate +
                 '}';
