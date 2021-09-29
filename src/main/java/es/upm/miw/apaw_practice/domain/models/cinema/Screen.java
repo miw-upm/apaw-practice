@@ -1,42 +1,64 @@
 package es.upm.miw.apaw_practice.domain.models.cinema;
 
+import java.util.List;
+
 public class Screen {
-    private int screenNumber;
-    private int flat;
-    private int numberOfSeats;
+    private Integer screenNumber;
+    private Integer flat;
+    private Integer numberOfSeats;
+    private List<Film> films;
+    private List<Spectator> spectators;
 
     public Screen(){
         //empty for framework
     }
 
-    public Screen(int screenNumber, int flat, int numberOfSeats) {
+    public Screen(Integer screenNumber, Integer flat, Integer numberOfSeats, List<Film> films, List<Spectator> spectators) {
         this.screenNumber = screenNumber;
         this.flat = flat;
         this.numberOfSeats = numberOfSeats;
+        this.films = films;
+        this.spectators = spectators;
     }
 
-    public int getScreenNumber() {
+    public Integer getScreenNumber() {
         return screenNumber;
     }
 
-    public void setScreenNumber(int screenNumber) {
+    public void setScreenNumber(Integer screenNumber) {
         this.screenNumber = screenNumber;
     }
 
-    public int getFlat() {
+    public Integer getFlat() {
         return flat;
     }
 
-    public void setFlat(int flat) {
+    public void setFlat(Integer flat) {
         this.flat = flat;
     }
 
-    public int getNumberOfSeats() {
+    public Integer getNumberOfSeats() {
         return numberOfSeats;
     }
 
-    public void setNumberOfSeats(int numberOfSeats) {
+    public void setNumberOfSeats(Integer numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
+    }
+
+    public List<Film> getFilms() {
+        return films;
+    }
+
+    public void setFilms(List<Film> films) {
+        this.films = films;
+    }
+
+    public List<Spectator> getSpectators() {
+        return spectators;
+    }
+
+    public void setSpectators(List<Spectator> spectators) {
+        this.spectators = spectators;
     }
 
     @Override
@@ -45,6 +67,8 @@ public class Screen {
                 "screenNumber=" + screenNumber +
                 ", flat=" + flat +
                 ", numberOfSeats=" + numberOfSeats +
+                ", films=" + films +
+                ", spectators=" + spectators +
                 '}';
     }
 }
