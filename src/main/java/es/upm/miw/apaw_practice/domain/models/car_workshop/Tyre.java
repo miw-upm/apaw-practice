@@ -6,17 +6,17 @@ import java.util.Objects;
 public class Tyre {
 
     private String manufacturer;
+    private String model;
     private BigDecimal price;
-    private TyreSpecification tyreSpec;
 
     public Tyre() {
         //empty for framework
     }
 
-    public Tyre(String manufacturer, BigDecimal price, TyreSpecification specs) {
+    public Tyre(String manufacturer, String model, BigDecimal price) {
         this.manufacturer = manufacturer;
+        this.model = model;
         this.price = price;
-        this.tyreSpec = specs;
     }
 
     public String getManufacturer() {
@@ -27,6 +27,14 @@ public class Tyre {
         this.manufacturer = manufacturer;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -35,17 +43,9 @@ public class Tyre {
         this.price = price;
     }
 
-    public TyreSpecification getTyreSpec() {
-        return tyreSpec;
-    }
-
-    public void setTyreSpec(TyreSpecification tyreSpec) {
-        this.tyreSpec = tyreSpec;
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(this.manufacturer, this.tyreSpec);
+        return Objects.hash(this.manufacturer, this.model);
     }
 
     @Override
@@ -53,15 +53,15 @@ public class Tyre {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         return Objects.equals(this.manufacturer, ((Tyre) o).manufacturer) &&
-                Objects.equals(this.tyreSpec, ((Tyre) o).tyreSpec);
+                Objects.equals(this.model, ((Tyre) o).model);
     }
 
     @Override
     public String toString() {
         return "Tyre{" +
-                "manufacturer='" + this.manufacturer + '\'' +
-                ", price=" + this.price +
-                ", specs=" + this.tyreSpec.toString() +
+                "manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

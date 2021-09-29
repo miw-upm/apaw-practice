@@ -3,14 +3,13 @@ package es.upm.miw.apaw_practice.domain.models.cinema;
 public class Actor {
     private String name;
     private String familyName;
-    private int age;
-
+    private Integer age;
 
     public Actor() {
         //empty for framework
     }
 
-    public Actor(String name, String familyName, int age) {
+    public Actor(String name, String familyName, Integer age) {
         this.name = name;
         this.familyName = familyName;
         this.age = age;
@@ -32,11 +31,11 @@ public class Actor {
         this.familyName = familyName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
