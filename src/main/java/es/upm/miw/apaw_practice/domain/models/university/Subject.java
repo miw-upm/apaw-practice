@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Subject {
 
-    private String name;
-    private Integer code;
+    private String subjectName;
+    private Integer subjectCode;
     private Integer credits;
     private Classroom classroom;
     private List<Student> students;
@@ -14,28 +14,28 @@ public class Subject {
         //empty for framework
     }
 
-    public Subject(String name, Integer code, Integer credits, Classroom classroom, List<Student> students) {
-        this.name = name;
-        this.code = code;
+    public Subject(String subjectName, Integer subjectCode, Integer credits, Classroom classroom, List<Student> students) {
+        this.subjectName = subjectName;
+        this.subjectCode = subjectCode;
         this.credits = credits;
         this.classroom = classroom;
         this.students = students;
     }
 
-    public String getName() {
-        return name;
+    public String getSubjectName() {
+        return subjectName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
-    public Integer getCode() {
-        return code;
+    public Integer getSubjectCode() {
+        return subjectCode;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setSubjectCode(Integer subjectCode) {
+        this.subjectCode = subjectCode;
     }
 
     public Integer getCredits() {

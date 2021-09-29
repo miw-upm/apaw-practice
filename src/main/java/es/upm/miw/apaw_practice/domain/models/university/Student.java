@@ -4,16 +4,16 @@ public class Student {
 
     private String name;
     private String lastName;
-    private Boolean isInternationalStudent;
+    private Boolean internationalStudent;
 
     public Student(){
         //empty for framework
     }
 
-    public Student(String name, String lastName, Boolean isInternationalStudent) {
+    public Student(String name, String lastName, Boolean internationalStudent) {
         this.name = name;
         this.lastName = lastName;
-        this.isInternationalStudent = isInternationalStudent;
+        this.internationalStudent = internationalStudent;
     }
 
     public String getName() {
@@ -32,11 +32,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public Boolean getIsInternationalStudent() {
-        return isInternationalStudent;
+    public Boolean getInternationalStudent() {
+        return internationalStudent;
     }
 
-    public void setIsInternationalStudent(Boolean isInternationalStudent) {
-        this.isInternationalStudent = isInternationalStudent;
+    public void setInternationalStudent(Boolean internationalStudent) {
+        this.internationalStudent = internationalStudent;
     }
 }
