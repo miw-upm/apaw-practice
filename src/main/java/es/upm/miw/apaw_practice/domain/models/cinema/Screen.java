@@ -6,18 +6,16 @@ public class Screen {
     private Integer screenNumber;
     private Integer flat;
     private Integer numberOfSeats;
-    private List<Film> films;
     private List<Spectator> spectators;
 
     public Screen(){
         //empty for framework
     }
 
-    public Screen(Integer screenNumber, Integer flat, Integer numberOfSeats, List<Film> films, List<Spectator> spectators) {
+    public Screen(Integer screenNumber, Integer flat, Integer numberOfSeats, List<Spectator> spectators) {
         this.screenNumber = screenNumber;
         this.flat = flat;
         this.numberOfSeats = numberOfSeats;
-        this.films = films;
         this.spectators = spectators;
     }
 
@@ -45,14 +43,6 @@ public class Screen {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public List<Film> getFilms() {
-        return films;
-    }
-
-    public void setFilms(List<Film> films) {
-        this.films = films;
-    }
-
     public List<Spectator> getSpectators() {
         return spectators;
     }
@@ -67,7 +57,6 @@ public class Screen {
                 "screenNumber=" + screenNumber +
                 ", flat=" + flat +
                 ", numberOfSeats=" + numberOfSeats +
-                ", films=" + films +
                 ", spectators=" + spectators +
                 '}';
     }
