@@ -1,14 +1,19 @@
 package es.upm.miw.apaw_practice.domain.models.tennis_courts;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
     private String name;
     private String surname;
     private Integer age;
+    private List<Equipment> equipmentList;
 
     public Player(String name, String surname, Integer age){
         this.name = name;
         this.surname = surname;
         this.age = age;
+        this.equipmentList = new ArrayList<>();
     }
 
     public String getCompleteName(){
@@ -37,5 +42,9 @@ public class Player {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public void setEquipmentList(Equipment equipment){
+        this.equipmentList.add(equipment);
     }
 }
