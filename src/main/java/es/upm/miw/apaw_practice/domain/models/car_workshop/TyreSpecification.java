@@ -8,11 +8,11 @@ public class TyreSpecification {
     private int weightIndex;
     private String speedRating;
 
-    public TyreSpecification(){
+    public TyreSpecification() {
         //empty for framework
     }
 
-    public TyreSpecification(int width, int diameter, int weightIndex, String speedRating){
+    public TyreSpecification(int width, int diameter, int weightIndex, String speedRating) {
         this.width = width;
         this.diameter = diameter;
         this.weightIndex = weightIndex;
