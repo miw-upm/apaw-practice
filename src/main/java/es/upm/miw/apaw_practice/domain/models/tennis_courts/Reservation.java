@@ -11,6 +11,10 @@ public class Reservation {
     private Court court;
     private List<Player> players;
 
+    public static Builder builder(LocalDateTime date, Integer duration){
+        return new Builder(date, duration);
+    }
+
     public String getName() {
         return this.name;
     }
@@ -50,6 +54,8 @@ public class Reservation {
     public void setPlayers(List<Player> players) {
         this.players = this.players;
     }
+
+
 
     public static class Builder {
         private Reservation reservation;
