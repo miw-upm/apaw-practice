@@ -16,6 +16,7 @@ public class Appointment {
         this.date = date;
         this.hour = hour;
         this.consumed = consumed;
+
     }
 
     public LocalDate getDate() {
