@@ -27,6 +27,14 @@ public class Tyre {
         this.manufacturer = manufacturer;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
