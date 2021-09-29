@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.car_workshop;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Car {
 
@@ -54,12 +55,14 @@ public class Car {
 
     @Override
     public int hashCode() {
-        return this.licensePlate.hashCode();
+        return Objects.hashCode(licensePlate);
     }
 
     @Override
     public boolean equals(Object o) {
-        return this == o || o != null && getClass() == o.getClass() && (this.licensePlate.equals(((Car) o).licensePlate));
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return Objects.equals(this.licensePlate, ((Car) o).licensePlate);
     }
 
     @Override

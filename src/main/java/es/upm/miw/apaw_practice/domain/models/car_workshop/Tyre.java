@@ -7,7 +7,7 @@ public class Tyre {
 
     private String manufacturer;
     private BigDecimal price;
-    private TyreSpecification specs;
+    private TyreSpecification tyreSpec;
 
     public Tyre() {
         //empty for framework
@@ -16,7 +16,7 @@ public class Tyre {
     public Tyre(String manufacturer, BigDecimal price, TyreSpecification specs) {
         this.manufacturer = manufacturer;
         this.price = price;
-        this.specs = specs;
+        this.tyreSpec = specs;
     }
 
     public String getManufacturer() {
@@ -35,31 +35,33 @@ public class Tyre {
         this.price = price;
     }
 
-    public TyreSpecification getSpecs() {
-        return specs;
+    public TyreSpecification getTyreSpec() {
+        return tyreSpec;
     }
 
-    public void setSpecs(TyreSpecification specs) {
-        this.specs = specs;
+    public void setTyreSpec(TyreSpecification tyreSpec) {
+        this.tyreSpec = tyreSpec;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(manufacturer, specs);
+        return Objects.hash(this.manufacturer, this.tyreSpec);
     }
 
     @Override
     public boolean equals(Object o) {
-        return this == o || o != null && getClass() == o.getClass() && (this.manufacturer.equals(((Tyre) o).manufacturer))
-                && (this.specs.equals(((Tyre) o).specs));
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return Objects.equals(this.manufacturer, ((Tyre) o).manufacturer) &&
+                Objects.equals(this.tyreSpec, ((Tyre) o).tyreSpec);
     }
 
     @Override
     public String toString() {
         return "Tyre{" +
-                "manufacturer='" + manufacturer + '\'' +
-                ", price=" + price +
-                ", specs=" + specs +
+                "manufacturer='" + this.manufacturer + '\'' +
+                ", price=" + this.price +
+                ", specs=" + this.tyreSpec +
                 '}';
     }
 }

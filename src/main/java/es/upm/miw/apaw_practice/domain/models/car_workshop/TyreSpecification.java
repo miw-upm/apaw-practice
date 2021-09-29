@@ -53,14 +53,27 @@ public class TyreSpecification {
 
     @Override
     public int hashCode() {
-        return Objects.hash(width, diameter, weightIndex, speedRating);
+        return Objects.hash(this.width, this.diameter, this.weightIndex, this.speedRating);
     }
 
     @Override
     public boolean equals(Object o) {
-        return this == o || o != null && getClass() == o.getClass() && (this.width == ((TyreSpecification) o).width)
-                && (this.diameter == ((TyreSpecification) o).diameter) &&
-                (this.weightIndex == ((TyreSpecification) o).weightIndex) &&
-                (this.speedRating.equals(((TyreSpecification) o).speedRating));
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TyreSpecification tyreSpec = (TyreSpecification) o;
+        return this.width == tyreSpec.width &&
+                this.diameter == tyreSpec.diameter &&
+                this.weightIndex == tyreSpec.weightIndex &&
+                Objects.equals(this.speedRating, tyreSpec.speedRating);
+    }
+
+    @Override
+    public String toString() {
+        return "TyreSpecification{" +
+                "width=" + this.width +
+                ", diameter=" + this.diameter +
+                ", weightIndex=" + this.weightIndex +
+                ", speedRating='" + this.speedRating + '\'' +
+                '}';
     }
 }
