@@ -9,6 +9,7 @@ public class HotelGuest {
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
+
     HotelGuest(){
         //empty for framework
     }
