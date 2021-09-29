@@ -5,3 +5,5 @@
 *.ipr
 
 target
+
+**/.DS_Store
