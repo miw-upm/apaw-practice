@@ -70,8 +70,8 @@ public class Car {
         return "Car{" +
                 "licensePlate='" + this.licensePlate + '\'' +
                 ", needsRevision=" + this.needsRevision +
-                ", owner=" + this.owner +
-                ", tyres=" + this.tyres +
+                ", owner=" + this.owner.toString() +
+                ", tyres=" + this.tyres.toString() +
                 '}';
     }
 }

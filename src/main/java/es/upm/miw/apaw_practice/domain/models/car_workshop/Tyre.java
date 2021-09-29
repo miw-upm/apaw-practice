@@ -61,7 +61,7 @@ public class Tyre {
         return "Tyre{" +
                 "manufacturer='" + this.manufacturer + '\'' +
                 ", price=" + this.price +
-                ", specs=" + this.tyreSpec +
+                ", specs=" + this.tyreSpec.toString() +
                 '}';
     }
 }
