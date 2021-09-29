@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.university;
 
 public class Classroom {
 
-    private Integer code;
+    private Integer classroomNumber;
     private String school;
     private Integer capacity;
 
@@ -10,18 +10,18 @@ public class Classroom {
         //empty for framework
     }
 
-    public Classroom(Integer code, String school, Integer capacity) {
-        this.code = code;
+    public Classroom(Integer classroomNumber, String school, Integer capacity) {
+        this.classroomNumber = classroomNumber;
         this.school = school;
         this.capacity = capacity;
     }
 
-    public Integer getCode() {
-        return code;
+    public Integer getClassroomNumber() {
+        return classroomNumber;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setClassroomNumber(Integer classroomNumber) {
+        this.classroomNumber = classroomNumber;
     }
 
     public String getSchool() {
