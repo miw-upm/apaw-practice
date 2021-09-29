@@ -5,6 +5,7 @@ public class Actor {
     private String familyName;
     private int age;
 
+
     public Actor() {
         //empty for framework
     }
