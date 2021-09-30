@@ -26,7 +26,7 @@ public class TyreSpecificationEntity {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(String id) {
@@ -34,7 +34,7 @@ public class TyreSpecificationEntity {
     }
 
     public Integer getWidth() {
-        return width;
+        return this.width;
     }
 
     public void setWidth(Integer width) {
@@ -42,7 +42,7 @@ public class TyreSpecificationEntity {
     }
 
     public Integer getDiameter() {
-        return diameter;
+        return this.diameter;
     }
 
     public void setDiameter(Integer diameter) {
@@ -50,7 +50,7 @@ public class TyreSpecificationEntity {
     }
 
     public String getLoadSpeedIndex() {
-        return loadSpeedIndex;
+        return this.loadSpeedIndex;
     }
 
     public void setLoadSpeedIndex(String loadSpeedIndex) {

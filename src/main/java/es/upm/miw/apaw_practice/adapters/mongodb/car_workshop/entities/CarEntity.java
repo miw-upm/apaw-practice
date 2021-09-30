@@ -34,7 +34,7 @@ public class CarEntity {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(String id) {
@@ -42,7 +42,7 @@ public class CarEntity {
     }
 
     public String getLicensePlate() {
-        return licensePlate;
+        return this.licensePlate;
     }
 
     public void setLicensePlate(String licensePlate) {
@@ -50,7 +50,7 @@ public class CarEntity {
     }
 
     public Boolean isRevision() {
-        return revision;
+        return this.revision;
     }
 
     public void setRevision(Boolean revision) {
@@ -58,7 +58,7 @@ public class CarEntity {
     }
 
     public OwnerEntity getOwnerEntity() {
-        return ownerEntity;
+        return this.ownerEntity;
     }
 
     public void setOwnerEntity(OwnerEntity ownerEntity) {
@@ -66,7 +66,7 @@ public class CarEntity {
     }
 
     public List<TyreSpecificationEntity> getTyreSpecsEntities() {
-        return tyreSpecsEntities;
+        return this.tyreSpecsEntities;
     }
 
     public void setTyreSpecsEntities(List<TyreSpecificationEntity> tyreSpecsEntities) {
@@ -75,7 +75,7 @@ public class CarEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(licensePlate);
+        return Objects.hashCode(this.licensePlate);
     }
 
     @Override

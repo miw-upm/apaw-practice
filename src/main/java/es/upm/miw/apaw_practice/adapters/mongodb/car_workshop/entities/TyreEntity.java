@@ -33,7 +33,7 @@ public class TyreEntity {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(String id) {
@@ -41,7 +41,7 @@ public class TyreEntity {
     }
 
     public String getManufacturer() {
-        return manufacturer;
+        return this.manufacturer;
     }
 
     public void setManufacturer(String manufacturer) {
@@ -49,7 +49,7 @@ public class TyreEntity {
     }
 
     public String getModel() {
-        return model;
+        return this.model;
     }
 
     public void setModel(String model) {
@@ -57,7 +57,7 @@ public class TyreEntity {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return this.price;
     }
 
     public void setPrice(BigDecimal price) {
@@ -65,7 +65,7 @@ public class TyreEntity {
     }
 
     public TyreSpecificationEntity getTyreSpecsEntity() {
-        return tyreSpecsEntity;
+        return this.tyreSpecsEntity;
     }
 
     public void setTyreSpecsEntity(TyreSpecificationEntity tyreSpecsEntity) {

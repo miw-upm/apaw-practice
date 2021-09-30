@@ -19,7 +19,7 @@ public class OwnerEntity {
     }
 
     public String getDni() {
-        return dni;
+        return this.dni;
     }
 
     public void setDni(String dni) {
@@ -27,7 +27,7 @@ public class OwnerEntity {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -35,7 +35,7 @@ public class OwnerEntity {
     }
 
     public LocalDate getRegistrationDate() {
-        return registrationDate;
+        return this.registrationDate;
     }
 
     @Override
