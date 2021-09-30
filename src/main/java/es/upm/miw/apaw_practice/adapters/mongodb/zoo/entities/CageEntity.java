@@ -33,9 +33,10 @@ public class CageEntity {
         //empty from framework
     }
 
-    public CageEntity(Cage cage, Zoo zoo) {
-        this.zoo = new ZooEntity(zoo);
+    public CageEntity(Cage cage, ZooEntity zoo, CaretakerEntity caretaker) {
+        this.zoo = zoo;
         BeanUtils.copyProperties(cage, this);
+        this.caretaker = caretaker;
         this.id = UUID.randomUUID().toString();
     }
 

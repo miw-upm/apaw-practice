@@ -1,9 +1,15 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+
 import java.util.List;
+import java.util.UUID;
 
 public class StudentEntity {
 
+    @Id
+    private String id;
     private String name;
     private String lastName;
     private Boolean internationalStudent;
@@ -18,6 +24,15 @@ public class StudentEntity {
         this.lastName = lastName;
         this.internationalStudent = internationalStudent;
         this.subjects = subjects;
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
