@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Degree {
 
-    private String name;
-    private Integer code;
+    private String degreeName;
+    private Integer degreeCode;
     private LocalDate implementationDate;
     private List<Subject> subjects;
 
@@ -14,27 +14,27 @@ public class Degree {
         //empty for framework
     }
 
-    public Degree(String name, Integer code, LocalDate implementationDate, List<Subject> subjects) {
-        this.name = name;
-        this.code = code;
+    public Degree(String degreeName, Integer degreeCode, LocalDate implementationDate, List<Subject> subjects) {
+        this.degreeName = degreeName;
+        this.degreeCode = degreeCode;
         this.implementationDate = implementationDate;
         this.subjects = subjects;
     }
 
-    public String getName() {
-        return name;
+    public String getDegreeName() {
+        return degreeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDegreeName(String degreeName) {
+        this.degreeName = degreeName;
     }
 
-    public Integer getCode() {
-        return code;
+    public Integer getDegreeCode() {
+        return degreeCode;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setDegreeCode(Integer degreeCode) {
+        this.degreeCode = degreeCode;
     }
 
     public LocalDate getImplementationDate() {
