@@ -6,8 +6,8 @@ public class Caretaker {
     private String name;
     private String surname;
 
-    public Caretaker(String DNI, String name, String surname) {
-        this.dni = DNI;
+    public Caretaker(String dni, String name, String surname) {
+        this.dni = dni;
         this.name = name;
         this.surname = surname;
     }
