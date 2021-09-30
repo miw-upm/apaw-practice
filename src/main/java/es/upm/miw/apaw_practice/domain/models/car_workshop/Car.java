@@ -45,10 +45,6 @@ public class Car {
         this.owner = owner;
     }
 
-    public Boolean getNeedsRevision() {
-        return revision;
-    }
-
     public List<TyreSpecification> getTyreSpecs() {
         return tyreSpecs;
     }
