@@ -3,13 +3,13 @@ package es.upm.miw.apaw_practice.domain.models.music_manager;
 public class Artist {
     private String firstName;
     private String familyName;
-    private int age;
+    private Integer age;
 
     public Artist() {
         // empty for framework
     }
 
-    public Artist(String firstName, String familyName, int age) {
+    public Artist(String firstName, String familyName, Integer age) {
         this.firstName = firstName;
         this.familyName = familyName;
         this.age = age;
@@ -31,11 +31,11 @@ public class Artist {
         this.familyName = familyName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

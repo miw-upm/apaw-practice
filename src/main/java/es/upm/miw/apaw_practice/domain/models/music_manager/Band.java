@@ -5,14 +5,14 @@ import java.util.List;
 public class Band {
     private String bandName;
     private String origin;
-    private boolean active;
+    private Boolean active;
     private List<Artist> artists;
 
     public Band() {
         // empty for framework
     }
 
-    public Band(String bandName, String origin, boolean active, List<Artist> artists) {
+    public Band(String bandName, String origin, Boolean active, List<Artist> artists) {
         this.bandName = bandName;
         this.origin = origin;
         this.active = active;
@@ -35,11 +35,11 @@ public class Band {
         this.origin = origin;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
