@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class EquipmentEntity {
 
     private String type;
-    private Integer numberId;
+    private Integer number;
     private BigDecimal pricePerUnit;
 
     public String getType() {
@@ -16,12 +16,12 @@ public class EquipmentEntity {
         this.type = type;
     }
 
-    public Integer getNumberId() {
-        return this.numberId;
+    public Integer getNumber() {
+        return this.number;
     }
 
-    public void setNumberId(Integer numberId) {
-        this.numberId = numberId;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public BigDecimal getPricePerUnit() {

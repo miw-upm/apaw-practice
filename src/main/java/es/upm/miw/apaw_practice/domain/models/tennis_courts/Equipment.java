@@ -5,17 +5,17 @@ import java.math.BigDecimal;
 public class Equipment {
 
     private String type;
-    private Integer numberId;
+    private Integer number;
     private BigDecimal pricePerUnit;
 
-    public Equipment(String type, Integer numberId, BigDecimal pricePerUnit){
+    public Equipment(String type, Integer number, BigDecimal pricePerUnit){
         this.type = type;
-        this.numberId = numberId;
+        this.number = number;
         this.pricePerUnit = pricePerUnit;
     }
 
     public BigDecimal getTotalPrice(){
-        return this.pricePerUnit.multiply(new BigDecimal(numberId));
+        return this.pricePerUnit.multiply(new BigDecimal(number));
     }
 
     public String getType() {
@@ -26,12 +26,12 @@ public class Equipment {
         this.type = type;
     }
 
-    public Integer getNumberId() {
-        return numberId;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setNumberId(Integer numberId) {
-        this.numberId = numberId;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public void setPricePerUnit(BigDecimal price){
@@ -46,7 +46,7 @@ public class Equipment {
     public String toString() {
         return "Equipment{" +
                 "type='" + this.type + '\'' +
-                ", number=" + this.numberId +
+                ", number=" + this.number +
                 ", pricePerUnit=" + this.pricePerUnit +
                 '}';
     }
