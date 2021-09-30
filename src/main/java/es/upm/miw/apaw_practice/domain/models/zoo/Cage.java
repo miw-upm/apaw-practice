@@ -46,7 +46,7 @@ public class Cage {
         this.nextFumigation = nextFumigation;
     }
 
-    public Boolean getCleaned() {
+    public Boolean isCleaned() {
         return cleaned;
     }
 
