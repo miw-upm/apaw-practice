@@ -8,10 +8,10 @@ public class Equipment {
     private Integer number;
     private BigDecimal pricePerUnit;
 
-    public Equipment(String type, Integer number){
+    public Equipment(String type, Integer number, BigDecimal pricePerUnit){
         this.type = type;
         this.number = number;
-        this.pricePerUnit = new BigDecimal(5.0);
+        this.pricePerUnit = pricePerUnit;
     }
 
     public BigDecimal getTotalPrice(){

@@ -1,20 +1,24 @@
 package es.upm.miw.apaw_practice.domain.models.vet_clinic;
 
+import java.util.List;
+
 public class Pet {
     private Integer chip;
     private Integer age;
     private String nick;
     private String owner;
+    private List<Diagnosis> diagnosis;
 
     public Pet(){
       //empty for framework
     }
 
-    public Pet(Integer chip, Integer age, String nick, String owner) {
+    public Pet(Integer chip, Integer age, String nick, String owner, List<Diagnosis> diagnosis) {
         this.chip = chip;
         this.age = age;
         this.nick = nick;
         this.owner = owner;
+        this.diagnosis = diagnosis;
     }
 
     public Integer getChip() {
@@ -49,6 +53,14 @@ public class Pet {
         this.owner = owner;
     }
 
+    public List<Diagnosis> getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(List<Diagnosis> diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
     @Override
     public String toString() {
         return "Pet{" +
@@ -56,6 +68,7 @@ public class Pet {
                 ", age=" + age +
                 ", nick='" + nick + '\'' +
                 ", owner='" + owner + '\'' +
+                ", diagnosis=" + diagnosis +
                 '}';
     }
 }
