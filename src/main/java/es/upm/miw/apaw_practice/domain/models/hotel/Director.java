@@ -2,15 +2,15 @@ package es.upm.miw.apaw_practice.domain.models.hotel;
 
 public class Director {
 
-    private String name;
     private String DNI;
+    private String name;
     private Long telephone;
 
-    Director(){
+    Director() {
         //empty for framework
     }
 
-    Director(String name, String DNI, Long telephone){
+    Director(String name, String DNI, Long telephone) {
         this.name = name;
         this.DNI = DNI;
         this.telephone = telephone;
