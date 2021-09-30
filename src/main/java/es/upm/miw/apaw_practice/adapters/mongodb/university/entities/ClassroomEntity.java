@@ -2,6 +2,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.UUID;
+
 public class ClassroomEntity {
 
     @Id
@@ -12,6 +14,13 @@ public class ClassroomEntity {
 
     public ClassroomEntity() {
         //empty for framework
+    }
+
+    public ClassroomEntity(Integer number, String school, Integer capacity) {
+        this.number = number;
+        this.school = school;
+        this.capacity = capacity;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {

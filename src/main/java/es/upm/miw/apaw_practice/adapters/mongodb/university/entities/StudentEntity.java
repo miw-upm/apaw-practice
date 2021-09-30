@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.List;
+import java.util.UUID;
 
 public class StudentEntity {
 
@@ -16,6 +17,14 @@ public class StudentEntity {
 
     public StudentEntity(){
         //empty for framework
+    }
+
+    public StudentEntity(String name, String lastName, Boolean internationalStudent, List<SubjectEntity> subjects) {
+        this.name = name;
+        this.lastName = lastName;
+        this.internationalStudent = internationalStudent;
+        this.subjects = subjects;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {

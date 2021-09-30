@@ -3,6 +3,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
+import java.util.UUID;
+
 public class SubjectEntity {
 
     @Id
@@ -15,6 +17,14 @@ public class SubjectEntity {
 
     public SubjectEntity() {
         //empty for framework
+    }
+
+    public SubjectEntity(Integer reference, String topic, Integer credits, ClassroomEntity classroom) {
+        this.reference = reference;
+        this.topic = topic;
+        this.credits = credits;
+        this.classroom = classroom;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {

@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class DegreeEntity {
 
@@ -18,6 +19,14 @@ public class DegreeEntity {
 
     public DegreeEntity() {
         //empty for framework
+    }
+
+    public DegreeEntity(Integer code, String title, LocalDate implementationDate, List<SubjectEntity> subjects) {
+        this.code = code;
+        this.title = title;
+        this.implementationDate = implementationDate;
+        this.subjects = subjects;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
