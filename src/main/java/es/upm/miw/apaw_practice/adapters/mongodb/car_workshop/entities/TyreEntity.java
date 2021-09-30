@@ -17,19 +17,19 @@ public class TyreEntity {
     private String model;
     private BigDecimal price;
     @DBRef
-    private List<TyreSpecificationEntity> tyreSpecsEntities;
+    private TyreSpecificationEntity tyreSpecsEntity;
 
     public TyreEntity() {
         //empty for framework
     }
 
     public TyreEntity(String manufacturer, String model, BigDecimal price,
-                      List<TyreSpecificationEntity> tyreSpecsEntities) {
+                      TyreSpecificationEntity tyreSpecsEntity) {
         this.id = UUID.randomUUID().toString();
         this.manufacturer = manufacturer;
         this.model = model;
         this.price = price;
-        this.tyreSpecsEntities = tyreSpecsEntities;
+        this.tyreSpecsEntity = tyreSpecsEntity;
     }
 
     public String getId() {
@@ -64,12 +64,12 @@ public class TyreEntity {
         this.price = price;
     }
 
-    public List<TyreSpecificationEntity> getTyreSpecsEntities() {
-        return tyreSpecsEntities;
+    public TyreSpecificationEntity getTyreSpecsEntity() {
+        return tyreSpecsEntity;
     }
 
-    public void setTyreSpecsEntities(List<TyreSpecificationEntity> tyreSpecsEntities) {
-        this.tyreSpecsEntities = tyreSpecsEntities;
+    public void setTyreSpecsEntity(TyreSpecificationEntity tyreSpecsEntity) {
+        this.tyreSpecsEntity = tyreSpecsEntity;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class TyreEntity {
                 ", manufacturer='" + this.manufacturer + '\'' +
                 ", model='" + this.model + '\'' +
                 ", price=" + this.price +
-                ", tyreSpecsEntities=" + this.tyreSpecsEntities.toString() +
+                ", tyreSpecsEntities=" + this.tyreSpecsEntity.toString() +
                 '}';
     }
 }
