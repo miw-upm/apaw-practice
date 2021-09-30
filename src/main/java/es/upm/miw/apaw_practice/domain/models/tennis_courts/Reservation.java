@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Reservation {
-    private String name;
+    private String ownerName;
     private LocalDateTime date;
     private Integer duration;
     private Court court;
@@ -15,12 +15,12 @@ public class Reservation {
         return new Builder(date, duration);
     }
 
-    public String getName() {
-        return this.name;
+    public String getOwnerName() {
+        return this.ownerName;
     }
 
-    public void setNombre(String name) {
-        this.name = name;
+    public void setOwnerName(String name) {
+        this.ownerName = name;
     }
 
     public LocalDateTime getDate() {
@@ -52,7 +52,7 @@ public class Reservation {
     }
 
     public void setPlayers(List<Player> players) {
-        this.players = this.players;
+        this.players = players;
     }
 
 
@@ -61,12 +61,13 @@ public class Reservation {
         private Reservation reservation;
 
         public Builder(LocalDateTime date, Integer duration){
+            this.reservation = new Reservation();
             this.reservation.date = date;
             this.reservation.duration = duration;
         }
 
         public Builder name(String name){
-            this.reservation.name = name;
+            this.reservation.ownerName = name;
             return this;
         }
 

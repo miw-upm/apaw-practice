@@ -47,4 +47,8 @@ public class Player {
     public void setEquipmentList(Equipment equipment){
         this.equipmentList.add(equipment);
     }
+
+    public List<Equipment> getEquipmentList() {
+        return equipmentList;
+    }
 }
