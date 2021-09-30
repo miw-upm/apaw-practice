@@ -1,10 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb;
 
-<<<<<<< HEAD
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.CarWorkshopSeederService;
-=======
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.CinemaSeederService;
->>>>>>> develop
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.ZooSeederService;
 import org.springframework.beans.factory.annotation.Autowired;
