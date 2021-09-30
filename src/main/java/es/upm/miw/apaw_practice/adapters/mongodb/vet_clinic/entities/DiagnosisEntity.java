@@ -9,6 +9,12 @@ public class DiagnosisEntity {
         //empty for framework
     }
 
+    public DiagnosisEntity(String description, String medicine, Boolean critical) {
+        this.description = description;
+        this.medicine = medicine;
+        this.critical = critical;
+    }
+
     public String getDescription() {
         return description;
     }

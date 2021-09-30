@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -19,8 +20,16 @@ public class VetEntity {
     private String name;
     private String surname;
 
-    public VetEntity(){
+    public VetEntity() {
+       //empty for framework
+    }
+
+    public VetEntity(Integer vetNumber, String name, String surname, List<AppointmentEntity> appointmentEntities) {
         this.id = UUID.randomUUID().toString();
+        this.vetNumber = vetNumber;
+        this.name = name;
+        this.surname = surname;
+        this.appointmentEntities = appointmentEntities;
     }
 
     public String getId() {
