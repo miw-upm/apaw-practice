@@ -1,11 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities;
 
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
+@Document
 public class TyreEntity {
     @Id
     private String id;
