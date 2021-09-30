@@ -6,16 +6,18 @@ public class Screen {
     private Integer screenNumber;
     private Integer flat;
     private Integer numberOfSeats;
+    private Boolean full;
     private List<Spectator> spectators;
 
-    public Screen(){
+    public Screen() {
         //empty for framework
     }
 
-    public Screen(Integer screenNumber, Integer flat, Integer numberOfSeats, List<Spectator> spectators) {
+    public Screen(Integer screenNumber, Integer flat, Integer numberOfSeats, Boolean full, List<Spectator> spectators) {
         this.screenNumber = screenNumber;
         this.flat = flat;
         this.numberOfSeats = numberOfSeats;
+        this.full = full;
         this.spectators = spectators;
     }
 
@@ -51,12 +53,21 @@ public class Screen {
         this.spectators = spectators;
     }
 
+    public Boolean getFull() {
+        return full;
+    }
+
+    public void setFull(Boolean full) {
+        this.full = full;
+    }
+
     @Override
     public String toString() {
         return "Screen{" +
                 "screenNumber=" + screenNumber +
                 ", flat=" + flat +
                 ", numberOfSeats=" + numberOfSeats +
+                ", full=" + full +
                 ", spectators=" + spectators +
                 '}';
     }

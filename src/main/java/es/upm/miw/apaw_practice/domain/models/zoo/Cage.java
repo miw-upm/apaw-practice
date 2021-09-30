@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.zoo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Cage {
 
@@ -10,13 +11,13 @@ public class Cage {
     private LocalDate nextFumigation;
     private Boolean cleaned;
     private Caretaker caretaker;
-    private ArrayList<Animal> animals;
+    private List<Animal> animals;
 
     public Cage(Double size, String locationCode, Caretaker caretaker) {
         this.size = size;
         this.locationCode = locationCode;
         this.caretaker = caretaker;
-        this.nextFumigation = LocalDate.MAX;
+        this.nextFumigation = LocalDate.now();
         this.cleaned = false;
         this.animals = new ArrayList<>();
     }
@@ -45,7 +46,7 @@ public class Cage {
         this.nextFumigation = nextFumigation;
     }
 
-    public Boolean getCleaned() {
+    public Boolean isCleaned() {
         return cleaned;
     }
 
@@ -61,11 +62,11 @@ public class Cage {
         this.caretaker = caretaker;
     }
 
-    public ArrayList<Animal> getAnimals() {
+    public List<Animal> getAnimals() {
         return animals;
     }
 
-    public void setAnimals(ArrayList<Animal> animals) {
+    public void setAnimals(List<Animal> animals) {
         this.animals = animals;
     }
 

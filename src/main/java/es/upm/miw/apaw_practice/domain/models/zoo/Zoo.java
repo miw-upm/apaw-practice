@@ -1,25 +1,26 @@
 package es.upm.miw.apaw_practice.domain.models.zoo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Zoo {
 
-    private ZooAddress zooAddress;
+    private ZooAddress address;
     private Integer phoneNumber;
-    private ArrayList<Cage> cages;
+    private List<Cage> cages;
 
-    public Zoo(ZooAddress zooAddress, Integer phoneNumber) {
-        this.zooAddress = zooAddress;
+    public Zoo(ZooAddress address, Integer phoneNumber) {
+        this.address = address;
         this.phoneNumber = phoneNumber;
         this.cages = new ArrayList<>();
     }
 
-    public ZooAddress getZooAddress() {
-        return zooAddress;
+    public ZooAddress getAddress() {
+        return address;
     }
 
-    public void setZooAddress(ZooAddress zooAddress) {
-        this.zooAddress = zooAddress;
+    public void setAddress(ZooAddress address) {
+        this.address = address;
     }
 
     public Integer getPhoneNumber() {
@@ -30,11 +31,11 @@ public class Zoo {
         this.phoneNumber = phoneNumber;
     }
 
-    public ArrayList<Cage> getCages() {
+    public List<Cage> getCages() {
         return cages;
     }
 
-    public void setCages(ArrayList<Cage> cages) {
+    public void setCages(List<Cage> cages) {
         this.cages = cages;
     }
 
@@ -49,7 +50,7 @@ public class Zoo {
     @Override
     public String toString() {
         return "Zoo{" +
-                zooAddress.toString() +
+                address.toString() +
                 ", phoneNumber=" + phoneNumber +
                 ", cages=" + cages.toString() +
                 '}';
