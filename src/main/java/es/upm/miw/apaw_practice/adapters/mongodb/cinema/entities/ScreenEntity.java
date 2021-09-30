@@ -1,24 +1,43 @@
-package es.upm.miw.apaw_practice.domain.models.cinema;
+package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
+
+import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
+import java.util.UUID;
 
-public class Screen {
+public class ScreenEntity {
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private Integer screenNumber;
     private Integer flat;
     private Integer numberOfSeats;
     private Boolean full;
-    private List<Spectator> spectators;
+    @DBRef
+    private List<SpectatorEntity> spectators;
 
-    public Screen() {
+    public ScreenEntity(){
         //empty for framework
     }
 
-    public Screen(Integer screenNumber, Integer flat, Integer numberOfSeats, Boolean full, List<Spectator> spectators) {
+    public ScreenEntity(Integer screenNumber, Integer flat, Integer numberOfSeats, Boolean full, List<SpectatorEntity> spectators) {
+        this.id = UUID.randomUUID().toString();
         this.screenNumber = screenNumber;
         this.flat = flat;
         this.numberOfSeats = numberOfSeats;
         this.full = full;
         this.spectators = spectators;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Integer getScreenNumber() {
@@ -45,14 +64,6 @@ public class Screen {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public List<Spectator> getSpectators() {
-        return spectators;
-    }
-
-    public void setSpectators(List<Spectator> spectators) {
-        this.spectators = spectators;
-    }
-
     public Boolean getFull() {
         return full;
     }
@@ -61,10 +72,19 @@ public class Screen {
         this.full = full;
     }
 
+    public List<SpectatorEntity> getSpectators() {
+        return spectators;
+    }
+
+    public void setSpectators(List<SpectatorEntity> spectators) {
+        this.spectators = spectators;
+    }
+
     @Override
     public String toString() {
-        return "Screen{" +
-                "screenNumber=" + screenNumber +
+        return "ScreenEntity{" +
+                "id='" + id + '\'' +
+                ", screenNumber=" + screenNumber +
                 ", flat=" + flat +
                 ", numberOfSeats=" + numberOfSeats +
                 ", full=" + full +
