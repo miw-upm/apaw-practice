@@ -6,9 +6,8 @@ import java.util.List;
 public class Hotel {
 
     private String id;
-    private String name;
     private String direction;
-    private Integer numStars;
+    private Integer numberStars;
     private Director director;
     private List<Room> rooms;
 
@@ -16,31 +15,22 @@ public class Hotel {
         //Empty because of framework
     }
 
-    public Hotel(String id, String name, String direction, Integer numStars, Director director, List<Room> rooms) {
+    public Hotel(String id, String direction, Integer numberStars, Director director, List<Room> rooms) {
         this.id = id;
-        this.name = name;
         this.direction = direction;
-        this.numStars = numStars;
+        this.numberStars = numberStars;
         this.director = director;
         this.rooms = rooms;
     }
 
-    public Hotel(String id, String name, String direction, Integer numStars) {
+    public Hotel(String id, String direction, Integer numStars) {
         this.id = id;
-        this.name = name;
         this.direction = direction;
-        this.numStars = numStars;
+        this.numberStars = numStars;
         this.director = null;
         this.rooms = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDirection() {
         return direction;
@@ -50,12 +40,12 @@ public class Hotel {
         this.direction = direction;
     }
 
-    public Integer getNumStars() {
-        return numStars;
+    public Integer getNumberStars() {
+        return numberStars;
     }
 
-    public void setNumStars(Integer numStars) {
-        this.numStars = numStars;
+    public void setNumberStars(Integer numberStars) {
+        this.numberStars = numberStars;
     }
 
     public Director getDirector() {
@@ -86,9 +76,8 @@ public class Hotel {
     public String toString() {
         return "Hotel{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
                 ", direction='" + direction + '\'' +
-                ", numStars=" + numStars +
+                ", numberStars=" + numberStars +
                 ", director=" + director +
                 ", rooms=" + rooms +
                 '}';

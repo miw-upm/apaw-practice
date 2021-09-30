@@ -4,27 +4,29 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Room {
-    private Integer nbrRoom;
+    private Integer numberRoom;
     private BigDecimal priceRoom;
+    private Boolean isVip;
     private List<HotelGuest> hotelGuests;
 
     Room() {
         //Empty for framework
     }
 
-    Room(Integer nbrRoom, BigDecimal priceRoom,  List<HotelGuest> hotelGuests) {
-        this.nbrRoom = nbrRoom;
+    Room(Integer numberRoom, BigDecimal priceRoom,Boolean isVip,  List<HotelGuest> hotelGuests) {
+        this.numberRoom = numberRoom;
         this.priceRoom = priceRoom;
+        this.isVip = isVip;
         this.hotelGuests = hotelGuests;
     }
 
 
-    public Integer getNbrRoom() {
-        return nbrRoom;
+    public Integer getNumberRoom() {
+        return numberRoom;
     }
 
-    public void setNbrRoom(Integer nbrRoom) {
-        this.nbrRoom = nbrRoom;
+    public void setNumberRoom(Integer numberRoom) {
+        this.numberRoom = numberRoom;
     }
 
     public BigDecimal getPriceRoom() {
@@ -35,6 +37,14 @@ public class Room {
         this.priceRoom = priceRoom;
     }
 
+    public Boolean getVip() {
+        return isVip;
+    }
+
+    public void setVip(Boolean vip) {
+        isVip = vip;
+    }
+
     public List<HotelGuest> getHotelGuests() {
         return hotelGuests;
     }
@@ -43,15 +53,12 @@ public class Room {
         this.hotelGuests = hotelGuests;
     }
 
-    public boolean isOccupied(){
-        return this.hotelGuests.size() > 0;
-    }
-
     @Override
     public String toString() {
         return "Room{" +
-                "nbrRoom=" + nbrRoom +
+                "numberRoom=" + numberRoom +
                 ", priceRoom=" + priceRoom +
+                ", isVip=" + isVip +
                 ", hotelGuests=" + hotelGuests +
                 '}';
     }
