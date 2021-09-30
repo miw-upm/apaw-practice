@@ -6,17 +6,17 @@ import java.util.List;
 public class Room {
     private Integer numberRoom;
     private BigDecimal priceRoom;
-    private Boolean isVip;
+    private Boolean vip;
     private List<HotelGuest> hotelGuests;
 
     Room() {
         //Empty for framework
     }
 
-    Room(Integer numberRoom, BigDecimal priceRoom,Boolean isVip,  List<HotelGuest> hotelGuests) {
+    Room(Integer numberRoom, BigDecimal priceRoom,Boolean vip,  List<HotelGuest> hotelGuests) {
         this.numberRoom = numberRoom;
         this.priceRoom = priceRoom;
-        this.isVip = isVip;
+        this.vip = vip;
         this.hotelGuests = hotelGuests;
     }
 
@@ -37,12 +37,12 @@ public class Room {
         this.priceRoom = priceRoom;
     }
 
-    public Boolean getVip() {
-        return isVip;
+    public Boolean isVip() {
+        return vip;
     }
 
     public void setVip(Boolean vip) {
-        isVip = vip;
+        this.vip = vip;
     }
 
     public List<HotelGuest> getHotelGuests() {
@@ -58,7 +58,7 @@ public class Room {
         return "Room{" +
                 "numberRoom=" + numberRoom +
                 ", priceRoom=" + priceRoom +
-                ", isVip=" + isVip +
+                ", vip=" + vip +
                 ", hotelGuests=" + hotelGuests +
                 '}';
     }
