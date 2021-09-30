@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Car {
 
     private String licensePlate;
-    private Boolean needsRevision;
+    private Boolean revision;
     private Owner owner;
     private List<TyreSpecification> tyreSpecs;
 
@@ -14,9 +14,9 @@ public class Car {
         // empty for framework
     }
 
-    public Car(String licensePlate, Boolean needsRevision, Owner owner, List<TyreSpecification> tyreSpecs) {
+    public Car(String licensePlate, Boolean revision, Owner owner, List<TyreSpecification> tyreSpecs) {
         this.licensePlate = licensePlate;
-        this.needsRevision = needsRevision;
+        this.revision = revision;
         this.owner = owner;
         this.tyreSpecs = tyreSpecs;
     }
@@ -29,12 +29,12 @@ public class Car {
         this.licensePlate = licensePlate;
     }
 
-    public boolean isNeedsRevision() {
-        return needsRevision;
+    public boolean getRevision() {
+        return revision;
     }
 
-    public void setNeedsRevision(Boolean needsRevision) {
-        this.needsRevision = needsRevision;
+    public void setRevision(Boolean revision) {
+        this.revision = revision;
     }
 
     public Owner getOwner() {
@@ -46,7 +46,7 @@ public class Car {
     }
 
     public Boolean getNeedsRevision() {
-        return needsRevision;
+        return revision;
     }
 
     public List<TyreSpecification> getTyreSpecs() {
@@ -73,7 +73,7 @@ public class Car {
     public String toString() {
         return "Car{" +
                 "licensePlate='" + this.licensePlate + '\'' +
-                ", needsRevision=" + this.needsRevision +
+                ", needsRevision=" + this.revision +
                 ", owner=" + this.owner.toString() +
                 ", tyreSpecifications=" + this.tyreSpecs.toString() +
                 '}';

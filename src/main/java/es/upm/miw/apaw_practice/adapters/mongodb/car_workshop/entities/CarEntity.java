@@ -15,7 +15,7 @@ public class CarEntity {
     private String id;
     @Indexed(unique = true)
     private String licensePlate;
-    private Boolean needsRevision;
+    private Boolean revision;
     private OwnerEntity ownerEntity;
     private List<TyreSpecificationEntity> tyreSpecsEntities;
 
@@ -23,11 +23,11 @@ public class CarEntity {
         // empty for framework
     }
 
-    public CarEntity(String licensePlate, Boolean needsRevision,
+    public CarEntity(String licensePlate, Boolean revision,
                      OwnerEntity ownerEntity, List<TyreSpecificationEntity> tyreSpecsEntities) {
         this.id = UUID.randomUUID().toString();
         this.licensePlate = licensePlate;
-        this.needsRevision = needsRevision;
+        this.revision = revision;
         this.ownerEntity = ownerEntity;
         this.tyreSpecsEntities = tyreSpecsEntities;
     }
@@ -44,12 +44,12 @@ public class CarEntity {
         this.licensePlate = licensePlate;
     }
 
-    public boolean isNeedsRevision() {
-        return needsRevision;
+    public boolean getRevision() {
+        return revision;
     }
 
-    public void setNeedsRevision(Boolean needsRevision) {
-        this.needsRevision = needsRevision;
+    public void setRevision(Boolean revision) {
+        this.revision = revision;
     }
 
     public Owner getOwnerEntity() {
@@ -85,7 +85,7 @@ public class CarEntity {
         return "CarEntity{" +
                 "id='" + this.id + '\'' +
                 ", licensePlate='" + this.licensePlate + '\'' +
-                ", needsRevision=" + this.needsRevision +
+                ", needsRevision=" + this.revision +
                 ", ownerEntity=" + this.ownerEntity.toString() +
                 ", tyreSpecsEntities=" + this.tyreSpecsEntities.toString() +
                 '}';
