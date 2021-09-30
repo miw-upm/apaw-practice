@@ -8,8 +8,8 @@ public class SubjectEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private String topic;
     private Integer reference;
+    private String topic;
     private Integer credits;
     private ClassroomEntity classroom;
 
@@ -25,20 +25,20 @@ public class SubjectEntity {
         this.id = id;
     }
 
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
     public Integer getReference() {
         return reference;
     }
 
     public void setReference(Integer reference) {
         this.reference = reference;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public Integer getCredits() {

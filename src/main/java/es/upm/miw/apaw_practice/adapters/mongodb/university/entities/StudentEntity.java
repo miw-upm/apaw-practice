@@ -9,7 +9,6 @@ public class StudentEntity {
 
     @Id
     private String id;
-    @Indexed(unique = true)
     private String name;
     private String lastName;
     private Boolean internationalStudent;
