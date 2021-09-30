@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.zoo;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.CageEntity;
-
 public class ZooAddress {
 
     private String street;
