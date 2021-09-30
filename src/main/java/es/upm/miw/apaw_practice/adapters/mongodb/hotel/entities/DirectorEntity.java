@@ -1,10 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
+import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Document
 public class DirectorEntity {
@@ -13,10 +16,15 @@ public class DirectorEntity {
     @Indexed(unique = true)
     private String dniDirector;
     private String email;
-    private Long telephone;
+    private int telephone;
 
     public DirectorEntity() {
         //empty for framework
+    }
+
+    public DirectorEntity(Director director) {
+       this.id = UUID.randomUUID().toString();
+        BeanUtils.copyProperties(director, this);
     }
 
     public String getId() {
@@ -43,11 +51,11 @@ public class DirectorEntity {
         this.email = email;
     }
 
-    public Long getTelephone() {
+    public int getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(Long telephone) {
+    public void setTelephone(int telephone) {
         this.telephone = telephone;
     }
 
