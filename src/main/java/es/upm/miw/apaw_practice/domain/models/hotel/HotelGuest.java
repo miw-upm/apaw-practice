@@ -3,8 +3,8 @@ package es.upm.miw.apaw_practice.domain.models.hotel;
 import java.time.LocalDateTime;
 
 public class HotelGuest {
-    private String name;
-    private String DNI;
+    private String dniGuest;
+    private String nameGuest;
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
@@ -13,29 +13,28 @@ public class HotelGuest {
         //empty for framework
     }
 
-    HotelGuest(String name, String DNI, Long telephone, LocalDateTime entryDate, LocalDateTime departureDate) {
-        this.name = name;
-        this.DNI = DNI;
+    HotelGuest(String nameGuest, String dniGuest, LocalDateTime entryDate, LocalDateTime departureDate) {
+        this.nameGuest = nameGuest;
+        this.dniGuest = dniGuest;
         this.entryDate = entryDate;
         this.departureDate = departureDate;
     }
 
-    public String getName() {
-        return name;
+    public String getDniGuest() {
+        return dniGuest;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDniGuest(String dniGuest) {
+        this.dniGuest = dniGuest;
     }
 
-    public String getDNI() {
-        return DNI;
+    public String getNameGuest() {
+        return nameGuest;
     }
 
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public void setNameGuest(String nameGuest) {
+        this.nameGuest = nameGuest;
     }
-
 
     public LocalDateTime getEntryDate() {
         return entryDate;
@@ -56,8 +55,8 @@ public class HotelGuest {
     @Override
     public String toString() {
         return "HotelGuest{" +
-                "name='" + name + '\'' +
-                ", DNI='" + DNI + '\'' +
+                "dniGuest='" + dniGuest + '\'' +
+                ", nameGuest='" + nameGuest + '\'' +
                 ", entryDate=" + entryDate +
                 ", departureDate=" + departureDate +
                 '}';
