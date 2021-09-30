@@ -8,6 +8,12 @@ public class EquipmentEntity {
     private Integer number;
     private BigDecimal pricePerUnit;
 
+    public EquipmentEntity(String type, Integer number, BigDecimal pricePerUnit){
+        this.type = type;
+        this.number = number;
+        this.pricePerUnit = pricePerUnit;
+    }
+
     public String getType() {
         return this.type;
     }

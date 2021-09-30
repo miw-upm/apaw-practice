@@ -1,14 +1,26 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
+import org.springframework.data.annotation.Id;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerEntity {
+    @Id
+    private String id;
     private String name;
     private String surname;
     private Integer age;
-    private List<Equipment> equipmentList;
+    private List<EquipmentEntity> equipmentList;
+
+    public PlayerEntity(String name, String surname, Integer age, List<EquipmentEntity> equipmentList){
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.equipmentList = equipmentList;
+    }
 
     public String getName() {
         return name;
@@ -34,11 +46,11 @@ public class PlayerEntity {
         this.age = age;
     }
 
-    public List<Equipment> getEquipmentList() {
+    public List<EquipmentEntity> getEquipmentList() {
         return equipmentList;
     }
 
-    public void setEquipmentList(List<Equipment> equipmentList) {
+    public void setEquipmentList(List<EquipmentEntity> equipmentList) {
         this.equipmentList = equipmentList;
     }
 }

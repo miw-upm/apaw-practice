@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 public class CourtEntity {
 
@@ -10,6 +11,14 @@ public class CourtEntity {
     private BigDecimal price;
     private Boolean occupied;
     private List<ReservationEntity> reservations;
+
+    public CourtEntity(Integer numberId, BigDecimal price, Boolean occupied, List<ReservationEntity> reservations){
+        this.id = UUID.randomUUID().toString();
+        this.numberId = numberId;
+        this.price = price;
+        this.occupied = occupied;
+        this.reservations = reservations;
+    }
 
     public String getId() {
         return id;
