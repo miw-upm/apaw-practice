@@ -2,34 +2,35 @@ package es.upm.miw.apaw_practice.domain.models.hotel;
 
 public class Director {
 
-    private String DNI;
-    private String name;
+    private String dniDirector;
+    private String email;
     private Long telephone;
 
     Director() {
         //empty for framework
     }
 
-    Director(String name, String DNI, Long telephone) {
-        this.name = name;
-        this.DNI = DNI;
+    Director(String dniDirector, String email, Long telephone) {
+        this.dniDirector = dniDirector;
+        this.email = email;
         this.telephone = telephone;
     }
 
-    public String getName() {
-        return name;
+
+    public String getDniDirector() {
+        return dniDirector;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDniDirector(String dniDirector) {
+        this.dniDirector = dniDirector;
     }
 
-    public String getDNI() {
-        return DNI;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getTelephone() {
@@ -43,8 +44,8 @@ public class Director {
     @Override
     public String toString() {
         return "Director{" +
-                "name='" + name + '\'' +
-                ", DNI='" + DNI + '\'' +
+                "dniDirector='" + dniDirector + '\'' +
+                ", email='" + email + '\'' +
                 ", telephone=" + telephone +
                 '}';
     }

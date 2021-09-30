@@ -1,21 +1,26 @@
 package es.upm.miw.apaw_practice.domain.models.vet_clinic;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 public class Appointment {
     private LocalDate date;
-    private LocalDateTime hour;
+    private LocalTime hour;
     private Boolean consumed;
+    private Pet pet;
+    private List<Vet> vets;
 
     public Appointment(){
         //empty for framework
     }
 
-    public Appointment(LocalDate date, LocalDateTime hour, Boolean consumed){
+    public Appointment(LocalDate date, LocalTime hour, Boolean consumed, Pet pet, List<Vet> vets){
         this.date = date;
         this.hour = hour;
         this.consumed = consumed;
+        this.pet = pet;
+        this.vets = vets;
     }
 
     public LocalDate getDate() {
@@ -26,11 +31,11 @@ public class Appointment {
         this.date = date;
     }
 
-    public LocalDateTime getHour() {
+    public LocalTime getHour() {
         return hour;
     }
 
-    public void setHour(LocalDateTime hour) {
+    public void setHour(LocalTime hour) {
         this.hour = hour;
     }
 
@@ -42,13 +47,30 @@ public class Appointment {
         this.consumed = consumed;
     }
 
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public List<Vet> getVets() {
+        return vets;
+    }
+
+    public void setVets(List<Vet> vets) {
+        this.vets = vets;
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
                 "date=" + date +
-                ", hour=" + hour + '\'' +
+                ", hour=" + hour +
                 ", consumed=" + consumed +
+                ", pet=" + pet +
+                ", vets=" + vets +
                 '}';
     }
-
 }
