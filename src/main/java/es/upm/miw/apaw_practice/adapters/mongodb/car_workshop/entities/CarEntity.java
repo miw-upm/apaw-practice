@@ -49,7 +49,7 @@ public class CarEntity {
         this.licensePlate = licensePlate;
     }
 
-    public boolean getRevision() {
+    public Boolean isRevision() {
         return revision;
     }
 
