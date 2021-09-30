@@ -73,4 +73,14 @@ public class Gymentity {
     public int hashCode() {
         return Objects.hash(id, gymAddress, gymName, coach);
     }
+
+    @Override
+    public String toString() {
+        return "Gymentity{" +
+                "id='" + id + '\'' +
+                ", gymAddress='" + gymAddress + '\'' +
+                ", gymName='" + gymName + '\'' +
+                ", coach=" + coach +
+                '}';
+    }
 }
