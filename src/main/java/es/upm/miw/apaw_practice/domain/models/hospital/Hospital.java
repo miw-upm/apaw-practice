@@ -1,10 +1,13 @@
 package es.upm.miw.apaw_practice.domain.models.hospital;
 
+import java.util.List;
+
 public class Hospital {
 
     private String name;
     private String address;
     private Integer availableRooms;
+    private List<Patient> patients;
 
     Hospital(){
         //empty for framework
@@ -32,6 +35,14 @@ public class Hospital {
 
     public void setAvailableRooms(Integer availableRooms) {
         this.availableRooms = availableRooms;
+    }
+
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
     }
 
     @Override
