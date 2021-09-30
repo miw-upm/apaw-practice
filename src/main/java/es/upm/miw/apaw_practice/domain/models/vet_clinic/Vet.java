@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.vet_clinic;
 
 public class Vet {
-    private Integer number;
+    private Integer vetNumber;
     private String name;
     private String surname;
 
@@ -9,18 +9,18 @@ public class Vet {
         //empty for framework
     }
 
-    public Vet(Integer number, String name, String surname){
-        this.number = number;
+    public Vet(Integer vetNumber, String name, String surname){
+        this.vetNumber = vetNumber;
         this.name = name;
         this.surname = surname;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getVetNumber() {
+        return vetNumber;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setVetNumber(Integer vetNumber) {
+        this.vetNumber = vetNumber;
     }
 
     public String getName() {
@@ -42,7 +42,7 @@ public class Vet {
     @Override
     public String toString() {
         return "Vet{" +
-                "number=" + number +
+                "vet number=" + vetNumber +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}';
