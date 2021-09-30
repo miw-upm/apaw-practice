@@ -4,6 +4,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -18,8 +19,16 @@ public class AppointmentEntity {
     @DBRef
     private PetEntity petEntity;
 
-    public AppointmentEntity(){
+    public AppointmentEntity() {
+        //empty for framework
+    }
+
+    public AppointmentEntity(LocalDate date, LocalTime hour, Boolean consumed, PetEntity petEntity) {
         this.id = UUID.randomUUID().toString();
+        this.date = date;
+        this.hour = hour;
+        this.consumed = consumed;
+        this.petEntity = petEntity;
     }
 
     public String getId() {
