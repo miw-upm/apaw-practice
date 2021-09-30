@@ -50,12 +50,12 @@ public class ZooSeederService {
         };
         this.caretakerRepository.saveAll(Arrays.asList(caretakers));
         AnimalEntity[] animals = {
-                new AnimalEntity(new Animal("Felino", "Omnívoro", 3)),
-                new AnimalEntity(new Animal("Mono", "Omnívoro", 14)),
-                new AnimalEntity(new Animal("Felino", "Carnívoro", 7)),
-                new AnimalEntity(new Animal("Bovino", "Herbívoro", 5)),
-                new AnimalEntity(new Animal("Oso", "Omnívoro", 25)),
-                new AnimalEntity(new Animal("Escualo", "Carnívoro", 121))
+                new AnimalEntity(new Animal("Gato", "Felino", "Omnívoro")),
+                new AnimalEntity(new Animal("Chimpancé", "Mono", "Omnívoro")),
+                new AnimalEntity(new Animal("Tigre dientes de sable", "Felino", "Carnívoro")),
+                new AnimalEntity(new Animal("Anjhk", "Bovino", "Herbívoro")),
+                new AnimalEntity(new Animal("Oso Grizzlie", "Oso", "Omnívoro")),
+                new AnimalEntity(new Animal("Tiburón Martillo", "Escualo", "Carnívoro"))
         };
         this.animalRepository.saveAll(Arrays.asList(animals));
         List<CageEntity> cages = new ArrayList<>();

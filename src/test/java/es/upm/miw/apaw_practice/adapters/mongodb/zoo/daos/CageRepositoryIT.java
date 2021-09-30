@@ -25,10 +25,10 @@ public class CageRepositoryIT {
     @BeforeEach
     void initializeTestData() {
         animals = new AnimalEntity[]{
-                new AnimalEntity(new Animal("Felino", "Omnívoro", 3)),
-                new AnimalEntity(new Animal("Mono", "Omnívoro", 14)),
-                new AnimalEntity(new Animal("Felino", "Carnívoro", 7)),
-                new AnimalEntity(new Animal("Bovino", "Herbívoro", 5))
+                new AnimalEntity(new Animal("Gato", "Felino", "Omnívoro")),
+                new AnimalEntity(new Animal("Chimpancé", "Mono", "Omnívoro")),
+                new AnimalEntity(new Animal("Tigre dientes de sable", "Felino", "Carnívoro")),
+                new AnimalEntity(new Animal("Anjhk", "Bovino", "Herbívoro"))
         };
     }
 

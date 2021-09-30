@@ -2,14 +2,22 @@ package es.upm.miw.apaw_practice.domain.models.zoo;
 
 public class Animal {
 
+    private String name;
     private String family;
     private String diet;
-    private Integer age;
 
-    public Animal(String family, String diet, Integer age) {
+    public Animal(String name, String family, String diet) {
+        this.name = name;
         this.family = family;
         this.diet = diet;
-        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFamily() {
@@ -28,20 +36,12 @@ public class Animal {
         this.diet = diet;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     @Override
     public String toString() {
         return "Animal{" +
-                "family='" + family + '\'' +
+                "name='" + name + '\'' +
+                ", family='" + family + '\'' +
                 ", diet='" + diet + '\'' +
-                ", age=" + age +
                 '}';
     }
 }

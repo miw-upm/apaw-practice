@@ -17,7 +17,7 @@ public class AnimalRepositoryIT {
     void testFindAll() {
         int size = this.animalRepository.findAll().size();
         Assertions.assertNotEquals(0, size);
-        AnimalEntity expected = new AnimalEntity(new Animal("Escualo", "Carnívoro", 121));
+        AnimalEntity expected = new AnimalEntity(new Animal("Tiburón Martillo", "Escualo", "Carnívoro"));
         Assertions.assertEquals(expected, this.animalRepository.findAll().get(size - 1));
     }
 }
