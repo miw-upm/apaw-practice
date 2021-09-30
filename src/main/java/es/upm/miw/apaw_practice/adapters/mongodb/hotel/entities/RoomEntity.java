@@ -1,25 +1,21 @@
-package es.upm.miw.apaw_practice.domain.models.hotel;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
+
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
-public class Room {
+public class RoomEntity {
     private Integer numberRoom;
     private BigDecimal priceRoom;
     private Boolean vip;
-    private List<HotelGuest> hotelGuests;
+    @DBRef
+    private List<HotelGuestEntity> hotelGuests;
 
-    Room() {
-        //Empty for framework
+    public RoomEntity(){
+        //empty for framework
     }
-
-    Room(Integer numberRoom, BigDecimal priceRoom,Boolean vip,  List<HotelGuest> hotelGuests) {
-        this.numberRoom = numberRoom;
-        this.priceRoom = priceRoom;
-        this.vip = vip;
-        this.hotelGuests = hotelGuests;
-    }
-
 
     public Integer getNumberRoom() {
         return numberRoom;
@@ -45,17 +41,30 @@ public class Room {
         this.vip = vip;
     }
 
-    public List<HotelGuest> getHotelGuests() {
+    public List<HotelGuestEntity> getHotelGuests() {
         return hotelGuests;
     }
 
-    public void setHotelGuests(List<HotelGuest> hotelGuests) {
+    public void setHotelGuests(List<HotelGuestEntity> hotelGuests) {
         this.hotelGuests = hotelGuests;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RoomEntity that = (RoomEntity) o;
+        return numberRoom.equals(that.numberRoom) && priceRoom.equals(that.priceRoom) && vip.equals(that.vip) && Objects.equals(hotelGuests, that.hotelGuests);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numberRoom, priceRoom, vip, hotelGuests);
+    }
+
+    @Override
     public String toString() {
-        return "Room{" +
+        return "RoomEntity{" +
                 "numberRoom=" + numberRoom +
                 ", priceRoom=" + priceRoom +
                 ", vip=" + vip +
