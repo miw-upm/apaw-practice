@@ -37,7 +37,7 @@ public class TvSeries {
         this.year = year;
     }
 
-    public Boolean getFinished() {
+    public Boolean isFinished() {
         return finished;
     }
 
