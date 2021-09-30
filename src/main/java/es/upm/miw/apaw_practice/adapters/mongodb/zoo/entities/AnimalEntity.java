@@ -12,9 +12,9 @@ public class AnimalEntity {
 
     @Id
     private String id;
+    private String name;
     private String family;
     private String diet;
-    private Integer age;
 
     public AnimalEntity() {
         //empty from framework
@@ -26,7 +26,7 @@ public class AnimalEntity {
     }
 
     public Animal toAnimal() {
-        return new Animal(this.family, this.diet, this.age);
+        return new Animal(this.name, this.family, this.diet);
     }
 
     public String getId() {
@@ -35,6 +35,14 @@ public class AnimalEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFamily() {
@@ -53,17 +61,9 @@ public class AnimalEntity {
         this.diet = diet;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return name.hashCode();
     }
 
     @Override
@@ -71,15 +71,16 @@ public class AnimalEntity {
         return this == obj
                 || obj != null
                 && getClass() == obj.getClass()
-                && id.equals(((AnimalEntity) obj).id);
+                && (family.equals(((AnimalEntity) obj).family)
+                && name.equals(((AnimalEntity) obj).name));
     }
 
     @Override
     public String toString() {
         return "Animal{" +
-                "family='" + family + '\'' +
+                "name='" + name + '\'' +
+                ", family='" + family + '\'' +
                 ", diet='" + diet + '\'' +
-                ", age=" + age +
                 '}';
     }
 }

@@ -17,7 +17,7 @@ public class Cage {
         this.size = size;
         this.locationCode = locationCode;
         this.caretaker = caretaker;
-        this.nextFumigation = LocalDate.MAX;
+        this.nextFumigation = LocalDate.now();
         this.cleaned = false;
         this.animals = new ArrayList<>();
     }
