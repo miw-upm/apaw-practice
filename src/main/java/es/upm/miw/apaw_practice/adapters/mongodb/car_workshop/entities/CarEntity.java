@@ -52,11 +52,11 @@ public class CarEntity {
         this.needsRevision = needsRevision;
     }
 
-    public Owner getOwner() {
+    public Owner getOwnerEntity() {
         return ownerEntity;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwnerEntity(OwnerEntity ownerEntity) {
         this.ownerEntity = ownerEntity;
     }
 
