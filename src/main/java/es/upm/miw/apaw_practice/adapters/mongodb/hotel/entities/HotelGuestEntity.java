@@ -5,7 +5,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Document
 public class HotelGuestEntity {
@@ -17,8 +19,16 @@ public class HotelGuestEntity {
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
+    public HotelGuestEntity(String dniGuest, String nameGuest, LocalDateTime entryDate, LocalDateTime departureDate) {
+        this.id = UUID.randomUUID().toString();
+        this.dniGuest = dniGuest;
+        this.nameGuest = nameGuest;
+        this.entryDate = entryDate;
+        this.departureDate = departureDate;
+    }
+
     public HotelGuestEntity() {
-        //Empty for framework
+        //empty for framework
     }
 
     public String getId() {
