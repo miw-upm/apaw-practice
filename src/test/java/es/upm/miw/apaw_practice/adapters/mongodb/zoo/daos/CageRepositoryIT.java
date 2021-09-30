@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Arrays;
 
 @TestConfig
-public class CageRepositoryIT {
+class CageRepositoryIT {
 
     @Autowired
     private CageRepository cageRepository;

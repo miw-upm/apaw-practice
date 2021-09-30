@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @TestConfig
-public class ZooRepositoryIT {
+class ZooRepositoryIT {
 
     @Autowired
     private ZooRepository zooRepository;

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @TestConfig
-public class AnimalRepositoryIT {
+class AnimalRepositoryIT {
 
     @Autowired
     private AnimalRepository animalRepository;

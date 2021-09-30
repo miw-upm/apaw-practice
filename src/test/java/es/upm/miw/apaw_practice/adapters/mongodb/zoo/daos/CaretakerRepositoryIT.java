@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @TestConfig
-public class CaretakerRepositoryIT {
+class CaretakerRepositoryIT {
 
     @Autowired
     private CaretakerRepository caretakerRepository;
