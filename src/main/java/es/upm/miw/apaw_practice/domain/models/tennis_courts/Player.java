@@ -51,4 +51,14 @@ public class Player {
     public List<Equipment> getEquipmentList() {
         return equipmentList;
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + this.name + '\'' +
+                ", surname='" + this.surname + '\'' +
+                ", age=" + this.age +
+                ", equipmentList=" + this.equipmentList +
+                '}';
+    }
 }
