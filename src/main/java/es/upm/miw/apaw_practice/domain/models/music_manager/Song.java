@@ -3,10 +3,16 @@ package es.upm.miw.apaw_practice.domain.models.music_manager;
 public class Song {
     private String songTitle;
     private String genre;
-    private int length;
+    private Integer length;
 
     public Song() {
         // empty for framework
+    }
+
+    public Song(String songTitle, String genre, Integer length) {
+        this.songTitle = songTitle;
+        this.genre = genre;
+        this.length = length;
     }
 
     public String getSongTitle() {
@@ -25,11 +31,11 @@ public class Song {
         this.genre = genre;
     }
 
-    public int getLength() {
+    public Integer getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(Integer length) {
         this.length = length;
     }
 
