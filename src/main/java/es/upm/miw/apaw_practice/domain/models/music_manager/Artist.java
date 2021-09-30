@@ -1,26 +1,26 @@
 package es.upm.miw.apaw_practice.domain.models.music_manager;
 
 public class Artist {
-    private String name;
+    private String firstName;
     private String familyName;
     private int age;
-
-    public Artist(String name, String familyName, int age) {
-        this.name = name;
-        this.familyName = familyName;
-        this.age = age;
-    }
 
     public Artist() {
         // empty for framework
     }
 
-    public String getName() {
-        return name;
+    public Artist(String firstName, String familyName, int age) {
+        this.firstName = firstName;
+        this.familyName = familyName;
+        this.age = age;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getFamilyName() {
@@ -42,7 +42,7 @@ public class Artist {
     @Override
     public String toString() {
         return "Artist{" +
-                "name='" + name + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", familyName='" + familyName + '\'' +
                 ", age=" + age +
                 '}';
