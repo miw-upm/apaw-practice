@@ -7,23 +7,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Document
-public class Gymentity {
+public class GymEntity {
 
     @Id
     private String id ;
     private String gymAddress;
     private String gymName ;
     @DBRef
-    private List<Coachentity> coach ;
+    private List<CoachEntity> coach ;
 
-    public Gymentity(){
+    public GymEntity(){
         //empty
     }
 
-    public Gymentity(String id, String gymAddress, String gymName, List<Coachentity> coach) {
-        this.id = id;
+    public GymEntity(String gymAddress, String gymName, List<CoachEntity> coach) {
+        this.id = UUID.randomUUID().toString() ;
         this.gymAddress = gymAddress;
         this.gymName = gymName;
         this.coach = coach;
@@ -33,9 +34,6 @@ public class Gymentity {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getGymAddress() {
         return gymAddress;
@@ -53,11 +51,11 @@ public class Gymentity {
         this.gymName = gymName;
     }
 
-    public List<Coachentity> getCoach() {
+    public List<CoachEntity> getCoach() {
         return coach;
     }
 
-    public void setCoach(List<Coachentity> coach) {
+    public void setCoach(List<CoachEntity> coach) {
         this.coach = coach;
     }
 
@@ -65,7 +63,7 @@ public class Gymentity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Gymentity gymentity = (Gymentity) o;
+        GymEntity gymentity = (GymEntity) o;
         return id.equals(gymentity.id) && Objects.equals(gymAddress, gymentity.gymAddress) && Objects.equals(gymName, gymentity.gymName) && Objects.equals(coach, gymentity.coach);
     }
 
