@@ -1,7 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import org.springframework.data.annotation.Id;
+
+import java.util.UUID;
+
 public class ClassroomEntity {
 
+    @Id
+    private String id;
     private Integer number;
     private String school;
     private Integer capacity;
@@ -14,6 +20,15 @@ public class ClassroomEntity {
         this.number = number;
         this.school = school;
         this.capacity = capacity;
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Integer getNumber() {

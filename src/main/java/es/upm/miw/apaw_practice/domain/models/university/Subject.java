@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Subject {
 
-    private String topic;
     private Integer reference;
+    private String topic;
     private Integer credits;
     private Classroom classroom;
     private List<Student> students;
@@ -15,19 +15,11 @@ public class Subject {
     }
 
     public Subject(String topic, Integer reference, Integer credits, Classroom classroom, List<Student> students) {
-        this.topic = topic;
         this.reference = reference;
+        this.topic = topic;
         this.credits = credits;
         this.classroom = classroom;
         this.students = students;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
     }
 
     public Integer getReference() {
@@ -36,6 +28,14 @@ public class Subject {
 
     public void setReference(Integer reference) {
         this.reference = reference;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public Integer getCredits() {
