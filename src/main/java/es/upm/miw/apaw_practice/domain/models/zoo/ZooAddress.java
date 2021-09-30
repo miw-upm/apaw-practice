@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.zoo;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.CageEntity;
+
 public class ZooAddress {
 
     private String street;
@@ -34,6 +36,21 @@ public class ZooAddress {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return street.hashCode() + streetNumber.hashCode() + zipCode.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj
+                || obj != null
+                && getClass() == obj.getClass()
+                && ((street.equals(((ZooAddress) obj).street))
+                && streetNumber.equals(((ZooAddress) obj).streetNumber)
+                && zipCode.equals(((ZooAddress) obj).zipCode));
     }
 
     @Override

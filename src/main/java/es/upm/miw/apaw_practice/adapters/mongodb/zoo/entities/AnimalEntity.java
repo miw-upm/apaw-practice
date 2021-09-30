@@ -71,7 +71,9 @@ public class AnimalEntity {
         return this == obj
                 || obj != null
                 && getClass() == obj.getClass()
-                && id.equals(((AnimalEntity) obj).id);
+                && (family.equals(((AnimalEntity) obj).family)
+                && diet.equals(((AnimalEntity) obj).diet)
+                && age.equals(((AnimalEntity) obj).age));
     }
 
     @Override
