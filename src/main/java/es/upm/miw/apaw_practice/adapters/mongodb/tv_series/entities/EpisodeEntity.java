@@ -71,6 +71,10 @@ public class EpisodeEntity {
         this.tvSeriesEntity = tvSeriesEntity;
     }
 
+    public Episode toEpisode() {
+        return new Episode(this.number,this.season,this.duration);
+    }
+
     @Override
     public boolean equals(Object obj) {
         return this == obj || obj != null && getClass() == obj.getClass()

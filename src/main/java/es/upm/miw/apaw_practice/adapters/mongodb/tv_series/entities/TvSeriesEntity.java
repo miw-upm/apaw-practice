@@ -1,7 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tv_series.entities;
 
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +14,7 @@ import java.util.UUID;
 public class TvSeriesEntity {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String title;
     private Integer year;
     private Boolean finished;
@@ -28,6 +31,14 @@ public class TvSeriesEntity {
         this.year = year;
         this.finished = finished;
         this.producerEntity = producerEntity;
+    }
+
+    public TvSeriesEntity(TvSeries tvSeries) {
+        this.id = UUID.randomUUID().toString();
+        this.title = tvSeries.getTitle();
+        this.year = tvSeries.getYear();
+        this.finished = tvSeries.isFinished();
+        this.producerEntity = new ProducerEntity(tvSeries.getProducer());
     }
 
     public String getId() {
@@ -68,6 +79,15 @@ public class TvSeriesEntity {
 
     public void setProducerEntity(ProducerEntity producerEntity) {
         this.producerEntity = producerEntity;
+    }
+
+    public TvSeries toTvSeries() {
+        TvSeries tvSeries = new TvSeries();
+        tvSeries.setProducer(this.producerEntity.toProducer());
+        tvSeries.setYear(this.year);
+        tvSeries.setTitle(this.title);
+        tvSeries.setFinished(this.finished);
+        return tvSeries;
     }
 
     @Override
