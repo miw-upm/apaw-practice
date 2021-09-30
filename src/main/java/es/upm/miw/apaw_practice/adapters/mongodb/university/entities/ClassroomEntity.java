@@ -1,7 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+
 public class ClassroomEntity {
 
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private Integer number;
     private String school;
     private Integer capacity;
@@ -10,10 +16,12 @@ public class ClassroomEntity {
         //empty for framework
     }
 
-    public ClassroomEntity(Integer number, String school, Integer capacity) {
-        this.number = number;
-        this.school = school;
-        this.capacity = capacity;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Integer getNumber() {

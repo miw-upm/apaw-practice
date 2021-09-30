@@ -1,9 +1,15 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+
 import java.util.List;
 
 public class StudentEntity {
 
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String name;
     private String lastName;
     private Boolean internationalStudent;
@@ -13,11 +19,12 @@ public class StudentEntity {
         //empty for framework
     }
 
-    public StudentEntity(String name, String lastName, Boolean internationalStudent, List<SubjectEntity> subjects) {
-        this.name = name;
-        this.lastName = lastName;
-        this.internationalStudent = internationalStudent;
-        this.subjects = subjects;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -1,10 +1,16 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class DegreeEntity {
 
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String title;
     private Integer code;
     private LocalDate implementationDate;
@@ -14,11 +20,12 @@ public class DegreeEntity {
         //empty for framework
     }
 
-    public DegreeEntity(String title, Integer code, LocalDate implementationDate, List<SubjectEntity> subjects) {
-        this.title = title;
-        this.code = code;
-        this.implementationDate = implementationDate;
-        this.subjects = subjects;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
