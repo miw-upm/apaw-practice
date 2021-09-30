@@ -24,11 +24,13 @@ public class DatabaseSeederService {
     public void seedDatabase() {
         this.shopSeederService.seedDatabase();
         this.zooSeederService.seedDatabase();
+        this.cinemaSeederService.seedDatabase();
     }
 
     public void deleteAll() {
         this.shopSeederService.deleteAll();
         this.zooSeederService.deleteAll();
+        this.cinemaSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
