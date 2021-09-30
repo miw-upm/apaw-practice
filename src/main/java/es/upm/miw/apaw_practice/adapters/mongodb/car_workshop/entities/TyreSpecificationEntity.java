@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Document
 public class TyreSpecificationEntity {
@@ -18,6 +19,7 @@ public class TyreSpecificationEntity {
     }
 
     public TyreSpecificationEntity(Integer width, Integer diameter, String loadSpeedIndex) {
+        this.id = UUID.randomUUID().toString();
         this.width = width;
         this.diameter = diameter;
         this.loadSpeedIndex = loadSpeedIndex;
