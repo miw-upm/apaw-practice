@@ -4,6 +4,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,16 @@ public class PetEntity {
     private List<DiagnosisEntity> diagnosisEntities;
 
     public PetEntity() {
+        //empty for framework
+    }
+
+    public PetEntity(Integer chip, Integer age, String nick, String owner, List<DiagnosisEntity> diagnosisEntities) {
         this.id = UUID.randomUUID().toString();
+        this.chip = chip;
+        this.age = age;
+        this.nick = nick;
+        this.owner = owner;
+        this.diagnosisEntities = diagnosisEntities;
     }
 
     public String getId() {
