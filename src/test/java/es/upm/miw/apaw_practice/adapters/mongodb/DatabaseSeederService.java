@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.CarWorkshopSeederS
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.CinemaSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.TvSeriesSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.university.UniversitySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.ZooSeederService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,18 @@ public class DatabaseSeederService {
     private final ZooSeederService zooSeederService;
     private final CinemaSeederService cinemaSeederService;
     private final CarWorkshopSeederService carWorkshopSeederService;
+    private final UniversitySeederService universitySeederService;
 
     @Autowired
-    public DatabaseSeederService(ShopSeederService shopSeederService, ZooSeederService zooSeederService, CinemaSeederService cinemaSeederService, CarWorkshopSeederService carWorkshopSeederService, TvSeriesSeederService tvSeriesSeederService) {
+    public DatabaseSeederService(ShopSeederService shopSeederService, ZooSeederService zooSeederService,
+                                 CinemaSeederService cinemaSeederService, CarWorkshopSeederService carWorkshopSeederService,
+                                 TvSeriesSeederService tvSeriesSeederService, UniversitySeederService universitySeederService) {
         this.shopSeederService = shopSeederService;
         this.zooSeederService = zooSeederService;
         this.cinemaSeederService = cinemaSeederService;
         this.carWorkshopSeederService = carWorkshopSeederService;
         this.tvSeriesSeederService = tvSeriesSeederService;
+        this.universitySeederService = universitySeederService;
         this.seedDatabase();
     }
 
@@ -34,6 +39,7 @@ public class DatabaseSeederService {
         this.carWorkshopSeederService.seedDatabase();
         this.zooSeederService.seedDatabase();
         this.cinemaSeederService.seedDatabase();
+        this.universitySeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -41,7 +47,9 @@ public class DatabaseSeederService {
         this.tvSeriesSeederService.deleteAll();
         this.carWorkshopSeederService.deleteAll();
         this.zooSeederService.deleteAll();
+        this.universitySeederService.deleteAll();
         this.cinemaSeederService.deleteAll();
+        this.universitySeederService.deleteAll();
     }
 
     public void reSeedDatabase() {

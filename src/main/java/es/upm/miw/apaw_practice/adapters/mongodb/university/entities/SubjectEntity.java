@@ -1,9 +1,17 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+
+import java.util.UUID;
+
 public class SubjectEntity {
 
-    private String topic;
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private Integer reference;
+    private String topic;
     private Integer credits;
     private ClassroomEntity classroom;
 
@@ -11,19 +19,20 @@ public class SubjectEntity {
         //empty for framework
     }
 
-    public SubjectEntity(String topic, Integer reference, Integer credits, ClassroomEntity classroom) {
-        this.topic = topic;
+    public SubjectEntity(Integer reference, String topic, Integer credits, ClassroomEntity classroom) {
         this.reference = reference;
+        this.topic = topic;
         this.credits = credits;
         this.classroom = classroom;
+        this.id = UUID.randomUUID().toString();
     }
 
-    public String getTopic() {
-        return topic;
+    public String getId() {
+        return id;
     }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Integer getReference() {
@@ -32,6 +41,14 @@ public class SubjectEntity {
 
     public void setReference(Integer reference) {
         this.reference = reference;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public Integer getCredits() {
