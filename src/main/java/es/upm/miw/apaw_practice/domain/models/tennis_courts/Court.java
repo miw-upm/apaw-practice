@@ -36,4 +36,13 @@ public class Court {
     public void setOccupied(Boolean occupied) {
         this.occupied = occupied;
     }
+
+    @Override
+    public String toString() {
+        return "Court{" +
+                "number=" + number +
+                ", price=" + price +
+                ", occupied=" + occupied +
+                '}';
+    }
 }
