@@ -4,13 +4,13 @@ public class Director {
 
     private String dniDirector;
     private String email;
-    private int telephone;
+    private Integer telephone;
 
     Director() {
         //empty for framework
     }
 
-    public Director(String dniDirector, String email, int telephone) {
+    public Director(String dniDirector, String email, Integer telephone) {
         this.dniDirector = dniDirector;
         this.email = email;
         this.telephone = telephone;
@@ -33,11 +33,11 @@ public class Director {
         this.email = email;
     }
 
-    public int getTelephone() {
+    public Integer getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(Integer telephone) {
         this.telephone = telephone;
     }
 
