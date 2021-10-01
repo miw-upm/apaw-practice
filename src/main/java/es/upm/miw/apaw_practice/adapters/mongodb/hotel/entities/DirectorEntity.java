@@ -23,7 +23,7 @@ public class DirectorEntity {
     }
 
     public DirectorEntity(Director director) {
-       this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         BeanUtils.copyProperties(director, this);
     }
 

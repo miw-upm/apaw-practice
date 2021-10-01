@@ -13,8 +13,15 @@ public class RoomEntity {
     @DBRef
     private List<HotelGuestEntity> hotelGuests;
 
-    public RoomEntity(){
+    public RoomEntity() {
         //empty for framework
+    }
+
+    public RoomEntity(Integer numberRoom, BigDecimal priceRoom, Boolean vip, List<HotelGuestEntity> hotelGuests) {
+        this.numberRoom = numberRoom;
+        this.priceRoom = priceRoom;
+        this.vip = vip;
+        this.hotelGuests = hotelGuests;
     }
 
     public Integer getNumberRoom() {

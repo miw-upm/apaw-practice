@@ -13,8 +13,11 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class HotelSeederService {
@@ -38,29 +41,38 @@ public class HotelSeederService {
         };
         this.directorRepository.saveAll(Arrays.asList(directors));
 
-        HotelGuestEntity[] hotelGuestEntities = {
+        HotelGuestEntity[] hotelGuests = {
                 new HotelGuestEntity("88888888K", "Mario", LocalDateTime.of(2015, 8, 10, 12, 30),
                         LocalDateTime.of(2015, 8, 25, 15, 30)),
-                new HotelGuestEntity("25252525R", "Laura", LocalDateTime.of(2018, 9, 1, 9, 0),
+                new HotelGuestEntity("25252525R", "Laura", LocalDateTime.of(2020, 6, 15, 9, 0),
                         LocalDateTime.of(2018, 9, 16, 16, 0)),
                 new HotelGuestEntity("11111111S", "Pedro", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0))
+                        LocalDateTime.of(2018, 9, 16, 16, 0)),
+                new HotelGuestEntity("56565656P", "Lucía", LocalDateTime.of(2020, 10, 6, 12, 0),
+                        LocalDateTime.of(2020, 10, 12, 18, 0))
 
         };
-        this.hotelGuestRepository.saveAll(Arrays.asList(hotelGuestEntities));
+        this.hotelGuestRepository.saveAll(Arrays.asList(hotelGuests));
 
-        RoomEntity[]rooms = {
-                //Todo
+        RoomEntity[] rooms = {
+                new RoomEntity(22, new BigDecimal(45), false, List.of(hotelGuests[1], hotelGuests[2])),
+                new RoomEntity(3, new BigDecimal(250), true, new ArrayList<>()),
+                new RoomEntity(45, new BigDecimal(120), true, List.of(hotelGuests[0])),
+                new RoomEntity(12, new BigDecimal(60), false, new ArrayList<>())
         };
-        //Todo --> Save Repository
-        HotelEntity[]hotels = {
-                //Todo
+        this.roomRepository.saveAll(Arrays.asList(rooms));
+
+        HotelEntity[] hotels = {
+                new HotelEntity("Av. Madrid, Madrid, 32452", 3, directors[0], List.of(rooms[0])),
+                new HotelEntity("Av. Salamanca, Salamanca, 15243", 4, directors[2], List.of(rooms[1], rooms[2], rooms[3]))
         };
-        //Todo --> Save Repository
+        this.hotelRepository.saveAll(Arrays.asList(hotels));
     }
 
-    public void deleteAll(){
-        //ToDo
+    public void deleteAll() {
+        this.hotelRepository.deleteAll();
+        this.hotelGuestRepository.deleteAll();
+        this.directorRepository.deleteAll();
+        this.roomRepository.deleteAll();
     }
-
 }
