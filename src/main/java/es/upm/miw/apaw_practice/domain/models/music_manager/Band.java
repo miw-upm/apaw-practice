@@ -3,28 +3,28 @@ package es.upm.miw.apaw_practice.domain.models.music_manager;
 import java.util.List;
 
 public class Band {
-    private String name;
+    private String bandName;
     private String origin;
-    private boolean isActive;
-    private List<Artist> artist;
-
-    public Band(String name, String origin, boolean isActive, List<Artist> artist) {
-        this.name = name;
-        this.origin = origin;
-        this.isActive = isActive;
-        this.artist = artist;
-    }
+    private Boolean active;
+    private List<Artist> artists;
 
     public Band() {
-        //empty for framework
+        // empty for framework
     }
 
-    public String getName() {
-        return name;
+    public Band(String bandName, String origin, Boolean active, List<Artist> artists) {
+        this.bandName = bandName;
+        this.origin = origin;
+        this.active = active;
+        this.artists = artists;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getBandName() {
+        return bandName;
+    }
+
+    public void setBandName(String bandName) {
+        this.bandName = bandName;
     }
 
     public String getOrigin() {
@@ -35,29 +35,29 @@ public class Band {
         this.origin = origin;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
-    public List<Artist> getArtist() {
-        return artist;
+    public List<Artist> getArtists() {
+        return artists;
     }
 
-    public void setArtist(List<Artist> artist) {
-        this.artist = artist;
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
     }
 
     @Override
     public String toString() {
         return "Band{" +
-                "name='" + name + '\'' +
+                "bandName='" + bandName + '\'' +
                 ", origin='" + origin + '\'' +
-                ", isActive=" + isActive +
-                ", artist=" + artist +
+                ", active=" + active +
+                ", artists=" + artists +
                 '}';
     }
 }

@@ -1,26 +1,29 @@
-package es.upm.miw.apaw_practice.domain.models.music_manager;
+package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
-public class Artist {
-    private String firstName;
+import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
+
+public class ActorEntity {
+    private String name;
     private String familyName;
     private Integer age;
 
-    public Artist() {
-        // empty for framework
+    public ActorEntity(){
+        //empty for framework
     }
 
-    public Artist(String firstName, String familyName, Integer age) {
-        this.firstName = firstName;
+    public ActorEntity(String name, String familyName, Integer age) {
+        this.name = name;
         this.familyName = familyName;
         this.age = age;
     }
 
-    public String getFirstName() {
-        return firstName;
+
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFamilyName() {
@@ -41,8 +44,8 @@ public class Artist {
 
     @Override
     public String toString() {
-        return "Artist{" +
-                "firstName='" + firstName + '\'' +
+        return "ActorEntity{" +
+                "name='" + name + '\'' +
                 ", familyName='" + familyName + '\'' +
                 ", age=" + age +
                 '}';

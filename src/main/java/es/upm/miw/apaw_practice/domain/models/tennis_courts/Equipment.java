@@ -41,4 +41,13 @@ public class Equipment {
     public BigDecimal getPricePerUnit() {
         return pricePerUnit;
     }
+
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "type='" + this.type + '\'' +
+                ", number=" + this.number +
+                ", pricePerUnit=" + this.pricePerUnit +
+                '}';
+    }
 }

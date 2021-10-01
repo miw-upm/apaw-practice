@@ -1,28 +1,26 @@
 package es.upm.miw.apaw_practice.domain.models.music_manager;
 
-import java.math.BigDecimal;
-
 public class Song {
-    private String name;
+    private String songTitle;
     private String genre;
-    private BigDecimal price;
-
-    public Song(String name, String genre, BigDecimal price) {
-        this.name = name;
-        this.genre = genre;
-        this.price = price;
-    }
+    private Integer length;
 
     public Song() {
         // empty for framework
     }
 
-    public String getName() {
-        return name;
+    public Song(String songTitle, String genre, Integer length) {
+        this.songTitle = songTitle;
+        this.genre = genre;
+        this.length = length;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getSongTitle() {
+        return songTitle;
+    }
+
+    public void setSongTitle(String songTitle) {
+        this.songTitle = songTitle;
     }
 
     public String getGenre() {
@@ -33,20 +31,20 @@ public class Song {
         this.genre = genre;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Integer getLength() {
+        return length;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     @Override
     public String toString() {
         return "Song{" +
-                "name='" + name + '\'' +
+                "songTitle='" + songTitle + '\'' +
                 ", genre='" + genre + '\'' +
-                ", price=" + price +
+                ", length=" + length + "s." +
                 '}';
     }
 }

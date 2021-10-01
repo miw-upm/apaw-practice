@@ -55,7 +55,16 @@ public class Reservation {
         this.players = players;
     }
 
-
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "ownerName='" + this.ownerName + '\'' +
+                ", date=" + this.date +
+                ", duration=" + this.duration +
+                ", court=" + this.court +
+                ", players=" + this.players +
+                '}';
+    }
 
     public static class Builder {
         private Reservation reservation;

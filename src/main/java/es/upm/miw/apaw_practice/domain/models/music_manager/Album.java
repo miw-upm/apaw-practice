@@ -6,23 +6,23 @@ import java.util.List;
 
 public class Album {
     private Band band;
-    private List<Song> songs;
-    private String name;
+    private List<Song> tracks;
+    private String albumTitle;
     private String label;
     private BigDecimal price;
     private LocalDate releaseDate;
 
-    public Album(Band band, List<Song> songs, String name, String label, BigDecimal price, LocalDate releaseDate) {
+    public Album() {
+        // empty for framework
+    }
+
+    public Album(Band band, List<Song> tracks, String albumTitle, String label, BigDecimal price, LocalDate releaseDate) {
         this.band = band;
-        this.songs = songs;
-        this.name = name;
+        this.tracks = tracks;
+        this.albumTitle = albumTitle;
         this.label = label;
         this.price = price;
         this.releaseDate = releaseDate;
-    }
-
-    public Album() {
-        // empty for framework
     }
 
     public Band getBand() {
@@ -33,20 +33,20 @@ public class Album {
         this.band = band;
     }
 
-    public List<Song> getSongs() {
-        return songs;
+    public List<Song> getTracks() {
+        return tracks;
     }
 
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
+    public void setTracks(List<Song> tracks) {
+        this.tracks = tracks;
     }
 
-    public String getName() {
-        return name;
+    public String getAlbumTitle() {
+        return albumTitle;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAlbumTitle(String albumTitle) {
+        this.albumTitle = albumTitle;
     }
 
     public String getLabel() {
@@ -77,8 +77,8 @@ public class Album {
     public String toString() {
         return "Album{" +
                 "band=" + band +
-                ", songs=" + songs +
-                ", name='" + name + '\'' +
+                ", tracks=" + tracks +
+                ", albumTitle='" + albumTitle + '\'' +
                 ", label='" + label + '\'' +
                 ", price=" + price +
                 ", releaseDate=" + releaseDate +
