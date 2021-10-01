@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Document
 public class HotelEntity {
@@ -18,8 +19,16 @@ public class HotelEntity {
     @DBRef
     private List<RoomEntity> rooms;
 
-    public HotelEntity(){
+    public HotelEntity() {
         //empty for framework
+    }
+
+    public HotelEntity(String direction, Integer numberStars, DirectorEntity director, List<RoomEntity> rooms) {
+        this.id = UUID.randomUUID().toString();
+        this.direction = direction;
+        this.numberStars = numberStars;
+        this.director = director;
+        this.rooms = rooms;
     }
 
     public String getId() {
