@@ -31,7 +31,7 @@ public class HotelSeederService {
     @Autowired
     private RoomRepository roomRepository;
 
-    public void sendDatabase() {
+    public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Hotel Initial Load -----------");
 
         DirectorEntity[] directors = {
@@ -48,7 +48,7 @@ public class HotelSeederService {
                         LocalDateTime.of(2018, 9, 16, 16, 0)),
                 new HotelGuestEntity("11111111S", "Pedro", LocalDateTime.of(2020, 6, 15, 9, 0),
                         LocalDateTime.of(2018, 9, 16, 16, 0)),
-                new HotelGuestEntity("56565656P", "Lucía", LocalDateTime.of(2020, 10, 6, 12, 0),
+                new HotelGuestEntity("56565656P", "Luca", LocalDateTime.of(2020, 10, 6, 12, 0),
                         LocalDateTime.of(2020, 10, 12, 18, 0))
 
         };
