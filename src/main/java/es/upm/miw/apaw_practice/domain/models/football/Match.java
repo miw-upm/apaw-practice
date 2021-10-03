@@ -1,20 +1,25 @@
 package es.upm.miw.apaw_practice.domain.models.football;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Match {
     private LocalDateTime date;
     private String weather;
-    private int round;
+    private Integer round;
+    private PrincipalReferee principalReferee;
+    private List<Player> players;
 
     public Match() {
         //Empty for framework
     }
 
-    public Match(LocalDateTime date, String weather, int round) {
+    public Match(LocalDateTime date, String weather, Integer round, PrincipalReferee principalReferee, List<Player> players) {
         this.date = date;
         this.weather = weather;
         this.round = round;
+        this.principalReferee =  principalReferee;
+        this.players = players;
     }
 
     public LocalDateTime getDate() {
@@ -33,12 +38,28 @@ public class Match {
         this.weather = weather;
     }
 
-    public int getRound() {
+    public Integer getRound() {
         return round;
     }
 
-    public void setRound(int round) {
+    public void setRound(Integer round) {
         this.round = round;
+    }
+
+    public PrincipalReferee getPrincipalReferee() {
+        return principalReferee;
+    }
+
+    public void setPrincipalReferee(PrincipalReferee principalReferee) {
+        this.principalReferee = principalReferee;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 
     @Override

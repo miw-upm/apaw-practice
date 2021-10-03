@@ -1,41 +1,41 @@
 package es.upm.miw.apaw_practice.domain.models.football;
 
 public class Player {
-    private boolean defense;
-    private int goalsScored;
-    private int age;
+    private Boolean defense;
+    private Integer goalsScored;
+    private Integer age;
 
     public Player() {
         //empty for framework
     }
 
-    public Player(boolean defense, int goalsScored, int age) {
+    public Player(Boolean defense, Integer goalsScored, Integer age) {
         this.defense = defense;
         this.goalsScored = goalsScored;
         this.age = age;
     }
 
-    public boolean isDefense() {
+    public Boolean isDefense() {
         return defense;
     }
 
-    public void setDefense(boolean defense) {
+    public void setDefense(Boolean defense) {
         this.defense = defense;
     }
 
-    public int getGoalsScored() {
+    public Integer getGoalsScored() {
         return goalsScored;
     }
 
-    public void setGoalsScored(int goalsScored) {
+    public void setGoalsScored(Integer goalsScored) {
         this.goalsScored = goalsScored;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
