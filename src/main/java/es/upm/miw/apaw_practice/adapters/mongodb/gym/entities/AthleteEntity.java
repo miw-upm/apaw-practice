@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities;
 
+import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,12 +24,10 @@ public class AthleteEntity {
 
     }
 
-    public AthleteEntity(String id, String athleteDni, String athleteName, String atheleFamilyname, String athleteAddress) {
+
+    public AthleteEntity(Athlete athlete) {
+        BeanUtils.copyProperties(athlete, this);
         this.id = UUID.randomUUID().toString();
-        this.athleteDni = athleteDni;
-        this.athleteName = athleteName;
-        this.atheleFamilyname = atheleFamilyname;
-        this.athleteAddress = athleteAddress;
     }
 
 
