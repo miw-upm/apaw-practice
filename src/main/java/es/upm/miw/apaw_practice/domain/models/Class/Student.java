@@ -25,4 +25,13 @@ public class Student {
 
     public boolean getIs_spanish(){ return Is_spanish; }
     public void setIs_spanish(boolean Is_spanish){ this.Is_spanish = Is_spanish;}
+
+    @Override
+    public String toString(){
+        return "Album{" +
+                "name =" + name + '\'' +
+                ", age =" + age +  '\'' +
+                ", Is_spanish ='" + Is_spanish + '\'' +
+                '}';
+    }
 }

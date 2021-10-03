@@ -27,6 +27,13 @@ public class Class {
     public LocalDate getStartTime(){ return StartTime;}
     public void setStartTime(LocalDate StartTime){ this.StartTime = StartTime;}
 
-
+    @Override
+    public String toString(){
+        return "Album{" +
+                "name =" + name + '\'' +
+                ", credit =" + credit +  '\'' +
+                ", StartTime=" + StartTime + '\'' +
+                '}';
+    }
 
 }

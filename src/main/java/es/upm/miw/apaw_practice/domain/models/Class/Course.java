@@ -26,4 +26,12 @@ public class Course {
     public void setNumberOfStudents(int NumberOfStudents){ this.NumberOfStudents = NumberOfStudents;}
 
 
+    @Override
+    public String toString(){
+        return "Album{" +
+                "name =" + name + '\'' +
+                ", credit =" + credit +  '\'' +
+                ", NumberOfStudents ='" + NumberOfStudents + '\'' +
+                '}';
+    }
 }

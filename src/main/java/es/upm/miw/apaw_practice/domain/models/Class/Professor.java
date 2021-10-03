@@ -33,5 +33,14 @@ public class Professor {
     public void setEntryDate(LocalDate EntryData){ this.EntryDate = EntryData;}
 
 
+    @Override
+    public String toString(){
+        return "Album{" +
+                "name =" + name + '\'' +
+                ", course =" + course +  '\'' +
+                ", age =" + age + '\'' +
+                ", EntryDate =" + EntryDate + '\'' +
+                '}';
+    }
 
 }
