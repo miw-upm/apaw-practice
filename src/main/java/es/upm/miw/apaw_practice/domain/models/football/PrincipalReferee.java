@@ -3,13 +3,13 @@ package es.upm.miw.apaw_practice.domain.models.football;
 public class PrincipalReferee {
     private String name;
     private String cityBorn;
-    private int age;
+    private Integer age;
 
     public PrincipalReferee() {
         //empty for framework
     }
 
-    public PrincipalReferee(String name, String cityBorn, int age) {
+    public PrincipalReferee(String name, String cityBorn, Integer age) {
         this.name = name;
         this.cityBorn = cityBorn;
         this.age = age;
@@ -31,11 +31,11 @@ public class PrincipalReferee {
         this.cityBorn = cityBorn;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
