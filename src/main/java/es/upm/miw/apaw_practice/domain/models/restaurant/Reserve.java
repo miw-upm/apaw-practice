@@ -4,12 +4,17 @@ import java.time.LocalDate;
 
 public class Reserve {
     private LocalDate reservationDate;
-    private int numPeople;
+    private Integer numPeople;
     private String holder;
-    private Table table;
 
     Reserve(){
         //empty for framework
+    }
+
+    public Reserve(LocalDate reservationDate, Integer numPeople, String holder) {
+        this.reservationDate = reservationDate;
+        this.numPeople = numPeople;
+        this.holder = holder;
     }
 
     public LocalDate getReservationDate() {
@@ -20,11 +25,11 @@ public class Reserve {
         this.reservationDate = reservationDate;
     }
 
-    public int getNumPeople() {
+    public Integer getNumPeople() {
         return numPeople;
     }
 
-    public void setNumPeople(int numPeople) {
+    public void setNumPeople(Integer numPeople) {
         this.numPeople = numPeople;
     }
 
@@ -36,21 +41,12 @@ public class Reserve {
         this.holder = holder;
     }
 
-    public Table getTable() {
-        return table;
-    }
-
-    public void setTable(Table table) {
-        this.table = table;
-    }
-
     @Override
     public String toString() {
         return "Reserve{" +
                 "reservationDate=" + reservationDate +
                 ", numPeople=" + numPeople +
                 ", holder='" + holder + '\'' +
-                ", table=" + table +
                 '}';
     }
 }
