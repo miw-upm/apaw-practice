@@ -8,17 +8,17 @@ public class Model {
     private String description;
     private Integer enginePower;
 
-    private List<Vehicle> vehicles;
+    private List<Vehicle> vehicleList;
 
     public Model() {
         //empty for framework
     }
 
-    public Model(String type, String description, Integer enginePower, List<Vehicle> vehicles) {
+    public Model(String type, String description, Integer enginePower, List<Vehicle> vehicleList) {
         this.type = type;
         this.description = description;
         this.enginePower = enginePower;
-        this.setVehicles(vehicles);
+        this.setVehicleList(vehicleList);
     }
 
     public String getType() {
@@ -45,12 +45,12 @@ public class Model {
         this.enginePower = enginePower;
     }
 
-    public List<Vehicle> getVehicles() {
-        return vehicles;
+    public List<Vehicle> getVehicleList() {
+        return vehicleList;
     }
 
-    public void setVehicles(List<Vehicle> vehicles) {
-        this.vehicles = vehicles;
+    public void setVehicleList(List<Vehicle> vehicleList) {
+        this.vehicleList = vehicleList;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Model {
                 "type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", enginePower=" + enginePower +
-                ", vehicles=" + vehicles +
+                ", vehicleList=" + vehicleList +
                 '}';
     }
 }
