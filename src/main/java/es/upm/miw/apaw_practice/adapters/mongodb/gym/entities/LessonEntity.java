@@ -24,7 +24,7 @@ public class LessonEntity {
         //empty for framework
     }
 
-    public LessonEntity(String id, String lessonName, LocalDateTime lessonTime, String lessonDescription, Boolean lessonFinished, List<AthleteEntity> athlete) {
+    public LessonEntity(String lessonName, LocalDateTime lessonTime, String lessonDescription, Boolean lessonFinished, List<AthleteEntity> athlete) {
         this.id = UUID.randomUUID().toString();
         this.lessonName = lessonName;
         this.lessonTime = lessonTime;
@@ -32,6 +32,8 @@ public class LessonEntity {
         this.lessonFinished = lessonFinished;
         this.athlete = athlete;
     }
+
+
 
     public String getId() {
         return id;

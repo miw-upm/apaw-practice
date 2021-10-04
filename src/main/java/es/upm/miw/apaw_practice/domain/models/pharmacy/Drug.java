@@ -1,19 +1,29 @@
 package es.upm.miw.apaw_practice.domain.models.pharmacy;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Drug {
 
+    private String barcode;
     private String name;
-    private ActiveIngredient activeIngredient;
+    private List<ActiveIngredient> activeIngredient;
     private Boolean commercialized;
     private BigDecimal price;
 
-    public Drug(String name, ActiveIngredient activeIngredient, Boolean commercialized, BigDecimal price) {
+    public Drug(String name, List<ActiveIngredient> activeIngredient, Boolean commercialized, BigDecimal price) {
         this.name = name;
         this.activeIngredient = activeIngredient;
         this.commercialized = commercialized;
         this.price = price;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public String getName() {
@@ -24,11 +34,11 @@ public class Drug {
         this.name = name;
     }
 
-    public ActiveIngredient getActiveIngredient() {
+    public List<ActiveIngredient> getActiveIngredient() {
         return activeIngredient;
     }
 
-    public void setActiveIngredient(ActiveIngredient activeIngredient) {
+    public void setActiveIngredient(List<ActiveIngredient> activeIngredient) {
         this.activeIngredient = activeIngredient;
     }
 
