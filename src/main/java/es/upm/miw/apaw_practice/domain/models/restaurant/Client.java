@@ -14,6 +14,14 @@ public class Client {
         //empty for framework
     }
 
+    public Client(String name, String dni, LocalDate registrationDate, List<Waiter> waiter, Table table) {
+        this.name = name;
+        this.dni = dni;
+        this.registrationDate = registrationDate;
+        this.waiter = waiter;
+        this.table = table;
+    }
+
     public String getName() {
         return name;
     }

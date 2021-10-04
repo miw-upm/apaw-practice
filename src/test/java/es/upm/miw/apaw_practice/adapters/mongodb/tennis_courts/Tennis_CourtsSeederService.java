@@ -29,7 +29,7 @@ public class Tennis_CourtsSeederService {
             new EquipmentEntity("Balls", 3, new BigDecimal("1.5"))
         };
         PlayerEntity[] players = {
-                new PlayerEntity("Paco", "López", 35, List.of(equipment[0])),
+                new PlayerEntity("Paco", "Lopez", 35, List.of(equipment[0])),
                 new PlayerEntity("Javier", "Gutierrez", 50, List.of(equipment[1])),
                 new PlayerEntity("Pepe", "Salgado", 20, List.of(equipment[2], equipment[4])),
                 new PlayerEntity("Carlos", "Alonso", 63, List.of(equipment[3])),
