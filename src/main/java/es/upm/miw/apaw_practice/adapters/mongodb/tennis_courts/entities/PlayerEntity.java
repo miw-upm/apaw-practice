@@ -1,8 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
-import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -14,8 +12,11 @@ public class PlayerEntity {
     private String name;
     private String surname;
     private Integer age;
-    @DBRef
     private List<EquipmentEntity> equipmentList;
+
+    public PlayerEntity(){
+        //empty from framework
+    }
 
     public PlayerEntity(String name, String surname, Integer age, List<EquipmentEntity> equipmentList){
         this.id = UUID.randomUUID().toString();

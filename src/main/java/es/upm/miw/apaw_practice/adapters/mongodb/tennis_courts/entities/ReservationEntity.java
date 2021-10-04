@@ -17,6 +17,10 @@ public class ReservationEntity {
     @DBRef
     private List<PlayerEntity> players;
 
+    public ReservationEntity(){
+        //empty from framework
+    }
+
     public ReservationEntity(String ownerName, LocalDateTime date, Integer duration, List<PlayerEntity> players){
         this.id = UUID.randomUUID().toString();
         this.ownerName = ownerName;

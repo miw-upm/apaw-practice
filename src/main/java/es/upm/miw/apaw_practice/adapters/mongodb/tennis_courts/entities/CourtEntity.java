@@ -21,6 +21,10 @@ public class CourtEntity {
     @DBRef
     private List<ReservationEntity> reservations;
 
+    public CourtEntity(){
+        //empty from framework
+    }
+
     public CourtEntity(Integer numberId, BigDecimal price, Boolean occupied, List<ReservationEntity> reservations){
         this.id = UUID.randomUUID().toString();
         this.numberId = numberId;
