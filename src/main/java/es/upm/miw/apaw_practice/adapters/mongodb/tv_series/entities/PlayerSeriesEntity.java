@@ -2,15 +2,18 @@ package es.upm.miw.apaw_practice.adapters.mongodb.tv_series.entities;
 
 import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import es.upm.miw.apaw_practice.domain.models.tv_series.Player;
+import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class PlayerSeriesEntity {
@@ -72,6 +75,13 @@ public class PlayerSeriesEntity {
 
     public void setTvSeriesEntities(List<TvSeriesEntity> tvSeriesEntities) {
         this.tvSeriesEntities = tvSeriesEntities;
+    }
+
+    public Player toPlayer() {
+        return new Player(this.name,this.birth,this.nationality,
+                this.tvSeriesEntities.stream()
+                        .map(TvSeriesEntity::toTvSeries)
+                        .collect(Collectors.toList()));
     }
 
     @Override

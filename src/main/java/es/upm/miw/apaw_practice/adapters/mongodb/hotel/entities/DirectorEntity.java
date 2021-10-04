@@ -16,14 +16,14 @@ public class DirectorEntity {
     @Indexed(unique = true)
     private String dniDirector;
     private String email;
-    private int telephone;
+    private Integer telephone;
 
     public DirectorEntity() {
         //empty for framework
     }
 
     public DirectorEntity(Director director) {
-       this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         BeanUtils.copyProperties(director, this);
     }
 
@@ -51,11 +51,11 @@ public class DirectorEntity {
         this.email = email;
     }
 
-    public int getTelephone() {
+    public Integer getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(int telephone) {
+    public void setTelephone(Integer telephone) {
         this.telephone = telephone;
     }
 
