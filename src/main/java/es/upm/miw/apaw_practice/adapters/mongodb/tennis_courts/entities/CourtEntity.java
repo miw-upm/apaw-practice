@@ -1,15 +1,24 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+@Document
 public class CourtEntity {
 
+    @Id
     private String id;
+    @Indexed(unique = true)
     private Integer numberId;
     private BigDecimal price;
     private Boolean occupied;
+    @DBRef
     private List<ReservationEntity> reservations;
 
     public CourtEntity(Integer numberId, BigDecimal price, Boolean occupied, List<ReservationEntity> reservations){

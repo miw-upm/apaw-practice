@@ -1,15 +1,20 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
+@Document
 public class ReservationEntity {
-
+    @Id
     private String id;
     private String ownerName;
     private LocalDateTime date;
     private Integer duration;
+    @DBRef
     private List<PlayerEntity> players;
 
     public ReservationEntity(String ownerName, LocalDateTime date, Integer duration, List<PlayerEntity> players){
