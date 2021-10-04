@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 
 public class Vehicle {
 
-    private String VIN_number;
+    private String vinNumber;
     private BigDecimal dailyCost;
-    private Integer numberDays;
     private Integer kilometersAmount;
     private Boolean goodCondition;
 
@@ -14,20 +13,19 @@ public class Vehicle {
         //empty for framework
     }
 
-    public  Vehicle(String VIN_number, BigDecimal dailyCost, Integer numberDays, Integer kilometersAmount, Boolean goodCondition) {
-        this.VIN_number = VIN_number;
+    public  Vehicle(String vinNumber, BigDecimal dailyCost, Integer kilometersAmount, Boolean goodCondition) {
+        this.vinNumber = vinNumber;
         this.dailyCost = dailyCost;
-        this.numberDays = numberDays;
         this.kilometersAmount = kilometersAmount;
         this.goodCondition = goodCondition;
     }
 
-    public String getVIN_number() {
-        return VIN_number;
+    public String getVinNumber() {
+        return vinNumber;
     }
 
-    public void setVIN_number(String VIN_number) {
-        this.VIN_number = VIN_number;
+    public void setVinNumber(String vinNumber) {
+        this.vinNumber = vinNumber;
     }
 
     public BigDecimal getDailyCost() {
@@ -36,14 +34,6 @@ public class Vehicle {
 
     public void setDailyCost(BigDecimal dailyCost) {
         this.dailyCost = dailyCost;
-    }
-
-    public Integer getNumberDays() {
-        return numberDays;
-    }
-
-    public void setNumberDays(Integer numberDays) {
-        this.numberDays = numberDays;
     }
 
     public Integer getKilometersAmount() {
@@ -65,9 +55,8 @@ public class Vehicle {
     @Override
     public String toString() {
         return "Vehicle{" +
-                "VIN_number='" + VIN_number + '\'' +
+                "VIN_Number='" + vinNumber + '\'' +
                 ", dailyCost=" + dailyCost +
-                ", numberDays=" + numberDays +
                 ", kilometersAmount=" + kilometersAmount +
                 ", goodCondition=" + goodCondition +
                 '}';

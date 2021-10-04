@@ -3,16 +3,16 @@ package es.upm.miw.apaw_practice.domain.models.car_hire;
 public class Renter {
 
     private String name;
-    private String DNI;
+    private String dni;
     private Boolean likedCar;
 
     public Renter() {
         //empty for framework
     }
 
-    public Renter(String name, String DNI, Boolean likedCar) {
+    public Renter(String name, String dni, Boolean likedCar) {
         this.name = name;
-        this.DNI = DNI;
+        this.dni = dni;
         this.likedCar = likedCar;
     }
 
@@ -24,12 +24,12 @@ public class Renter {
         this.name = name;
     }
 
-    public String getDNI() {
-        return this.DNI;
+    public String getDni() {
+        return this.dni;
     }
 
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public Boolean getLikedCar() {
@@ -44,7 +44,7 @@ public class Renter {
     public String toString() {
         return "Renter{" +
                 "name='" + name + '\'' +
-                ", DNI='" + DNI + '\'' +
+                ", DNI='" + dni + '\'' +
                 ", likedCar=" + likedCar +
                 '}';
     }
