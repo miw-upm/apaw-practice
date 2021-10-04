@@ -7,7 +7,7 @@ import java.util.List;
 public class Booking {
 
     private LocalDateTime hiredDate;
-    private Integer bookingNumber;
+    private String bookingNumber;
     private BigDecimal totalCost;
 
     private List<Vehicle> vehiclesList;
@@ -17,7 +17,7 @@ public class Booking {
         //empty for framework
     }
 
-    public Booking(LocalDateTime hiredDate, Integer bookingNumber, BigDecimal totalCost, List<Vehicle> vehiclesList, Renter renter) {
+    public Booking(LocalDateTime hiredDate, String bookingNumber, BigDecimal totalCost, List<Vehicle> vehiclesList, Renter renter) {
         this.hiredDate = hiredDate;
         this.bookingNumber = bookingNumber;
         this.totalCost = totalCost;
@@ -45,11 +45,11 @@ public class Booking {
         this.hiredDate = hiredDate;
     }
 
-    public Integer getBookingNumber() {
+    public String getBookingNumber() {
         return bookingNumber;
     }
 
-    public void setBookingNumber(Integer bookingNumber) {
+    public void setBookingNumber(String bookingNumber) {
         this.bookingNumber = bookingNumber;
     }
 
