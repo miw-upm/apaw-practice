@@ -14,14 +14,14 @@ public class MatchEntity {
     private String weather;
     @DBRef
     private PrincipalRefereeEntity principalRefereeEntity;
-    private List<PlayerEntity> playerEntities;
+    private List<FootballPlayerEntity> playerEntities;
     private Integer round;
 
     public MatchEntity() {
         //Empty for framework
     }
 
-    public MatchEntity(LocalDateTime date, String weather, Integer round, PrincipalRefereeEntity principalRefereeEntity, List<PlayerEntity> playerEntities) {
+    public MatchEntity(LocalDateTime date, String weather, Integer round, PrincipalRefereeEntity principalRefereeEntity, List<FootballPlayerEntity> playerEntities) {
         this.id = UUID.randomUUID().toString();
         this.date = date;
         this.weather = weather;
@@ -70,11 +70,11 @@ public class MatchEntity {
         this.principalRefereeEntity = principalRefereeEntity;
     }
 
-    public List<PlayerEntity> getPlayerEntities() {
+    public List<FootballPlayerEntity> getPlayerEntities() {
         return playerEntities;
     }
 
-    public void setPlayerEntities(List<PlayerEntity> playerEntities) {
+    public void setPlayerEntities(List<FootballPlayerEntity> playerEntities) {
         this.playerEntities = playerEntities;
     }
 

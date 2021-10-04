@@ -1,15 +1,15 @@
 package es.upm.miw.apaw_practice.domain.models.football;
 
-public class Player {
+public class FootballPlayer {
     private Boolean defense;
     private Integer goalsScored;
     private Integer age;
 
-    public Player() {
+    public FootballPlayer() {
         //empty for framework
     }
 
-    public Player(Boolean defense, Integer goalsScored, Integer age) {
+    public FootballPlayer(Boolean defense, Integer goalsScored, Integer age) {
         this.defense = defense;
         this.goalsScored = goalsScored;
         this.age = age;
@@ -41,7 +41,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "FootballPlayer{" +
                 "defense=" + defense +
                 ", goalsScored=" + goalsScored +
                 ", age=" + age +

@@ -4,18 +4,18 @@ import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
 
-public class PlayerEntity {
+public class FootballPlayerEntity {
     @Id
     private String id;
     private Boolean defense;
     private Integer goalsScored;
     private Integer age;
 
-    public PlayerEntity() {
+    public FootballPlayerEntity() {
         //empty for framework
     }
 
-    public PlayerEntity(Boolean defense, Integer goalsScored, Integer age) {
+    public FootballPlayerEntity(Boolean defense, Integer goalsScored, Integer age) {
         this.id = UUID.randomUUID().toString();
         this.defense = defense;
         this.goalsScored = goalsScored;
@@ -61,12 +61,12 @@ public class PlayerEntity {
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((PlayerEntity) obj).id));
+        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((FootballPlayerEntity) obj).id));
     }
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "FootballPlayer{" +
                 "defense=" + defense +
                 ", goalsScored=" + goalsScored +
                 ", age=" + age +
