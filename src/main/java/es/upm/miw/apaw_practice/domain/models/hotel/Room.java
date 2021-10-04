@@ -13,7 +13,7 @@ public class Room {
         //Empty for framework
     }
 
-    Room(Integer numberRoom, BigDecimal priceRoom,Boolean vip,  List<HotelGuest> hotelGuests) {
+    Room(Integer numberRoom, BigDecimal priceRoom, Boolean vip, List<HotelGuest> hotelGuests) {
         this.numberRoom = numberRoom;
         this.priceRoom = priceRoom;
         this.vip = vip;

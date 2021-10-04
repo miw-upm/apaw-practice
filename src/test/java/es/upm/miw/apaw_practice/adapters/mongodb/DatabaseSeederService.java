@@ -2,10 +2,13 @@ package es.upm.miw.apaw_practice.adapters.mongodb;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.CarWorkshopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.CinemaSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.GymSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.HotelSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.TvSeriesSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.UniversitySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.VetClinicSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.ZooSeederService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +23,27 @@ public class DatabaseSeederService {
     private final CinemaSeederService cinemaSeederService;
     private final CarWorkshopSeederService carWorkshopSeederService;
     private final UniversitySeederService universitySeederService;
+    private final HotelSeederService hotelSeederService;
     private final Tennis_CourtsSeederService tennis_courtsSeederService;
+    private final GymSeederService gymSeederService;
+    private final VetClinicSeederService vetClinicSeederService;
 
     @Autowired
     public DatabaseSeederService(ShopSeederService shopSeederService, ZooSeederService zooSeederService,
                                  CinemaSeederService cinemaSeederService, CarWorkshopSeederService carWorkshopSeederService,
                                  TvSeriesSeederService tvSeriesSeederService, UniversitySeederService universitySeederService,
-                                 Tennis_CourtsSeederService tennis_courtsSeederService) {
+                                 HotelSeederService hotelSeederService, Tennis_CourtsSeederService tennis_courtsSeederService,
+                                 GymSeederService gymSeederService, VetClinicSeederService vetClinicSeederService) {
         this.shopSeederService = shopSeederService;
         this.zooSeederService = zooSeederService;
         this.cinemaSeederService = cinemaSeederService;
         this.carWorkshopSeederService = carWorkshopSeederService;
         this.tvSeriesSeederService = tvSeriesSeederService;
         this.universitySeederService = universitySeederService;
+        this.hotelSeederService = hotelSeederService;
         this.tennis_courtsSeederService = tennis_courtsSeederService;
+        this.gymSeederService = gymSeederService;
+        this.vetClinicSeederService = vetClinicSeederService;
         this.seedDatabase();
     }
 
@@ -44,7 +54,10 @@ public class DatabaseSeederService {
         this.zooSeederService.seedDatabase();
         this.cinemaSeederService.seedDatabase();
         this.universitySeederService.seedDatabase();
+        this.hotelSeederService.seedDatabase();
         this.tennis_courtsSeederService.seedDatabase();
+        this.gymSeederService.seedDatabase();
+        this.vetClinicSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -55,7 +68,10 @@ public class DatabaseSeederService {
         this.universitySeederService.deleteAll();
         this.cinemaSeederService.deleteAll();
         this.universitySeederService.deleteAll();
+        this.hotelSeederService.deleteAll();
         this.tennis_courtsSeederService.deleteAll();
+        this.gymSeederService.deleteAll();
+        this.vetClinicSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
