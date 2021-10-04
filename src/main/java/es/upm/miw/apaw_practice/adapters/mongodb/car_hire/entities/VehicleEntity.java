@@ -15,9 +15,8 @@ public class VehicleEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private String VIN_number;
+    private String vinNumber;
     private BigDecimal dailyCost;
-    private Integer numberDays;
     private Integer kilometersAmount;
     private Boolean goodCondition;
 
@@ -38,12 +37,12 @@ public class VehicleEntity {
         this.id = id;
     }
 
-    public String getVIN_number() {
-        return VIN_number;
+    public String getVinNumber() {
+        return vinNumber;
     }
 
-    public void setVIN_number(String VIN_number) {
-        this.VIN_number = VIN_number;
+    public void setVinNumber(String vinNumber) {
+        this.vinNumber = vinNumber;
     }
 
     public BigDecimal getDailyCost() {
@@ -52,14 +51,6 @@ public class VehicleEntity {
 
     public void setDailyCost(BigDecimal dailyCost) {
         this.dailyCost = dailyCost;
-    }
-
-    public Integer getNumberDays() {
-        return numberDays;
-    }
-
-    public void setNumberDays(Integer numberDays) {
-        this.numberDays = numberDays;
     }
 
     public Integer getKilometersAmount() {
@@ -82,9 +73,8 @@ public class VehicleEntity {
     public String toString() {
         return "VehicleEntity{" +
                 "id='" + id + '\'' +
-                ", VIN_number='" + VIN_number + '\'' +
+                ", VIN_Number='" + vinNumber + '\'' +
                 ", dailyCost=" + dailyCost +
-                ", numberDays=" + numberDays +
                 ", kilometersAmount=" + kilometersAmount +
                 ", goodCondition=" + goodCondition +
                 '}';

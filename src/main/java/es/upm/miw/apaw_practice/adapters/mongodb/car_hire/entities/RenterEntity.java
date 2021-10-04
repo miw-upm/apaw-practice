@@ -15,7 +15,7 @@ public class RenterEntity {
     private String id;
     private String name;
     @Indexed(unique = true)
-    private String DNI;
+    private String dni;
     private Boolean likedCar;
 
     public RenterEntity() {
@@ -43,12 +43,12 @@ public class RenterEntity {
         this.name = name;
     }
 
-    public String getDNI() {
-        return DNI;
+    public String getDni() {
+        return dni;
     }
 
-    public void setDNI(String DNI) {
-        this.DNI = DNI;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public Boolean getLikedCar() {
@@ -64,7 +64,7 @@ public class RenterEntity {
         return "RenterEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", DNI='" + DNI + '\'' +
+                ", DNI='" + dni + '\'' +
                 ", likedCar=" + likedCar +
                 '}';
     }
