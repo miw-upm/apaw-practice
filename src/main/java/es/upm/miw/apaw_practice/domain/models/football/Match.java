@@ -8,17 +8,17 @@ public class Match {
     private String weather;
     private Integer round;
     private PrincipalReferee principalReferee;
-    private List<Player> players;
+    private List<FootballPlayer> players;
 
     public Match() {
         //Empty for framework
     }
 
-    public Match(LocalDateTime date, String weather, Integer round, PrincipalReferee principalReferee, List<Player> players) {
+    public Match(LocalDateTime date, String weather, Integer round, PrincipalReferee principalReferee, List<FootballPlayer> players) {
         this.date = date;
         this.weather = weather;
         this.round = round;
-        this.principalReferee =  principalReferee;
+        this.principalReferee = principalReferee;
         this.players = players;
     }
 
@@ -54,11 +54,11 @@ public class Match {
         this.principalReferee = principalReferee;
     }
 
-    public List<Player> getPlayers() {
+    public List<FootballPlayer> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(List<FootballPlayer> players) {
         this.players = players;
     }
 
