@@ -10,19 +10,16 @@ public class Vehicle {
     private Integer kilometersAmount;
     private Boolean goodCondition;
 
-    private Model model;
-
     public Vehicle() {
         //empty for framework
     }
 
-    public  Vehicle(String VIN_number, BigDecimal dailyCost, Integer numberDays, Integer kilometersAmount, Boolean goodCondition, Model model) {
+    public  Vehicle(String VIN_number, BigDecimal dailyCost, Integer numberDays, Integer kilometersAmount, Boolean goodCondition) {
         this.VIN_number = VIN_number;
         this.dailyCost = dailyCost;
         this.numberDays = numberDays;
         this.kilometersAmount = kilometersAmount;
         this.goodCondition = goodCondition;
-        this.setModel(model);
     }
 
     public String getVIN_number() {
@@ -65,14 +62,6 @@ public class Vehicle {
         this.goodCondition = goodCondition;
     }
 
-    public Model getModel() {
-        return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
-
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -81,7 +70,6 @@ public class Vehicle {
                 ", numberDays=" + numberDays +
                 ", kilometersAmount=" + kilometersAmount +
                 ", goodCondition=" + goodCondition +
-                ", model=" + model +
                 '}';
     }
 }
