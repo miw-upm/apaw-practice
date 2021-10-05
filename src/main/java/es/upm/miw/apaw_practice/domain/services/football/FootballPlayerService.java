@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.domain.services.football;
 
 import es.upm.miw.apaw_practice.domain.models.football.FootballPlayer;
 import es.upm.miw.apaw_practice.domain.persistence_ports.football.FootballPlayerPersistence;
-import es.upm.miw.apaw_practice.domain.persistence_ports.shop.ArticlePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,6 @@ public class FootballPlayerService {
     }
 
     public Stream<FootballPlayer> readAll() {
-        return footballPlayerPersistence.readAll();
+        return this.footballPlayerPersistence.readAll();
     }
 }

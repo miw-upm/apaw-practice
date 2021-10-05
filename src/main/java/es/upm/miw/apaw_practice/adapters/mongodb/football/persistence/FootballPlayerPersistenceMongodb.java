@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.football.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.football.daos.FootballPlayerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.football.entities.FootballPlayerEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.shop.daos.ArticleRepository;
 import es.upm.miw.apaw_practice.domain.models.football.FootballPlayer;
 import es.upm.miw.apaw_practice.domain.persistence_ports.football.FootballPlayerPersistence;
 import org.springframework.beans.factory.annotation.Autowired;

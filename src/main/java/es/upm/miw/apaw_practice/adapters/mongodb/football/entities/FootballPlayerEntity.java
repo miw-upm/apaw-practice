@@ -59,6 +59,7 @@ public class FootballPlayerEntity {
     public FootballPlayer toFootballPlayer() {
         FootballPlayer footballPlayer = new FootballPlayer();
         BeanUtils.copyProperties(this, footballPlayer);
+        footballPlayer.setDefense(this.defense);
         return footballPlayer;
     }
 
