@@ -9,8 +9,15 @@ public class Hospital {
     private Integer availableRooms;
     private List<Patient> patients;
 
-    Hospital(){
+    public Hospital(){
         //empty for framework
+    }
+
+    public Hospital(String name, String address, Integer availableRooms, List<Patient> patients) {
+        this.name = name;
+        this.address = address;
+        this.availableRooms = availableRooms;
+        this.patients = patients;
     }
 
     public String getName() {
