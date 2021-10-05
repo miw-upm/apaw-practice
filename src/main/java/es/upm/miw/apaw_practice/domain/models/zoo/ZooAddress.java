@@ -6,6 +6,10 @@ public class ZooAddress {
     private Integer streetNumber;
     private String zipCode;
 
+    public ZooAddress() {
+        //empty from framework
+    }
+
     public ZooAddress(String street, Integer streetNumber, String zipCode) {
         this.street = street;
         this.streetNumber = streetNumber;

@@ -1,8 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.zoo;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
-import es.upm.miw.apaw_practice.adapters.rest.shop.ArticleResource;
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import es.upm.miw.apaw_practice.domain.models.zoo.Caretaker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,5 +28,17 @@ public class CaretakerResourceIT {
                 .value(caretakers -> Assertions.assertEquals("71679884Q", caretakers.get(0).getDni()))
                 .value(caretakers -> Assertions.assertEquals("Samuel L", caretakers.get(0).getName()))
                 .value(caretakers -> Assertions.assertEquals("Jackson", caretakers.get(0).getSurname()));
+    }
+
+    @Test
+    void testFindByDniNotFound() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(CaretakerResource.CARETAKERS + CaretakerResource.SEARCH)
+                                .queryParam("dni", "dniestamal")
+                                .build())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
