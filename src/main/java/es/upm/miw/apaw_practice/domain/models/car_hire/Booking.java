@@ -6,43 +6,37 @@ import java.util.List;
 
 public class Booking {
 
-    private LocalDateTime hiredDate;
     private String bookingNumber;
+    private LocalDateTime hiredDate;
+    private Integer numberDays;
     private BigDecimal totalCost;
 
-    private List<Vehicle> vehiclesList;
+    private List<Vehicle> vehicleList;
     private Renter renter;
 
     public Booking() {
         //empty for framework
     }
 
-    public Booking(LocalDateTime hiredDate, String bookingNumber, BigDecimal totalCost, List<Vehicle> vehiclesList, Renter renter) {
-        this.hiredDate = hiredDate;
+    public Booking(String bookingNumber, LocalDateTime hiredDate, Integer numberDays, BigDecimal totalCost, List<Vehicle> vehicleList, Renter renter) {
         this.bookingNumber = bookingNumber;
+        this.hiredDate = hiredDate;
+        this.numberDays = numberDays;
         this.totalCost = totalCost;
-        this.setVehiclesList(vehiclesList);
+        this.setVehicleList(vehicleList);
         this.setRenter(renter);
     }
 
     public void addVehicle(Vehicle vehicle) {
         assert vehicle != null;
 
-        this.vehiclesList.add(vehicle);
+        this.vehicleList.add(vehicle);
     }
 
     public void removeVehicle(Vehicle vehicle) {
         assert vehicle != null;
 
-        this.vehiclesList.remove(vehicle);
-    }
-
-    public LocalDateTime getHiredDate() {
-        return hiredDate;
-    }
-
-    public void setHiredDate(LocalDateTime hiredDate) {
-        this.hiredDate = hiredDate;
+        this.vehicleList.remove(vehicle);
     }
 
     public String getBookingNumber() {
@@ -53,6 +47,22 @@ public class Booking {
         this.bookingNumber = bookingNumber;
     }
 
+    public LocalDateTime getHiredDate() {
+        return hiredDate;
+    }
+
+    public void setHiredDate(LocalDateTime hiredDate) {
+        this.hiredDate = hiredDate;
+    }
+
+    public Integer getNumberDays() {
+        return numberDays;
+    }
+
+    public void setNumberDays(Integer numberDays) {
+        this.numberDays = numberDays;
+    }
+
     public BigDecimal getTotalCost() {
         return totalCost;
     }
@@ -61,12 +71,12 @@ public class Booking {
         this.totalCost = totalCost;
     }
 
-    public List<Vehicle> getVehiclesList() {
-        return vehiclesList;
+    public List<Vehicle> getVehicleList() {
+        return vehicleList;
     }
 
-    public void setVehiclesList(List<Vehicle> vehiclesList) {
-        this.vehiclesList = vehiclesList;
+    public void setVehicleList(List<Vehicle> vehicleList) {
+        this.vehicleList = vehicleList;
     }
 
     public Renter getRenter() {
@@ -80,10 +90,11 @@ public class Booking {
     @Override
     public String toString() {
         return "Booking{" +
-                "hiredDate=" + hiredDate +
-                ", bookingNumber=" + bookingNumber +
+                "bookingNumber='" + bookingNumber + '\'' +
+                ", hiredDate=" + hiredDate +
+                ", numberDays=" + numberDays +
                 ", totalCost=" + totalCost +
-                ", vehiclesList=" + vehiclesList +
+                ", vehicleList=" + vehicleList +
                 ", renter=" + renter +
                 '}';
     }

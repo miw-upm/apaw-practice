@@ -53,12 +53,12 @@ public class TvSeries {
         this.producer = producer;
     }
 
-    public List<Episode> getEpisodes() {
-        return episodes;
+    public void addEpisode(Episode episode) {
+        this.episodes.add(episode);
     }
 
-    public void setEpisodes(List<Episode> episodes) {
-        this.episodes = episodes;
+    public List<Episode> getEpisodes() {
+        return this.episodes;
     }
 
     @Override

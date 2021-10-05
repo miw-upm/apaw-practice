@@ -8,8 +8,14 @@ public class Doctor {
     private String surname;
     private LocalDate activeSince;
 
-    Doctor(){
+    public Doctor(){
         //empty for framework
+    }
+
+    public Doctor(String nick, String surname, LocalDate activeSince) {
+        this.nick = nick;
+        this.surname = surname;
+        this.activeSince = activeSince;
     }
 
     public String getNick() {

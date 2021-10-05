@@ -14,6 +14,10 @@ public class EquipmentEntity {
         this.pricePerUnit = pricePerUnit;
     }
 
+    public EquipmentEntity(){
+        //empty from framework
+    }
+
     public String getType() {
         return this.type;
     }
