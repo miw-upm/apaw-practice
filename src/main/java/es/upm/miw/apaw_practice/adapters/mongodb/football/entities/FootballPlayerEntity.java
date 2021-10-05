@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.football.entities;
 
+import es.upm.miw.apaw_practice.domain.models.football.FootballPlayer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
@@ -54,6 +56,12 @@ public class FootballPlayerEntity {
         this.id = id;
     }
 
+    public FootballPlayer toFootballPlayer() {
+        FootballPlayer footballPlayer = new FootballPlayer();
+        BeanUtils.copyProperties(this, footballPlayer);
+        return footballPlayer;
+    }
+
     @Override
     public int hashCode() {
         return id.hashCode();
@@ -72,4 +80,6 @@ public class FootballPlayerEntity {
                 ", age=" + age +
                 '}';
     }
+
+
 }
