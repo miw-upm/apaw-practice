@@ -1,13 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.RoomEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.DirectorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.RoomRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.RoomEntity;
 import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.apache.logging.log4j.LogManager;

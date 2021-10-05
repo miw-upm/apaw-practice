@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;

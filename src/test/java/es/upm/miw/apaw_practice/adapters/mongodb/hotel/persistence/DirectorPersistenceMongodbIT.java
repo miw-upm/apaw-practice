@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-public class DirectorPersistenceMongodbIT {
+class DirectorPersistenceMongodbIT {
 
     @Autowired
     private DirectorPersistenceMongodb directorPersistence;
