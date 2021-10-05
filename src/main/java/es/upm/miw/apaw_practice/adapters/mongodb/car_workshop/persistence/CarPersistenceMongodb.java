@@ -20,8 +20,7 @@ public class CarPersistenceMongodb implements CarPersistence {
     @Override
     public void create(Car car) {
         this.carRepository
-                .save(new CarEntity(car))
-                .toCar();
+                .save(new CarEntity(car));
     }
 
     @Override
