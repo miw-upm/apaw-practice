@@ -74,4 +74,7 @@ public class Car {
                 ", tyreSpecifications=" + this.tyreSpecs.toString() +
                 '}';
     }
+
+    public void doDefault() {
+    }
 }
