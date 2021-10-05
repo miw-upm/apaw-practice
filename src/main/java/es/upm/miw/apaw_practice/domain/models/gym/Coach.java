@@ -7,7 +7,7 @@ public class Coach {
     private String firstName;
     private String lastName;
     private Integer phone;
-    private List <Lesson> lesson;
+    private Lesson lesson;
 
 
 
@@ -15,7 +15,7 @@ public class Coach {
        //empty for framework
     }
 
-    public Coach(String dni, String firstName, String lastName, Integer phone, List<Lesson> lesson) {
+    public Coach(String dni, String firstName, String lastName, Integer phone, Lesson lesson) {
         this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -57,11 +57,11 @@ public class Coach {
        this.phone = phone;
     }
 
-    public List<Lesson> getLesson() {
+    public Lesson getLesson() {
         return lesson;
     }
 
-    public void setLesson(List<Lesson> lesson) {
+    public void setLesson(Lesson lesson) {
         this.lesson = lesson;
     }
 
