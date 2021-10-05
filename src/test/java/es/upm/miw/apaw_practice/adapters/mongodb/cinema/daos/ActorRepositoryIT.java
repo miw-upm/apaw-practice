@@ -13,10 +13,15 @@ class ActorRepositoryIT {
     private ActorRepository actorRepository;
 
     @Test
-    void testFindAllFilms() {
+    void testFindAllActors() {
         List<ActorEntity> actor = this.actorRepository.findAll();
 
         assertEquals(actor.size(), 4);
-        //assertEquals(films.get(0).getName(), "Jennifer");
+    }
+    @Test
+    void testFindActorName() {
+        List<ActorEntity> actor = this.actorRepository.findAll();
+
+        assertEquals(actor.get(0).getName(), "Jennifer");
     }
 }

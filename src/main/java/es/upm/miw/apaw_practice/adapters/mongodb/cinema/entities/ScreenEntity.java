@@ -4,10 +4,12 @@ import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
 
+@Document
 public class ScreenEntity {
     @Id
     private String id;
@@ -16,7 +18,6 @@ public class ScreenEntity {
     private Integer flat;
     private Integer numberOfSeats;
     private Boolean full;
-    @DBRef
     private List<SpectatorEntity> spectators;
 
     public ScreenEntity(){

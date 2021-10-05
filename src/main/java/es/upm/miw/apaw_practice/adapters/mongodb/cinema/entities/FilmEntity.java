@@ -18,6 +18,7 @@ public class FilmEntity {
     private String barcode;
     private String name;
     private String description;
+    @DBRef
     private List<ActorEntity> actors;
     @DBRef
     private List<ScreenEntity> screens;

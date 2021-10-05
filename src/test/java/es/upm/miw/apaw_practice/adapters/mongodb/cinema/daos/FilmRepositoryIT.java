@@ -18,7 +18,12 @@ class FilmRepositoryIT {
         List<FilmEntity> films = this.filmRepository.findAll();
 
         assertEquals(films.size(), 1);
-        assertEquals(films.get(0).getName(), "The hunger games");
     }
 
+    @Test
+    void testFindFilmName() {
+        List<FilmEntity> films = this.filmRepository.findAll();
+
+        assertEquals(films.get(0).getName(), "The hunger games");
+    }
 }

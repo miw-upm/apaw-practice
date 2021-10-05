@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class SpectatorEntity {
-    @Indexed(unique = true)
     private String idCard;
     private String name;
     private String familyName;

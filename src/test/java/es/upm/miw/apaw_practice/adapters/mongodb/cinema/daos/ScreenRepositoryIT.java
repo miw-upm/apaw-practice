@@ -17,6 +17,11 @@ public class ScreenRepositoryIT {
         List<ScreenEntity> screens = this.screenRepository.findAll();
 
         assertEquals(screens.size(), 2);
+    }
+    @Test
+    void testFindScreenNumberOfSeats() {
+        List<ScreenEntity> screens = this.screenRepository.findAll();
+
         assertEquals(screens.get(1).getNumberOfSeats(), 70);
     }
 }

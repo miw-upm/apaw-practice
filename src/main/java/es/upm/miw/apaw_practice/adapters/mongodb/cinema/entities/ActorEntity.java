@@ -2,9 +2,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
+@Document
 public class ActorEntity {
     @Id
     private String id;
