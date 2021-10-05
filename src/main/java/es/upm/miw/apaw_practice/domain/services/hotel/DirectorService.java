@@ -16,7 +16,7 @@ public class DirectorService {
         this.directorPersistence = directorPersistence;
     }
 
-    public List<String> getEmails() {
-        return this.directorPersistence.getEmails();
+    public List<String> readEmails() {
+        return this.directorPersistence.readEmails();
     }
 }
