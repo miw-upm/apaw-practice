@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.daos;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.RoomEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
