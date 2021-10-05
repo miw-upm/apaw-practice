@@ -1,8 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.ActorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.FilmRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.ScreenRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.SpectatorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ActorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.FilmEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ScreenEntity;
@@ -21,7 +21,7 @@ public class CinemaSeederService {
     @Autowired
     private ScreenRepository screenRepository;
     @Autowired
-    private SpectatorRepository spectatorRepository;
+    private ActorRepository actorRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Cinema Initial Load -----------");
@@ -31,13 +31,13 @@ public class CinemaSeederService {
                 new ActorEntity("Woody", "Harrelson", 60),
                 new ActorEntity("Liam", "Hemsworth", 31)
         };
+        this.actorRepository.saveAll(Arrays.asList(actors));
         SpectatorEntity[] spectators = {
                 new SpectatorEntity("12345j", "Tomas", "Smith"),
                 new SpectatorEntity("98745p", "John", "Gomez"),
                 new SpectatorEntity("98745p", "Mary", "Banks"),
                 new SpectatorEntity("98745p", "Zoe", "Alley")
         };
-        this.spectatorRepository.saveAll(Arrays.asList(spectators));
         ScreenEntity[] screens = {
                 new ScreenEntity(1,1,70,false, List.of(spectators[0], spectators[1], spectators[2])),
                 new ScreenEntity(2,1,70,false, List.of(spectators[3]))
@@ -51,7 +51,7 @@ public class CinemaSeederService {
 
     public void deleteAll() {
         this.filmRepository.deleteAll();
-        this.spectatorRepository.deleteAll();
+        this.actorRepository.deleteAll();
         this.screenRepository.deleteAll();
     }
 }

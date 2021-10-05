@@ -1,24 +1,22 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.FilmEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ActorEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-class FilmRepositoryIT {
-
+class ActorRepositoryIT {
     @Autowired
-    private FilmRepository filmRepository;
+    private ActorRepository actorRepository;
 
     @Test
     void testFindAllFilms() {
-        List<FilmEntity> films = this.filmRepository.findAll();
+        List<ActorEntity> actor = this.actorRepository.findAll();
 
-        assertEquals(films.size(), 1);
-        assertEquals(films.get(0).getName(), "The hunger games");
+        assertEquals(actor.size(), 4);
+        //assertEquals(films.get(0).getName(), "Jennifer");
     }
-
 }

@@ -7,8 +7,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class SpectatorEntity {
-    @Id
-    private String id;
     @Indexed(unique = true)
     private String idCard;
     private String name;
@@ -20,19 +18,10 @@ public class SpectatorEntity {
     }
 
     public SpectatorEntity(String idCard, String name, String familyName) {
-        this.id = UUID.randomUUID().toString();
         this.idCard = idCard;
         this.name = name;
         this.familyName = familyName;
         this.registrationDate = LocalDate.now();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getIdCard() {
@@ -70,7 +59,6 @@ public class SpectatorEntity {
     @Override
     public String toString() {
         return "SpectatorEntity{" +
-                "id='" + id + '\'' +
                 ", idCard='" + idCard + '\'' +
                 ", name='" + name + '\'' +
                 ", familyName='" + familyName + '\'' +

@@ -1,8 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
+import org.springframework.data.annotation.Id;
+
+import java.util.UUID;
 
 public class ActorEntity {
+    @Id
+    private String id;
     private String name;
     private String familyName;
     private Integer age;
@@ -12,11 +17,19 @@ public class ActorEntity {
     }
 
     public ActorEntity(String name, String familyName, Integer age) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.familyName = familyName;
         this.age = age;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -45,7 +58,8 @@ public class ActorEntity {
     @Override
     public String toString() {
         return "ActorEntity{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", familyName='" + familyName + '\'' +
                 ", age=" + age +
                 '}';
