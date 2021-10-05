@@ -46,14 +46,14 @@ public class GymSeederService {
         };
         this.lessonRepository.saveAll(Arrays.asList(lesson));
         CoachEntity[] coach ={
-                new CoachEntity("2356892A","Terry","Ryan",List.of(lesson[0],lesson[2])),
-                new CoachEntity("2458698A","John","Chris",List.of(lesson[1])),
-                new CoachEntity("2376698A","Arnold","Coleman",List.of(lesson[1],lesson[2]))
+                new CoachEntity("2356892A", "Terry", "Ryan", 11112, lesson[1]),
+                new CoachEntity("2458698A", "John", "Chris", 123456789, lesson[2]),
+                new CoachEntity("2376698A", "Arnold", "Coleman", 123456789, lesson[2])
         };
         this.coachRepository.saveAll(Arrays.asList(coach));
-        GymEntity[] gym ={
-                new GymEntity("calle Gran via 82","Basic Fit",List.of(coach[1],coach[2])),
-                new GymEntity("calle toledo 32","Basic Fit",List.of(coach[0]))
+        GymEntity[] gym = {
+                new GymEntity("calle Gran via 82", "Basic Fit", "12356688", List.of(coach[1], coach[2])),
+                new GymEntity("calle toledo 32", "Basic Fit", "12356856", List.of(coach[0]))
 
         };
         this.gymRepository.saveAll(Arrays.asList(gym));
