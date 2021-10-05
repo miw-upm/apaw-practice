@@ -69,6 +69,12 @@ public class VehicleEntity {
         this.goodCondition = goodCondition;
     }
 
+    public Vehicle toVehicle() {
+        Vehicle vehicle = new Vehicle();
+        BeanUtils.copyProperties(this, vehicle);
+        return vehicle;
+    }
+
     @Override
     public String toString() {
         return "VehicleEntity{" +
