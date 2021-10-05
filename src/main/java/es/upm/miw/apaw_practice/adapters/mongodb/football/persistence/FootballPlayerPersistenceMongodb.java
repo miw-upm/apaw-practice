@@ -17,7 +17,7 @@ public class FootballPlayerPersistenceMongodb implements FootballPlayerPersisten
     public FootballPlayerPersistenceMongodb(FootballPlayerRepository footballPlayerRepository) {
         this.footballPlayerRepository = footballPlayerRepository;
     }
-    
+
     @Override
     public Stream<FootballPlayer> readAll() {
         return this.footballPlayerRepository.findAll().stream()

@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.football.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.domain.models.football.FootballPlayer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,8 +20,8 @@ public class FootballPlayerPersistenceMongodbIT {
         assertTrue(this.footballPlayerPersistenceMongodb.readAll()
                 .anyMatch(player ->
                         24 == player.getAge() &&
-                        10 == player.getGoalsScored() &&
-                        Boolean.TRUE == player.isDefense()
+                                10 == player.getGoalsScored() &&
+                                Boolean.TRUE == player.isDefense()
                 ));
     }
 
