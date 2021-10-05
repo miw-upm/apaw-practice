@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClassroomResource {
     static final String CLASSROOMS = "/university/classrooms";
 
-    static final String CLASSROOM_ID = "/{school}/{number}"; //Preguntar esto
+    static final String CLASSROOM_ID = "/{school}/{number}";
 
     private final ClassroomService classroomService;
 
