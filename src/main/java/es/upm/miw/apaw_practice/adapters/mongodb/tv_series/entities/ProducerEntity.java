@@ -69,7 +69,8 @@ public class ProducerEntity {
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (businessName.equals(((ProducerEntity) obj).businessName));
+        return this == obj || obj != null && getClass() == obj.getClass()
+                && (businessName.equals(((ProducerEntity) obj).businessName));
     }
 
     @Override

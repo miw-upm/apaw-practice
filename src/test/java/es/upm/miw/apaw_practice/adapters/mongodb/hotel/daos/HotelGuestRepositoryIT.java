@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.daos.HotelGuestRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

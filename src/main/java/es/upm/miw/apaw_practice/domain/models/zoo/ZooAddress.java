@@ -63,4 +63,10 @@ public class ZooAddress {
                 ", zipCode=" + zipCode +
                 '}';
     }
+
+    public boolean isNull() {
+        return this.street == null
+                || this.streetNumber == null
+                || this.zipCode == null;
+    }
 }
