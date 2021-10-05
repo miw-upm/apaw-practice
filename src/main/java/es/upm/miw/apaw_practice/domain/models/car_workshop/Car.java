@@ -76,5 +76,8 @@ public class Car {
     }
 
     public void doDefault() {
+        if (Objects.isNull(owner)){
+            this.owner = new Owner("99999999Z", "John Doe");
+        }
     }
 }
