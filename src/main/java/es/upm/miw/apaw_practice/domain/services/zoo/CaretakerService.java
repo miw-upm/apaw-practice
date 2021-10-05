@@ -1,12 +1,9 @@
 package es.upm.miw.apaw_practice.domain.services.zoo;
 
 import es.upm.miw.apaw_practice.domain.models.zoo.Caretaker;
-import es.upm.miw.apaw_practice.domain.persistence_ports.shop.ArticlePersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.zoo.CaretakerPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CaretakerService {

@@ -9,6 +9,10 @@ public class Zoo {
     private Integer phoneNumber;
     private List<Cage> cages;
 
+    public Zoo() {
+        //emtpy from framework
+    }
+
     public Zoo(ZooAddress address, Integer phoneNumber) {
         this.address = address;
         this.phoneNumber = phoneNumber;
