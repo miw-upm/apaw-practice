@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Lesson {
-    private String lessonName ;
-    private LocalDateTime lessonTime;
-    private String lessonDescription ;
-    private Boolean lessonFinished ;
+    private String title ;
+    private LocalDateTime time;
+    private String description ;
+    private Boolean finished ;
     private List<Athlete> athletes ;
 
 
@@ -16,36 +16,44 @@ public class Lesson {
         //empty for framework
     }
 
-    public String getLessonName() {
-        return lessonName;
+    public Lesson(String title, LocalDateTime time, String description, Boolean finished, List<Athlete> athletes) {
+        this.title = title;
+        this.time = time;
+        this.description = description;
+        this.finished = finished;
+        this.athletes = athletes;
     }
 
-    public void setLessonName(String lessonName) {
-        this.lessonName = lessonName;
+    public String getTitle() {
+        return title;
     }
 
-    public LocalDateTime getLessonTime() {
-        return lessonTime;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setLessonTime(LocalDateTime lessonTime) {
-        this.lessonTime = lessonTime;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public String getLessonDescription() {
-        return lessonDescription;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
-    public void setLessonDescription(String lessonDescription) {
-        this.lessonDescription = lessonDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public Boolean getLessonFinished() {
-        return lessonFinished;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setLessonFinished(Boolean lessonFinished) {
-        this.lessonFinished = lessonFinished;
+    public Boolean getFinished() {
+        return finished;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
     }
 
     public List<Athlete> getAthletes() {
@@ -59,10 +67,10 @@ public class Lesson {
     @Override
     public String toString() {
         return "Lesson{" +
-                "lessonName='" + lessonName + '\'' +
-                ", lessonTime=" + lessonTime +
-                ", lessonDescription='" + lessonDescription + '\'' +
-                ", lessonFinished=" + lessonFinished +
+                "title='" + title + '\'' +
+                ", time=" + time +
+                ", description='" + description + '\'' +
+                ", finished=" + finished +
                 ", athletes=" + athletes +
                 '}';
     }
