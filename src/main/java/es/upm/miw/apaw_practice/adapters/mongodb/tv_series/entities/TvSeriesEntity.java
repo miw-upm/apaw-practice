@@ -1,12 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tv_series.entities;
 
+import es.upm.miw.apaw_practice.domain.models.tv_series.Episode;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -20,9 +22,19 @@ public class TvSeriesEntity {
     private Boolean finished;
     @DBRef
     private ProducerEntity producerEntity;
+    private List<EpisodeEntity> episodeEntities;
 
     public TvSeriesEntity() {
         // empty for framework
+    }
+
+    public TvSeriesEntity(String title, Integer year, Boolean finished, ProducerEntity producerEntity,List<EpisodeEntity> episodeEntities) {
+        this.id = UUID.randomUUID().toString();
+        this.title = title;
+        this.year = year;
+        this.finished = finished;
+        this.producerEntity = producerEntity;
+        this.episodeEntities = episodeEntities;
     }
 
     public TvSeriesEntity(String title, Integer year, Boolean finished, ProducerEntity producerEntity) {
@@ -31,6 +43,7 @@ public class TvSeriesEntity {
         this.year = year;
         this.finished = finished;
         this.producerEntity = producerEntity;
+        this.episodeEntities = new ArrayList<>();
     }
 
     public TvSeriesEntity(TvSeries tvSeries) {
@@ -39,6 +52,17 @@ public class TvSeriesEntity {
         this.year = tvSeries.getYear();
         this.finished = tvSeries.isFinished();
         this.producerEntity = new ProducerEntity(tvSeries.getProducer());
+        this.episodesFromTvSeries(tvSeries.getEpisodes());
+    }
+
+    private void episodesFromTvSeries(List<Episode> episodes) {
+        List<EpisodeEntity> episodeEntities = new ArrayList<>();
+        for(Episode episode : episodes) {
+            EpisodeEntity episodeEntity = new EpisodeEntity();
+            episodeEntity.fromEpisode(episode);
+            episodeEntities.add(episodeEntity);
+        }
+        this.episodeEntities = episodeEntities;
     }
 
     public String getId() {
@@ -81,6 +105,10 @@ public class TvSeriesEntity {
         this.producerEntity = producerEntity;
     }
 
+    public List<EpisodeEntity> getEpisodeEntities() {
+        return this.episodeEntities;
+    }
+
     public TvSeries toTvSeries() {
         TvSeries tvSeries = new TvSeries();
         tvSeries.setProducer(this.producerEntity.toProducer());
@@ -93,15 +121,12 @@ public class TvSeriesEntity {
     @Override
     public boolean equals(Object obj) {
         return this == obj || obj != null && getClass() == obj.getClass()
-                || ((title.equals(((TvSeriesEntity) obj).title))
-                && (year.equals(((TvSeriesEntity) obj).year))
-                && (finished == ((TvSeriesEntity) obj).finished)
-                && (producerEntity.equals(((TvSeriesEntity) obj).producerEntity)));
+         && (this.title.equals(((TvSeriesEntity) obj).title)) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, year, finished, producerEntity);
+        return Objects.hash(id, title, year, finished, producerEntity, episodeEntities);
     }
 
     @Override
