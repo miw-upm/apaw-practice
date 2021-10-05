@@ -18,7 +18,7 @@ public class DirectorPersistenceMongodb implements DirectorPersistence {
     }
 
     @Override
-    public List<String> getEmails() {
+    public List<String> readEmails() {
         return this.directorRepository.findAll().stream()
                 .map(DirectorEntity::getEmail)
                 .collect(Collectors.toList());

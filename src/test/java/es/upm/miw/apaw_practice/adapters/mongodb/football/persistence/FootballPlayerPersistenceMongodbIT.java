@@ -1,20 +1,23 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.football.daos;
+package es.upm.miw.apaw_practice.adapters.mongodb.football.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class FootballPlayerRepositoryIT {
+public class FootballPlayerPersistenceMongodbIT {
 
     @Autowired
-    private FootballPlayerRepository footballPlayerRepository;
+    private FootballPlayerPersistenceMongodb footballPlayerPersistenceMongodb;
 
     @Test
-    void testCreateAndRead() {
-        assertTrue(this.footballPlayerRepository.findAll().stream()
+    void testReadAll() {
+        assertEquals(6, footballPlayerPersistenceMongodb.readAll().count());
+
+        assertTrue(this.footballPlayerPersistenceMongodb.readAll()
                 .anyMatch(player ->
                         24 == player.getAge() &&
                                 10 == player.getGoalsScored() &&

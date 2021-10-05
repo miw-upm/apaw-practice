@@ -9,16 +9,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-public class DirectorPersistenceMongodbIT {
+class DirectorPersistenceMongodbIT {
 
     @Autowired
     private DirectorPersistenceMongodb directorPersistence;
 
     @Test
-    void testGetEmails() {
+    void testReadEmails() {
         assertEquals(List.of("test@email.com",
                 "email@email.com",
                 "director@email.com"
-        ), this.directorPersistence.getEmails());
+        ), this.directorPersistence.readEmails());
     }
 }
