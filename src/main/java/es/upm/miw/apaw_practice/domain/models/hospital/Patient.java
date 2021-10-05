@@ -4,21 +4,29 @@ import java.util.List;
 
 public class Patient {
 
-    private Integer dni;
+    private String dni;
     private String gender;
     private Integer age;
     private List<Disease> diseases;
     private Doctor doctor;
 
-    Patient(){
+    public Patient(){
         //empty for framework
     }
 
-    public Integer getDni() {
+    public Patient(String dni, String gender, Integer age, List<Disease> diseases, Doctor doctor) {
+        this.dni = dni;
+        this.gender = gender;
+        this.age = age;
+        this.diseases = diseases;
+        this.doctor = doctor;
+    }
+
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(Integer dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
