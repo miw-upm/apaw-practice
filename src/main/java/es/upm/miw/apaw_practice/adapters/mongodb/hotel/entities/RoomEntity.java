@@ -26,9 +26,6 @@ public class RoomEntity {
         this.hotelGuestsEntities = hotelGuestsEntities;
     }
 
-    public List<HotelGuestEntity> getHotelGuestEntities() {
-        return hotelGuestsEntities;
-    }
 
     public Integer getNumberRoom() {
         return numberRoom;
@@ -58,7 +55,7 @@ public class RoomEntity {
         return hotelGuestsEntities;
     }
 
-    public void setHotelGuests(List<HotelGuestEntity> hotelGuestsEntities) {
+    public void setHotelGuestsEntities(List<HotelGuestEntity> hotelGuestsEntities) {
         this.hotelGuestsEntities = hotelGuestsEntities;
     }
 

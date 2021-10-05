@@ -4,5 +4,6 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 
 public interface HotelGuestPersistence {
     HotelGuest create(HotelGuest hotelGuest);
+
     HotelGuest read(String dni);
 }
