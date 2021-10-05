@@ -1,6 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,16 +21,19 @@ public class HotelGuestEntity {
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
-    public HotelGuestEntity(String dniGuest, String nameGuest, LocalDateTime entryDate, LocalDateTime departureDate) {
-        this.id = UUID.randomUUID().toString();
-        this.dniGuest = dniGuest;
-        this.nameGuest = nameGuest;
-        this.entryDate = entryDate;
-        this.departureDate = departureDate;
-    }
-
     public HotelGuestEntity() {
         //empty for framework
+    }
+
+    public HotelGuestEntity(HotelGuest hotelGuest) {
+        this.id = UUID.randomUUID().toString();
+        BeanUtils.copyProperties(hotelGuest, this);
+    }
+
+    public HotelGuest toHotelGuest() {
+        HotelGuest hotelGuest = new HotelGuest();
+        BeanUtils.copyProperties(this, hotelGuest);
+        return hotelGuest;
     }
 
     public String getId() {
@@ -93,4 +99,6 @@ public class HotelGuestEntity {
                 ", departureDate=" + departureDate +
                 '}';
     }
+
+
 }
