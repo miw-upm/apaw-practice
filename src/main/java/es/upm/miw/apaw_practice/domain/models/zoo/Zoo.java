@@ -59,4 +59,10 @@ public class Zoo {
                 ", cages=" + cages.toString() +
                 '}';
     }
+
+    public boolean isNull() {
+        return this.phoneNumber == null
+                || this.address == null
+                || this.address.isNull();
+    }
 }
