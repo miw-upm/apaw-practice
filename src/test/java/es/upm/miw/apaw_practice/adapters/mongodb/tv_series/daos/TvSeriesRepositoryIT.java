@@ -20,5 +20,6 @@ public class TvSeriesRepositoryIT {
         assertEquals(2009,tvSeriesEntity.getYear());
         assertTrue(tvSeriesEntity.isFinished());
         assertEquals("A-1 Pictures Inc.",tvSeriesEntity.getProducerEntity().getBusinessName());
+        assertEquals(37,tvSeriesEntity.getEpisodeEntities().size());
     }
 }

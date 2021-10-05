@@ -1,19 +1,24 @@
 package es.upm.miw.apaw_practice.domain.models.car_hire;
 
+import java.util.List;
+
 public class Model {
 
     private String type;
     private String description;
     private Integer enginePower;
 
+    private List<Vehicle> vehicleList;
+
     public Model() {
         //empty for framework
     }
 
-    public Model(String type, String description, Integer enginePower) {
+    public Model(String type, String description, Integer enginePower, List<Vehicle> vehicleList) {
         this.type = type;
         this.description = description;
         this.enginePower = enginePower;
+        this.setVehicleList(vehicleList);
     }
 
     public String getType() {
@@ -40,12 +45,21 @@ public class Model {
         this.enginePower = enginePower;
     }
 
+    public List<Vehicle> getVehicleList() {
+        return vehicleList;
+    }
+
+    public void setVehicleList(List<Vehicle> vehicleList) {
+        this.vehicleList = vehicleList;
+    }
+
     @Override
     public String toString() {
         return "Model{" +
                 "type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", enginePower=" + enginePower +
+                ", vehicleList=" + vehicleList +
                 '}';
     }
 }
