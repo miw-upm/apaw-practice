@@ -9,6 +9,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.RoomRepository;
 import es.upm.miw.apaw_practice.domain.models.hotel.Director;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,14 +43,14 @@ public class HotelSeederService {
         this.directorRepository.saveAll(Arrays.asList(directors));
 
         HotelGuestEntity[] hotelGuests = {
-                new HotelGuestEntity("88888888K", "Mario", LocalDateTime.of(2015, 8, 10, 12, 30),
-                        LocalDateTime.of(2015, 8, 25, 15, 30)),
-                new HotelGuestEntity("25252525R", "Laura", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0)),
-                new HotelGuestEntity("11111111S", "Pedro", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0)),
-                new HotelGuestEntity("56565656P", "Luca", LocalDateTime.of(2020, 10, 6, 12, 0),
-                        LocalDateTime.of(2020, 10, 12, 18, 0))
+                new HotelGuestEntity(new HotelGuest("88888888K", "Mario", LocalDateTime.of(2015, 8, 10, 12, 30),
+                        LocalDateTime.of(2015, 8, 25, 15, 30))),
+                new HotelGuestEntity(new HotelGuest("25252525R", "Laura", LocalDateTime.of(2020, 6, 15, 9, 0),
+                        LocalDateTime.of(2018, 9, 16, 16, 0))),
+                new HotelGuestEntity(new HotelGuest("11111111S", "Pedro", LocalDateTime.of(2020, 6, 15, 9, 0),
+                        LocalDateTime.of(2018, 9, 16, 16, 0))),
+                new HotelGuestEntity(new HotelGuest("56565656P", "Luca", LocalDateTime.of(2020, 10, 6, 12, 0),
+                        LocalDateTime.of(2020, 10, 12, 18, 0)))
 
         };
         this.hotelGuestRepository.saveAll(Arrays.asList(hotelGuests));
