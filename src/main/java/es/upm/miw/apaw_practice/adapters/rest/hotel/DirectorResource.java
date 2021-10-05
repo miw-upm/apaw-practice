@@ -21,6 +21,6 @@ public class DirectorResource {
 
     @GetMapping
     public List<String> getEmails(){
-        return this.directorService.getEmails();
+        return this.directorService.readEmails();
     }
 }

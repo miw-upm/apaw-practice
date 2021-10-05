@@ -11,27 +11,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class RoomRepositoryIT {
+class RoomRepositoryIT {
 
     @Autowired
     private RoomRepository roomRepository;
 
     @Test
-    public void testCreateAndRead() {
+    void testCreateAndRead() {
         assertTrue(this.roomRepository.findAll().stream()
                 .anyMatch(room -> 22 == room.getNumberRoom() &&
                         BigDecimal.valueOf(45).equals(room.getPriceRoom()) &&
                         !room.isVip() &&
-                        2 == room.getHotelGuestEntities().size()));
+                        2 == room.getHotelGuestsEntities().size()));
 
     }
 
     @Test
-    public void testFindByRoomNumber() {
+    void testFindByRoomNumber() {
         assertTrue(this.roomRepository.findByNumberRoom(45).isPresent());
         RoomEntity room = this.roomRepository.findByNumberRoom(45).get();
         assertEquals(BigDecimal.valueOf(120), room.getPriceRoom());
         assertEquals("88888888K", room.getHotelGuestsEntities().get(0).getDniGuest());
-        assertEquals(1, room.getHotelGuestEntities().size());
+        assertEquals(1, room.getHotelGuestsEntities().size());
     }
 }
