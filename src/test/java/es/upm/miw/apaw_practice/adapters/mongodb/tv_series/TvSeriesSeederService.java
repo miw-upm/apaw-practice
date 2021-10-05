@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tv_series;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.daos.EpisodeRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.daos.PlayerSeriesRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.daos.ProducerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.daos.TvSeriesRepository;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,8 +25,6 @@ public class TvSeriesSeederService {
     private TvSeriesRepository tvSeriesRepository;
     @Autowired
     private PlayerSeriesRepository playerSeriesRepository;
-    @Autowired
-    private EpisodeRepository episodeRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- TvSeries Initial Load -----------");
@@ -39,24 +35,21 @@ public class TvSeriesSeederService {
                 new ProducerEntity(new Producer("A-1 Pictures Inc.","a1@pictures.com", 327468273L)),
         };
         this.producerRepository.saveAll(Arrays.asList(producers));
+        List<EpisodeEntity> episodeEntities1 = new ArrayList<>();
+        for(int i = 1;i<=25;i++)
+            episodeEntities1.add(new EpisodeEntity(i,1,25));
+        for(int i = 1;i<=12;i++)
+            episodeEntities1.add(new EpisodeEntity(i,2,28));
+        List<EpisodeEntity> episodeEntities2 = new ArrayList<>();
+        for(int i = 1;i<=24;i++)
+            episodeEntities2.add(new EpisodeEntity(i,1,24));
         TvSeriesEntity[] tvSeries = {
-                new TvSeriesEntity("Fairy Tail",2009,true,producers[3]),
+                new TvSeriesEntity("Fairy Tail",2009,true,producers[3],episodeEntities1),
                 new TvSeriesEntity("Kimetsu No Yaiba",2019,false,producers[0]),
-                new TvSeriesEntity("Shingeki No Kyojin",2013,false,producers[1]),
+                new TvSeriesEntity("Shingeki No Kyojin",2013,false,producers[1],episodeEntities2),
                 new TvSeriesEntity("Vinland Saga",2019,false,producers[1])
         };
         this.tvSeriesRepository.saveAll(Arrays.asList(tvSeries));
-        List<EpisodeEntity> episodes = new ArrayList<>();
-        for(int i = 1;i<=25;i++) {
-            episodes.add(new EpisodeEntity(i,1,25,tvSeries[2]));
-        }
-        for(int i = 1;i<=12;i++) {
-            episodes.add(new EpisodeEntity(i,2,28,tvSeries[2]));
-        }
-        for(int i = 1;i<=24;i++) {
-            episodes.add(new EpisodeEntity(i,1,24,tvSeries[3]));
-        }
-        this.episodeRepository.saveAll(episodes);
         PlayerSeriesEntity[] players = {
                 new PlayerSeriesEntity("Yuki Kaji",LocalDate.of(1985,9,3),"Japan",List.of(tvSeries[1],tvSeries[2])),
                 new PlayerSeriesEntity("Yuto Uemura",LocalDate.of(1993,10,23),"Japan",List.of(tvSeries[3])),
