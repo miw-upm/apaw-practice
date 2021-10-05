@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 public class EquipmentEntity {
 
     private String type;
-    private Integer number;
+    private Integer quantity;
     private BigDecimal pricePerUnit;
 
-    public EquipmentEntity(String type, Integer number, BigDecimal pricePerUnit){
+    public EquipmentEntity(String type, Integer quantity, BigDecimal pricePerUnit){
         this.type = type;
-        this.number = number;
+        this.quantity = quantity;
         this.pricePerUnit = pricePerUnit;
     }
 
@@ -26,12 +26,12 @@ public class EquipmentEntity {
         this.type = type;
     }
 
-    public Integer getNumber() {
-        return this.number;
+    public Integer getQuantity() {
+        return this.quantity;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public BigDecimal getPricePerUnit() {
