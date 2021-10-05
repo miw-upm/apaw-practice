@@ -1,61 +1,50 @@
 package es.upm.miw.apaw_practice.domain.models.gym;
 
 public class Athlete {
-    private String athleteDni;
-    private  String athleteName;
-    private  String atheleFamilyname;
-    private String athleteAddress;
+    private String nie;
+    private  String name;
+    private  String familyName;
 
     public Athlete(){
         //empty for framework
     }
 
-    public Athlete(String athleteDni, String athleteName, String atheleFamilyname, String athleteAddress) {
-        this.athleteDni = athleteDni;
-        this.athleteName = athleteName;
-        this.atheleFamilyname = atheleFamilyname;
-        this.athleteAddress = athleteAddress;
+    public Athlete(String nie, String name, String familyName) {
+        this.nie = nie;
+        this.name = name;
+        this.familyName = familyName;
     }
 
-    public String getAthleteDni() {
-        return athleteDni;
+    public String getNie() {
+        return nie;
     }
 
-    public void setAthleteDni(String athleteDni) {
-        this.athleteDni = athleteDni;
+    public void setNie(String nie) {
+        this.nie = nie;
     }
 
-    public String getAthleteName() {
-        return athleteName;
+    public String getName() {
+        return name;
     }
 
-    public void setAthleteName(String athleteName) {
-        this.athleteName = athleteName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAtheleFamilyname() {
-        return atheleFamilyname;
+    public String getFamilyName() {
+        return familyName;
     }
 
-    public void setAtheleFamilyname(String atheleFamilyname) {
-        this.atheleFamilyname = atheleFamilyname;
-    }
-
-    public String getAthleteAddress() {
-        return athleteAddress;
-    }
-
-    public void setAthleteAddress(String athleteAddress) {
-        this.athleteAddress = athleteAddress;
+    public void setFamilyname(String familyname) {
+        this.familyName = familyname;
     }
 
     @Override
     public String toString() {
         return "Athlete{" +
-                "athleteDni='" + athleteDni + '\'' +
-                ", athleteName='" + athleteName + '\'' +
-                ", atheleFamilyname='" + atheleFamilyname + '\'' +
-                ", athleteAddress='" + athleteAddress + '\'' +
+                "nie='" + nie + '\'' +
+                ", name='" + name + '\'' +
+                ", familyname='" + familyName + '\'' +
                 '}';
     }
 }
