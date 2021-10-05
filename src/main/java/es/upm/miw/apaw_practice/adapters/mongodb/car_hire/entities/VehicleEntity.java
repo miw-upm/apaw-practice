@@ -27,6 +27,7 @@ public class VehicleEntity {
     public VehicleEntity(Vehicle vehicle) {
         BeanUtils.copyProperties(vehicle, this);
         this.id = UUID.randomUUID().toString();
+        vehicle.setId(this.id);
     }
 
     public String getId() {
