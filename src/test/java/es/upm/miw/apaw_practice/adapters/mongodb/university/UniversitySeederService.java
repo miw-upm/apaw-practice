@@ -30,7 +30,8 @@ public class UniversitySeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- University Initial Load -----------");
         ClassroomEntity[] classrooms = {
-            new ClassroomEntity(1302, "ETSISI", 20)
+                new ClassroomEntity("ETSISI", 1302, 20),
+                new ClassroomEntity("ETSISI", 3101, 40)
         };
         this.classroomRepository.saveAll(Arrays.asList(classrooms));
         SubjectEntity[] subjects = {

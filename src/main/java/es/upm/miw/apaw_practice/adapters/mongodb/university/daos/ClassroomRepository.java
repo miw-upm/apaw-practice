@@ -4,4 +4,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.ClassroomEn
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface ClassroomRepository extends MongoRepository<ClassroomEntity, String> {
+
+    int deleteBySchoolAndNumber(String school, Integer number);
 }
