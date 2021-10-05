@@ -14,10 +14,9 @@ public class AthleteEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private String athleteDni;
-    private String athleteName;
-    private String atheleFamilyname;
-    private String athleteAddress;
+    private String nie;
+    private String name;
+    private String familyName;
 
     public AthleteEntity() {
         //empty
@@ -30,7 +29,6 @@ public class AthleteEntity {
         this.id = UUID.randomUUID().toString();
     }
 
-
     public String getId() {
         return id;
     }
@@ -39,36 +37,28 @@ public class AthleteEntity {
         this.id = id;
     }
 
-    public String getAthleteDni() {
-        return athleteDni;
+    public String getNie() {
+        return nie;
     }
 
-    public void setAthleteDni(String athleteDni) {
-        this.athleteDni = athleteDni;
+    public void setNie(String nie) {
+        this.nie = nie;
     }
 
-    public String getAthleteName() {
-        return athleteName;
+    public String getName() {
+        return name;
     }
 
-    public void setAthleteName(String athleteName) {
-        this.athleteName = athleteName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAtheleFamilyname() {
-        return atheleFamilyname;
+    public String getFamilyName() {
+        return familyName;
     }
 
-    public void setAtheleFamilyname(String atheleFamilyname) {
-        this.atheleFamilyname = atheleFamilyname;
-    }
-
-    public String getAthleteAddress() {
-        return athleteAddress;
-    }
-
-    public void setAthleteAddress(String athleteAddress) {
-        this.athleteAddress = athleteAddress;
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
     }
 
     @Override
@@ -76,22 +66,21 @@ public class AthleteEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AthleteEntity that = (AthleteEntity) o;
-        return id.equals(that.id) && athleteDni.equals(that.athleteDni) && Objects.equals(athleteName, that.athleteName) && Objects.equals(atheleFamilyname, that.atheleFamilyname) && Objects.equals(athleteAddress, that.athleteAddress);
+        return nie.equals(that.nie);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, athleteDni, athleteName, atheleFamilyname, athleteAddress);
+        return Objects.hash(nie);
     }
 
     @Override
     public String toString() {
         return "AthleteEntity{" +
                 "id='" + id + '\'' +
-                ", athleteDni='" + athleteDni + '\'' +
-                ", athleteName='" + athleteName + '\'' +
-                ", atheleFamilyname='" + atheleFamilyname + '\'' +
-                ", athleteAddress='" + athleteAddress + '\'' +
+                ", nie='" + nie + '\'' +
+                ", name='" + name + '\'' +
+                ", familyName='" + familyName + '\'' +
                 '}';
     }
 }
