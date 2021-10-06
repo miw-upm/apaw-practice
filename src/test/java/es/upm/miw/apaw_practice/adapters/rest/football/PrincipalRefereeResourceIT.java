@@ -9,7 +9,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 @RestTestConfig
-public class PrincipalRefereeResourceIT {
+class PrincipalRefereeResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
