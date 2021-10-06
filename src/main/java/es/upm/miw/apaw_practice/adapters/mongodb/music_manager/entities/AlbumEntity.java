@@ -21,7 +21,7 @@ public class AlbumEntity {
     @Id
     private String id;
     @DBRef
-    private Band band;
+    private BandEntity bandEntity;
     @DBRef
     private List<SongEntity> songEntities;
     private String albumTitle;
@@ -29,9 +29,9 @@ public class AlbumEntity {
     private BigDecimal price;
     private LocalDate releaseDate;
 
-    public AlbumEntity(Band band, List<SongEntity> songEntities, String albumTitle, String label, BigDecimal price, LocalDate releaseDate) {
+    public AlbumEntity(BandEntity bandEntity, List<SongEntity> songEntities, String albumTitle, String label, BigDecimal price, LocalDate releaseDate) {
         this.id = UUID.randomUUID().toString();
-        this.band = band;
+        this.bandEntity = bandEntity;
         this.songEntities = songEntities;
         this.albumTitle = albumTitle;
         this.label = label;
@@ -51,12 +51,12 @@ public class AlbumEntity {
         this.id = id;
     }
 
-    public Band getBand() {
-        return band;
+    public BandEntity getBandEntity() {
+        return bandEntity;
     }
 
-    public void setBand(Band band) {
-        this.band = band;
+    public void setBandEntity(BandEntity band) {
+        this.bandEntity = band;
     }
 
     public List<SongEntity> getSongEntities() {
@@ -97,7 +97,8 @@ public class AlbumEntity {
 
     public Album toAlbum() {
         Album album = new Album();
-        BeanUtils.copyProperties(this, album, "songEntities");
+        BeanUtils.copyProperties(this, album, "bandEntity", "songEntities");
+        album.setBand(bandEntity.toBand());
         List<Song> tracks = this.songEntities.stream()
                 .map(SongEntity::toSong)
                 .collect(Collectors.toList());
@@ -110,20 +111,20 @@ public class AlbumEntity {
         if (this == o) return true;
         if (!(o instanceof AlbumEntity)) return false;
         AlbumEntity that = (AlbumEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(band, that.band) && Objects.equals(songEntities, that.songEntities) && Objects.equals(albumTitle, that.albumTitle) && Objects.equals(label, that.label) && Objects.equals(price, that.price) && Objects.equals(releaseDate, that.releaseDate);
+        return Objects.equals(id, that.id) && Objects.equals(bandEntity, that.bandEntity) && Objects.equals(songEntities, that.songEntities) && Objects.equals(albumTitle, that.albumTitle) && Objects.equals(label, that.label) && Objects.equals(price, that.price) && Objects.equals(releaseDate, that.releaseDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, band, songEntities, albumTitle, label, price, releaseDate);
+        return Objects.hash(id, bandEntity, songEntities, albumTitle, label, price, releaseDate);
     }
 
     @Override
     public String toString() {
         return "AlbumEntity{" +
                 "id='" + id + '\'' +
-                ", band=" + band +
-                ", tracks=" + songEntities +
+                ", bandEntity=" + bandEntity +
+                ", songEntities=" + songEntities +
                 ", albumTitle='" + albumTitle + '\'' +
                 ", label='" + label + '\'' +
                 ", price=" + price +
