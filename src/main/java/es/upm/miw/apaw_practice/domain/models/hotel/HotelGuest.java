@@ -9,11 +9,11 @@ public class HotelGuest {
     private LocalDateTime departureDate;
 
 
-    HotelGuest() {
+    public HotelGuest() {
         //empty for framework
     }
 
-    HotelGuest(String nameGuest, String dniGuest, LocalDateTime entryDate, LocalDateTime departureDate) {
+    public HotelGuest(String nameGuest, String dniGuest, LocalDateTime entryDate, LocalDateTime departureDate) {
         this.nameGuest = nameGuest;
         this.dniGuest = dniGuest;
         this.entryDate = entryDate;
@@ -50,6 +50,13 @@ public class HotelGuest {
 
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
+    }
+
+    public boolean isNull() {
+        return this.nameGuest == null
+                || this.dniGuest == null
+                || this.entryDate == null
+                || this.departureDate == null;
     }
 
     @Override
