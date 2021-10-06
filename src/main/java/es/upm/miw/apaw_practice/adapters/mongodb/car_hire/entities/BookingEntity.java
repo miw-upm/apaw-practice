@@ -29,9 +29,9 @@ public class BookingEntity {
         //empty for framework
     }
 
-    public BookingEntity(List<VehicleEntity> vehicleEntities, RenterEntity renterEntity, Integer numberDays) {
+    public BookingEntity(List<VehicleEntity> vehicleEntities, RenterEntity renterEntity, String bookingNumber, Integer numberDays) {
         this.id = UUID.randomUUID().toString();
-        this.bookingNumber = UUID.randomUUID().toString();
+        this.bookingNumber = bookingNumber;
         this.hiredDate = LocalDateTime.now();
         this.numberDays = numberDays;
         this.vehicleEntities = vehicleEntities;

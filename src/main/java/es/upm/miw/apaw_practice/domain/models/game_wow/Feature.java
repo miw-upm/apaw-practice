@@ -3,13 +3,53 @@ package es.upm.miw.apaw_practice.domain.models.game_wow;
 public class Feature {
 
     private String part;
-    private int spellPower;
-    private int meleeAtack;
-    private int temple;
-    private String extraEpell;
+    private Integer spellPower;
+    private Integer meleeAtack;
+    private Integer temple;
+    private String extraSpell;
 
     public Feature() {
         //empty for framework
+    }
+
+    public String getPart() {
+        return part;
+    }
+
+    public void setPart(String part) {
+        this.part = part;
+    }
+
+    public Integer getSpellPower() {
+        return spellPower;
+    }
+
+    public void setSpellPower(Integer spellPower) {
+        this.spellPower = spellPower;
+    }
+
+    public Integer getMeleeAtack() {
+        return meleeAtack;
+    }
+
+    public void setMeleeAtack(Integer meleeAtack) {
+        this.meleeAtack = meleeAtack;
+    }
+
+    public Integer getTemple() {
+        return temple;
+    }
+
+    public void setTemple(Integer temple) {
+        this.temple = temple;
+    }
+
+    public String getExtraSpell() {
+        return extraSpell;
+    }
+
+    public void setExtraSpell(String extraSpell) {
+        this.extraSpell = extraSpell;
     }
 
     @Override
@@ -19,7 +59,7 @@ public class Feature {
                 ", spellPower=" + spellPower +
                 ", meleeAtack=" + meleeAtack +
                 ", temple=" + temple +
-                ", extraEpell='" + extraEpell + '\'' +
+                ", extraEpell='" + extraSpell + '\'' +
                 '}';
     }
 }

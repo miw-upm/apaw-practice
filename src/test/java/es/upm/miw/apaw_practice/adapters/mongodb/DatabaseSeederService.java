@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.CarHireSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.CarWorkshopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.CinemaSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.football.FootballSeederService;
@@ -29,13 +30,15 @@ public class DatabaseSeederService {
     private final GymSeederService gymSeederService;
     private final VetClinicSeederService vetClinicSeederService;
     private final FootballSeederService footballSeederService;
+    private final CarHireSeederService carHireSeederService;
 
     @Autowired
     public DatabaseSeederService(ShopSeederService shopSeederService, ZooSeederService zooSeederService,
                                  CinemaSeederService cinemaSeederService, CarWorkshopSeederService carWorkshopSeederService,
                                  TvSeriesSeederService tvSeriesSeederService, UniversitySeederService universitySeederService,
                                  HotelSeederService hotelSeederService, Tennis_CourtsSeederService tennis_courtsSeederService,
-                                 GymSeederService gymSeederService, VetClinicSeederService vetClinicSeederService, FootballSeederService footballSeederService) {
+                                 GymSeederService gymSeederService, VetClinicSeederService vetClinicSeederService,
+                                 FootballSeederService footballSeederService, CarHireSeederService carHireSeederService) {
         this.shopSeederService = shopSeederService;
         this.zooSeederService = zooSeederService;
         this.cinemaSeederService = cinemaSeederService;
@@ -47,6 +50,7 @@ public class DatabaseSeederService {
         this.gymSeederService = gymSeederService;
         this.vetClinicSeederService = vetClinicSeederService;
         this.footballSeederService = footballSeederService;
+        this.carHireSeederService = carHireSeederService;
         this.seedDatabase();
     }
 
@@ -62,6 +66,7 @@ public class DatabaseSeederService {
         this.gymSeederService.seedDatabase();
         this.vetClinicSeederService.seedDatabase();
         this.footballSeederService.seedDatabase();
+        this.carHireSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -77,6 +82,7 @@ public class DatabaseSeederService {
         this.gymSeederService.deleteAll();
         this.vetClinicSeederService.deleteAll();
         this.footballSeederService.deleteAll();
+        this.carHireSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
