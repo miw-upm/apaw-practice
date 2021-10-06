@@ -6,7 +6,7 @@ public class Feature {
     private Integer spellPower;
     private Integer meleeAtack;
     private Integer temple;
-    private String extraEpell;
+    private String extraSpell;
 
     public Feature() {
         //empty for framework
@@ -44,12 +44,12 @@ public class Feature {
         this.temple = temple;
     }
 
-    public String getExtraEpell() {
-        return extraEpell;
+    public String getExtraSpell() {
+        return extraSpell;
     }
 
-    public void setExtraEpell(String extraEpell) {
-        this.extraEpell = extraEpell;
+    public void setExtraSpell(String extraSpell) {
+        this.extraSpell = extraSpell;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Feature {
                 ", spellPower=" + spellPower +
                 ", meleeAtack=" + meleeAtack +
                 ", temple=" + temple +
-                ", extraEpell='" + extraEpell + '\'' +
+                ", extraEpell='" + extraSpell + '\'' +
                 '}';
     }
 }
