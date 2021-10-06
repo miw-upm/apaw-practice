@@ -6,8 +6,14 @@ public class Disease {
     private Boolean severe;
     private String alias;
 
-    Disease(){
+    public Disease(){
         //empty for framework
+    }
+
+    public Disease(String description, Boolean severe, String alias) {
+        this.description = description;
+        this.severe = severe;
+        this.alias = alias;
     }
 
     public String getDescription() {

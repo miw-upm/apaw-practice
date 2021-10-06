@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities;
 
+
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -12,70 +13,89 @@ import java.util.UUID;
 @Document
 public class CoachEntity {
     @Id
-    private String id ;
+    private String id;
     @Indexed(unique = true)
-    private String coachDni;
-    private String coachName;
-    private String coachFamilyname;
-    private Integer coachPhone;
-    @DBRef
-    private List<LessonEntity> lesson;
+    private String dni;
+    private String firstName;
+    private String lastName;
+    private Integer phone;
 
-    public CoachEntity(){
+    @DBRef
+    private LessonEntity lesson;
+
+    public CoachEntity() {
         //empty
     }
-    public CoachEntity(String coachDni, String coachName, String coachFamilyname, List<LessonEntity> lesson) {
+
+    public CoachEntity(String dni, String firstName, String lastName, Integer phone, LessonEntity lesson) {
 
         this.id = UUID.randomUUID().toString();
-        this.coachDni = coachDni;
-        this.coachName = coachName;
-        this.coachFamilyname = coachFamilyname;
+        this.dni = dni;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
         this.lesson = lesson;
     }
 
-    public String getId() {return id;}
 
-    public String getCoachDni() {return coachDni;}
+    public String getId() {
+        return id;
+    }
 
-    public void setCoachDni(String coachDni) {this.coachDni = coachDni;}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public String getCoachName() {return coachName;}
+    public String getDni() {
+        return dni;
+    }
 
-    public void setCoachName(String coachName) {this.coachName = coachName;}
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 
-    public String getCoachFamilyname() {return coachFamilyname;}
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public void setCoachFamilyname(String coachFamilyname) {this.coachFamilyname = coachFamilyname;}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public Integer getCoachPhone() {return coachPhone;}
+    public String getLastName() {
+        return lastName;
+    }
 
-    public void setCoachPhone(Integer coachPhone) {this.coachPhone = coachPhone;}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public List<LessonEntity> getLesson() {return lesson;}
+    public Integer getPhone() {
+        return phone;
+    }
 
-    public void setLesson(List<LessonEntity> lesson) {this.lesson = lesson;}
+    public void setPhone(Integer phone) {
+        this.phone = phone;
+    }
+
+    public LessonEntity getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(LessonEntity lesson) {
+        this.lesson = lesson;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CoachEntity that = (CoachEntity) o;return id.equals(that.id) && coachDni.equals(that.coachDni) && Objects.equals(coachName, that.coachName) && Objects.equals(coachFamilyname, that.coachFamilyname) && Objects.equals(coachPhone, that.coachPhone) && Objects.equals(lesson, that.lesson);
+        CoachEntity that = (CoachEntity) o;
+        return dni.equals(that.dni);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, coachDni, coachName, coachFamilyname, coachPhone, lesson);
-    }
-
-    @Override
-    public String toString() {
-        return "Coachentity{" +
-                "id='" + id + '\'' +
-                ", coachDni='" + coachDni + '\'' +
-                ", coachName='" + coachName + '\'' +
-                ", coachFamilyname='" + coachFamilyname + '\'' +
-                ", coachPhone=" + coachPhone +
-                ", lesson=" + lesson +
-                '}';
+        return Objects.hash(dni);
     }
 }

@@ -5,10 +5,14 @@ import java.util.List;
 public class Waiter {
     private String section;
     private String category;
-    private List<Client> clients;
 
     Waiter(){
         //empty for framework
+    }
+
+    public Waiter(String section, String category) {
+        this.section = section;
+        this.category = category;
     }
 
     public String getSection() {
@@ -27,20 +31,12 @@ public class Waiter {
         this.category = category;
     }
 
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
 
     @Override
     public String toString() {
         return "Waiter{" +
                 "section='" + section + '\'' +
                 ", category='" + category + '\'' +
-                ", clients=" + clients +
                 '}';
     }
 }

@@ -3,38 +3,48 @@ package es.upm.miw.apaw_practice.domain.models.gym;
 import java.util.List;
 
 public class Gym {
-    private String gymAddress;
-    private String gymName ;
+    private String address;
+    private String label ;
+    private String cellphone;
     private List<Coach> coach ;
 
     public Gym(){
         //empty for framework
     }
 
-    public Gym(String gymAddress, String gymName, List<Coach> coach) {
-        this.gymAddress = gymAddress;
-        this.gymName = gymName;
+    public Gym(String address, String label,String cellphone, List<Coach> coach) {
+        this.address = address;
+        this.cellphone=cellphone;
+        this.label = label;
         this.coach = coach;
     }
 
-    public String getGymAddress() {
-        return gymAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setGymAddress(String gymAddress) {
-        this.gymAddress = gymAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getGymName() {
-        return gymName;
+    public String getLabel() {
+        return label;
     }
 
-    public void setGymName(String gymName) {
-        this.gymName = gymName;
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 
     public List<Coach> getCoach() {
-        return this.coach;
+        return coach;
     }
 
     public void setCoach(List<Coach> coach) {
@@ -44,9 +54,10 @@ public class Gym {
     @Override
     public String toString() {
         return "Gym{" +
-                "gymAddress='" + gymAddress + '\'' +
-                ", gymName='" + gymName + '\'' +
-                ", Coach=" + coach +
+                "address='" + address + '\'' +
+                ", label='" + label + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", coach=" + coach +
                 '}';
     }
 }

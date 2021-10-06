@@ -6,6 +6,10 @@ public class ZooAddress {
     private Integer streetNumber;
     private String zipCode;
 
+    public ZooAddress() {
+        //empty from framework
+    }
+
     public ZooAddress(String street, Integer streetNumber, String zipCode) {
         this.street = street;
         this.streetNumber = streetNumber;
@@ -58,5 +62,11 @@ public class ZooAddress {
                 ", streetNumber='" + streetNumber + '\'' +
                 ", zipCode=" + zipCode +
                 '}';
+    }
+
+    public boolean isNull() {
+        return this.street == null
+                || this.streetNumber == null
+                || this.zipCode == null;
     }
 }

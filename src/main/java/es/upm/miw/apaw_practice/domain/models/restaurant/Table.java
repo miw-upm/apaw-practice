@@ -4,30 +4,37 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Table {
-    private boolean isOccupied;
-    private int number;
+    private Boolean occupied;
+    private Integer number;
     private String style;
     private BigDecimal price;
-    private List<Client> clients;
     private List<Reserve> reserves;
 
     Table(){
         //empty for framework
     }
 
-    public boolean isOccupied() {
-        return isOccupied;
+    public Table(Boolean occupied, Integer number, String style, BigDecimal price, List<Reserve> reserves) {
+        this.occupied = occupied;
+        this.number = number;
+        this.style = style;
+        this.price = price;
+        this.reserves = reserves;
     }
 
-    public void setOccupied(boolean occupied) {
-        isOccupied = occupied;
+    public Boolean isOccupied() {
+        return occupied;
     }
 
-    public int getNumber() {
+    public void setOccupied(Boolean occupied) {
+        occupied = occupied;
+    }
+
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
@@ -47,14 +54,6 @@ public class Table {
         this.price = price;
     }
 
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
-
     public List<Reserve> getReserves() {
         return reserves;
     }
@@ -66,11 +65,10 @@ public class Table {
     @Override
     public String toString() {
         return "Table{" +
-                "isOccupied=" + isOccupied +
+                "isOccupied=" + occupied +
                 ", number=" + number +
                 ", style='" + style + '\'' +
                 ", price=" + price +
-                ", clients=" + clients +
                 ", reserves=" + reserves +
                 '}';
     }
