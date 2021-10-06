@@ -12,63 +12,66 @@ import java.util.UUID;
 @Document
 public class LessonEntity {
     @Id
-    private String id ;
-    private String lessonName ;
-    private LocalDateTime lessonTime;
-    private String lessonDescription ;
-    private Boolean lessonFinished ;
+    private String id;
+    private String title;
+    private LocalDateTime time;
+    private String description;
+    private Boolean finished;
     @DBRef
-    private List<AthleteEntity> athlete ;
+    private List<AthleteEntity> athlete;
 
-    public LessonEntity(){
+    public LessonEntity() {
         //empty for framework
     }
 
-    public LessonEntity(String lessonName, LocalDateTime lessonTime, String lessonDescription, Boolean lessonFinished, List<AthleteEntity> athlete) {
+    public LessonEntity(String title, LocalDateTime time, String description, Boolean finished, List<AthleteEntity> athlete) {
         this.id = UUID.randomUUID().toString();
-        this.lessonName = lessonName;
-        this.lessonTime = lessonTime;
-        this.lessonDescription = lessonDescription;
-        this.lessonFinished = lessonFinished;
+        this.title = title;
+        this.time = time;
+        this.description = description;
+        this.finished = finished;
         this.athlete = athlete;
     }
-
 
 
     public String getId() {
         return id;
     }
 
-    public String getLessonName() {
-        return lessonName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setLessonName(String lessonName) {
-        this.lessonName = lessonName;
+    public String getTitle() {
+        return title;
     }
 
-    public LocalDateTime getLessonTime() {
-        return lessonTime;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setLessonTime(LocalDateTime lessonTime) {
-        this.lessonTime = lessonTime;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public String getLessonDescription() {
-        return lessonDescription;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
-    public void setLessonDescription(String lessonDescription) {
-        this.lessonDescription = lessonDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public Boolean isLessonFinished() {
-        return lessonFinished;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setLessonFinished(Boolean lessonFinished) {
-        this.lessonFinished = lessonFinished;
+    public Boolean getFinished() {
+        return finished;
+    }
+
+    public void setFinished(Boolean finished) {
+        this.finished = finished;
     }
 
     public List<AthleteEntity> getAthlete() {
@@ -84,22 +87,22 @@ public class LessonEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LessonEntity that = (LessonEntity) o;
-        return id.equals(that.id) && lessonName.equals(that.lessonName) && Objects.equals(lessonTime, that.lessonTime) && Objects.equals(lessonDescription, that.lessonDescription) && Objects.equals(lessonFinished, that.lessonFinished) && Objects.equals(athlete, that.athlete);
+        return title.equals(that.title) && Objects.equals(time, that.time) && Objects.equals(description, that.description) && Objects.equals(finished, that.finished) && Objects.equals(athlete, that.athlete);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, lessonName, lessonTime, lessonDescription, lessonFinished, athlete);
+        return Objects.hash(title, time, description, finished, athlete);
     }
 
     @Override
     public String toString() {
         return "LessonEntity{" +
                 "id='" + id + '\'' +
-                ", lessonName='" + lessonName + '\'' +
-                ", lessonTime=" + lessonTime +
-                ", lessonDescription='" + lessonDescription + '\'' +
-                ", lessonFinished=" + lessonFinished +
+                ", title='" + title + '\'' +
+                ", time=" + time +
+                ", description='" + description + '\'' +
+                ", finished=" + finished +
                 ", athlete=" + athlete +
                 '}';
     }

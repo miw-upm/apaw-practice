@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Table {
-    private Boolean isOccupied;
+    private Boolean occupied;
     private Integer number;
     private String style;
     private BigDecimal price;
@@ -14,8 +14,8 @@ public class Table {
         //empty for framework
     }
 
-    public Table(Boolean isOccupied, Integer number, String style, BigDecimal price, List<Reserve> reserves) {
-        this.isOccupied = isOccupied;
+    public Table(Boolean occupied, Integer number, String style, BigDecimal price, List<Reserve> reserves) {
+        this.occupied = occupied;
         this.number = number;
         this.style = style;
         this.price = price;
@@ -23,11 +23,11 @@ public class Table {
     }
 
     public Boolean isOccupied() {
-        return isOccupied;
+        return occupied;
     }
 
     public void setOccupied(Boolean occupied) {
-        isOccupied = occupied;
+        occupied = occupied;
     }
 
     public Integer getNumber() {
@@ -65,7 +65,7 @@ public class Table {
     @Override
     public String toString() {
         return "Table{" +
-                "isOccupied=" + isOccupied +
+                "isOccupied=" + occupied +
                 ", number=" + number +
                 ", style='" + style + '\'' +
                 ", price=" + price +
