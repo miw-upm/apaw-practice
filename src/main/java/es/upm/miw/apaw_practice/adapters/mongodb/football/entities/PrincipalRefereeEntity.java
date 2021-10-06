@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.football.entities;
 
 import es.upm.miw.apaw_practice.domain.models.football.PrincipalReferee;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
@@ -22,6 +23,11 @@ public class PrincipalRefereeEntity {
         this.name = name;
         this.cityBorn = cityBorn;
         this.age = age;
+    }
+
+    public PrincipalRefereeEntity(PrincipalReferee principalReferee) {
+        BeanUtils.copyProperties(principalReferee, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getName() {

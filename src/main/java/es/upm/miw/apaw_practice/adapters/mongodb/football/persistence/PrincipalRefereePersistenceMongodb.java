@@ -20,7 +20,7 @@ public class PrincipalRefereePersistenceMongodb implements PrincipalRefereePersi
     @Override
     public PrincipalReferee create(PrincipalReferee principalReferee) {
         return this.principalRefereeRepository
-                .save(new PrincipalRefereeEntity())
+                .save(new PrincipalRefereeEntity(principalReferee))
                 .toPrincipalReferee();
     }
 }
