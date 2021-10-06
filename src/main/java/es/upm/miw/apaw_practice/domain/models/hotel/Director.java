@@ -6,7 +6,7 @@ public class Director {
     private String email;
     private Integer telephone;
 
-    Director() {
+    public Director() {
         //empty for framework
     }
 
@@ -16,6 +16,11 @@ public class Director {
         this.telephone = telephone;
     }
 
+    public static Director ofEmail(Director director) {
+        Director directorDto = new Director();
+        directorDto.setEmail(director.getEmail());
+        return directorDto;
+    }
 
     public String getDniDirector() {
         return dniDirector;

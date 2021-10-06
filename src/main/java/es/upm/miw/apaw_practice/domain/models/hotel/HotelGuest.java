@@ -52,6 +52,13 @@ public class HotelGuest {
         this.departureDate = departureDate;
     }
 
+    public boolean isNull() {
+        return this.nameGuest == null
+                || this.dniGuest == null
+                || this.entryDate == null
+                || this.departureDate == null;
+    }
+
     @Override
     public String toString() {
         return "HotelGuest{" +
