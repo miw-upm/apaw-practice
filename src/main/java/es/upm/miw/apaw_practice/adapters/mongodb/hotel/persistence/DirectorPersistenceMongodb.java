@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.DirectorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
+import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.DirectorPersistence;
 import org.springframework.stereotype.Repository;
 
@@ -18,9 +19,11 @@ public class DirectorPersistenceMongodb implements DirectorPersistence {
     }
 
     @Override
-    public List<String> getEmails() {
+    public List<Director> readEmails() {
         return this.directorRepository.findAll().stream()
-                .map(DirectorEntity::getEmail)
+                .map(DirectorEntity::toDirector)
+                .map(Director::ofEmail)
                 .collect(Collectors.toList());
+
     }
 }

@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
+import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.services.hotel.DirectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class DirectorResource {
     public DirectorResource(DirectorService directorService){this.directorService = directorService;}
 
     @GetMapping
-    public List<String> getEmails(){
-        return this.directorService.getEmails();
+    public List<Director> readEmails(){
+        return this.directorService.readEmails();
     }
 }

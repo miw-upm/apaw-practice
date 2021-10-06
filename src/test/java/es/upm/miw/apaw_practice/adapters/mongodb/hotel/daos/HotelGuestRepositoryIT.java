@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class HotelGuestRepositoryIT {
+class HotelGuestRepositoryIT {
 
     @Autowired
     private HotelGuestRepository hotelGuestRepository;
 
     @Test
-    public void testFindByDni() {
+    void testFindByDni() {
         assertTrue(this.hotelGuestRepository.findByDniGuest("25252525R").isPresent());
         HotelGuestEntity hotelGuest = this.hotelGuestRepository.findByDniGuest("25252525R").get();
         assertEquals("Laura", hotelGuest.getNameGuest());
@@ -26,7 +26,7 @@ public class HotelGuestRepositoryIT {
     }
 
     @Test
-    public void testFindByName() {
+    void testFindByName() {
         assertTrue(this.hotelGuestRepository.findByNameGuest("Luca").isPresent());
         HotelGuestEntity hotelGuest = this.hotelGuestRepository.findByNameGuest("Luca").get();
         assertEquals("56565656P", hotelGuest.getDniGuest());
@@ -35,7 +35,7 @@ public class HotelGuestRepositoryIT {
     }
 
     @Test
-    public void testCreateAndRead() {
+    void testCreateAndRead() {
         assertTrue(this.hotelGuestRepository.findAll().stream()
                 .anyMatch(hotelGuest -> "88888888K".equals(hotelGuest.getDniGuest()) &&
                         "Mario".equals(hotelGuest.getNameGuest()) &&
