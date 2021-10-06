@@ -4,20 +4,20 @@ import java.util.List;
 
 public class Boss {
 
-    private String boss;
+    private String description;
     private String effort;
-    private List<Drop> DropList;
+    private List<Drop> dropList;
 
     public Boss() {
         //empty for framework
     }
 
-    public String getBoss() {
-        return boss;
+    public String getDescription() {
+        return description;
     }
 
-    public void setBoss(String boss) {
-        this.boss = boss;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getEffort() {
@@ -29,19 +29,19 @@ public class Boss {
     }
 
     public List<Drop> getDropList() {
-        return DropList;
+        return dropList;
     }
 
     public void setDropList(List<Drop> dropList) {
-        DropList = dropList;
+        this.dropList = dropList;
     }
 
     @Override
     public String toString() {
         return "Boss{" +
-                "boss='" + boss + '\'' +
+                "boss='" + description + '\'' +
                 ", effort='" + effort + '\'' +
-                ", bossesList=" + DropList +
+                ", bossesList=" + dropList +
                 '}';
     }
 }
