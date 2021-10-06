@@ -18,10 +18,12 @@ public class DirectorResource {
     private final DirectorService directorService;
 
     @Autowired
-    public DirectorResource(DirectorService directorService){this.directorService = directorService;}
+    public DirectorResource(DirectorService directorService) {
+        this.directorService = directorService;
+    }
 
     @GetMapping
-    public List<Director> readEmails(){
+    public List<Director> readEmails() {
         return this.directorService.readEmails();
     }
 }
