@@ -29,14 +29,14 @@ public class Tennis_CourtsSeederService {
             new EquipmentEntity("Balls", 3, new BigDecimal("1.5"))
         };
         PlayerEntity[] players = {
-                new PlayerEntity("Paco", "Lopez", 35, List.of(equipment[0])),
-                new PlayerEntity("Javier", "Gutierrez", 50, List.of(equipment[1])),
-                new PlayerEntity("Pepe", "Salgado", 20, List.of(equipment[2], equipment[4])),
-                new PlayerEntity("Carlos", "Alonso", 63, List.of(equipment[3])),
-                new PlayerEntity("Nacho", "Murillo", 47, List.of()),
-                new PlayerEntity("Rob", "Herrera", 17, List.of()),
-                new PlayerEntity("Jesús", "", 36, List.of()),
-                new PlayerEntity("Pedro", "Morales", 60, List.of())
+                new PlayerEntity("00000001R","Paco", "Lopez", 35, List.of(equipment[0])),
+                new PlayerEntity("00000002R","Javier", "Gutierrez", 50, List.of(equipment[1])),
+                new PlayerEntity("00000003R","Pepe", "Salgado", 20, List.of(equipment[2], equipment[4])),
+                new PlayerEntity("00000004R","Carlos", "Alonso", 63, List.of(equipment[3])),
+                new PlayerEntity("00000005R","Nacho", "Murillo", 47, List.of()),
+                new PlayerEntity("00000006R","Rob", "Herrera", 17, List.of()),
+                new PlayerEntity("00000007R","Jesús", "", 36, List.of()),
+                new PlayerEntity("00000008R","Pedro", "Morales", 60, List.of())
         };
         playerRepository.saveAll(Arrays.asList(players));
         LocalDate date = LocalDate.of(2021,9,30);

@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class EquipmentEntity {
 
@@ -40,5 +41,18 @@ public class EquipmentEntity {
 
     public void setPricePerUnit(BigDecimal pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EquipmentEntity that = (EquipmentEntity) o;
+        return this.type.equals(that.type) && this.quantity.equals(that.quantity) && this.pricePerUnit.equals(that.pricePerUnit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, quantity, pricePerUnit);
     }
 }
