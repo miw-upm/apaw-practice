@@ -1,12 +1,14 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
+
 public class Director {
 
     private String dniDirector;
     private String email;
     private Integer telephone;
 
-    Director() {
+    public Director() {
         //empty for framework
     }
 
@@ -16,6 +18,11 @@ public class Director {
         this.telephone = telephone;
     }
 
+    public static Director ofEmail(Director director) {
+        Director directorDto = new Director();
+        directorDto.setEmail(director.getEmail());
+        return directorDto;
+    }
 
     public String getDniDirector() {
         return dniDirector;
