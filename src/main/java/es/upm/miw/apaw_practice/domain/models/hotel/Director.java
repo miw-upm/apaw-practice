@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
-
 public class Director {
 
     private String dniDirector;
