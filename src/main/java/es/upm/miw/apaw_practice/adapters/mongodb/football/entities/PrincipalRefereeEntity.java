@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.football.entities;
 
 import es.upm.miw.apaw_practice.domain.models.football.PrincipalReferee;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
