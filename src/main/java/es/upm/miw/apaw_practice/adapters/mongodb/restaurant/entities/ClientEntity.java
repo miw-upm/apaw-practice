@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Client;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,8 +15,9 @@ import java.util.UUID;
 public class ClientEntity {
     @Id
     private String id;
-    private String name;
+    @Indexed(unique = true)
     private String dni;
+    private String name;
     private LocalDate registrationDate;
     @DBRef
     private List<WaiterEntity> waiters;

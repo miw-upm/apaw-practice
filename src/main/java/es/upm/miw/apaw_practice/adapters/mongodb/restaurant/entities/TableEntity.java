@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Table;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -13,8 +14,9 @@ import java.util.UUID;
 public class TableEntity {
     @Id
     private String id;
-    private Boolean occupied;
+    @Indexed(unique = true)
     private Integer number;
+    private Boolean occupied;
     private String style;
     private BigDecimal price;
     private List<ReserveEntity> reserves;
