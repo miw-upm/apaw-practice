@@ -8,6 +8,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.ClassroomEn
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.DegreeEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.StudentEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.SubjectEntity;
+import es.upm.miw.apaw_practice.domain.models.university.Student;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class UniversitySeederService {
         };
         this.degreeRepository.saveAll(Arrays.asList(degrees));
         StudentEntity[] students = {
-            new StudentEntity("Ada", "Lovelace", true, Arrays.asList(subjects))
+            new StudentEntity(new Student("12345678X", "Ada Lovelace", true), Arrays.asList(subjects))
         };
         this.studentRepository.saveAll(Arrays.asList(students));
     }

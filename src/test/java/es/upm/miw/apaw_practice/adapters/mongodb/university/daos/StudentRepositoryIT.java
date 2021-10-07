@@ -16,8 +16,8 @@ public class StudentRepositoryIT {
     void testCreateAndRead() {
         assertTrue(this.studentRepository.findAll().stream()
                 .anyMatch(student ->
-                         "Ada".equals(student.getName()) &&
-                                 "Lovelace".equals(student.getLastName()) &&
+                         "12345678X".equals(student.getDni()) &&
+                                 "Ada Lovelace".equals(student.getFullName()) &&
                                  student.getInternationalStudent()
                 ));
     }
