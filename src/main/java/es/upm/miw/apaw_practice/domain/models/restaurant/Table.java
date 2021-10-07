@@ -27,7 +27,7 @@ public class Table {
     }
 
     public void setOccupied(Boolean occupied) {
-        occupied = occupied;
+        this.occupied = occupied;
     }
 
     public Integer getNumber() {
