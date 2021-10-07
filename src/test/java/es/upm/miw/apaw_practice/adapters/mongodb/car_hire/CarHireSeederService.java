@@ -49,8 +49,7 @@ public class CarHireSeederService {
         ModelEntity[] models = {
                 new ModelEntity(new Model("Opel Insignia", "Tipo Berlina, manual", 140, List.of(vehicles[0].toVehicle()))),
                 new ModelEntity(new Model("Opel Insignia", "Tipo Berlina, automático", 130, List.of(vehicles[1].toVehicle()))),
-                new ModelEntity(new Model("Seat Ibiza", "Tipo Compacto, manual", 90, List.of(vehicles[2].toVehicle()))),
-                new ModelEntity(new Model("Seat Ibiza", "Tipo Compacto, manual", 90, List.of(vehicles[3].toVehicle()))),
+                new ModelEntity(new Model("Seat Ibiza", "Tipo Compacto, manual", 90, List.of(vehicles[2].toVehicle(), vehicles[3].toVehicle()))),
         };
         this.modelRepository.saveAll(Arrays.asList(models));
         BookingEntity[] bookings = {
