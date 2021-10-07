@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.hotel;
 
+import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.DirectorPersistence;
-import es.upm.miw.apaw_practice.domain.persistence_ports.shop.ArticlePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class DirectorService {
         this.directorPersistence = directorPersistence;
     }
 
-    public List<String> getEmails() {
-        return this.directorPersistence.getEmails();
+    public List<Director> readEmails() {
+        return this.directorPersistence.readEmails();
     }
 }

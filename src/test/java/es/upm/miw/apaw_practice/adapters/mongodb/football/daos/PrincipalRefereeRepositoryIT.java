@@ -16,8 +16,8 @@ public class PrincipalRefereeRepositoryIT {
         assertTrue(this.principalRefereeRepository.findAll().stream()
                 .anyMatch(principalReferee ->
                         "Undiano".equals(principalReferee.getName()) &&
-                        "Madrid".equals(principalReferee.getCityBorn()) &&
-                        34 == principalReferee.getAge()
+                                "Madrid".equals(principalReferee.getCityBorn()) &&
+                                34 == principalReferee.getAge()
                 ));
     }
 }

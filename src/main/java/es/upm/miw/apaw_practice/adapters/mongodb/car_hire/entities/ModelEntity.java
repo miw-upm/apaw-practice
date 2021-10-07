@@ -5,6 +5,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +25,10 @@ public class ModelEntity {
 
     public ModelEntity(Model model) {
         BeanUtils.copyProperties(model, this);
+        this.vehicleEntities = new ArrayList<>();
+        model.getVehicleList().forEach(vehicle -> {VehicleEntity vehicleEntity = new VehicleEntity();
+                                                    BeanUtils.copyProperties(vehicle, vehicleEntity);
+                                                    this.vehicleEntities.add(vehicleEntity);});
         this.id = UUID.randomUUID().toString();
     }
 
