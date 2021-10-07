@@ -24,6 +24,10 @@ public class Owner {
         this.registrationDate = LocalDate.now();
     }
 
+    public Owner(String dni) {
+        this.dni = dni;
+    }
+
     public String getDni() {
         return dni;
     }

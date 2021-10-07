@@ -21,6 +21,12 @@ public class Car {
         this.tyreSpecs = tyreSpecs;
     }
 
+    public Car(String licensePlate, boolean revision, Owner owner) {
+        this.licensePlate = licensePlate;
+        this.revision = revision;
+        this.owner = owner;
+    }
+
     public String getLicensePlate() {
         return licensePlate;
     }
