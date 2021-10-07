@@ -18,18 +18,18 @@ class HotelGuestRepositoryIT {
 
     @Test
     void testFindByDni() {
-        assertTrue(this.hotelGuestRepository.findByDniGuest("25252525R").isPresent());
-        HotelGuestEntity hotelGuest = this.hotelGuestRepository.findByDniGuest("25252525R").get();
-        assertEquals("Laura", hotelGuest.getNameGuest());
+        assertTrue(this.hotelGuestRepository.findByDni("25252525R").isPresent());
+        HotelGuestEntity hotelGuest = this.hotelGuestRepository.findByDni("25252525R").get();
+        assertEquals("Laura", hotelGuest.getName());
         assertEquals(LocalDateTime.of(2020, 6, 15, 9, 0), hotelGuest.getEntryDate());
         assertEquals(LocalDateTime.of(2018, 9, 16, 16, 0), hotelGuest.getDepartureDate());
     }
 
     @Test
     void testFindByName() {
-        assertTrue(this.hotelGuestRepository.findByNameGuest("Luca").isPresent());
-        HotelGuestEntity hotelGuest = this.hotelGuestRepository.findByNameGuest("Luca").get();
-        assertEquals("56565656P", hotelGuest.getDniGuest());
+        assertTrue(this.hotelGuestRepository.findByName("Luca").isPresent());
+        HotelGuestEntity hotelGuest = this.hotelGuestRepository.findByName("Luca").get();
+        assertEquals("56565656P", hotelGuest.getDni());
         assertEquals(LocalDateTime.of(2020, 10, 6, 12, 0), hotelGuest.getEntryDate());
         assertEquals(LocalDateTime.of(2020, 10, 12, 18, 0), hotelGuest.getDepartureDate());
     }
@@ -37,8 +37,8 @@ class HotelGuestRepositoryIT {
     @Test
     void testCreateAndRead() {
         assertTrue(this.hotelGuestRepository.findAll().stream()
-                .anyMatch(hotelGuest -> "88888888K".equals(hotelGuest.getDniGuest()) &&
-                        "Mario".equals(hotelGuest.getNameGuest()) &&
+                .anyMatch(hotelGuest -> "88888888K".equals(hotelGuest.getDni()) &&
+                        "Mario".equals(hotelGuest.getName()) &&
                         hotelGuest.getEntryDate() != null &&
                         hotelGuest.getDepartureDate() != null
                 ));

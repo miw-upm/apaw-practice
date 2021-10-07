@@ -39,7 +39,7 @@ public class HotelGuestResourceIT {
 
         HotelGuest hotelGuest = new HotelGuest(null, "8384929P", entryDate, departureDate);
 
-        Assertions.assertNull(hotelGuest.getNameGuest());
+        Assertions.assertNull(hotelGuest.getName());
         Assertions.assertTrue(hotelGuest.isNull());
         this.webTestClient
                 .post()
