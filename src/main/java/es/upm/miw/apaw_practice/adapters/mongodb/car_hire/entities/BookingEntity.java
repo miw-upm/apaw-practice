@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +18,6 @@ public class BookingEntity {
     private String bookingNumber;
     private LocalDateTime hiredDate;
     private Integer numberDays;
-    private BigDecimal totalCost;
     @DBRef
     private List<VehicleEntity> vehicleEntities;
     @DBRef
@@ -82,20 +80,11 @@ public class BookingEntity {
         this.renterEntity = renterEntity;
     }
 
-    public BigDecimal getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
-    }
-
     @Override
     public String toString() {
         return "BookingEntity{" +
                 "bookingNumber='" + bookingNumber + '\'' +
                 ", hiredDate=" + hiredDate +
-                ", totalCost=" + totalCost +
                 ", vehicleEntities=" + vehicleEntities +
                 ", renterEntity=" + renterEntity +
                 '}';

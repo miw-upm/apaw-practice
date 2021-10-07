@@ -1,7 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import es.upm.miw.apaw_practice.domain.models.university.Student;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,8 +11,8 @@ public class StudentEntity {
 
     @Id
     private String id;
-    private String name;
-    private String lastName;
+    private String dni;
+    private String fullName;
     private Boolean internationalStudent;
     private List<SubjectEntity> subjects;
 
@@ -19,12 +20,20 @@ public class StudentEntity {
         //empty for framework
     }
 
-    public StudentEntity(String name, String lastName, Boolean internationalStudent, List<SubjectEntity> subjects) {
-        this.name = name;
-        this.lastName = lastName;
-        this.internationalStudent = internationalStudent;
+    public StudentEntity(Student student) {
+        this(student, null);
+    }
+
+    public StudentEntity(Student student, List<SubjectEntity> subjects) {
+        BeanUtils.copyProperties(student, this);
         this.subjects = subjects;
         this.id = UUID.randomUUID().toString();
+    }
+
+    public Student toStudent() {
+        Student student = new Student();
+        BeanUtils.copyProperties(this, student);
+        return student;
     }
 
     public String getId() {
@@ -35,20 +44,20 @@ public class StudentEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDni() {
+        return dni;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Boolean getInternationalStudent() {
