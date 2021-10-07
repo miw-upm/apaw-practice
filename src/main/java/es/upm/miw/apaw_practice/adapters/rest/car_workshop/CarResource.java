@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.car_workshop;
 
+import es.upm.miw.apaw_practice.adapters.rest.shop.ArticleResource;
 import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
 import es.upm.miw.apaw_practice.domain.services.car_workshop.CarService;
