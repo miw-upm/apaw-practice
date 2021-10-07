@@ -18,6 +18,11 @@ public class AnimalResource {
         this.animalService = animalService;
     }
 
+    @PostMapping()
+    public void create(@RequestBody Animal animal) {
+        this.animalService.create(animal);
+    }
+
     @DeleteMapping()
     public void delete(@RequestBody Animal animal) {
         this.animalService.delete(animal);

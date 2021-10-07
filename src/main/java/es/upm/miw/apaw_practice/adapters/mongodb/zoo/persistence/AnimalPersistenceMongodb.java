@@ -39,4 +39,9 @@ public class AnimalPersistenceMongodb implements AnimalPersistence {
                 .withMatcher("family", ignoreCase());
         return Example.of(new AnimalEntity(animal), animalMatcher);
     }
+
+    @Override
+    public void create(Animal animal) {
+        this.animalRepository.save(new AnimalEntity(animal));
+    }
 }
