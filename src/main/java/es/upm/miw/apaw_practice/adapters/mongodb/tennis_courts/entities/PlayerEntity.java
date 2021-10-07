@@ -1,14 +1,21 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Document
 public class PlayerEntity {
     @Id
     private String id;
+    @Indexed(unique = true)
+    private String dni;
     private String name;
     private String surname;
     private Integer age;
@@ -18,12 +25,31 @@ public class PlayerEntity {
         //empty from framework
     }
 
-    public PlayerEntity(String name, String surname, Integer age, List<EquipmentEntity> equipmentList){
+    public PlayerEntity(String dni, String name, String surname, Integer age, List<EquipmentEntity> equipmentList){
         this.id = UUID.randomUUID().toString();
+        this.dni = dni;
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.equipmentList = equipmentList;
+    }
+
+    public PlayerEntity(Player player){
+        this.id = UUID.randomUUID().toString();
+        this.dni = player.getDNI();
+        this.name = player.getName();
+        this.surname = player.getSurname();
+        this.age = player.getAge();
+        this.equipmentList = toEquipmentEntityList(player.getEquipmentList());
+
+    }
+
+    public String getDni(){
+        return this.dni;
+    }
+
+    public void setDni(String dni){
+        this.dni = dni;
     }
 
     public String getName() {
@@ -56,5 +82,15 @@ public class PlayerEntity {
 
     public void setEquipmentList(List<EquipmentEntity> equipmentList) {
         this.equipmentList = equipmentList;
+    }
+
+    public List<EquipmentEntity> toEquipmentEntityList(List<Equipment> equipmentList){
+        return equipmentList.stream()
+                .map(equipment -> new EquipmentEntity(equipment.getType(), equipment.getQuantity(), equipment.getPricePerUnit()))
+                .collect(Collectors.toList());
+    }
+
+    public Player toPlayer(){
+       return new Player(this.dni, this.name, this.surname, this.age);
     }
 }

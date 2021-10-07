@@ -3,22 +3,22 @@ package es.upm.miw.apaw_practice.domain.models.tennis_courts;
 import java.math.BigDecimal;
 
 public class Court {
-    private Integer numberId;
+    private Integer number;
     private BigDecimal price;
     private Boolean occupied;
 
-    public Court(Integer numberId, boolean occupied, BigDecimal price){
-        this.numberId = numberId;
+    public Court(Integer number, boolean occupied, BigDecimal price){
+        this.number = number;
         this.price = price;
         this.occupied = occupied;
     }
 
-    public Integer getNumberId() {
-        return this.numberId;
+    public Integer getNumber() {
+        return this.number;
     }
 
-    public void setNumberId(Integer numberId) {
-        this.numberId = numberId;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public BigDecimal getPrice(){

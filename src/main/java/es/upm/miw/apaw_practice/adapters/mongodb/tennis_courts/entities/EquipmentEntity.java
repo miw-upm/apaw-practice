@@ -1,16 +1,19 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
+
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class EquipmentEntity {
 
     private String type;
-    private Integer number;
+    private Integer quantity;
     private BigDecimal pricePerUnit;
 
-    public EquipmentEntity(String type, Integer number, BigDecimal pricePerUnit){
+    public EquipmentEntity(String type, Integer quantity, BigDecimal pricePerUnit){
         this.type = type;
-        this.number = number;
+        this.quantity = quantity;
         this.pricePerUnit = pricePerUnit;
     }
 
@@ -26,12 +29,12 @@ public class EquipmentEntity {
         this.type = type;
     }
 
-    public Integer getNumber() {
-        return this.number;
+    public Integer getQuantity() {
+        return this.quantity;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public BigDecimal getPricePerUnit() {
@@ -40,5 +43,19 @@ public class EquipmentEntity {
 
     public void setPricePerUnit(BigDecimal pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EquipmentEntity that = (EquipmentEntity) o;
+        return this.type.equals(that.type) && this.quantity.equals(that.quantity) && this.pricePerUnit.equals(that.pricePerUnit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, quantity, pricePerUnit);
     }
 }
