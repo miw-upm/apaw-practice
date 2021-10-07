@@ -1,8 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 
-import es.upm.miw.apaw_practice.domain.models.restaurant.Reserve;
-import org.springframework.beans.BeanUtils;
-
 import java.time.LocalDate;
 
 public class ReserveEntity {
