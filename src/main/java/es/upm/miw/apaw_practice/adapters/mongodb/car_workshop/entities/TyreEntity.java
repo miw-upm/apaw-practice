@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities;
 
+import es.upm.miw.apaw_practice.domain.models.car_workshop.Tyre;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -31,6 +33,11 @@ public class TyreEntity {
         this.model = model;
         this.price = price;
         this.tyreSpecsEntity = tyreSpecsEntity;
+    }
+
+    public TyreEntity(Tyre tyre) {
+        this.id = UUID.randomUUID().toString();
+        BeanUtils.copyProperties(this, tyre);
     }
 
     public String getId() {
@@ -71,6 +78,12 @@ public class TyreEntity {
 
     public void setTyreSpecsEntity(TyreSpecificationEntity tyreSpecsEntity) {
         this.tyreSpecsEntity = tyreSpecsEntity;
+    }
+
+    public Tyre toTyre() {
+        Tyre tyre = new Tyre();
+        BeanUtils.copyProperties(this, tyre);
+        return tyre;
     }
 
     @Override
