@@ -13,7 +13,7 @@ public class OwnerPersistenceMongodb implements OwnerPersistence {
     private final OwnerRepository ownerRepository;
 
     @Autowired
-    OwnerPersistenceMongodb(OwnerRepository ownerRepository) {
+    public OwnerPersistenceMongodb(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
     }
 
