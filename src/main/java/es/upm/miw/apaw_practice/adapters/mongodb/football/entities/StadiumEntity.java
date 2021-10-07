@@ -1,10 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.football.entities;
 
+import es.upm.miw.apaw_practice.domain.models.football.Match;
+import es.upm.miw.apaw_practice.domain.models.football.Stadium;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class StadiumEntity {
     @Id
@@ -67,6 +71,16 @@ public class StadiumEntity {
         this.matchEntities = matchEntities;
     }
 
+    public Stadium toStadium() {
+        Stadium stadium = new Stadium();
+        BeanUtils.copyProperties(this, stadium, "matchEntities");
+        List<Match> matches = this.matchEntities.stream()
+                .map(MatchEntity::toMatch)
+                .collect(Collectors.toList());
+        stadium.setMatches(matches);
+        return stadium;
+    }
+
     @Override
     public int hashCode() {
         return id.hashCode();
@@ -85,4 +99,6 @@ public class StadiumEntity {
                 ", team=" + team +
                 '}';
     }
+
+
 }
