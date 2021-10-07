@@ -11,12 +11,6 @@ public class Reserve {
         //empty for framework
     }
 
-    public Reserve(LocalDate reservationDate, Integer numPeople, String holder) {
-        this.reservationDate = reservationDate;
-        this.numPeople = numPeople;
-        this.holder = holder;
-    }
-
     public LocalDate getReservationDate() {
         return reservationDate;
     }
