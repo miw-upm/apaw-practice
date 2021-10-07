@@ -17,9 +17,10 @@ public class WaiterEntity {
         //empty for framework
     }
 
-    public WaiterEntity(Waiter waiter){
-        BeanUtils.copyProperties(waiter,this);
+    public WaiterEntity(String section, String category) {
         this.id = UUID.randomUUID().toString();
+        this.section = section;
+        this.category = category;
     }
 
     public String getId() {

@@ -14,8 +14,10 @@ public class ReserveEntity {
         //empty for framework
     }
 
-    public ReserveEntity(Reserve reserve){
-        BeanUtils.copyProperties(reserve,this);
+    public ReserveEntity(LocalDate reservationDate, Integer numPeople, String holder){
+        this.reservationDate = reservationDate;
+        this.numPeople = numPeople;
+        this.holder = holder;
     }
 
     public LocalDate getReservationDate() {
