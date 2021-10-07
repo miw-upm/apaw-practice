@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.daos.OwnerRepository;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Owner;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car_workshop.OwnerPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class OwnerPersistenceMongodb implements OwnerPersistence {
 
     @Override
     public Owner findByDni(String dni){
-        return this.ownerRepository.findByDni(dni);
+        return this.ownerRepository.findByDni(dni)
+                .orElseThrow(() -> new NotFoundException("Owner dni: " + dni))
+                .toOwner();
     };
 }
