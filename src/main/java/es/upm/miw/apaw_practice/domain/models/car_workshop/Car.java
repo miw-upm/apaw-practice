@@ -21,6 +21,12 @@ public class Car {
         this.tyreSpecs = tyreSpecs;
     }
 
+    public Car(String licensePlate, boolean revision, Owner owner) {
+        this.licensePlate = licensePlate;
+        this.revision = revision;
+        this.owner = owner;
+    }
+
     public String getLicensePlate() {
         return licensePlate;
     }
@@ -73,5 +79,11 @@ public class Car {
                 ", owner=" + this.owner.toString() +
                 ", tyreSpecifications=" + this.tyreSpecs.toString() +
                 '}';
+    }
+
+    public void doDefault() {
+        if (Objects.isNull(owner)) {
+            this.owner = new Owner("00000000Z", "John Doe");
+        }
     }
 }
