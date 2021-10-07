@@ -21,7 +21,7 @@ public class CarService {
 
     public void createWithOwnerDni(String dni, Car car) {
         this.assertLicensePlateNotExist(car.getLicensePlate());
-        car.setOwner(this.ownerPersistence.findByDni(dni));
+        car.setOwner(this.ownerPersistence.readByDni(dni));
         this.carPersistence.create(car);
     }
 

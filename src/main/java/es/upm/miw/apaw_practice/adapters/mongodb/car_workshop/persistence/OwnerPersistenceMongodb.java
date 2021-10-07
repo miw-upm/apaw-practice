@@ -18,7 +18,7 @@ public class OwnerPersistenceMongodb implements OwnerPersistence {
     }
 
     @Override
-    public Owner findByDni(String dni){
+    public Owner readByDni(String dni){
         return this.ownerRepository.findByDni(dni)
                 .orElseThrow(() -> new NotFoundException("Owner dni: " + dni))
                 .toOwner();
