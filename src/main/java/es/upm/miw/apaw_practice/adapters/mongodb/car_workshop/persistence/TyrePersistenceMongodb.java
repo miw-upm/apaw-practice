@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.daos.TyreRepository;
+import es.upm.miw.apaw_practice.domain.models.car_workshop.Tyre;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car_workshop.TyrePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,11 @@ public class TyrePersistenceMongodb implements TyrePersistence {
     public void deleteManufacturer(String manufacturer) {
         this.tyreRepository.deleteByManufacturer(manufacturer);
     }
+
+    @Override
+    public Tyre read(String model){};
+
+    @Override
+    public void create(Tyre tyre){}
+
 }
