@@ -18,17 +18,17 @@ public class StadiumPersistenceMongodb implements StadiumPersistence {
     }
 
     @Override
-    public Stadium readByName(String name) {
-        return this.stadiumRepository.findByName(name)
-                .orElseThrow(() -> new NotFoundException("Stadium with name: " + name))
+    public Stadium readByCity(String city) {
+        return this.stadiumRepository.findByCity(city)
+                .orElseThrow(() -> new NotFoundException("Stadium with city: " + city))
                 .toStadium();
     }
 
     @Override
     public void update(Stadium stadium) {
         StadiumEntity stadiumEntity = this.stadiumRepository
-                .findByName(stadium.getName())
-                .orElseThrow(() -> new NotFoundException("Stadium name:" + stadium.getName()));
+                .findByCity(stadium.getCity())
+                .orElseThrow(() -> new NotFoundException("Stadium city:" + stadium.getCity()));
         stadiumEntity.setName(stadium.getName());
         this.stadiumRepository.save(stadiumEntity);
     }

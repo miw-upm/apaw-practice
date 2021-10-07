@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StadiumPersistence {
-    Stadium readByName(String name);
+    Stadium readByCity(String city);
 
     void update(Stadium stadiumResult);
 }

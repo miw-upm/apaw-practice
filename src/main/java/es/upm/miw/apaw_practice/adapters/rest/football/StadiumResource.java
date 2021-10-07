@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(StadiumResource.STADIUMS)
 public class StadiumResource {
 
-    static final String NAME_ID = "/{name}";
+    static final String CITY_ID = "/{city}";
     static final String STADIUMS = "/stadiums";
 
     private final StadiumService stadiumService;
@@ -19,8 +19,8 @@ public class StadiumResource {
         this.stadiumService = stadiumService;
     }
 
-    @PutMapping(NAME_ID + STADIUMS)
-    public void updateName(@PathVariable String name, @RequestBody Stadium stadium) {
-        this.stadiumService.updateName(name, stadium);
+    @PutMapping(CITY_ID + STADIUMS)
+    public void updateName(@PathVariable String city, @RequestBody Stadium stadium) {
+        this.stadiumService.updateName(city, stadium);
     }
 }

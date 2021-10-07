@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface StadiumRepository extends MongoRepository<StadiumEntity, String> {
-    Optional<StadiumEntity> findByName(String name);
+    Optional<StadiumEntity> findByCity(String city);
 }
