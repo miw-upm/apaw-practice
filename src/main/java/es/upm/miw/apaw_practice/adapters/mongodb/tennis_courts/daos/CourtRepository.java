@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface CourtRepository extends MongoRepository<CourtEntity, String> {
-    Optional<Integer> findByNumberId(Integer number);
+    Optional<Integer> findByNumber(Integer number);
 }
