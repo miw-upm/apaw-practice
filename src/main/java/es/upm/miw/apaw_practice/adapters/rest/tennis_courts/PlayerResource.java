@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/players")
 public class PlayerResource {
+
+    public static final String PLAYERS = "/players";
+
     private final PlayerService playerService;
 
     @Autowired

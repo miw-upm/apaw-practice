@@ -31,9 +31,9 @@ class PlayerEntityTest {
                 new EquipmentEntity("Racquet",2, new BigDecimal("5")),
                 new EquipmentEntity("Shoes",2, new BigDecimal("4"))
         };
-        assertEquals(expectedValues[0], this.playerEntity.convertToEntityList(equipments).get(0));
-        assertEquals(expectedValues[1], this.playerEntity.convertToEntityList(equipments).get(1));
-        assertEquals(expectedValues[2], this.playerEntity.convertToEntityList(equipments).get(2));
+        assertEquals(expectedValues[0], this.playerEntity.toEquipmentEntityList(equipments).get(0));
+        assertEquals(expectedValues[1], this.playerEntity.toEquipmentEntityList(equipments).get(1));
+        assertEquals(expectedValues[2], this.playerEntity.toEquipmentEntityList(equipments).get(2));
     }
 
 }

@@ -11,7 +11,12 @@ public class Player {
     private Integer age;
     private List<Equipment> equipmentList;
 
-    public Player(String name, String surname, Integer age){
+    public Player(){
+        //empty for framework
+    }
+
+    public Player(String dni, String name, String surname, Integer age){
+        this.dni = dni;
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -54,7 +59,11 @@ public class Player {
         this.age = age;
     }
 
-    public void setEquipmentList(Equipment equipment){
+    public void setEquipmentList(List<Equipment> equipmentList){
+        this.equipmentList = equipmentList;
+    }
+
+    public void setEquipment(Equipment equipment){
         this.equipmentList.add(equipment);
     }
 

@@ -40,8 +40,16 @@ public class PlayerEntity {
         this.name = player.getName();
         this.surname = player.getSurname();
         this.age = player.getAge();
-        this.equipmentList = convertToEntityList(player.getEquipmentList());
+        this.equipmentList = toEquipmentEntityList(player.getEquipmentList());
 
+    }
+
+    public String getDni(){
+        return this.dni;
+    }
+
+    public void setDni(String dni){
+        this.dni = dni;
     }
 
     public String getName() {
@@ -76,9 +84,13 @@ public class PlayerEntity {
         this.equipmentList = equipmentList;
     }
 
-    public List<EquipmentEntity> convertToEntityList(List<Equipment> equipmentList){
+    public List<EquipmentEntity> toEquipmentEntityList(List<Equipment> equipmentList){
         return equipmentList.stream()
                 .map(equipment -> new EquipmentEntity(equipment.getType(), equipment.getQuantity(), equipment.getPricePerUnit()))
                 .collect(Collectors.toList());
+    }
+
+    public Player toPlayer(){
+       return new Player(this.dni, this.name, this.surname, this.age);
     }
 }
