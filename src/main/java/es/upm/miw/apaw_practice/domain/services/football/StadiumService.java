@@ -15,8 +15,8 @@ public class StadiumService {
         this.stadiumPersistence = stadiumPersistence;
     }
 
-    public void updateName(String name, Stadium stadium) {
-        Stadium stadiumResult = this.stadiumPersistence.readByName(name);
+    public void updateName(String city, Stadium stadium) {
+        Stadium stadiumResult = this.stadiumPersistence.readByCity(city);
         stadiumResult.setName(stadium.getName());
         this.stadiumPersistence.update(stadiumResult);
     }
