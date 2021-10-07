@@ -11,8 +11,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RoomEntity {
-    private Integer numberRoom;
-    private BigDecimal priceRoom;
+    private Integer number;
+    private BigDecimal price;
     private Boolean vip;
     @DBRef
     private List<HotelGuestEntity> hotelGuestsEntities;
@@ -21,9 +21,9 @@ public class RoomEntity {
         //empty for framework
     }
 
-    public RoomEntity(Integer numberRoom, BigDecimal priceRoom, Boolean vip, List<HotelGuestEntity> hotelGuestsEntities) {
-        this.numberRoom = numberRoom;
-        this.priceRoom = priceRoom;
+    public RoomEntity(Integer number, BigDecimal price, Boolean vip, List<HotelGuestEntity> hotelGuestsEntities) {
+        this.number = number;
+        this.price = price;
         this.vip = vip;
         this.hotelGuestsEntities = hotelGuestsEntities;
     }
@@ -40,20 +40,20 @@ public class RoomEntity {
 
     }
 
-    public Integer getNumberRoom() {
-        return numberRoom;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setNumberRoom(Integer numberRoom) {
-        this.numberRoom = numberRoom;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
-    public BigDecimal getPriceRoom() {
-        return priceRoom;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setPriceRoom(BigDecimal priceRoom) {
-        this.priceRoom = priceRoom;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Boolean isVip() {
@@ -76,8 +76,8 @@ public class RoomEntity {
     @Override
     public String toString() {
         return "RoomEntity{" +
-                "numberRoom=" + numberRoom +
-                ", priceRoom=" + priceRoom +
+                "number=" + number +
+                ", price=" + price +
                 ", vip=" + vip +
                 ", hotelGuestsEntities=" + hotelGuestsEntities +
                 '}';
@@ -88,12 +88,12 @@ public class RoomEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RoomEntity that = (RoomEntity) o;
-        return Objects.equals(numberRoom, that.numberRoom) && Objects.equals(priceRoom, that.priceRoom) && Objects.equals(vip, that.vip) && Objects.equals(hotelGuestsEntities, that.hotelGuestsEntities);
+        return Objects.equals(number, that.number) && Objects.equals(price, that.price) && Objects.equals(vip, that.vip) && Objects.equals(hotelGuestsEntities, that.hotelGuestsEntities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numberRoom, priceRoom, vip, hotelGuestsEntities);
+        return Objects.hash(number, price, vip, hotelGuestsEntities);
     }
 
 }

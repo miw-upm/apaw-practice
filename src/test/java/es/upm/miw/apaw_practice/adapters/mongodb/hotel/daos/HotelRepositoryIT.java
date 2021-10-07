@@ -20,7 +20,7 @@ class HotelRepositoryIT {
                         "Av. Madrid, Madrid, 32452".equals(hotel.getDirection()) &&
                         3 == hotel.getNumberStars() &&
                         "77777777V".equals(hotel.getDirector().getDni()) &&
-                        22 == hotel.getRoomEntities().get(0).getNumberRoom()
+                        22 == hotel.getRoomEntities().get(0).getNumber()
                 ));
     }
 
