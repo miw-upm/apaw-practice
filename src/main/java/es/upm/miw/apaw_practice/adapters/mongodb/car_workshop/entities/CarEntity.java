@@ -18,6 +18,7 @@ public class CarEntity {
     @Indexed(unique = true)
     private String licensePlate;
     private Boolean revision;
+    @DBRef
     private OwnerEntity ownerEntity;
     @DBRef
     private List<TyreSpecificationEntity> tyreSpecsEntities;
