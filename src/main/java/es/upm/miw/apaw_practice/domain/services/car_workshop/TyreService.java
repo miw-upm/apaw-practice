@@ -15,6 +15,6 @@ public class TyreService {
     }
 
     public Integer deleteManufacturer(String manufacturer) {
-        return this.tyrePersistence.delete(manufacturer);
+        return this.tyrePersistence.deleteManufacturer(manufacturer);
     }
 }
