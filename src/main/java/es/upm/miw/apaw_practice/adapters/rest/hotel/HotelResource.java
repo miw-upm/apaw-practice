@@ -4,8 +4,6 @@ import es.upm.miw.apaw_practice.domain.services.hotel.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequestMapping(HotelResource.HOTEL)
 public class HotelResource {
@@ -23,6 +21,7 @@ public class HotelResource {
         this.hotelService = hotelService;
     }
 
-
+    @PutMapping(ID_ID + ROOMS + NUMBER_ROOM + ROOM_PRICE)
+    public void updateRoomPrice(@PathVariable String id, @PathVariable Integer numberRoom){}
 
 }

@@ -21,7 +21,7 @@ public class DirectorResourceIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Director.class)
-                .value(directors -> Assertions.assertNull(directors.get(0).getDniDirector()))
+                .value(directors -> Assertions.assertNull(directors.get(0).getDni()))
                 .value(directors -> Assertions.assertNull(directors.get(1).getTelephone()))
                 .value(directors -> Assertions.assertEquals("email@email.com", directors.get(1).getEmail()));
     }

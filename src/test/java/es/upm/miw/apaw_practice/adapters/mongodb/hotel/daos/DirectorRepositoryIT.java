@@ -16,8 +16,8 @@ class DirectorRepositoryIT {
 
     @Test
     void testFindByDni() {
-        assertTrue(this.directorRepository.findByDniDirector("77777777V").isPresent());
-        DirectorEntity director = this.directorRepository.findByDniDirector("77777777V").get();
+        assertTrue(this.directorRepository.findByDni("77777777V").isPresent());
+        DirectorEntity director = this.directorRepository.findByDni("77777777V").get();
         assertEquals("test@email.com", director.getEmail());
         assertEquals(222222222, director.getTelephone());
     }
