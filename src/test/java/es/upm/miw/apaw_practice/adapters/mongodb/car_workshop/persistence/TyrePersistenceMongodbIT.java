@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Tyre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestConfig
 public class TyrePersistenceMongodbIT {
@@ -17,11 +19,11 @@ public class TyrePersistenceMongodbIT {
 
     @Test
     void testCreateAndRead() {
-        Tyre tyre = new Tyre("Firestone", "Roadhawk", new BigDecimal("99.99"));
+        Tyre tyre = new Tyre("Firestone", "Champion", new BigDecimal("119.99"));
         this.tyrePersistence.create(tyre);
-        Tyre tyreBBDD = this.tyrePersistence.read("Roadhawk");
+        Tyre tyreBBDD = this.tyrePersistence.read("Champion");
         assertEquals("Firestone", tyreBBDD.getManufacturer());
-        assertEquals(0, new BigDecimal("99.99").compareTo(tyreBBDD.getPrice()));
+        assertEquals(0, new BigDecimal("119.99").compareTo(tyreBBDD.getPrice()));
     }
 
     @Test
@@ -29,7 +31,7 @@ public class TyrePersistenceMongodbIT {
         Tyre tyre = new Tyre("Firestone", "Roadhawk", new BigDecimal("99.99"));
         this.tyrePersistence.create(tyre);
         this.tyrePersistence.deleteManufacturer("Firestone");
-        assertFalse(this.tyrePersistence.findByModel("Roadhawk"));
+        assertThrows(NotFoundException.class, () -> this.tyrePersistence.read("Roadhawk"));
     }
 
 }
