@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TyreResource {
 
     static final String TYRES = "/car-workshop/tyres";
-    static final String MANUFACTURER = "/manufacturer";
+    static final String MANUFACTURER = "/{manufacturer}";
 
     private final TyreService tyreService;
 
@@ -23,7 +23,7 @@ public class TyreResource {
     }
 
     @DeleteMapping(TyreResource.MANUFACTURER)
-    public Integer deleteManufacturer(@PathVariable String manufacturer) {
-        return this.tyreService.deleteManufacturer(manufacturer);
+    public void deleteManufacturer(@PathVariable String manufacturer) {
+        this.tyreService.deleteManufacturer(manufacturer);
     }
 }

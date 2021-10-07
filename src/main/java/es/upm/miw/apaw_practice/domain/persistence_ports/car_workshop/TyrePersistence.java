@@ -4,5 +4,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TyrePersistence {
-    Integer deleteManufacturer(String manufacturer);
+    void deleteManufacturer(String manufacturer);
 }

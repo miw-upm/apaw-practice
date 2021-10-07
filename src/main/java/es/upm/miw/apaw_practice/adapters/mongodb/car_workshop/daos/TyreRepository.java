@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface TyreRepository extends MongoRepository<TyreEntity, String> {
 
-    Integer deleteByManufacturer(String manufacturer);
+    void deleteByManufacturer(String manufacturer);
 
 }
