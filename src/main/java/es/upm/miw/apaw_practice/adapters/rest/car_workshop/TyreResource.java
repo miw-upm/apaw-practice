@@ -24,6 +24,6 @@ public class TyreResource {
 
     @DeleteMapping(TyreResource.MANUFACTURER)
     public Integer deleteManufacturer(@PathVariable String manufacturer) {
-        return this.tyreService.deleteManufacturer(String manufacturer);
+        return this.tyreService.deleteManufacturer(manufacturer);
     }
 }
