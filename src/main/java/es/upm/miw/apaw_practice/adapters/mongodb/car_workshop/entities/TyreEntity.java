@@ -37,7 +37,7 @@ public class TyreEntity {
 
     public TyreEntity(Tyre tyre) {
         this.id = UUID.randomUUID().toString();
-        BeanUtils.copyProperties(this, tyre);
+        BeanUtils.copyProperties(tyre, this);
     }
 
     public String getId() {
