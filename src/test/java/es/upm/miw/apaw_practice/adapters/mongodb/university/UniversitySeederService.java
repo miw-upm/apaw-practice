@@ -41,7 +41,9 @@ public class UniversitySeederService {
         };
         this.subjectRepository.saveAll(Arrays.asList(subjects));
         DegreeEntity[] degrees = {
-            new DegreeEntity(4313004, "Máster en Ingeniería Web", LocalDate.parse("2011-09-01"), Arrays.asList(subjects))
+                new DegreeEntity(4313004, "Máster en Ingeniería Web", LocalDate.parse("2011-09-01"), Arrays.asList(subjects)),
+                new DegreeEntity(2503028, "Ingeniería del Software", LocalDate.parse("2014-09-01")),
+                new DegreeEntity(2503027, "Ingeniería de Computadores", LocalDate.parse("2014-09-01")),
         };
         this.degreeRepository.saveAll(Arrays.asList(degrees));
         StudentEntity[] students = {
