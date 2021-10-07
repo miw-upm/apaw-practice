@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities;
 
+import es.upm.miw.apaw_practice.domain.models.car_workshop.Owner;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -46,6 +48,12 @@ public class OwnerEntity {
 
     public LocalDate getRegistrationDate() {
         return this.registrationDate;
+    }
+
+    public Owner toOwner(){
+        Owner owner = new Owner();
+        BeanUtils.copyProperties(this, owner);
+        return owner;
     }
 
     @Override
