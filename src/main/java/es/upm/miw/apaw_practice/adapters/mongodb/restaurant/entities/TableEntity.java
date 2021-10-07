@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 
-import es.upm.miw.apaw_practice.domain.models.restaurant.Table;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
