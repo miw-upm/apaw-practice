@@ -21,6 +21,10 @@ public class DegreeEntity {
         //empty for framework
     }
 
+    public DegreeEntity(Integer code, String title, LocalDate implementationDate) {
+        this(code, title, implementationDate, null);
+    }
+
     public DegreeEntity(Integer code, String title, LocalDate implementationDate, List<SubjectEntity> subjects) {
         this.code = code;
         this.title = title;
