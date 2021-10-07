@@ -6,6 +6,10 @@ public class Animal {
     private String family;
     private String diet;
 
+    public Animal() {
+        //empty from framework
+    }
+
     public Animal(String name, String family, String diet) {
         this.name = name;
         this.family = family;
