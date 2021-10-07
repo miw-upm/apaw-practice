@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.university;
 
+import es.upm.miw.apaw_practice.domain.models.university.Student;
+import es.upm.miw.apaw_practice.domain.services.university.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
