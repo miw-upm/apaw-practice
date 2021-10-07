@@ -13,14 +13,15 @@ public class OwnerPersistenceMongodb implements OwnerPersistence {
     private final OwnerRepository ownerRepository;
 
     @Autowired
-    OwnerPersistenceMongodb(OwnerRepository ownerRepository){
+    OwnerPersistenceMongodb(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
     }
 
     @Override
-    public Owner readByDni(String dni){
+    public Owner readByDni(String dni) {
         return this.ownerRepository.findByDni(dni)
                 .orElseThrow(() -> new NotFoundException("Owner dni: " + dni))
                 .toOwner();
-    };
+    }
+
 }

@@ -13,7 +13,7 @@ public class CarPersistenceMongodb implements CarPersistence {
     private final CarRepository carRepository;
 
     @Autowired
-    public CarPersistenceMongodb(CarRepository carRepository){
+    public CarPersistenceMongodb(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
 

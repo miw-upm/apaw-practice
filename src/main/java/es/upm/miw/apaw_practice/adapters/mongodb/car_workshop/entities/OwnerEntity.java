@@ -50,7 +50,7 @@ public class OwnerEntity {
         return this.registrationDate;
     }
 
-    public Owner toOwner(){
+    public Owner toOwner() {
         Owner owner = new Owner();
         BeanUtils.copyProperties(this, owner);
         return owner;
