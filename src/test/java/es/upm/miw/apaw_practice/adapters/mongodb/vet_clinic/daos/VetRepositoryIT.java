@@ -1,13 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.AppointmentEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.VetEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
