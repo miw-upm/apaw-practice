@@ -4,4 +4,5 @@ import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities.TyreEntit
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface TyreRepository extends MongoRepository<TyreEntity, String> {
+    Integer deleteByManufacturer(String manufacturer);
 }

@@ -17,6 +17,6 @@ public class TyrePersistenceMongodb implements TyrePersistence {
 
     @Override
     public Integer deleteManufacturer(String manufacturer) {
-        return null;
+        return this.tyreRepository.deleteByManufacturer(manufacturer);
     }
 }
