@@ -2,18 +2,18 @@ package es.upm.miw.apaw_practice.adapters.rest.zoo;
 
 import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
+import es.upm.miw.apaw_practice.domain.models.zoo.ZooAddress;
 import es.upm.miw.apaw_practice.domain.services.zoo.ZooService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(ZooResource.ZOOS)
 public class ZooResource {
 
     static final String ZOOS = "/zoo/zoos";
+    static final String ID = "/{id}";
+    static final String ZIPCODE = "/address/zipcode";
 
     private final ZooService zooService;
 
@@ -29,5 +29,19 @@ public class ZooResource {
         } else {
             this.zooService.create(zoo);
         }
+    }
+
+    @PutMapping(ID + ZIPCODE)
+    public void updateZipcode(@PathVariable("id") String id, @RequestBody ZooAddress address) {
+        if (address.getZipCode() == null) {
+            throw new BadRequestException("For this update, a new valid zipcode is mandatory");
+        } else {
+            this.zooService.updateZipCode(id, address);
+        }
+    }
+
+    @GetMapping(ID)
+    public Zoo findById(@PathVariable String id) {
+        return this.zooService.findById(id);
     }
 }
