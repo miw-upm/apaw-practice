@@ -17,10 +17,10 @@ public class StadiumRepositoryIT {
         assertTrue(this.stadiumRepository.findAll().stream()
                 .anyMatch(stadium ->
                         "Madrid".equals(stadium.getCity()) &&
-                        "Bernabeu".equals(stadium.getName()) &&
-                        "Real Madrid".equals(stadium.getTeam()) &&
-                        "cloudy".equals(stadium.getMatchEntities().get(0).getWeather()) &&
-                        3 == stadium.getMatchEntities().size()
+                                "Bernabeu".equals(stadium.getName()) &&
+                                "Real Madrid".equals(stadium.getTeam()) &&
+                                "cloudy".equals(stadium.getMatchEntities().get(0).getWeather()) &&
+                                3 == stadium.getMatchEntities().size()
                 ));
     }
 

@@ -27,6 +27,14 @@ public class DirectorEntity {
         BeanUtils.copyProperties(director, this);
     }
 
+
+    public Director toDirector() {
+        Director director = new Director();
+        BeanUtils.copyProperties(this, director);
+        return director;
+    }
+
+
     public String getId() {
         return id;
     }

@@ -18,6 +18,16 @@ public class Owner {
         this.registrationDate = registrationDate;
     }
 
+    public Owner(String dni, String name) {
+        this.dni = dni;
+        this.name = name;
+        this.registrationDate = LocalDate.now();
+    }
+
+    public Owner(String dni) {
+        this.dni = dni;
+    }
+
     public String getDni() {
         return dni;
     }
