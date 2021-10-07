@@ -9,7 +9,7 @@ public class Room {
     private Boolean vip;
     private List<HotelGuest> hotelGuests;
 
-    Room() {
+    public Room() {
         //Empty for framework
     }
 

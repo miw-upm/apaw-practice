@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.DirectorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.RoomRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
@@ -29,8 +28,6 @@ public class HotelSeederService {
     private DirectorRepository directorRepository;
     @Autowired
     private HotelGuestRepository hotelGuestRepository;
-    @Autowired
-    private RoomRepository roomRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Hotel Initial Load -----------");
@@ -61,7 +58,6 @@ public class HotelSeederService {
                 new RoomEntity(45, new BigDecimal(120), true, List.of(hotelGuests[0])),
                 new RoomEntity(12, new BigDecimal(60), false, new ArrayList<>())
         };
-        this.roomRepository.saveAll(Arrays.asList(rooms));
 
         HotelEntity[] hotels = {
                 new HotelEntity("Av. Madrid, Madrid, 32452", 3, directors[0], List.of(rooms[0])),
@@ -74,6 +70,5 @@ public class HotelSeederService {
         this.hotelRepository.deleteAll();
         this.hotelGuestRepository.deleteAll();
         this.directorRepository.deleteAll();
-        this.roomRepository.deleteAll();
     }
 }
