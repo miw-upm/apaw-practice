@@ -41,6 +41,7 @@ public class ZooSeederService {
                 new ZooEntity(new Zoo(addresses[1], 35664718)),
                 new ZooEntity(new Zoo(addresses[2], 5551450))
         };
+        zoos[0].setId("id1");
         this.zooRepository.saveAll(Arrays.asList(zoos));
         CaretakerEntity[] caretakers = {
                 new CaretakerEntity(new Caretaker("71679884Q", "Samuel L", "Jackson")),
