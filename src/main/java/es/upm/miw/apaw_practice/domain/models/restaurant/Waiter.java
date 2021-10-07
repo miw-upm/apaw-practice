@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.restaurant;
 
-import java.util.List;
-
 public class Waiter {
     private String section;
     private String category;

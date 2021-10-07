@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.game_wow;
 
 import java.util.Date;
+import java.util.List;
 
 public class Raid {
 
@@ -9,7 +10,7 @@ public class Raid {
     private String dificulty;
     private Integer playerNumber;
     private Boolean finish;
-    private Boss boss;
+    private List<Boss> bossList;
 
     public Raid() {
         //empty for framework
@@ -55,12 +56,12 @@ public class Raid {
         this.finish = finish;
     }
 
-    public Boss getBoss() {
-        return boss;
+    public List<Boss> getBossList() {
+        return bossList;
     }
 
-    public void setBoss(Boss boss) {
-        this.boss = boss;
+    public void setBossList(List<Boss> bossList) {
+        this.bossList = bossList;
     }
 
     @Override
@@ -71,7 +72,7 @@ public class Raid {
                 ", dificulty='" + dificulty + '\'' +
                 ", playerNumber=" + playerNumber +
                 ", finish=" + finish +
-                ", boss=" + boss +
+                ", boss=" + bossList +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.math.BigDecimal;
@@ -9,6 +10,8 @@ import java.util.Objects;
 
 public class RoomEntity {
     @Id
+    private String id;
+    @Indexed(unique = true)
     private Integer numberRoom;
     private BigDecimal priceRoom;
     private Boolean vip;

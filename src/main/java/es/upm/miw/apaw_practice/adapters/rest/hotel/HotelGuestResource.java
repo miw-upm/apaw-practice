@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
+import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import es.upm.miw.apaw_practice.domain.services.hotel.HotelGuestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,19 @@ public class HotelGuestResource {
 
     static final String HOTELGUEST = "/hotel/hotelguests";
 
-   private final HotelGuestService hotelGuestService;
+    private final HotelGuestService hotelGuestService;
 
-   @Autowired
+    @Autowired
     public HotelGuestResource(HotelGuestService hotelGuestService) {
         this.hotelGuestService = hotelGuestService;
     }
 
     @PostMapping
-    public HotelGuest create(@RequestBody HotelGuest hotelGuest){
-       return this.hotelGuestService.create(hotelGuest);
+    public HotelGuest create(@RequestBody HotelGuest hotelGuest) {
+        if (hotelGuest.isNull()) {
+            throw new BadRequestException("");
+        } else {
+            return this.hotelGuestService.create(hotelGuest);
+        }
     }
 }

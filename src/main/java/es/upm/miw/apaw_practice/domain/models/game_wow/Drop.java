@@ -1,10 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.game_wow;
 
-import java.util.List;
-
 public class Drop {
 
-    private String drop;
+    private String race;
     private Integer level;
     private Feature feature;
 
@@ -12,10 +10,12 @@ public class Drop {
         //empty for framework
     }
 
-    public String getDrop() {return drop;}
+    public String getRace() {
+        return race;
+    }
 
-    public void setDrop(String drop) {
-        this.drop = drop;
+    public void setRace(String race) {
+        this.race = race;
     }
 
     public Integer getLevel() {
@@ -37,7 +37,7 @@ public class Drop {
     @Override
     public String toString() {
         return "Drop{" +
-                "drop='" + drop + '\'' +
+                "drop='" + race + '\'' +
                 ", level=" + level +
                 ", feature=" + feature +
                 '}';
