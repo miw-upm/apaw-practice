@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class Vehicle {
 
+    private String id;
     private String vinNumber;
     private BigDecimal dailyCost;
     private Integer kilometersAmount;
@@ -13,11 +14,19 @@ public class Vehicle {
         //empty for framework
     }
 
-    public  Vehicle(String vinNumber, BigDecimal dailyCost, Integer kilometersAmount, Boolean goodCondition) {
+    public Vehicle(String vinNumber, BigDecimal dailyCost, Integer kilometersAmount, Boolean goodCondition) {
         this.vinNumber = vinNumber;
         this.dailyCost = dailyCost;
         this.kilometersAmount = kilometersAmount;
         this.goodCondition = goodCondition;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getVinNumber() {

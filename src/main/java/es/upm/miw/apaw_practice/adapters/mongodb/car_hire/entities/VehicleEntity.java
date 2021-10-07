@@ -27,6 +27,7 @@ public class VehicleEntity {
     public VehicleEntity(Vehicle vehicle) {
         BeanUtils.copyProperties(vehicle, this);
         this.id = UUID.randomUUID().toString();
+        vehicle.setId(this.id);
     }
 
     public String getId() {
@@ -67,6 +68,12 @@ public class VehicleEntity {
 
     public void setGoodCondition(Boolean goodCondition) {
         this.goodCondition = goodCondition;
+    }
+
+    public Vehicle toVehicle() {
+        Vehicle vehicle = new Vehicle();
+        BeanUtils.copyProperties(this, vehicle);
+        return vehicle;
     }
 
     @Override

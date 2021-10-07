@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities;
 
 
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,20 +14,23 @@ import java.util.UUID;
 public class GymEntity {
 
     @Id
-    private String id ;
-    private String gymAddress;
-    private String gymName ;
+    private String id;
+    @Indexed(unique = true)
+    private String address;
+    private String label;
+    private String cellphone;
     @DBRef
-    private List<CoachEntity> coach ;
+    private List<CoachEntity> coach;
 
-    public GymEntity(){
+    public GymEntity() {
         //empty
     }
 
-    public GymEntity(String gymAddress, String gymName, List<CoachEntity> coach) {
-        this.id = UUID.randomUUID().toString() ;
-        this.gymAddress = gymAddress;
-        this.gymName = gymName;
+    public GymEntity(String address, String label, String cellphone, List<CoachEntity> coach) {
+        this.id = UUID.randomUUID().toString();
+        this.address = address;
+        this.label = label;
+        this.cellphone = cellphone;
         this.coach = coach;
     }
 
@@ -34,21 +38,32 @@ public class GymEntity {
         return id;
     }
 
-
-    public String getGymAddress() {
-        return gymAddress;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setGymAddress(String gymAddress) {
-        this.gymAddress = gymAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public String getGymName() {
-        return gymName;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setGymName(String gymName) {
-        this.gymName = gymName;
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 
     public List<CoachEntity> getCoach() {
@@ -63,21 +78,22 @@ public class GymEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GymEntity gymentity = (GymEntity) o;
-        return id.equals(gymentity.id) && Objects.equals(gymAddress, gymentity.gymAddress) && Objects.equals(gymName, gymentity.gymName) && Objects.equals(coach, gymentity.coach);
+        GymEntity gymEntity = (GymEntity) o;
+        return address.equals(gymEntity.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, gymAddress, gymName, coach);
+        return Objects.hash(address);
     }
 
     @Override
     public String toString() {
-        return "Gymentity{" +
+        return "GymEntity{" +
                 "id='" + id + '\'' +
-                ", gymAddress='" + gymAddress + '\'' +
-                ", gymName='" + gymName + '\'' +
+                ", address='" + address + '\'' +
+                ", label='" + label + '\'' +
+                ", cellphone=" + cellphone +
                 ", coach=" + coach +
                 '}';
     }
