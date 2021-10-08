@@ -26,7 +26,7 @@ public class AnimalPersistenceMongodb implements AnimalPersistence {
     public void delete(Animal animal) {
         Example<AnimalEntity> exampleAnimal = this.exampleOf(animal);
         if (this.animalRepository.exists(exampleAnimal)) {
-            this.animalRepository.delete(new AnimalEntity(animal));
+            this.animalRepository.deleteAll(this.animalRepository.findAll(exampleAnimal));
         } else {
             throw new NotFoundException("Not found: " + animal.toString());
         }
@@ -35,6 +35,7 @@ public class AnimalPersistenceMongodb implements AnimalPersistence {
     private Example<AnimalEntity> exampleOf(Animal animal) {
         ExampleMatcher animalMatcher = ExampleMatcher.matching()
                 .withIgnorePaths("id")
+                .withIgnorePaths("diet")
                 .withMatcher("name", ignoreCase())
                 .withMatcher("family", ignoreCase());
         return Example.of(new AnimalEntity(animal), animalMatcher);
