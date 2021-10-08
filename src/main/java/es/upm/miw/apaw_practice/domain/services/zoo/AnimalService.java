@@ -18,8 +18,4 @@ public class AnimalService {
     public void delete(Animal animal) {
         this.animalPersistence.delete(animal);
     }
-
-    public void create(Animal animal) {
-        this.animalPersistence.create(animal);
-    }
 }

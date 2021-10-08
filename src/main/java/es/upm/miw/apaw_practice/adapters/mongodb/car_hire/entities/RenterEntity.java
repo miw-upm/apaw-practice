@@ -59,6 +59,12 @@ public class RenterEntity {
         this.likedCar = likedCar;
     }
 
+    public Renter toRenter() {
+        Renter renter = new Renter();
+        BeanUtils.copyProperties(this, renter);
+        return renter;
+    }
+
     @Override
     public String toString() {
         return "RenterEntity{" +
