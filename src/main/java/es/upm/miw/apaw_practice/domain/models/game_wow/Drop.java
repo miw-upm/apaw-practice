@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.game_wow;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.FeatureEntity;
+
 public class Drop {
 
     private String race;
@@ -8,6 +10,12 @@ public class Drop {
 
     public Drop() {
         //empty for framework
+    }
+
+    public Drop(String race, Integer level, Feature feature) {
+        this.race = race;
+        this.level = level;
+        this.feature = feature;
     }
 
     public String getRace() {

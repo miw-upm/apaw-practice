@@ -1,7 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities;
 
+import es.upm.miw.apaw_practice.domain.models.game_wow.Feature;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.UUID;
 
 @Document
 public class FeatureEntity {
@@ -16,6 +20,11 @@ public class FeatureEntity {
 
     public FeatureEntity() {
         //empty for framework
+    }
+
+    public FeatureEntity(Feature feature) {
+        BeanUtils.copyProperties(feature,this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {

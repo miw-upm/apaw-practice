@@ -4,6 +4,8 @@ import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 @Document
 public class DropEntity {
 
@@ -16,6 +18,13 @@ public class DropEntity {
 
     public DropEntity() {
         //empty for framework
+    }
+
+    public DropEntity(String race, Integer level, FeatureEntity feature) {
+        this.race = race;
+        this.level = level;
+        this.feature = feature;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
