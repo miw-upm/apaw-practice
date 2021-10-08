@@ -8,12 +8,10 @@ import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.AthleteReposi
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.CoachRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.GymRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.LessonRepository;
-
 import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -53,7 +51,7 @@ public class GymSeederService {
         this.coachRepository.saveAll(Arrays.asList(coach));
         GymEntity[] gym = {
                 new GymEntity("calle Gran via 82", "Basic Fit", "12356688", List.of(coach[1], coach[2])),
-                new GymEntity("calle toledo 32", "Basic Fit", "12356856", List.of(coach[0]))
+                new GymEntity("calle toledo 32", "Basic Fi", "12356856", List.of(coach[0]))
 
         };
         this.gymRepository.saveAll(Arrays.asList(gym));
