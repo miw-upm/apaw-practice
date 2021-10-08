@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 public interface AnimalPersistence {
 
     void delete(Animal animal);
-
 }
