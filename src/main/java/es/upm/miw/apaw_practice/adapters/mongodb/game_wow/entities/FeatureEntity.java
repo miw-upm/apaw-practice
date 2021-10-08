@@ -1,23 +1,38 @@
-package es.upm.miw.apaw_practice.domain.models.game_wow;
+package es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities;
 
-public class Feature {
+import es.upm.miw.apaw_practice.domain.models.game_wow.Feature;
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
+@Document
+public class FeatureEntity {
+
+    @Id
+    private String id;
     private String part;
     private Integer spellPower;
     private Integer meleeAtack;
     private Integer temple;
     private String extraSpell;
 
-    public Feature() {
+    public FeatureEntity() {
         //empty for framework
     }
 
-    public Feature(String part, Integer spellPower, Integer meleeAtack, Integer temple, String extraSpell) {
-        this.part = part;
-        this.spellPower = spellPower;
-        this.meleeAtack = meleeAtack;
-        this.temple = temple;
-        this.extraSpell = extraSpell;
+    public FeatureEntity(Feature feature) {
+        BeanUtils.copyProperties(feature,this);
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPart() {
@@ -58,16 +73,5 @@ public class Feature {
 
     public void setExtraSpell(String extraSpell) {
         this.extraSpell = extraSpell;
-    }
-
-    @Override
-    public String toString() {
-        return "Feature{" +
-                "part='" + part + '\'' +
-                ", spellPower=" + spellPower +
-                ", meleeAtack=" + meleeAtack +
-                ", temple=" + temple +
-                ", extraEpell='" + extraSpell + '\'' +
-                '}';
     }
 }
