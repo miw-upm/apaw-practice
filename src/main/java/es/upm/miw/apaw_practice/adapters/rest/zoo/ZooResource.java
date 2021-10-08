@@ -36,7 +36,7 @@ public class ZooResource {
         if (address.getZipCode() == null) {
             throw new BadRequestException("For this update, a new valid zipcode is mandatory");
         } else {
-            this.zooService.updateZipCode(id, address);
+            this.zooService.updateZipCode(id, address.getZipCode());
         }
     }
 

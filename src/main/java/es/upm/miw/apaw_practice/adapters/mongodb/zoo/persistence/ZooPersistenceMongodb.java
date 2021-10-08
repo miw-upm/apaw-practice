@@ -24,13 +24,17 @@ public class ZooPersistenceMongodb implements ZooPersistence {
     }
 
     @Override
-    public ZooEntity findById(String id) {
+    public Zoo findById(String id) {
         return this.zooRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Zoo with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Zoo with id: " + id))
+                .toZoo();
     }
 
     @Override
-    public void update(ZooEntity zooEntity) {
-        this.zooRepository.save(zooEntity);
+    public void updateZipCode(String id, String zipCode) {
+        ZooEntity zoo = this.zooRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Zoo with id: " + id));
+        zoo.getAddress().setZipCode(zipCode);
+        this.zooRepository.save(zoo);
     }
 }
