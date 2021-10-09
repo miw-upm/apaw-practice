@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 
-import es.upm.miw.apaw_practice.domain.models.restaurant.Table;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,9 +23,13 @@ public class TableEntity {
         //empty for framework
     }
 
-    public TableEntity(Table table){
-        BeanUtils.copyProperties(table,this);
+    public TableEntity(Integer number, Boolean occupied, String style, BigDecimal price, List<ReserveEntity> reserves) {
         this.id = UUID.randomUUID().toString();
+        this.number = number;
+        this.occupied = occupied;
+        this.style = style;
+        this.price = price;
+        this.reserves = reserves;
     }
 
     public String getId() {
