@@ -11,6 +11,7 @@ public class DropEntity {
 
     @Id
     private String id;
+    private String title;
     private String race;
     private Integer level;
     @DBRef
@@ -20,7 +21,8 @@ public class DropEntity {
         //empty for framework
     }
 
-    public DropEntity(String race, Integer level, FeatureEntity feature) {
+    public DropEntity(String title, String race, Integer level, FeatureEntity feature) {
+        this.title = title;
         this.race = race;
         this.level = level;
         this.feature = feature;
@@ -34,6 +36,10 @@ public class DropEntity {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getTitle() {return title;}
+
+    public void setTitle(String title) {this.title = title;}
 
     public String getRace() {
         return race;
