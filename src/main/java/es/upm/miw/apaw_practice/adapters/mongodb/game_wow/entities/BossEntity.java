@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.UUID;
 
 @Document
 public class BossEntity {
@@ -18,6 +19,13 @@ public class BossEntity {
 
     public BossEntity() {
         //empty for framework
+    }
+
+    public BossEntity(String description, String effort, List<DropEntity> dropList) {
+        this.description = description;
+        this.effort = effort;
+        this.dropList = dropList;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {

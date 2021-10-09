@@ -32,39 +32,38 @@ public class GameWowSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Game_wow Initial Load -----------");
         FeatureEntity[] features = {
-                //Sliver of Pure Ice
                 new FeatureEntity(new Feature("Trinket",158,null,null,"Use: Restores 1625 mana")),
-                //Marrowgar's Scratching Choker
                 new FeatureEntity(new Feature("Neck",null,79,null,null)),
-                //Boots of the Frozen Seed
                 new FeatureEntity(new Feature("Feet",106,null,null,"Use: Restores 1625 mana")),
-                //Ghoul Commander's Cuirass
-                new FeatureEntity(new Feature("chest",null,144,null,"Use: Restores 1625 mana")),
-                //
-                new FeatureEntity(new Feature("Trinket",158,null,null,"Use: Restores 1625 mana")),
-                //
-                new FeatureEntity(new Feature("Trinket",158,null,null,"Use: Restores 1625 mana")),
+                new FeatureEntity(new Feature("Chest",null,144,null,"Use: Restores 1625 mana")),
+                new FeatureEntity(new Feature("Waist",106,null,null,null)),
+                new FeatureEntity(new Feature("Legs",171,null,null,"Use: Restores 1625 mana"))
         };
         this.featureRepository.saveAll(Arrays.asList(features));
 
         DropEntity[] drops = {
-                new DropEntity(null,251,features[0]),
-                new DropEntity(null,251,features[1]),
-                new DropEntity(null,251,features[3]),
-                new DropEntity("Human, Orc, Dwarf, Night Elf, Undead, Tauren, Gnome, Troll, Blood Elf, Draenei",
-                        251,features[4]),
-                //new DropEntity(null,251,features[]),
-                //new DropEntity(null,251,features[]),
+                new DropEntity("Sliver of Pure Ice","mage,paladin,druid,priest,shaman,warlock",251,features[0]),
+                new DropEntity("Marrowgar's Scratching Choker","paladin,warrior,dk",251,features[1]),
+                new DropEntity("Boots of the Frozen Seed","druid,rogue",251,features[3]),
+                new DropEntity("Ghoul Commander's Cuirass","paladin,warrior,dk",251,features[4]),
+                new DropEntity("Cord of Dark Suffering","druid,rogue",251,features[4]),
+                new DropEntity("Plaguebringer's Stained Pants","mage,priest,warlock",264,features[5])
         };
-
+        this.dropRepository.saveAll(Arrays.asList(drops));
 
         BossEntity[] bosses = {
-            /*new BossEntity(new Boss("Lord Marrowgal", "10N", List.of(features[0], features[1])),
-            new BossEntity(new Boss("Lady DeathWhisper", "10N",)),
-            new BossEntity(new Boss("GunShip Battle", "10N",)),
-            new BossEntity(new Boss("DeathBringer Saurfang", "10N",)),
-            new BossEntity(new Boss("Festergut", "10N",)),
-            new BossEntity(new Boss("Rotface", "10N",))*/
+            new BossEntity("Lord Marrowgal", "10N", List.of(drops[0],drops[1])),
+            //new BossEntity(new Boss("Lord Marrowgal", "10N", List.of(features[0], features[1])),
+            new BossEntity("Lady DeathWhisper", "10N",List.of(drops[2],drops[3])),
+            new BossEntity("GunShip Battle", "10N",List.of(drops[4])),
+            new BossEntity("Festergut", "25N",List.of(drops[5]))
         };
+        this.bossRepository.saveAll(Arrays.asList(bosses));
+    }
+
+    public void deleteAll() {
+        this.featureRepository.deleteAll();
+        this.dropRepository.deleteAll();
+        this.bossRepository.deleteAll();
     }
 }
