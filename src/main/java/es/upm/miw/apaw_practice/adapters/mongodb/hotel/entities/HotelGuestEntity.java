@@ -15,8 +15,8 @@ public class HotelGuestEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private String dniGuest;
-    private String nameGuest;
+    private String dni;
+    private String name;
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
@@ -43,20 +43,20 @@ public class HotelGuestEntity {
         this.id = id;
     }
 
-    public String getDniGuest() {
-        return dniGuest;
+    public String getDni() {
+        return dni;
     }
 
-    public void setDniGuest(String dniGuest) {
-        this.dniGuest = dniGuest;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
-    public String getNameGuest() {
-        return nameGuest;
+    public String getName() {
+        return name;
     }
 
-    public void setNameGuest(String nameGuest) {
-        this.nameGuest = nameGuest;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDateTime getEntryDate() {
@@ -80,20 +80,20 @@ public class HotelGuestEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HotelGuestEntity that = (HotelGuestEntity) o;
-        return id.equals(that.id) && dniGuest.equals(that.dniGuest) && nameGuest.equals(that.nameGuest) && entryDate.equals(that.entryDate) && departureDate.equals(that.departureDate);
+        return id.equals(that.id) && dni.equals(that.dni) && name.equals(that.name) && entryDate.equals(that.entryDate) && departureDate.equals(that.departureDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dniGuest, nameGuest, entryDate, departureDate);
+        return Objects.hash(id, dni, name, entryDate, departureDate);
     }
 
     @Override
     public String toString() {
         return "HotelGuestEntity{" +
                 "id='" + id + '\'' +
-                ", dniGuest='" + dniGuest + '\'' +
-                ", nameGuest='" + nameGuest + '\'' +
+                ", dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
                 ", entryDate=" + entryDate +
                 ", departureDate=" + departureDate +
                 '}';
