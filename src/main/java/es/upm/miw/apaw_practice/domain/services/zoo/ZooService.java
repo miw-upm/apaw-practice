@@ -1,9 +1,12 @@
 package es.upm.miw.apaw_practice.domain.services.zoo;
 
+import es.upm.miw.apaw_practice.domain.models.zoo.Cage;
+import es.upm.miw.apaw_practice.domain.models.zoo.CageFumigation;
 import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
 import es.upm.miw.apaw_practice.domain.persistence_ports.zoo.ZooPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.stream.Stream;
 
 @Service
 public class ZooService {
@@ -17,5 +20,17 @@ public class ZooService {
 
     public void create(Zoo zoo) {
         this.zooPersistence.create(zoo);
+    }
+
+    public void updateZipCode(String id, String zipCode) {
+        this.zooPersistence.updateZipCode(id, zipCode);
+    }
+
+    public Zoo findById(String id) {
+        return this.zooPersistence.findById(id);
+    }
+
+    public void updateNextFumigation(String id, CageFumigation cageFumigation) {
+        this.zooPersistence.updateNextFumigation(id, cageFumigation);
     }
 }

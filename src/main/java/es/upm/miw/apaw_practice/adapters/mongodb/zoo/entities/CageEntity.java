@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities;
 
 import es.upm.miw.apaw_practice.domain.models.zoo.Cage;
-import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

@@ -15,7 +15,7 @@ public class CourtEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private Integer numberId;
+    private Integer number;
     private BigDecimal price;
     private Boolean occupied;
     @DBRef
@@ -25,9 +25,9 @@ public class CourtEntity {
         //empty from framework
     }
 
-    public CourtEntity(Integer numberId, BigDecimal price, Boolean occupied, List<ReservationEntity> reservations){
+    public CourtEntity(Integer number, BigDecimal price, Boolean occupied, List<ReservationEntity> reservations){
         this.id = UUID.randomUUID().toString();
-        this.numberId = numberId;
+        this.number = number;
         this.price = price;
         this.occupied = occupied;
         this.reservations = reservations;
@@ -41,12 +41,12 @@ public class CourtEntity {
         this.id = id;
     }
 
-    public Integer getNumberId() {
-        return numberId;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setNumberId(Integer numberId) {
-        this.numberId = numberId;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public BigDecimal getPrice() {
@@ -77,7 +77,7 @@ public class CourtEntity {
     public String toString() {
         return "CourtEntity{" +
                 "id='" + id + '\'' +
-                ", number=" + numberId +
+                ", number=" + number +
                 ", price=" + price +
                 ", occupied=" + occupied +
                 ", reservations=" + reservations +
