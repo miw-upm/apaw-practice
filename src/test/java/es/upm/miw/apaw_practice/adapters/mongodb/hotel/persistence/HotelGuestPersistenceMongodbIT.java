@@ -27,6 +27,7 @@ class HotelGuestPersistenceMongodbIT {
         assertEquals("Kino", hotelGuestDB.getName());
         assertEquals(entryDate, hotelGuestDB.getEntryDate());
         assertEquals(departureDate, hotelGuestDB.getDepartureDate());
-
     }
+
+
 }

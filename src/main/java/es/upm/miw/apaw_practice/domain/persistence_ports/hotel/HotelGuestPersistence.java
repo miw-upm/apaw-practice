@@ -8,4 +8,6 @@ public interface HotelGuestPersistence {
     HotelGuest create(HotelGuest hotelGuest);
 
     HotelGuest read(String dni);
+
+    void delete(String dni);
 }

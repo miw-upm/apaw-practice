@@ -23,4 +23,13 @@ public class HotelGuestService {
             return this.hotelGuestPersistence.create(hotelGuest);
         }
     }
+
+    public void delete(String dni) {
+        this.hotelGuestPersistence.delete(dni);
+    }
+
+    public HotelGuest read(String dni) {
+        return this.hotelGuestPersistence.read(dni);
+    }
+
 }

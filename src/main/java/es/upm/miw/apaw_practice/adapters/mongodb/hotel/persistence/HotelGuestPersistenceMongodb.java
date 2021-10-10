@@ -32,4 +32,11 @@ public class HotelGuestPersistenceMongodb implements HotelGuestPersistence {
                 .orElseThrow(() -> new NotFoundException("HotelGuest DNI: " + dni))
                 .toHotelGuest();
     }
+
+
+
+    @Override
+    public void delete(String dni) {
+        this.hotelGuestRepository.deleteByDni(dni);
+    }
 }
