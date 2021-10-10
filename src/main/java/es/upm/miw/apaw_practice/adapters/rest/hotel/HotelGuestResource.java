@@ -24,7 +24,6 @@ public class HotelGuestResource {
 
     @PostMapping
     public HotelGuest create(@RequestBody HotelGuest hotelGuest) {
-
             return this.hotelGuestService.create(hotelGuest);
 
     }

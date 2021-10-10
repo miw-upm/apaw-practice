@@ -11,7 +11,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.time.LocalDateTime;
 
 @RestTestConfig
-public class HotelGuestResourceIT {
+class HotelGuestResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

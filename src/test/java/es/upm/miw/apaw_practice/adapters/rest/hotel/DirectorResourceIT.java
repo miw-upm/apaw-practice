@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @RestTestConfig
-public class DirectorResourceIT {
+class DirectorResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

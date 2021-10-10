@@ -61,8 +61,10 @@ public class HotelSeederService {
 
         HotelEntity[] hotels = {
                 new HotelEntity("Av. Madrid, Madrid, 32452", 3, directors[0], List.of(rooms[0])),
+                new HotelEntity("Av. Luto, 23981", 2, directors[0], List.of(rooms[1])),
                 new HotelEntity("Av. Salamanca, Salamanca, 15243", 4, directors[2], List.of(rooms[1], rooms[2], rooms[3]))
         };
+        hotels[1].setId("1");
         this.hotelRepository.saveAll(Arrays.asList(hotels));
     }
 

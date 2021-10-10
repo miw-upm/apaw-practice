@@ -6,14 +6,14 @@ import java.util.List;
 public class Room {
     private Integer number;
     private BigDecimal price;
-    private Boolean vip;
+    private boolean vip;
     private List<HotelGuest> hotelGuests;
 
     public Room() {
         //Empty for framework
     }
 
-    Room(Integer number, BigDecimal price, Boolean vip, List<HotelGuest> hotelGuests) {
+    public Room(Integer number, BigDecimal price, boolean vip, List<HotelGuest> hotelGuests) {
         this.number = number;
         this.price = price;
         this.vip = vip;
@@ -37,11 +37,11 @@ public class Room {
         this.price = price;
     }
 
-    public Boolean isVip() {
+    public boolean isVip() {
         return vip;
     }
 
-    public void setVip(Boolean vip) {
+    public void setVip(boolean vip) {
         this.vip = vip;
     }
 

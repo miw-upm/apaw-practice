@@ -27,6 +27,7 @@ public class HotelEntity {
         //empty for framework
     }
 
+
     public HotelEntity(String direction, Integer numberStars, DirectorEntity director, List<RoomEntity> roomEntities) {
         this.id = UUID.randomUUID().toString();
         this.direction = direction;

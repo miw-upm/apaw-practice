@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class RoomEntity {
     private Integer number;
     private BigDecimal price;
-    private Boolean vip;
+    private boolean vip;
     @DBRef
     private List<HotelGuestEntity> hotelGuestsEntities;
 
@@ -21,7 +21,7 @@ public class RoomEntity {
         //empty for framework
     }
 
-    public RoomEntity(Integer number, BigDecimal price, Boolean vip, List<HotelGuestEntity> hotelGuestsEntities) {
+    public RoomEntity(Integer number, BigDecimal price, boolean vip, List<HotelGuestEntity> hotelGuestsEntities) {
         this.number = number;
         this.price = price;
         this.vip = vip;
@@ -56,11 +56,11 @@ public class RoomEntity {
         this.price = price;
     }
 
-    public Boolean isVip() {
+    public boolean isVip() {
         return vip;
     }
 
-    public void setVip(Boolean vip) {
+    public void setVip(boolean vip) {
         this.vip = vip;
     }
 
@@ -83,6 +83,12 @@ public class RoomEntity {
                 '}';
     }
 
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, price, vip, hotelGuestsEntities);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,10 +96,4 @@ public class RoomEntity {
         RoomEntity that = (RoomEntity) o;
         return Objects.equals(number, that.number) && Objects.equals(price, that.price) && Objects.equals(vip, that.vip) && Objects.equals(hotelGuestsEntities, that.hotelGuestsEntities);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, price, vip, hotelGuestsEntities);
-    }
-
 }
