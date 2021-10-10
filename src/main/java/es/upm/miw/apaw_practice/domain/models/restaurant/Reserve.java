@@ -7,7 +7,7 @@ public class Reserve {
     private Integer numPeople;
     private String holder;
 
-    Reserve(){
+    public Reserve(){
         //empty for framework
     }
 
