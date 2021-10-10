@@ -1,0 +1,35 @@
+package es.upm.miw.apaw_practice.adapters.rest.restaurant;
+
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
+import es.upm.miw.apaw_practice.domain.models.restaurant.Waiter;
+import es.upm.miw.apaw_practice.domain.services.restaurant.WaiterService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.stream.Stream;
+
+@RestController
+@RequestMapping(WaiterResource.WAITERS)
+public class WaiterResource {
+
+    static final String WAITERS = "/restaurant/waiters";
+    static final String SEARCHES = "/searches";
+
+    private final WaiterService waiterService;
+
+    @Autowired
+    public WaiterResource(WaiterService waiterService){
+        this.waiterService = waiterService;
+    }
+
+    @GetMapping(SEARCHES)
+    public Stream<Waiter> findBySectionAndCategory(@RequestParam String q){
+        String section = new LexicalAnalyzer().extractWithAssure(q, "section");
+        String category = new LexicalAnalyzer().extractWithAssure(q, "category");
+        return this.waiterService.findBySectionAndCategory(section,category);
+    }
+
+}

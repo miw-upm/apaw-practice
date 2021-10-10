@@ -4,7 +4,7 @@ public class Waiter {
     private String section;
     private String category;
 
-    Waiter(){
+    public Waiter(){
         //empty for framework
     }
 
