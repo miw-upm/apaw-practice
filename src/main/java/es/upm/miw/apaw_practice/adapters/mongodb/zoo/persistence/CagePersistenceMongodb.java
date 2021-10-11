@@ -1,14 +1,19 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.zoo.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.daos.CageRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.AnimalEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.CageEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.ZooEntity;
+import es.upm.miw.apaw_practice.domain.models.zoo.Animal;
+import es.upm.miw.apaw_practice.domain.models.zoo.Cage;
 import es.upm.miw.apaw_practice.domain.models.zoo.CageFumigation;
+import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
 import es.upm.miw.apaw_practice.domain.persistence_ports.zoo.CagePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository("cagePersistence")
 public class CagePersistenceMongodb implements CagePersistence {
@@ -21,11 +26,22 @@ public class CagePersistenceMongodb implements CagePersistence {
     }
 
     @Override
-    public void updateNextFumigation(ZooEntity zooEntity, CageFumigation cageFumigation) {
-        List<CageEntity> cages = this.cageRepository.findByZoo(zooEntity)
+    public void updateNextFumigation(Zoo zoo, CageFumigation cageFumigation) {
+        List<CageEntity> cages = this.cageRepository.findByZoo(new ZooEntity(zoo))
                 .filter(cage -> cage.getNextFumigation().equals(cageFumigation.getOldFumigation()))
                 .collect(Collectors.toList());
         cages.forEach(cage -> cage.setNextFumigation(cageFumigation.getNewFumigation()));
         this.cageRepository.saveAll(cages);
+    }
+
+    @Override
+    public Stream<Cage> findAllContainingAny(Animal animal) {
+       return this.cageRepository.findAll().stream()
+               .filter(cage -> cage.getAnimals().stream()
+                       .map(AnimalEntity::toAnimal)
+                       .collect(Collectors.toList())
+                       .contains(animal))
+               .map(CageEntity::toCage);
+
     }
 }

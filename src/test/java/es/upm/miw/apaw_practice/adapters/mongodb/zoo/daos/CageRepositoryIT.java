@@ -30,7 +30,7 @@ class CageRepositoryIT {
     void initializeTestData() {
         animals = new AnimalEntity[]{
                 new AnimalEntity(new Animal("Gato", "Felino", "Omnívoro")),
-                new AnimalEntity(new Animal("Chimpancé", "Mono", "Omnívoro")),
+                new AnimalEntity(new Animal("Chimpance", "Mono", "Omnívoro")),
                 new AnimalEntity(new Animal("Tigre dientes de sable", "Felino", "Carnívoro")),
                 new AnimalEntity(new Animal("Anjhk", "Bovino", "Herbívoro"))
         };
@@ -42,6 +42,7 @@ class CageRepositoryIT {
         ZooAddress address = new ZooAddress("Calle Carranza", 22, "28004");
         ZooEntity expectedZoo = new ZooEntity(
                 new Zoo(address, 914334789));
+        expectedZoo.setId("id1");
         Assertions.assertEquals(expectedZoo, this.cageRepository.findByLocationCode("A1").get().getZoo());
         CaretakerEntity expectedCaretaker = new CaretakerEntity(
                 new Caretaker("71679884Q", "Samuel L", "Jackson"));

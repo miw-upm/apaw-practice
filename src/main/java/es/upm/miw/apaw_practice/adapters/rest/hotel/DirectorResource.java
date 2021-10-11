@@ -26,4 +26,5 @@ public class DirectorResource {
     public List<Director> readEmails() {
         return this.directorService.readEmails();
     }
+
 }
