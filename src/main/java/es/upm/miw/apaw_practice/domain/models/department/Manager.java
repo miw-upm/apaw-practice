@@ -6,18 +6,16 @@ public class Manager {
     private Integer experienceYears;
     private String phoneNumber;
     private String email;
-    private List<Department> departments;
     private List<DepartmentEmployee> departmentEmployees;
 
     public Manager() {
         //empty for framework
     }
 
-    public Manager(Integer experienceYears, String phoneNumber, String email, List<Department> departments, List<DepartmentEmployee> departmentEmployees) {
+    public Manager(Integer experienceYears, String phoneNumber, String email, List<DepartmentEmployee> departmentEmployees) {
         this.experienceYears = experienceYears;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.departments = departments;
         this.departmentEmployees = departmentEmployees;
     }
 
@@ -45,14 +43,6 @@ public class Manager {
         this.email = email;
     }
 
-    public List<Department> getDepartments() {
-        return departments;
-    }
-
-    public void setDepartments(List<Department> departments) {
-        this.departments = departments;
-    }
-
     public List<DepartmentEmployee> getDepartmentEmployees() {
         return departmentEmployees;
     }
@@ -67,7 +57,6 @@ public class Manager {
                 "experienceYears=" + experienceYears +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
-                ", departments=" + departments +
                 ", departmentEmployees=" + departmentEmployees +
                 '}';
     }
