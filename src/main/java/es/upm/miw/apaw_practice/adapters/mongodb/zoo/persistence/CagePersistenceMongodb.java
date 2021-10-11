@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.zoo.daos.CageRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.CageEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.ZooEntity;
 import es.upm.miw.apaw_practice.domain.models.zoo.CageFumigation;
+import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
 import es.upm.miw.apaw_practice.domain.persistence_ports.zoo.CagePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,8 +22,8 @@ public class CagePersistenceMongodb implements CagePersistence {
     }
 
     @Override
-    public void updateNextFumigation(ZooEntity zooEntity, CageFumigation cageFumigation) {
-        List<CageEntity> cages = this.cageRepository.findByZoo(zooEntity)
+    public void updateNextFumigation(Zoo zoo, CageFumigation cageFumigation) {
+        List<CageEntity> cages = this.cageRepository.findByZoo(new ZooEntity(zoo))
                 .filter(cage -> cage.getNextFumigation().equals(cageFumigation.getOldFumigation()))
                 .collect(Collectors.toList());
         cages.forEach(cage -> cage.setNextFumigation(cageFumigation.getNewFumigation()));

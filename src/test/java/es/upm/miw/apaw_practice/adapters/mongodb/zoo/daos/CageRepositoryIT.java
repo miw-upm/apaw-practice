@@ -42,6 +42,7 @@ class CageRepositoryIT {
         ZooAddress address = new ZooAddress("Calle Carranza", 22, "28004");
         ZooEntity expectedZoo = new ZooEntity(
                 new Zoo(address, 914334789));
+        expectedZoo.setId("id1");
         Assertions.assertEquals(expectedZoo, this.cageRepository.findByLocationCode("A1").get().getZoo());
         CaretakerEntity expectedCaretaker = new CaretakerEntity(
                 new Caretaker("71679884Q", "Samuel L", "Jackson"));
