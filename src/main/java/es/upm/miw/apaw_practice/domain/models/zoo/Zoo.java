@@ -70,7 +70,7 @@ public class Zoo {
     @Override
     public String toString() {
         return "Zoo{" +
-                "id=" + phoneNumber +
+                "id=" + id +
                 ", " + address.toString() +
                 ", phoneNumber=" + phoneNumber +
                 ", cages=" + cages.toString() +
