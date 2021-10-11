@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.DirectorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
 import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.DirectorPersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class DirectorPersistenceMongodb implements DirectorPersistence {
 
     private final DirectorRepository directorRepository;
 
+    @Autowired
     public DirectorPersistenceMongodb(DirectorRepository directorRepository) {
         this.directorRepository = directorRepository;
     }
