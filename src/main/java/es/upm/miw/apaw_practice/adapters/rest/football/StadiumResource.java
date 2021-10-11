@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class StadiumResource {
 
     static final String CITY_ID = "/{city}";
-    static final String STADIUMS = "/stadiums";
+    static final String STADIUMS = "/football/stadiums";
 
     private final StadiumService stadiumService;
 
