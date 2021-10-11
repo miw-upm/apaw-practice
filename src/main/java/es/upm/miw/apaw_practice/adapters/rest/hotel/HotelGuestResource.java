@@ -24,10 +24,7 @@ public class HotelGuestResource {
 
     @PostMapping
     public HotelGuest create(@RequestBody HotelGuest hotelGuest) {
-        if (hotelGuest.isNull()) {
-            throw new BadRequestException("");
-        } else {
             return this.hotelGuestService.create(hotelGuest);
-        }
+
     }
 }

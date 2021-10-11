@@ -12,6 +12,12 @@ public class Boss {
         //empty for framework
     }
 
+    public Boss(String description, String effort, List<Drop> dropList) {
+        this.description = description;
+        this.effort = effort;
+        this.dropList = dropList;
+    }
+
     public String getDescription() {
         return description;
     }

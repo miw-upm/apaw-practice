@@ -1,7 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.gym.Gym;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -72,6 +74,12 @@ public class GymEntity {
 
     public void setCoach(List<CoachEntity> coach) {
         this.coach = coach;
+    }
+
+    public Gym ToGym() {
+        Gym gym = new Gym();
+        BeanUtils.copyProperties(this, gym);
+        return gym;
     }
 
     @Override
