@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.game_wow.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.daos.BossRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.BossEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.game_wow.Boss;
 import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.BossPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,15 @@ public class BossPersistenceMongodb implements BossPersistence {
                 .map(BossEntity::toBoss);
     }
 
-   // @Override
-    public Stream<Boss> readByEffort(String effort){
-       // return this.bossRepository.findByEffort(effort);
+    @Override
+    public Boss readByEffort(String effort){
+        return this.bossRepository.findByEffort(effort)
+                .orElseThrow(() -> new NotFoundException(" effort: " + effort))
+                .toBoss();
 
-//Optional<TagEntity> findByName(String name);  en  BossRepository
-        @Override
+//Optional<TagEntity> findByName(String name); readByName  en  BossRepository
+       /* @Override
         public Tag readByName(String name) {
-            return this.tagRepository.findByName(name)
+            return this.tagRepository.findByName(name)*/
     }
 }
