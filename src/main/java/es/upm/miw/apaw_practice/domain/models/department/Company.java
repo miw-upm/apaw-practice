@@ -5,16 +5,14 @@ import java.util.List;
 public class Company {
     private String direction;
     private String cif;
-    private List<Department> departments;
 
     public Company() {
         //empty for framework
     }
 
-    public Company(String direction, String cif, List<Department> departments) {
+    public Company(String direction, String cif) {
         this.direction = direction;
         this.cif = cif;
-        this.departments = departments;
     }
 
     public String getDirection() {
@@ -33,20 +31,11 @@ public class Company {
         this.cif = cif;
     }
 
-    public List<Department> getDepartments() {
-        return departments;
-    }
-
-    public void setDepartments(List<Department> departments) {
-        this.departments = departments;
-    }
-
     @Override
     public String toString() {
         return "Company{" +
                 "direction='" + direction + '\'' +
                 ", cif='" + cif + '\'' +
-                ", departments=" + departments +
                 '}';
     }
 }

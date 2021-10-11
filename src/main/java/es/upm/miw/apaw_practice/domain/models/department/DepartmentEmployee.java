@@ -6,17 +6,15 @@ public class DepartmentEmployee {
     private String dni;
     private LocalDate birthday;
     private Boolean isActive;
-    private Manager manager;
 
     public DepartmentEmployee() {
         //empty for framework
     }
 
-    public DepartmentEmployee(String dni, LocalDate birthday, Boolean isActive, Manager manager) {
+    public DepartmentEmployee(String dni, LocalDate birthday, Boolean isActive) {
         this.dni = dni;
         this.birthday = birthday;
         this.isActive = isActive;
-        this.manager = manager;
     }
 
     public String getDni() {
@@ -43,21 +41,12 @@ public class DepartmentEmployee {
         isActive = active;
     }
 
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
-
     @Override
     public String toString() {
         return "DepartmentEmployee{" +
                 "dni='" + dni + '\'' +
                 ", birthday=" + birthday +
                 ", isActive=" + isActive +
-                ", manager=" + manager +
                 '}';
     }
 }
