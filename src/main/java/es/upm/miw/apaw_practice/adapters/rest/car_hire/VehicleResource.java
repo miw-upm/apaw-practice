@@ -19,7 +19,7 @@ public class VehicleResource {
         this.vehicleService = vehicleService;
     }
 
-    @PutMapping(VIN_NUMBER)
+    @PutMapping(VehicleResource.VIN_NUMBER)
     public Vehicle update(@PathVariable String vinNumber, @RequestBody Vehicle vehicle) {
         return this.vehicleService.updateVehicle(vinNumber, vehicle);
     }

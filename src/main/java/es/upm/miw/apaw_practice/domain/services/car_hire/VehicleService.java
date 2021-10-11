@@ -16,7 +16,7 @@ public class VehicleService {
     }
 
     public Vehicle updateVehicle(String vinNumber, Vehicle vehicle) {
-        Vehicle vehicleToUpdate = this.vehiclePersistence.readByVinNumber(vinNumber);
+        Vehicle vehicleToUpdate = this.vehiclePersistence.readByVinNumber(vinNumber).toVehicle();
         vehicle.setVinNumber(vehicleToUpdate.getVinNumber());
         return this.vehiclePersistence.update(vehicle);
     }
