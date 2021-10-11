@@ -64,7 +64,7 @@ class AnimalResourceIT {
                 .value(values -> Assertions.assertEquals(3, values.size()))
                 .value(values -> Assertions.assertEquals("A1", values.get(0).getCageLocationCode()))
                 .value(values -> Assertions.assertEquals("A2", values.get(1).getCageLocationCode()))
-                .value(values -> Assertions.assertEquals("B7", values.get(2).getCageLocationCode()))
+                .value(values -> Assertions.assertEquals("B8", values.get(2).getCageLocationCode()))
                 .value(values -> Assertions.assertEquals("Jackson", values.get(0).getCaretakerSurname()))
                 .value(values -> Assertions.assertEquals("Jackson", values.get(1).getCaretakerSurname()))
                 .value(values -> Assertions.assertEquals("de Paul", values.get(2).getCaretakerSurname()));
