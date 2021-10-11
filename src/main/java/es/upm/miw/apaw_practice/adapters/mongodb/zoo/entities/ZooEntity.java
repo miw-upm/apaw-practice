@@ -22,11 +22,10 @@ public class ZooEntity {
 
     public ZooEntity(Zoo zoo) {
         BeanUtils.copyProperties(zoo, this);
-        this.id = UUID.randomUUID().toString();
     }
 
     public Zoo toZoo() {
-        return new Zoo(this.address, this.phoneNumber);
+        return new Zoo(this.id, this.address, this.phoneNumber);
     }
 
     public String getId() {
@@ -55,7 +54,7 @@ public class ZooEntity {
 
     @Override
     public int hashCode() {
-        return address.hashCode();
+        return id.hashCode();
     }
 
     @Override
@@ -63,13 +62,14 @@ public class ZooEntity {
         return this == obj
                 || obj != null
                 && getClass() == obj.getClass()
-                && (address.equals(((ZooEntity) obj).address));
+                && (id.equals(((ZooEntity) obj).id));
     }
 
     @Override
     public String toString() {
         return "Zoo{" +
-                address.toString() +
+                "id=" + id +
+                ", " + address.toString() +
                 ", phoneNumber=" + phoneNumber +
                 '}';
     }

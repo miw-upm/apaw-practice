@@ -6,6 +6,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.zoo.daos.ZooRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.ZooEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.zoo.CageFumigation;
+import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
 import es.upm.miw.apaw_practice.domain.persistence_ports.zoo.CagePersistence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,13 +26,14 @@ public class CagePersistenceMongodbIT {
 
     @Test
     void testUpdateNextFumigation() {
-        ZooEntity zoo = this.zooRepository.findById("id1")
+        ZooEntity zooEntity = this.zooRepository.findById("id1")
                 .orElseThrow(() -> new NotFoundException("test error"));
+        Zoo zoo = zooEntity.toZoo();
 
-        Long countOfAll = this.cageRepository.findByZoo(zoo).count();
+        Long countOfAll = this.cageRepository.findByZoo(zooEntity).count();
         Assertions.assertNotEquals(0, countOfAll);
         Assertions.assertEquals(countOfAll,
-                this.cageRepository.findByZoo(zoo)
+                this.cageRepository.findByZoo(zooEntity)
                         .filter(cage -> cage.getNextFumigation().equals(LocalDate.now()))
                         .count());
 
@@ -40,28 +42,28 @@ public class CagePersistenceMongodbIT {
         CageFumigation cageFumigation = new CageFumigation(oldDate, newDate);
         this.cagePersistence.updateNextFumigation(zoo, cageFumigation);
 
-        countOfAll = this.cageRepository.findByZoo(zoo).count();
+        countOfAll = this.cageRepository.findByZoo(zooEntity).count();
         Assertions.assertNotEquals(0, countOfAll);
         Assertions.assertEquals(0,
-                this.cageRepository.findByZoo(zoo)
+                this.cageRepository.findByZoo(zooEntity)
                         .filter(cage -> cage.getNextFumigation().equals(oldDate))
                         .count());
         Assertions.assertEquals(countOfAll,
-                this.cageRepository.findByZoo(zoo)
+                this.cageRepository.findByZoo(zooEntity)
                         .filter(cage -> cage.getNextFumigation().equals(newDate))
                         .count());
 
         cageFumigation = new CageFumigation(newDate, oldDate);
         this.cagePersistence.updateNextFumigation(zoo, cageFumigation);
 
-        countOfAll = this.cageRepository.findByZoo(zoo).count();
+        countOfAll = this.cageRepository.findByZoo(zooEntity).count();
         Assertions.assertNotEquals(0, countOfAll);
         Assertions.assertEquals(countOfAll,
-                this.cageRepository.findByZoo(zoo)
+                this.cageRepository.findByZoo(zooEntity)
                         .filter(cage -> cage.getNextFumigation().equals(oldDate))
                         .count());
         Assertions.assertEquals(0,
-                this.cageRepository.findByZoo(zoo)
+                this.cageRepository.findByZoo(zooEntity)
                         .filter(cage -> cage.getNextFumigation().equals(newDate))
                         .count());
     }
