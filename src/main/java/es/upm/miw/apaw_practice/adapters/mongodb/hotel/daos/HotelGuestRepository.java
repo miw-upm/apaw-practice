@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface HotelGuestRepository extends MongoRepository<HotelGuestEntity, String> {
     Optional<HotelGuestEntity> findByDni(String dni);
+
     void deleteByDni(String dni);
 
 }

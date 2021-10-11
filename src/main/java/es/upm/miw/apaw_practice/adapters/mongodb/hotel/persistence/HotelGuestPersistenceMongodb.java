@@ -26,14 +26,12 @@ public class HotelGuestPersistenceMongodb implements HotelGuestPersistence {
     }
 
     @Override
-    public HotelGuest read(String dni) {
+    public HotelGuest readByDni(String dni) {
         return this.hotelGuestRepository
                 .findByDni(dni)
                 .orElseThrow(() -> new NotFoundException("HotelGuest DNI: " + dni))
                 .toHotelGuest();
     }
-
-
 
     @Override
     public void delete(String dni) {

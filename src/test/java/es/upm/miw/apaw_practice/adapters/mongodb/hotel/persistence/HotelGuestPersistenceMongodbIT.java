@@ -23,7 +23,7 @@ class HotelGuestPersistenceMongodbIT {
         HotelGuest hotelGuest = new HotelGuest("Kino", "11111111P", entryDate, departureDate);
         this.hotelGuestPersistence.create(hotelGuest);
 
-        HotelGuest hotelGuestDB = this.hotelGuestPersistence.read("11111111P");
+        HotelGuest hotelGuestDB = this.hotelGuestPersistence.readByDni("11111111P");
         assertEquals("Kino", hotelGuestDB.getName());
         assertEquals(entryDate, hotelGuestDB.getEntryDate());
         assertEquals(departureDate, hotelGuestDB.getDepartureDate());

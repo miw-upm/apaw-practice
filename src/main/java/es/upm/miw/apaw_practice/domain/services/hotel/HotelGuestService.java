@@ -28,8 +28,8 @@ public class HotelGuestService {
         this.hotelGuestPersistence.delete(dni);
     }
 
-    public HotelGuest read(String dni) {
-        return this.hotelGuestPersistence.read(dni);
+    public HotelGuest readByDni(String dni) {
+        return this.hotelGuestPersistence.readByDni(dni);
     }
 
 }

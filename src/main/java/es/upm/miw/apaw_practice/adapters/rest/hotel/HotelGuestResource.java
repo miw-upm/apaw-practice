@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
-import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import es.upm.miw.apaw_practice.domain.services.hotel.HotelGuestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +21,16 @@ public class HotelGuestResource {
 
     @PostMapping
     public HotelGuest create(@RequestBody HotelGuest hotelGuest) {
-            return this.hotelGuestService.create(hotelGuest);
+        return this.hotelGuestService.create(hotelGuest);
     }
 
     @GetMapping(HotelGuestResource.DNI)
-    public HotelGuest read(@PathVariable String dni){
-        return this.hotelGuestService.read(dni);
+    public HotelGuest readByDni(@PathVariable String dni) {
+        return this.hotelGuestService.readByDni(dni);
     }
 
     @DeleteMapping(HotelGuestResource.DNI)
-    public void delete(@PathVariable String dni){
+    public void delete(@PathVariable String dni) {
         this.hotelGuestService.delete(dni);
 
     }

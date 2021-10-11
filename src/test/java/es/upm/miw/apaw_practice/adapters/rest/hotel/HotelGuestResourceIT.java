@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +13,6 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
 class HotelGuestResourceIT {
@@ -19,10 +20,19 @@ class HotelGuestResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Autowired
+    private HotelGuestRepository hotelGuestRepository;
+
     @BeforeEach
-    void init(){
+    void init() {
+        LocalDateTime entryDate = LocalDateTime.of(2021, 9, 10, 16, 0);
+        LocalDateTime departureDate = LocalDateTime.of(2021, 9, 25, 16, 0);
+
+        HotelGuestEntity hotelGuestEntity = new HotelGuestEntity(new HotelGuest("Yaiza", "11111111L", entryDate, departureDate));
+        this.hotelGuestRepository.save(hotelGuestEntity);
 
     }
+
     @Test
     void testCreate() {
         LocalDateTime entryDate = LocalDateTime.of(2021, 9, 10, 16, 0);
@@ -56,15 +66,38 @@ class HotelGuestResourceIT {
                 .expectStatus().isBadRequest();
     }
 
-   //TODO -> COMPROBAR QUE FUNCIONA
     @Test
-    void testDeleteByDni(){
-        HotelGuest hotelGuest = new HotelGuest("Mario", "88888888K", null, null);
+    void testReadByDni() {
+        this.webTestClient
+                .get()
+                .uri(HotelGuestResource.HOTELGUESTS + HotelGuestResource.DNI, "11111111L")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(HotelGuest.class);
+    }
+
+
+    @Test
+    void testDeleteByDni() {
+        this.webTestClient
+                .get()
+                .uri(HotelGuestResource.HOTELGUESTS + HotelGuestResource.DNI, "11111111L")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(HotelGuest.class);
+
         this.webTestClient
                 .delete()
-                .uri(HotelGuestResource.HOTELGUESTS + HotelGuestResource.DNI , "88888888K")
+                .uri(HotelGuestResource.HOTELGUESTS + HotelGuestResource.DNI, "11111111L")
                 .exchange()
                 .expectStatus().isOk();
+
+        this.webTestClient
+                .get()
+                .uri(HotelGuestResource.HOTELGUESTS + HotelGuestResource.DNI, "11111111L")
+                .exchange()
+                .expectStatus().isNotFound();
     }
+
 
 }
