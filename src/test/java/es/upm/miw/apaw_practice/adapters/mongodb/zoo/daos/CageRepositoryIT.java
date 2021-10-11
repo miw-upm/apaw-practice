@@ -30,7 +30,7 @@ class CageRepositoryIT {
     void initializeTestData() {
         animals = new AnimalEntity[]{
                 new AnimalEntity(new Animal("Gato", "Felino", "Omnívoro")),
-                new AnimalEntity(new Animal("Chimpancé", "Mono", "Omnívoro")),
+                new AnimalEntity(new Animal("Chimpance", "Mono", "Omnívoro")),
                 new AnimalEntity(new Animal("Tigre dientes de sable", "Felino", "Carnívoro")),
                 new AnimalEntity(new Animal("Anjhk", "Bovino", "Herbívoro"))
         };
