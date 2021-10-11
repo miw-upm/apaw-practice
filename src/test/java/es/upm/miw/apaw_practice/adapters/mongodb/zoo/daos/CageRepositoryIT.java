@@ -38,16 +38,21 @@ class CageRepositoryIT {
 
     @Test
     void testFindByLocationCode() {
-        Assertions.assertTrue(this.cageRepository.findByLocationCode("A1").isPresent());
+        Assertions.assertEquals(1, this.cageRepository.findByLocationCode("A1").count());
         ZooAddress address = new ZooAddress("Calle Carranza", 22, "28004");
         ZooEntity expectedZoo = new ZooEntity(
                 new Zoo(address, 914334789));
         expectedZoo.setId("id1");
-        Assertions.assertEquals(expectedZoo, this.cageRepository.findByLocationCode("A1").get().getZoo());
+        Assertions.assertTrue(this.cageRepository.findByLocationCode("A1").findFirst().isPresent());
+        Assertions.assertEquals(expectedZoo,
+                this.cageRepository.findByLocationCode("A1").findFirst().get().getZoo());
         CaretakerEntity expectedCaretaker = new CaretakerEntity(
                 new Caretaker("71679884Q", "Samuel L", "Jackson"));
-        Assertions.assertEquals(expectedCaretaker, this.cageRepository.findByLocationCode("A1").get().getCaretaker());
-        Assertions.assertEquals(Arrays.asList(animals), this.cageRepository.findByLocationCode("A1").get().getAnimals());
+        Assertions.assertEquals(expectedCaretaker,
+                this.cageRepository.findByLocationCode("A1").findFirst().get().getCaretaker());
+        Assertions.assertEquals(Arrays.asList(animals),
+                this.cageRepository.findByLocationCode("A1").findFirst().get().getAnimals());
+        Assertions.assertEquals(2, this.cageRepository.findByLocationCode("1").count());
     }
 
     @Test

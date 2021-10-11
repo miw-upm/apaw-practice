@@ -4,10 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.zoo.daos.CageRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.AnimalEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.CageEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.ZooEntity;
-import es.upm.miw.apaw_practice.domain.models.zoo.Animal;
-import es.upm.miw.apaw_practice.domain.models.zoo.Cage;
-import es.upm.miw.apaw_practice.domain.models.zoo.CageFumigation;
-import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
+import es.upm.miw.apaw_practice.domain.models.zoo.*;
 import es.upm.miw.apaw_practice.domain.persistence_ports.zoo.CagePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -43,5 +40,12 @@ public class CagePersistenceMongodb implements CagePersistence {
                        .contains(animal))
                .map(CageEntity::toCage);
 
+    }
+
+    @Override
+    public Stream<ZooAddress> findZooAddressesByCageLocationCode(String locationCode) {
+        return this.cageRepository.findByLocationCode(locationCode)
+                .map(CageEntity::getZoo)
+                .map(ZooEntity::getAddress);
     }
 }
