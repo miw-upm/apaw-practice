@@ -44,10 +44,10 @@ public class ZooSeederService {
         zoos[0].setId("id1");
         this.zooRepository.saveAll(Arrays.asList(zoos));
         CaretakerEntity[] caretakers = {
-                new CaretakerEntity(new Caretaker("71679884Q", "Samuel L", "Jackson")),
-                new CaretakerEntity(new Caretaker("53562718L", "Rodrigo", "de Paul")),
-                new CaretakerEntity(new Caretaker("13348920W", "Abel", "Piñón")),
-                new CaretakerEntity(new Caretaker("93879237O", "Thomas", "Partey"))
+                new CaretakerEntity(Caretaker.builder().dni("71679884Q").name("Samuel L").surname("Jackson").build()),
+                new CaretakerEntity(Caretaker.builder().dni("53562718L").name("Rodrigo").surname("de Paul").build()),
+                new CaretakerEntity(Caretaker.builder().dni("13348920W").name("Abel").surname("Pina").build()),
+                new CaretakerEntity(Caretaker.builder().dni("93879237O").name("Thomas").surname("Partey").build())
         };
         this.caretakerRepository.saveAll(Arrays.asList(caretakers));
         AnimalEntity[] animals = {
