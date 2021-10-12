@@ -20,11 +20,11 @@ class StadiumPersistenceMongodbIT {
     @Test
     void testUpdate() {
         Stadium stadium = this.stadiumPersistenceMongodb.readByCity("Madrid");
-        assertEquals(stadium.getName(), "Bernabeu");
+        assertEquals("Bernabeu", stadium.getName());
         stadium.setName("Nuevo Bernabeu");
         this.stadiumPersistenceMongodb.update(stadium);
         Stadium stadiumUpdated = this.stadiumPersistenceMongodb.readByCity("Madrid");
-        assertEquals(stadiumUpdated.getName(), "Nuevo Bernabeu");
+        assertEquals("Nuevo Bernabeu", stadiumUpdated.getName());
         footballSeederService.deleteAll();
         footballSeederService.seedDatabase();
     }

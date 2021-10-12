@@ -14,7 +14,7 @@ class MatchPersistenceMongodbIT {
 
     @Test
     void testDelete() {
-        assertEquals(this.matchPersistenceMongodb.delete(6), 1);
-        assertEquals(this.matchPersistenceMongodb.delete(8), 0);
+        assertEquals(1, this.matchPersistenceMongodb.delete(6));
+        assertEquals(0, this.matchPersistenceMongodb.delete(8));
     }
 }

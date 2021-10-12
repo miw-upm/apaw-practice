@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RestTestConfig
-public class MatchResourceIT {
+class MatchResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
