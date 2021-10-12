@@ -63,8 +63,9 @@ public class ZooSeederService {
         cages.add(new CageEntity(new Cage(150.0, "A1", caretakers[0].toCaretaker()), zoos[0], caretakers[0]));
         cages.add(new CageEntity(new Cage(75.5, "A2", caretakers[0].toCaretaker()), zoos[0], caretakers[0]));
         cages.add(new CageEntity(new Cage(81.0, "B7", caretakers[1].toCaretaker()), zoos[0], caretakers[1]));
-        cages.add(new CageEntity(new Cage(45.0, "B7", caretakers[1].toCaretaker()), zoos[0], caretakers[1]));
+        cages.add(new CageEntity(new Cage(45.0, "B8", caretakers[1].toCaretaker()), zoos[0], caretakers[1]));
         cages.add(new CageEntity(new Cage(1350.75, "1", caretakers[2].toCaretaker()), zoos[1], caretakers[2]));
+        cages.add(new CageEntity(new Cage(300.0, "1", caretakers[3].toCaretaker()), zoos[2], caretakers[3]));
         cages.get(0).setAnimals(Arrays.asList(animals).subList(0, 4));
         cages.get(1).setAnimals(Arrays.asList(animals).subList(0, 2));
         cages.get(2).setAnimals(Arrays.asList(animals).subList(1, 4));

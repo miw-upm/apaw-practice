@@ -76,7 +76,7 @@ public class CagePersistenceMongodbIT {
     void testFindAllContainingAny() {
         Animal animal = new Animal("Gato", "Felino", "Omnívoro");
         Assertions.assertEquals(3, this.cagePersistence.findAllContainingAny(animal).count());
-        Assertions.assertEquals(Stream.of("A1", "A2", "B7").collect(Collectors.toList()),
+        Assertions.assertEquals(Stream.of("A1", "A2", "B8").collect(Collectors.toList()),
                 this.cagePersistence.findAllContainingAny(animal)
                         .map(Cage::getLocationCode)
                         .collect(Collectors.toList()));

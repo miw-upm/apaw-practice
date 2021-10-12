@@ -17,4 +17,5 @@ public class HotelPersistenceMongodbIT {
         assertEquals(3, this.hotelPersistenceMongodb.read("1").getRooms().get(0).getNumber());
         assertEquals("Av. Luto, 23981", this.hotelPersistenceMongodb.read("1").getDirection());
     }
+
 }

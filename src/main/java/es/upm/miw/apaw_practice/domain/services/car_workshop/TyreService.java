@@ -10,7 +10,7 @@ public class TyreService {
     private final TyrePersistence tyrePersistence;
 
     @Autowired
-    private TyreService(TyrePersistence tyrePersistence){
+    private TyreService(TyrePersistence tyrePersistence) {
         this.tyrePersistence = tyrePersistence;
     }
 

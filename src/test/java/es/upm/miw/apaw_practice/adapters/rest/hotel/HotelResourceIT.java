@@ -89,7 +89,7 @@ class HotelResourceIT {
                 .exchange()
                 .expectStatus().isOk().expectBody(Hotel.class)
                 .value(hotel ->
-                    assertEquals(new BigDecimal(90), hotel.getRooms().get(0).getPrice())
+                        assertEquals(new BigDecimal(90), hotel.getRooms().get(0).getPrice())
                 );
 
         this.webTestClient
@@ -105,7 +105,7 @@ class HotelResourceIT {
                 .exchange()
                 .expectBody(Hotel.class)
                 .value(hotel ->
-                    assertEquals(new BigDecimal(120), hotel.getRooms().get(0).getPrice())
+                        assertEquals(new BigDecimal(120), hotel.getRooms().get(0).getPrice())
                 );
 
     }
