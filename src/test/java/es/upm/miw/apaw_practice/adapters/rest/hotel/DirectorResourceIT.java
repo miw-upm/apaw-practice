@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @RestTestConfig
-public class DirectorResourceIT {
+class DirectorResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -21,7 +21,7 @@ public class DirectorResourceIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Director.class)
-                .value(directors -> Assertions.assertNull(directors.get(0).getDniDirector()))
+                .value(directors -> Assertions.assertNull(directors.get(0).getDni()))
                 .value(directors -> Assertions.assertNull(directors.get(1).getTelephone()))
                 .value(directors -> Assertions.assertEquals("email@email.com", directors.get(1).getEmail()));
     }

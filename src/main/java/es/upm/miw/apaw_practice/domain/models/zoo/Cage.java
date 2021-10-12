@@ -82,7 +82,7 @@ public class Cage {
     public String toString() {
         return "Cage{" +
                 "size=" + size +
-                ", locationCode='" + locationCode + '\'' +
+                ", locationCode='" + locationCode +
                 ", nextFumigation=" + nextFumigation.toString() +
                 ", cleaned=" + cleaned +
                 caretaker.toString() +

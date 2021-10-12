@@ -14,7 +14,7 @@ public class DirectorEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private String dniDirector;
+    private String dni;
     private String email;
     private Integer telephone;
 
@@ -43,12 +43,12 @@ public class DirectorEntity {
         this.id = id;
     }
 
-    public String getDniDirector() {
-        return dniDirector;
+    public String getDni() {
+        return dni;
     }
 
-    public void setDniDirector(String dniDirector) {
-        this.dniDirector = dniDirector;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getEmail() {
@@ -69,14 +69,14 @@ public class DirectorEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dniDirector, email, telephone);
+        return Objects.hash(id, dni, email, telephone);
     }
 
     @Override
     public String toString() {
         return "DirectorEntity{" +
                 "id='" + id + '\'' +
-                ", dniDirector='" + dniDirector + '\'' +
+                ", dni='" + dni + '\'' +
                 ", email='" + email + '\'' +
                 ", telephone=" + telephone +
                 '}';
@@ -87,7 +87,7 @@ public class DirectorEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DirectorEntity that = (DirectorEntity) o;
-        return id.equals(that.id) && dniDirector.equals(that.dniDirector) && Objects.equals(email, that.email) && Objects.equals(telephone, that.telephone);
+        return id.equals(that.id) && dni.equals(that.dni) && Objects.equals(email, that.email) && Objects.equals(telephone, that.telephone);
     }
 }
 
