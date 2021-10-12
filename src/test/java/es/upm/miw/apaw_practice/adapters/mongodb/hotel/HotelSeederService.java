@@ -65,6 +65,7 @@ public class HotelSeederService {
                 new HotelEntity("Av. Salamanca, Salamanca, 15243", 4, directors[2], List.of(rooms[1], rooms[2], rooms[3]))
         };
         hotels[1].setId("1");
+        hotels[2].setId("2");
         this.hotelRepository.saveAll(Arrays.asList(hotels));
     }
 

@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.hotel;
 
+import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,15 @@ public class HotelService {
 
     public Hotel read(String id) {
         return this.hotelPersistence.read(id);
+    }
+
+    public void update(String id, Hotel hotel) {
+        if(hotel.getDirection() == null || hotel.getNumberStars() == null){
+            throw new BadRequestException("For this update, invalid inputs");
+        }else{
+            this.hotelPersistence.update(id, hotel);
+        }
+
+
     }
 }
