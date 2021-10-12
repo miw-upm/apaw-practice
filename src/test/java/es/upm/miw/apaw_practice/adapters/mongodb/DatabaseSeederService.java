@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.CarHireSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.CarWorkshopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.CinemaSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.emarketer.EmarketerSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.football.FootballSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.GymSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.HotelSeederService;
@@ -35,6 +36,7 @@ public class DatabaseSeederService {
     private final CarHireSeederService carHireSeederService;
     private final RestaurantSeederService restaurantSeederService;
     private final MusicManagerSeederService musicManagerSeederService;
+    private final EmarketerSeederService emarketerSeederService;
 
     @Autowired
     public DatabaseSeederService(ShopSeederService shopSeederService, ZooSeederService zooSeederService,
@@ -43,7 +45,7 @@ public class DatabaseSeederService {
                                  HotelSeederService hotelSeederService, Tennis_CourtsSeederService tennis_courtsSeederService,
                                  GymSeederService gymSeederService, VetClinicSeederService vetClinicSeederService,
                                  FootballSeederService footballSeederService, CarHireSeederService carHireSeederService,
-                                 RestaurantSeederService restaurantSeederService, MusicManagerSeederService musicManagerSeederService) {
+                                 RestaurantSeederService restaurantSeederService, MusicManagerSeederService musicManagerSeederService, EmarketerSeederService emarketerSeederService) {
         this.shopSeederService = shopSeederService;
         this.zooSeederService = zooSeederService;
         this.cinemaSeederService = cinemaSeederService;
@@ -58,6 +60,7 @@ public class DatabaseSeederService {
         this.carHireSeederService = carHireSeederService;
         this.restaurantSeederService = restaurantSeederService;
         this.musicManagerSeederService = musicManagerSeederService;
+        this.emarketerSeederService = emarketerSeederService;
         this.seedDatabase();
     }
 
@@ -76,6 +79,7 @@ public class DatabaseSeederService {
         this.carHireSeederService.seedDatabase();
         this.restaurantSeederService.seedDatabase();
         this.musicManagerSeederService.seedDatabase();
+        this.emarketerSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -94,6 +98,7 @@ public class DatabaseSeederService {
         this.carHireSeederService.deleteAll();
         this.restaurantSeederService.deleteAll();
         this.musicManagerSeederService.deleteAll();
+        this.emarketerSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {

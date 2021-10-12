@@ -55,20 +55,20 @@ public class EmarketerSeederService {
         };
         this.planRepository.saveAll(Arrays.asList(plans));
 
-        EmarketerEntity[] emarkters = {
+        EmarketerEntity[] emarketers = {
                 new EmarketerEntity("Comercializadora A", "Madrid", true, List.of(cups[0]), List.of(plans[0])),
-                new EmarketerEntity("Comercializadora B", "Barcelona", true, List.of(cups[1]), List.of(plans[1])),
+                new EmarketerEntity("Comercializadora B", "Barcelona", false, List.of(cups[1]), List.of(plans[1])),
                 new EmarketerEntity("Comercializadora C", "Bilbao", true, List.of(cups[2]), List.of(plans[2])),
-                new EmarketerEntity("Comercializadora D", "Vigo", true, List.of(cups[3]), List.of(plans[3]))
+                new EmarketerEntity("Comercializadora D", "Vigo", false, List.of(cups[3]), List.of(plans[3]))
         };
-        this.emarketerRepository.saveAll(Arrays.asList(emarkters));
+        this.emarketerRepository.saveAll(Arrays.asList(emarketers));
     }
 
     public void deleteAll() {
-        this.cupsRepository.deleteAll();
-        this.customerRepository.deleteAll();
         this.emarketerRepository.deleteAll();
         this.planRepository.deleteAll();
+        this.cupsRepository.deleteAll();
+        this.customerRepository.deleteAll();
     }
 
 }
