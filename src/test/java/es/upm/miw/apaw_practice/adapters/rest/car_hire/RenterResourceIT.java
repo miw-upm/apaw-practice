@@ -41,4 +41,27 @@ public class RenterResourceIT {
         assertEquals("Pepito", createdRenter.getName());
         assertNull(createdRenter.getLikedCar());
     }
+
+    @Test
+    void updateLikedCar() {
+        assertTrue(this.renterRepository.findByDni("51435421N").isPresent());
+        RenterEntity renterEntityToUpdate = this.renterRepository.findByDni("51435421N").get();
+        assertEquals("Pablo", renterEntityToUpdate.getName());
+        assertNull(renterEntityToUpdate.getLikedCar());
+
+        renterEntityToUpdate.setLikedCar(true);
+        Renter renterToUpdate = renterEntityToUpdate.toRenter();
+        this.webTestClient
+                .patch()
+                .uri(RenterResource.RENTER + RenterResource.DNI, renterToUpdate.getDni())
+                .body(BodyInserters.fromValue(renterEntityToUpdate))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Renter.class)
+                .value(Assertions::assertNotNull)
+                .value(renter -> assertTrue(renter.getLikedCar()));
+
+        RenterEntity renterEntityUpdated = this.renterRepository.findByDni("51435421N").get();
+        assertTrue(renterEntityUpdated.getLikedCar());
+    }
 }
