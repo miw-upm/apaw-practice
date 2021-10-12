@@ -23,16 +23,16 @@ public class ModelResourceIT {
                 .get()
                 .uri(uriBuilder -> uriBuilder
                         .path(ModelResource.MODELS + ModelResource.SEARCH)
-                        .queryParam("q", "VIN_Number:VSSZZZ6KZ1R149943")
+                        .queryParam("q", "VIN_Number:WVGZZZ5NZJM131395")
                         .build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Model.class)
                 .value(model -> assertEquals("Opel Insignia", model.getType()))
-                .value(model -> assertEquals("Tipo Berlina, manual", model.getDescription()))
-                .value(model -> assertEquals(140, model.getEnginePower()))
+                .value(model -> assertEquals("Tipo Berlina, automático", model.getDescription()))
+                .value(model -> assertEquals(130, model.getEnginePower()))
                 .value(model -> assertEquals(new BigDecimal("50"), model.getVehicleList().get(0).getDailyCost()))
-                .value(model -> assertEquals(25400, model.getVehicleList().get(0).getKilometersAmount()))
+                .value(model -> assertEquals(32000, model.getVehicleList().get(0).getKilometersAmount()))
                 .value(model -> assertTrue(model.getVehicleList().get(0).getGoodCondition()));
     }
 }
