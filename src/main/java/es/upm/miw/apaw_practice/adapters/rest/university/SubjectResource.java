@@ -11,6 +11,7 @@ public class SubjectResource {
 
     static final String SUBJECTS = "/university/subjects";
     static final String REFERENCE_ID = "/{reference}";
+    static final String CLASSROOM = "/classroom";
 
     private final SubjectService subjectService;
 
@@ -19,7 +20,7 @@ public class SubjectResource {
         this.subjectService = subjectService;
     }
 
-    @PutMapping
+    @PutMapping(REFERENCE_ID + CLASSROOM)
     public void updateClassroom(@PathVariable Integer reference, @RequestBody Classroom classroom) {
         this.subjectService.updateClassroom(reference, classroom);
     }
