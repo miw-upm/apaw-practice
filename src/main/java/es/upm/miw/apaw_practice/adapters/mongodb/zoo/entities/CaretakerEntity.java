@@ -28,7 +28,11 @@ public class CaretakerEntity {
     }
 
     public Caretaker toCaretaker() {
-        return new Caretaker(this.dni, this.name, this.surname);
+        return Caretaker.builder()
+                .dni(this.dni)
+                .name(this.name)
+                .surname(this.surname)
+                .build();
     }
 
     public String getId() {
