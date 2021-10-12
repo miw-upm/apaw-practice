@@ -52,8 +52,7 @@ class ArticleResourceIT {
     @Test
     void testUpdatePrices() {
         List<ArticlePriceUpdating> articlePriceUpdatingList = Arrays.asList(
-                new ArticlePriceUpdating("84001", new BigDecimal("1.23")),
-                new ArticlePriceUpdating("84002", new BigDecimal("0.27"))
+
         );
         this.webTestClient
                 .patch()

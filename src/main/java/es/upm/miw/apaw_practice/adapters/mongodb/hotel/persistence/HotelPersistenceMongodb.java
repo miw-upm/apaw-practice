@@ -39,4 +39,13 @@ public class HotelPersistenceMongodb implements HotelPersistence {
                 .orElseThrow(() -> new NotFoundException("Hotel with id: " + id))
                 .toHotel();
     }
+
+    @Override
+    public void update(String id, Hotel hotel) {
+       HotelEntity hotelEntity =  this.hotelRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("Hotel id:" + id));
+       hotelEntity.setDirection(hotel.getDirection());
+       hotelEntity.setNumberStars(hotel.getNumberStars());
+       this.hotelRepository.save(hotelEntity);
+    }
 }
