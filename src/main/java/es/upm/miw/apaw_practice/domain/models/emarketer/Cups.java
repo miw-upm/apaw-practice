@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class Cups {
 
-    private String id;
+    private String cups;
     private BigDecimal energy;
     private LocalDateTime registrationDate;
     private Customer customer;
@@ -14,19 +14,19 @@ public class Cups {
         //Empty for framework
     }
 
-    public Cups(String id, BigDecimal energy, LocalDateTime registrationDate, Customer customer) {
-        this.id = id;
+    public Cups(String cups, BigDecimal energy, LocalDateTime registrationDate, Customer customer) {
+        this.cups = cups;
         this.energy = energy;
         this.registrationDate = registrationDate;
         this.customer = customer;
     }
 
     public String getId() {
-        return id;
+        return cups;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.cups = id;
     }
 
     public BigDecimal getEnergy() {
@@ -56,7 +56,7 @@ public class Cups {
     @Override
     public String toString() {
         return "Cups{" +
-                "id=" + id +
+                "cups=" + cups +
                 ", energy=" + energy +
                 ", registrationDate=" + registrationDate +
                 '}';
