@@ -18,9 +18,9 @@ public class ClientService {
         this.clientPersistence = clientPersistence;
     }
 
-    public Stream<Waiter> readCategoryByIdWaiterAndDniClient(String dni, String section) {
+    public Stream<Waiter> readCategoryBySectionWaiterAndDniClient(String dni, String section) {
         this.assertDniExist(dni);
-        return this.clientPersistence.readCategoryByIdWaiterAndDniClient(dni,section);
+        return this.clientPersistence.readCategoryBySectionWaiterAndDniClient(dni,section);
     }
 
     public void assertDniExist(String dni){

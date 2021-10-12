@@ -20,7 +20,7 @@ public class ClientPersistenceMongodb implements ClientPersistence {
     }
 
     @Override
-    public Stream<Waiter> readCategoryByIdWaiterAndDniClient(String dni, String section) {
+    public Stream<Waiter> readCategoryBySectionWaiterAndDniClient(String dni, String section) {
         return this.clientRepository.findAll().stream()
                 .filter(client -> dni.equals(client.getDni()))
                 .flatMap(client -> client.getWaiters().stream())
