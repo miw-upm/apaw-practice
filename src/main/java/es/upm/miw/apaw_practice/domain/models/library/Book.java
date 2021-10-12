@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Book {
+    private String id;
     private String isbn;
     private String title;
     private Boolean available;
@@ -18,6 +19,14 @@ public class Book {
 
     public static BookBuilders.Isbn builder() {
         return new Builder();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getIsbn() {
@@ -76,7 +85,7 @@ public class Book {
         this.authors = authors;
     }
 
-    public static class Builder implements BookBuilders.Isbn, BookBuilders.Title, BookBuilders.Available, BookBuilders.NumbersOfPages, BookBuilders.PublicationDate, BookBuilders.Category, BookBuilders.Authors {
+    public static class Builder implements BookBuilders.Isbn, BookBuilders.Title, BookBuilders.Available, BookBuilders.NumbersOfPages, BookBuilders.PublicationDate, BookBuilders.Category, BookBuilders.Author, BookBuilders.Optionals {
         private final Book book;
 
         public Builder() {
@@ -113,21 +122,22 @@ public class Book {
             return this;
         }
 
+
         @Override
-        public BookBuilders.Authors category(BookBuilders.Category category) {
-            this.book.category = (Category) category;
+        public BookBuilders.Author category(Category category) {
+            this.book.category=category;
             return this;
         }
 
         @Override
-        public BookBuilders.Authors authors(Author author) {
+        public BookBuilders.Optionals authors(Author author) {
             this.book.authors.add(author);
             return this;
         }
 
         @Override
         public Book build() {
-            return null;
+            return this.book;
         }
     }
 }
