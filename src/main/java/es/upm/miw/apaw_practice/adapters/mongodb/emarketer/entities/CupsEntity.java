@@ -25,7 +25,7 @@ public class CupsEntity {
         //empty for framework
     }
 
-    public CupsEntity( String cups, BigDecimal energy, LocalDateTime registrationDate, CustomerEntity customerEntity) {
+    public CupsEntity( String cups, BigDecimal energy, CustomerEntity customerEntity) {
         this.id = UUID.randomUUID().toString();
         this.cups = cups;
         this.energy = energy;
