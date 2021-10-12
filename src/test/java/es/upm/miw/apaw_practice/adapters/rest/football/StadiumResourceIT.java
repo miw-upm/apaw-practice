@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.football;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.football.persistence.StadiumPersistenceMongodb;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.football.Stadium;
 import org.junit.jupiter.api.Test;
@@ -11,15 +10,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 @RestTestConfig
 public class StadiumResourceIT {
 
-    private final StadiumPersistenceMongodb stadiumPersistenceMongodb;
-
     @Autowired
     private WebTestClient webTestClient;
-
-    @Autowired
-    public StadiumResourceIT(StadiumPersistenceMongodb stadiumPersistenceMongodb) {
-        this.stadiumPersistenceMongodb = stadiumPersistenceMongodb;
-    }
 
     @Test
     void testUpdate() {
@@ -27,10 +19,21 @@ public class StadiumResourceIT {
 
         this.webTestClient
                 .put()
-                .uri(StadiumResource.STADIUMS + StadiumResource.CITY_ID, "kk")
+                .uri(StadiumResource.STADIUMS + "/Madrid" + StadiumResource.NAME)
+                .body(BodyInserters.fromValue(stadium))
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void testUpdateCityNotFound() {
+        Stadium stadium = new Stadium("Madrid", "Nuevo Bernabeu dos", "Real Madrid", null);
+
+        this.webTestClient
+                .put()
+                .uri(StadiumResource.STADIUMS + "/Madridd" + StadiumResource.NAME)
                 .body(BodyInserters.fromValue(stadium))
                 .exchange()
                 .expectStatus().isNotFound();
-
     }
 }
