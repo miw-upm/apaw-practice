@@ -25,9 +25,13 @@ public class TableEntity {
         //empty for framework
     }
 
-    public TableEntity(Table table){
-        BeanUtils.copyProperties(table,this);
+    public TableEntity(Integer number, Boolean occupied, String style, BigDecimal price, List<ReserveEntity> reserves) {
         this.id = UUID.randomUUID().toString();
+        this.number = number;
+        this.occupied = occupied;
+        this.style = style;
+        this.price = price;
+        this.reserves = reserves;
     }
 
     public String getId() {
@@ -98,5 +102,11 @@ public class TableEntity {
                 ", price=" + price +
                 ", reserves=" + reserves +
                 '}';
+    }
+
+    public Table toTable() {
+        Table table = new Table();
+        BeanUtils.copyProperties(this,table);
+        return table;
     }
 }

@@ -3,9 +3,12 @@ package es.upm.miw.apaw_practice.adapters.mongodb;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.CarHireSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.CarWorkshopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.CinemaSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.emarketer.EmarketerSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.football.FootballSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.GymSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.HotelSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.RestaurantSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_manager.MusicManagerSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.TvSeriesSeederService;
@@ -31,6 +34,9 @@ public class DatabaseSeederService {
     private final VetClinicSeederService vetClinicSeederService;
     private final FootballSeederService footballSeederService;
     private final CarHireSeederService carHireSeederService;
+    private final RestaurantSeederService restaurantSeederService;
+    private final MusicManagerSeederService musicManagerSeederService;
+    private final EmarketerSeederService emarketerSeederService;
 
     @Autowired
     public DatabaseSeederService(ShopSeederService shopSeederService, ZooSeederService zooSeederService,
@@ -38,7 +44,8 @@ public class DatabaseSeederService {
                                  TvSeriesSeederService tvSeriesSeederService, UniversitySeederService universitySeederService,
                                  HotelSeederService hotelSeederService, Tennis_CourtsSeederService tennis_courtsSeederService,
                                  GymSeederService gymSeederService, VetClinicSeederService vetClinicSeederService,
-                                 FootballSeederService footballSeederService, CarHireSeederService carHireSeederService) {
+                                 FootballSeederService footballSeederService, CarHireSeederService carHireSeederService,
+                                 RestaurantSeederService restaurantSeederService, MusicManagerSeederService musicManagerSeederService, EmarketerSeederService emarketerSeederService) {
         this.shopSeederService = shopSeederService;
         this.zooSeederService = zooSeederService;
         this.cinemaSeederService = cinemaSeederService;
@@ -51,6 +58,9 @@ public class DatabaseSeederService {
         this.vetClinicSeederService = vetClinicSeederService;
         this.footballSeederService = footballSeederService;
         this.carHireSeederService = carHireSeederService;
+        this.restaurantSeederService = restaurantSeederService;
+        this.musicManagerSeederService = musicManagerSeederService;
+        this.emarketerSeederService = emarketerSeederService;
         this.seedDatabase();
     }
 
@@ -67,6 +77,9 @@ public class DatabaseSeederService {
         this.vetClinicSeederService.seedDatabase();
         this.footballSeederService.seedDatabase();
         this.carHireSeederService.seedDatabase();
+        this.restaurantSeederService.seedDatabase();
+        this.musicManagerSeederService.seedDatabase();
+        this.emarketerSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -83,6 +96,9 @@ public class DatabaseSeederService {
         this.vetClinicSeederService.deleteAll();
         this.footballSeederService.deleteAll();
         this.carHireSeederService.deleteAll();
+        this.restaurantSeederService.deleteAll();
+        this.musicManagerSeederService.deleteAll();
+        this.emarketerSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {

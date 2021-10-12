@@ -34,9 +34,9 @@ public class CarHireSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Car Hire Initial Load -----------");
         RenterEntity[] renters = {
-                new RenterEntity(new Renter("Pablo", "51435421N", true)),
-                new RenterEntity(new Renter("Alejandro", "84315984J", false)),
-                new RenterEntity(new Renter("Manuel", "29681563D", true)),
+                new RenterEntity(new Renter("Pablo", "51435421N")),
+                new RenterEntity(new Renter("Alejandro", "84315984J")),
+                new RenterEntity(new Renter("Manuel", "29681563D")),
         };
         this.renterRepository.saveAll(Arrays.asList(renters));
         VehicleEntity[] vehicles = {

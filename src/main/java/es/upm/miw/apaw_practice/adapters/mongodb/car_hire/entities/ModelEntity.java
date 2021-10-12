@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Model;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class ModelEntity {
     private String type;
     private String description;
     private Integer enginePower;
+    @DBRef
     private List<VehicleEntity> vehicleEntities;
 
     public ModelEntity() {
@@ -24,7 +26,7 @@ public class ModelEntity {
     }
 
     public ModelEntity(Model model) {
-        BeanUtils.copyProperties(model, this);
+        BeanUtils.copyProperties(model, this, "vehicleList");
         this.vehicleEntities = new ArrayList<>();
         model.getVehicleList().forEach(vehicle -> {VehicleEntity vehicleEntity = new VehicleEntity();
                                                     BeanUtils.copyProperties(vehicle, vehicleEntity);
@@ -70,6 +72,13 @@ public class ModelEntity {
 
     public void setVehicleEntities(List<VehicleEntity> vehicleEntities) {
         this.vehicleEntities = vehicleEntities;
+    }
+
+    public Model toModel() {
+        Model model = new Model();
+        BeanUtils.copyProperties(this, model, "vehicleEntities");
+        this.getVehicleEntities().forEach(vehicleEntity -> model.addVehicleToList(vehicleEntity.toVehicle()));
+        return model;
     }
 
     @Override

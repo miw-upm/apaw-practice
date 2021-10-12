@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.car_hire;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
@@ -8,7 +9,7 @@ public class Model {
     private String description;
     private Integer enginePower;
 
-    private List<Vehicle> vehicleList;
+    private List<Vehicle> vehicleList = new ArrayList<Vehicle>();
 
     public Model() {
         //empty for framework
@@ -51,6 +52,10 @@ public class Model {
 
     public void setVehicleList(List<Vehicle> vehicleList) {
         this.vehicleList = vehicleList;
+    }
+
+    public void addVehicleToList(Vehicle vehicle) {
+        this.vehicleList.add(vehicle);
     }
 
     @Override

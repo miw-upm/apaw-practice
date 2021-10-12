@@ -3,8 +3,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities;
 import es.upm.miw.apaw_practice.domain.models.zoo.Animal;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.UUID;
 
 @Document
@@ -12,6 +12,7 @@ public class AnimalEntity {
 
     @Id
     private String id;
+    @Indexed(unique = true)
     private String name;
     private String family;
     private String diet;
@@ -71,16 +72,17 @@ public class AnimalEntity {
         return this == obj
                 || obj != null
                 && getClass() == obj.getClass()
-                && (family.equals(((AnimalEntity) obj).family)
-                && name.equals(((AnimalEntity) obj).name));
+                && name.equals(((AnimalEntity) obj).name);
     }
 
     @Override
     public String toString() {
-        return "Animal{" +
+        return "AnimalEntity{" +
                 "name='" + name + '\'' +
                 ", family='" + family + '\'' +
                 ", diet='" + diet + '\'' +
                 '}';
     }
+
+
 }

@@ -17,7 +17,13 @@ class AnimalRepositoryIT {
     void testFindAll() {
         int size = this.animalRepository.findAll().size();
         Assertions.assertNotEquals(0, size);
-        AnimalEntity expected = new AnimalEntity(new Animal("Tiburón Martillo", "Escualo", "Carnívoro"));
+        AnimalEntity expected = new AnimalEntity(new Animal("Tiburon Martillo", "Escualo", "Carnívoro"));
         Assertions.assertEquals(expected, this.animalRepository.findAll().get(size - 1));
+    }
+
+    @Test
+    void testFindByName() {
+       Assertions.assertTrue(this.animalRepository.findByName("Gato").isPresent());
+       Assertions.assertFalse(this.animalRepository.findByName("Gato con botas").isPresent());
     }
 }
