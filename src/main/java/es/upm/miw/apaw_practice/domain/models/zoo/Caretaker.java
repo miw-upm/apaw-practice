@@ -1,17 +1,16 @@
 package es.upm.miw.apaw_practice.domain.models.zoo;
 
+import java.util.Objects;
+
 public class Caretaker {
 
     private String dni;
     private String name;
     private String surname;
 
-    public Caretaker(String dni, String name, String surname) {
-        this.dni = dni;
-        this.name = name;
-        this.surname = surname;
+    public Caretaker() {
+        //empty from framework
     }
-
     public String getDni() {
         return dni;
     }
@@ -43,5 +42,55 @@ public class Caretaker {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj
+                || obj != null
+                && getClass() == obj.getClass()
+                && dni.equals(((Caretaker) obj).dni);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni, name, surname);
+    }
+
+    public static CaretakerBuilders.Dni builder() {
+        return new CaretakerBuilder();
+    }
+
+    public static class CaretakerBuilder implements CaretakerBuilders.Dni, CaretakerBuilders.Name,
+            CaretakerBuilders.Surname, CaretakerBuilders.Optionals {
+
+        private final Caretaker caretaker;
+
+        public CaretakerBuilder() {
+            this.caretaker = new Caretaker();
+        }
+
+        @Override
+        public CaretakerBuilders.Name dni(String dni) {
+            this.caretaker.dni = dni;
+            return this;
+        }
+
+        @Override
+        public CaretakerBuilders.Surname name(String name) {
+            this.caretaker.name = name;
+            return this;
+        }
+
+        @Override
+        public CaretakerBuilders.Optionals surname(String surname) {
+            this.caretaker.surname = surname;
+            return this;
+        }
+
+        @Override
+        public Caretaker build() {
+            return this.caretaker;
+        }
     }
 }

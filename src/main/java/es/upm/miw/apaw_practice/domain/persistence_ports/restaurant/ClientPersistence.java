@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 @Repository
 public interface ClientPersistence {
-    Stream<Waiter> readCategoryByIdWaiterAndDniClient(String dni, String section);
+    Stream<Waiter> readCategoryBySectionWaiterAndDniClient(String dni, String section);
 
     boolean existDni(String dni);
 
