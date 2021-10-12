@@ -31,4 +31,9 @@ public class HotelResource {
     public void updateRoomPrice(@PathVariable String id, @PathVariable Integer number, @RequestBody Room room) {
         this.hotelService.updateRoomPrice(id, number, room.getPrice());
     }
+
+    @PatchMapping(HotelResource.ID_ID)
+    public void update(@PathVariable String id, @RequestBody Hotel hotel){
+        this.hotelService.update(id, hotel);
+    }
 }
