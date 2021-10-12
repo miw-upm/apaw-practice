@@ -12,6 +12,14 @@ public class Feature {
         //empty for framework
     }
 
+    public Feature(String part, Integer spellPower, Integer meleeAtack, Integer temple, String extraSpell) {
+        this.part = part;
+        this.spellPower = spellPower;
+        this.meleeAtack = meleeAtack;
+        this.temple = temple;
+        this.extraSpell = extraSpell;
+    }
+
     public String getPart() {
         return part;
     }

@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities;
 
+import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -16,6 +18,7 @@ public class CarEntity {
     @Indexed(unique = true)
     private String licensePlate;
     private Boolean revision;
+    @DBRef
     private OwnerEntity ownerEntity;
     @DBRef
     private List<TyreSpecificationEntity> tyreSpecsEntities;
@@ -31,6 +34,11 @@ public class CarEntity {
         this.revision = revision;
         this.ownerEntity = ownerEntity;
         this.tyreSpecsEntities = tyreSpecsEntities;
+    }
+
+    public CarEntity(Car car) {
+        this.id = UUID.randomUUID().toString();
+        BeanUtils.copyProperties(this, car);
     }
 
     public String getId() {

@@ -5,8 +5,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities.RenterEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 public class RenterRepositoryIT {
@@ -19,6 +18,6 @@ public class RenterRepositoryIT {
         assertTrue(this.renterRepository.findByDni("51435421N").isPresent());
         RenterEntity renter = this.renterRepository.findByDni("51435421N").get();
         assertEquals("Pablo", renter.getName());
-        assertEquals(true, renter.getLikedCar());
+        assertNull(renter.getLikedCar());
     }
 }

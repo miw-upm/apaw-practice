@@ -1,13 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities;
 
 import es.upm.miw.apaw_practice.domain.models.zoo.Cage;
-import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -126,7 +124,7 @@ public class CageEntity {
     public String toString() {
         return "Cage{" +
                 "size=" + size +
-                ", locationCode='" + locationCode + '\'' +
+                ", locationCode='" + locationCode +
                 ", nextFumigation=" + nextFumigation.toString() +
                 ", cleaned=" + cleaned +
                 caretaker.toString() +

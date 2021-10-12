@@ -41,29 +41,31 @@ public class ZooSeederService {
                 new ZooEntity(new Zoo(addresses[1], 35664718)),
                 new ZooEntity(new Zoo(addresses[2], 5551450))
         };
+        zoos[0].setId("id1");
         this.zooRepository.saveAll(Arrays.asList(zoos));
         CaretakerEntity[] caretakers = {
-                new CaretakerEntity(new Caretaker("71679884Q", "Samuel L", "Jackson")),
-                new CaretakerEntity(new Caretaker("53562718L", "Rodrigo", "de Paul")),
-                new CaretakerEntity(new Caretaker("13348920W", "Abel", "Piñón")),
-                new CaretakerEntity(new Caretaker("93879237O", "Thomas", "Partey"))
+                new CaretakerEntity(Caretaker.builder().dni("71679884Q").name("Samuel L").surname("Jackson").build()),
+                new CaretakerEntity(Caretaker.builder().dni("53562718L").name("Rodrigo").surname("de Paul").build()),
+                new CaretakerEntity(Caretaker.builder().dni("13348920W").name("Abel").surname("Pina").build()),
+                new CaretakerEntity(Caretaker.builder().dni("93879237O").name("Thomas").surname("Partey").build())
         };
         this.caretakerRepository.saveAll(Arrays.asList(caretakers));
         AnimalEntity[] animals = {
                 new AnimalEntity(new Animal("Gato", "Felino", "Omnívoro")),
-                new AnimalEntity(new Animal("Chimpancé", "Mono", "Omnívoro")),
+                new AnimalEntity(new Animal("Chimpance", "Mono", "Omnívoro")),
                 new AnimalEntity(new Animal("Tigre dientes de sable", "Felino", "Carnívoro")),
                 new AnimalEntity(new Animal("Anjhk", "Bovino", "Herbívoro")),
                 new AnimalEntity(new Animal("Oso Grizzlie", "Oso", "Omnívoro")),
-                new AnimalEntity(new Animal("Tiburón Martillo", "Escualo", "Carnívoro"))
+                new AnimalEntity(new Animal("Tiburon Martillo", "Escualo", "Carnívoro"))
         };
         this.animalRepository.saveAll(Arrays.asList(animals));
         List<CageEntity> cages = new ArrayList<>();
         cages.add(new CageEntity(new Cage(150.0, "A1", caretakers[0].toCaretaker()), zoos[0], caretakers[0]));
         cages.add(new CageEntity(new Cage(75.5, "A2", caretakers[0].toCaretaker()), zoos[0], caretakers[0]));
         cages.add(new CageEntity(new Cage(81.0, "B7", caretakers[1].toCaretaker()), zoos[0], caretakers[1]));
-        cages.add(new CageEntity(new Cage(45.0, "B7", caretakers[1].toCaretaker()), zoos[0], caretakers[1]));
+        cages.add(new CageEntity(new Cage(45.0, "B8", caretakers[1].toCaretaker()), zoos[0], caretakers[1]));
         cages.add(new CageEntity(new Cage(1350.75, "1", caretakers[2].toCaretaker()), zoos[1], caretakers[2]));
+        cages.add(new CageEntity(new Cage(300.0, "1", caretakers[3].toCaretaker()), zoos[2], caretakers[3]));
         cages.get(0).setAnimals(Arrays.asList(animals).subList(0, 4));
         cages.get(1).setAnimals(Arrays.asList(animals).subList(0, 2));
         cages.get(2).setAnimals(Arrays.asList(animals).subList(1, 4));

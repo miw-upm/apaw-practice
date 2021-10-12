@@ -7,14 +7,8 @@ public class Reserve {
     private Integer numPeople;
     private String holder;
 
-    Reserve(){
+    public Reserve(){
         //empty for framework
-    }
-
-    public Reserve(LocalDate reservationDate, Integer numPeople, String holder) {
-        this.reservationDate = reservationDate;
-        this.numPeople = numPeople;
-        this.holder = holder;
     }
 
     public LocalDate getReservationDate() {

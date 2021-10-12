@@ -14,11 +14,13 @@ class HotelRepositoryIT {
 
     @Test
     void testCreateAndRead() {
+
         assertTrue(this.hotelRepository.findAll().stream()
-                .anyMatch(hotel -> "Av. Madrid, Madrid, 32452".equals(hotel.getDirection()) &&
-                        3 == hotel.getNumberStars() &&
-                        "77777777V".equals(hotel.getDirector().getDniDirector()) &&
-                        1 == hotel.getRooms().size()
+                .anyMatch(hotel ->
+                        "Av. Madrid, Madrid, 32452".equals(hotel.getDirection()) &&
+                                3 == hotel.getNumberStars() &&
+                                "77777777V".equals(hotel.getDirector().getDni()) &&
+                                22 == hotel.getRoomEntities().get(0).getNumber()
                 ));
     }
 

@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface DirectorRepository extends MongoRepository<DirectorEntity, String> {
-    Optional<DirectorEntity> findByDniDirector(String dniDirector);
+    Optional<DirectorEntity> findByDni(String dni);
 }
