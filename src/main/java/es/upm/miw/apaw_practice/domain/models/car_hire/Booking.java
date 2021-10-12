@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.car_hire;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Booking {
@@ -9,7 +10,7 @@ public class Booking {
     private LocalDateTime hiredDate;
     private Integer numberDays;
 
-    private List<Vehicle> vehicleList;
+    private List<Vehicle> vehicleList = new ArrayList<>();
     private Renter renter;
 
     public Booking() {

@@ -11,10 +11,10 @@ import java.util.stream.Stream;
 @Service
 public class TableService {
 
-    private TablePersistence tablePersistence;
+    private final TablePersistence tablePersistence;
 
     @Autowired
-    public TableService(TablePersistence tablePersistence){
+    public TableService(TablePersistence tablePersistence) {
         this.tablePersistence = tablePersistence;
     }
 
@@ -23,9 +23,9 @@ public class TableService {
         return this.tablePersistence.readHoldersByNumber(number);
     }
 
-    public void assertNumberNoExist(Integer number){
-        if(!this.tablePersistence.existNumber(number)){
-            throw new ConflictException("Number no exist: "+number);
+    public void assertNumberNoExist(Integer number) {
+        if (!this.tablePersistence.existNumber(number)) {
+            throw new ConflictException("Number no exist: " + number);
         }
     }
 }

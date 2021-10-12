@@ -28,7 +28,7 @@ public class HotelPersistenceMongodb implements HotelPersistence {
         hotelEntity.getRoomEntities().stream()
                 .filter(roomEntity -> roomEntity.getNumber().equals(numberRoom))
                 .forEach(room ->
-                    room.setPrice(price)
+                        room.setPrice(price)
                 );
         this.hotelRepository.save(hotelEntity);
     }

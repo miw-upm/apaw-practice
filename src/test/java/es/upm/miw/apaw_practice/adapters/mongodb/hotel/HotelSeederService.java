@@ -42,7 +42,7 @@ public class HotelSeederService {
         HotelGuestEntity[] hotelGuests = {
                 new HotelGuestEntity(new HotelGuest("Mario", "88888888K", LocalDateTime.of(2015, 8, 10, 12, 30),
                         LocalDateTime.of(2015, 8, 25, 15, 30))),
-                new HotelGuestEntity(new HotelGuest("Laura", "25252525R", LocalDateTime.of(2020, 6, 15, 9, 0),
+                new HotelGuestEntity(new HotelGuest("Mario", "88888888K", LocalDateTime.of(2020, 6, 15, 9, 0),
                         LocalDateTime.of(2018, 9, 16, 16, 0))),
                 new HotelGuestEntity(new HotelGuest("Pedro", "11111111S", LocalDateTime.of(2020, 6, 15, 9, 0),
                         LocalDateTime.of(2018, 9, 16, 16, 0))),
