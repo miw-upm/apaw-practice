@@ -47,7 +47,7 @@ class CageRepositoryIT {
         Assertions.assertEquals(expectedZoo,
                 this.cageRepository.findByLocationCode("A1").findFirst().get().getZoo());
         CaretakerEntity expectedCaretaker = new CaretakerEntity(
-                new Caretaker("71679884Q", "Samuel L", "Jackson"));
+                Caretaker.builder().dni("71679884Q").name("Samuel L").surname("Jackson").build());
         Assertions.assertEquals(expectedCaretaker,
                 this.cageRepository.findByLocationCode("A1").findFirst().get().getCaretaker());
         Assertions.assertEquals(Arrays.asList(animals),

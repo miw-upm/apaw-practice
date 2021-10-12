@@ -6,9 +6,7 @@ import es.upm.miw.apaw_practice.domain.models.football.Stadium;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
 class StadiumPersistenceMongodbIT {
