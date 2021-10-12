@@ -20,4 +20,8 @@ public class WaiterService {
     public Stream<Waiter> findBySectionAndCategory(String section, String category) {
         return this.waiterPersistence.findBySectionAndCategory(section, category);
     }
+
+    public Waiter create(Waiter waiter) {
+        return this.waiterPersistence.create(waiter);
+    }
 }

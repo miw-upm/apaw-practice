@@ -26,4 +26,11 @@ public class WaiterPersistenceMongodb implements WaiterPersistence {
                 .filter(waiter -> category.equals(waiter.getCategory()))
                 .map(WaiterEntity::toWaiter);
     }
+
+    @Override
+    public Waiter create(Waiter waiter) {
+        return this.waiterRepository
+                .save(new WaiterEntity(waiter))
+                .toWaiter();
+    }
 }

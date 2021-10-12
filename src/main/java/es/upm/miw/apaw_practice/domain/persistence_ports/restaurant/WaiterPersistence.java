@@ -8,4 +8,6 @@ import java.util.stream.Stream;
 @Repository
 public interface WaiterPersistence {
     Stream<Waiter> findBySectionAndCategory(String section, String category);
+
+    Waiter create(Waiter waiter);
 }

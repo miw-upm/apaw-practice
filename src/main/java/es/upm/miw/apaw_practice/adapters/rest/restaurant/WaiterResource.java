@@ -4,10 +4,7 @@ import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Waiter;
 import es.upm.miw.apaw_practice.domain.services.restaurant.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Stream;
 
@@ -25,6 +22,11 @@ public class WaiterResource {
     @Autowired
     public WaiterResource(WaiterService waiterService){
         this.waiterService = waiterService;
+    }
+
+    @PostMapping
+    public Waiter create(@RequestBody Waiter waiter){
+        return this.waiterService.create(waiter);
     }
 
     @GetMapping(SEARCHES)
