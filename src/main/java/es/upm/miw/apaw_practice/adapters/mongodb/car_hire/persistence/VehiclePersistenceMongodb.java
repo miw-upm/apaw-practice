@@ -20,18 +20,15 @@ public class VehiclePersistenceMongodb implements VehiclePersistence {
     }
 
     @Override
-    public Vehicle readByVinNumber(String vinNumber) {
+    public VehicleEntity readByVinNumber(String vinNumber) {
         return this.vehicleRepository
                 .findByVinNumber(vinNumber)
-                .orElseThrow(() -> new NotFoundException("Vehicle VIN_Number: " + vinNumber))
-                .toVehicle();
+                .orElseThrow(() -> new NotFoundException("Vehicle VIN_Number: " + vinNumber));
     }
 
     @Override
     public Vehicle update(Vehicle vehicle) {
-        VehicleEntity vehicleEntity = this.vehicleRepository
-                .findByVinNumber(vehicle.getVinNumber())
-                .orElseThrow(() -> new NotFoundException("Vehicle VIN_Number: " + vehicle.getVinNumber()));
+        VehicleEntity vehicleEntity = this.readByVinNumber(vehicle.getVinNumber());
         BeanUtils.copyProperties(vehicle, vehicleEntity, "id", "vinNumber");
         return this.vehicleRepository.save(vehicleEntity).toVehicle();
     }

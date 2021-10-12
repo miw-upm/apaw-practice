@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.daos.TableRepository
 import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities.ReserveEntity;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Reserve;
 import es.upm.miw.apaw_practice.domain.persistence_ports.restaurant.TablePersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
@@ -13,6 +14,7 @@ public class TablePersistenceMongodb implements TablePersistence {
 
     private final TableRepository tableRepository;
 
+    @Autowired
     public TablePersistenceMongodb(TableRepository tableRepository){
         this.tableRepository = tableRepository;
     }

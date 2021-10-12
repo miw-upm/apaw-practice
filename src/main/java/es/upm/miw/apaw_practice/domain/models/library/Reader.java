@@ -1,55 +1,37 @@
 package es.upm.miw.apaw_practice.domain.models.library;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Reader {
-    private Long id;
-    private String name;
-    private String dni;
-    private Date birthDate;
+    private String nick;
+    private Gender gender;
     private String email;
     private List<Book> books;
 
-    public Reader(Long id, String name, String dni, Date birthDate, String email) {
-        this.id = id;
-        this.name = name;
-        this.dni = dni;
-        this.birthDate = birthDate;
+    public Reader() {
+        // empty for framework
+    }
+
+    public Reader(String nick, Gender gender, String email) {
+        this.nick = nick;
+        this.gender = gender;
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
+    public String getNick() {
+        return nick;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
-    public String getName() {
-        return name;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getEmail() {
@@ -68,3 +50,4 @@ public class Reader {
         this.books = books;
     }
 }
+

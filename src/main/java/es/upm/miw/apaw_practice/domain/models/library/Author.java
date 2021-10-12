@@ -1,37 +1,37 @@
 package es.upm.miw.apaw_practice.domain.models.library;
 
 public class Author {
-    private Long id;
-    private String name;
-    private String surname;
+    private String fullName;
+    private String nationality;
+    private String writingStyle;
 
-    public Author(Long id, String name, String surname) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
+    public Author(String fullName, String nationality, String writingStyle) {
+        this.fullName = fullName;
+        this.nationality = nationality;
+        this.writingStyle = writingStyle;
     }
 
-    public Long getId() {
-        return id;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getName() {
-        return name;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getWritingStyle() {
+        return writingStyle;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setWritingStyle(String writingStyle) {
+        this.writingStyle = writingStyle;
     }
 }
