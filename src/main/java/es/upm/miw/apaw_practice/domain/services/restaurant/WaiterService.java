@@ -13,7 +13,7 @@ public class WaiterService {
     private final WaiterPersistence waiterPersistence;
 
     @Autowired
-    public WaiterService(WaiterPersistence waiterPersistence){
+    public WaiterService(WaiterPersistence waiterPersistence) {
         this.waiterPersistence = waiterPersistence;
     }
 
