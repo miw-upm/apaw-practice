@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(AlbumResource.ALBUMS)
 public class AlbumResource {
     static final String ALBUMS = "/music_manager/albums";
-    static final String ID_ID = "/{id}";
+    static final String ALBUMTITLE = "/{albumTitle}";
 
     AlbumService albumService;
 
@@ -18,8 +18,8 @@ public class AlbumResource {
         this.albumService = albumService;
     }
 
-    @GetMapping(ID_ID)
-    public Album getAlbum(@PathVariable String id) {
-        return this.albumService.read(id);
+    @GetMapping(ALBUMTITLE)
+    public Album getAlbum(@PathVariable String albumTitle) {
+        return this.albumService.read(albumTitle);
     }
 }

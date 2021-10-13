@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AlbumPersistence {
-    Album read(String id);
+    Album read(String albumTitle);
 }
