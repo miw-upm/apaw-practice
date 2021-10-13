@@ -33,4 +33,9 @@ public class ClientPersistenceMongodb implements ClientPersistence {
         return this.clientRepository.findByDni(dni).isPresent();
     }
 
+    @Override
+    public void delete(String dni) {
+        this.clientRepository.deleteByDni(dni);
+    }
+
 }
