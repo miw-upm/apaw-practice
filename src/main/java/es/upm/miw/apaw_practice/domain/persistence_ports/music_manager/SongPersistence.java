@@ -4,5 +4,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SongPersistence {
-    void delete(String id);
+    void delete(String songTitle);
 }
