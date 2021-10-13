@@ -28,39 +28,21 @@ class AlbumResourceIT {
     @Autowired
     private BandRepository bandRepository;
 
-    BandEntity fooFighters;
-
-    @BeforeEach
-    void initAlbum() {
-         fooFighters = this.bandRepository.findAll().stream()
-                .filter(band -> band.getBandName().equals("Foo Fighters"))
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException("Band Foo Fighters not found"));
-
-        AlbumEntity albumEntity = new AlbumEntity(fooFighters, List.of(),
-                "Medicine at Midnight", "RCA Records",
-                new BigDecimal("11.99"), LocalDate.of(2021, 2, 5));
-
-        albumEntity.setId("medicine");
-        this.albumRepository.save(albumEntity);
-    }
-
     @Test
     void testRead() {
         this.webTestClient
                 .get()
-                .uri(AlbumResource.ALBUMS + "/medicine" )
+                .uri(AlbumResource.ALBUMS + "/Nevermind" )
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Album.class)
                 .consumeWith(albumResponse -> {
                     assertNotNull(albumResponse.getResponseBody());
                     Album album = albumResponse.getResponseBody();
-                    assertEquals("Medicine at Midnight", album.getAlbumTitle());
-                    assertEquals("RCA Records", album.getLabel());
-                    assertEquals(new BigDecimal("11.99"), album.getPrice());
-                    assertEquals(LocalDate.of(2021, 2, 5), album.getReleaseDate());
-                    assertEquals(List.of(), album.getTracks());
+                    assertEquals("Nevermind", album.getAlbumTitle());
+                    assertEquals("DGC", album.getLabel());
+                    assertEquals(new BigDecimal("8.99"), album.getPrice());
+                    assertEquals(LocalDate.of(1991, 9, 24), album.getReleaseDate());
                 });
     }
 }

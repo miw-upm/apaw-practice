@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface HotelGuestPersistence {
     HotelGuest create(HotelGuest hotelGuest);
 
-    HotelGuest read(String dni);
+    HotelGuest readByDni(String dni);
+
+    void delete(String dni);
 }

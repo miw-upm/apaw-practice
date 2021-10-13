@@ -11,4 +11,6 @@ public interface HotelPersistence {
     void updateRoomPrice(String id, Integer numberRoom, BigDecimal price);
 
     Hotel read(String id);
+
+    void update(String id, Hotel hotel);
 }

@@ -1,26 +1,17 @@
 package es.upm.miw.apaw_practice.domain.models.pharmacy;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class ActiveIngredient {
 
-    private String reference;
     private List<String> components;
-    private BigDecimal eurosGram;
+    private Integer dose;
+    private Drug drug;
 
-    public ActiveIngredient(String reference, List<String> components, BigDecimal eurosGram) {
-        this.reference = reference;
+    public ActiveIngredient(List<String> components, Integer dose, Drug drug) {
         this.components = components;
-        this.eurosGram = eurosGram;
-    }
-
-    public String getReference() {
-        return reference;
-    }
-
-    public void setReference(String reference) {
-        this.reference = reference;
+        this.dose = dose;
+        this.drug = drug;
     }
 
     public List<String> getComponents() {
@@ -31,11 +22,28 @@ public class ActiveIngredient {
         this.components = components;
     }
 
-    public BigDecimal getEurosGram() {
-        return eurosGram;
+    public Integer getDose() {
+        return dose;
     }
 
-    public void setEurosGram(BigDecimal eurosGram) {
-        this.eurosGram = eurosGram;
+    public void setDose(Integer dose) {
+        this.dose = dose;
+    }
+
+    public Drug getDrug() {
+        return drug;
+    }
+
+    public void setDrug(Drug drug) {
+        this.drug = drug;
+    }
+
+    @Override
+    public String toString() {
+        return "ActiveIngredient{" +
+                "components=" + components +
+                ", dose=" + dose +
+                ", drug=" + drug +
+                '}';
     }
 }

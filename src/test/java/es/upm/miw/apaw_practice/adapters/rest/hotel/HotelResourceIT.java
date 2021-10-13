@@ -89,7 +89,7 @@ class HotelResourceIT {
                 .exchange()
                 .expectStatus().isOk().expectBody(Hotel.class)
                 .value(hotel ->
-                    assertEquals(new BigDecimal(90), hotel.getRooms().get(0).getPrice())
+                        assertEquals(new BigDecimal(90), hotel.getRooms().get(0).getPrice())
                 );
 
         this.webTestClient
@@ -105,9 +105,61 @@ class HotelResourceIT {
                 .exchange()
                 .expectBody(Hotel.class)
                 .value(hotel ->
-                    assertEquals(new BigDecimal(120), hotel.getRooms().get(0).getPrice())
+                        assertEquals(new BigDecimal(120), hotel.getRooms().get(0).getPrice())
                 );
-
     }
 
-}
+    @Test
+    void testUpdate() {
+        String id = "0";
+        Hotel hotelParam = new Hotel("Luna, Perla", 5, null, null);
+        this.webTestClient
+                .get()
+                .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
+                .exchange()
+                .expectBody(Hotel.class)
+                .value(hotel -> assertEquals("Barcelona, Perla", hotel.getDirection()))
+                .value(hotel -> assertEquals(4, hotel.getNumberStars()));
+
+        this.webTestClient
+                .patch()
+                .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
+                .body(BodyInserters.fromValue(hotelParam))
+                .exchange()
+                .expectStatus().isOk();
+
+        this.webTestClient
+                .get()
+                .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
+                .exchange()
+                .expectBody(Hotel.class)
+                .value(hotel -> assertEquals("Luna, Perla", hotel.getDirection()))
+                .value(hotel -> assertEquals(5, hotel.getNumberStars()));
+    }
+
+    @Test
+    void testUpdateBadRequest(){
+        String id = "0";
+        Hotel hotelParam = new Hotel(null, 5, null, null);
+        this.webTestClient
+                .patch()
+                .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
+                .body(BodyInserters.fromValue(hotelParam))
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testUpdateForUpdateNotFound(){
+        String id = "oo";
+        Hotel hotelParam = new Hotel("Luna, Perla", 5, null, null);
+        this.webTestClient
+                .patch()
+                .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
+                .body(BodyInserters.fromValue(hotelParam))
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+    }
+
+

@@ -13,11 +13,15 @@ public class WaiterService {
     private final WaiterPersistence waiterPersistence;
 
     @Autowired
-    public WaiterService(WaiterPersistence waiterPersistence){
+    public WaiterService(WaiterPersistence waiterPersistence) {
         this.waiterPersistence = waiterPersistence;
     }
 
     public Stream<Waiter> findBySectionAndCategory(String section, String category) {
         return this.waiterPersistence.findBySectionAndCategory(section, category);
+    }
+
+    public Waiter create(Waiter waiter) {
+        return this.waiterPersistence.create(waiter);
     }
 }
