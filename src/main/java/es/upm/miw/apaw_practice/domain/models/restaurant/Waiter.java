@@ -4,8 +4,13 @@ public class Waiter {
     private String section;
     private String category;
 
-    Waiter(){
+    public Waiter(){
         //empty for framework
+    }
+
+    public Waiter(String section, String category){
+        this.section = section;
+        this.category = category;
     }
 
     public String getSection() {

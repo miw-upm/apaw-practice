@@ -8,6 +8,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.ClassroomEn
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.DegreeEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.StudentEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.SubjectEntity;
+import es.upm.miw.apaw_practice.domain.models.university.Classroom;
 import es.upm.miw.apaw_practice.domain.models.university.Student;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class UniversitySeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- University Initial Load -----------");
         ClassroomEntity[] classrooms = {
-                new ClassroomEntity("ETSISI", 1302, 20),
-                new ClassroomEntity("ETSISI", 3101, 40)
+                new ClassroomEntity(new Classroom("ETSISI", 1302, 20)),
+                new ClassroomEntity(new Classroom("ETSISI", 3101, 40))
         };
         this.classroomRepository.saveAll(Arrays.asList(classrooms));
         SubjectEntity[] subjects = {

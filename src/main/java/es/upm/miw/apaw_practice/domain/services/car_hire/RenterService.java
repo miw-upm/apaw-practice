@@ -18,4 +18,9 @@ public class RenterService {
     public Renter create(Renter renter) {
         return this.renterPersistence.create(renter);
     }
+
+    public Renter updateLikedCar(String dni, Renter renter) {
+        Renter renterToUpdate = this.renterPersistence.readByDni(dni);
+        return this.renterPersistence.update(renterToUpdate.getDni(), renter);
+    }
 }

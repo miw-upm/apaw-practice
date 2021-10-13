@@ -5,5 +5,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RenterPersistence {
-    Renter create(Renter article);
+
+    Renter create(Renter renter);
+
+    Renter readByDni(String dni);
+
+    Renter update(String dni, Renter renter);
 }

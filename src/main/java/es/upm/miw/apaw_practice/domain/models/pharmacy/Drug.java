@@ -1,19 +1,18 @@
 package es.upm.miw.apaw_practice.domain.models.pharmacy;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Objects;
 
 public class Drug {
 
     private String barcode;
     private String name;
-    private List<ActiveIngredient> activeIngredient;
     private Boolean commercialized;
     private BigDecimal price;
 
-    public Drug(String name, List<ActiveIngredient> activeIngredient, Boolean commercialized, BigDecimal price) {
+    public Drug(String barcode, String name, Boolean commercialized, BigDecimal price) {
+        this.barcode = barcode;
         this.name = name;
-        this.activeIngredient = activeIngredient;
         this.commercialized = commercialized;
         this.price = price;
     }
@@ -34,14 +33,6 @@ public class Drug {
         this.name = name;
     }
 
-    public List<ActiveIngredient> getActiveIngredient() {
-        return activeIngredient;
-    }
-
-    public void setActiveIngredient(List<ActiveIngredient> activeIngredient) {
-        this.activeIngredient = activeIngredient;
-    }
-
     public Boolean getCommercialized() {
         return commercialized;
     }
@@ -56,5 +47,28 @@ public class Drug {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Drug drug = (Drug) o;
+        return barcode.equals(drug.barcode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(barcode);
+    }
+
+    @Override
+    public String toString() {
+        return "Drug{" +
+                "barcode='" + barcode + '\'' +
+                ", name='" + name + '\'' +
+                ", commercialized=" + commercialized +
+                ", price=" + price +
+                '}';
     }
 }

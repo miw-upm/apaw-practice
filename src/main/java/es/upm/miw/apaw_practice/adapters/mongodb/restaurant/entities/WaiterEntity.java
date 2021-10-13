@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 
+import es.upm.miw.apaw_practice.domain.models.restaurant.Waiter;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;
@@ -13,6 +15,11 @@ public class WaiterEntity {
 
     public WaiterEntity(){
         //empty for framework
+    }
+
+    public WaiterEntity(Waiter waiter){
+        BeanUtils.copyProperties(waiter, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public WaiterEntity(String section, String category) {
@@ -62,5 +69,11 @@ public class WaiterEntity {
                 ", section='" + section + '\'' +
                 ", category='" + category + '\'' +
                 '}';
+    }
+
+    public Waiter toWaiter() {
+        Waiter waiter = new Waiter();
+        BeanUtils.copyProperties(this, waiter);
+        return waiter;
     }
 }
