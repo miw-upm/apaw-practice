@@ -18,10 +18,19 @@ public class ArtistPersistenceMongodb implements ArtistPersistence {
     }
 
     @Override
-    public Artist update(String id, Artist artist) {
+    public Artist readByFirstNameAndFamilyName(String firstName, String familyName) {
+        return this.artistRepository
+                .findByFirstNameAndFamilyName(firstName, familyName)
+                .orElseThrow(() -> new NotFoundException("Artist full name: " + firstName + " " +
+                        familyName)).toArtist();
+    }
+
+    @Override
+    public Artist update(Artist artist) {
         ArtistEntity artistEntity = this.artistRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Artist ID: " + id));
+                .findByFirstNameAndFamilyName(artist.getFirstName(), artist.getFamilyName())
+                .orElseThrow(() -> new NotFoundException("Artist full name: " + artist.getFirstName() + " " +
+                        artist.getFamilyName()));
         artistEntity.fromArtist(artist);
         return artistRepository
                 .save(artistEntity)
