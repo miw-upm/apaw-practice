@@ -1,9 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
+import es.upm.miw.apaw_practice.domain.models.cinema.Film;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.UUID;
 
 @Document
@@ -13,16 +16,19 @@ public class ActorEntity {
     private String name;
     private String familyName;
     private Integer age;
+    @DBRef
+    private List<FilmEntity> films;
 
     public ActorEntity(){
         //empty for framework
     }
 
-    public ActorEntity(String name, String familyName, Integer age) {
+    public ActorEntity(String name, String familyName, Integer age, List<FilmEntity> films) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.familyName = familyName;
         this.age = age;
+        this.films = films;
     }
 
     public String getId() {
@@ -57,6 +63,14 @@ public class ActorEntity {
         this.age = age;
     }
 
+    public List<FilmEntity> getFilms() {
+        return films;
+    }
+
+    public void setFilms(List<FilmEntity> films) {
+        this.films = films;
+    }
+
     @Override
     public String toString() {
         return "ActorEntity{" +
@@ -64,6 +78,7 @@ public class ActorEntity {
                 ", name='" + name + '\'' +
                 ", familyName='" + familyName + '\'' +
                 ", age=" + age +
+                ", films=" + films +
                 '}';
     }
 }

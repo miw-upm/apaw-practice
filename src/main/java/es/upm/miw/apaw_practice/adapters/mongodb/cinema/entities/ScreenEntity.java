@@ -1,9 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
-import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -14,7 +12,7 @@ public class ScreenEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private Integer screenNumber;
+    private Integer number;
     private Integer flat;
     private Integer numberOfSeats;
     private Boolean full;
@@ -24,9 +22,9 @@ public class ScreenEntity {
         //empty for framework
     }
 
-    public ScreenEntity(Integer screenNumber, Integer flat, Integer numberOfSeats, Boolean full, List<SpectatorEntity> spectators) {
+    public ScreenEntity(Integer number, Integer flat, Integer numberOfSeats, Boolean full, List<SpectatorEntity> spectators) {
         this.id = UUID.randomUUID().toString();
-        this.screenNumber = screenNumber;
+        this.number = number;
         this.flat = flat;
         this.numberOfSeats = numberOfSeats;
         this.full = full;
@@ -41,12 +39,12 @@ public class ScreenEntity {
         this.id = id;
     }
 
-    public Integer getScreenNumber() {
-        return screenNumber;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setScreenNumber(Integer screenNumber) {
-        this.screenNumber = screenNumber;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public Integer getFlat() {
@@ -85,7 +83,7 @@ public class ScreenEntity {
     public String toString() {
         return "ScreenEntity{" +
                 "id='" + id + '\'' +
-                ", screenNumber=" + screenNumber +
+                ", screenNumber=" + number +
                 ", flat=" + flat +
                 ", numberOfSeats=" + numberOfSeats +
                 ", full=" + full +

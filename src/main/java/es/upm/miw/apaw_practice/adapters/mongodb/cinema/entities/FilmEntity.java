@@ -1,7 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
+import es.upm.miw.apaw_practice.domain.models.cinema.Film;
 import es.upm.miw.apaw_practice.domain.models.cinema.Screen;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -19,21 +21,18 @@ public class FilmEntity {
     private String name;
     private String description;
     @DBRef
-    private List<ActorEntity> actors;
-    @DBRef
-    private List<ScreenEntity> screens;
+    private ScreenEntity screen;
 
     public FilmEntity(){
         //empty for framework
     }
 
-    public FilmEntity(String barcode, String name, String description, List<ActorEntity> actors, List<ScreenEntity> screens) {
+    public FilmEntity(String barcode, String name, String description, ScreenEntity screen) {
         this.id = UUID.randomUUID().toString();
         this.barcode = barcode;
         this.name = name;
         this.description = description;
-        this.actors = actors;
-        this.screens = screens;
+        this.screen = screen;
     }
 
     public String getId() {
@@ -68,20 +67,18 @@ public class FilmEntity {
         this.description = description;
     }
 
-    public List<ActorEntity> getActors() {
-        return actors;
+    public ScreenEntity getScreen() {
+        return screen;
     }
 
-    public void setActors(List<ActorEntity> actors) {
-        this.actors = actors;
+    public void setScreens(ScreenEntity screen) {
+        this.screen = screen;
     }
 
-    public List<ScreenEntity> getScreens() {
-        return screens;
-    }
-
-    public void setScreens(List<ScreenEntity> screens) {
-        this.screens = screens;
+    public Film toFilm() {
+        Film film = new Film();
+        BeanUtils.copyProperties(this, film.getBarcode(),film.getName(), film.getDescription());
+        return film;
     }
 
     @Override
@@ -91,8 +88,7 @@ public class FilmEntity {
                 ", barcode='" + barcode + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", actors=" + actors +
-                ", screens=" + screens +
+                ", screens=" + screen +
                 '}';
     }
 }
