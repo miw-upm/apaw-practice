@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 
+import es.upm.miw.apaw_practice.domain.models.restaurant.Client;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -103,5 +105,11 @@ public class ClientEntity {
                 ", waiters=" + waiters +
                 ", table=" + table +
                 '}';
+    }
+
+    public Client toClient() {
+        Client client = new Client();
+        BeanUtils.copyProperties(this, client);
+        return client;
     }
 }
