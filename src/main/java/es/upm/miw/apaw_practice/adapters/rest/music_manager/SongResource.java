@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(SongResource.SONGS)
 public class SongResource {
     static final String SONGS = "/music_manager/songs";
-    static final String ID_ID = "/{id}";
+    static final String SONGTITLE = "/{songTitle}";
 
     SongService songService;
 
@@ -17,6 +17,6 @@ public class SongResource {
         this.songService = songService;
     }
 
-    @DeleteMapping(ID_ID)
-    public void delete(@PathVariable String id) { this.songService.delete(id); }
+    @DeleteMapping(SONGTITLE)
+    public void delete(@PathVariable String songTitle) { this.songService.delete(songTitle); }
 }
