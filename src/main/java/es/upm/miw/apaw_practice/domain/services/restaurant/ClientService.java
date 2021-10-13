@@ -29,5 +29,7 @@ public class ClientService {
         }
     }
 
-
+    public void delete(String dni) {
+        this.clientPersistence.delete(dni);
+    }
 }

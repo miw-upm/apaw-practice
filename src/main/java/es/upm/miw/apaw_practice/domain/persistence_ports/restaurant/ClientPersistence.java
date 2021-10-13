@@ -11,4 +11,5 @@ public interface ClientPersistence {
 
     boolean existDni(String dni);
 
+    void delete(String dni);
 }
