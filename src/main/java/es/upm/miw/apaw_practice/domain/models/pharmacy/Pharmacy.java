@@ -8,13 +8,13 @@ public class Pharmacy {
     String registrationNumber;
     String address;
     Integer postalCode;
-    List<Dispensing> dispensing;
+    List<Drug> drug;
 
-    public Pharmacy(String registrationNumber, String address, Integer postalCode, List<Dispensing> dispensing) {
+    public Pharmacy(String registrationNumber, String address, Integer postalCode, List<Drug> drug) {
         this.registrationNumber = registrationNumber;
         this.address = address;
         this.postalCode = postalCode;
-        this.dispensing = dispensing;
+        this.drug = drug;
     }
 
     public String getRegistrationNumber() {
@@ -41,12 +41,12 @@ public class Pharmacy {
         this.postalCode = postalCode;
     }
 
-    public List<Dispensing> getDispensing() {
-        return dispensing;
+    public List<Drug> getDrug() {
+        return drug;
     }
 
-    public void setDispensing(List<Dispensing> dispensing) {
-        this.dispensing = dispensing;
+    public void setDrug(List<Drug> drug) {
+        this.drug = drug;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Pharmacy {
                 "registrationNumber='" + registrationNumber + '\'' +
                 ", address='" + address + '\'' +
                 ", postalCode=" + postalCode +
-                ", dispensing=" + dispensing +
+                ", drug=" + drug +
                 '}';
     }
 }
