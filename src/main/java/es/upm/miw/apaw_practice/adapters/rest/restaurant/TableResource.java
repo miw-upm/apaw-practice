@@ -35,4 +35,9 @@ public class TableResource {
         return this.tableService.updateNumPeople(id, reserves);
     }
 
+    @PatchMapping
+    public void updateStyles(@RequestBody String style){
+        this.tableService.updateStyles(style);
+    }
+
 }

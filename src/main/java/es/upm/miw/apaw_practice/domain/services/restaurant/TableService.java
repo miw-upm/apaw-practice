@@ -37,4 +37,19 @@ public class TableService {
         table.setReserves(reserves);
         return this.tablePersistence.updateNumPeople(table);
     }
+
+    public void updateStyles(String style) {
+        this.tablePersistence.readAll()
+                .map(table -> {
+                    Table newTable = new Table(
+                            table.getNumber(),
+                            table.isOccupied(),
+                            table.getStyle(),
+                            table.getPrice(),
+                            table.getReserves()
+                    );
+                    newTable.setStyle(style);
+                    return newTable;})
+                .forEach(table -> this.tablePersistence.update(table));
+    }
 }

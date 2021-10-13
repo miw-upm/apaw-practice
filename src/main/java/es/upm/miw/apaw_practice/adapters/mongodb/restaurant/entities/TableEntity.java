@@ -109,4 +109,8 @@ public class TableEntity {
         BeanUtils.copyProperties(this,table);
         return table;
     }
+
+    public void fromTable(Table table) {
+        BeanUtils.copyProperties(table,this);
+    }
 }

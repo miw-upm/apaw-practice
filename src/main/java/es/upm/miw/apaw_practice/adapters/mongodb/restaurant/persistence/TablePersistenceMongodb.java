@@ -55,4 +55,17 @@ public class TablePersistenceMongodb implements TablePersistence {
     public TableEntity readByNumber(Integer id) {
         return this.tableRepository.findByNumber(id).orElseThrow(()->new NotFoundException("Table number: "+id));
     }
+
+    @Override
+    public Stream<Table> readAll() {
+        return this.tableRepository.findAll().stream()
+                .map(TableEntity::toTable);
+    }
+
+    @Override
+    public Table update(Table table) {
+        TableEntity tableEntity = this.readByNumber(table.getNumber());
+        tableEntity.fromTable(table);
+        return this.tableRepository.save(tableEntity).toTable();
+    }
 }

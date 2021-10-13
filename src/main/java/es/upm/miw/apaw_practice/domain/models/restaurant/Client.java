@@ -10,7 +10,7 @@ public class Client {
     private List<Waiter> waiters;
     private Table table;
 
-    Client(){
+    public Client(){
         //empty for framework
     }
 
