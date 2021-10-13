@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface ClientRepository extends MongoRepository<ClientEntity,String> {
     Optional<ClientEntity> findByDni(String dni);
+
+    void deleteByDni(String dni);
 }

@@ -14,8 +14,8 @@ public class SongService {
         this.songPersistence = songPersistence;
     }
 
-    public void delete(String id) {
-        this.songPersistence.delete(id);
+    public void delete(String songTitle) {
+        this.songPersistence.delete(songTitle);
     }
 
 }

@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.library;
 import java.util.List;
 
 public class Reader {
+    private String id;
     private String nick;
     private Gender gender;
     private String email;
@@ -16,6 +17,14 @@ public class Reader {
         this.nick = nick;
         this.gender = gender;
         this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNick() {

@@ -23,12 +23,17 @@ public class HotelResource {
     }
 
     @GetMapping(HotelResource.ID_ID)
-    public Hotel read(@PathVariable  String id){
-       return this.hotelService.read(id);
+    public Hotel read(@PathVariable String id) {
+        return this.hotelService.read(id);
     }
 
     @PutMapping(HotelResource.ID_ID + HotelResource.ROOMS + HotelResource.NUMBER_ROOM + HotelResource.PRICE_ROOM)
-    public void updateRoomPrice(@PathVariable String id, @PathVariable Integer number, @RequestBody Room room){
+    public void updateRoomPrice(@PathVariable String id, @PathVariable Integer number, @RequestBody Room room) {
         this.hotelService.updateRoomPrice(id, number, room.getPrice());
+    }
+
+    @PatchMapping(HotelResource.ID_ID)
+    public void update(@PathVariable String id, @RequestBody Hotel hotel){
+        this.hotelService.update(id, hotel);
     }
 }

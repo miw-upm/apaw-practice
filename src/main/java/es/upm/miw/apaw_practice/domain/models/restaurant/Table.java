@@ -10,7 +10,7 @@ public class Table {
     private BigDecimal price;
     private List<Reserve> reserves;
 
-    Table(){
+    public Table(){
         //empty for framework
     }
 

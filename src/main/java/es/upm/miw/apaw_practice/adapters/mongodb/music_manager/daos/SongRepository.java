@@ -4,4 +4,5 @@ import es.upm.miw.apaw_practice.adapters.mongodb.music_manager.entities.SongEnti
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface SongRepository extends MongoRepository<SongEntity, String> {
+    int deleteBySongTitle(String songTitle);
 }

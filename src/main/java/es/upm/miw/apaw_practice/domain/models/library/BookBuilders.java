@@ -24,11 +24,15 @@ public interface BookBuilders {
     }
 
     interface Category {
-        Authors category(Category category);
+        Author category(es.upm.miw.apaw_practice.domain.models.library.Category category);
     }
 
-    interface Authors {
-        Authors authors(Author author);
+    interface Author {
+        Optionals authors(es.upm.miw.apaw_practice.domain.models.library.Author author);
+
+    }
+
+    interface Optionals{
         Book build();
     }
 
