@@ -15,8 +15,7 @@ public class AlbumService {
         this.albumPersistence = albumPersistence;
     }
 
-    public Album read(String id) {
-        return this.albumPersistence.read(id);
+    public Album read(String albumTitle) {
+        return this.albumPersistence.read(albumTitle);
     }
-
 }
