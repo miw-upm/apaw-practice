@@ -17,4 +17,8 @@ public interface TablePersistence {
     Table updateNumPeople(Table table);
 
     TableEntity readByNumber(Integer id);
+
+    Stream<Table> readAll();
+
+    Table update(Table table);
 }
