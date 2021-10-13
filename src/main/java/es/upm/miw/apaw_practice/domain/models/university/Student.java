@@ -2,34 +2,34 @@ package es.upm.miw.apaw_practice.domain.models.university;
 
 public class Student {
 
-    private String name;
-    private String lastName;
+    private String dni;
+    private String fullName;
     private Boolean internationalStudent;
 
     public Student(){
         //empty for framework
     }
 
-    public Student(String name, String lastName, Boolean internationalStudent) {
-        this.name = name;
-        this.lastName = lastName;
+    public Student(String dni, String fullName, Boolean internationalStudent) {
+        this.dni = dni;
+        this.fullName = fullName;
         this.internationalStudent = internationalStudent;
     }
 
-    public String getName() {
-        return name;
+    public String getDni() {
+        return dni;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Boolean getInternationalStudent() {

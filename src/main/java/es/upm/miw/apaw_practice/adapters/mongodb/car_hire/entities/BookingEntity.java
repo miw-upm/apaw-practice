@@ -1,11 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities;
 
+import es.upm.miw.apaw_practice.domain.models.car_hire.Booking;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +20,6 @@ public class BookingEntity {
     private String bookingNumber;
     private LocalDateTime hiredDate;
     private Integer numberDays;
-    private BigDecimal totalCost;
     @DBRef
     private List<VehicleEntity> vehicleEntities;
     @DBRef
@@ -82,12 +82,12 @@ public class BookingEntity {
         this.renterEntity = renterEntity;
     }
 
-    public BigDecimal getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
+    public Booking toBooking() {
+        Booking booking = new Booking();
+        BeanUtils.copyProperties(this, booking, "id", "vehicleEntities", "renterEntity");
+        this.vehicleEntities.forEach(vehicleEntity -> booking.addVehicle(vehicleEntity.toVehicle()));
+        booking.setRenter(this.renterEntity.toRenter());
+        return booking;
     }
 
     @Override
@@ -95,7 +95,6 @@ public class BookingEntity {
         return "BookingEntity{" +
                 "bookingNumber='" + bookingNumber + '\'' +
                 ", hiredDate=" + hiredDate +
-                ", totalCost=" + totalCost +
                 ", vehicleEntities=" + vehicleEntities +
                 ", renterEntity=" + renterEntity +
                 '}';

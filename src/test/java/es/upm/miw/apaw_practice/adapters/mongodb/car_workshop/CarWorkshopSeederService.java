@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.daos.CarRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.daos.OwnerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.daos.TyreRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.daos.TyreSpecificationRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities.CarEntity;
@@ -23,6 +24,8 @@ public class CarWorkshopSeederService {
     private TyreRepository tyreRepository;
     @Autowired
     private TyreSpecificationRepository tyreSpecsRepository;
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("-- Car Workshop Initial Load --");
@@ -40,13 +43,15 @@ public class CarWorkshopSeederService {
                 new TyreEntity("Bridgestone", "Turanza", new BigDecimal("150.00"), tyreSpecs[2])
         };
         this.tyreRepository.saveAll(Arrays.asList(tyres));
+        OwnerEntity[] owners = {
+                new OwnerEntity("00000000Z", "John Doe"),
+                new OwnerEntity("99999999A", "Jane Doe")
+        };
+        this.ownerRepository.saveAll(Arrays.asList(owners));
         CarEntity[] cars = {
-                new CarEntity("1111AAA", true, new OwnerEntity("00000000Z", "John Doe"),
-                        List.of(tyreSpecs[0], tyreSpecs[1])),
-                new CarEntity("2222BBB", false, new OwnerEntity("00000000Z", "John Doe"),
-                        List.of(tyreSpecs[3])),
-                new CarEntity("3333CCC", false, new OwnerEntity("99999999A", "Jane Doe"),
-                        List.of(tyreSpecs[2], tyreSpecs[3]))
+                new CarEntity("1111AAA", true, owners[0], List.of(tyreSpecs[0], tyreSpecs[1])),
+                new CarEntity("2222BBB", false, owners[0], List.of(tyreSpecs[3])),
+                new CarEntity("3333CCC", false, owners[1], List.of(tyreSpecs[2], tyreSpecs[3]))
         };
         this.carRepository.saveAll(Arrays.asList(cars));
     }

@@ -34,9 +34,9 @@ public class CarHireSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Car Hire Initial Load -----------");
         RenterEntity[] renters = {
-                new RenterEntity(new Renter("Pablo", "51435421N", true)),
-                new RenterEntity(new Renter("Alejandro", "84315984J", false)),
-                new RenterEntity(new Renter("Manuel", "29681563D", true)),
+                new RenterEntity(new Renter("Pablo", "51435421N")),
+                new RenterEntity(new Renter("Alejandro", "84315984J")),
+                new RenterEntity(new Renter("Manuel", "29681563D")),
         };
         this.renterRepository.saveAll(Arrays.asList(renters));
         VehicleEntity[] vehicles = {
@@ -49,8 +49,7 @@ public class CarHireSeederService {
         ModelEntity[] models = {
                 new ModelEntity(new Model("Opel Insignia", "Tipo Berlina, manual", 140, List.of(vehicles[0].toVehicle()))),
                 new ModelEntity(new Model("Opel Insignia", "Tipo Berlina, automático", 130, List.of(vehicles[1].toVehicle()))),
-                new ModelEntity(new Model("Seat Ibiza", "Tipo Compacto, manual", 90, List.of(vehicles[2].toVehicle()))),
-                new ModelEntity(new Model("Seat Ibiza", "Tipo Compacto, manual", 90, List.of(vehicles[3].toVehicle()))),
+                new ModelEntity(new Model("Seat Ibiza", "Tipo Compacto, manual", 90, List.of(vehicles[2].toVehicle(), vehicles[3].toVehicle()))),
         };
         this.modelRepository.saveAll(Arrays.asList(models));
         BookingEntity[] bookings = {

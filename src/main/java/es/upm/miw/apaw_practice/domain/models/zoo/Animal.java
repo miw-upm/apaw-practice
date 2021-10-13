@@ -6,6 +6,10 @@ public class Animal {
     private String family;
     private String diet;
 
+    public Animal() {
+        //empty from framework
+    }
+
     public Animal(String name, String family, String diet) {
         this.name = name;
         this.family = family;
@@ -43,5 +47,18 @@ public class Animal {
                 ", family='" + family + '\'' +
                 ", diet='" + diet + '\'' +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj
+                || obj != null
+                && getClass() == obj.getClass()
+                && name.equals(((Animal) obj).name);
     }
 }

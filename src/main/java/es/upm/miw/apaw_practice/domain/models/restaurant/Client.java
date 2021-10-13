@@ -4,22 +4,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Client {
-    private String name;
     private String dni;
+    private String name;
     private LocalDate registrationDate;
     private List<Waiter> waiters;
     private Table table;
 
     Client(){
         //empty for framework
-    }
-
-    public Client(String name, String dni, LocalDate registrationDate, List<Waiter> waiters, Table table) {
-        this.name = name;
-        this.dni = dni;
-        this.registrationDate = registrationDate;
-        this.waiters = waiters;
-        this.table = table;
     }
 
     public String getName() {
