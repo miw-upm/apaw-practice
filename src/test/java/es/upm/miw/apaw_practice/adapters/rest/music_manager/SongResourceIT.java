@@ -17,20 +17,11 @@ class SongResourceIT {
     @Autowired
     private SongRepository songRepository;
 
-    private static final String TESTSONGID = "lithium";
-
-    @BeforeEach
-    void initSong() {
-        SongEntity songEntity = new SongEntity(new Song("Lithium", "Grunge", 256));
-        songEntity.setId(TESTSONGID);
-        this.songRepository.save(songEntity);
-    }
-
     @Test
     void testDelete() {
         this.webTestClient
                 .delete()
-                .uri(SongResource.SONGS + "/" + TESTSONGID )
+                .uri(SongResource.SONGS + "/Blackbird" )
                 .exchange()
                 .expectStatus().isOk();
     }

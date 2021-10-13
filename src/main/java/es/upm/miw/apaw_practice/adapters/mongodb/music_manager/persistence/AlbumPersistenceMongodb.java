@@ -17,10 +17,10 @@ public class AlbumPersistenceMongodb implements AlbumPersistence {
     }
 
     @Override
-    public Album read(String id) {
+    public Album read(String albumTitle) {
         return this.albumRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Album id: " + id))
+                .findByAlbumTitle(albumTitle)
+                .orElseThrow(() -> new NotFoundException("Album albumTitle: " + albumTitle))
                 .toAlbum();
     }
 }
