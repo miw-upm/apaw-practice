@@ -39,4 +39,24 @@ public class SubjectResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testUpdateCredits() {
+        this.webTestClient
+                .patch()
+                .uri(SUBJECTS + REFERENCE_ID, 613000095)
+                .body(BodyInserters.fromValue(9))
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void testUpdateCreditsNotFound() {
+        this.webTestClient
+                .patch()
+                .uri(SUBJECTS + REFERENCE_ID, 111)
+                .body(BodyInserters.fromValue(9))
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }

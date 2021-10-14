@@ -24,4 +24,9 @@ public class SubjectResource {
     public void updateClassroom(@PathVariable Integer reference, @RequestBody Classroom classroom) {
         this.subjectService.updateClassroom(reference, classroom);
     }
+
+    @PatchMapping(REFERENCE_ID)
+    public void updateCredits(@PathVariable Integer reference, @RequestBody Integer credits) {
+        this.subjectService.updateCredits(reference, credits);
+    }
 }

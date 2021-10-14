@@ -36,5 +36,15 @@ public class SubjectPersistenceMongodb implements SubjectPersistence {
                 .findByReference(subject.getReference())
                 .orElseThrow(() -> new NotFoundException("Subject reference:" + subject.getReference()));
         subjectEntity.setClassroom(new ClassroomEntity(subject.getClassroom()));
+        this.subjectRepository.save(subjectEntity);
+    }
+
+    @Override
+    public void update(Integer reference, Subject subject) {
+        SubjectEntity subjectEntity = this.subjectRepository
+                .findByReference(reference)
+                .orElseThrow(() -> new NotFoundException("Subject reference:" + reference));
+        subjectEntity.fromSubject(subject);
+        this.subjectRepository.save(subjectEntity);
     }
 }
