@@ -40,7 +40,7 @@ class MatchResourceIT {
     }
 
     @Test
-    public void testUpdateWeather() {
+    void testUpdateWeather() {
         MatchWeatherDto matchWeatherDto = new MatchWeatherDto(LocalDateTime.of(2021, 10, 20, 21, 0), "clear");
 
         this.webTestClient
