@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+import static org.hamcrest.CoreMatchers.equalTo;
+
 
 
 import java.util.List;
@@ -26,15 +28,14 @@ class FilmResourceIT {
     void testSearchFilmsByScreenNumber() {
         this.webTestClient
                 .get()
-                .uri(uriBuilder ->
-                        uriBuilder.path(FilmResource.FILMS + FilmResource.SEARCH)
-                                .queryParam("number", 1)
-                                .build())
+                .uri(uriBuilder -> uriBuilder.path(FilmResource.FILMS + FilmResource.SEARCH)
+                        .queryParam("numberString", "number: 2")
+                        .build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Film.class)
-                .value(film -> assertTrue(film.size() > 0))
-                .value(film -> assertEquals(1, film.get(0).getScreen().getNumber()));
+                .value(filmDtoList -> filmDtoList.get(0).getScreen().getNumber(), equalTo(""));
+
     }
 }
 

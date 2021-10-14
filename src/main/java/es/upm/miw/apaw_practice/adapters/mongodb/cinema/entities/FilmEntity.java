@@ -76,9 +76,7 @@ public class FilmEntity {
     }
 
     public Film toFilm() {
-        Film film = new Film();
-        BeanUtils.copyProperties(this, film.getBarcode(),film.getName(), film.getDescription());
-        return film;
+        return new Film(this.barcode, this.name, this.description, this.screen.getNumber());
     }
 
     @Override

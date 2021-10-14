@@ -7,6 +7,6 @@ import java.util.stream.Stream;
 @Repository
 public interface FilmPersistence {
 
-    Stream<Film> findFilmsByScreenNumber(Integer number);
+    Stream<Film> readAll();
 }
 

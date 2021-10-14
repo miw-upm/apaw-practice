@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.cinema;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ScreenEntity;
+
 import java.util.List;
 
 public class Film {
@@ -11,6 +13,12 @@ public class Film {
 
     public Film() {
         //empty for framework
+    }
+    public Film(String barcode, String name, String description, Integer screenNumber) {
+        this.barcode = barcode;
+        this.name = name;
+        this.description = description;
+        this.screen.setNumber(screenNumber);
     }
 
     public Film(String barcode, String name, String description, List<Actor> actors, Screen screen) {

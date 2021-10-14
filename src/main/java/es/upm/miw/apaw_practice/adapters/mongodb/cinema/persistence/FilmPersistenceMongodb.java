@@ -20,9 +20,8 @@ public class FilmPersistenceMongodb implements FilmPersistence {
     }
 
     @Override
-    public Stream<Film> findFilmsByScreenNumber(Integer number) {
+    public Stream<Film> readAll() {
         return this.filmRepository.findAll().stream()
-                .filter(film -> number.equals(film.getScreen().getNumber()))
                 .map(FilmEntity::toFilm);
     }
 }
