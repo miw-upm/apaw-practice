@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface BossRepository extends MongoRepository <BossEntity, String> {
-    List<BossEntity> findByEffort (String effort);
+    List<BossEntity> findByEffort(String effort);
 }
