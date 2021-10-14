@@ -21,4 +21,10 @@ public class SubjectService {
         subject.setClassroom(classroom);
         this.subjectPersistence.update(subject);
     }
+
+    public void updateCredits(Integer reference, Integer credits) {
+        Subject subject = this.subjectPersistence.readByReference(reference);
+        subject.setCredits(credits);
+        this.subjectPersistence.update(reference, subject);
+    }
 }
