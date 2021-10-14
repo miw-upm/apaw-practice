@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 @Repository
 public interface BossPersistence {
-    Stream<Boss> readAll();
-    Boss readByEffort(String effort)
+    Stream<Boss> findByEffort(String effort);
 }
 

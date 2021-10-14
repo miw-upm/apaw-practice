@@ -18,9 +18,6 @@ public class DropService {
     }
 
     public Stream<Boss> findByEffort(String effort) {
-
-        Parecido, pero el filtrado de effort, ya esta implementado en PersistenceBoss, por eso le pasamos el parámetro
-        return bossPersistence.readAll()
-                .filter(boss -> boss.getEffort().equals(effort));
+        return  bossPersistence.findByEffort(effort);
     }
 }
