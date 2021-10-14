@@ -19,7 +19,6 @@ public class SubjectRepositoryIT {
         assertTrue(this.subjectRepository.findByReference(613000095).isPresent());
         SubjectEntity degree = this.subjectRepository.findByReference(613000095).get();
         assertEquals("Ingeniería Web: Visión General", degree.getTopic());
-        assertEquals(6, degree.getCredits());
     }
 
 }
