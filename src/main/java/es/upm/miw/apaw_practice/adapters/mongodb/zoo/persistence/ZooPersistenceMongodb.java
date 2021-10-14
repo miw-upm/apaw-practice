@@ -44,8 +44,9 @@ public class ZooPersistenceMongodb implements ZooPersistence {
 
     @Override
     public void updateNextFumigation(String id, CageFumigation cageFumigation) {
-        ZooEntity zoo = this.zooRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Zoo with id: " + id));
+        Zoo zoo = this.zooRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Zoo with id: " + id))
+                .toZoo();
         this.cagePersistence.updateNextFumigation(zoo, cageFumigation);
     }
 }

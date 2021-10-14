@@ -10,8 +10,16 @@ public class Table {
     private BigDecimal price;
     private List<Reserve> reserves;
 
-    Table(){
+    public Table(){
         //empty for framework
+    }
+
+    public Table(Integer number, Boolean occupied, String style, BigDecimal price, List<Reserve> reserves) {
+        this.number = number;
+        this.occupied = occupied;
+        this.style = style;
+        this.price = price;
+        this.reserves = reserves;
     }
 
     public Boolean isOccupied() {

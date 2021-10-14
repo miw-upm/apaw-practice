@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface HotelGuestRepository extends MongoRepository<HotelGuestEntity, String> {
     Optional<HotelGuestEntity> findByDni(String dni);
 
-    Optional<HotelGuestEntity> findByName(String name);
+    void deleteByDni(String dni);
 
 }
