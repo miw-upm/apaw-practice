@@ -2,11 +2,14 @@ package es.upm.miw.apaw_practice.adapters.rest.university;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.university.Classroom;
-import org.junit.jupiter.api.Assertions;
+import es.upm.miw.apaw_practice.domain.models.university.SubjectCreditsUpdating;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static es.upm.miw.apaw_practice.adapters.rest.university.SubjectResource.SUBJECTS;
 import static es.upm.miw.apaw_practice.adapters.rest.university.SubjectResource.REFERENCE_ID;
@@ -42,20 +45,29 @@ public class SubjectResourceIT {
 
     @Test
     void testUpdateCredits() {
+        List<SubjectCreditsUpdating> subjectCreditsUpdatings = Arrays.asList(
+                new SubjectCreditsUpdating(613000096, 6),
+                new SubjectCreditsUpdating(613000095, 9)
+        );
+
         this.webTestClient
                 .patch()
-                .uri(SUBJECTS + REFERENCE_ID, 613000095)
-                .body(BodyInserters.fromValue(9))
+                .uri(SUBJECTS)
+                .body(BodyInserters.fromValue(subjectCreditsUpdatings))
                 .exchange()
                 .expectStatus().isOk();
     }
 
     @Test
     void testUpdateCreditsNotFound() {
+        List<SubjectCreditsUpdating> subjectCreditsUpdatings = List.of(
+                new SubjectCreditsUpdating(111, 9)
+        );
+
         this.webTestClient
                 .patch()
-                .uri(SUBJECTS + REFERENCE_ID, 111)
-                .body(BodyInserters.fromValue(9))
+                .uri(SUBJECTS)
+                .body(BodyInserters.fromValue(subjectCreditsUpdatings))
                 .exchange()
                 .expectStatus().isNotFound();
     }
