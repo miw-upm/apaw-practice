@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArtistPersistence {
-    Artist update(String id, Artist artist);
+    Artist readByFirstNameAndFamilyName(String firstName, String familyName);
+
+    Artist update(Artist artist);
 }

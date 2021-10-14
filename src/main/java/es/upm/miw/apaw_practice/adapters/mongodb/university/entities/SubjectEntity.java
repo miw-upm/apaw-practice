@@ -35,6 +35,10 @@ public class SubjectEntity {
         return subject;
     }
 
+    public void fromSubject(Subject subject) {
+        BeanUtils.copyProperties(subject, this);
+    }
+
     public String getId() {
         return id;
     }
