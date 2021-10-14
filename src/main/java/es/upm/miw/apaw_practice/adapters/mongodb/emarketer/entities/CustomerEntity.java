@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.emarketer.entities;
 
+import es.upm.miw.apaw_practice.domain.models.emarketer.Customer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -55,6 +57,15 @@ public class CustomerEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Customer toCustomer() {
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(this, customer);
+        customer.setName(this.name);
+        customer.setAddress(this.address);
+        customer.setType(this.type);
+        return customer;
     }
 
     @Override
