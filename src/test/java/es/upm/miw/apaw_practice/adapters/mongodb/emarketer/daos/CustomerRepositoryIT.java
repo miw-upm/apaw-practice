@@ -16,7 +16,10 @@ class CustomerRepositoryIT {
     void testCreateAndRead() {
         assertTrue(this.customerRepository.findAll().stream()
                 .anyMatch(customer ->
-                        "Pedro".equals(customer.getName())
+                        "Paula".equals(customer.getName()) &&
+                                "Sevilla".equals(customer.getAddress()) &&
+                                "particular".equals(customer.getType()) &&
+                                customer.getId() != null
                 ));
     }
 
