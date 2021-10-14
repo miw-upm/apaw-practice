@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(MatchResource.TAGS)
+@RequestMapping(MatchResource.MATCHES)
 public class MatchResource {
-    static final String TAGS = "/football/matches";
+    static final String MATCHES = "/football/matches";
 
     static final String ROUND_ID = "/{round}";
 
