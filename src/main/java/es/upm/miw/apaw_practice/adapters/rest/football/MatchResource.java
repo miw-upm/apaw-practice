@@ -1,16 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.rest.football;
 
+import es.upm.miw.apaw_practice.domain.models.football.MatchWeatherDto;
 import es.upm.miw.apaw_practice.domain.services.football.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(MatchResource.TAGS)
+@RequestMapping(MatchResource.MATCHES)
 public class MatchResource {
-    static final String TAGS = "/football/matches";
+    static final String MATCHES = "/football/matches";
 
     static final String ROUND_ID = "/{round}";
 
@@ -22,8 +20,13 @@ public class MatchResource {
     }
 
     @DeleteMapping(ROUND_ID)
-    public void delete(@PathVariable Integer round)
-    {
+    public void delete(@PathVariable Integer round) {
         this.matchservice.delete(round);
     }
+
+    @PatchMapping
+    public void updateWeather(@RequestBody MatchWeatherDto matchWeatherDto) {
+        this.matchservice.updateWeather(matchWeatherDto);
+    }
+
 }
