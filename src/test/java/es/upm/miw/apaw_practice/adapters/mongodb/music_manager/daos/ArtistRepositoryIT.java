@@ -16,14 +16,12 @@ class ArtistRepositoryIT {
     @Test
     void testCreateAndRead() {
         assertTrue(true);
-        /* TODO: Fix
-           assertTrue(this.artistRepository.findAll().stream()
+        assertTrue(this.artistRepository.findAll().stream()
                 .anyMatch(artist ->
-                        "Dave".equals(artist.getFirstName()) &&
+                        "Ringo".equals(artist.getFirstName()) &&
                                 artist.getId() != null &&
-                                artist.getFamilyName().equals("Grohl") &&
-                                artist.getAge().equals(52)));
-      */
+                                artist.getFamilyName().equals("Starr") &&
+                                artist.getAge().equals(81)));
     }
 
     @Test
