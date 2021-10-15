@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.services.hospital.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Stream;
+
 @RestController
 @RequestMapping(DoctorResource.DOCTORS)
 public class DoctorResource {
@@ -20,8 +22,7 @@ public class DoctorResource {
     }
 
     @GetMapping(NICK)
-    public String readDoctorNicks(){
-        return this.doctorService.readDoctorNick();
+    public Stream<String> readDoctorNicks(){
+        return this.doctorService.readDoctorNicks();
     }
-    //TODO 2horas
 }

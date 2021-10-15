@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.hospital.DoctorPersiste
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class DoctorService {
 
@@ -14,7 +16,7 @@ public class DoctorService {
         this.doctorPersistence = doctorPersistence;
     }
 
-    public String readDoctorNicks() {
+    public Stream<String> readDoctorNicks() {
         return this.doctorPersistence.readNicks();
     }
 }
