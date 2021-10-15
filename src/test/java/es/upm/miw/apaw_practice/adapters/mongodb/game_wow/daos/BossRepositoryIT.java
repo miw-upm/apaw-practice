@@ -2,10 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.game_wow.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.BossEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.DropEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.FeatureEntity;
-import es.upm.miw.apaw_practice.domain.models.game_wow.Feature;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +9,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
 public class BossRepositoryIT {

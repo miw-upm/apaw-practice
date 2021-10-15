@@ -20,7 +20,7 @@ public class DropResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder -> uriBuilder.path(DropResource.GAMEWOW_DROPS + DropResource.SEARCH)
-                        .queryParam("q", "effort:10N")
+                        .queryParam("q", "effort:25N")
                         .build())
                 .exchange()
                 .expectStatus().isOk()

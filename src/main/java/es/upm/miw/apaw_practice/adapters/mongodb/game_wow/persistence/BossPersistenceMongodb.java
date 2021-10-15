@@ -7,6 +7,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.BossPersistenc
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.stream.Stream;
 @Repository("bossPersistence")
 public class BossPersistenceMongodb implements BossPersistence {
