@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping()
 public class OwnerResource {
     static final String OWNERS = "/car-workshop/owners";
+    static final String DNI = "/{dni}";
 
     private final OwnerService ownerService;
 
     @Autowired
-    public OwnerResource(OwnerService ownerService){
+    public OwnerResource(OwnerService ownerService) {
         this.ownerService = ownerService;
     }
 
-    @GetMapping
-    public Owner readByDni(@PathVariable String dni){
+    @GetMapping(OwnerResource.OWNERS + OwnerResource.DNI)
+    public Owner readByDni(@PathVariable String dni) {
         return this.ownerService.readByDni(dni);
     }
 }
