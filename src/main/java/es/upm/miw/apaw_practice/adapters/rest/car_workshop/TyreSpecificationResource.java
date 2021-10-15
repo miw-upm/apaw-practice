@@ -23,7 +23,7 @@ public class TyreSpecificationResource {
         this.tyreSpecificationService = tyreSpecificationService;
     }
 
-    @PatchMapping(TYRE_SPECIFICATIONS + LOAD_SPEED_INDEX)
+    @PatchMapping(LOAD_SPEED_INDEX)
     public void updateLoadSpeedIndex(@RequestBody TyreSpecsModification tyreSpecsModification){
         if(tyreSpecsModification.getNewSpec() != null &&
             tyreSpecsModification.getOldSpec() != null){
