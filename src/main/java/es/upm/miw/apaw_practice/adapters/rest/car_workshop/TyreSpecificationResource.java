@@ -30,7 +30,7 @@ public class TyreSpecificationResource {
             this.tyreSpecificationService.updateLoadSpeedIndex(tyreSpecsModification);
         } else
         {
-            throw new BadRequestException("Insufficient information.")
+            throw new BadRequestException("Insufficient information.");
         };
 
 
