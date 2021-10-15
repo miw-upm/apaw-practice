@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface AthleteRepository  extends MongoRepository<AthleteEntity,String> {
-    Optional<AthleteEntity> findByAthleteDni(String athleteDni);
+    Optional<AthleteEntity> findByNie(String nie);
 }

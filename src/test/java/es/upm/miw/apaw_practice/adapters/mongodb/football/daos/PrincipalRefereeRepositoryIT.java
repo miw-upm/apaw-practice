@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class PrincipalRefereeRepositoryIT {
+class PrincipalRefereeRepositoryIT {
     @Autowired
     private PrincipalRefereeRepository principalRefereeRepository;
 
@@ -16,8 +16,8 @@ public class PrincipalRefereeRepositoryIT {
         assertTrue(this.principalRefereeRepository.findAll().stream()
                 .anyMatch(principalReferee ->
                         "Undiano".equals(principalReferee.getName()) &&
-                        "Madrid".equals(principalReferee.getCityBorn()) &&
-                        34 == principalReferee.getAge()
+                                "Madrid".equals(principalReferee.getCityBorn()) &&
+                                34 == principalReferee.getAge()
                 ));
     }
 }

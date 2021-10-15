@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.car_hire;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Booking {
@@ -9,20 +9,18 @@ public class Booking {
     private String bookingNumber;
     private LocalDateTime hiredDate;
     private Integer numberDays;
-    private BigDecimal totalCost;
 
-    private List<Vehicle> vehicleList;
+    private List<Vehicle> vehicleList = new ArrayList<>();
     private Renter renter;
 
     public Booking() {
         //empty for framework
     }
 
-    public Booking(String bookingNumber, LocalDateTime hiredDate, Integer numberDays, BigDecimal totalCost, List<Vehicle> vehicleList, Renter renter) {
+    public Booking(String bookingNumber, LocalDateTime hiredDate, Integer numberDays, List<Vehicle> vehicleList, Renter renter) {
         this.bookingNumber = bookingNumber;
         this.hiredDate = hiredDate;
         this.numberDays = numberDays;
-        this.totalCost = totalCost;
         this.setVehicleList(vehicleList);
         this.setRenter(renter);
     }
@@ -63,14 +61,6 @@ public class Booking {
         this.numberDays = numberDays;
     }
 
-    public BigDecimal getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
-    }
-
     public List<Vehicle> getVehicleList() {
         return vehicleList;
     }
@@ -93,7 +83,6 @@ public class Booking {
                 "bookingNumber='" + bookingNumber + '\'' +
                 ", hiredDate=" + hiredDate +
                 ", numberDays=" + numberDays +
-                ", totalCost=" + totalCost +
                 ", vehicleList=" + vehicleList +
                 ", renter=" + renter +
                 '}';

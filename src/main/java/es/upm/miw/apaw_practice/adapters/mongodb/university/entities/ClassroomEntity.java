@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import es.upm.miw.apaw_practice.domain.models.university.Classroom;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
@@ -8,18 +10,16 @@ public class ClassroomEntity {
 
     @Id
     private String id;
-    private Integer number;
     private String school;
+    private Integer number;
     private Integer capacity;
 
     public ClassroomEntity() {
         //empty for framework
     }
 
-    public ClassroomEntity(Integer number, String school, Integer capacity) {
-        this.number = number;
-        this.school = school;
-        this.capacity = capacity;
+    public ClassroomEntity(Classroom classroom) {
+        BeanUtils.copyProperties(classroom, this);
         this.id = UUID.randomUUID().toString();
     }
 
@@ -31,20 +31,20 @@ public class ClassroomEntity {
         this.id = id;
     }
 
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
     public String getSchool() {
         return school;
     }
 
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public Integer getCapacity() {

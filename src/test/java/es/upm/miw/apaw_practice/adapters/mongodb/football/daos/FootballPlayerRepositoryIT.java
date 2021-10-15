@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class FootballPlayerRepositoryIT {
+class FootballPlayerRepositoryIT {
 
     @Autowired
     private FootballPlayerRepository footballPlayerRepository;
@@ -17,8 +17,8 @@ public class FootballPlayerRepositoryIT {
         assertTrue(this.footballPlayerRepository.findAll().stream()
                 .anyMatch(player ->
                         24 == player.getAge() &&
-                        10 == player.getGoalsScored() &&
-                        Boolean.TRUE == player.isDefense()
+                                10 == player.getGoalsScored() &&
+                                Boolean.TRUE == player.isDefense()
                 ));
     }
 

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class MatchRepositoryIT {
+class MatchRepositoryIT {
 
     @Autowired
     private MatchRepository matchRepository;
@@ -19,11 +19,11 @@ public class MatchRepositoryIT {
         assertTrue(this.matchRepository.findAll().stream()
                 .anyMatch(match ->
                         match.getDate().equals(LocalDateTime.of(2021, 10, 20, 21, 0)) &&
-                        "cloudy".equals(match.getWeather()) &&
-                        3 == match.getRound() &&
-                        "Undiano".equals(match.getPrincipalRefereeEntity().getName()) &&
-                        3 == match.getPlayerEntities().size() &&
-                        20 == match.getPlayerEntities().get(1).getGoalsScored()
+                                "cloudy".equals(match.getWeather()) &&
+                                3 == match.getRound() &&
+                                "Undiano".equals(match.getPrincipalRefereeEntity().getName()) &&
+                                3 == match.getPlayerEntities().size() &&
+                                20 == match.getPlayerEntities().get(1).getGoalsScored()
                 ));
     }
 }

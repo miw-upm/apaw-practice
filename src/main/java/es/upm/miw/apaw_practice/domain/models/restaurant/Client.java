@@ -4,22 +4,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Client {
-    private String name;
     private String dni;
+    private String name;
     private LocalDate registrationDate;
-    private List<Waiter> waiter;
+    private List<Waiter> waiters;
     private Table table;
 
-    Client(){
+    public Client(){
         //empty for framework
-    }
-
-    public Client(String name, String dni, LocalDate registrationDate, List<Waiter> waiter, Table table) {
-        this.name = name;
-        this.dni = dni;
-        this.registrationDate = registrationDate;
-        this.waiter = waiter;
-        this.table = table;
     }
 
     public String getName() {
@@ -46,12 +38,12 @@ public class Client {
         this.registrationDate = registrationDate;
     }
 
-    public List<Waiter> getWaiter() {
-        return waiter;
+    public List<Waiter> getWaiters() {
+        return waiters;
     }
 
-    public void setWaiter(List<Waiter> waiter) {
-        this.waiter = waiter;
+    public void setWaiters(List<Waiter> waiters) {
+        this.waiters = waiters;
     }
 
     public Table getTable() {
@@ -68,7 +60,7 @@ public class Client {
                 "name='" + name + '\'' +
                 ", dni='" + dni + '\'' +
                 ", registrationDate=" + registrationDate +
-                ", waiter=" + waiter +
+                ", waiters=" + waiters +
                 ", table=" + table +
                 '}';
     }

@@ -1,17 +1,19 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
-import org.springframework.data.annotation.Id;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
+import es.upm.miw.apaw_practice.domain.models.hotel.Room;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class RoomEntity {
-    @Id
-    private Integer numberRoom;
-    private BigDecimal priceRoom;
-    private Boolean vip;
+    private Integer number;
+    private BigDecimal price;
+    private boolean vip;
     @DBRef
     private List<HotelGuestEntity> hotelGuestsEntities;
 
@@ -19,38 +21,46 @@ public class RoomEntity {
         //empty for framework
     }
 
-    public RoomEntity(Integer numberRoom, BigDecimal priceRoom, Boolean vip, List<HotelGuestEntity> hotelGuestsEntities) {
-        this.numberRoom = numberRoom;
-        this.priceRoom = priceRoom;
+    public RoomEntity(Integer number, BigDecimal price, boolean vip, List<HotelGuestEntity> hotelGuestsEntities) {
+        this.number = number;
+        this.price = price;
         this.vip = vip;
         this.hotelGuestsEntities = hotelGuestsEntities;
     }
 
-    public List<HotelGuestEntity> getHotelGuestEntities() {
-        return hotelGuestsEntities;
+
+    public Room toRoom() {
+        Room room = new Room();
+        BeanUtils.copyProperties(this, room, "hotelGuestEntities");
+        List<HotelGuest> hotelGuests = this.hotelGuestsEntities.stream()
+                .map(HotelGuestEntity::toHotelGuest)
+                .collect(Collectors.toList());
+        room.setHotelGuests(hotelGuests);
+        return room;
+
     }
 
-    public Integer getNumberRoom() {
-        return numberRoom;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setNumberRoom(Integer numberRoom) {
-        this.numberRoom = numberRoom;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
-    public BigDecimal getPriceRoom() {
-        return priceRoom;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setPriceRoom(BigDecimal priceRoom) {
-        this.priceRoom = priceRoom;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public Boolean isVip() {
+    public boolean isVip() {
         return vip;
     }
 
-    public void setVip(Boolean vip) {
+    public void setVip(boolean vip) {
         this.vip = vip;
     }
 
@@ -58,8 +68,25 @@ public class RoomEntity {
         return hotelGuestsEntities;
     }
 
-    public void setHotelGuests(List<HotelGuestEntity> hotelGuestsEntities) {
+    public void setHotelGuestsEntities(List<HotelGuestEntity> hotelGuestsEntities) {
         this.hotelGuestsEntities = hotelGuestsEntities;
+    }
+
+
+    @Override
+    public String toString() {
+        return "RoomEntity{" +
+                "number=" + number +
+                ", price=" + price +
+                ", vip=" + vip +
+                ", hotelGuestsEntities=" + hotelGuestsEntities +
+                '}';
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, price, vip, hotelGuestsEntities);
     }
 
     @Override
@@ -67,21 +94,6 @@ public class RoomEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RoomEntity that = (RoomEntity) o;
-        return numberRoom.equals(that.numberRoom) && priceRoom.equals(that.priceRoom) && vip.equals(that.vip) && Objects.equals(hotelGuestsEntities, that.hotelGuestsEntities);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(numberRoom, priceRoom, vip, hotelGuestsEntities);
-    }
-
-    @Override
-    public String toString() {
-        return "RoomEntity{" +
-                "numberRoom=" + numberRoom +
-                ", priceRoom=" + priceRoom +
-                ", vip=" + vip +
-                ", hotelGuestsEntities=" + hotelGuestsEntities +
-                '}';
+        return Objects.equals(number, that.number) && Objects.equals(price, that.price) && Objects.equals(vip, that.vip) && Objects.equals(hotelGuestsEntities, that.hotelGuestsEntities);
     }
 }

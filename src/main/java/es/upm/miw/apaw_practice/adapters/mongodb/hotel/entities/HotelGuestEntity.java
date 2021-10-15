@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,21 +15,24 @@ public class HotelGuestEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private String dniGuest;
-    private String nameGuest;
+    private String dni;
+    private String name;
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
-    public HotelGuestEntity(String dniGuest, String nameGuest, LocalDateTime entryDate, LocalDateTime departureDate) {
-        this.id = UUID.randomUUID().toString();
-        this.dniGuest = dniGuest;
-        this.nameGuest = nameGuest;
-        this.entryDate = entryDate;
-        this.departureDate = departureDate;
-    }
-
     public HotelGuestEntity() {
         //empty for framework
+    }
+
+    public HotelGuestEntity(HotelGuest hotelGuest) {
+        this.id = UUID.randomUUID().toString();
+        BeanUtils.copyProperties(hotelGuest, this);
+    }
+
+    public HotelGuest toHotelGuest() {
+        HotelGuest hotelGuest = new HotelGuest();
+        BeanUtils.copyProperties(this, hotelGuest);
+        return hotelGuest;
     }
 
     public String getId() {
@@ -38,20 +43,20 @@ public class HotelGuestEntity {
         this.id = id;
     }
 
-    public String getDniGuest() {
-        return dniGuest;
+    public String getDni() {
+        return dni;
     }
 
-    public void setDniGuest(String dniGuest) {
-        this.dniGuest = dniGuest;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
-    public String getNameGuest() {
-        return nameGuest;
+    public String getName() {
+        return name;
     }
 
-    public void setNameGuest(String nameGuest) {
-        this.nameGuest = nameGuest;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDateTime getEntryDate() {
@@ -75,22 +80,24 @@ public class HotelGuestEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HotelGuestEntity that = (HotelGuestEntity) o;
-        return id.equals(that.id) && dniGuest.equals(that.dniGuest) && nameGuest.equals(that.nameGuest) && entryDate.equals(that.entryDate) && departureDate.equals(that.departureDate);
+        return id.equals(that.id) && dni.equals(that.dni) && name.equals(that.name) && entryDate.equals(that.entryDate) && departureDate.equals(that.departureDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dniGuest, nameGuest, entryDate, departureDate);
+        return Objects.hash(id, dni, name, entryDate, departureDate);
     }
 
     @Override
     public String toString() {
         return "HotelGuestEntity{" +
                 "id='" + id + '\'' +
-                ", dniGuest='" + dniGuest + '\'' +
-                ", nameGuest='" + nameGuest + '\'' +
+                ", dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
                 ", entryDate=" + entryDate +
                 ", departureDate=" + departureDate +
                 '}';
     }
+
+
 }

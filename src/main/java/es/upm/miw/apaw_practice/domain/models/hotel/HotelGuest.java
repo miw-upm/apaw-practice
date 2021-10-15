@@ -3,37 +3,37 @@ package es.upm.miw.apaw_practice.domain.models.hotel;
 import java.time.LocalDateTime;
 
 public class HotelGuest {
-    private String dniGuest;
-    private String nameGuest;
+    private String dni;
+    private String name;
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
 
-    HotelGuest() {
+    public HotelGuest() {
         //empty for framework
     }
 
-    HotelGuest(String nameGuest, String dniGuest, LocalDateTime entryDate, LocalDateTime departureDate) {
-        this.nameGuest = nameGuest;
-        this.dniGuest = dniGuest;
+    public HotelGuest(String name, String dni, LocalDateTime entryDate, LocalDateTime departureDate) {
+        this.name = name;
+        this.dni = dni;
         this.entryDate = entryDate;
         this.departureDate = departureDate;
     }
 
-    public String getDniGuest() {
-        return dniGuest;
+    public String getDni() {
+        return dni;
     }
 
-    public void setDniGuest(String dniGuest) {
-        this.dniGuest = dniGuest;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
-    public String getNameGuest() {
-        return nameGuest;
+    public String getName() {
+        return name;
     }
 
-    public void setNameGuest(String nameGuest) {
-        this.nameGuest = nameGuest;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDateTime getEntryDate() {
@@ -52,11 +52,18 @@ public class HotelGuest {
         this.departureDate = departureDate;
     }
 
+    public boolean isNull() {
+        return this.name == null
+                || this.dni == null
+                || this.entryDate == null
+                || this.departureDate == null;
+    }
+
     @Override
     public String toString() {
         return "HotelGuest{" +
-                "dniGuest='" + dniGuest + '\'' +
-                ", nameGuest='" + nameGuest + '\'' +
+                "dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
                 ", entryDate=" + entryDate +
                 ", departureDate=" + departureDate +
                 '}';

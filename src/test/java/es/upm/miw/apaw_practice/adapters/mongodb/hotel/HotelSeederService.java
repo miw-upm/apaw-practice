@@ -1,14 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.DirectorRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.RoomEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.daos.DirectorRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.daos.HotelGuestRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.daos.HotelRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.daos.RoomRepository;
 import es.upm.miw.apaw_practice.domain.models.hotel.Director;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +28,6 @@ public class HotelSeederService {
     private DirectorRepository directorRepository;
     @Autowired
     private HotelGuestRepository hotelGuestRepository;
-    @Autowired
-    private RoomRepository roomRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Hotel Initial Load -----------");
@@ -42,14 +40,14 @@ public class HotelSeederService {
         this.directorRepository.saveAll(Arrays.asList(directors));
 
         HotelGuestEntity[] hotelGuests = {
-                new HotelGuestEntity("88888888K", "Mario", LocalDateTime.of(2015, 8, 10, 12, 30),
-                        LocalDateTime.of(2015, 8, 25, 15, 30)),
-                new HotelGuestEntity("25252525R", "Laura", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0)),
-                new HotelGuestEntity("11111111S", "Pedro", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0)),
-                new HotelGuestEntity("56565656P", "Luca", LocalDateTime.of(2020, 10, 6, 12, 0),
-                        LocalDateTime.of(2020, 10, 12, 18, 0))
+                new HotelGuestEntity(new HotelGuest("Mario", "88888888K", LocalDateTime.of(2015, 8, 10, 12, 30),
+                        LocalDateTime.of(2015, 8, 25, 15, 30))),
+                new HotelGuestEntity(new HotelGuest("Mario", "88888888K", LocalDateTime.of(2020, 6, 15, 9, 0),
+                        LocalDateTime.of(2018, 9, 16, 16, 0))),
+                new HotelGuestEntity(new HotelGuest("Pedro", "11111111S", LocalDateTime.of(2020, 6, 15, 9, 0),
+                        LocalDateTime.of(2018, 9, 16, 16, 0))),
+                new HotelGuestEntity(new HotelGuest("Luca", "56565656P", LocalDateTime.of(2020, 10, 6, 12, 0),
+                        LocalDateTime.of(2020, 10, 12, 18, 0)))
 
         };
         this.hotelGuestRepository.saveAll(Arrays.asList(hotelGuests));
@@ -60,12 +58,14 @@ public class HotelSeederService {
                 new RoomEntity(45, new BigDecimal(120), true, List.of(hotelGuests[0])),
                 new RoomEntity(12, new BigDecimal(60), false, new ArrayList<>())
         };
-        this.roomRepository.saveAll(Arrays.asList(rooms));
 
         HotelEntity[] hotels = {
                 new HotelEntity("Av. Madrid, Madrid, 32452", 3, directors[0], List.of(rooms[0])),
+                new HotelEntity("Av. Luto, 23981", 2, directors[0], List.of(rooms[1])),
                 new HotelEntity("Av. Salamanca, Salamanca, 15243", 4, directors[2], List.of(rooms[1], rooms[2], rooms[3]))
         };
+        hotels[1].setId("1");
+        hotels[2].setId("2");
         this.hotelRepository.saveAll(Arrays.asList(hotels));
     }
 
@@ -73,6 +73,5 @@ public class HotelSeederService {
         this.hotelRepository.deleteAll();
         this.hotelGuestRepository.deleteAll();
         this.directorRepository.deleteAll();
-        this.roomRepository.deleteAll();
     }
 }

@@ -1,9 +1,20 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities;
 
+import es.upm.miw.apaw_practice.domain.models.car_workshop.Owner;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.UUID;
 
+@Document
 public class OwnerEntity {
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String dni;
     private String name;
     private LocalDate registrationDate;
@@ -13,6 +24,7 @@ public class OwnerEntity {
     }
 
     public OwnerEntity(String dni, String name) {
+        this.id = UUID.randomUUID().toString();
         this.dni = dni;
         this.name = name;
         this.registrationDate = LocalDate.now();
@@ -36,6 +48,12 @@ public class OwnerEntity {
 
     public LocalDate getRegistrationDate() {
         return this.registrationDate;
+    }
+
+    public Owner toOwner() {
+        Owner owner = new Owner();
+        BeanUtils.copyProperties(this, owner);
+        return owner;
     }
 
     @Override
