@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.university.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.DegreeRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.DegreeEntity;
+import es.upm.miw.apaw_practice.domain.models.university.Degree;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.DegreePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,8 @@ public class DegreePersistenceMongodb implements DegreePersistence {
     }
 
     @Override
-    public Stream<String> readAllTitles() {
+    public Stream<Degree> readAll() {
         return this.degreeRepository.findAll().stream()
-                .map(DegreeEntity::getTitle);
+                .map(DegreeEntity::toDegree);
     }
 }
