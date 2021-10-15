@@ -57,6 +57,20 @@ public class DoctorEntity {
         this.activeSince = activeSince;
     }
 
+    public Doctor toDoctor(){
+        Doctor doctor = new Doctor();
+        BeanUtils.copyProperties(this, doctor);
+        return doctor;
+    }
+    /**
+     * public FootballPlayer toFootballPlayer() {
+     *         FootballPlayer footballPlayer = new FootballPlayer();
+     *         BeanUtils.copyProperties(this, footballPlayer);
+     *         footballPlayer.setDefense(this.defense);
+     *         return footballPlayer;
+     *     }
+     */
+
     @Override
     public String toString() {
         return "DoctorEntity{" +

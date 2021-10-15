@@ -5,8 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 public class DoctorResourceIT {
@@ -23,7 +27,10 @@ public class DoctorResourceIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(String.class)
-                .value(nicks -> assertTrue(nicks.size() > 0))
-                .value(nicks -> assertEquals("John",nicks.get(0)));
+                .consumeWith(entityList -> {
+                    assertNotNull(entityList.getResponseBody());
+                    List<String> nickList = entityList.getResponseBody();
+                    assertTrue(nickList.containsAll(Arrays.asList("John","Marta","Jose")));
+                });
     }
 }
