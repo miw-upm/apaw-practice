@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping(DropResource.DROP)
+@RequestMapping(DropResource.GAMEWOW_DROPS)
 public class DropResource {
-    static final String DROP = "/gamewow/drops";
+    static final String GAMEWOW_DROPS = "/gamewow/drops";
     static final String EFFORT_EFFORT = "/{effort}";
     static final String SEARCH = "/search";
 
@@ -27,9 +27,8 @@ public class DropResource {
 
 
     //invicaria al dropService, y este preguntaría al persistenceBoss con la condición de effort, y a lo devuelto se extrae la lista de drops...
-    // pero podría plantearse de varias maneras
     // GET */drops/search?q=boss-effort:value
-    @GetMapping(SEARCH + EFFORT_EFFORT)
+    @GetMapping(SEARCH)
     public Stream<Drop> findByEffort(@PathVariable String q){
         String effort = new LexicalAnalyzer().extractWithAssure(q, "effort", String::new);
         return  dropService.findByEffort(effort)
