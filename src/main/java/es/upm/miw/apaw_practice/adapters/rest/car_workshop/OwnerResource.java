@@ -21,7 +21,7 @@ public class OwnerResource {
     }
 
     @GetMapping
-    public Owner findByDni(@PathVariable String dni){
-        return this.ownerService.findByDni(dni);
+    public Owner readByDni(@PathVariable String dni){
+        return this.ownerService.readByDni(dni);
     }
 }
