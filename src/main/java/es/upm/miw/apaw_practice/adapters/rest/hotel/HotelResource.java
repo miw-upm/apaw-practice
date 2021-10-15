@@ -36,4 +36,5 @@ public class HotelResource {
     public void update(@PathVariable String id, @RequestBody Hotel hotel){
         this.hotelService.update(id, hotel);
     }
+
 }
