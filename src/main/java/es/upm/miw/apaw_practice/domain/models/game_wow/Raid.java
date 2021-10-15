@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Raid {
 
+    private String id;
     private Date date;
     private String name;
     private String dificulty;
@@ -64,15 +65,20 @@ public class Raid {
         this.bossList = bossList;
     }
 
+    public String getId() {return id;}
+
+    public void setId(String id) {this.id = id;}
+
     @Override
     public String toString() {
         return "Raid{" +
-                "date=" + date +
+                "id='" + id + '\'' +
+                ", date=" + date +
                 ", name='" + name + '\'' +
                 ", dificulty='" + dificulty + '\'' +
                 ", playerNumber=" + playerNumber +
                 ", finish=" + finish +
-                ", boss=" + bossList +
+                ", bossList=" + bossList +
                 '}';
     }
 }
