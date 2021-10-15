@@ -74,4 +74,8 @@ public class FeatureEntity {
     public void setExtraSpell(String extraSpell) {
         this.extraSpell = extraSpell;
     }
+
+    public Feature toFeature(){
+        return new Feature(this.part,this.spellPower,this.meleeAtack,this.temple,this.extraSpell);
+    }
 }

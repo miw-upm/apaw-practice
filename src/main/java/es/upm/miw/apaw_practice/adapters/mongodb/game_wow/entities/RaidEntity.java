@@ -6,6 +6,7 @@ import nonapi.io.github.classgraph.json.Id;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Document
 public class RaidEntity {
@@ -22,6 +23,17 @@ public class RaidEntity {
 
     public RaidEntity() {
         //empty for framework
+    }
+
+    public RaidEntity(Date date, String name, String dificulty,
+                      Integer playerNumber, Boolean finish, List<BossEntity> bossListEntities) {
+        this.date = date;
+        this.name = name;
+        this.dificulty = dificulty;
+        this.playerNumber = playerNumber;
+        this.finish = finish;
+        this.bossListEntities = bossListEntities;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {

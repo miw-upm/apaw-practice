@@ -1,11 +1,17 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.ArticleItemEntity;
+import es.upm.miw.apaw_practice.domain.models.game_wow.Boss;
+import es.upm.miw.apaw_practice.domain.models.game_wow.Drop;
+import es.upm.miw.apaw_practice.domain.models.shop.ArticleItem;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class BossEntity {
@@ -58,5 +64,16 @@ public class BossEntity {
 
     public void setDropList(List<DropEntity> dropList) {
         this.dropList = dropList;
+    }
+
+    public Boss toBoss() {
+        Boss boss = new Boss();
+        BeanUtils.copyProperties(this, boss, "dropList");
+        List<Drop> dropItems = this.dropList.stream()
+                .map(DropEntity::todrop)
+                .collect(Collectors.toList());
+        boss.setDropList(dropItems);
+        return boss;
+
     }
 }
