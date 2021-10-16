@@ -83,4 +83,11 @@ public class AthleteEntity {
                 ", familyName='" + familyName + '\'' +
                 '}';
     }
+
+    public Athlete toAthlete() {
+
+        Athlete athlete = new Athlete();
+        BeanUtils.copyProperties(this, athlete);
+        return athlete;
+    }
 }
