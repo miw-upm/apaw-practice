@@ -18,7 +18,7 @@ public class DirectorResource {
 
     static final String DIRECTORS = "/hotel/directors";
     static final String DNI ="/{dni}";
-    static final String HOTELGUEST_DNI = "/hotels/rooms/hotelguests/dni";
+    static final String HOTELGUEST = "/hotels/rooms/hotelguests/emails";
 
     private final DirectorService directorService;
 
@@ -37,7 +37,7 @@ public class DirectorResource {
         return this.directorService.getHotelsByDirector(dni);
     }
 
-    @GetMapping(DirectorResource.DNI + DirectorResource.HOTELGUEST_DNI)
+    @GetMapping(DirectorResource.DNI + DirectorResource.HOTELGUEST)
     public List<HotelGuest> findHotelGuestDistinctDni(@PathVariable String dni){
         return this.directorService.findHotelGuestDistinctDni(dni);
     }
