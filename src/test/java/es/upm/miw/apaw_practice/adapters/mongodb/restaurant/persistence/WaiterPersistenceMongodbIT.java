@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @TestConfig
@@ -20,7 +21,8 @@ class WaiterPersistenceMongodbIT {
     void testCreateAndFind(){
         Waiter waiter = new Waiter("bar","employee");
         this.waiterPersistence.create(waiter);
-        assertEquals("bar", this.waiterPersistence.findBySectionAndCategory("bar","employee")
+        assertEquals("bar", this.waiterPersistence.findBySection("bar")
                                         .collect(Collectors.toList()).get(0).getSection());
+        assertTrue(this.waiterPersistence.findByNumberTable(1).collect(Collectors.toList()).size() == 1);
     }
 }
