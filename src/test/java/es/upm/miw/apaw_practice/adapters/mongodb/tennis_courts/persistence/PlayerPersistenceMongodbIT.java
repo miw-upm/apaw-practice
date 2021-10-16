@@ -27,17 +27,26 @@ class PlayerPersistenceMongodbIT {
     }
 
     @Test
-    void testCreateUpdateAndRead(){
+    void testUpdateAndRead(){
         Equipment[] equipments = {
                 new Equipment("Ball", 3, new BigDecimal("1.5")),
                 new Equipment("Racquet", 2, new BigDecimal("5")),
                 new Equipment("Shoes", 2, new BigDecimal("4"))
         };
         Player player;
-        this.playerPersistence.create(new Player("0L", "Sonia", "Garza", 25));
-        this.playerPersistence.updateEquipment("0L",List.of(equipments));
-        player = this.playerPersistence.read("0L");
-        assertEquals("Sonia", player.getName());
+        this.playerPersistence.updateEquipment("00000006R",List.of(equipments));
+        player = this.playerPersistence.read("00000006R");
+        assertEquals("Rob", player.getName());
         assertEquals(3, player.getEquipmentList().size());
+    }
+
+    @Test
+    void testUpdateFail(){
+        Equipment[] equipments = {
+                new Equipment("Ball", 3, new BigDecimal("1.5")),
+                new Equipment("Racquet", 2, new BigDecimal("5")),
+                new Equipment("Shoes", 2, new BigDecimal("4"))
+        };
+        assertThrows(NotFoundException.class, () -> this.playerPersistence.updateEquipment("otro",List.of(equipments)));
     }
 }
