@@ -25,7 +25,6 @@ public class Hotel {
         this.rooms = new ArrayList<>();
     }
 
-
     public String getDirection() {
         return direction;
     }

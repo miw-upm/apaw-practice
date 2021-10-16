@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class DirectorEntity {
@@ -38,7 +39,11 @@ public class DirectorEntity {
 
     public Director toDirector() {
         Director director = new Director();
-        BeanUtils.copyProperties(this, director);
+        BeanUtils.copyProperties(this, director, "hotelEntityList");
+        List<Hotel> hotel = this.hotelEntityList.stream()
+                .map(HotelEntity::toHotel)
+                .collect(Collectors.toList());
+        director.setHotelList(hotel);
         return director;
     }
 

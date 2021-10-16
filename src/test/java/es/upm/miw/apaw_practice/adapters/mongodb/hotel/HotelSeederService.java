@@ -57,6 +57,9 @@ public class HotelSeederService {
                 new HotelEntity("Av. Luto, 23981", 2,  List.of(rooms[1])),
                 new HotelEntity("Av. Salamanca, Salamanca, 15243", 4, List.of(rooms[1], rooms[2], rooms[3]))
         };
+        hotels[1].setId("1");
+        hotels[2].setId("2");
+        this.hotelRepository.saveAll(Arrays.asList(hotels));
 
         DirectorEntity[] directors = {
                 new DirectorEntity("77777777V", "test@email.com", 222222222, List.of(hotels[0])),
@@ -65,9 +68,7 @@ public class HotelSeederService {
         };
         this.directorRepository.saveAll(Arrays.asList(directors));
 
-        hotels[1].setId("1");
-        hotels[2].setId("2");
-        this.hotelRepository.saveAll(Arrays.asList(hotels));
+
     }
 
     public void deleteAll() {

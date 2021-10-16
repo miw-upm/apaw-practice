@@ -21,4 +21,9 @@ class DirectorPersistenceMongodbIT {
         assertEquals(List.of("test@email.com", "email@email.com", "director@email.com")
                 , this.directorPersistence.readEmails().stream().map(Director::getEmail).collect(Collectors.toList()));
     }
+
+    @Test
+    void testReadHotels(){
+        assertEquals(1, this.directorPersistence.getHotelsByDirector("77777777V").size());
+    }
 }

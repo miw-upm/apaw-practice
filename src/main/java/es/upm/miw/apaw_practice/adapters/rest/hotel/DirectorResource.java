@@ -1,9 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
 import es.upm.miw.apaw_practice.domain.models.hotel.Director;
+import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import es.upm.miw.apaw_practice.domain.services.hotel.DirectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class DirectorResource {
 
     static final String DIRECTORS = "/hotel/directors";
+    static final String DNI ="/{dni}";
 
     private final DirectorService directorService;
 
@@ -27,5 +30,9 @@ public class DirectorResource {
         return this.directorService.readEmails();
     }
 
+    @GetMapping(DirectorResource.DNI)
+    public List<Hotel> getHotelsByDirector(@PathVariable String dni){
+        return this.directorService.getHotelsByDirector(dni);
+    }
 
 }
