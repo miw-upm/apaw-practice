@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
+import es.upm.miw.apaw_practice.domain.models.hotel.Room;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.DirectorPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,5 +41,21 @@ public class DirectorPersistenceMongodb implements DirectorPersistence {
                 .toDirector();
 
         return director.getHotelList();
+    }
+
+    @Override
+    public List<HotelGuest> findHotelGuestDistinctDni(String dni) {
+
+        Director director = this.directorRepository
+                .findByDni(dni)
+                .orElseThrow(() -> new NotFoundException("Director DNI: " + dni))
+                .toDirector();
+
+        return director.getHotelList().stream()
+                .flatMap(hotel -> hotel.getRooms().stream()
+                        .flatMap(room -> room.getHotelGuests().stream()
+                                .map(HotelGuest::ofDni)))
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

@@ -46,7 +46,7 @@ public class HotelSeederService {
         this.hotelGuestRepository.saveAll(Arrays.asList(hotelGuests));
 
         RoomEntity[] rooms = {
-                new RoomEntity(22, new BigDecimal(45), false, List.of(hotelGuests[1], hotelGuests[2])),
+                new RoomEntity(22, new BigDecimal(45), false, List.of(hotelGuests[0],hotelGuests[1], hotelGuests[2])),
                 new RoomEntity(3, new BigDecimal(250), true, new ArrayList<>()),
                 new RoomEntity(45, new BigDecimal(120), true, List.of(hotelGuests[0])),
                 new RoomEntity(12, new BigDecimal(60), false, new ArrayList<>())

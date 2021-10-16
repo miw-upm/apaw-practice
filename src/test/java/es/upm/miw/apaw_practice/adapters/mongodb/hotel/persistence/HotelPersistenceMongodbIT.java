@@ -28,7 +28,7 @@ public class HotelPersistenceMongodbIT {
         assertEquals("Av. Salamanca, Salamanca, 15243", hotel.get().getDirection());
         assertEquals(4, hotel.get().getNumberStars());
 
-        Hotel hotelParams = new Hotel("updatedDirection", 2,  null);
+        Hotel hotelParams = new Hotel("updatedDirection", 2, null);
         this.hotelPersistenceMongodb.update("2", hotelParams);
 
         Optional<Hotel> updatedHotel = Optional.ofNullable(this.hotelPersistenceMongodb.read("2"));

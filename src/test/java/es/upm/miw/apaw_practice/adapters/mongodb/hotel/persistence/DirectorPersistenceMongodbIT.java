@@ -23,7 +23,14 @@ class DirectorPersistenceMongodbIT {
     }
 
     @Test
-    void testReadHotels(){
+    void testReadHotels() {
         assertEquals(1, this.directorPersistence.getHotelsByDirector("77777777V").size());
+    }
+
+    @Test
+    void testFindHotelGuestDniByDirectorDni() {
+        int size = this.directorPersistence.findHotelGuestDistinctDni("77777777V").size();
+        System.out.println("Size: " + size);
+
     }
 }
