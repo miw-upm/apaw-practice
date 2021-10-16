@@ -18,12 +18,7 @@ public class FilmService {
         this.filmPersistence = filmPersistence;
     }
 
-    private Integer selectScreenNumber(Screen screen){
-        return screen.getNumber();
-    }
-
     public Stream<Film> findFilmsByScreenNumber(Integer number){
-        return this.filmPersistence.readAll()
-                .filter(film -> number.equals(film.getScreen().getNumber()));
+        return this.filmPersistence.findByScreenNumber(number);
     }
 }

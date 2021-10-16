@@ -24,5 +24,12 @@ public class FilmPersistenceMongodb implements FilmPersistence {
         return this.filmRepository.findAll().stream()
                 .map(FilmEntity::toFilm);
     }
+
+    @Override
+    public Stream<Film> findByScreenNumber(Integer number) {
+        return this.filmRepository.findAll().stream()
+                .map(FilmEntity::toFilm)
+                .filter(film -> number.equals(film.getScreen().getNumber()));
+    }
 }
 

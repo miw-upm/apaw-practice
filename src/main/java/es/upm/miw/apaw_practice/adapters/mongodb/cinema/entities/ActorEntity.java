@@ -1,14 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
-import es.upm.miw.apaw_practice.domain.models.cinema.Film;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Document
 public class ActorEntity {

@@ -2,8 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
 import es.upm.miw.apaw_practice.domain.models.cinema.Film;
-import es.upm.miw.apaw_practice.domain.models.cinema.Screen;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;

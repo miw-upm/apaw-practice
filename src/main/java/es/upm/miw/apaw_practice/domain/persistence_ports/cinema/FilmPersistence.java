@@ -8,5 +8,7 @@ import java.util.stream.Stream;
 public interface FilmPersistence {
 
     Stream<Film> readAll();
+
+    Stream<Film> findByScreenNumber(Integer number);
 }
 

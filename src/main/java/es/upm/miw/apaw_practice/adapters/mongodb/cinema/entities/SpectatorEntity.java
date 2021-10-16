@@ -2,11 +2,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class SpectatorEntity {
     private String idCard;

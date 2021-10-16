@@ -6,7 +6,6 @@ import es.upm.miw.apaw_practice.domain.services.cinema.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 @RestController
@@ -24,8 +23,8 @@ public class FilmResource {
     }
 
     @GetMapping(SEARCH)
-    public Stream<Film> findFilmsByScreenNumber(@RequestParam String numberString){
-        Integer number = new LexicalAnalyzer().extractWithAssure(numberString, "number", Integer::new);
+    public Stream<Film> findFilmsByScreenNumber(@RequestParam String q){
+        Integer number = new LexicalAnalyzer().extractWithAssure(q, "number", Integer::new);
         return this.filmService.findFilmsByScreenNumber(number);
     }
 }
