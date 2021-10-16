@@ -43,7 +43,7 @@ class TableResourceIT {
         );
         this.webTestClient
                 .put()
-                .uri(TABLES+ID+RESERVES,"3")
+                .uri(TABLES+ID_NUMBER+RESERVES,"3")
                 .body(BodyInserters.fromValue(reserves))
                 .exchange()
                 .expectStatus().isOk()
