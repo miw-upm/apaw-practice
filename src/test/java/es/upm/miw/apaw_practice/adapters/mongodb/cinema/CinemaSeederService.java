@@ -36,18 +36,19 @@ public class CinemaSeederService {
                 new ScreenEntity(2,1,70,false, List.of(spectators[3]))
         };
         this.screenRepository.saveAll(Arrays.asList(screens));
-        FilmEntity[] films = {
-                new FilmEntity("7890", "The hunger games", "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games", screens[1]),
-                new FilmEntity("7891", "The hunger games. Part 2", "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games", screens[1])
-        };
-        this.filmRepository.saveAll(Arrays.asList(films));
         ActorEntity[] actors = {
-                new ActorEntity("Jennifer", "Lawrence", 31, List.of(films[0], films[1])),
-                new ActorEntity("Josh", "Hutcherson", 28, List.of(films[0], films[1])),
-                new ActorEntity("Woody", "Harrelson", 60, List.of(films[0], films[1])),
-                new ActorEntity("Liam", "Hemsworth", 31, List.of(films[0], films[1]))
+                new ActorEntity("Jennifer", "Lawrence", 31),
+                new ActorEntity("Josh", "Hutcherson", 28),
+                new ActorEntity("Woody", "Harrelson", 60),
+                new ActorEntity("Liam", "Hemsworth", 31)
         };
         this.actorRepository.saveAll(Arrays.asList(actors));
+        FilmEntity[] films = {
+                new FilmEntity("7890", "The hunger games", "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games", screens[1], List.of(actors[0], actors[1], actors[2], actors[3])),
+                new FilmEntity("7891", "The hunger games. Part 2", "Katniss Everdeen voluntarily takes her younger sister's place in the Hunger Games",screens[1], List.of(actors[0], actors[1], actors[2], actors[3]))
+        };
+        this.filmRepository.saveAll(Arrays.asList(films));
+
     }
 
     public void deleteAll() {

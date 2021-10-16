@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class ActorEntity {
@@ -16,19 +17,16 @@ public class ActorEntity {
     private String name;
     private String familyName;
     private Integer age;
-    @DBRef
-    private List<FilmEntity> films;
 
     public ActorEntity(){
         //empty for framework
     }
 
-    public ActorEntity(String name, String familyName, Integer age, List<FilmEntity> films) {
+    public ActorEntity(String name, String familyName, Integer age) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.familyName = familyName;
         this.age = age;
-        this.films = films;
     }
 
     public String getId() {
@@ -63,12 +61,8 @@ public class ActorEntity {
         this.age = age;
     }
 
-    public List<FilmEntity> getFilms() {
-        return films;
-    }
-
-    public void setFilms(List<FilmEntity> films) {
-        this.films = films;
+    public Actor toActor() {
+        return new Actor(name, familyName, age);
     }
 
     @Override
@@ -78,7 +72,6 @@ public class ActorEntity {
                 ", name='" + name + '\'' +
                 ", familyName='" + familyName + '\'' +
                 ", age=" + age +
-                ", films=" + films +
                 '}';
     }
 }

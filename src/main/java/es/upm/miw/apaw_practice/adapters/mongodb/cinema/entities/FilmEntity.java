@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class FilmEntity {
@@ -22,17 +23,20 @@ public class FilmEntity {
     private String description;
     @DBRef
     private ScreenEntity screen;
+    @DBRef
+    private List<ActorEntity> actors;
 
     public FilmEntity(){
         //empty for framework
     }
 
-    public FilmEntity(String barcode, String name, String description, ScreenEntity screen) {
+    public FilmEntity(String barcode, String name, String description, ScreenEntity screen, List<ActorEntity> actor) {
         this.id = UUID.randomUUID().toString();
         this.barcode = barcode;
         this.name = name;
         this.description = description;
         this.screen = screen;
+        this.actors = actor;
     }
 
     public String getId() {
@@ -71,12 +75,23 @@ public class FilmEntity {
         return screen;
     }
 
-    public void setScreens(ScreenEntity screen) {
+    public void setScreen(ScreenEntity screen) {
         this.screen = screen;
     }
 
+    public List<ActorEntity> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<ActorEntity> actors) {
+        this.actors = actors;
+    }
+
     public Film toFilm() {
-        return new Film(this.barcode, this.name, this.description, this.screen.getNumber());
+        List<Actor> actorList = this.actors.stream()
+                .map(ActorEntity::toActor)
+                .collect(Collectors.toList());
+        return new Film(barcode, name, description, actorList,this.screen.toScreen());
     }
 
     @Override
@@ -87,6 +102,7 @@ public class FilmEntity {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", screens=" + screen +
+                ", actors=" + actors +
                 '}';
     }
 }
