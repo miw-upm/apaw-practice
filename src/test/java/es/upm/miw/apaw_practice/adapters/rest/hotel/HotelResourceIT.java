@@ -41,7 +41,7 @@ class HotelResourceIT {
                 new RoomEntity(15, new BigDecimal(50), false, new ArrayList<>()));
 
 
-        HotelEntity hotelEntity = new HotelEntity("Barcelona, Perla", 4, roomEntities);
+        HotelEntity hotelEntity = new HotelEntity("Bendala","Barcelona, Perla", 4, roomEntities);
 
         hotelEntity.setId("0");
         this.hotelRepository.save(hotelEntity);
@@ -107,7 +107,7 @@ class HotelResourceIT {
     @Test
     void testUpdate() {
         String id = "0";
-        Hotel hotelParam = new Hotel("Luna, Perla", 5, null);
+        Hotel hotelParam = new Hotel("Rosa","Luna, Perla", 5, null);
         this.webTestClient
                 .get()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
@@ -135,7 +135,7 @@ class HotelResourceIT {
     @Test
     void testUpdateBadRequest(){
         String id = "0";
-        Hotel hotelParam = new Hotel(null, 5, null);
+        Hotel hotelParam = new Hotel(null, null, 5, null);
         this.webTestClient
                 .patch()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
@@ -147,7 +147,7 @@ class HotelResourceIT {
     @Test
     void testUpdateForUpdateNotFound(){
         String id = "oo";
-        Hotel hotelParam = new Hotel("Luna, Perla", 5,  null);
+        Hotel hotelParam = new Hotel("Rosa","Luna, Perla", 5,  null);
         this.webTestClient
                 .patch()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
