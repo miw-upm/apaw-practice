@@ -17,7 +17,6 @@ public class HotelPersistenceMongodbIT {
 
     @Test
     void testFindHotelById() {
-        assertEquals("77777777V", this.hotelPersistenceMongodb.read("1").getDirector().getDni());
         assertEquals(3, this.hotelPersistenceMongodb.read("1").getRooms().get(0).getNumber());
         assertEquals("Av. Luto, 23981", this.hotelPersistenceMongodb.read("1").getDirection());
     }
@@ -29,7 +28,7 @@ public class HotelPersistenceMongodbIT {
         assertEquals("Av. Salamanca, Salamanca, 15243", hotel.get().getDirection());
         assertEquals(4, hotel.get().getNumberStars());
 
-        Hotel hotelParams = new Hotel("updatedDirection", 2, null, null);
+        Hotel hotelParams = new Hotel("updatedDirection", 2, null);
         this.hotelPersistenceMongodb.update("2", hotelParams);
 
         Optional<Hotel> updatedHotel = Optional.ofNullable(this.hotelPersistenceMongodb.read("2"));

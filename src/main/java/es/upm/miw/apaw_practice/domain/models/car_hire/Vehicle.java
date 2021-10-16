@@ -21,6 +21,13 @@ public class Vehicle {
         this.goodCondition = goodCondition;
     }
 
+    public static Vehicle ofIdVinNumber(Vehicle vehicle) {
+        Vehicle vehicleRequested = new Vehicle();
+        vehicleRequested.setId(vehicle.getId());
+        vehicleRequested.setVinNumber(vehicle.getVinNumber());
+        return vehicleRequested;
+    }
+
     public String getId() {
         return id;
     }

@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BandPersistence {
     Band create(Band band);
+
+    Band read(String bandName);
+
+    Band update(String bandName, Band band);
 }

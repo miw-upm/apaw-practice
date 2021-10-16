@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.university;
 
+import es.upm.miw.apaw_practice.domain.models.university.Degree;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.DegreePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,8 @@ public class DegreeService {
         this.degreePersistence = degreePersistence;
     }
 
-    public Stream<String> read() {
-        return this.degreePersistence.readAllTitles();
+    public Stream<String> readTitles() {
+        return this.degreePersistence.readAll()
+                .map(Degree::getTitle);
     }
 }

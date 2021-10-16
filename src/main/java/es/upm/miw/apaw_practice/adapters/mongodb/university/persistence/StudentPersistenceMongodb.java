@@ -2,13 +2,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.university.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.StudentRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.StudentEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.SubjectEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.university.Student;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.StudentPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository("studentPersistence")
 public class StudentPersistenceMongodb implements StudentPersistence {
@@ -32,5 +30,13 @@ public class StudentPersistenceMongodb implements StudentPersistence {
         return this.studentRepository
                 .findByDni(dni)
                 .isPresent();
+    }
+
+    @Override
+    public Student readByDni(String dni) {
+        return this.studentRepository
+                .findByDni(dni)
+                .orElseThrow(() -> new NotFoundException("Student dni: " + dni))
+                .toStudent();
     }
 }

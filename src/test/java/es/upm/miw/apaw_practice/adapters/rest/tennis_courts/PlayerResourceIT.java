@@ -1,11 +1,16 @@
 package es.upm.miw.apaw_practice.adapters.rest.tennis_courts;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @RestTestConfig
 class PlayerResourceIT {
@@ -14,7 +19,7 @@ class PlayerResourceIT {
     private WebTestClient webTestClient;
 
     @Test
-    void TestCreate(){
+    void testCreate(){
         Player player = new Player("0L", "Javier", "Fernandez", 43);
         this.webTestClient
                 .post()
@@ -24,4 +29,27 @@ class PlayerResourceIT {
                 .expectStatus().isOk()
                 .expectBody();
     }
+
+    @Test
+    void testUpdate(){
+        Equipment[] equipments = {
+                new Equipment("Ball", 5, new BigDecimal("1.5")),
+                new Equipment("Racquet", 1, new BigDecimal("5")),
+                new Equipment("Shoes", 4, new BigDecimal("4"))
+        };
+        this.webTestClient
+                .put()
+                .uri(PlayerResource.PLAYERS + "/" + "00000001R" + PlayerResource.EQUIPMENTS)
+                .body(BodyInserters.fromValue(List.of(equipments)))
+                .exchange()
+                .expectStatus().isOk();
+
+        this.webTestClient
+                .put()
+                .uri(PlayerResource.PLAYERS + "/" + "otro" + PlayerResource.EQUIPMENTS)
+                .body(BodyInserters.fromValue(List.of(equipments)))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.NOT_FOUND);
+    }
 }
+

@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.LocalDate;
 import java.util.Arrays;
 
 @TestConfig
@@ -39,13 +37,9 @@ class CageRepositoryIT {
     @Test
     void testFindByLocationCode() {
         Assertions.assertEquals(1, this.cageRepository.findByLocationCode("A1").count());
-        ZooAddress address = new ZooAddress("Calle Carranza", 22, "28004");
-        ZooEntity expectedZoo = new ZooEntity(
-                new Zoo(address, 914334789));
-        expectedZoo.setId("id1");
         Assertions.assertTrue(this.cageRepository.findByLocationCode("A1").findFirst().isPresent());
-        Assertions.assertEquals(expectedZoo,
-                this.cageRepository.findByLocationCode("A1").findFirst().get().getZoo());
+        Assertions.assertEquals("id1",
+                this.cageRepository.findByLocationCode("A1").findFirst().get().getZoo().getId());
         CaretakerEntity expectedCaretaker = new CaretakerEntity(
                 Caretaker.builder().dni("71679884Q").name("Samuel L").surname("Jackson").build());
         Assertions.assertEquals(expectedCaretaker,
@@ -62,10 +56,6 @@ class CageRepositoryIT {
 
         Long countOfAll = this.cageRepository.findByZoo(zoo).count();
         Assertions.assertNotEquals(0, countOfAll);
-        Assertions.assertEquals(countOfAll,
-                this.cageRepository.findByZoo(zoo)
-                        .filter(cage -> cage.getNextFumigation().equals(LocalDate.now()))
-                        .count());
     }
 
 }

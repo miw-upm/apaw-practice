@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.daos.*;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities.*;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class Tennis_CourtsSeederService {
     private PlayerRepository playerRepository;
 
     public void seedDatabase() {
+        LogManager.getLogger(this.getClass()).info("------- Tennis Courts Initial Load -----------");
         EquipmentEntity[] equipment = {
             new EquipmentEntity("Racquet", 2, new BigDecimal("5.0")),
             new EquipmentEntity("Balls", 5, new BigDecimal("1.5")),
