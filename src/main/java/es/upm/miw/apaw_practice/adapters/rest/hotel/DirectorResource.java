@@ -17,7 +17,7 @@ import java.util.List;
 public class DirectorResource {
 
     static final String DIRECTORS = "/hotel/directors";
-    static final String DNI ="/{dni}";
+    static final String DNI = "/{dni}";
     static final String HOTELGUEST = "/hotels/rooms/hotelguests/emails";
 
     private final DirectorService directorService;
@@ -33,12 +33,12 @@ public class DirectorResource {
     }
 
     @GetMapping(DirectorResource.DNI)
-    public List<Hotel> getHotelsByDirector(@PathVariable String dni){
+    public List<Hotel> getHotelsByDirector(@PathVariable String dni) {
         return this.directorService.getHotelsByDirector(dni);
     }
 
     @GetMapping(DirectorResource.DNI + DirectorResource.HOTELGUEST)
-    public List<HotelGuest> findHotelGuestDistinctDni(@PathVariable String dni){
+    public List<HotelGuest> findHotelGuestDistinctDni(@PathVariable String dni) {
         return this.directorService.findHotelGuestDistinctDni(dni);
     }
 

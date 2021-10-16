@@ -31,7 +31,7 @@ class DirectorPersistenceMongodbIT {
     @Test
     void testFindHotelGuestDniByDirectorDni() {
         List<HotelGuest> search = this.directorPersistence.findHotelGuestDistinctDni("77777777V");
-        assertEquals(2,  search.size());
+        assertEquals(2, search.size());
         List<String> listEmails = List.of("88888888K", "11111111S");
         assertEquals(listEmails, search.stream().map(HotelGuest::getDni).collect(Collectors.toList()));
 
