@@ -35,17 +35,13 @@ class HotelResourceIT {
 
     @BeforeEach
     void init() {
-        DirectorEntity directorEntity =
-                new DirectorEntity(new Director("5050505L", "email@email.email", 920110022));
 
-        this.directorRepository.save(directorEntity);
         List<RoomEntity> roomEntities = List.of(
                 new RoomEntity(56, new BigDecimal(90), true, new ArrayList<>()),
                 new RoomEntity(15, new BigDecimal(50), false, new ArrayList<>()));
 
 
-        HotelEntity hotelEntity = new HotelEntity("Barcelona, Perla", 4, directorEntity,
-                roomEntities);
+        HotelEntity hotelEntity = new HotelEntity("Barcelona, Perla", 4, roomEntities);
 
         hotelEntity.setId("0");
         this.hotelRepository.save(hotelEntity);
@@ -60,7 +56,6 @@ class HotelResourceIT {
                 .exchange()
                 .expectStatus().isOk().expectBody(Hotel.class)
                 .value(hotel -> {
-                    assertEquals("5050505L", hotel.getDirector().getDni());
                     assertEquals(4, hotel.getNumberStars());
                     assertEquals(new BigDecimal(90), hotel.getRooms().get(0).getPrice());
                     assertTrue(hotel.getRooms().get(0).isVip());
@@ -112,7 +107,7 @@ class HotelResourceIT {
     @Test
     void testUpdate() {
         String id = "0";
-        Hotel hotelParam = new Hotel("Luna, Perla", 5, null, null);
+        Hotel hotelParam = new Hotel("Luna, Perla", 5, null);
         this.webTestClient
                 .get()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
@@ -140,7 +135,7 @@ class HotelResourceIT {
     @Test
     void testUpdateBadRequest(){
         String id = "0";
-        Hotel hotelParam = new Hotel(null, 5, null, null);
+        Hotel hotelParam = new Hotel(null, 5, null);
         this.webTestClient
                 .patch()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
@@ -152,7 +147,7 @@ class HotelResourceIT {
     @Test
     void testUpdateForUpdateNotFound(){
         String id = "oo";
-        Hotel hotelParam = new Hotel("Luna, Perla", 5, null, null);
+        Hotel hotelParam = new Hotel("Luna, Perla", 5,  null);
         this.webTestClient
                 .patch()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
