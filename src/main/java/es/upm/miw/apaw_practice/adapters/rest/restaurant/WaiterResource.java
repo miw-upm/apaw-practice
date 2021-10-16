@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public class WaiterResource {
 
     static final String WAITERS = "/restaurant/waiters";
-    static final String SEARCHES = "/searches";
+    static final String SEARCH = "/search";
     static final String ID_SECTION = "/{section}";
     static final String CATEGORY = "/category";
 
@@ -29,11 +29,16 @@ public class WaiterResource {
         return this.waiterService.create(waiter);
     }
 
-    @GetMapping(SEARCHES)
+    @GetMapping(SEARCH)
     public Stream<Waiter> findBySectionAndCategory(@RequestParam String q){
         String section = new LexicalAnalyzer().extractWithAssure(q, "section");
         String category = new LexicalAnalyzer().extractWithAssure(q, "category");
         return this.waiterService.findBySectionAndCategory(section,category);
+    }
+
+    @GetMapping(TableResource.ID_NUMBER)
+    public Stream<Waiter> findByNumberTable(@PathVariable Integer number){
+        return this.waiterService.findByNumberTable(number);
     }
 
 }
