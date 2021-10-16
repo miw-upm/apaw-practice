@@ -38,8 +38,9 @@ public class UniversitySeederService {
         };
         this.classroomRepository.saveAll(Arrays.asList(classrooms));
         SubjectEntity[] subjects = {
-            new SubjectEntity(613000096, "Arquitectura y Patrones para Aplicaciones Web", 4, classrooms[0]),
-            new SubjectEntity(613000095, "Ingeniería Web: Visión General", 6, classrooms[0])
+                new SubjectEntity(613000096, "Arquitectura y Patrones para Aplicaciones Web", 4, classrooms[0]),
+                new SubjectEntity(613000095, "Ingeniería Web: Visión General", 6, classrooms[0]),
+                new SubjectEntity(615000246, "Inteligencia artificial", 3, classrooms[0])
         };
         this.subjectRepository.saveAll(Arrays.asList(subjects));
         DegreeEntity[] degrees = {
@@ -49,7 +50,7 @@ public class UniversitySeederService {
         };
         this.degreeRepository.saveAll(Arrays.asList(degrees));
         StudentEntity[] students = {
-            new StudentEntity(new Student("12345678X", "Ada Lovelace", true), Arrays.asList(subjects))
+                new StudentEntity(new Student("12345678X", "Ada Lovelace", true), Arrays.asList(subjects))
         };
         this.studentRepository.saveAll(Arrays.asList(students));
     }
