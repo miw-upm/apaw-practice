@@ -84,13 +84,25 @@ public class PlayerEntity {
         this.equipmentList = equipmentList;
     }
 
-    public List<EquipmentEntity> toEquipmentEntityList(List<Equipment> equipmentList){
+    public void setEquipmentEntityListFromEquipment(List<Equipment> equipmentList){
+        this.equipmentList = toEquipmentEntityList(equipmentList);
+    }
+
+    public static List<EquipmentEntity> toEquipmentEntityList(List<Equipment> equipmentList){
         return equipmentList.stream()
                 .map(equipment -> new EquipmentEntity(equipment.getType(), equipment.getQuantity(), equipment.getPricePerUnit()))
                 .collect(Collectors.toList());
     }
 
+    public static List<Equipment> toEquipmentList(List<EquipmentEntity> equipmentList){
+        return equipmentList.stream()
+                .map(equipment -> new Equipment(equipment.getType(), equipment.getQuantity(), equipment.getPricePerUnit()))
+                .collect(Collectors.toList());
+    }
+
     public Player toPlayer(){
-       return new Player(this.dni, this.name, this.surname, this.age);
+       Player player = new Player(this.dni, this.name, this.surname, this.age);
+       player.setEquipmentList(toEquipmentList(this.equipmentList));
+       return player;
     }
 }
