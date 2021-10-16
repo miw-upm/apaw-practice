@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class TableResource {
 
     static final String TABLES = "/restaurant/tables";
-    static final String ID = "/{id}";
+    static final String ID_NUMBER = "/{number}";
     static final String RESERVES = "/reserves";
     static final String HOLDER = "/holder";
 
@@ -25,14 +25,14 @@ public class TableResource {
         this.tableService = tableService;
     }
 
-    @GetMapping(ID+RESERVES+HOLDER)
-    public Stream<Reserve> readHoldersByNumber(@PathVariable Integer id){
-        return this.tableService.readHoldersByNumber(id);
+    @GetMapping(ID_NUMBER+RESERVES+HOLDER)
+    public Stream<Reserve> readHoldersByNumber(@PathVariable Integer number){
+        return this.tableService.readHoldersByNumber(number);
     }
 
-    @PutMapping(ID+RESERVES)
-    public Table updateNumPeople(@PathVariable Integer id, @RequestBody List<Reserve> reserves){
-        return this.tableService.updateNumPeople(id, reserves);
+    @PutMapping(ID_NUMBER+RESERVES)
+    public Table updateNumPeople(@PathVariable Integer number, @RequestBody List<Reserve> reserves){
+        return this.tableService.updateNumPeople(number, reserves);
     }
 
     @PatchMapping
