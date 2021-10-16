@@ -28,6 +28,12 @@ public class Hotel {
         this.rooms = new ArrayList<>();
     }
 
+    public static Hotel ofName(Hotel hotel) {
+        Hotel hotelDto = new Hotel();
+        hotelDto.setName(hotel.getName());
+        return hotelDto;
+    }
+
     public String getName() {
         return name;
     }
@@ -60,7 +66,6 @@ public class Hotel {
         this.rooms = rooms;
     }
 
-
     @Override
     public String toString() {
         return "Hotel{" +
@@ -70,4 +75,5 @@ public class Hotel {
                 ", rooms=" + rooms +
                 '}';
     }
+
 }
