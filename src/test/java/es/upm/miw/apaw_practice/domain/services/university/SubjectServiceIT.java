@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.university;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.domain.models.university.Classroom;
 import es.upm.miw.apaw_practice.domain.models.university.SubjectCreditsUpdating;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.SubjectPersistence;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,16 @@ public class SubjectServiceIT {
 
     @Autowired
     private SubjectPersistence subjectPersistence;
+
+    @Test
+    void testUpdateClassroom() {
+        Classroom classroom = new Classroom("ETSISI", 8002, 15);
+        this.subjectService.updateClassroom(615000246, classroom);
+        Classroom persistedClassroom = this.subjectPersistence.readByReference(615000246).getClassroom();
+        assertEquals(classroom.getSchool(), persistedClassroom.getSchool());
+        assertEquals(classroom.getNumber(), persistedClassroom.getNumber());
+        assertEquals(classroom.getCapacity(), persistedClassroom.getCapacity());
+    }
 
     @Test
     void testUpdateCredits() {
