@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
+import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
@@ -53,6 +55,12 @@ public class SpectatorEntity {
 
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public Spectator toSpectator() {
+        Spectator spectator = new Spectator();
+        BeanUtils.copyProperties(this, spectator);
+        return spectator;
     }
 
     @Override
