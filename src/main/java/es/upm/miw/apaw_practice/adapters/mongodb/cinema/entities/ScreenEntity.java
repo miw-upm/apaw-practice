@@ -1,11 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
+import es.upm.miw.apaw_practice.domain.models.cinema.Screen;
+import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class ScreenEntity {
@@ -77,6 +80,13 @@ public class ScreenEntity {
 
     public void setSpectators(List<SpectatorEntity> spectators) {
         this.spectators = spectators;
+    }
+
+    public Screen toScreen() {
+        List<Spectator> spectatorsList = this.spectators.stream()
+                .map(SpectatorEntity::toSpectator)
+                .collect(Collectors.toList());
+        return new Screen(number, flat, numberOfSeats, full, spectatorsList);
     }
 
     @Override
