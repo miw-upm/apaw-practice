@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface HotelGuestRepository extends MongoRepository<HotelGuestEntity, String> {
-    Optional<HotelGuestEntity> findByDniGuest(String dniGuest);
+    Optional<HotelGuestEntity> findByDni(String dni);
 
-    Optional<HotelGuestEntity> findByNameGuest(String nameGuest);
+    void deleteByDni(String dni);
 
 }

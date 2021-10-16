@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
+import es.upm.miw.apaw_practice.domain.models.university.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
@@ -25,6 +27,20 @@ public class SubjectEntity {
         this.credits = credits;
         this.classroom = classroom;
         this.id = UUID.randomUUID().toString();
+    }
+
+    public Subject toSubject() {
+        Subject subject = new Subject();
+        BeanUtils.copyProperties(this, subject);
+        subject.setClassroom(this.classroom.toClassroom());
+        return subject;
+    }
+
+    public void fromSubject(Subject subject) {
+        BeanUtils.copyProperties(subject, this);
+        ClassroomEntity classroomEntity = new ClassroomEntity();
+        BeanUtils.copyProperties(classroomEntity, subject.getClassroom());
+        this.setClassroom(classroomEntity);
     }
 
     public String getId() {

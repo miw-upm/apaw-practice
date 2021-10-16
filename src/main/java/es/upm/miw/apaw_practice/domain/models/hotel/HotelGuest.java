@@ -1,10 +1,11 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class HotelGuest {
-    private String dniGuest;
-    private String nameGuest;
+    private String dni;
+    private String name;
     private LocalDateTime entryDate;
     private LocalDateTime departureDate;
 
@@ -13,27 +14,33 @@ public class HotelGuest {
         //empty for framework
     }
 
-    public HotelGuest(String nameGuest, String dniGuest, LocalDateTime entryDate, LocalDateTime departureDate) {
-        this.nameGuest = nameGuest;
-        this.dniGuest = dniGuest;
+    public HotelGuest(String name, String dni, LocalDateTime entryDate, LocalDateTime departureDate) {
+        this.name = name;
+        this.dni = dni;
         this.entryDate = entryDate;
         this.departureDate = departureDate;
     }
 
-    public String getDniGuest() {
-        return dniGuest;
+    public static HotelGuest ofDni(HotelGuest hotelGuest){
+        HotelGuest hotelGuestDto = new HotelGuest();
+        hotelGuestDto.setDni(hotelGuest.getDni());
+        return hotelGuestDto;
     }
 
-    public void setDniGuest(String dniGuest) {
-        this.dniGuest = dniGuest;
+    public String getDni() {
+        return dni;
     }
 
-    public String getNameGuest() {
-        return nameGuest;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
-    public void setNameGuest(String nameGuest) {
-        this.nameGuest = nameGuest;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDateTime getEntryDate() {
@@ -53,8 +60,8 @@ public class HotelGuest {
     }
 
     public boolean isNull() {
-        return this.nameGuest == null
-                || this.dniGuest == null
+        return this.name == null
+                || this.dni == null
                 || this.entryDate == null
                 || this.departureDate == null;
     }
@@ -62,10 +69,23 @@ public class HotelGuest {
     @Override
     public String toString() {
         return "HotelGuest{" +
-                "dniGuest='" + dniGuest + '\'' +
-                ", nameGuest='" + nameGuest + '\'' +
+                "dni='" + dni + '\'' +
+                ", name='" + name + '\'' +
                 ", entryDate=" + entryDate +
                 ", departureDate=" + departureDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HotelGuest that = (HotelGuest) o;
+        return Objects.equals(dni, that.dni) && Objects.equals(name, that.name) && Objects.equals(entryDate, that.entryDate) && Objects.equals(departureDate, that.departureDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni, name, entryDate, departureDate);
     }
 }

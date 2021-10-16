@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.game_wow;
 
+import org.springframework.beans.BeanUtils;
+
 import java.util.List;
 
 public class Boss {
@@ -10,6 +12,12 @@ public class Boss {
 
     public Boss() {
         //empty for framework
+    }
+
+    public Boss(String description, String effort, List<Drop> dropList) {
+        this.description = description;
+        this.effort = effort;
+        this.dropList = dropList;
     }
 
     public String getDescription() {

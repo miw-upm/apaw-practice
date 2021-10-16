@@ -9,4 +9,6 @@ public interface StudentPersistence {
     Student create(Student student);
 
     boolean existDni(String dni);
+
+    Student readByDni(String dni);
 }

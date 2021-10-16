@@ -8,4 +8,5 @@ public interface AnimalPersistence {
 
     void delete(Animal animal);
 
+    Animal findByName(String name);
 }

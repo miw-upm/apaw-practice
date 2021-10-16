@@ -1,39 +1,51 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 import es.upm.miw.apaw_practice.domain.models.hotel.Director;
+import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class DirectorEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private String dniDirector;
+    private String dni;
     private String email;
     private Integer telephone;
+    @DBRef
+    private List<HotelEntity> hotelEntityList;
 
     public DirectorEntity() {
         //empty for framework
     }
 
-    public DirectorEntity(Director director) {
+    public DirectorEntity(String dni, String email, Integer telephone, List<HotelEntity> hotelEntityList) {
         this.id = UUID.randomUUID().toString();
-        BeanUtils.copyProperties(director, this);
-    }
+        this.dni = dni;
+        this.email = email;
+        this.telephone = telephone;
+        this.hotelEntityList = hotelEntityList;
 
+    }
 
     public Director toDirector() {
         Director director = new Director();
-        BeanUtils.copyProperties(this, director);
+        BeanUtils.copyProperties(this, director, "hotelEntityList");
+        List<Hotel> hotel = this.hotelEntityList.stream()
+                .map(HotelEntity::toHotel)
+                .collect(Collectors.toList());
+        director.setHotelList(hotel);
         return director;
     }
-
 
     public String getId() {
         return id;
@@ -43,12 +55,12 @@ public class DirectorEntity {
         this.id = id;
     }
 
-    public String getDniDirector() {
-        return dniDirector;
+    public String getDni() {
+        return dni;
     }
 
-    public void setDniDirector(String dniDirector) {
-        this.dniDirector = dniDirector;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getEmail() {
@@ -67,18 +79,22 @@ public class DirectorEntity {
         this.telephone = telephone;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, dniDirector, email, telephone);
+    public List<HotelEntity> getHotelEntityList() {
+        return hotelEntityList;
+    }
+
+    public void setHotelEntityList(List<HotelEntity> hotelEntityList) {
+        this.hotelEntityList = hotelEntityList;
     }
 
     @Override
     public String toString() {
         return "DirectorEntity{" +
                 "id='" + id + '\'' +
-                ", dniDirector='" + dniDirector + '\'' +
+                ", dni='" + dni + '\'' +
                 ", email='" + email + '\'' +
                 ", telephone=" + telephone +
+                ", hotelEntityList=" + hotelEntityList +
                 '}';
     }
 
@@ -86,9 +102,19 @@ public class DirectorEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DirectorEntity that = (DirectorEntity) o;
-        return id.equals(that.id) && dniDirector.equals(that.dniDirector) && Objects.equals(email, that.email) && Objects.equals(telephone, that.telephone);
+        DirectorEntity director = (DirectorEntity) o;
+        return Objects.equals(id, director.id) &&
+                Objects.equals(dni, director.dni) &&
+                Objects.equals(email, director.email) &&
+                Objects.equals(telephone, director.telephone) &&
+                Objects.equals(hotelEntityList, director.hotelEntityList);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, dni, email, telephone, hotelEntityList);
+    }
+
 }
 
 

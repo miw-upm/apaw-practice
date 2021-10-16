@@ -17,7 +17,7 @@ class CaretakerRepositoryIT {
     void testFindByDni() {
        Assertions.assertTrue(this.caretakerRepository.findByDni("71679884Q").isPresent());
         CaretakerEntity expected = new CaretakerEntity(
-                new Caretaker("71679884Q", "Samuel L", "Jackson"));
+                Caretaker.builder().dni("71679884Q").name("Samuel L").surname("Jackson").build());
        Assertions.assertEquals(expected, this.caretakerRepository.findByDni("71679884Q").get());
         Assertions.assertTrue(this.caretakerRepository.findByDni("abecedario").isEmpty());
     }

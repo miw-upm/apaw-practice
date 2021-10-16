@@ -18,8 +18,14 @@ public class WaiterEntity {
     }
 
     public WaiterEntity(Waiter waiter){
-        BeanUtils.copyProperties(waiter,this);
+        BeanUtils.copyProperties(waiter, this);
         this.id = UUID.randomUUID().toString();
+    }
+
+    public WaiterEntity(String section, String category) {
+        this.id = UUID.randomUUID().toString();
+        this.section = section;
+        this.category = category;
     }
 
     public String getId() {
@@ -63,5 +69,11 @@ public class WaiterEntity {
                 ", section='" + section + '\'' +
                 ", category='" + category + '\'' +
                 '}';
+    }
+
+    public Waiter toWaiter() {
+        Waiter waiter = new Waiter();
+        BeanUtils.copyProperties(this, waiter);
+        return waiter;
     }
 }

@@ -4,19 +4,19 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Table {
-    private Boolean occupied;
     private Integer number;
+    private Boolean occupied;
     private String style;
     private BigDecimal price;
     private List<Reserve> reserves;
 
-    Table(){
+    public Table(){
         //empty for framework
     }
 
-    public Table(Boolean occupied, Integer number, String style, BigDecimal price, List<Reserve> reserves) {
-        this.occupied = occupied;
+    public Table(Integer number, Boolean occupied, String style, BigDecimal price, List<Reserve> reserves) {
         this.number = number;
+        this.occupied = occupied;
         this.style = style;
         this.price = price;
         this.reserves = reserves;
