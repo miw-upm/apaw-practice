@@ -1,9 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.library.entities;
 
-import es.upm.miw.apaw_practice.domain.models.library.Author;
 import es.upm.miw.apaw_practice.domain.models.library.Book;
-import es.upm.miw.apaw_practice.domain.models.library.BookBuilders;
-import es.upm.miw.apaw_practice.domain.models.library.Category;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -13,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Document
 public class BookEntity {
@@ -127,6 +123,12 @@ public class BookEntity {
                 ", category=" + category +
                 ", authors=" + authors +
                 '}';
+    }
+
+    public Book toBook() {
+        Book book = new Book();
+        BeanUtils.copyProperties(this, book);
+        return book;
     }
 
     public static class Builder implements BookEntityBuilders.Id, BookEntityBuilders.Isbn, BookEntityBuilders.Title, BookEntityBuilders.Available, BookEntityBuilders.NumbersOfPages, BookEntityBuilders.PublicationDate, BookEntityBuilders.CategoryEntity, BookEntityBuilders.Optionals {
