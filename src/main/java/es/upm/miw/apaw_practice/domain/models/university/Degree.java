@@ -14,6 +14,10 @@ public class Degree {
         //empty for framework
     }
 
+    public Degree(Integer code, String title, LocalDate implementationDate) {
+        this(code, title, implementationDate, null);
+    }
+
     public Degree(Integer code, String title, LocalDate implementationDate, List<Subject> subjects) {
         this.code = code;
         this.title = title;

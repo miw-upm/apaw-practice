@@ -10,10 +10,9 @@ public class Renter {
         //empty for framework
     }
 
-    public Renter(String name, String dni, Boolean likedCar) {
+    public Renter(String name, String dni) {
         this.name = name;
         this.dni = dni;
-        this.likedCar = likedCar;
     }
 
     public String getName() {

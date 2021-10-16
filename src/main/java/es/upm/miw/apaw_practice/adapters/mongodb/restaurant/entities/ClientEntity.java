@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 
 import es.upm.miw.apaw_practice.domain.models.restaurant.Client;
+import es.upm.miw.apaw_practice.domain.models.restaurant.Table;
+import es.upm.miw.apaw_practice.domain.models.restaurant.Waiter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -10,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class ClientEntity {
@@ -28,9 +31,13 @@ public class ClientEntity {
         //empty for framework
     }
 
-    public ClientEntity(Client client){
-        BeanUtils.copyProperties(client,this);
+    public ClientEntity(String dni, String name, LocalDate  registrationDate, List<WaiterEntity> waiters, TableEntity table) {
         this.id = UUID.randomUUID().toString();
+        this.dni = dni;
+        this.name = name;
+        this.registrationDate = registrationDate;
+        this.waiters = waiters;
+        this.table = table;
     }
 
     public String getId() {
@@ -101,5 +108,17 @@ public class ClientEntity {
                 ", waiters=" + waiters +
                 ", table=" + table +
                 '}';
+    }
+
+    public Client toClient() {
+        Client client = new Client();
+        BeanUtils.copyProperties(this, client,"table","waiters");
+        List<Waiter> newWaiters = this.waiters.stream()
+                .map(WaiterEntity::toWaiter)
+                .collect(Collectors.toList());
+        client.setWaiters(newWaiters);
+        Table newTable = this.table.toTable();
+        client.setTable(newTable);
+        return client;
     }
 }

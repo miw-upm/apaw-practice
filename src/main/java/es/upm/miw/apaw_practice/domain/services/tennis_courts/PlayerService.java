@@ -14,11 +14,11 @@ public class PlayerService {
     private final PlayerPersistence playerPersistence;
 
     @Autowired
-    public PlayerService(PlayerPersistence playerPersistence){
+    public PlayerService(PlayerPersistence playerPersistence) {
         this.playerPersistence = playerPersistence;
     }
 
-    public void create(Player player){
+    public void create(Player player) {
         this.playerPersistence.create(player);
     }
 

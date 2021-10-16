@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.AnimalEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.CaretakerEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.ZooEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.zoo.Animal;
 import es.upm.miw.apaw_practice.domain.models.zoo.Caretaker;
 import es.upm.miw.apaw_practice.domain.models.zoo.Zoo;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Arrays;
 
 @TestConfig
@@ -20,13 +20,15 @@ class CageRepositoryIT {
 
     @Autowired
     private CageRepository cageRepository;
+    @Autowired
+    private ZooRepository zooRepository;
     private AnimalEntity[] animals;
 
     @BeforeEach
     void initializeTestData() {
         animals = new AnimalEntity[]{
                 new AnimalEntity(new Animal("Gato", "Felino", "Omnívoro")),
-                new AnimalEntity(new Animal("Chimpancé", "Mono", "Omnívoro")),
+                new AnimalEntity(new Animal("Chimpance", "Mono", "Omnívoro")),
                 new AnimalEntity(new Animal("Tigre dientes de sable", "Felino", "Carnívoro")),
                 new AnimalEntity(new Animal("Anjhk", "Bovino", "Herbívoro"))
         };
@@ -34,15 +36,26 @@ class CageRepositoryIT {
 
     @Test
     void testFindByLocationCode() {
-        Assertions.assertTrue(this.cageRepository.findByLocationCode("A1").isPresent());
-        ZooAddress address = new ZooAddress("Calle Carranza", 22, "28004");
-        ZooEntity expectedZoo = new ZooEntity(
-                new Zoo(address, 914334789));
-        Assertions.assertEquals(expectedZoo, this.cageRepository.findByLocationCode("A1").get().getZoo());
+        Assertions.assertEquals(1, this.cageRepository.findByLocationCode("A1").count());
+        Assertions.assertTrue(this.cageRepository.findByLocationCode("A1").findFirst().isPresent());
+        Assertions.assertEquals("id1",
+                this.cageRepository.findByLocationCode("A1").findFirst().get().getZoo().getId());
         CaretakerEntity expectedCaretaker = new CaretakerEntity(
-                new Caretaker("71679884Q", "Samuel L", "Jackson"));
-        Assertions.assertEquals(expectedCaretaker, this.cageRepository.findByLocationCode("A1").get().getCaretaker());
-        Assertions.assertEquals(Arrays.asList(animals), this.cageRepository.findByLocationCode("A1").get().getAnimals());
+                Caretaker.builder().dni("71679884Q").name("Samuel L").surname("Jackson").build());
+        Assertions.assertEquals(expectedCaretaker,
+                this.cageRepository.findByLocationCode("A1").findFirst().get().getCaretaker());
+        Assertions.assertEquals(Arrays.asList(animals),
+                this.cageRepository.findByLocationCode("A1").findFirst().get().getAnimals());
+        Assertions.assertEquals(2, this.cageRepository.findByLocationCode("1").count());
+    }
+
+    @Test
+    void testFindByZoo() {
+        ZooEntity zoo = this.zooRepository.findById("id1")
+                .orElseThrow(() -> new NotFoundException("test error"));
+
+        Long countOfAll = this.cageRepository.findByZoo(zoo).count();
+        Assertions.assertNotEquals(0, countOfAll);
     }
 
 }
