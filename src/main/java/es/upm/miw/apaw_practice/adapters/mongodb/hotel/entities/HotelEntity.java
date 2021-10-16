@@ -1,11 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
-import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import es.upm.miw.apaw_practice.domain.models.hotel.Room;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -19,8 +17,6 @@ public class HotelEntity {
     private String id;
     private String direction;
     private Integer numberStars;
-    @DBRef
-    private DirectorEntity director;
     private List<RoomEntity> roomEntities;
 
     public HotelEntity() {
@@ -28,23 +24,20 @@ public class HotelEntity {
     }
 
 
-    public HotelEntity(String direction, Integer numberStars, DirectorEntity director, List<RoomEntity> roomEntities) {
+    public HotelEntity(String direction, Integer numberStars, List<RoomEntity> roomEntities) {
         this.id = UUID.randomUUID().toString();
         this.direction = direction;
         this.numberStars = numberStars;
-        this.director = director;
         this.roomEntities = roomEntities;
     }
 
     public Hotel toHotel() {
         Hotel hotel = new Hotel();
-        BeanUtils.copyProperties(this, hotel, "rooms", "director");
+        BeanUtils.copyProperties(this, hotel, "roomEntities");
         List<Room> rooms = this.roomEntities.stream()
                 .map(RoomEntity::toRoom)
                 .collect(Collectors.toList());
-        Director director = this.director.toDirector();
         hotel.setRooms(rooms);
-        hotel.setDirector(director);
         return hotel;
     }
 
@@ -72,14 +65,6 @@ public class HotelEntity {
         this.numberStars = numberStars;
     }
 
-    public DirectorEntity getDirector() {
-        return director;
-    }
-
-    public void setDirector(DirectorEntity director) {
-        this.director = director;
-    }
-
     public List<RoomEntity> getRoomEntities() {
         return roomEntities;
     }
@@ -90,7 +75,7 @@ public class HotelEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, direction, numberStars, director, roomEntities);
+        return Objects.hash(id, direction, numberStars, roomEntities);
     }
 
     @Override
@@ -99,7 +84,6 @@ public class HotelEntity {
                 "id='" + id + '\'' +
                 ", direction='" + direction + '\'' +
                 ", numberStars=" + numberStars +
-                ", director=" + director +
                 ", roomEntities=" + roomEntities +
                 '}';
     }
@@ -109,7 +93,7 @@ public class HotelEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HotelEntity that = (HotelEntity) o;
-        return id.equals(that.id) && Objects.equals(direction, that.direction) && Objects.equals(numberStars, that.numberStars) && Objects.equals(director, that.director) && Objects.equals(roomEntities, that.roomEntities);
+        return id.equals(that.id) && Objects.equals(direction, that.direction) && Objects.equals(numberStars, that.numberStars) && Objects.equals(roomEntities, that.roomEntities);
     }
 
 

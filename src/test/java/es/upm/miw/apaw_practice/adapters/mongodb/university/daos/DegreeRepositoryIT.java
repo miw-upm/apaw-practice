@@ -22,7 +22,6 @@ public class DegreeRepositoryIT {
         DegreeEntity degree = this.degreeRepository.findByCode(4313004).get();
         assertEquals("Máster en Ingeniería Web", degree.getTitle());
         assertEquals(LocalDate.parse("2011-09-01"), degree.getImplementationDate());
-        //TODO test subjects list
     }
 
 }
