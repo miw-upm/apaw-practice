@@ -57,6 +57,12 @@ public class DoctorEntity {
         this.activeSince = activeSince;
     }
 
+    public Doctor toDoctor(){
+        Doctor doctor = new Doctor();
+        BeanUtils.copyProperties(this, doctor);
+        return doctor;
+    }
+
     @Override
     public String toString() {
         return "DoctorEntity{" +
