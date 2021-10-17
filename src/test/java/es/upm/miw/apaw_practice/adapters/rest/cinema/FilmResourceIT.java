@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static es.upm.miw.apaw_practice.adapters.rest.cinema.FilmResource.*;
 import java.util.List;
 
 @RestTestConfig
@@ -25,10 +26,17 @@ class FilmResourceIT {
                 .expectStatus().isOk()
                 .expectBodyList(Film.class)
                 .value(filmDtoList -> filmDtoList.get(0).getScreen().getNumber(), equalTo(2))
-                .value(List::size, equalTo(2))
-                .value(filmDtoList -> filmDtoList.get(1).getName(), equalTo("The hunger games. Part 2"))
-                .value(filmDtoList -> filmDtoList.get(1).getActors().size(), equalTo(4));
+                .value(filmDtoList -> filmDtoList.get(0).getName(), equalTo("The hunger games"))
+                .value(filmDtoList -> filmDtoList.get(0).getActors().size(), equalTo(4));
+    }
 
+    @Test
+    void testDelete() {
+        this.webTestClient
+                .delete()
+                .uri(FILMS + BARCODE, "7891")
+                .exchange()
+                .expectStatus().isOk();
     }
 }
 

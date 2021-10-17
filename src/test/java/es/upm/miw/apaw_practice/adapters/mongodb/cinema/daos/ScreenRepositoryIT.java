@@ -13,12 +13,6 @@ public class ScreenRepositoryIT {
     private ScreenRepository screenRepository;
 
     @Test
-    void testFindAllScreens() {
-        List<ScreenEntity> screens = this.screenRepository.findAll();
-
-        assertEquals(screens.size(), 2);
-    }
-    @Test
     void testFindScreenNumberOfSeats() {
         List<ScreenEntity> screens = this.screenRepository.findAll();
 

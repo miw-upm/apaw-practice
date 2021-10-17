@@ -21,4 +21,22 @@ public class ActorPersistenceMongodbIT {
         assertEquals(actor.getAge(), this.actorPersistence.create(actor).getAge());
     }
 
+    @Test
+    void testRead() {
+        Actor actor =
+                new Actor("Jennifer", "Lawrence", 31);
+        Actor actorDB = this.actorPersistence.read(actor);
+        assertEquals(actor.getName(), actorDB.getName());
+        assertEquals(actor.getFamilyName(), actorDB.getFamilyName());
+    }
+
+    @Test
+    void testUpdate() {
+        Actor actor =
+                new Actor("Jennifer", "Lawrence", 32);
+        Actor actorDB = this.actorPersistence.update(actor.getAge(), actor);
+        assertEquals(actor.getName(), actorDB.getName());
+        assertEquals(actor.getFamilyName(), actorDB.getFamilyName());
+    }
+
 }

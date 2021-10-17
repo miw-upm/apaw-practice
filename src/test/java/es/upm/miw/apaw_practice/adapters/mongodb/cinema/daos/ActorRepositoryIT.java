@@ -11,13 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ActorRepositoryIT {
     @Autowired
     private ActorRepository actorRepository;
-
-    @Test
-    void testFindAllActors() {
-        List<ActorEntity> actor = this.actorRepository.findAll();
-
-        assertEquals(actor.size(), 4);
-    }
+    
     @Test
     void testFindActorName() {
         List<ActorEntity> actor = this.actorRepository.findAll();
