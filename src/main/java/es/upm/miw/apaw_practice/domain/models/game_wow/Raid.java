@@ -17,6 +17,15 @@ public class Raid {
         //empty for framework
     }
 
+    public Raid(Date date, String name, String dificulty, Integer playerNumber, Boolean finish, List<Boss> bossList) {
+        this.date = date;
+        this.name = name;
+        this.dificulty = dificulty;
+        this.playerNumber = playerNumber;
+        this.finish = finish;
+        this.bossList = bossList;
+    }
+
     public Date getDate() {
         return date;
     }
