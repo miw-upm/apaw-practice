@@ -27,4 +27,16 @@ class ActorResourceIT {
                 .expectBody(Actor.class)
                 .value(Assertions::assertNotNull);
     }
+
+    @Test
+    void testUpdateActorAge() {
+        Actor actor =
+                new Actor("Jennifer", "Lawrence", 32);
+        this.webTestClient
+                .post()
+                .uri(ActorResource.ACTOR)
+                .body(BodyInserters.fromValue(actor))
+                .exchange()
+                .expectStatus().isOk();
+    }
 }
