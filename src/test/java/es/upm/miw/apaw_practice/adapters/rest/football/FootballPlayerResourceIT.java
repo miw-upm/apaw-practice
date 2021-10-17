@@ -29,7 +29,7 @@ class FootballPlayerResourceIT {
                 .value(players -> assertTrue(players.get(3).isDefense()));
     }
 
-    @Test
+   /* @Test
     void testFindGoalsByStadiumName() {
         WebTestClient.BodySpec<Integer, ?> goalsScored = this.webTestClient
                 .get()
@@ -51,5 +51,5 @@ class FootballPlayerResourceIT {
                                 .build())
                 .exchange()
                 .expectStatus().isNotFound();
-    }
+    }*/
 }
