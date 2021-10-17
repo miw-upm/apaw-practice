@@ -7,6 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.daos.RaidRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.BossEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.DropEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.FeatureEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.RaidEntity;
 import es.upm.miw.apaw_practice.domain.models.game_wow.Boss;
 import es.upm.miw.apaw_practice.domain.models.game_wow.Drop;
 import es.upm.miw.apaw_practice.domain.models.game_wow.Feature;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class GameWowSeederService {
@@ -53,12 +56,17 @@ public class GameWowSeederService {
 
         BossEntity[] bosses = {
             new BossEntity("Lord Marrowgal", "10N", List.of(drops[0],drops[1])),
-            //new BossEntity(new Boss("Lord Marrowgal", "10N", List.of(features[0], features[1])),
             new BossEntity("Lady DeathWhisper", "10N",List.of(drops[2],drops[3])),
             new BossEntity("GunShip Battle", "10N",List.of(drops[4])),
             new BossEntity("Festergut", "25N",List.of(drops[5]))
         };
         this.bossRepository.saveAll(Arrays.asList(bosses));
+
+        RaidEntity[] raids = {
+                new RaidEntity(new Date(), "ICC", "10N", 10, false, List.of(bosses[0], bosses[1], bosses[2])),
+                new RaidEntity(new Date(), "ICC", "25N", 25, false, List.of(bosses[3]))
+        };
+        this.raidRepository.saveAll(Arrays.asList(raids));
     }
 
     public void deleteAll() {

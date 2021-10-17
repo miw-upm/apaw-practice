@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.music_manager.daos.BandReposito
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.music_manager.Artist;
 import es.upm.miw.apaw_practice.domain.models.music_manager.Band;
+import es.upm.miw.apaw_practice.domain.models.music_manager.BandActiveUpdating;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
 class BandResourceIT {
@@ -38,5 +37,17 @@ class BandResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Band.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testUpdateActives() {
+        List<BandActiveUpdating> bandActiveUpdatingList = List.of();
+
+        this.webTestClient
+                .patch()
+                .uri(BandResource.BANDS)
+                .body(BodyInserters.fromValue(bandActiveUpdatingList))
+                .exchange()
+                .expectStatus().isOk();
     }
 }

@@ -2,11 +2,9 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.DirectorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.RoomEntity;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
-import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import es.upm.miw.apaw_practice.domain.models.hotel.Room;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,17 +33,13 @@ class HotelResourceIT {
 
     @BeforeEach
     void init() {
-        DirectorEntity directorEntity =
-                new DirectorEntity(new Director("5050505L", "email@email.email", 920110022));
 
-        this.directorRepository.save(directorEntity);
         List<RoomEntity> roomEntities = List.of(
                 new RoomEntity(56, new BigDecimal(90), true, new ArrayList<>()),
                 new RoomEntity(15, new BigDecimal(50), false, new ArrayList<>()));
 
 
-        HotelEntity hotelEntity = new HotelEntity("Barcelona, Perla", 4, directorEntity,
-                roomEntities);
+        HotelEntity hotelEntity = new HotelEntity("Bendala", "Barcelona, Perla", 4, roomEntities);
 
         hotelEntity.setId("0");
         this.hotelRepository.save(hotelEntity);
@@ -60,7 +54,6 @@ class HotelResourceIT {
                 .exchange()
                 .expectStatus().isOk().expectBody(Hotel.class)
                 .value(hotel -> {
-                    assertEquals("5050505L", hotel.getDirector().getDni());
                     assertEquals(4, hotel.getNumberStars());
                     assertEquals(new BigDecimal(90), hotel.getRooms().get(0).getPrice());
                     assertTrue(hotel.getRooms().get(0).isVip());
@@ -94,7 +87,7 @@ class HotelResourceIT {
 
         this.webTestClient
                 .put()
-                .uri(HotelResource.HOTELS + HotelResource.ID_ID + HotelResource.ROOMS + HotelResource.NUMBER_ROOM + HotelResource.PRICE_ROOM, 0, 56)
+                .uri(HotelResource.HOTELS + HotelResource.ID_ID  + HotelResource.PRICE_ROOM, 0, 56)
                 .body(BodyInserters.fromValue(roomParams))
                 .exchange()
                 .expectStatus().isOk();
@@ -112,7 +105,7 @@ class HotelResourceIT {
     @Test
     void testUpdate() {
         String id = "0";
-        Hotel hotelParam = new Hotel("Luna, Perla", 5, null, null);
+        Hotel hotelParam = new Hotel("Rosa", "Luna, Perla", 5, null);
         this.webTestClient
                 .get()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
@@ -138,9 +131,9 @@ class HotelResourceIT {
     }
 
     @Test
-    void testUpdateBadRequest(){
+    void testUpdateBadRequest() {
         String id = "0";
-        Hotel hotelParam = new Hotel(null, 5, null, null);
+        Hotel hotelParam = new Hotel(null, null, 5, null);
         this.webTestClient
                 .patch()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
@@ -150,9 +143,9 @@ class HotelResourceIT {
     }
 
     @Test
-    void testUpdateForUpdateNotFound(){
+    void testUpdateForUpdateNotFound() {
         String id = "oo";
-        Hotel hotelParam = new Hotel("Luna, Perla", 5, null, null);
+        Hotel hotelParam = new Hotel("Rosa", "Luna, Perla", 5, null);
         this.webTestClient
                 .patch()
                 .uri(HotelResource.HOTELS + HotelResource.ID_ID, id)
@@ -160,6 +153,30 @@ class HotelResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testFindHotelNameListByGuestName(){
+        String name = "Pedro";
+        this.webTestClient
+                .get()
+                .uri(HotelResource.HOTELS + HotelResource.HOTELS_HOTELGUEST_NAME, name)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Hotel.class)
+                .value(hotel -> assertEquals(1, hotel.size()))
+                .value(hotel -> assertEquals("MariaLuisa", hotel.get(0).getName()));
     }
+
+
+    @Test
+    void testFindHotelNameListByGuestNameNotFound(){
+        String name = "raquel";
+        this.webTestClient
+                .get()
+                .uri(HotelResource.HOTELS + HotelResource.HOTELS_HOTELGUEST_NAME, name)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+}
 
 

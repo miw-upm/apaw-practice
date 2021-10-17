@@ -1,8 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.daos.ClientRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities.ClientEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities.WaiterEntity;
-import es.upm.miw.apaw_practice.domain.models.restaurant.Waiter;
+import es.upm.miw.apaw_practice.domain.models.restaurant.Client;
 import es.upm.miw.apaw_practice.domain.persistence_ports.restaurant.ClientPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,12 +21,12 @@ public class ClientPersistenceMongodb implements ClientPersistence {
     }
 
     @Override
-    public Stream<Waiter> readCategoryBySectionWaiterAndDniClient(String dni, String section) {
+    public Stream<String> readCategoryBySectionWaiterAndDniClient(String dni, String section) {
         return this.clientRepository.findAll().stream()
                 .filter(client -> dni.equals(client.getDni()))
                 .flatMap(client -> client.getWaiters().stream())
                 .filter(waiter -> section.equals(waiter.getSection()))
-                .map(WaiterEntity::toWaiter);
+                .map(WaiterEntity::getCategory);
     }
 
     @Override
@@ -36,6 +37,12 @@ public class ClientPersistenceMongodb implements ClientPersistence {
     @Override
     public void delete(String dni) {
         this.clientRepository.deleteByDni(dni);
+    }
+
+    @Override
+    public Stream<Client> readAll() {
+        return this.clientRepository.findAll()
+                .stream().map(ClientEntity::toClient);
     }
 
 }

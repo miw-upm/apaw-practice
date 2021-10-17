@@ -2,7 +2,10 @@ package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.daos.CarRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities.CarEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities.OwnerEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
+import es.upm.miw.apaw_practice.domain.models.car_workshop.Owner;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car_workshop.CarPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,5 +31,14 @@ public class CarPersistenceMongodb implements CarPersistence {
         return this.carRepository
                 .findByLicensePlate(licensePlate)
                 .isPresent();
+    }
+
+    @Override
+    public void updateOwner(String licensePlate, Owner owner) {
+        CarEntity car = this.carRepository
+                .findByLicensePlate(licensePlate)
+                .orElseThrow(() -> new NotFoundException("LicensePlate: " + licensePlate));
+        car.setOwnerEntity(new OwnerEntity(owner.getDni(), owner.getName()));
+        this.carRepository.save(car);
     }
 }

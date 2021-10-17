@@ -1,8 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface HotelGuestRepository extends MongoRepository<HotelGuestEntity, String> {
@@ -10,4 +12,5 @@ public interface HotelGuestRepository extends MongoRepository<HotelGuestEntity, 
 
     void deleteByDni(String dni);
 
+    List<HotelGuestEntity> findByName(String name);
 }

@@ -28,7 +28,7 @@ public class HospitalSeederService {
     private PatientRepository patientRepository;
 
     public void seedDatabase() {
-        LogManager.getLogger(this.getClass()).warn("------- Shop Initial Load -----------");
+        LogManager.getLogger(this.getClass()).warn("------- Hospital Initial Load -----------");
         DoctorEntity[] doctors = {
                 new DoctorEntity(new Doctor("John", "Doe", LocalDate.of(1989,11,23))),
                 new DoctorEntity(new Doctor("Marta", "Lopez", LocalDate.of(1999,4,2))),

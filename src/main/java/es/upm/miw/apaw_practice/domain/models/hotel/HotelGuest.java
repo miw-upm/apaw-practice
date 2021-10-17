@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class HotelGuest {
     private String dni;
@@ -18,6 +19,12 @@ public class HotelGuest {
         this.dni = dni;
         this.entryDate = entryDate;
         this.departureDate = departureDate;
+    }
+
+    public static HotelGuest ofDni(HotelGuest hotelGuest){
+        HotelGuest hotelGuestDto = new HotelGuest();
+        hotelGuestDto.setDni(hotelGuest.getDni());
+        return hotelGuestDto;
     }
 
     public String getDni() {
@@ -67,5 +74,18 @@ public class HotelGuest {
                 ", entryDate=" + entryDate +
                 ", departureDate=" + departureDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HotelGuest that = (HotelGuest) o;
+        return Objects.equals(dni, that.dni) && Objects.equals(name, that.name) && Objects.equals(entryDate, that.entryDate) && Objects.equals(departureDate, that.departureDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni, name, entryDate, departureDate);
     }
 }

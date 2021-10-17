@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.game_wow;
 
+import org.springframework.beans.BeanUtils;
+
 import java.util.List;
 
 public class Boss {
