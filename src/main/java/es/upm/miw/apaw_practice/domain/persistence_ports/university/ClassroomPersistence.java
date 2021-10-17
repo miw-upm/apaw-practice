@@ -9,4 +9,6 @@ public interface ClassroomPersistence {
     Classroom readBySchoolAndNumber(String school, Integer number);
 
     void delete(String school, Integer number);
+
+    Integer findCapacitySumByStudentDni(String studentDni);
 }
