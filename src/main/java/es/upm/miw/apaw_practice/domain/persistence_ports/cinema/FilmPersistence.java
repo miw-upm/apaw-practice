@@ -10,5 +10,7 @@ public interface FilmPersistence {
     Stream<Film> readAll();
 
     Stream<Film> findByScreenNumber(Integer number);
+
+    void delete(String barcode);
 }
 
