@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface VetPersistence {
     Vet create(Vet vet);
     boolean existVetNumber(Integer vetNumber);
+    public Vet readByVetNumber(Integer vetNumber);
 }

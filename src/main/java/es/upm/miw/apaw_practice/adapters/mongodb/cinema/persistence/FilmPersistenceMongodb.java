@@ -31,5 +31,10 @@ public class FilmPersistenceMongodb implements FilmPersistence {
                 .map(FilmEntity::toFilm)
                 .filter(film -> number.equals(film.getScreen().getNumber()));
     }
+
+    @Override
+    public void delete(String barcode) {
+        this.filmRepository.deleteByBarcode(barcode);
+    }
 }
 

@@ -21,4 +21,8 @@ public class FilmService {
     public Stream<Film> findFilmsByScreenNumber(Integer number){
         return this.filmPersistence.findByScreenNumber(number);
     }
+
+    public void delete(String barcode) {
+        this.filmPersistence.delete(barcode);
+    }
 }

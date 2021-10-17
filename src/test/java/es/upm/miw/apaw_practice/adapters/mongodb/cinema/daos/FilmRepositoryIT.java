@@ -14,13 +14,6 @@ class FilmRepositoryIT {
     private FilmRepository filmRepository;
 
     @Test
-    void testFindAllFilms() {
-        List<FilmEntity> films = this.filmRepository.findAll();
-
-        assertEquals(films.size(), 2);
-    }
-
-    @Test
     void testFindFilmName() {
         List<FilmEntity> films = this.filmRepository.findAll();
 

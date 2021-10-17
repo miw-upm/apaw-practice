@@ -31,12 +31,12 @@ public class FootballSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Football Initial Load -----------");
         FootballPlayerEntity[] players = {
-                new FootballPlayerEntity(Boolean.TRUE, 10, 24),
-                new FootballPlayerEntity(Boolean.FALSE, 20, 22),
-                new FootballPlayerEntity(Boolean.FALSE, 0, 19),
-                new FootballPlayerEntity(Boolean.TRUE, 2, 24),
-                new FootballPlayerEntity(Boolean.FALSE, 7, 35),
-                new FootballPlayerEntity(Boolean.FALSE, 8, 40)
+                new FootballPlayerEntity(Boolean.TRUE, 10, 24, "Cristiano"),
+                new FootballPlayerEntity(Boolean.FALSE, 20, 22, "Ramos"),
+                new FootballPlayerEntity(Boolean.FALSE, 0, 19, "Messi"),
+                new FootballPlayerEntity(Boolean.TRUE, 2, 24, "Yuri"),
+                new FootballPlayerEntity(Boolean.FALSE, 7, 35, "Courtois"),
+                new FootballPlayerEntity(Boolean.FALSE, 8, 40, "Benzema")
         };
         this.playerRepository.saveAll(Arrays.asList(players));
 

@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.emarketer.entities;
 
+import es.upm.miw.apaw_practice.domain.models.emarketer.Cups;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -25,11 +27,11 @@ public class CupsEntity {
         //empty for framework
     }
 
-    public CupsEntity( String cups, BigDecimal energy, CustomerEntity customerEntity) {
+    public CupsEntity( String cups, BigDecimal energy, LocalDateTime registrationDate, CustomerEntity customerEntity) {
         this.id = UUID.randomUUID().toString();
         this.cups = cups;
         this.energy = energy;
-        this.registrationDate = LocalDateTime.now();
+        this.registrationDate = registrationDate;
         this.customerEntity = customerEntity;
     }
 
@@ -67,6 +69,12 @@ public class CupsEntity {
 
     public void setCustomerEntity(CustomerEntity customerEntity) {
         this.customerEntity = customerEntity;
+    }
+
+    public Cups toCups() {
+        Cups cups = new Cups();
+        BeanUtils.copyProperties(this, cups);
+        return cups;
     }
 
     @Override

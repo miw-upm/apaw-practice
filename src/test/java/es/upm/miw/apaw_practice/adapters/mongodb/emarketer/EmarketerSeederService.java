@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,10 +41,10 @@ public class EmarketerSeederService {
         this.customerRepository.saveAll(Arrays.asList(customers));
 
         CupsEntity[] cups = {
-                new CupsEntity("AAPPZZZ6KZ1R149943", new BigDecimal("844.56"), customers[0]),
-                new CupsEntity("AAPPZZZ6KZ1R149944", new BigDecimal("723.23"), customers[1]),
-                new CupsEntity("AAPPZZZ6KZ1R149945", new BigDecimal("814.12"), customers[2]),
-                new CupsEntity("AAPPZZZ6KZ1R149946", new BigDecimal("912.31"), customers[3])
+                new CupsEntity("AAPPZZZ6KZ1R149943", new BigDecimal("844.56"), LocalDateTime.of(2021, 10, 12, 19, 00 , 00), customers[0]),
+                new CupsEntity("AAPPZZZ6KZ1R149944", new BigDecimal("723.23"), LocalDateTime.of(2021, 10, 12, 19, 00 , 00), customers[1]),
+                new CupsEntity("AAPPZZZ6KZ1R149945", new BigDecimal("814.12"),LocalDateTime.of(2021, 10, 12, 19, 00 , 00),  customers[2]),
+                new CupsEntity("AAPPZZZ6KZ1R149946", new BigDecimal("912.31"),LocalDateTime.of(2021, 10, 12, 19, 00 , 00),  customers[3])
         };
         this.cupsRepository.saveAll(Arrays.asList(cups));
 

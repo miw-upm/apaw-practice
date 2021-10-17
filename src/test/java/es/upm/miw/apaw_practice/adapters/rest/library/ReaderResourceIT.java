@@ -10,7 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 @RestTestConfig
-public class ReaderResourceIT {
+class ReaderResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

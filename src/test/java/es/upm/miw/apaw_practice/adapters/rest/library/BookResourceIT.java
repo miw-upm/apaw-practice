@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @RestTestConfig
-public class BookResourceIT {
+class BookResourceIT {
     @Autowired
     private WebTestClient webTestClient;
+
     @Test
-    void testFindAll(){
+    void testFindAll() {
         this.webTestClient
                 .get()
                 .uri(BookResource.BOOKS)
