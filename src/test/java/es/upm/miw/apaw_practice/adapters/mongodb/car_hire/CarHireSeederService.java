@@ -40,10 +40,10 @@ public class CarHireSeederService {
         };
         this.renterRepository.saveAll(Arrays.asList(renters));
         VehicleEntity[] vehicles = {
-                new VehicleEntity(new Vehicle("VSSZZZ6KZ1R149943", new BigDecimal("50"), 25400, true)),
-                new VehicleEntity(new Vehicle("WVGZZZ5NZJM131395", new BigDecimal("50"), 32000, true)),
-                new VehicleEntity(new Vehicle("JCPCBL6HSCX110002", new BigDecimal("30"), 45000, false)),
-                new VehicleEntity(new Vehicle("GYWKAS8AHBD284620", new BigDecimal("30"), 52000, true)),
+                new VehicleEntity(Vehicle.builder().vinNumber("VSSZZZ6KZ1R149943").dailyCost(new BigDecimal("50")).kilometersAmount(25400).goodCondition(true).build()),
+                new VehicleEntity(Vehicle.builder().vinNumber("WVGZZZ5NZJM131395").dailyCost(new BigDecimal("50")).kilometersAmount(32000).goodCondition(true).build()),
+                new VehicleEntity(Vehicle.builder().vinNumber("JCPCBL6HSCX110002").dailyCost(new BigDecimal("30")).kilometersAmount(45000).goodCondition(false).build()),
+                new VehicleEntity(Vehicle.builder().vinNumber("GYWKAS8AHBD284620").dailyCost(new BigDecimal("30")).kilometersAmount(52000).goodCondition(true).build())
         };
         this.vehicleRepository.saveAll(Arrays.asList(vehicles));
         ModelEntity[] models = {
