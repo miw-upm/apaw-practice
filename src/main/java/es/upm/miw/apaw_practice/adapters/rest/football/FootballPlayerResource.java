@@ -30,7 +30,7 @@ public class FootballPlayerResource {
     }
 
     @GetMapping(SEARCH)
-    public Integer findGoalsByStadiumName(@RequestParam String stadiumName){
-        return this.footballPlayerService.findGoalsByStadiumName(stadiumName);
+    public Integer findGoalsByStadiumName(@RequestParam String q) {
+        return this.footballPlayerService.findGoalsByStadiumName(q);
     }
 }

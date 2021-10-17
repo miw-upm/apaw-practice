@@ -23,11 +23,13 @@ public class FootballPlayerService {
         return this.footballPlayerPersistence.readAll();
     }
 
-    public Integer findGoalsByStadiumName(String stadiumName) {
-         return this.stadiumPersistence.readByName(stadiumName)
-                 .getMatches().stream()
-                 .flatMap(match -> match.getPlayers().stream().distinct())
-                 .map(FootballPlayer::getGoalsScored)
-                 .reduce(0, Integer::sum);
+    public Integer findGoalsByStadiumName(String q) {
+        return this.stadiumPersistence.readByName(q)
+                .getMatches().stream()
+                .flatMap(match -> match.getPlayers().stream())
+                .distinct()
+                .map(FootballPlayer::getGoalsScored)
+                .reduce(0, Integer::sum);
     }
+
 }
