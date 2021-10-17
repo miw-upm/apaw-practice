@@ -26,9 +26,6 @@ public class CustomerResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Autowired
-    private EmarketerSeederService emarketerSeederService;
-
     @Test
     void testReadAll() {
         this.webTestClient
@@ -65,8 +62,6 @@ public class CustomerResourceIT {
         CustomerEntity updatedCustomer = this.customerRepository.findByName("Pedro").get();
         assertEquals("Madrid", updatedCustomer.getAddress());
         assertEquals("empresa", updatedCustomer.getType());
-        emarketerSeederService.deleteAll();
-        emarketerSeederService.seedDatabase();
 
     }
 }
