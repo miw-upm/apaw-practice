@@ -9,6 +9,4 @@ public interface SubjectPersistence {
     Subject readByReference(Integer reference);
 
     void update(Subject subject);
-
-    void update(Integer reference, Subject subject);
 }

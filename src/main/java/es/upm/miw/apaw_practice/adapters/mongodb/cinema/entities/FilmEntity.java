@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
-import es.upm.miw.apaw_practice.domain.models.cinema.Screen;
+import es.upm.miw.apaw_practice.domain.models.cinema.Film;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class FilmEntity {
@@ -18,21 +19,22 @@ public class FilmEntity {
     private String barcode;
     private String name;
     private String description;
-    private List<ActorEntity> actors;
     @DBRef
-    private List<ScreenEntity> screens;
+    private ScreenEntity screen;
+    @DBRef
+    private List<ActorEntity> actors;
 
     public FilmEntity(){
         //empty for framework
     }
 
-    public FilmEntity(String barcode, String name, String description, List<ActorEntity> actors, List<ScreenEntity> screens) {
+    public FilmEntity(String barcode, String name, String description, ScreenEntity screen, List<ActorEntity> actor) {
         this.id = UUID.randomUUID().toString();
         this.barcode = barcode;
         this.name = name;
         this.description = description;
-        this.actors = actors;
-        this.screens = screens;
+        this.screen = screen;
+        this.actors = actor;
     }
 
     public String getId() {
@@ -67,6 +69,14 @@ public class FilmEntity {
         this.description = description;
     }
 
+    public ScreenEntity getScreen() {
+        return screen;
+    }
+
+    public void setScreen(ScreenEntity screen) {
+        this.screen = screen;
+    }
+
     public List<ActorEntity> getActors() {
         return actors;
     }
@@ -75,12 +85,11 @@ public class FilmEntity {
         this.actors = actors;
     }
 
-    public List<ScreenEntity> getScreens() {
-        return screens;
-    }
-
-    public void setScreens(List<ScreenEntity> screens) {
-        this.screens = screens;
+    public Film toFilm() {
+        List<Actor> actorList = this.actors.stream()
+                .map(ActorEntity::toActor)
+                .collect(Collectors.toList());
+        return new Film(barcode, name, description, actorList,this.screen.toScreen());
     }
 
     @Override
@@ -90,8 +99,8 @@ public class FilmEntity {
                 ", barcode='" + barcode + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", screens=" + screen +
                 ", actors=" + actors +
-                ", screens=" + screens +
                 '}';
     }
 }

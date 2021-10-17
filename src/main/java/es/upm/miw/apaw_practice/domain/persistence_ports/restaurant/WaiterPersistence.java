@@ -7,7 +7,9 @@ import java.util.stream.Stream;
 
 @Repository
 public interface WaiterPersistence {
-    Stream<Waiter> findBySectionAndCategory(String section, String category);
+    Stream<Waiter> findBySection(String section);
 
     Waiter create(Waiter waiter);
+
+    Stream<Waiter> findByNumberTable(Integer number);
 }

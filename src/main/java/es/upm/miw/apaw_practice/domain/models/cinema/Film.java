@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.cinema;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ScreenEntity;
+
 import java.util.List;
 
 public class Film {

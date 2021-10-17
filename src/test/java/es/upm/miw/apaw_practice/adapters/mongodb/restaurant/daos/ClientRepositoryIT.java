@@ -24,6 +24,6 @@ class ClientRepositoryIT {
         assertEquals("Jose",client.getName());
         assertEquals(LocalDate.of(2021,10,7),client.getRegistrationDate());
         assertEquals(1,client.getTable().getNumber());
-        assertEquals(4, client.getWaiters().size());
+        assertEquals(1, client.getWaiters().size());
     }
 }
