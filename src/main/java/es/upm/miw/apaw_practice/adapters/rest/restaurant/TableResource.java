@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.restaurant;
 
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Reserve;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Table;
 import es.upm.miw.apaw_practice.domain.services.restaurant.TableService;
@@ -17,6 +18,7 @@ public class TableResource {
     static final String ID_NUMBER = "/{number}";
     static final String RESERVES = "/reserves";
     static final String HOLDER = "/holder";
+    static final String SEARCH = "/search";
 
     private TableService tableService;
 
@@ -38,6 +40,12 @@ public class TableResource {
     @PatchMapping
     public void updateStyles(@RequestBody String style){
         this.tableService.updateStyles(style);
+    }
+
+    @GetMapping(SEARCH)
+    public Table findByCategoryWaiter(@RequestParam String q){
+        String category = new LexicalAnalyzer().extractWithAssure(q,"category");
+        return this.tableService.findByCategoryWaiter(category);
     }
 
 }

@@ -29,16 +29,15 @@ public class WaiterResource {
         return this.waiterService.create(waiter);
     }
 
-    @GetMapping(SEARCH)
-    public Stream<Waiter> findBySectionAndCategory(@RequestParam String q){
-        String section = new LexicalAnalyzer().extractWithAssure(q, "section");
-        String category = new LexicalAnalyzer().extractWithAssure(q, "category");
-        return this.waiterService.findBySectionAndCategory(section,category);
+    @GetMapping(ID_SECTION)
+    public Stream<Waiter> findBySection(@PathVariable String section){
+        return this.waiterService.findBySection(section);
     }
 
-    @GetMapping(TableResource.ID_NUMBER)
-    public Stream<Waiter> findByNumberTable(@PathVariable Integer number){
-        return this.waiterService.findByNumberTable(number);
+    @GetMapping(SEARCH)
+    public Stream<Waiter> findByNumberTable(@RequestParam String q){
+        String number = new LexicalAnalyzer().extractWithAssure(q, "number");
+        return this.waiterService.findByNumberTable(Integer.parseInt(number));
     }
 
 }

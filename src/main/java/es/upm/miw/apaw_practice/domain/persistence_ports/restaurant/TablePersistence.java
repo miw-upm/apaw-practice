@@ -21,4 +21,6 @@ public interface TablePersistence {
     Stream<Table> readAll();
 
     Table update(Table table);
+
+    Table findByCategoryWaiter(String category);
 }
