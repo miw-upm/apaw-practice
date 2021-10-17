@@ -8,4 +8,8 @@ import java.util.stream.Stream;
 @Repository
 public interface CustomerPersistence {
     Stream<Customer> readAll();
+
+    Customer readByName(String name);
+
+    Customer update(String name, Customer customer);
 }
