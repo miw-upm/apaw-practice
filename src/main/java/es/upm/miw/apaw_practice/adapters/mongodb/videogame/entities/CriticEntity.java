@@ -1,16 +1,16 @@
-package es.upm.miw.apaw_practice.domain.models.videogame;
+package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
-public class Critic {
+public class CriticEntity {
 
     private Boolean mustPlay;
     private Integer expertScore;
     private Double userScore;
 
-    public Critic() {
+    public CriticEntity() {
         //empty for framework
     }
 
-    public Critic(Boolean mustPlay, Integer expertScore, Double userScore) {
+    public CriticEntity(Boolean mustPlay, Integer expertScore, Double userScore) {
         this.mustPlay = mustPlay;
         this.expertScore = expertScore;
         this.userScore = userScore;
@@ -42,7 +42,7 @@ public class Critic {
 
     @Override
     public String toString() {
-        return "Critic{" +
+        return "CriticEntity{" +
                 "mustPlay=" + mustPlay +
                 ", expertScore=" + expertScore +
                 ", userScore=" + userScore +

@@ -1,21 +1,37 @@
-package es.upm.miw.apaw_practice.domain.models.videogame;
+package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
-public class Console {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.UUID;
+
+@Document
+public class ConsoleEntity {
+
+    @Id
+    private String id;
+    @Indexed(unique = true)
 
     private String consoleName;
     private String model;
     private String color;
     private String memory;
 
-    public Console() {
-        //empty from framework
-    }
-
-    public Console(String consoleName, String model, String color, String memory) {
+    public ConsoleEntity(String consoleName, String model, String color, String memory) {
+        this.id = UUID.randomUUID().toString();
         this.consoleName = consoleName;
         this.model = model;
         this.color = color;
         this.memory = memory;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getConsoleName() {
@@ -52,8 +68,9 @@ public class Console {
 
     @Override
     public String toString() {
-        return "Console{" +
-                "consoleName='" + consoleName + '\'' +
+        return "ConsoleEntity{" +
+                "id='" + id + '\'' +
+                ", consoleName='" + consoleName + '\'' +
                 ", model='" + model + '\'' +
                 ", color='" + color + '\'' +
                 ", memory='" + memory + '\'' +

@@ -1,24 +1,44 @@
-package es.upm.miw.apaw_practice.domain.models.videogame;
+package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
+
+import es.upm.miw.apaw_practice.domain.models.videogame.Console;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
-public class Company {
+@Document
+public class CompanyEntity {
+
+    @Id
+    private String id;
+    @Indexed(unique = true)
 
     private String name;
     private LocalDate formationDate;
     private Boolean stockMarket;
     private List<Console> consoles;
 
-    public Company() {
+    public CompanyEntity() {
         //empty from framework
     }
 
-    public Company(String name, LocalDate formationDate, Boolean stockMarket, List<Console> consoles) {
+    public CompanyEntity(String name, LocalDate formationDate, Boolean stockMarket, List<Console> consoles) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.formationDate = formationDate;
         this.stockMarket = stockMarket;
         this.consoles = consoles;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,8 +75,9 @@ public class Company {
 
     @Override
     public String toString() {
-        return "Company{" +
-                "name='" + name + '\'' +
+        return "CompanyEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", formationDate=" + formationDate +
                 ", stockMarket=" + stockMarket +
                 ", consoles=" + consoles +
