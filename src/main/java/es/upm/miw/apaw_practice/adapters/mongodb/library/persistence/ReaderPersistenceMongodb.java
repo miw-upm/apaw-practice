@@ -19,7 +19,7 @@ public class ReaderPersistenceMongodb implements ReaderPersistence {
 
     @Override
     public Reader create(Reader reader) {
-        ReaderEntity readerEntity = new ReaderEntity(reader.getNick(),reader.getGender(),reader.getEmail());
+        ReaderEntity readerEntity = new ReaderEntity(reader.getNick(), reader.getGender(), reader.getEmail());
         return this.readerRepository
                 .save(readerEntity).toReader();
     }
@@ -29,5 +29,10 @@ public class ReaderPersistenceMongodb implements ReaderPersistence {
         return this.readerRepository
                 .findByEmail(email)
                 .isPresent();
+    }
+
+    @Override
+    public void delete(String email) {
+        this.readerRepository.deleteByEmail(email);
     }
 }

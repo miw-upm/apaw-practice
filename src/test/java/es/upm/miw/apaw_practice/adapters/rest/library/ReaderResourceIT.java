@@ -16,8 +16,8 @@ public class ReaderResourceIT {
     private WebTestClient webTestClient;
 
     @Test
-    void testCreate(){
-        Reader reader = new Reader("Carlos", Gender.M,"ca@xpto.com");
+    void testCreate() {
+        Reader reader = new Reader("Carlos", Gender.M, "ca@xpto.com");
         this.webTestClient
                 .post()
                 .uri(ReaderResource.READERS)
@@ -26,5 +26,14 @@ public class ReaderResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Reader.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testDelete() {
+        this.webTestClient
+                .delete()
+                .uri(ReaderResource.READERS + ReaderResource.EMAIL_ID, "jlo@xpto.com")
+                .exchange()
+                .expectStatus().isOk();
     }
 }
