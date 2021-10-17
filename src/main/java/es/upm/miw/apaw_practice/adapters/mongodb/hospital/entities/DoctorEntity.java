@@ -62,14 +62,6 @@ public class DoctorEntity {
         BeanUtils.copyProperties(this, doctor);
         return doctor;
     }
-    /**
-     * public FootballPlayer toFootballPlayer() {
-     *         FootballPlayer footballPlayer = new FootballPlayer();
-     *         BeanUtils.copyProperties(this, footballPlayer);
-     *         footballPlayer.setDefense(this.defense);
-     *         return footballPlayer;
-     *     }
-     */
 
     @Override
     public String toString() {

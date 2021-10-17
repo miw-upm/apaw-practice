@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.hospital;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
+import es.upm.miw.apaw_practice.domain.models.hospital.Doctor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -26,11 +27,10 @@ public class DoctorResourceIT {
                         .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(String.class)
-                .consumeWith(entityList -> {
-                    assertNotNull(entityList.getResponseBody());
-                    List<String> nickList = entityList.getResponseBody();
-                    assertTrue(nickList.containsAll(Arrays.asList("John","Marta","Jose")));
-                });
+                .expectBodyList(Doctor.class)
+                .value(doctors -> assertTrue(doctors.size() > 0))
+                .value(doctors -> assertEquals("John", doctors.get(0).getNick()))
+                .value(doctors -> assertEquals("Marta", doctors.get(1).getNick()))
+                .value(doctors -> assertEquals("Jose", doctors.get(2).getNick()));
     }
 }

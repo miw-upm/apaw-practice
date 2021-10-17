@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.hospital;
 
+import es.upm.miw.apaw_practice.domain.models.hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.services.hospital.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class DoctorResource {
     }
 
     @GetMapping(NICK)
-    public Stream<String> readDoctorNicks(){
+    public Stream<Doctor> readDoctorNicks(){
         return this.doctorService.readDoctorNicks();
     }
 }

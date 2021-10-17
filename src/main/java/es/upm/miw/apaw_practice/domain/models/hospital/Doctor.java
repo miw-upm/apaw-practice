@@ -12,6 +12,12 @@ public class Doctor {
         //empty for framework
     }
 
+    public Doctor(String nick){
+        this.nick = nick;
+        this.surname = null;
+        this.activeSince = null;
+    }
+
     public Doctor(String nick, String surname, LocalDate activeSince) {
         this.nick = nick;
         this.surname = surname;
@@ -50,4 +56,5 @@ public class Doctor {
                 ", activeSince=" + this.activeSince +
                 '}';
     }
+
 }

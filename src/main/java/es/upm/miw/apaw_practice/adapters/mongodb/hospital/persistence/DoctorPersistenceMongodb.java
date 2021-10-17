@@ -20,8 +20,8 @@ public class DoctorPersistenceMongodb implements DoctorPersistence {
     }
 
     @Override
-    public Stream<String> readNicks() {
+    public Stream<Doctor> readNicks() {
         return this.doctorRepository.findAll().stream()
-                .map(DoctorEntity::toDoctor).map(Doctor::getNick);
+                .map(DoctorEntity::toDoctor).map(Doctor::getNick).map(Doctor::new);
     }
 }
