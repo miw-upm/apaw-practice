@@ -14,11 +14,8 @@ public class Vehicle {
         //empty for framework
     }
 
-    public Vehicle(String vinNumber, BigDecimal dailyCost, Integer kilometersAmount, Boolean goodCondition) {
-        this.vinNumber = vinNumber;
-        this.dailyCost = dailyCost;
-        this.kilometersAmount = kilometersAmount;
-        this.goodCondition = goodCondition;
+    public static VehicleBuilders.VinNumber builder() {
+        return new Builder();
     }
 
     public static Vehicle ofIdVinNumber(Vehicle vehicle) {
@@ -76,5 +73,44 @@ public class Vehicle {
                 ", kilometersAmount=" + kilometersAmount +
                 ", goodCondition=" + goodCondition +
                 '}';
+    }
+
+    public static class Builder implements VehicleBuilders.VinNumber, VehicleBuilders.DailyCost,
+            VehicleBuilders.KilometersAmount, VehicleBuilders.GoodCondition, VehicleBuilders.VehicleBuild{
+
+        private final Vehicle vehicle;
+
+        public Builder() {
+            this.vehicle = new Vehicle();
+        }
+
+        @Override
+        public VehicleBuilders.DailyCost vinNumber(String vinNumber) {
+            this.vehicle.vinNumber = vinNumber;
+            return this;
+        }
+
+        @Override
+        public VehicleBuilders.KilometersAmount dailyCost(BigDecimal dailyCost) {
+            this.vehicle.dailyCost = dailyCost;
+            return this;
+        }
+
+        @Override
+        public VehicleBuilders.GoodCondition kilometersAmount(Integer kilometersAmount) {
+            this.vehicle.kilometersAmount = kilometersAmount;
+            return this;
+        }
+
+        @Override
+        public VehicleBuilders.VehicleBuild goodCondition(Boolean goodCondition) {
+            this.vehicle.goodCondition = goodCondition;
+            return this;
+        }
+
+        @Override
+        public Vehicle build() {
+            return this.vehicle;
+        }
     }
 }
