@@ -22,5 +22,6 @@ public class PatientResourceIT {
                 .uri(PATIENTS + DNI_ID, "03457384C")
                 .exchange()
                 .expectStatus().isOk();
+
     }
 }
