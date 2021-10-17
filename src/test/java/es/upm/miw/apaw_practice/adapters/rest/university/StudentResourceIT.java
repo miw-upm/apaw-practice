@@ -9,6 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static es.upm.miw.apaw_practice.adapters.rest.university.StudentResource.SEARCH;
+import static es.upm.miw.apaw_practice.adapters.rest.university.StudentResource.STUDENTS;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @RestTestConfig
 public class StudentResourceIT {
 
@@ -21,7 +28,7 @@ public class StudentResourceIT {
                 new Student("12121212D", "Teresa de Ahumada", false);
         this.webTestClient
                 .post()
-                .uri(StudentResource.STUDENTS)
+                .uri(STUDENTS)
                 .body(BodyInserters.fromValue(student))
                 .exchange()
                 .expectStatus().isOk()
@@ -35,9 +42,25 @@ public class StudentResourceIT {
                 new Student("12345678X", "Ada Lovelace", true);
         this.webTestClient
                 .post()
-                .uri(StudentResource.STUDENTS)
+                .uri(STUDENTS)
                 .body(BodyInserters.fromValue(student))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void testFindDniListByClassroomSchool() {
+        List<String> dniCorrectList = Arrays.asList("12345678X", "112233445E");
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(STUDENTS + SEARCH)
+                                .queryParam("q", "classroomSchool:ETSIINF")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(dniGetList -> assertTrue(dniCorrectList.size() == dniGetList.size()
+                        && dniGetList.containsAll(dniCorrectList)));
     }
 }

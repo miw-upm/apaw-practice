@@ -1,21 +1,28 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.StudentRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.SubjectRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.StudentEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.SubjectEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.university.Student;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.StudentPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Repository("studentPersistence")
 public class StudentPersistenceMongodb implements StudentPersistence {
 
     private final StudentRepository studentRepository;
+    private final SubjectRepository subjectRepository;
 
     @Autowired
-    public StudentPersistenceMongodb(StudentRepository studentRepository) {
+    public StudentPersistenceMongodb(StudentRepository studentRepository, SubjectRepository subjectRepository) {
         this.studentRepository = studentRepository;
+        this.subjectRepository = subjectRepository;
     }
 
     @Override
@@ -38,5 +45,18 @@ public class StudentPersistenceMongodb implements StudentPersistence {
                 .findByDni(dni)
                 .orElseThrow(() -> new NotFoundException("Student dni: " + dni))
                 .toStudent();
+    }
+
+    @Override
+    public Stream<Student> findStudentsByClassroomSchool(String classroomSchool) {
+        Stream<SubjectEntity> subjectEntities = this.subjectRepository.findAll().stream()
+                .filter(subjectEntity -> subjectEntity.getClassroom()
+                        .getSchool().equals(classroomSchool));
+
+        return this.studentRepository.findAll().stream()
+                .filter(studentEntity -> studentEntity.getSubjects().stream()
+                        .anyMatch(subjectEntities
+                                .collect(Collectors.toSet())::contains))
+                .map(StudentEntity::toStudent);
     }
 }
