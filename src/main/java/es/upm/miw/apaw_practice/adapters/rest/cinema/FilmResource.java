@@ -14,6 +14,7 @@ public class FilmResource {
     static final String FILMS = "/cinema/films";
 
     static final String SEARCH = "/search";
+    static final String BARCODE = "/{barcode}";
 
     private final FilmService filmService;
 
@@ -23,8 +24,14 @@ public class FilmResource {
     }
 
     @GetMapping(SEARCH)
-    public Stream<Film> findFilmsByScreenNumber(@RequestParam String q){
+    public Stream<Film> findFilmsByScreenNumber(@RequestParam String q) {
         Integer number = new LexicalAnalyzer().extractWithAssure(q, "number", Integer::new);
         return this.filmService.findFilmsByScreenNumber(number);
     }
+
+    @DeleteMapping(BARCODE)
+    public void delete(@PathVariable String barcode) {
+        this.filmService.delete(barcode);
+    }
+
 }

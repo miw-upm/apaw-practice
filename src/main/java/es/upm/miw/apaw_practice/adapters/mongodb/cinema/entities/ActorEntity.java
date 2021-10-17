@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,6 +24,11 @@ public class ActorEntity {
         this.name = name;
         this.familyName = familyName;
         this.age = age;
+    }
+
+    public ActorEntity(Actor actor) {
+        BeanUtils.copyProperties(actor, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
@@ -69,5 +75,9 @@ public class ActorEntity {
                 ", familyName='" + familyName + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    public void fromActor(Actor actor) {
+        BeanUtils.copyProperties(actor, this);
     }
 }
