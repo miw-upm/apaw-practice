@@ -20,6 +20,7 @@ public class GymResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
+
     @Test
     void testFindByLabel() {
         this.webTestClient
@@ -38,11 +39,12 @@ public class GymResourceIT {
 
     @Test
     void testUpdateCellphone() {
-        Athlete athlete = new Athlete("88888888a", "julia", "Jackson");
         Athlete athlete1 = new Athlete("55555555a", "ana", "ramos");
-        Lesson lesson1 = new Lesson("BodyComba", LocalDateTime.of(2020, 9, 5, 5, 15)
-                , "lesMils", false, List.of(athlete, athlete1));
-        Coach coach = new Coach("2356892A", "Terry", "Ryan", 11112, lesson1);
+
+        Lesson lesson = new Lesson("BodyComba", LocalDateTime.of(2020, 9, 5, 5, 15)
+                , "lesMils", false, List.of(athlete1, athlete1));
+        Coach coach = new Coach("2356892A", "Terry", "Ryan", 11112, lesson);
+
         Gym gym = new Gym("calle toledo 32", "Basic Fi", "66666666", List.of(coach));
 
         this.webTestClient
@@ -56,8 +58,8 @@ public class GymResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(GymResource.Gyms + GymResource.Search)
-                                .queryParam("label", "Basic Fi")
+                        uriBuilder.path(GymResource.Gyms + GymResource.Address1)
+                                .queryParam("address", "calle toledo 32")
                                 .build())
                 .exchange()
                 .expectStatus().isOk()

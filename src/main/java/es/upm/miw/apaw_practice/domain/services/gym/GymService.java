@@ -23,4 +23,8 @@ public class GymService {
 
         return this.gymPersistence.update(gymToupdate.getAddress(), gym);
     }
+
+    public Gym findByAdress(String address) {
+        return this.gymPersistence.findByAddress(address);
+    }
 }

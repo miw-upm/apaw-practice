@@ -10,4 +10,6 @@ public interface GymPersistence {
     Gym readByAddress(String address);
 
     Gym update(String address, Gym gym);
+
+    Gym findByAddress(String address);
 }

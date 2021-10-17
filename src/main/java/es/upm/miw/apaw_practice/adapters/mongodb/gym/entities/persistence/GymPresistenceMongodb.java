@@ -36,9 +36,15 @@ public class GymPresistenceMongodb implements GymPersistence {
     @Override
     public Gym update(String address, Gym gym) {
         GymEntity addressUpdate = this.gymRepository.findByAddress(address)
-                .orElseThrow(() -> new NotFoundException("Renter with DNI: " + address));
+                .orElseThrow(() -> new NotFoundException("gym Address: " + address));
         addressUpdate.setCellphone(gym.getCellphone());
         return this.gymRepository.save(addressUpdate).ToGym();
 
+    }
+
+    @Override
+    public Gym findByAddress(String address) {
+        return this.gymRepository.findByAddress(address).
+                orElseThrow(() -> new NotFoundException("Gym with address:" + address)).ToGym();
     }
 }
