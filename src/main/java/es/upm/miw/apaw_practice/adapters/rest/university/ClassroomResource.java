@@ -1,19 +1,17 @@
 package es.upm.miw.apaw_practice.adapters.rest.university;
 
 
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.services.university.ClassroomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(ClassroomResource.CLASSROOMS)
 public class ClassroomResource {
     static final String CLASSROOMS = "/university/classrooms";
-
     static final String CLASSROOM_ID = "/{school}/{number}";
+    static final String SEARCH = "/search";
 
     private final ClassroomService classroomService;
 
@@ -25,5 +23,11 @@ public class ClassroomResource {
     @DeleteMapping(CLASSROOM_ID)
     public void delete(@PathVariable String school, @PathVariable Integer number) {
         this.classroomService.delete(school, number);
+    }
+
+    @GetMapping(SEARCH)
+    public Integer findCapacitySumByStudentDni(@RequestParam String q) {
+        String studentDni = new LexicalAnalyzer().extractWithAssure(q, "studentDni", String::new);
+        return this.classroomService.findCapacitySumByStudentDni(studentDni);
     }
 }

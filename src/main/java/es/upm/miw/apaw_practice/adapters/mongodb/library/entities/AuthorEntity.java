@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.library.entities;
 import es.upm.miw.apaw_practice.domain.models.library.Author;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
@@ -12,6 +13,7 @@ import java.util.UUID;
 public class AuthorEntity {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String fullName;
     private String nationality;
     private String writingStyle;
@@ -59,15 +61,16 @@ public class AuthorEntity {
         this.writingStyle = writingStyle;
     }
 
-    public Author toAuthor(){
+    public Author toAuthor() {
         Author author = new Author();
         BeanUtils.copyProperties(this, author);
         return author;
     }
 
-    public void fromAuthor(Author author){
+    public void fromAuthor(Author author) {
         BeanUtils.copyProperties(author, this);
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

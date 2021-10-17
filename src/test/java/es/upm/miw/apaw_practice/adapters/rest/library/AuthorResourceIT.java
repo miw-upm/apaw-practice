@@ -8,7 +8,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 @RestTestConfig
-public class AuthorResourceIT {
+class AuthorResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -18,7 +18,7 @@ public class AuthorResourceIT {
         Author author = new Author();
         this.webTestClient
                 .put()
-                .uri(AuthorResource.AUTHORS + 1)
+                .uri(AuthorResource.AUTHORS)
                 .body(BodyInserters.fromValue(author))
                 .exchange()
                 .expectStatus().isNotFound();

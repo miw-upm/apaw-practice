@@ -16,7 +16,6 @@ public class FeatureService {
         this.featurePersistence = featurePersistence;
     }
 
-
     public Feature create(Feature feature) {
         return featurePersistence.create(feature);
     }
