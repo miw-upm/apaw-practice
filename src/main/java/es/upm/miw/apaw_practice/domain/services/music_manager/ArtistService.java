@@ -15,7 +15,11 @@ public class ArtistService {
         this.artistPersistence = artistPersistence;
     }
 
-    public Artist update(String id, Artist artist) {
-        return this.artistPersistence.update(id, artist);
+    public Artist updateAge(String fullName, Integer age) {
+        String[] splittedName = fullName.split(" ");
+
+        Artist artist = this.artistPersistence.readByFirstNameAndFamilyName(splittedName[0], splittedName[1]);
+        artist.setAge(age);
+        return this.artistPersistence.update(artist);
     }
 }

@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hospital;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.hospital.daos.DiseaseRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hospital.daos.DoctorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hospital.daos.HospitalRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hospital.daos.PatientRepository;
@@ -26,9 +27,11 @@ public class HospitalSeederService {
     private HospitalRepository hospitalRepository;
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private DiseaseRepository diseaseRepository;
 
     public void seedDatabase() {
-        LogManager.getLogger(this.getClass()).warn("------- Shop Initial Load -----------");
+        LogManager.getLogger(this.getClass()).warn("------- Hospital Initial Load -----------");
         DoctorEntity[] doctors = {
                 new DoctorEntity(new Doctor("John", "Doe", LocalDate.of(1989,11,23))),
                 new DoctorEntity(new Doctor("Marta", "Lopez", LocalDate.of(1999,4,2))),
@@ -41,6 +44,7 @@ public class HospitalSeederService {
                 new DiseaseEntity(new Disease("Severe organ failure", Boolean.TRUE,"Kidney failure")),
                 new DiseaseEntity(new Disease("Eye membrane inflamation", Boolean.FALSE,"Conjunctivitis"))
         };
+        this.diseaseRepository.saveAll(Arrays.asList(diseases));
 
         PatientEntity[] patients = {
                 new PatientEntity("03457384C", "Male", 23, List.of(diseases[1], diseases[0]), doctors[1]),
@@ -61,5 +65,6 @@ public class HospitalSeederService {
         this.doctorRepository.deleteAll();
         this.patientRepository.deleteAll();
         this.hospitalRepository.deleteAll();
+        this.diseaseRepository.deleteAll();
     }
 }

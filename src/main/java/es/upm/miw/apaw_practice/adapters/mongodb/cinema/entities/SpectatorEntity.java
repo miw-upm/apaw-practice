@@ -1,15 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class SpectatorEntity {
-    @Id
-    private String id;
-    @Indexed(unique = true)
     private String idCard;
     private String name;
     private String familyName;
@@ -20,19 +16,10 @@ public class SpectatorEntity {
     }
 
     public SpectatorEntity(String idCard, String name, String familyName) {
-        this.id = UUID.randomUUID().toString();
         this.idCard = idCard;
         this.name = name;
         this.familyName = familyName;
         this.registrationDate = LocalDate.now();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getIdCard() {
@@ -67,10 +54,15 @@ public class SpectatorEntity {
         this.registrationDate = registrationDate;
     }
 
+    public Spectator toSpectator() {
+        Spectator spectator = new Spectator();
+        BeanUtils.copyProperties(this, spectator);
+        return spectator;
+    }
+
     @Override
     public String toString() {
         return "SpectatorEntity{" +
-                "id='" + id + '\'' +
                 ", idCard='" + idCard + '\'' +
                 ", name='" + name + '\'' +
                 ", familyName='" + familyName + '\'' +

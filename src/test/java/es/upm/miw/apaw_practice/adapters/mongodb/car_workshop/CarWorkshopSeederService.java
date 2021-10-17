@@ -32,7 +32,7 @@ public class CarWorkshopSeederService {
         TyreSpecificationEntity[] tyreSpecs = {
                 new TyreSpecificationEntity(205, 16, "100Y"),
                 new TyreSpecificationEntity(205, 16, "95Z"),
-                new TyreSpecificationEntity(225, 17, "95T"),
+                new TyreSpecificationEntity(225, 17, "90T"),
                 new TyreSpecificationEntity(215, 17, "90T")
         };
         this.tyreSpecsRepository.saveAll(Arrays.asList(tyreSpecs));

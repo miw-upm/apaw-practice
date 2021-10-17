@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities;
 
+import es.upm.miw.apaw_practice.domain.models.restaurant.Reserve;
+import es.upm.miw.apaw_practice.domain.models.restaurant.Table;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class TableEntity {
@@ -100,5 +104,23 @@ public class TableEntity {
                 ", price=" + price +
                 ", reserves=" + reserves +
                 '}';
+    }
+
+    public Table toTable() {
+        Table table = new Table();
+        BeanUtils.copyProperties(this,table,"reserves");
+        List<Reserve> newReserves = this.reserves.stream()
+                .map(ReserveEntity::toReserve)
+                .collect(Collectors.toList());
+        table.setReserves(newReserves);
+        return table;
+    }
+
+    public void fromTable(Table table) {
+        BeanUtils.copyProperties(table,this,"reserves");
+        List<Reserve> newReserves = this.reserves.stream()
+                .map(ReserveEntity::toReserve)
+                .collect(Collectors.toList());
+        table.setReserves(newReserves);
     }
 }

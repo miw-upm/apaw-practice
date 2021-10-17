@@ -1,12 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.rest.restaurant;
 
-import es.upm.miw.apaw_practice.domain.models.restaurant.Waiter;
 import es.upm.miw.apaw_practice.domain.services.restaurant.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Stream;
 
@@ -25,7 +21,12 @@ public class ClientResource {
     }
 
     @GetMapping(ID_DNI+WAITERS+WaiterResource.ID_SECTION+WaiterResource.CATEGORY)
-    public Stream<Waiter> readCategoryBySectionWaiterAndDniClient(@PathVariable String dni, @PathVariable String section){
+    public Stream<String> readCategoryBySectionWaiterAndDniClient(@PathVariable String dni, @PathVariable String section){
         return this.clientService.readCategoryBySectionWaiterAndDniClient(dni,section);
+    }
+
+    @DeleteMapping(ID_DNI)
+    public void delete(String dni){
+        this.clientService.delete(dni);
     }
 }

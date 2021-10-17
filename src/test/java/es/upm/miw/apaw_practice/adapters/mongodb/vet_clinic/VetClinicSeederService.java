@@ -7,6 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.Appointment
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.DiagnosisEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.PetEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.VetEntity;
+import es.upm.miw.apaw_practice.domain.models.vet_clinic.Vet;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,10 +58,10 @@ public class VetClinicSeederService {
         this.appointmentRepository.saveAll(Arrays.asList(appointments));
 
         VetEntity[] vets = {
-                new VetEntity(111, "vet1", "surname1", List.of(appointments[0])),
-                new VetEntity(222, "vet2", "", List.of(appointments[0], appointments[1])),
-                new VetEntity(333, "vet3", "surname3", List.of()),
-                new VetEntity(444, "", "surname4", List.of(appointments[2], appointments[3],
+                new VetEntity(new Vet(111, "vet1", "surname1"),  List.of(appointments[0])),
+                new VetEntity(new Vet(222, "vet2", ""), List.of(appointments[0], appointments[1])),
+                new VetEntity(new Vet(333, "vet3", "surname3"), List.of()),
+                new VetEntity(new Vet(444, "", "surname4"), List.of(appointments[2], appointments[3],
                         appointments[4]))
         };
         this.vetRepository.saveAll(Arrays.asList(vets));

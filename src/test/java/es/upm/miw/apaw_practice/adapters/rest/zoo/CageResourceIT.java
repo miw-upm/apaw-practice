@@ -15,10 +15,10 @@ class CageResourceIT {
 
     @Test
     void testFindZooAddressesByCageLocationCode() {
-        ZooAddress address = new ZooAddress("Calle Carranza", 22, "28004");
+        ZooAddress address = new ZooAddress("Portobello Road", 301, "GB 11K");
         this.webTestClient
                 .get()
-                .uri(CageResource.CAGES + "/A1" + CageResource.ZOOS_ADDRESSES)
+                .uri(CageResource.CAGES + "/2" + CageResource.ZOOS_ADDRESSES)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(ZooAddress.class)

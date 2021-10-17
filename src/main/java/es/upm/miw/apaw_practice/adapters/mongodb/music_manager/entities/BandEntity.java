@@ -74,6 +74,10 @@ public class BandEntity {
         this.artistEntities = artistEntities;
     }
 
+    public void fromBand(Band band) {
+        BeanUtils.copyProperties(band, this, "artists");
+    }
+
     public Band toBand() {
         Band band = new Band();
         BeanUtils.copyProperties(this, band, "artistEntities");

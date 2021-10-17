@@ -15,7 +15,7 @@ public class SongPersistenceMongodb implements SongPersistence {
     }
 
     @Override
-    public void delete(String id) {
-         this.songRepository.deleteById(id);
+    public void delete(String songTitle) {
+         this.songRepository.deleteBySongTitle(songTitle);
     }
 }

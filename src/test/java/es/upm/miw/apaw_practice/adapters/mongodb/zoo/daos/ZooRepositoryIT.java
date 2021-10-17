@@ -15,8 +15,8 @@ class ZooRepositoryIT {
     @Test
     void testFindAll() {
         Assertions.assertNotEquals(0, this.zooRepository.findAll().size());
-        ZooAddress address = new ZooAddress("Calle Carranza", 22, "28004");
-        Assertions.assertEquals(address, this.zooRepository.findAll().get(0).getAddress());
-        Assertions.assertNotEquals(address, this.zooRepository.findAll().get(1).getAddress());
+        ZooAddress address = new ZooAddress("Portobello Road", 301, "GB 11K");
+        Assertions.assertNotEquals(address, this.zooRepository.findAll().get(0).getAddress());
+        Assertions.assertEquals(address, this.zooRepository.findAll().get(1).getAddress());
     }
 }
