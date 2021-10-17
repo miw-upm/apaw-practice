@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class UniversitySeederService {
@@ -42,7 +43,8 @@ public class UniversitySeederService {
         SubjectEntity[] subjects = {
                 new SubjectEntity(613000096, "Arquitectura y Patrones para Aplicaciones Web", 4, classrooms[0]),
                 new SubjectEntity(613000095, "Ingeniería Web: Visión General", 6, classrooms[0]),
-                new SubjectEntity(615000246, "Inteligencia artificial", 3, classrooms[0]),
+                new SubjectEntity(615000246, "Inteligencia artificial", 3, classrooms[1]),
+                new SubjectEntity(615000243, "Programación Orientada a Objetos", 6, classrooms[2]),
                 new SubjectEntity(615000225, "Análisis matemático", 6, classrooms[0]),
                 new SubjectEntity(615000232, "Fundamentos de Seguridad", 3, classrooms[0])
         };
@@ -54,7 +56,8 @@ public class UniversitySeederService {
         };
         this.degreeRepository.saveAll(Arrays.asList(degrees));
         StudentEntity[] students = {
-                new StudentEntity(new Student("12345678X", "Ada Lovelace", true), Arrays.asList(subjects))
+                new StudentEntity(new Student("12345678X", "Ada Lovelace", true), Arrays.asList(subjects)),
+                new StudentEntity(new Student("112233445E", "Alan Turing", true), List.of(subjects[2], subjects[3]))
         };
         this.studentRepository.saveAll(Arrays.asList(students));
     }

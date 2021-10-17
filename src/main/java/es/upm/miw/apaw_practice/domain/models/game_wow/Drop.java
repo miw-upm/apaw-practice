@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.game_wow;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.DropEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.FeatureEntity;
 
 public class Drop {
@@ -46,6 +47,10 @@ public class Drop {
 
     public void setFeature(Feature feature) {
         this.feature = feature;
+    }
+
+    public DropEntity toDropEntity(Drop drop) {
+        return new DropEntity(this.title,this.race,this.level,this.feature.toFeatureEntity(this.feature));
     }
 
     @Override
