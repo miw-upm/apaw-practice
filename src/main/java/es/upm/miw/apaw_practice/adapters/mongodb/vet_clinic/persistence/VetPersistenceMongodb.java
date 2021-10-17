@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
-@Repository
-public class VetRepositoryMongodb implements VetPersistence {
+@Repository("vetPersistence")
+public class VetPersistenceMongodb implements VetPersistence {
 
     private final VetRepository vetRepository;
 
     @Autowired
-    public VetRepositoryMongodb (VetRepository vetRepository) {
+    public VetPersistenceMongodb (VetRepository vetRepository) {
         this.vetRepository = vetRepository;
     }
 
@@ -28,7 +28,9 @@ public class VetRepositoryMongodb implements VetPersistence {
 
     @Override
     public boolean existVetNumber(Integer vetNumber){
-        return false;
+        return this.vetRepository
+                .findVetByVetNumber(vetNumber)
+                .isPresent();
     }
 
 
