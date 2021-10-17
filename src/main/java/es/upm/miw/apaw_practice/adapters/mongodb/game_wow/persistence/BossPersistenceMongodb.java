@@ -24,4 +24,9 @@ public class BossPersistenceMongodb implements BossPersistence {
         return this.bossRepository.findByEffort(effort).stream()
                 .map(BossEntity::toBoss);
     }
+
+    @Override
+    public void delete(String description, String effort) {
+        this.bossRepository.deleteByDescriptionAndEffort(description, effort);
+    }
 }
