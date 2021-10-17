@@ -1,8 +1,10 @@
 package es.upm.miw.apaw_practice.domain.models.game_wow;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.BossEntity;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Boss {
 
@@ -42,6 +44,11 @@ public class Boss {
 
     public void setDropList(List<Drop> dropList) {
         this.dropList = dropList;
+    }
+
+    public BossEntity toBossEntity(Boss boss){
+        return new BossEntity(
+                this.description,this.effort,boss.getDropList().stream().map(drop -> drop.toDropEntity(drop)).collect(Collectors.toList()));
     }
 
     @Override

@@ -4,4 +4,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.emarketer.entities.EmarketerEnt
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface EmarketerRepository extends MongoRepository<EmarketerEntity, String> {
+
+    void deleteByName(String name);
 }
