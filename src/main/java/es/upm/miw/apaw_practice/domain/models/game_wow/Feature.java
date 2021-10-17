@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.game_wow;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.FeatureEntity;
+
 public class Feature {
 
     private String part;
@@ -69,5 +71,9 @@ public class Feature {
                 ", temple=" + temple +
                 ", extraEpell='" + extraSpell + '\'' +
                 '}';
+    }
+
+    public FeatureEntity toFeatureEntity(Feature feature) {
+        return new FeatureEntity(feature);
     }
 }
