@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.persistence;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.daos.VetRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.AppointmentEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.VetEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.vet_clinic.Vet;
 import es.upm.miw.apaw_practice.domain.persistence_ports.vet_clinic.VetPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,11 @@ public class VetPersistenceMongodb implements VetPersistence {
                 .isPresent();
     }
 
-
+    @Override
+    public Vet readByVetNumber(Integer vetNumber){
+        return this.vetRepository
+                .findVetByVetNumber(vetNumber)
+                .orElseThrow(() -> new NotFoundException("Vet number: " + vetNumber))
+                .toVet();
+    }
 }
