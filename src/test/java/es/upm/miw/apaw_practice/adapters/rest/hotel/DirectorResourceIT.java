@@ -34,7 +34,7 @@ class DirectorResourceIT {
     }
 
     @Test
-    void testReadHotels(){
+    void testReadHotels() {
         String dni = "22222222P";
         this.webTestClient
                 .get()
@@ -46,7 +46,7 @@ class DirectorResourceIT {
     }
 
     @Test
-    void testReadHotelNotFound(){
+    void testReadHotelNotFound() {
         String dni = "74599234P";
         this.webTestClient
                 .get()
@@ -56,7 +56,7 @@ class DirectorResourceIT {
     }
 
     @Test
-    void testFindHotelGuestDistinctDni(){
+    void testFindHotelGuestDistinctDni() {
         String dni = "77777777V";
         this.webTestClient
                 .get()
