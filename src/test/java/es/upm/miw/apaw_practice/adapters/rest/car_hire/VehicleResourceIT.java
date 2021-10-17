@@ -49,7 +49,7 @@ public class VehicleResourceIT {
                                 model.getVehicleEntities().get(0).getGoodCondition().equals(true)
                 ));
 
-        Vehicle vehicle = new Vehicle("VSSZZZ6KZ1R149943", new BigDecimal("35"), 40000, false);
+        Vehicle vehicle = Vehicle.builder().vinNumber("VSSZZZ6KZ1R149943").dailyCost(new BigDecimal("35")).kilometersAmount(40000).goodCondition(false).build();
         this.webTestClient
                 .put()
                 .uri(VehicleResource.VEHICLES + VehicleResource.VIN_NUMBER, vehicle.getVinNumber())
