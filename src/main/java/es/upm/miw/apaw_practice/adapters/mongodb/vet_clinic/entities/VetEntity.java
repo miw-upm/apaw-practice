@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.vet_clinic.Vet;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -24,11 +26,9 @@ public class VetEntity {
        //empty for framework
     }
 
-    public VetEntity(Integer vetNumber, String name, String surname, List<AppointmentEntity> appointmentEntities) {
+    public VetEntity(Vet vet, List<AppointmentEntity> appointmentEntities) {
+        BeanUtils.copyProperties(vet, this);
         this.id = UUID.randomUUID().toString();
-        this.vetNumber = vetNumber;
-        this.name = name;
-        this.surname = surname;
         this.appointmentEntities = appointmentEntities;
     }
 
@@ -75,5 +75,11 @@ public class VetEntity {
     @Override
     public int hashCode() {
         return vetNumber.hashCode();
+    }
+
+    public Vet toVet() {
+        Vet vet = new Vet();
+        BeanUtils.copyProperties(this, vet);
+        return vet;
     }
 }

@@ -43,7 +43,7 @@ class TableResourceIT {
         );
         this.webTestClient
                 .put()
-                .uri(TABLES+ID+RESERVES,"3")
+                .uri(TABLES+ID_NUMBER+RESERVES,"3")
                 .body(BodyInserters.fromValue(reserves))
                 .exchange()
                 .expectStatus().isOk()
@@ -59,5 +59,19 @@ class TableResourceIT {
                 .body(BodyInserters.fromValue("classic"))
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    @Test
+    void testFindByCategoryWaiter(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(TABLES+SEARCH)
+                                .queryParam("q","category:manager")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Table.class)
+                .value(table -> assertTrue(6 == table.getReserves().get(0).getNumPeople()));
     }
 }

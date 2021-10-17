@@ -34,12 +34,17 @@ public class UniversitySeederService {
         ClassroomEntity[] classrooms = {
                 new ClassroomEntity(new Classroom("ETSISI", 1302, 20)),
                 new ClassroomEntity(new Classroom("ETSISI", 3101, 40)),
-                new ClassroomEntity(new Classroom("ETSISI", 4302, 30))
+                new ClassroomEntity(new Classroom("ETSISI", 4302, 30)),
+                new ClassroomEntity(new Classroom("ETSISI", 3004, 10)),
+                new ClassroomEntity(new Classroom("ETSISI", 8002, 15))
         };
         this.classroomRepository.saveAll(Arrays.asList(classrooms));
         SubjectEntity[] subjects = {
-            new SubjectEntity(613000096, "Arquitectura y Patrones para Aplicaciones Web", 4, classrooms[0]),
-            new SubjectEntity(613000095, "Ingeniería Web: Visión General", 6, classrooms[0])
+                new SubjectEntity(613000096, "Arquitectura y Patrones para Aplicaciones Web", 4, classrooms[0]),
+                new SubjectEntity(613000095, "Ingeniería Web: Visión General", 6, classrooms[0]),
+                new SubjectEntity(615000246, "Inteligencia artificial", 3, classrooms[0]),
+                new SubjectEntity(615000225, "Análisis matemático", 6, classrooms[0]),
+                new SubjectEntity(615000232, "Fundamentos de Seguridad", 3, classrooms[0])
         };
         this.subjectRepository.saveAll(Arrays.asList(subjects));
         DegreeEntity[] degrees = {
@@ -49,7 +54,7 @@ public class UniversitySeederService {
         };
         this.degreeRepository.saveAll(Arrays.asList(degrees));
         StudentEntity[] students = {
-            new StudentEntity(new Student("12345678X", "Ada Lovelace", true), Arrays.asList(subjects))
+                new StudentEntity(new Student("12345678X", "Ada Lovelace", true), Arrays.asList(subjects))
         };
         this.studentRepository.saveAll(Arrays.asList(students));
     }

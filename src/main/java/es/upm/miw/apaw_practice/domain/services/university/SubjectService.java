@@ -31,6 +31,6 @@ public class SubjectService {
                     subject.setCredits(subjectNewCredits.getCredits());
                     return subject;
                 })
-                .forEach(subject -> this.subjectPersistence.update(subject.getReference(), subject));
+                .forEach(this.subjectPersistence::update);
     }
 }

@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.restaurant;
 
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Reserve;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Table;
 import es.upm.miw.apaw_practice.domain.services.restaurant.TableService;
@@ -14,9 +15,10 @@ import java.util.stream.Stream;
 public class TableResource {
 
     static final String TABLES = "/restaurant/tables";
-    static final String ID = "/{id}";
+    static final String ID_NUMBER = "/{number}";
     static final String RESERVES = "/reserves";
     static final String HOLDER = "/holder";
+    static final String SEARCH = "/search";
 
     private TableService tableService;
 
@@ -25,19 +27,25 @@ public class TableResource {
         this.tableService = tableService;
     }
 
-    @GetMapping(ID+RESERVES+HOLDER)
-    public Stream<Reserve> readHoldersByNumber(@PathVariable Integer id){
-        return this.tableService.readHoldersByNumber(id);
+    @GetMapping(ID_NUMBER+RESERVES+HOLDER)
+    public Stream<Reserve> readHoldersByNumber(@PathVariable Integer number){
+        return this.tableService.readHoldersByNumber(number);
     }
 
-    @PutMapping(ID+RESERVES)
-    public Table updateNumPeople(@PathVariable Integer id, @RequestBody List<Reserve> reserves){
-        return this.tableService.updateNumPeople(id, reserves);
+    @PutMapping(ID_NUMBER+RESERVES)
+    public Table updateNumPeople(@PathVariable Integer number, @RequestBody List<Reserve> reserves){
+        return this.tableService.updateNumPeople(number, reserves);
     }
 
     @PatchMapping
     public void updateStyles(@RequestBody String style){
         this.tableService.updateStyles(style);
+    }
+
+    @GetMapping(SEARCH)
+    public Table findByCategoryWaiter(@RequestParam String q){
+        String category = new LexicalAnalyzer().extractWithAssure(q,"category");
+        return this.tableService.findByCategoryWaiter(category);
     }
 
 }

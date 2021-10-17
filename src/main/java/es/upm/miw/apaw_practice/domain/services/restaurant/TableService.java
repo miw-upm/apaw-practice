@@ -50,6 +50,10 @@ public class TableService {
                     );
                     newTable.setStyle(style);
                     return newTable;})
-                .forEach(table -> this.tablePersistence.update(table));
+                .forEach(this.tablePersistence::update);
+    }
+
+    public Table findByCategoryWaiter(String category) {
+        return this.tablePersistence.findByCategoryWaiter(category);
     }
 }

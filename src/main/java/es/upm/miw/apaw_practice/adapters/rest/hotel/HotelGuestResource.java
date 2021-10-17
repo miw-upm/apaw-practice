@@ -32,6 +32,6 @@ public class HotelGuestResource {
     @DeleteMapping(HotelGuestResource.DNI)
     public void delete(@PathVariable String dni) {
         this.hotelGuestService.delete(dni);
-
     }
+
 }

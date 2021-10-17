@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static es.upm.miw.apaw_practice.adapters.rest.restaurant.ClientResource.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
 class ClientResourceIT {
