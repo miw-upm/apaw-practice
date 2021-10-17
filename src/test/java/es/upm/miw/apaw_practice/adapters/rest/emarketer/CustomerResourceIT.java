@@ -7,6 +7,9 @@ import es.upm.miw.apaw_practice.adapters.mongodb.emarketer.entities.CustomerEnti
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.emarketer.Cups;
 import es.upm.miw.apaw_practice.domain.models.emarketer.Customer;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -26,6 +29,9 @@ public class CustomerResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Autowired
+    EmarketerSeederService emarketerSeederService;
+
     @Test
     void testReadAll() {
         this.webTestClient
@@ -41,9 +47,12 @@ public class CustomerResourceIT {
                 .value(customers -> assertEquals("Barcelona", customers.get(1).getAddress()))       ;
     }
 
-    /*
+
     @Test
     void testUpdate() {
+        emarketerSeederService.deleteAll();
+        emarketerSeederService.seedDatabase();
+
         assertTrue(this.customerRepository.findByName("Pedro").isPresent());
         CustomerEntity currentCustomer = this.customerRepository.findByName("Pedro").get();
         assertEquals("Madrid", currentCustomer.getAddress());
@@ -66,5 +75,5 @@ public class CustomerResourceIT {
 
     }
 
-     */
+
 }
