@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.domain.services.football.FootballPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.Stream;
@@ -14,6 +15,7 @@ import java.util.stream.Stream;
 public class FootballPlayerResource {
 
     static final String PLAYERS = "/football/players";
+    static final String SEARCH = "/search";
 
     private final FootballPlayerService footballPlayerService;
 
@@ -25,5 +27,10 @@ public class FootballPlayerResource {
     @GetMapping
     public Stream<FootballPlayer> readAllPlayers() {
         return this.footballPlayerService.readAll();
+    }
+
+    @GetMapping(SEARCH)
+    public Integer findGoalsByStadiumName(@RequestParam String q) {
+        return this.footballPlayerService.findGoalsByStadiumName(q);
     }
 }

@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 public class DegreeResource {
 
     static final String DEGREES = "/university/degrees";
+    static final String CODE_ID = "/{code}";
+    static final String TITLE = "/title";
 
     private final DegreeService degreeService;
 
@@ -21,8 +23,8 @@ public class DegreeResource {
         this.degreeService = degreeService;
     }
 
-    @GetMapping
-    public Stream<String> read() {
-        return this.degreeService.read();
+    @GetMapping(TITLE)
+    public Stream<String> readTitles() {
+        return this.degreeService.readTitles();
     }
 }

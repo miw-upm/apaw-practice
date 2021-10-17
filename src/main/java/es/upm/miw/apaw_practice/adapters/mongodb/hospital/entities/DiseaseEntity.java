@@ -9,6 +9,8 @@ import java.util.UUID;
 
 @Document
 public class DiseaseEntity {
+    @Id
+    private String id;
     private String description;
     private Boolean severe;
     private String alias;
@@ -19,6 +21,7 @@ public class DiseaseEntity {
 
     public DiseaseEntity(Disease disease){
         BeanUtils.copyProperties(disease, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getDescription() {
@@ -43,6 +46,14 @@ public class DiseaseEntity {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Disease toDisease(){

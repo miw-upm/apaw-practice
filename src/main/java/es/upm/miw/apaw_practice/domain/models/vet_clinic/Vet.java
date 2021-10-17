@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.vet_clinic;
 
+import java.util.List;
+
 public class Vet {
     private Integer vetNumber;
     private String name;

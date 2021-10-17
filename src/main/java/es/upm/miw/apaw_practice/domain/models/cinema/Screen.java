@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.cinema;
 import java.util.List;
 
 public class Screen {
-    private Integer screenNumber;
+    private Integer number;
     private Integer flat;
     private Integer numberOfSeats;
     private Boolean full;
@@ -13,20 +13,20 @@ public class Screen {
         //empty for framework
     }
 
-    public Screen(Integer screenNumber, Integer flat, Integer numberOfSeats, Boolean full, List<Spectator> spectators) {
-        this.screenNumber = screenNumber;
+    public Screen(Integer number, Integer flat, Integer numberOfSeats, Boolean full, List<Spectator> spectators) {
+        this.number = number;
         this.flat = flat;
         this.numberOfSeats = numberOfSeats;
         this.full = full;
         this.spectators = spectators;
     }
 
-    public Integer getScreenNumber() {
-        return screenNumber;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setScreenNumber(Integer screenNumber) {
-        this.screenNumber = screenNumber;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public Integer getFlat() {
@@ -64,7 +64,7 @@ public class Screen {
     @Override
     public String toString() {
         return "Screen{" +
-                "screenNumber=" + screenNumber +
+                "screenNumber=" + number +
                 ", flat=" + flat +
                 ", numberOfSeats=" + numberOfSeats +
                 ", full=" + full +

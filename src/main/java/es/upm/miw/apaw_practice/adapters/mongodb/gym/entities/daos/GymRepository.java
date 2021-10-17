@@ -5,6 +5,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface GymRepository extends MongoRepository<GymEntity,String> {
+public interface GymRepository extends MongoRepository<GymEntity, String> {
     Optional<GymEntity> findByLabel(String label);
+
+    Optional<GymEntity> findByAddress(String address);
 }

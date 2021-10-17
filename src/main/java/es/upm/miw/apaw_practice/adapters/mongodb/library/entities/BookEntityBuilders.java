@@ -1,8 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.library.entities;
 
-import es.upm.miw.apaw_practice.domain.models.library.Book;
-import es.upm.miw.apaw_practice.domain.models.library.BookBuilders;
-
 import java.time.LocalDate;
 
 public interface BookEntityBuilders {

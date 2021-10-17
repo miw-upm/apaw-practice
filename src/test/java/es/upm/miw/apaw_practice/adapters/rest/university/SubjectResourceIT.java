@@ -46,8 +46,8 @@ public class SubjectResourceIT {
     @Test
     void testUpdateCredits() {
         List<SubjectCreditsUpdating> subjectCreditsUpdatings = Arrays.asList(
-                new SubjectCreditsUpdating(613000096, 6),
-                new SubjectCreditsUpdating(613000095, 9)
+                new SubjectCreditsUpdating(615000225, 9),
+                new SubjectCreditsUpdating(615000232, 6)
         );
 
         this.webTestClient

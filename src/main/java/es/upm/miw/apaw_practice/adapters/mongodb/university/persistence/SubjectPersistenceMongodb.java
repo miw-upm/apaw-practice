@@ -2,9 +2,9 @@ package es.upm.miw.apaw_practice.adapters.mongodb.university.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.ClassroomRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.SubjectRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.ClassroomEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.SubjectEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.university.Classroom;
 import es.upm.miw.apaw_practice.domain.models.university.Subject;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.SubjectPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +35,13 @@ public class SubjectPersistenceMongodb implements SubjectPersistence {
         SubjectEntity subjectEntity = this.subjectRepository
                 .findByReference(subject.getReference())
                 .orElseThrow(() -> new NotFoundException("Subject reference:" + subject.getReference()));
-        subjectEntity.setClassroom(new ClassroomEntity(subject.getClassroom()));
-        this.subjectRepository.save(subjectEntity);
-    }
-
-    @Override
-    public void update(Integer reference, Subject subject) {
-        SubjectEntity subjectEntity = this.subjectRepository
-                .findByReference(reference)
-                .orElseThrow(() -> new NotFoundException("Subject reference:" + reference));
+        Classroom classroom = subject.getClassroom();
+        if (classroom != null) {
+            this.classroomRepository
+                    .findBySchoolAndNumber(classroom.getSchool(), classroom.getNumber())
+                    .orElseThrow(() ->
+                            new NotFoundException("Classroom school and number: " + classroom.getSchool() + ";" + classroom.getNumber()));
+        }
         subjectEntity.fromSubject(subject);
         this.subjectRepository.save(subjectEntity);
     }

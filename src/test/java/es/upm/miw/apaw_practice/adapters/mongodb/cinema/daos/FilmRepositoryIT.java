@@ -8,17 +8,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-public class FilmRepositoryIT {
+class FilmRepositoryIT {
 
     @Autowired
     private FilmRepository filmRepository;
 
     @Test
-    void testFindAllFilms() {
+    void testFindFilmName() {
         List<FilmEntity> films = this.filmRepository.findAll();
 
-        assertEquals(films.size(), 1);
         assertEquals(films.get(0).getName(), "The hunger games");
     }
-
 }

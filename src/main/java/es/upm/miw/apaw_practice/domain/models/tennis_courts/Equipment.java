@@ -8,6 +8,10 @@ public class Equipment {
     private Integer quantity;
     private BigDecimal pricePerUnit;
 
+    public Equipment(){
+        //empty for framework
+    }
+
     public Equipment(String type, Integer quantity, BigDecimal pricePerUnit){
         this.type = type;
         this.quantity = quantity;
