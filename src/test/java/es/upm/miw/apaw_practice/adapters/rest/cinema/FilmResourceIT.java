@@ -8,7 +8,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.hamcrest.CoreMatchers.equalTo;
 import java.util.List;
 
-public @RestTestConfig
+@RestTestConfig
 class FilmResourceIT {
 
     @Autowired
