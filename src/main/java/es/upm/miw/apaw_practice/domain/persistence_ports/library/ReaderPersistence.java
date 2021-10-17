@@ -9,4 +9,6 @@ public interface ReaderPersistence {
     Reader create(Reader reader);
 
     boolean existEmail(String email);
+
+    void delete(String email);
 }

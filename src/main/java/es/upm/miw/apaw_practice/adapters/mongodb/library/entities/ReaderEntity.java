@@ -74,7 +74,7 @@ public class ReaderEntity {
         this.books = books;
     }
 
-    public Reader toReader(){
+    public Reader toReader() {
         Reader reader = new Reader();
         BeanUtils.copyProperties(this, reader);
         return reader;

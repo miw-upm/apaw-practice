@@ -14,7 +14,7 @@ public class AuthorResourceIT {
     private WebTestClient webTestClient;
 
     @Test
-    void testUpdate(){
+    void testUpdate() {
         Author author = new Author();
         this.webTestClient
                 .put()
