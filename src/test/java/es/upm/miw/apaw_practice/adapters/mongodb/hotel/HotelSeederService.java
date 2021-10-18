@@ -7,6 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.RoomEntity;
+import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,33 @@ public class HotelSeederService {
         LogManager.getLogger(this.getClass()).warn("------- Hotel Initial Load -----------");
 
         HotelGuestEntity[] hotelGuests = {
-                new HotelGuestEntity(new HotelGuest("Mario", "88888888K", LocalDateTime.of(2015, 8, 10, 12, 30),
-                        LocalDateTime.of(2015, 8, 25, 15, 30))),
-                new HotelGuestEntity(new HotelGuest("Mario", "88888888K", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0))),
-                new HotelGuestEntity(new HotelGuest("Pedro", "11111111S", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0))),
-                new HotelGuestEntity(new HotelGuest("Luca", "56565656P", LocalDateTime.of(2020, 10, 6, 12, 0),
-                        LocalDateTime.of(2020, 10, 12, 18, 0)))
+                new HotelGuestEntity(HotelGuest.builder()
+                        .dni("88888888K")
+                        .name("Mario")
+                        .entryDate(LocalDateTime.of(2015, 8, 10, 12, 30))
+                        .departureDate( LocalDateTime.of(2015, 8, 25, 15, 30))
+                        .build()),
+
+                new HotelGuestEntity(HotelGuest.builder()
+                        .dni("88888888K")
+                        .name("Mario")
+                        .entryDate(LocalDateTime.of(2020, 6, 15, 9, 0))
+                        .departureDate( LocalDateTime.of(2018, 9, 16, 16, 0))
+                        .build()),
+
+                new HotelGuestEntity(HotelGuest.builder()
+                        .dni("11111111S")
+                        .name("Pedro")
+                        .entryDate( LocalDateTime.of(2020, 6, 15, 9, 0))
+                        .departureDate(LocalDateTime.of(2018, 9, 16, 16, 0))
+                        .build()),
+
+                new HotelGuestEntity(HotelGuest.builder()
+                        .dni("56565656P")
+                        .name("Luca")
+                        .entryDate(LocalDateTime.of(2020, 10, 6, 12, 0))
+                        .departureDate(LocalDateTime.of(2020, 10, 12, 18, 0))
+                        .build())
 
         };
         this.hotelGuestRepository.saveAll(Arrays.asList(hotelGuests));

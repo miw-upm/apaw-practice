@@ -16,13 +16,6 @@ public class HotelGuest {
         //empty for framework
     }
 
-    public HotelGuest(String name, String dni, LocalDateTime entryDate, LocalDateTime departureDate) {
-        this.name = name;
-        this.dni = dni;
-        this.entryDate = entryDate;
-        this.departureDate = departureDate;
-    }
-
     public static HotelGuestBuilders.Dni builder() {
         return new Builder();
     }
