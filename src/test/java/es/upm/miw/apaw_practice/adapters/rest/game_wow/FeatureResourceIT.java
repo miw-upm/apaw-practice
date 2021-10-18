@@ -11,6 +11,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestTestConfig
 public class FeatureResourceIT {
@@ -29,5 +30,15 @@ public class FeatureResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Feature.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testupdateTemples() {
+        this.webTestClient
+                .patch()
+                .uri(FeatureResource.GAMEWOW_FEATURES)
+                .body(BodyInserters.fromValue(0))
+                .exchange()
+                .expectStatus().isOk();
     }
 }

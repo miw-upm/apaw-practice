@@ -10,6 +10,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.FeaturePersist
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 @Repository("featurePersistence")
 public class FeaturePersistenceMongodb implements FeaturePersistence {
 
@@ -32,6 +34,23 @@ public class FeaturePersistenceMongodb implements FeaturePersistence {
         return this.featureRepository
                 .findByPart(part)
                 .orElseThrow(() -> new NotFoundException("Feature part: " + part))
+                .toFeature();
+    }
+
+    @Override
+    public Stream<Feature> readAll(){
+        return this.featureRepository.findAll().stream()
+                .map(FeatureEntity::toFeature);
+    }
+
+    @Override
+    public Feature update(Feature feature) {
+        FeatureEntity featureEntity = this.featureRepository
+                .findByPart(feature.getPart())
+                .orElseThrow(() -> new NotFoundException("feature part: " + feature.getPart()));
+        featureEntity.fromFeature(feature);
+        return this.featureRepository
+                .save(featureEntity)
                 .toFeature();
     }
 }
