@@ -33,7 +33,6 @@ class ReaderPersistenceMongodbIT {
 
     @Test
     void testDelete() {
-        assertTrue(readerPersistenceMongodb.existEmail("al@xpto.com"));
         this.readerPersistenceMongodb.delete("al@xpto.com");
         assertFalse(readerPersistenceMongodb.existEmail("al@xpto.com"));
     }
