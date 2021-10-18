@@ -7,8 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities.VehicleEntity
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Renter;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Vehicle;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -33,8 +32,9 @@ public class BookingResourceIT {
     @Autowired
     CarHireSeederService carHireSeederService;
 
-    @BeforeEach
+    @AfterEach
     void seedDatabase() {
+        this.carHireSeederService.deleteAll();
         this.carHireSeederService.seedDatabase();
     }
 
