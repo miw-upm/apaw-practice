@@ -92,5 +92,14 @@ public class Reservation {
             this.reservation.players.add(player);
             return this;
         }
+
+        public Builder players(List<Player> players){
+            this.reservation.players = players;
+            return this;
+        }
+
+        public Reservation build(){
+            return this.reservation;
+        }
     }
 }
