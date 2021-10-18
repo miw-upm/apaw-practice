@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface StadiumRepository extends MongoRepository<StadiumEntity, String> {
     Optional<StadiumEntity> findByCity(String city);
+
+    Optional<StadiumEntity> findByName(String name);
 }

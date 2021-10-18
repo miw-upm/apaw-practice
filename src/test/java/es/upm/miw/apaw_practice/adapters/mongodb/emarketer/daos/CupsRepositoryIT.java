@@ -22,7 +22,7 @@ public class CupsRepositoryIT {
                         "AAPPZZZ6KZ1R149945".equals(cups.getCups()) &&
                                 new BigDecimal("814.12").equals(cups.getEnergy()) &&
                                 cups.getId() != null &&
-                                cups.getRegistrationDate().isBefore(LocalDateTime.now()) &&
+                                LocalDateTime.of(2021, 10, 12, 19, 00 , 00).equals(cups.getRegistrationDate()) &&
                                 cups.getCustomerEntity().getName().equals("Gestores S.A")
                 ));
     }

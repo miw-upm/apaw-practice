@@ -19,6 +19,10 @@ public class Tyre {
         this.price = price;
     }
 
+    public static TyreBuilder.Manufacturer builder() {
+        return new Builder();
+    }
+
     public String getManufacturer() {
         return manufacturer;
     }
@@ -63,5 +67,39 @@ public class Tyre {
                 ", model='" + model + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    public static class Builder implements TyreBuilder.Manufacturer, TyreBuilder.Model,
+            TyreBuilder.Price, TyreBuilder.Optionals {
+
+        private final Tyre tyre;
+
+        private Builder() {
+            this.tyre = new Tyre();
+        }
+
+        @Override
+        public TyreBuilder.Model manufacturer(String manufacturer) {
+            this.tyre.manufacturer = manufacturer;
+            return this;
+        }
+
+        @Override
+        public TyreBuilder.Price model(String model) {
+            this.tyre.model = model;
+            return this;
+        }
+
+        @Override
+        public TyreBuilder.Optionals price(BigDecimal price){
+            this.tyre.price = price;
+            return this;
+        }
+
+        @Override
+        public Tyre build() {
+            return this.tyre;
+        }
+
     }
 }
