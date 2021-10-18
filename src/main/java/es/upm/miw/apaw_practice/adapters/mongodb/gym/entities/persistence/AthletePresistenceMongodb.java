@@ -3,10 +3,15 @@ package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.AthleteEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.AthleteRepository;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
+import es.upm.miw.apaw_practice.domain.models.gym.AthleteNameUpdating;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gym.AthletePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository("AthletePersistence")
 public class AthletePresistenceMongodb implements AthletePersistence {
@@ -30,4 +35,24 @@ public class AthletePresistenceMongodb implements AthletePersistence {
                 .findByNie(nie)
                 .isPresent();
     }
+
+
+    @Override
+    public void updateNextFumigation(AthleteNameUpdating athleteNameUpdating) {
+        List<AthleteEntity> nameUpdat = this.athleteRepository.findAll().stream()
+                .filter(nameUpd -> nameUpd.getName().equals(athleteNameUpdating.getOldName()))
+                .collect(Collectors.toList());
+        nameUpdat.forEach(name -> name.setName(athleteNameUpdating.getNewName()));
+        this.athleteRepository.saveAll(nameUpdat);
+    }
+
+    @Override
+    public Athlete findByNie(String nie) {
+        return this.athleteRepository.findByNie(nie).
+                orElseThrow(() -> new NotFoundException("Gym with name :" + nie)).toAthlete();
+
+
+    }
+
+
 }
