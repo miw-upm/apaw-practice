@@ -18,7 +18,6 @@ public class DispensingEntity {
     @Id
     private String id;
     private LocalDateTime dispensingTimestamp;
-    @DBRef
     private List<ActiveIngredientEntity> activeIngredientEntities;
 
     public DispensingEntity() {
