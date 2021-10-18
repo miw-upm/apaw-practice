@@ -26,8 +26,14 @@ public class CupsResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Autowired
+    EmarketerSeederService emarketerSeederService;
+
     @Test
     void testUpdate() {
+        emarketerSeederService.deleteAll();
+        emarketerSeederService.seedDatabase();
+
         assertTrue(this.cupsRepository.findByCups("AAPPZZZ6KZ1R149946").isPresent());
         CupsEntity currentCups = this.cupsRepository.findByCups("AAPPZZZ6KZ1R149946").get();
         assertEquals(new BigDecimal("912.31"), currentCups.getEnergy());

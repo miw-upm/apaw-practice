@@ -20,7 +20,12 @@ class HotelGuestPersistenceMongodbIT {
         LocalDateTime entryDate = LocalDateTime.of(2021, 5, 1, 9, 0);
         LocalDateTime departureDate = LocalDateTime.of(2021, 5, 30, 16, 0);
 
-        HotelGuest hotelGuest = new HotelGuest("Kino", "11111111P", entryDate, departureDate);
+        HotelGuest hotelGuest = HotelGuest.builder()
+                .dni("11111111P")
+                .name("Kino")
+                .entryDate(entryDate)
+                .departureDate(departureDate)
+                .build();
         this.hotelGuestPersistence.create(hotelGuest);
 
         HotelGuest hotelGuestDB = this.hotelGuestPersistence.readByDni("11111111P");
