@@ -22,13 +22,10 @@ public class LibrarySeederService {
 
     @Autowired
     private AuthorRepository authorRepository;
-
     @Autowired
     private BookRepository bookRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private ReaderRepository readerRepository;
 
@@ -81,5 +78,12 @@ public class LibrarySeederService {
                 new ReaderEntity("Jenifer", Gender.F, "jlo@xpto.com")
         };
         this.readerRepository.saveAll(Arrays.asList(readers));
+    }
+
+    public void deleteAll() {
+        this.readerRepository.deleteAll();
+        this.bookRepository.deleteAll();
+        this.authorRepository.deleteAll();
+        this.categoryRepository.deleteAll();
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Hotel {
 
+    private String name;
     private String direction;
     private Integer numberStars;
     private List<Room> rooms;
@@ -13,16 +14,32 @@ public class Hotel {
         //Empty because of framework
     }
 
-    public Hotel(String direction, Integer numberStars, List<Room> rooms) {
+    public Hotel(String name, String direction, Integer numberStars, List<Room> rooms) {
+        this.name = name;
         this.direction = direction;
         this.numberStars = numberStars;
         this.rooms = rooms;
     }
 
-    public Hotel(String direction, Integer numStars) {
+    public Hotel(String name,String direction, Integer numStars) {
+        this.name =  name;
         this.direction = direction;
         this.numberStars = numStars;
         this.rooms = new ArrayList<>();
+    }
+
+    public static Hotel ofName(Hotel hotel) {
+        Hotel hotelDto = new Hotel();
+        hotelDto.setName(hotel.getName());
+        return hotelDto;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDirection() {
@@ -49,13 +66,14 @@ public class Hotel {
         this.rooms = rooms;
     }
 
-
     @Override
     public String toString() {
         return "Hotel{" +
+                "name='" + name + '\'' +
                 ", direction='" + direction + '\'' +
                 ", numberStars=" + numberStars +
                 ", rooms=" + rooms +
                 '}';
     }
+
 }

@@ -8,4 +8,6 @@ public interface StadiumPersistence {
     Stadium readByCity(String city);
 
     void update(Stadium stadiumResult);
+
+    Stadium readByName(String stadiumName);
 }

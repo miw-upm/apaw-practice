@@ -1,11 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ActorEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.FilmEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ScreenEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.FilmRepository;
 import es.upm.miw.apaw_practice.domain.models.cinema.Film;
-import es.upm.miw.apaw_practice.domain.models.cinema.Screen;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.CinemaSeederService;
@@ -19,6 +16,8 @@ class FilmPersistenceMongodbIT {
     private FilmPersistenceMongodb filmPersistenceMongodb;
     private CinemaSeederService cinemaSeederService;
 
+    @Autowired
+    private FilmRepository filmRepository;
     @Test
     void testReadAll() {
        Stream<Film> films = this.filmPersistenceMongodb.readAll();
@@ -30,5 +29,13 @@ class FilmPersistenceMongodbIT {
         Stream<Film> films = this.filmPersistenceMongodb.findByScreenNumber(2);
         System.out.println(this.filmPersistenceMongodb.findByScreenNumber(2).findFirst());
         assertEquals(films.count(), 2);
+    }
+
+    @Test
+    void testDelete() {
+        this.filmPersistenceMongodb.delete("7891");
+        assertFalse(this.filmRepository.findAll().stream()
+                .anyMatch(film -> "7891".equals(film.getBarcode()))
+        );
     }
 }

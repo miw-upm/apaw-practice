@@ -22,7 +22,7 @@ class ClientPersistenceMongodbIT {
 
     @Test
     void testReadAndDelete(){
-        assertEquals("manager",
+        assertEquals("employee",
                 this.clientPersistence.readCategoryBySectionWaiterAndDniClient("89844561Y","dining room")
                         .collect(Collectors.toList()).get(0));
         this.clientPersistence.delete("35935824A");

@@ -20,7 +20,7 @@ public class FeatureRepositoryIT {
                                 feature.getId() != null &&
                                 158 == feature.getSpellPower() &&
                                 feature.getMeleeAtack() == null &&
-                                feature.getTemple() == null &&
+                                feature.getTemple() == 0 &&
                                 "Use: Restores 1625 mana".equals(feature.getExtraSpell())
                 ));
     }
