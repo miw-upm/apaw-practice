@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
