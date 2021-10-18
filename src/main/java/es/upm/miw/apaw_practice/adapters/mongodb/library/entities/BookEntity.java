@@ -1,9 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.library.entities;
 
-import es.upm.miw.apaw_practice.domain.models.library.Author;
 import es.upm.miw.apaw_practice.domain.models.library.Book;
-import es.upm.miw.apaw_practice.domain.models.library.BookBuilders;
-import es.upm.miw.apaw_practice.domain.models.library.Category;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -11,9 +8,9 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Document
 public class BookEntity {
@@ -129,6 +126,12 @@ public class BookEntity {
                 '}';
     }
 
+    public Book toBook() {
+        Book book = new Book();
+        BeanUtils.copyProperties(this, book);
+        return book;
+    }
+
     public static class Builder implements BookEntityBuilders.Id, BookEntityBuilders.Isbn, BookEntityBuilders.Title, BookEntityBuilders.Available, BookEntityBuilders.NumbersOfPages, BookEntityBuilders.PublicationDate, BookEntityBuilders.CategoryEntity, BookEntityBuilders.Optionals {
         private final BookEntity bookEntity;
 
@@ -180,6 +183,9 @@ public class BookEntity {
 
         @Override
         public BookEntityBuilders.Optionals authors(AuthorEntity author) {
+            if (this.bookEntity.authors == null) {
+                this.bookEntity.authors = new ArrayList<>();
+            }
             this.bookEntity.authors.add(author);
             return this;
         }

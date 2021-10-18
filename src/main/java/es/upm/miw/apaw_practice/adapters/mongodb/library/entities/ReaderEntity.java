@@ -1,8 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.library.entities;
 
-import es.upm.miw.apaw_practice.domain.models.library.Book;
 import es.upm.miw.apaw_practice.domain.models.library.Gender;
+import es.upm.miw.apaw_practice.domain.models.library.Reader;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +18,7 @@ public class ReaderEntity {
     private String id;
     private String nick;
     private Gender gender;
+    @Indexed(unique = true)
     private String email;
     @DBRef
     private List<BookEntity> books;
@@ -69,6 +72,12 @@ public class ReaderEntity {
 
     public void setBooks(List<BookEntity> books) {
         this.books = books;
+    }
+
+    public Reader toReader() {
+        Reader reader = new Reader();
+        BeanUtils.copyProperties(this, reader);
+        return reader;
     }
 
     @Override

@@ -13,8 +13,10 @@ import java.util.stream.Collectors;
 
 @Document
 public class HotelEntity {
+
     @Id
     private String id;
+    private String name;
     private String direction;
     private Integer numberStars;
     private List<RoomEntity> roomEntities;
@@ -24,8 +26,9 @@ public class HotelEntity {
     }
 
 
-    public HotelEntity(String direction, Integer numberStars, List<RoomEntity> roomEntities) {
+    public HotelEntity(String name, String direction, Integer numberStars, List<RoomEntity> roomEntities) {
         this.id = UUID.randomUUID().toString();
+        this.name = name;
         this.direction = direction;
         this.numberStars = numberStars;
         this.roomEntities = roomEntities;
@@ -49,6 +52,14 @@ public class HotelEntity {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDirection() {
         return direction;
     }
@@ -69,19 +80,15 @@ public class HotelEntity {
         return roomEntities;
     }
 
-    public void setRooms(List<RoomEntity> roomEntities) {
+    public void setRoomsEntities(List<RoomEntity> roomEntities) {
         this.roomEntities = roomEntities;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, direction, numberStars, roomEntities);
     }
 
     @Override
     public String toString() {
         return "HotelEntity{" +
                 "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", direction='" + direction + '\'' +
                 ", numberStars=" + numberStars +
                 ", roomEntities=" + roomEntities +
@@ -93,7 +100,12 @@ public class HotelEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HotelEntity that = (HotelEntity) o;
-        return id.equals(that.id) && Objects.equals(direction, that.direction) && Objects.equals(numberStars, that.numberStars) && Objects.equals(roomEntities, that.roomEntities);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(direction, that.direction) && Objects.equals(numberStars, that.numberStars) && Objects.equals(roomEntities, that.roomEntities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, direction, numberStars, roomEntities);
     }
 
 

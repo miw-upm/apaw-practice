@@ -7,7 +7,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.DirectorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.RoomEntity;
-import es.upm.miw.apaw_practice.domain.models.hotel.Director;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,29 +32,48 @@ public class HotelSeederService {
         LogManager.getLogger(this.getClass()).warn("------- Hotel Initial Load -----------");
 
         HotelGuestEntity[] hotelGuests = {
-                new HotelGuestEntity(new HotelGuest("Mario", "88888888K", LocalDateTime.of(2015, 8, 10, 12, 30),
-                        LocalDateTime.of(2015, 8, 25, 15, 30))),
-                new HotelGuestEntity(new HotelGuest("Mario", "88888888K", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0))),
-                new HotelGuestEntity(new HotelGuest("Pedro", "11111111S", LocalDateTime.of(2020, 6, 15, 9, 0),
-                        LocalDateTime.of(2018, 9, 16, 16, 0))),
-                new HotelGuestEntity(new HotelGuest("Luca", "56565656P", LocalDateTime.of(2020, 10, 6, 12, 0),
-                        LocalDateTime.of(2020, 10, 12, 18, 0)))
+                new HotelGuestEntity(HotelGuest.builder()
+                        .dni("88888888K")
+                        .name("Mario")
+                        .entryDate(LocalDateTime.of(2015, 8, 10, 12, 30))
+                        .departureDate(LocalDateTime.of(2015, 8, 25, 15, 30))
+                        .build()),
+
+                new HotelGuestEntity(HotelGuest.builder()
+                        .dni("88888888K")
+                        .name("Mario")
+                        .entryDate(LocalDateTime.of(2020, 6, 15, 9, 0))
+                        .departureDate(LocalDateTime.of(2018, 9, 16, 16, 0))
+                        .build()),
+
+                new HotelGuestEntity(HotelGuest.builder()
+                        .dni("11111111S")
+                        .name("Pedro")
+                        .entryDate(LocalDateTime.of(2020, 6, 15, 9, 0))
+                        .departureDate(LocalDateTime.of(2018, 9, 16, 16, 0))
+                        .build()),
+
+                new HotelGuestEntity(HotelGuest.builder()
+                        .dni("56565656P")
+                        .name("Luca")
+                        .entryDate(LocalDateTime.of(2020, 10, 6, 12, 0))
+                        .departureDate(LocalDateTime.of(2020, 10, 12, 18, 0))
+                        .build())
 
         };
         this.hotelGuestRepository.saveAll(Arrays.asList(hotelGuests));
 
         RoomEntity[] rooms = {
-                new RoomEntity(22, new BigDecimal(45), false, List.of(hotelGuests[0],hotelGuests[1], hotelGuests[2])),
+                new RoomEntity(22, new BigDecimal(45), false, List.of(hotelGuests[0], hotelGuests[1], hotelGuests[2])),
                 new RoomEntity(3, new BigDecimal(250), true, new ArrayList<>()),
                 new RoomEntity(45, new BigDecimal(120), true, List.of(hotelGuests[0])),
                 new RoomEntity(12, new BigDecimal(60), false, new ArrayList<>())
         };
 
         HotelEntity[] hotels = {
-                new HotelEntity("Av. Madrid, Madrid, 32452", 3,  List.of(rooms[0])),
-                new HotelEntity("Av. Luto, 23981", 2,  List.of(rooms[1])),
-                new HotelEntity("Av. Salamanca, Salamanca, 15243", 4, List.of(rooms[1], rooms[2], rooms[3]))
+                new HotelEntity("MariaLuisa", "Av. Madrid, Madrid, 32452", 3, List.of(rooms[0])),
+                new HotelEntity("Estrella", "Av. Luto, 23981", 2, List.of(rooms[1])),
+                new HotelEntity("Gran hotel", "Av. Salamanca, Salamanca, 15243", 4, List.of(rooms[1], rooms[2], rooms[3]))
         };
         hotels[1].setId("1");
         hotels[2].setId("2");

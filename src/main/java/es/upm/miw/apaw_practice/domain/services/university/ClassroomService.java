@@ -17,4 +17,8 @@ public class ClassroomService {
     public void delete(String school, Integer number) {
         this.classroomPersistence.delete(school, number);
     }
+
+    public Integer findCapacitySumByStudentDni(String studentDni) {
+        return this.classroomPersistence.findCapacitySumByStudentDni(studentDni);
+    }
 }

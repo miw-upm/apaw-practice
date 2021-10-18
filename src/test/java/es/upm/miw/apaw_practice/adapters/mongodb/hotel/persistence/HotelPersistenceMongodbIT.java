@@ -5,7 +5,9 @@ import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,7 +30,7 @@ public class HotelPersistenceMongodbIT {
         assertEquals("Av. Salamanca, Salamanca, 15243", hotel.get().getDirection());
         assertEquals(4, hotel.get().getNumberStars());
 
-        Hotel hotelParams = new Hotel("updatedDirection", 2, null);
+        Hotel hotelParams = new Hotel("Lora", "updatedDirection", 2, null);
         this.hotelPersistenceMongodb.update("2", hotelParams);
 
         Optional<Hotel> updatedHotel = Optional.ofNullable(this.hotelPersistenceMongodb.read("2"));
@@ -38,4 +40,11 @@ public class HotelPersistenceMongodbIT {
         assertEquals(2, updatedHotel.get().getNumberStars());
     }
 
+    @Test
+    void testFindHotelNameListByGuestName() {
+        List<Hotel> search = this.hotelPersistenceMongodb.findHotelNameListByGuestName("Mario");
+        assertEquals(2, search.size());
+        List<String> hotelNames = List.of("MariaLuisa", "Gran hotel");
+        assertEquals(hotelNames, search.stream().map(Hotel::getName).collect(Collectors.toList()));
+    }
 }
