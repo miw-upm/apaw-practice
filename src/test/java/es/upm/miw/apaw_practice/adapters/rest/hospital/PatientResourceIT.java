@@ -26,13 +26,13 @@ public class PatientResourceIT {
     void testDelete() {
         this.webTestClient
                 .delete()
-                .uri(PATIENTS + DNI_ID, "03457384C")
+                .uri(PATIENTS + DNI_ID, "12357798M")
                 .exchange()
                 .expectStatus().isOk();
 
     }
 
-    /*
+
     @Test
     void testUpdate(){
         Patient patient = new Patient("03457384C", "Female", 47, null, null);
@@ -48,5 +48,5 @@ public class PatientResourceIT {
                 .value(updatedPatient -> assertEquals(updatedPatient.getAge(), 47))
                 .value(updatedPatient -> assertEquals(updatedPatient.getGender(), "Female"));
     }
-     */
+
 }
