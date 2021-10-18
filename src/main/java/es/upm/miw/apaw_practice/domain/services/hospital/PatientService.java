@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.hospital;
 
+import es.upm.miw.apaw_practice.domain.models.hospital.Patient;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hospital.PatientPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,9 @@ public class PatientService {
 
     public void delete(String dni) {
         this.patientPersistence.delete(dni);
+    }
+
+    public Patient update(String dni, Patient patient) {
+        return this.patientPersistence.update(dni,patient);
     }
 }
