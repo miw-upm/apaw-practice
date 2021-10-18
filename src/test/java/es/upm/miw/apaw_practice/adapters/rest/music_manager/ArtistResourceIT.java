@@ -19,7 +19,7 @@ class ArtistResourceIT {
 
     @Test
     void testUpdateAge() {
-        Integer newAge = 53;
+        Integer newAge = 52;
         this.webTestClient
                 .put()
                 .uri(ArtistResource.ARTISTS + "/Dave Grohl" + ArtistResource.AGE)
