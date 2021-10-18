@@ -14,6 +14,7 @@ import java.util.List;
 
 import static es.upm.miw.apaw_practice.adapters.rest.university.StudentResource.SEARCH;
 import static es.upm.miw.apaw_practice.adapters.rest.university.StudentResource.STUDENTS;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RestTestConfig
@@ -59,8 +60,11 @@ public class StudentResourceIT {
                                 .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(String.class)
-                .value(dniGetList -> assertTrue(dniCorrectList.size() == dniGetList.size()
-                        && dniGetList.containsAll(dniCorrectList)));
+                .expectBody(List.class)
+                .value(System.out::println)
+                .consumeWith(dniList -> {
+                    assertNotNull(dniList.getResponseBody());
+                    assertTrue(dniList.getResponseBody().containsAll(dniCorrectList));
+                });
     }
 }
