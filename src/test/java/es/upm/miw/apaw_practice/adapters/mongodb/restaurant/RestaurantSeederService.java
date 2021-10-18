@@ -55,13 +55,13 @@ public class RestaurantSeederService {
         };
         this.tableRepository.saveAll(Arrays.asList(tables));
         ClientEntity[] clients = {
-                new ClientEntity("42279207D","Jose",LocalDate.of(2021,10,7),List.of(waiters),tables[0]),
-                new ClientEntity("35935824A","Maria",LocalDate.of(2021,10,7),List.of(waiters),tables[1]),
-                new ClientEntity("64221329Q","Belen",LocalDate.of(2021,10,7),List.of(waiters),tables[1]),
-                new ClientEntity("91780147G","Juan",LocalDate.of(2021,10,7),List.of(waiters),tables[2]),
-                new ClientEntity("82912110P","Luis",LocalDate.of(2021,10,7),List.of(waiters),tables[3]),
-                new ClientEntity("89844561Y","Dona",LocalDate.of(2021,10,7),List.of(waiters),tables[3]),
-                new ClientEntity("47604450Q","Rosa",LocalDate.of(2021,10,7),List.of(waiters),tables[4])
+                new ClientEntity("42279207D","Jose",LocalDate.of(2021,10,7),List.of(waiters[3]),tables[0]),
+                new ClientEntity("35935824A","Maria",LocalDate.of(2021,10,7),List.of(waiters[0]),tables[1]),
+                new ClientEntity("64221329Q","Belen",LocalDate.of(2021,10,7),List.of(waiters[0],waiters[1]),tables[1]),
+                new ClientEntity("91780147G","Juan",LocalDate.of(2021,10,7),List.of(waiters[3]),tables[2]),
+                new ClientEntity("82912110P","Luis",LocalDate.of(2021,10,7),List.of(waiters[3],waiters[2]),tables[3]),
+                new ClientEntity("89844561Y","Dona",LocalDate.of(2021,10,7),List.of(waiters[3]),tables[3]),
+                new ClientEntity("47604450Q","Rosa",LocalDate.of(2021,10,7),List.of(waiters[0]),tables[4])
         };
         this.clientRepository.saveAll(Arrays.asList(clients));
     }

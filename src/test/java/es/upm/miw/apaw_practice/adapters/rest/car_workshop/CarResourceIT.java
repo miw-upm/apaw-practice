@@ -15,7 +15,7 @@ class CarResourceIT {
     private WebTestClient webTestClient;
 
     @Test
-    void testCreate(){
+    void testCreate() {
         Car car = new Car("1234ABC", true, new Owner("00000000Z"));
         this.webTestClient
                 .post()
@@ -27,7 +27,7 @@ class CarResourceIT {
     }
 
     @Test
-    void testCreateConflictLicensePlate(){
+    void testCreateConflictLicensePlate() {
         Car car = new Car("1111AAA", true, new Owner("00000000Z"));
         this.webTestClient
                 .post()
@@ -38,7 +38,7 @@ class CarResourceIT {
     }
 
     @Test
-    void testCreateConflictOwner(){
+    void testCreateConflictOwner() {
         Car car = new Car("1234ABC", true, new Owner("123456789A"));
         this.webTestClient
                 .post()
@@ -46,5 +46,17 @@ class CarResourceIT {
                 .body(BodyInserters.fromValue(car))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdateOwner() {
+        Owner owner = new Owner("99999999A", "Jane Doe");
+        String licensePlate = "1111AAA";
+        this.webTestClient
+                .put()
+                .uri(CarResource.CARS + CarResource.LICENSE_PLATE + CarResource.OWNERS_DNI,
+                        licensePlate, "00000000Z")
+                .exchange()
+                .expectStatus().isOk();
     }
 }

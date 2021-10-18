@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities;
 
+import es.upm.miw.apaw_practice.domain.models.game_wow.Drop;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -64,4 +66,10 @@ public class DropEntity {
     public void setFeature(FeatureEntity feature) {
         this.feature = feature;
     }
+
+    public Drop todrop() {
+        return new Drop(this.title,this.race,this.level,feature.toFeature());
+    }
+
+
 }

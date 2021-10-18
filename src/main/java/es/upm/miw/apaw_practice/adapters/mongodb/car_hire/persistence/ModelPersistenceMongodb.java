@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository("modelPersistence")
 public class ModelPersistenceMongodb implements ModelPersistence {
@@ -17,6 +18,13 @@ public class ModelPersistenceMongodb implements ModelPersistence {
     @Autowired
     public ModelPersistenceMongodb(ModelRepository modelRepository) {
         this.modelRepository = modelRepository;
+    }
+
+    @Override
+    public Stream<Model> readAll() {
+        return this.modelRepository.findAll()
+                .stream()
+                .map(ModelEntity::toModel);
     }
 
     @Override

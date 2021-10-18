@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.domain.services.hotel;
 
 import es.upm.miw.apaw_practice.domain.models.hotel.Director;
+import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.DirectorPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +21,13 @@ public class DirectorService {
 
     public List<Director> readEmails() {
         return this.directorPersistence.readEmails();
+    }
+
+    public List<Hotel> getHotelsByDirector(String dni) {
+        return this.directorPersistence.getHotelsByDirector(dni);
+    }
+
+    public List<HotelGuest> findHotelGuestDistinctDni(String dni) {
+        return this.directorPersistence.findHotelGuestDistinctDni(dni);
     }
 }

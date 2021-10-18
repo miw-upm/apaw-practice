@@ -9,6 +9,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @RestTestConfig
@@ -31,17 +32,29 @@ class WaiterResourceIT {
     }
 
     @Test
-    void testSearchBySectionAndCategory(){
+    void findBySection(){
         this.webTestClient
                 .get()
-                .uri(uriBuilder ->
-                        uriBuilder.path(WaiterResource.WAITERS+WaiterResource.SEARCHES)
-                                .queryParam("q", "section:dining room;category:manager")
-                                .build())
+                .uri(WaiterResource.WAITERS+WaiterResource.ID_SECTION, "dining room")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Waiter.class)
-                .value(waiters -> assertEquals("manager",waiters.get(0).getCategory()))
-                .value(waiters -> assertEquals("dining room",waiters.get(0).getSection()));
+                .value(waiters -> assertEquals("manager",waiters.get(0).getCategory()));
+    }
+
+    @Test
+    void testFindByNumberTable(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                                uriBuilder.path(WaiterResource.WAITERS+WaiterResource.SEARCH)
+                                        .queryParam("q", "number:2")
+                                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Waiter.class)
+                .value(waiters -> assertEquals(waiters.get(0).getSection(),"terrace"))
+                .value(waiters -> assertEquals(waiters.get(1).getSection(),"dining room"))
+                .value(waiters -> assertTrue(waiters.size() == 2));
     }
 }

@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Repository;
 public class HotelGuestPersistenceMongodb implements HotelGuestPersistence {
 
     private final HotelGuestRepository hotelGuestRepository;
+    private final HotelRepository hotelRepository;
 
     @Autowired
-    public HotelGuestPersistenceMongodb(HotelGuestRepository hotelGuestRepository) {
+    public HotelGuestPersistenceMongodb(HotelGuestRepository hotelGuestRepository, HotelRepository hotelRepository) {
         this.hotelGuestRepository = hotelGuestRepository;
+        this.hotelRepository = hotelRepository;
     }
 
     @Override
@@ -37,4 +40,6 @@ public class HotelGuestPersistenceMongodb implements HotelGuestPersistence {
     public void delete(String dni) {
         this.hotelGuestRepository.deleteByDni(dni);
     }
+
+
 }

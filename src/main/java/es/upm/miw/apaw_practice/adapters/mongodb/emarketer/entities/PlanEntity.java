@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.emarketer.entities;
 
+import es.upm.miw.apaw_practice.domain.models.emarketer.Plan;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,6 +26,11 @@ public class PlanEntity {
         this.description = description;
         this.price = price;
         this.duration = duration;
+    }
+
+    public PlanEntity(Plan plan) {
+        BeanUtils.copyProperties(plan, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
@@ -56,6 +63,12 @@ public class PlanEntity {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public Plan toPlan() {
+        Plan plan = new Plan();
+        BeanUtils.copyProperties(this, plan);
+        return plan;
     }
 
     @Override

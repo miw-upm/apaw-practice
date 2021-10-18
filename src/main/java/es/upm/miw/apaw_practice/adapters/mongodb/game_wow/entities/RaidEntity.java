@@ -1,11 +1,19 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities;
 
+import es.upm.miw.apaw_practice.domain.models.game_wow.Boss;
+import es.upm.miw.apaw_practice.domain.models.game_wow.Drop;
+import es.upm.miw.apaw_practice.domain.models.game_wow.Feature;
+import es.upm.miw.apaw_practice.domain.models.game_wow.Raid;
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import nonapi.io.github.classgraph.json.Id;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class RaidEntity {
@@ -22,6 +30,24 @@ public class RaidEntity {
 
     public RaidEntity() {
         //empty for framework
+    }
+
+    public RaidEntity(Raid raid) {
+        BeanUtils.copyProperties(raid, this);
+        this.bossListEntities =
+                raid.getBossList().stream().map(boss -> boss.toBossEntity(boss)).collect(Collectors.toList());
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public RaidEntity(Date date, String name, String dificulty,
+                      Integer playerNumber, Boolean finish, List<BossEntity> bossListEntities) {
+        this.date = date;
+        this.name = name;
+        this.dificulty = dificulty;
+        this.playerNumber = playerNumber;
+        this.finish = finish;
+        this.bossListEntities = bossListEntities;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
@@ -78,5 +104,26 @@ public class RaidEntity {
 
     public void setBossListEntities(List<BossEntity> bossListEntities) {
         this.bossListEntities = bossListEntities;
+    }
+
+    public void fromRaid(Raid raid) {
+        BeanUtils.copyProperties(raid, this);
+        this.bossListEntities = raid.getBossList().stream().map(boss -> boss.toBossEntity(boss)).collect(Collectors.toList());
+    }
+
+    public Raid toRaid() {
+        Raid raid = new Raid();
+        BeanUtils.copyProperties(this, raid, "bossListEntities");
+        raid.setBossList(this.getBossListEntities().stream().
+                filter(bossEntity -> null != bossEntity)
+                .map(boss -> boss.toBoss()).collect(Collectors.toList()));
+        List<Boss> bossItems = !raid.getBossList().isEmpty()
+                ? this.bossListEntities.stream()
+                    .map(BossEntity::toBoss)
+                    .collect(Collectors.toList())
+                : null;
+        raid.setBossList(bossItems);
+
+        return raid;
     }
 }

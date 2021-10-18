@@ -8,9 +8,12 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.music_manager.ArtistPer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 @Repository("artistPersistence")
 public class ArtistPersistenceMongodb implements ArtistPersistence {
     private final ArtistRepository artistRepository;
+    private static final String ARTISTNOTFOUND = "Artist not found:";
 
     @Autowired
     public ArtistPersistenceMongodb(ArtistRepository artistRepository) {
@@ -18,13 +21,36 @@ public class ArtistPersistenceMongodb implements ArtistPersistence {
     }
 
     @Override
-    public Artist update(String id, Artist artist) {
+    public Artist readByFirstNameAndFamilyName(String firstName, String familyName) {
+        return this.artistRepository
+                .findByFirstNameAndFamilyName(firstName, familyName)
+                .orElseThrow(() -> new NotFoundException(ARTISTNOTFOUND + " " + firstName + " " + familyName))
+                .toArtist();
+    }
+
+    @Override
+    public Artist update(Artist artist) {
         ArtistEntity artistEntity = this.artistRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Artist ID: " + id));
+                .findByFirstNameAndFamilyName(artist.getFirstName(), artist.getFamilyName())
+                .orElseThrow(() -> new NotFoundException(ARTISTNOTFOUND + " " +
+                        artist.getFirstName() + " " + artist.getFamilyName()));
         artistEntity.fromArtist(artist);
         return artistRepository
                 .save(artistEntity)
                 .toArtist();
+    }
+
+    @Override
+    public Artist readByFirstName(String firstName) {
+        return this.artistRepository
+                .findByFirstName(firstName)
+                .orElseThrow(() -> new NotFoundException("Artist full name: " + firstName))
+                .toArtist();
+    }
+
+    @Override
+    public Stream<Artist> readAll() {
+        return this.artistRepository.findAll()
+                .stream().map(ArtistEntity::toArtist);
     }
 }

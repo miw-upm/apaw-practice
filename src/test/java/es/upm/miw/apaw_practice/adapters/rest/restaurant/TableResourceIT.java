@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static es.upm.miw.apaw_practice.adapters.rest.restaurant.TableResource.*;
 
 
 @RestTestConfig
@@ -26,7 +27,7 @@ class TableResourceIT {
     void testReadHoldersByNumber(){
         this.webTestClient
                 .get()
-                .uri(TableResource.TABLES+"/1"+TableResource.RESERVES+TableResource.HOLDER)
+                .uri(TABLES+"/1"+RESERVES+HOLDER)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Reserve.class)
@@ -42,11 +43,35 @@ class TableResourceIT {
         );
         this.webTestClient
                 .put()
-                .uri(TableResource.TABLES+TableResource.ID+TableResource.RESERVES,"3")
+                .uri(TABLES+ID_NUMBER+RESERVES,"3")
                 .body(BodyInserters.fromValue(reserves))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Table.class)
                 .value(table -> assertTrue(table.getReserves().size() == 2));
+    }
+
+    @Test
+    void testUpdateStyle(){
+        this.webTestClient
+                .patch()
+                .uri(TABLES)
+                .body(BodyInserters.fromValue("classic"))
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void testFindByCategoryWaiter(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(TABLES+SEARCH)
+                                .queryParam("q","category:manager")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Table.class)
+                .value(table -> assertTrue(6 == table.getReserves().get(0).getNumPeople()));
     }
 }

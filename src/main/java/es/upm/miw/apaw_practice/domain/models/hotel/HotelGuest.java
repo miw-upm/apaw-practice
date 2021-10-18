@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class HotelGuest {
     private String dni;
@@ -13,11 +14,14 @@ public class HotelGuest {
         //empty for framework
     }
 
-    public HotelGuest(String name, String dni, LocalDateTime entryDate, LocalDateTime departureDate) {
-        this.name = name;
-        this.dni = dni;
-        this.entryDate = entryDate;
-        this.departureDate = departureDate;
+    public static HotelGuestBuilders.Dni builder() {
+        return new Builder();
+    }
+
+    public static HotelGuest ofDni(HotelGuest hotelGuest) {
+        HotelGuest hotelGuestDto = new HotelGuest();
+        hotelGuestDto.setDni(hotelGuest.getDni());
+        return hotelGuestDto;
     }
 
     public String getDni() {
@@ -67,5 +71,55 @@ public class HotelGuest {
                 ", entryDate=" + entryDate +
                 ", departureDate=" + departureDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HotelGuest that = (HotelGuest) o;
+        return Objects.equals(dni, that.dni) && Objects.equals(name, that.name) && Objects.equals(entryDate, that.entryDate) && Objects.equals(departureDate, that.departureDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni, name, entryDate, departureDate);
+    }
+
+    public static class Builder implements HotelGuestBuilders.Dni, HotelGuestBuilders.Name, HotelGuestBuilders.EntryDate, HotelGuestBuilders.DepartureDate, HotelGuestBuilders.Optionals {
+        private final HotelGuest hotelGuest;
+
+        public Builder() {
+            this.hotelGuest = new HotelGuest();
+        }
+
+        @Override
+        public HotelGuestBuilders.Name dni(String dni) {
+            this.hotelGuest.dni = dni;
+            return this;
+        }
+
+        @Override
+        public HotelGuestBuilders.EntryDate name(String name) {
+            this.hotelGuest.name = name;
+            return this;
+        }
+
+        @Override
+        public HotelGuestBuilders.DepartureDate entryDate(LocalDateTime entryDate) {
+            this.hotelGuest.entryDate = entryDate;
+            return this;
+        }
+
+        @Override
+        public HotelGuestBuilders.Optionals departureDate(LocalDateTime departureDate) {
+            this.hotelGuest.departureDate = departureDate;
+            return this;
+        }
+
+        @Override
+        public HotelGuest build() {
+            return this.hotelGuest;
+        }
     }
 }
