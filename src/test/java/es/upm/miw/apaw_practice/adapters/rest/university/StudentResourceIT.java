@@ -56,15 +56,26 @@ public class StudentResourceIT {
                 .get()
                 .uri(uriBuilder ->
                         uriBuilder.path(STUDENTS + SEARCH)
-                                .queryParam("q", "classroomSchool:ETSIINF")
+                                .queryParam("q", "classroomSchool:ETSISI")
                                 .build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(List.class)
-                .value(System.out::println)
                 .consumeWith(dniList -> {
                     assertNotNull(dniList.getResponseBody());
                     assertTrue(dniList.getResponseBody().containsAll(dniCorrectList));
                 });
+    }
+
+    @Test
+    void testFindDniListByClassroomSchoolBadRequest() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(STUDENTS + SEARCH)
+                                .queryParam("q", "classroom:ETSISI")
+                                .build())
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 }
