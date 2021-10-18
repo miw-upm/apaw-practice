@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @RestTestConfig
-public class VehicleResourceIT {
+class VehicleResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
