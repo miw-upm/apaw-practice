@@ -75,5 +75,9 @@ public class PatientEntity {
         this.doctor = doctor;
     }
 
-
+    public Patient toPatient() {
+        Patient patient = new Patient();
+        BeanUtils.copyProperties(this,patient);
+        return patient;
+    }
 }

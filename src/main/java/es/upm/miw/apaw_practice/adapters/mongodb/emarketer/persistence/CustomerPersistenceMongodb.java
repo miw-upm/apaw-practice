@@ -23,4 +23,20 @@ public class CustomerPersistenceMongodb implements CustomerPersistence {
         return this.customerRepository.findAll().stream()
                 .map(CustomerEntity::toCustomer);
     }
+
+    @Override
+    public Customer readByName(String name) {
+        return this.customerRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Customer with name: " + name))
+                .toCustomer();
+    }
+
+    @Override
+    public Customer update(String name, Customer customer) {
+        CustomerEntity customerToUpdate = this.customerRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Customer with name: " + name));
+        customerToUpdate.setType(customer.getType());
+        return this.customerRepository.save(customerToUpdate).toCustomer();
+    }
+
 }

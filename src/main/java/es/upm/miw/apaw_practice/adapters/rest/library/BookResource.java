@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping(BookResource.BOOKS)
 public class BookResource {
-    static final String BOOKS ="/library/books";
+    static final String BOOKS = "/library/books";
 
     private final BookService bookService;
 
@@ -21,7 +21,7 @@ public class BookResource {
     }
 
     @GetMapping
-    public Stream<Book> findAll(){
+    public Stream<Book> findAll() {
         return this.bookService.findAll();
     }
 }

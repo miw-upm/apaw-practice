@@ -27,7 +27,7 @@ public class BossRepositoryIT {
         assertEquals("Neck", bossesByEffort.get(0).getDropList().get(1).getFeature().getPart());
         assertNull (bossesByEffort.get(0).getDropList().get(1).getFeature().getSpellPower(),"spellPower = null");
         assertEquals(79, bossesByEffort.get(0).getDropList().get(1).getFeature().getMeleeAtack());
-        assertNull (bossesByEffort.get(0).getDropList().get(1).getFeature().getTemple(),"temple = null");
+        assertEquals(0,bossesByEffort.get(0).getDropList().get(1).getFeature().getTemple());
         assertNull (bossesByEffort.get(0).getDropList().get(1).getFeature().getExtraSpell(),"extraSpell = null");
     }
 

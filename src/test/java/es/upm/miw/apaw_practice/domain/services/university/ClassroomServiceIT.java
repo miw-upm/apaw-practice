@@ -6,6 +6,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.university.ClassroomPer
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestConfig
@@ -22,5 +23,11 @@ public class ClassroomServiceIT {
         this.classroomService.delete("ETSISI", 4302);
         assertThrows(NotFoundException.class, () ->
                 this.classroomPersistence.readBySchoolAndNumber("ETSISI", 4302));
+    }
+
+    @Test
+    void testFindCapacitySumByStudentDni() {
+        Integer CapacitySum = this.classroomService.findCapacitySumByStudentDni("112233445E");
+        assertEquals(70, CapacitySum);
     }
 }

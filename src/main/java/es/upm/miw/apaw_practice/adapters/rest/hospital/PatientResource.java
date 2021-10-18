@@ -28,4 +28,9 @@ public class PatientResource {
     public void delete(@PathVariable String dni) {
         this.patientService.delete(dni);
     }
+
+    @PutMapping(DNI_ID)
+    public Patient update(@PathVariable String dni, @RequestBody Patient patient){
+        return this.patientService.update(dni,patient);
+    }
 }
