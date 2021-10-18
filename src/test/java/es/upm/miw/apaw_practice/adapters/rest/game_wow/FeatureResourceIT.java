@@ -37,7 +37,7 @@ public class FeatureResourceIT {
         this.webTestClient
                 .patch()
                 .uri(FeatureResource.GAMEWOW_FEATURES)
-                .body(BodyInserters.fromValue(200))
+                .body(BodyInserters.fromValue(0))
                 .exchange()
                 .expectStatus().isOk();
     }

@@ -28,5 +28,6 @@ public class FeatureSeviceIT {
         assertEquals(150, this.featurePersistence.read("Chest").getTemple());
         assertEquals(150, this.featurePersistence.read("Waist").getTemple());
         assertEquals(150, this.featurePersistence.read("Legs").getTemple());
+        this.featureService.updateTemple(0);
     }
 }
