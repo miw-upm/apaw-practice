@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.music_manager;
 
+import java.util.Objects;
+
 public class Artist {
     private String firstName;
     private String familyName;
@@ -37,6 +39,19 @@ public class Artist {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Artist)) return false;
+        Artist artist = (Artist) o;
+        return Objects.equals(firstName, artist.firstName) && Objects.equals(familyName, artist.familyName) && Objects.equals(age, artist.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, familyName, age);
     }
 
     @Override
