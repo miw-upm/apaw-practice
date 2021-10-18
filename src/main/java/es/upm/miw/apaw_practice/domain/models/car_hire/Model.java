@@ -9,7 +9,7 @@ public class Model {
     private String description;
     private Integer enginePower;
 
-    private List<Vehicle> vehicleList = new ArrayList<Vehicle>();
+    private List<Vehicle> vehicleList = new ArrayList<>();
 
     public Model() {
         //empty for framework
