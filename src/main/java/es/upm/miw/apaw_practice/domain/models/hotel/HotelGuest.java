@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import org.springframework.security.core.userdetails.User;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,6 +21,10 @@ public class HotelGuest {
         this.dni = dni;
         this.entryDate = entryDate;
         this.departureDate = departureDate;
+    }
+
+    public static HotelGuestBuilders.Dni builder() {
+        return new Builder();
     }
 
     public static HotelGuest ofDni(HotelGuest hotelGuest){
@@ -87,5 +93,42 @@ public class HotelGuest {
     @Override
     public int hashCode() {
         return Objects.hash(dni, name, entryDate, departureDate);
+    }
+
+    public static class Builder implements HotelGuestBuilders.Dni, HotelGuestBuilders.Name, HotelGuestBuilders.EntryDate, HotelGuestBuilders.DepartureDate, HotelGuestBuilders.Optionals{
+        private final HotelGuest hotelGuest;
+
+        public Builder() {
+            this.hotelGuest = new HotelGuest();
+        }
+
+        @Override
+        public HotelGuestBuilders.Name dni(String dni) {
+            this.hotelGuest.dni = dni;
+            return this;
+        }
+
+        @Override
+        public HotelGuestBuilders.EntryDate name(String name) {
+            this.hotelGuest.name = name;
+            return this;
+        }
+
+        @Override
+        public HotelGuestBuilders.DepartureDate entryDate(LocalDateTime entryDate) {
+            this.hotelGuest.entryDate = entryDate;
+            return this;
+        }
+
+        @Override
+        public HotelGuestBuilders.Optionals departureDate(LocalDateTime departureDate) {
+            this.hotelGuest.departureDate = departureDate;
+            return this;
+        }
+
+        @Override
+        public HotelGuest build() {
+            return this.hotelGuest;
+        }
     }
 }
