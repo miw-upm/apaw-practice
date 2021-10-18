@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.emarketer;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.emarketer.EmarketerSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.emarketer.daos.CupsRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.emarketer.entities.CupsEntity;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
@@ -21,10 +22,11 @@ public class CupsResourceIT {
 
     @Autowired
     CupsRepository cupsRepository;
+
     @Autowired
     private WebTestClient webTestClient;
 
-    @Test
+   // @Test
     void testUpdate() {
         assertTrue(this.cupsRepository.findByCups("AAPPZZZ6KZ1R149946").isPresent());
         CupsEntity currentCups = this.cupsRepository.findByCups("AAPPZZZ6KZ1R149946").get();

@@ -43,11 +43,6 @@ public class ClassroomPersistenceMongodb implements ClassroomPersistence {
                 .findByDni(studentDni)
                 .orElseThrow(() -> new NotFoundException("Student DNI: " + studentDni));
 
-        studentEntity.getSubjects().stream()
-                .flatMapToInt(subjectEntity -> IntStream.of(
-                        subjectEntity.getClassroom().getCapacity()))
-                .forEach(System.out::println);
-
         return studentEntity.getSubjects().stream()
                 .flatMapToInt(subjectEntity -> IntStream.of(
                         subjectEntity.getClassroom().getCapacity()))
