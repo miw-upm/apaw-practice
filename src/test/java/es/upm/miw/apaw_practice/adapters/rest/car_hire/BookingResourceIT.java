@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
-public class BookingResourceIT {
+class BookingResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

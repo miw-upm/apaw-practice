@@ -13,7 +13,7 @@ public class Director {
         //empty for framework
     }
 
-    public Director(String dni, String email, Integer telephone,List<Hotel> hotelList) {
+    public Director(String dni, String email, Integer telephone, List<Hotel> hotelList) {
         this.dni = dni;
         this.email = email;
         this.telephone = telephone;
