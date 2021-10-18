@@ -21,12 +21,12 @@ public class Cups {
         this.customer = customer;
     }
 
-    public String getId() {
+    public String getCups() {
         return cups;
     }
 
-    public void setId(String id) {
-        this.cups = id;
+    public void setCups(String cups) {
+        this.cups = cups;
     }
 
     public BigDecimal getEnergy() {

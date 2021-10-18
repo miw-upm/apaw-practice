@@ -30,6 +30,11 @@ public class HospitalEntity {
         this.patients = patients;
     }
 
+    public HospitalEntity(Hospital hospital){
+        BeanUtils.copyProperties(hospital, this);
+        this.id = UUID.randomUUID().toString();
+    }
+
     public String getId() {
         return id;
     }
@@ -70,6 +75,12 @@ public class HospitalEntity {
         this.patients = patients;
     }
 
+    public Hospital toHospital() {
+        Hospital hospital = new Hospital();
+        BeanUtils.copyProperties(this,hospital);
+        return hospital;
+    }
+
     @Override
     public String toString() {
         return "HospitalEntity{" +
@@ -80,4 +91,5 @@ public class HospitalEntity {
                 ", patients=" + this.patients +
                 '}';
     }
+
 }

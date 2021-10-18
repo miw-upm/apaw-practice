@@ -30,9 +30,12 @@ public class HotelGuestEntity {
     }
 
     public HotelGuest toHotelGuest() {
-        HotelGuest hotelGuest = new HotelGuest();
-        BeanUtils.copyProperties(this, hotelGuest);
-        return hotelGuest;
+        return HotelGuest.builder()
+                .dni(this.dni)
+                .name(this.name)
+                .entryDate(this.entryDate)
+                .departureDate(this.departureDate)
+                .build();
     }
 
     public String getId() {
