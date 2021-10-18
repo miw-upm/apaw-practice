@@ -87,7 +87,7 @@ class HotelResourceIT {
 
         this.webTestClient
                 .put()
-                .uri(HotelResource.HOTELS + HotelResource.ID_ID  + HotelResource.PRICE_ROOM, 0, 56)
+                .uri(HotelResource.HOTELS + HotelResource.ID_ID + HotelResource.PRICE_ROOM, 0, 56)
                 .body(BodyInserters.fromValue(roomParams))
                 .exchange()
                 .expectStatus().isOk();
@@ -155,7 +155,7 @@ class HotelResourceIT {
     }
 
     @Test
-    void testFindHotelNameListByGuestName(){
+    void testFindHotelNameListByGuestName() {
         String name = "Pedro";
         this.webTestClient
                 .get()
@@ -169,7 +169,7 @@ class HotelResourceIT {
 
 
     @Test
-    void testFindHotelNameListByGuestNameNotFound(){
+    void testFindHotelNameListByGuestNameNotFound() {
         String name = "raquel";
         this.webTestClient
                 .get()

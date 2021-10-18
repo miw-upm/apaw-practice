@@ -10,6 +10,10 @@ public class Drug {
     private Boolean commercialized;
     private BigDecimal price;
 
+    public Drug() {
+        //empty for framework
+    }
+
     public Drug(String barcode, String name, Boolean commercialized, BigDecimal price) {
         this.barcode = barcode;
         this.name = name;
