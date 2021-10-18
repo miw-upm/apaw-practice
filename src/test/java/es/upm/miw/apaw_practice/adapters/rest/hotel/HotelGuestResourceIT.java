@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
-import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +12,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @RestTestConfig
@@ -117,7 +114,6 @@ class HotelGuestResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
-
 
 
 }

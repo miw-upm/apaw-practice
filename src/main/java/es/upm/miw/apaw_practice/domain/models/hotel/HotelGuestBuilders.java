@@ -3,23 +3,23 @@ package es.upm.miw.apaw_practice.domain.models.hotel;
 import java.time.LocalDateTime;
 
 public interface HotelGuestBuilders {
-    interface Dni{
+    interface Dni {
         Name dni(String dni);
     }
 
-    interface Name{
+    interface Name {
         EntryDate name(String name);
     }
 
-    interface EntryDate{
+    interface EntryDate {
         DepartureDate entryDate(LocalDateTime entryDate);
     }
 
-    interface DepartureDate{
-       Optionals departureDate(LocalDateTime departureDate);
+    interface DepartureDate {
+        Optionals departureDate(LocalDateTime departureDate);
     }
 
-    interface Optionals{
+    interface Optionals {
         HotelGuest build();
     }
 

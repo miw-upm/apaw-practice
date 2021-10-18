@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
-import org.springframework.security.core.userdetails.User;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -20,7 +18,7 @@ public class HotelGuest {
         return new Builder();
     }
 
-    public static HotelGuest ofDni(HotelGuest hotelGuest){
+    public static HotelGuest ofDni(HotelGuest hotelGuest) {
         HotelGuest hotelGuestDto = new HotelGuest();
         hotelGuestDto.setDni(hotelGuest.getDni());
         return hotelGuestDto;
@@ -88,7 +86,7 @@ public class HotelGuest {
         return Objects.hash(dni, name, entryDate, departureDate);
     }
 
-    public static class Builder implements HotelGuestBuilders.Dni, HotelGuestBuilders.Name, HotelGuestBuilders.EntryDate, HotelGuestBuilders.DepartureDate, HotelGuestBuilders.Optionals{
+    public static class Builder implements HotelGuestBuilders.Dni, HotelGuestBuilders.Name, HotelGuestBuilders.EntryDate, HotelGuestBuilders.DepartureDate, HotelGuestBuilders.Optionals {
         private final HotelGuest hotelGuest;
 
         public Builder() {
