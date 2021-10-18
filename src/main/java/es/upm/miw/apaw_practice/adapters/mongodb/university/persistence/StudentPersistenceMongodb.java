@@ -50,6 +50,10 @@ public class StudentPersistenceMongodb implements StudentPersistence {
 
     @Override
     public Stream<Student> findStudentsByClassroomSchool(String classroomSchool) {
+        for (SubjectEntity s : this.subjectRepository.findAll()) {
+            System.out.println(s.getTopic() + " ; " + s.getClassroom().getSchool());
+        }
+
         List<Integer> subjectEntityList = this.subjectRepository.findAll().stream()
                 .filter(subjectEntity -> subjectEntity.getClassroom()
                         .getSchool().equals(classroomSchool))
