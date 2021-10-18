@@ -1,6 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.library.entities;
 
+import es.upm.miw.apaw_practice.domain.models.library.Category;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
@@ -10,6 +13,7 @@ import java.util.UUID;
 public class CategoryEntity {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String name;
     private String description;
 
@@ -21,6 +25,16 @@ public class CategoryEntity {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
+    }
+
+    public Category toCategory() {
+        Category category = new Category();
+        BeanUtils.copyProperties(this, category);
+        return category;
+    }
+
+    public void fromCategory(Category category) {
+        BeanUtils.copyProperties(category, this);
     }
 
     public String getId() {

@@ -18,12 +18,11 @@ public class AuthorPersistenceMongodb implements AuthorPersistence {
         this.authorRepository = authorRepository;
     }
 
-
     @Override
-    public Author update(String id, Author author) {
+    public Author update(Author author) {
         AuthorEntity authorEntity = this.authorRepository
-                .findById(author.getId())
-                .orElseThrow(()-> new NotFoundException("Author id: "+ author.getId()));
+                .findByFullName(author.getFullName())
+                .orElseThrow(() -> new NotFoundException("Author fullName: " + author.getFullName()));
         authorEntity.fromAuthor(author);
         return this.authorRepository.save(authorEntity).toAuthor();
     }
