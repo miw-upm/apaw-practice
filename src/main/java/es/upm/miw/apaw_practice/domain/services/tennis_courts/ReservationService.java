@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.tennis_courts.Reservati
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class ReservationService {
     private final ReservationPersistence reservationPersistence;
@@ -13,7 +15,7 @@ public class ReservationService {
         this.reservationPersistence = reservationPersistence;
     }
 
-    public void delete(String ownerName){
-        this.reservationPersistence.delete(ownerName);
+    public void delete(String ownerName, LocalDateTime date){
+        this.reservationPersistence.delete(ownerName, date);
     }
 }
