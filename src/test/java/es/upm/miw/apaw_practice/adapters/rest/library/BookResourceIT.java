@@ -19,4 +19,16 @@ class BookResourceIT {
                 .expectStatus().isOk();
 
     }
+
+    @Test
+    void testFindCategoryNameByAuthorFullName(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(BookResource.BOOKS + BookResource.FULLNAME)
+                                .queryParam("fullname", "Alda do Espírito Santo")
+                                .build())
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

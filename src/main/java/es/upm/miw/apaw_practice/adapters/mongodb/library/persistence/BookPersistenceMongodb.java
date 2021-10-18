@@ -26,4 +26,11 @@ public class BookPersistenceMongodb implements BookPersistence {
                 .map(BookEntity::toBook);
 
     }
+
+    @Override
+    public Stream<String> findDistinctCategoryNameByAuthorFullName(String authorFullName) {
+        return bookRepository.findAll().stream()
+                .filter(bookEntity -> bookEntity.getAuthors().stream().allMatch(authorEntity->authorEntity.getFullName().equals(authorFullName)))
+                .map(bookEntity -> bookEntity.getCategory().getName()).distinct();
+    }
 }
