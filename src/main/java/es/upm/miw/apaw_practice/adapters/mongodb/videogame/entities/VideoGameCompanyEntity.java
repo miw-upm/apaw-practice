@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
-import es.upm.miw.apaw_practice.domain.models.videogame.Console;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Document
-public class CompanyEntity {
+public class VideoGameCompanyEntity {
 
     @Id
     private String id;
@@ -19,18 +18,18 @@ public class CompanyEntity {
     private String name;
     private LocalDate formationDate;
     private Boolean stockMarket;
-    private List<Console> consoles;
+    private List<PlatformEntity> platforms;
 
-    public CompanyEntity() {
+    public VideoGameCompanyEntity() {
         //empty from framework
     }
 
-    public CompanyEntity(String name, LocalDate formationDate, Boolean stockMarket, List<Console> consoles) {
+    public VideoGameCompanyEntity(String name, LocalDate formationDate, Boolean stockMarket, List<PlatformEntity> platforms) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.formationDate = formationDate;
         this.stockMarket = stockMarket;
-        this.consoles = consoles;
+        this.platforms = platforms;
     }
 
     public String getId() {
@@ -65,22 +64,22 @@ public class CompanyEntity {
         this.stockMarket = stockMarket;
     }
 
-    public List<Console> getConsoles() {
-        return consoles;
+    public List<PlatformEntity> getPlatforms() {
+        return platforms;
     }
 
-    public void setConsoles(List<Console> consoles) {
-        this.consoles = consoles;
+    public void setPlatforms(List<PlatformEntity> platforms) {
+        this.platforms = platforms;
     }
 
     @Override
     public String toString() {
-        return "CompanyEntity{" +
+        return "VideoGameCompanyEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", formationDate=" + formationDate +
                 ", stockMarket=" + stockMarket +
-                ", consoles=" + consoles +
+                ", platforms=" + platforms +
                 '}';
     }
 }

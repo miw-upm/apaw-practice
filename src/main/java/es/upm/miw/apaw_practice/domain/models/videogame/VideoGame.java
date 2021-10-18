@@ -9,18 +9,18 @@ public class VideoGame {
     private LocalDate releaseDate;
     private String rating;
     private Critic critic;
-    private List<Console> consoles;
+    private List<Platform> platforms;
 
     public VideoGame() {
         //empty for framework
     }
 
-    public VideoGame(String title, LocalDate releaseDate, String rating, List<Console> consoles) {
+    public VideoGame(String title, LocalDate releaseDate, String rating, Critic critic, List<Platform> platforms) {
         this.title = title;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.critic = new Critic();
-        this.consoles = consoles;
+        this.critic = critic;
+        this.platforms = platforms;
     }
 
     public String getTitle() {
@@ -55,12 +55,12 @@ public class VideoGame {
         this.critic = critic;
     }
 
-    public List<Console> getConsoles() {
-        return consoles;
+    public List<Platform> getConsoles() {
+        return platforms;
     }
 
-    public void setConsoles(List<Console> consoles) {
-        this.consoles = consoles;
+    public void setConsoles(List<Platform> platforms) {
+        this.platforms = platforms;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class VideoGame {
                 ", releaseDate=" + releaseDate +
                 ", rating='" + rating + '\'' +
                 ", critic=" + critic +
-                ", consoles=" + consoles +
+                ", consoles=" + platforms +
                 '}';
     }
 }

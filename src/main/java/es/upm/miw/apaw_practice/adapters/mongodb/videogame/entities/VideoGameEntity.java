@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
-import es.upm.miw.apaw_practice.domain.models.videogame.Console;
 import es.upm.miw.apaw_practice.domain.models.videogame.Critic;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -23,19 +22,19 @@ public class VideoGameEntity {
     private String rating;
     private Critic critic;
     @DBRef
-    private List<Console> consoles;
+    private List<PlatformEntity> platforms;
 
     public VideoGameEntity() {
         //empty for framework
     }
 
-    public VideoGameEntity(String title, LocalDate releaseDate, String rating, Critic critic, List<Console> consoles) {
+    public VideoGameEntity(String title, LocalDate releaseDate, String rating, Critic critic, List<PlatformEntity> platforms) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.releaseDate = releaseDate;
         this.rating = rating;
         this.critic = critic;
-        this.consoles = consoles;
+        this.platforms = platforms;
     }
 
     public String getId() {
@@ -78,12 +77,12 @@ public class VideoGameEntity {
         this.critic = critic;
     }
 
-    public List<Console> getConsoles() {
-        return consoles;
+    public List<PlatformEntity> getPlatforms() {
+        return platforms;
     }
 
-    public void setConsoles(List<Console> consoles) {
-        this.consoles = consoles;
+    public void setPlatforms(List<PlatformEntity> platforms) {
+        this.platforms = platforms;
     }
 
     @Override
@@ -94,7 +93,7 @@ public class VideoGameEntity {
                 ", releaseDate=" + releaseDate +
                 ", rating='" + rating + '\'' +
                 ", critic=" + critic +
-                ", consoles=" + consoles +
+                ", platforms=" + platforms +
                 '}';
     }
 }

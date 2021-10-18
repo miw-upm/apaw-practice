@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;
 
 @Document
-public class ConsoleEntity {
+public class PlatformEntity {
 
     @Id
     private String id;
@@ -15,14 +15,16 @@ public class ConsoleEntity {
 
     private String consoleName;
     private String model;
-    private String color;
     private String memory;
 
-    public ConsoleEntity(String consoleName, String model, String color, String memory) {
+    public PlatformEntity() {
+        //empty from framework
+    }
+
+    public PlatformEntity(String consoleName, String model, String memory) {
         this.id = UUID.randomUUID().toString();
         this.consoleName = consoleName;
         this.model = model;
-        this.color = color;
         this.memory = memory;
     }
 
@@ -50,14 +52,6 @@ public class ConsoleEntity {
         this.model = model;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public String getMemory() {
         return memory;
     }
@@ -68,11 +62,10 @@ public class ConsoleEntity {
 
     @Override
     public String toString() {
-        return "ConsoleEntity{" +
+        return "PlatformEntity{" +
                 "id='" + id + '\'' +
                 ", consoleName='" + consoleName + '\'' +
                 ", model='" + model + '\'' +
-                ", color='" + color + '\'' +
                 ", memory='" + memory + '\'' +
                 '}';
     }
