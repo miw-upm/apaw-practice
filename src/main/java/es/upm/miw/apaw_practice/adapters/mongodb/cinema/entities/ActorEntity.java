@@ -76,4 +76,8 @@ public class ActorEntity {
                 ", age=" + age +
                 '}';
     }
+
+    public void fromActor(Actor actor) {
+        BeanUtils.copyProperties(actor, this);
+    }
 }

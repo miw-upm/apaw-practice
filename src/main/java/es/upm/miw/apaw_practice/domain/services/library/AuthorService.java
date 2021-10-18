@@ -16,7 +16,7 @@ public class AuthorService {
     }
 
 
-    public Author update(String id, Author authorParam) {
-        return this.authorPersistence.update(id, authorParam);
+    public Author update(Author authorParam) {
+        return this.authorPersistence.update(authorParam);
     }
 }
