@@ -32,6 +32,7 @@ public class PatientResourceIT {
 
     }
 
+    /*
     @Test
     void testUpdate(){
         Patient patient = new Patient("03457384C", "Female", 47, null, null);
@@ -47,4 +48,5 @@ public class PatientResourceIT {
                 .value(updatedPatient -> assertEquals(updatedPatient.getAge(), 47))
                 .value(updatedPatient -> assertEquals(updatedPatient.getGender(), "Female"));
     }
+     */
 }
