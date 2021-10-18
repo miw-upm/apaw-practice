@@ -6,7 +6,9 @@ import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.department.DepartmentEmployee;
 import es.upm.miw.apaw_practice.domain.persistence_ports.department.DepartmentEmployeePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository("departmentEmployeePersistence")
 public class DepartmentEmployeePersistenceMongodb implements DepartmentEmployeePersistence {
 
     private DepartmentEmployeeRepository departmentEmployeeRepository;

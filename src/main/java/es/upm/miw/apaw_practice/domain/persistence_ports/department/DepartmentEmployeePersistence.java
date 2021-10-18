@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 public interface DepartmentEmployeePersistence {
 
     DepartmentEmployee create(DepartmentEmployee departmentEmployee);
+
     DepartmentEmployee read(String dni);
+
     boolean existDni(String dni);
 }

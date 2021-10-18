@@ -22,7 +22,7 @@ public class DepartmentEmployeeRepositoryIT {
                 .get();
         assertEquals(false, departmentEmployeeEntity.getActive());
         assertEquals(1984, departmentEmployeeEntity.getBirthday().getYear());
-        assertEquals(8, departmentEmployeeEntity.getBirthday().getMonth());
+        assertEquals(8, departmentEmployeeEntity.getBirthday().getMonthValue());
         assertEquals(27, departmentEmployeeEntity.getBirthday().getDayOfMonth());
     }
 }

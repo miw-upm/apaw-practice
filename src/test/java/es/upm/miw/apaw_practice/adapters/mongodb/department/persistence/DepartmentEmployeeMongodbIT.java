@@ -40,7 +40,7 @@ public class DepartmentEmployeeMongodbIT {
         DepartmentEmployee departmentEmployeeBD = this.departmentEmployeePersistenceMongodb.read("08553821F");
         assertEquals(true, departmentEmployeeBD.getActive());
         assertEquals(1980, departmentEmployeeBD.getBirthday().getYear());
-        assertEquals(4, departmentEmployeeBD.getBirthday().getMonth());
+        assertEquals(4, departmentEmployeeBD.getBirthday().getMonthValue());
         assertEquals(11, departmentEmployeeBD.getBirthday().getDayOfMonth());
     }
 }
