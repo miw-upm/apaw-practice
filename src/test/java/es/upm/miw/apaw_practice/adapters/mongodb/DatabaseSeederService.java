@@ -19,6 +19,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeed
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.TvSeriesSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.UniversitySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.VetClinicSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.VideoGameSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.ZooSeederService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,7 @@ public class DatabaseSeederService {
     private final PharmacySeederService pharmacySeederService;
     private final HospitalSeederService hospitalSeederService;
     private final LibrarySeederService librarySeederService;
+    private final VideoGameSeederService videoGameSeederService;
     private final DepartmentSeederService departmentSeederService;
 
     @Autowired
@@ -57,8 +59,10 @@ public class DatabaseSeederService {
                                  FootballSeederService footballSeederService, CarHireSeederService carHireSeederService,
                                  RestaurantSeederService restaurantSeederService, MusicManagerSeederService musicManagerSeederService,
                                  EmarketerSeederService emarketerSeederService, GameWowSeederService gameWowSeederService,
-                                 PharmacySeederService pharmacySeederService, HospitalSeederService hospitalSeederService,
-                                 LibrarySeederService librarySeederService, DepartmentSeederService departmentSeederService) {
+                                 HospitalSeederService hospitalSeederService, LibrarySeederService librarySeederService,
+                                 DepartmentSeederService departmentSeederService, VideoGameSeederService videoGameSeederService,
+                                 PharmacySeederService pharmacySeederService ) {
+
 
         this.shopSeederService = shopSeederService;
         this.zooSeederService = zooSeederService;
@@ -79,7 +83,9 @@ public class DatabaseSeederService {
         this.hospitalSeederService = hospitalSeederService;
         this.librarySeederService = librarySeederService;
         this.departmentSeederService = departmentSeederService;
+        this.videoGameSeederService = videoGameSeederService;
         this.gameWowSeederService = gameWowSeederService;
+
         this.seedDatabase();
     }
 
@@ -104,7 +110,7 @@ public class DatabaseSeederService {
         this.hospitalSeederService.seedDatabase();
         this.librarySeederService.seedDatabase();
         this.departmentSeederService.seedDatabase();
-
+        this.videoGameSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -129,7 +135,7 @@ public class DatabaseSeederService {
         this.hospitalSeederService.deleteAll();
         this.librarySeederService.deleteAll();
         this.departmentSeederService.deleteAll();
-
+        this.videoGameSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
