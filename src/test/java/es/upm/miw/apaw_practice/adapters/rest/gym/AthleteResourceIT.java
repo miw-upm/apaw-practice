@@ -18,6 +18,21 @@ public class AthleteResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
+
+    @Test
+    void testFindeByNie() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(AthleteResource.athlets + AthleteResource.ID)
+                                .queryParam("nie", "55555555a")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Athlete.class)
+                .value(athletes -> assertEquals("ana", athletes.get(0).getName()));
+    }
+
     @Test
     void testCreate() {
         Athlete athlete =
@@ -78,17 +93,4 @@ public class AthleteResourceIT {
     }
 
 
-    @Test
-    void testFindeByNie() {
-        this.webTestClient
-                .get()
-                .uri(uriBuilder ->
-                        uriBuilder.path(AthleteResource.athlets + AthleteResource.ID)
-                                .queryParam("nie", "55555555a")
-                                .build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(Athlete.class)
-                .value(athletes -> assertEquals("ana", athletes.get(0).getName()));
-    }
 }
