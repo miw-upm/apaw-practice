@@ -1,6 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities;
 
+import es.upm.miw.apaw_practice.domain.models.gym.Lesson;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +16,7 @@ import java.util.UUID;
 public class LessonEntity {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String title;
     private LocalDateTime time;
     private String description;
@@ -80,6 +84,12 @@ public class LessonEntity {
 
     public void setAthlete(List<AthleteEntity> athlete) {
         this.athlete = athlete;
+    }
+
+    public Lesson toLesson() {
+        Lesson lesson = new Lesson();
+        BeanUtils.copyProperties(this, lesson);
+        return lesson;
     }
 
     @Override
