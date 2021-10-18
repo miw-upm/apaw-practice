@@ -25,7 +25,7 @@ public class SongResource {
     @DeleteMapping(SONGTITLE_ID)
     public void delete(@PathVariable String songTitle) { this.songService.delete(songTitle); }
 
-    @DeleteMapping(SONGTITLE + SEARCH)
+    @GetMapping(SONGTITLE + SEARCH)
     public Stream<String> getSongTitlesByArtist(@RequestParam String q) {
         return this.songService.findSongTitlesByArtistFirstName(new LexicalAnalyzer().extractWithAssure(q, "firstName"));
     }
