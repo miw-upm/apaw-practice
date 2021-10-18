@@ -4,14 +4,14 @@ import java.util.List;
 
 public class ActiveIngredient {
 
+    private Drug drug;
     private List<String> components;
     private Integer dose;
-    private Drug drug;
 
-    public ActiveIngredient(List<String> components, Integer dose, Drug drug) {
+    public ActiveIngredient(Drug drug,List<String> components, Integer dose) {
+        this.drug = drug;
         this.components = components;
         this.dose = dose;
-        this.drug = drug;
     }
 
     public List<String> getComponents() {
