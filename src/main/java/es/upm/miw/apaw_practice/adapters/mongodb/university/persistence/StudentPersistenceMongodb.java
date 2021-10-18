@@ -10,6 +10,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.university.StudentPersi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,14 +50,15 @@ public class StudentPersistenceMongodb implements StudentPersistence {
 
     @Override
     public Stream<Student> findStudentsByClassroomSchool(String classroomSchool) {
-        Stream<SubjectEntity> subjectEntities = this.subjectRepository.findAll().stream()
+        List<Integer> subjectEntityList = this.subjectRepository.findAll().stream()
                 .filter(subjectEntity -> subjectEntity.getClassroom()
-                        .getSchool().equals(classroomSchool));
+                        .getSchool().equals(classroomSchool))
+                .map(SubjectEntity::getReference)
+                .collect(Collectors.toList());
 
         return this.studentRepository.findAll().stream()
                 .filter(studentEntity -> studentEntity.getSubjects().stream()
-                        .anyMatch(subjectEntities
-                                .collect(Collectors.toSet())::contains))
+                        .anyMatch(subjectEntity -> subjectEntityList.contains(subjectEntity.getReference())))
                 .map(StudentEntity::toStudent);
     }
 }

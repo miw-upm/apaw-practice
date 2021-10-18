@@ -34,7 +34,7 @@ public class StudentServiceIT {
     @Test
     void testFindDniListByClassroomSchool() {
         List<String> dniCorrectList = Arrays.asList("12345678X", "112233445E");
-        List<String> dniServiceList = this.studentService.findDniListByClassroomSchool("ETSIINF");
+        List<String> dniServiceList = this.studentService.findDniListByClassroomSchool("ETSISI");
         assertTrue(dniCorrectList.size() == dniServiceList.size()
                 && dniServiceList.containsAll(dniCorrectList));
     }
