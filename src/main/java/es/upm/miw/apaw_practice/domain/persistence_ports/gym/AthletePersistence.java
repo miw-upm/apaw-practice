@@ -13,5 +13,4 @@ public interface AthletePersistence {
 
     void updateNextFumigation(AthleteNameUpdating athleteNameUpdating);
 
-    Athlete findByNie(String nie);
 }
