@@ -3,7 +3,9 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Class.entities;
 import es.upm.miw.apaw_practice.domain.models.Class.Learner;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class LearnerEntity {
 
     @Id

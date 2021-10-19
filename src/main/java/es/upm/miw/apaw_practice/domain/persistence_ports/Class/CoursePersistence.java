@@ -9,4 +9,6 @@ public interface CoursePersistence {
 
     Stream<es.upm.miw.apaw_practice.domain.models.Class.Course> readAll();
 
+    void delete(String name);
+
 }

@@ -3,9 +3,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Class.entities;
 import es.upm.miw.apaw_practice.domain.models.Class.Professor;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
+@Document
 public class ProfessorEntity {
 
     @Id
@@ -66,7 +68,7 @@ public class ProfessorEntity {
         this.id = id;
     }
 
-    public Professor professor() {
+    public Professor toProfessor() {
         Professor professor = new Professor();
         BeanUtils.copyProperties(this, professor);
         return professor;
