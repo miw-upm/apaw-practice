@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Class.entities;
 
+import es.upm.miw.apaw_practice.domain.models.Class.Course;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 
 public class CourseEntity {
 
@@ -50,6 +52,12 @@ public class CourseEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Course toCourse(){
+        Course course = new Course();
+        BeanUtils.copyProperties(this, course);
+        return course;
     }
 
     @Override

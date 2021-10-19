@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Class.entities;
 
+import es.upm.miw.apaw_practice.domain.models.Class.Learner;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 
 public class LearnerEntity {
 
@@ -50,6 +52,12 @@ public class LearnerEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Learner toLearner(){
+        Learner learner = new Learner();
+        BeanUtils.copyProperties(this, learner);
+        return learner;
     }
 
     @Override

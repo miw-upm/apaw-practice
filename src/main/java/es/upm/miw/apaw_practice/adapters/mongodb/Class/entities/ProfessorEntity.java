@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Class.entities;
 
+import es.upm.miw.apaw_practice.domain.models.Class.Professor;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 
@@ -62,6 +64,12 @@ public class ProfessorEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Professor professor() {
+        Professor professor = new Professor();
+        BeanUtils.copyProperties(this, professor);
+        return professor;
     }
 
     @Override
