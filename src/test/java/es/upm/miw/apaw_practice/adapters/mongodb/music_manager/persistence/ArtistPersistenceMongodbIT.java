@@ -41,5 +41,7 @@ class ArtistPersistenceMongodbIT {
         assertEquals("Dave", artist.getFirstName());
         assertEquals("Grohl", artist.getFamilyName());
         assertEquals(53, artist.getAge());
+        artist.setAge(52);
+        this.artistPersistenceMongodb.update(artist);
     }
 }

@@ -14,17 +14,10 @@ public class GymService {
         this.gymPersistence = gymPersistence;
     }
 
-    public Gym findByLabel(String label) {
-        return this.gymPersistence.findByLabel(label);
-    }
 
     public Gym updateCellphone(String address, Gym gym) {
         Gym gymToupdate = this.gymPersistence.readByAddress(address);
 
         return this.gymPersistence.update(gymToupdate.getAddress(), gym);
-    }
-
-    public Gym findByAdress(String address) {
-        return this.gymPersistence.findByAddress(address);
     }
 }

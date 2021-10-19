@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(GymResource.Gyms)
 public class GymResource {
     static final String Gyms = "/gym/gym";
-    static final String Search = "/search";
     static final String Address = "/{address}";
-    static final String Address1 = "/address";
     static final String cellphone = "/cellphone";
 
 
@@ -22,18 +20,8 @@ public class GymResource {
         this.gymService = gymService;
     }
 
-    @GetMapping(Search)
-    public Gym findByLabel(@RequestParam String label) {
-        return this.gymService.findByLabel(label);
-    }
-
-    @GetMapping(GymResource.Address1)
-    public Gym findByAdress(@RequestParam String address) {
-        return this.gymService.findByAdress(address);
-    }
-
     @PutMapping(GymResource.Address + GymResource.cellphone)
-    public Gym updateCellpone(@PathVariable String address, @RequestBody Gym gym) {
+    public Gym updateCellPhone(@PathVariable String address, @RequestBody Gym gym) {
         return this.gymService.updateCellphone(address, gym);
     }
 

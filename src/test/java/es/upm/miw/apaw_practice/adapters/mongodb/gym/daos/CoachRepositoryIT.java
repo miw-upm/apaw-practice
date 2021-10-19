@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.gym.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.AthleteEntity;
-
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.CoachEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.LessonEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.CoachRepository;
@@ -30,8 +29,8 @@ public class CoachRepositoryIT {
     @BeforeEach
     void initializeTestData() {
         athlete = new AthleteEntity[]{
-                new AthleteEntity(new Athlete("88888888a", "julia", "Jackson")),
-                new AthleteEntity(new Athlete("55555555a", "ana", "ramos"))
+                new AthleteEntity(Athlete.builder().nie("88888888a").name("julia").familyName("Jackson").build()),
+                new AthleteEntity(Athlete.builder().nie("55555555a").name("ana").familyName("ramos").build())
         };
         lesson = new LessonEntity[]{
                 new LessonEntity("BodyComba", LocalDateTime.of(2020, 9, 5, 5, 15), "lesMils", false, List.of(athlete[0], athlete[1])),

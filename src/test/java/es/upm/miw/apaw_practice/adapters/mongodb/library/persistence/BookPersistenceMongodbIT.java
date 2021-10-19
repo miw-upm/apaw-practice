@@ -4,8 +4,9 @@ import es.upm.miw.apaw_practice.TestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 class BookPersistenceMongodbIT {
@@ -18,5 +19,19 @@ class BookPersistenceMongodbIT {
         long booksQtd = bookPersistenceMongodb.findAll().count();
         assertEquals(8, booksQtd);
         assertNotEquals(9, booksQtd);
+    }
+
+    @Test
+    void testFindDistinctCategoryNameByAuthorFullName() {
+        Stream<String> categoryNames = bookPersistenceMongodb.findDistinctCategoryNameByAuthorFullName("Alda do Espírito Santo");
+        assertTrue(categoryNames.anyMatch(x -> x.equals("Poetry")));
+        Stream<String> categoryNamesFalse = bookPersistenceMongodb.findDistinctCategoryNameByAuthorFullName("Alda do Espírito Santo");
+        assertFalse(categoryNamesFalse.anyMatch(x -> x.equals("Thriller")));
+    }
+
+    @Test
+    void testFindTop1AuthorNationalityByDescriptionCategory() {
+        String nationality = bookPersistenceMongodb.findTop1AuthorNationalityByDescriptionCategory("a conflict that takes place in the lives of character");
+        assertEquals("English", nationality);
     }
 }

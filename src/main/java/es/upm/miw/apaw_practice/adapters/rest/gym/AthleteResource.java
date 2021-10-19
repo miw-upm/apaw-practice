@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(AthleteResource.athlets)
 public class AthleteResource {
     static final String athlets = "/gym/athlet";
-    static final String ID = "/nie";
     static final String Name = "/name";
 
     private final AthleteService athletService;
@@ -26,10 +25,6 @@ public class AthleteResource {
         return this.athletService.create(athlete);
     }
 
-    @GetMapping(ID)
-    public Athlete findeByNie(@RequestParam String nie) {
-        return this.athletService.findByNie(nie);
-    }
 
     @PatchMapping(Name)
     public void updateAtheleName(@RequestBody AthleteNameUpdating athleteNameUpdating) {

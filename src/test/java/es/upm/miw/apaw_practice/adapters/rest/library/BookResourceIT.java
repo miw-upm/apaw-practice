@@ -19,4 +19,27 @@ class BookResourceIT {
                 .expectStatus().isOk();
 
     }
+
+    @Test
+    void testFindCategoryNameByAuthorFullName(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(BookResource.BOOKS + BookResource.FULLNAME)
+                                .queryParam("fullname", "Alda do Espírito Santo")
+                                .build())
+                .exchange()
+                .expectStatus().isOk();
+    }
+    @Test
+    void testFindTop1AuthorNationalityByDescriptionCategory(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(BookResource.BOOKS + BookResource.DESCRIPTION)
+                                .queryParam("desc", "a conflict that takes place in the lives of character")
+                                .build())
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

@@ -24,10 +24,10 @@ public class WaiterPersistenceMongodb implements WaiterPersistence {
     }
 
     @Override
-    public Stream<Waiter> findBySection(String section) {
+    public Stream<Waiter> findSection() {
         return this.waiterRepository.findAll().stream()
-                .filter(waiter -> section.equals(waiter.getSection()))
-                .map(WaiterEntity::toWaiter);
+                .map(WaiterEntity::toWaiter)
+                .map(Waiter::ofSection);
     }
 
     @Override

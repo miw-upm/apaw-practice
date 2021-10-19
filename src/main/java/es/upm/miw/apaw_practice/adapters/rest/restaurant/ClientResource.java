@@ -1,16 +1,15 @@
 package es.upm.miw.apaw_practice.adapters.rest.restaurant;
 
+import es.upm.miw.apaw_practice.domain.models.restaurant.Client;
 import es.upm.miw.apaw_practice.domain.services.restaurant.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(ClientResource.CLIENTS)
 public class ClientResource {
     static final String CLIENTS ="/restaurant/clients";
-    static final String WAITERS ="/waiters";
+    static final String NAME ="/name";
     static final String ID_DNI = "/{dni}";
 
     private ClientService clientService;
@@ -20,9 +19,9 @@ public class ClientResource {
         this.clientService = clientService;
     }
 
-    @GetMapping(ID_DNI+WAITERS+WaiterResource.ID_SECTION+WaiterResource.CATEGORY)
-    public Stream<String> readCategoryBySectionWaiterAndDniClient(@PathVariable String dni, @PathVariable String section){
-        return this.clientService.readCategoryBySectionWaiterAndDniClient(dni,section);
+    @GetMapping(ID_DNI+NAME)
+    public Client findNameByDni(@PathVariable String dni){
+        return Client.ofName(this.clientService.read(dni));
     }
 
     @DeleteMapping(ID_DNI)
