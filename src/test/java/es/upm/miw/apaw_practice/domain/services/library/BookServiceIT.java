@@ -27,5 +27,9 @@ class BookServiceIT {
         assertTrue(categoryNames.anyMatch(name->name.equals("Poetry")));
     }
 
-
+    @Test
+    void testFindTop1AuthorNationalityByDescriptionCategory(){
+        String nationality = bookService.findTop1AuthorNationalityByDescriptionCategory("a conflict that takes place in the lives of character");
+        assertEquals("English", nationality);
+    }
 }

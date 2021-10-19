@@ -15,7 +15,6 @@ class ArtistRepositoryIT {
 
     @Test
     void testCreateAndRead() {
-        assertTrue(true);
         assertTrue(this.artistRepository.findAll().stream()
                 .anyMatch(artist ->
                         "Ringo".equals(artist.getFirstName()) &&

@@ -37,4 +37,10 @@ public class Waiter {
                 ", category='" + category + '\'' +
                 '}';
     }
+
+    public static Waiter ofSection(Waiter waiter) {
+        Waiter waiterDto = new Waiter();
+        waiterDto.setSection(waiter.getSection());
+        return waiterDto;
+    }
 }
