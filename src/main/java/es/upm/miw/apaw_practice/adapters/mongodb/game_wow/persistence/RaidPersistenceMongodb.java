@@ -52,4 +52,11 @@ public class RaidPersistenceMongodb implements RaidPersistence {
         return this.raidRepository.findAll().stream()
                 .map(RaidEntity::toRaid);
     }
+
+    @Override
+    public Stream<Raid> findByFinishTrue() {
+        return raidRepository
+                .findAll().stream()
+                .filter(raid -> raid.getFinish() == true).map(RaidEntity::toRaid);
+    }
 }

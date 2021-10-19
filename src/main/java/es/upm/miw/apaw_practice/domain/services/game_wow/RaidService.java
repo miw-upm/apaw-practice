@@ -18,6 +18,5 @@ public class RaidService {
         Raid raid = this.raidPersistence.readById(id);
         raid.setDificulty(dificulty);
         return this.raidPersistence.update(raid);
-
     }
 }

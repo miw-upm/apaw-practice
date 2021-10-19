@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @TestConfig
 public class RaidPersistenceMongodbIT {
@@ -33,5 +34,10 @@ public class RaidPersistenceMongodbIT {
         this.raidPersistenceMongodb.update(raidBD);
         raidBD = this.raidPersistenceMongodb.readById(raidBD.getId());
         assertEquals("25H", raidBD.getDificulty());
+    }
+
+    @Test
+    void findByFinishTrue (){
+        assertNotNull(raidPersistenceMongodb.findByFinishTrue());
     }
 }
