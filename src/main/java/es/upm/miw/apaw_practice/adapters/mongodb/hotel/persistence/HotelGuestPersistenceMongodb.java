@@ -2,20 +2,12 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelGuestEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
-import es.upm.miw.apaw_practice.domain.models.hotel.Room;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelGuestPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Repository("hotelGuestPersistence")
 public class HotelGuestPersistenceMongodb implements HotelGuestPersistence {

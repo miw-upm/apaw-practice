@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Document
 public class ReservationEntity {
     @Id
@@ -59,5 +63,19 @@ public class ReservationEntity {
 
     public void setPlayers(List<PlayerEntity> players) {
         this.players = players;
+    }
+
+    public static List<Player> toPlayerList(List<PlayerEntity> playerEntityList){
+        return playerEntityList.stream()
+                .map(PlayerEntity::toPlayer)
+                .collect(Collectors.toList());
+    }
+
+    public Reservation toReservation(){
+        return Reservation.builder(this.date, this.duration)
+                .name(this.ownerName)
+                .players(toPlayerList(this.players))
+                .court(null)
+                .build();
     }
 }
