@@ -20,8 +20,8 @@ public class WaiterService {
         this.tablePersistence = tablePersistence;
     }
 
-    public Stream<Waiter> findBySection(String section) {
-        return this.waiterPersistence.findBySection(section);
+    public Stream<Waiter> findSection() {
+        return this.waiterPersistence.findSection();
     }
 
     public Waiter create(Waiter waiter) {

@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.stream.Stream;
 
 public interface PlayerSeriesRepository extends MongoRepository<PlayerSeriesEntity,String> {
-    Stream<PlayerSeriesEntity> findByName(String name);
+
 }
