@@ -22,7 +22,8 @@ public class AthleteResourceIT {
     @Test
     void testCreate() {
         Athlete athlete =
-                new Athlete("aaaa", "aaaaa", "aaaaa");
+                Athlete.builder().nie("123456a").name("luca").familyName("Modric").build();
+
         this.webTestClient
                 .post()
                 .uri(AthleteResource.athlets)
@@ -36,7 +37,8 @@ public class AthleteResourceIT {
     @Test
     void testCreateConflict() {
         Athlete athlete =
-                new Athlete("88888888a", "sergio", "ramos");
+                Athlete.builder().nie("88888888a").name("sergio").familyName("ramos").build();
+
         this.webTestClient
                 .post()
                 .uri(AthleteResource.athlets)

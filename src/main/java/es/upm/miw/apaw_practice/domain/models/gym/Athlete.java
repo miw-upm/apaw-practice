@@ -11,9 +11,6 @@ public class Athlete {
     }
 
     //TO delete
-    public Athlete(String aaaa, String aaaaa, String aaaaa1) {
-
-    }
 
     public String getNie() {
         return nie;
