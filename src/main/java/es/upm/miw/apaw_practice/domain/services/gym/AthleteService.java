@@ -33,7 +33,4 @@ public class AthleteService {
         this.athletePersistence.updateNextFumigation(athleteNameUpdating);
     }
 
-    public Athlete findByNie(String nie) {
-        return this.athletePersistence.findByNie(nie);
-    }
 }

@@ -23,7 +23,7 @@ class CategoryPersistenceMongodbIT {
 
     @Test
     void testUpdate() {
-        Category category = new Category("Poetry", "Test Description");
+        Category category = new Category("Thriller", "Test Description");
         Category cat = this.categoryPersistenceMongodb.update(category);
         assertEquals(cat.getDescription(), category.getDescription());
         assertEquals(cat.getName(), category.getName());
