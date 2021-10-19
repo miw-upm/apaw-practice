@@ -2,26 +2,22 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Class.entities;
 
 import nonapi.io.github.classgraph.json.Id;
 
-import java.time.LocalDate;
-
-public class ProfessorEntity {
+public class LearnerEntity {
 
     @Id
     private String id;
     private String name;
-    private String course;
     private int age;
-    private LocalDate entryDate;
+    private boolean isSpanish;
 
-    public ProfessorEntity() {
+    public LearnerEntity() {
         //empty for framework
     }
 
-    public ProfessorEntity(String name, String course, int age, LocalDate EntryDate) {
+    public LearnerEntity(String name, int age, boolean isSpanish) {
         this.name = name;
-        this.course = course;
         this.age = age;
-        this.entryDate = EntryDate;
+        this.isSpanish = isSpanish;
     }
 
     public String getName() {
@@ -32,14 +28,6 @@ public class ProfessorEntity {
         this.name = name;
     }
 
-    public String getCourse() {
-        return course;
-    }
-
-    public void setCourse(String course) {
-        this.course = course;
-    }
-
     public int getAge() {
         return age;
     }
@@ -48,12 +36,12 @@ public class ProfessorEntity {
         this.age = age;
     }
 
-    public LocalDate getEntryData() {
-        return entryDate;
+    public boolean getIsSpanish() {
+        return isSpanish;
     }
 
-    public void setEntryDate(LocalDate EntryData) {
-        this.entryDate = EntryData;
+    public void setIsSpanish(boolean isSpanish) {
+        this.isSpanish = isSpanish;
     }
 
     public String getId() {
@@ -71,17 +59,15 @@ public class ProfessorEntity {
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((ProfessorEntity) obj).id));
+        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((LearnerEntity) obj).id));
     }
 
     @Override
     public String toString() {
-        return "Album{" +
+        return "Album {" +
                 "name =" + name + '\'' +
-                ", course =" + course + '\'' +
                 ", age =" + age + '\'' +
-                ", EntryDate =" + entryDate + '\'' +
+                ", Is_spanish ='" + isSpanish + '\'' +
                 '}';
     }
-
 }

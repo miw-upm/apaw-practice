@@ -1,39 +1,69 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Class.entities;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.football.entities.FootballPlayerEntity;
+import es.upm.miw.apaw_practice.domain.models.Class.Class;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
+
+@Document
 public class ClassEntity {
 
     @Id
     private String id;
     private String name;
     private int credit;
-    private LocalDate StartTime;
+    private LocalDate startTime;
 
-    public ClassEntity(){
+    public ClassEntity() {
         //empty for framework
     }
 
-    public ClassEntity(String name,int credit,LocalDate StartTime){
+    public ClassEntity(String name, int credit, LocalDate StartTime) {
         this.name = name;
         this.credit = credit;
-        this.StartTime = StartTime;
+        this.startTime = StartTime;
     }
 
-    public String getName(){ return name;}
-    public void setName(String name){ this.name = name;}
+    public String getName() {
+        return name;
+    }
 
-    public int getCredit(){ return credit;}
-    public void setCredit(int credit){ this.credit = credit;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public LocalDate getStartTime(){ return StartTime;}
-    public void setStartTime(LocalDate StartTime){ this.StartTime = StartTime;}
+    public int getCredit() {
+        return credit;
+    }
 
-    public String getId(){ return id;}
-    public void setId(String id){ this.id = id;}
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
+    public LocalDate getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDate StartTime) {
+        this.startTime = StartTime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Class toClass() {
+        Class class1 = new Class();
+        BeanUtils.copyProperties(this, class1);
+        return class1;
+    }
 
     @Override
     public int hashCode() {
@@ -46,11 +76,11 @@ public class ClassEntity {
     }
 
     @Override
-    public String toString(){
-        return "Album{" +
+    public String toString() {
+        return "Class{" +
                 "name =" + name + '\'' +
-                ", credit =" + credit +  '\'' +
-                ", StartTime=" + StartTime + '\'' +
+                ", credit =" + credit + '\'' +
+                ", startTime=" + startTime + '\'' +
                 '}';
     }
 

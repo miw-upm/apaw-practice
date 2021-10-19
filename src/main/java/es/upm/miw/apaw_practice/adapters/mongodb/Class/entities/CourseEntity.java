@@ -8,29 +8,49 @@ public class CourseEntity {
     private String id;
     private String name;
     private int credit;
-    private int NumberOfStudents;
+    private int numberOfStudents;
 
-    public CourseEntity(){
+    public CourseEntity() {
         //empty for framework
     }
 
-    public CourseEntity(String name,int credit,int NumberOfStudents){
+    public CourseEntity(String name, int credit, int NumberOfStudents) {
         this.name = name;
         this.credit = credit;
-        this.NumberOfStudents = NumberOfStudents;
+        this.numberOfStudents = NumberOfStudents;
     }
 
-    public String getName(){ return name;}
-    public void setName(String name){ this.name = name;}
+    public String getName() {
+        return name;
+    }
 
-    public int getCredit(){ return credit;}
-    public void setCredit(int credit){ this.credit = credit;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public int getNumberOfStudents(){ return NumberOfStudents;}
-    public void setNumberOfStudents(int NumberOfStudents){ this.NumberOfStudents = NumberOfStudents;}
+    public int getCredit() {
+        return credit;
+    }
 
-    public String getId(){ return id;}
-    public void setId(String id){ this.id = id;}
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
+    public int getNumberOfStudents() {
+        return numberOfStudents;
+    }
+
+    public void setNumberOfStudents(int NumberOfStudents) {
+        this.numberOfStudents = NumberOfStudents;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Override
     public int hashCode() {
@@ -43,11 +63,11 @@ public class CourseEntity {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Album{" +
                 "name =" + name + '\'' +
-                ", credit =" + credit +  '\'' +
-                ", NumberOfStudents ='" + NumberOfStudents + '\'' +
+                ", credit =" + credit + '\'' +
+                ", NumberOfStudents ='" + numberOfStudents + '\'' +
                 '}';
     }
 }
