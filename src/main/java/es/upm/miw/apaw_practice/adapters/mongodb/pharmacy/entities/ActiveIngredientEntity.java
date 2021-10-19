@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities;
 
+import es.upm.miw.apaw_practice.domain.models.pharmacy.ActiveIngredient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
@@ -42,6 +43,10 @@ public class ActiveIngredientEntity {
 
     public void setDrugEntity(DrugEntity drugEntity) {
         this.drugEntity = drugEntity;
+    }
+
+    public ActiveIngredient toActiveIngredient() {
+        return new ActiveIngredient(this.drugEntity.toDrug(), this.components, this.dose);
     }
 
     @Override
