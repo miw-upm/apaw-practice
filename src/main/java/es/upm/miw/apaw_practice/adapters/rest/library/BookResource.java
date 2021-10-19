@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 public class BookResource {
     static final String BOOKS = "/library/books";
     static final String FULLNAME = "/fullname";
+    static final String DESCRIPTION = "/desc";
+
 
     private final BookService bookService;
 
@@ -27,7 +29,12 @@ public class BookResource {
     }
 
     @GetMapping(FULLNAME)
-    public Stream<String> findCategoryNameByAuthorFullName(@RequestParam String fullname){
+    public Stream<String> findCategoryNameByAuthorFullName(@RequestParam String fullname) {
         return this.bookService.findCategoryNameByAuthorFullName(fullname);
+    }
+
+    @GetMapping(DESCRIPTION)
+    public String findTop1AuthorNationalityByDescriptionCategory(@RequestParam String desc) {
+        return this.bookService.findTop1AuthorNationalityByDescriptionCategory(desc);
     }
 }
