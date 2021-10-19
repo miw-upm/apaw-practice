@@ -39,7 +39,7 @@ public class SubjectEntity {
     public void fromSubject(Subject subject) {
         BeanUtils.copyProperties(subject, this);
         ClassroomEntity classroomEntity = new ClassroomEntity();
-        BeanUtils.copyProperties(classroomEntity, subject.getClassroom());
+        BeanUtils.copyProperties(subject.getClassroom(), classroomEntity);
         this.setClassroom(classroomEntity);
     }
 

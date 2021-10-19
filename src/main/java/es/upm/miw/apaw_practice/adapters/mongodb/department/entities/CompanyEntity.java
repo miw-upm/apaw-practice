@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.department.entities;
 
+import es.upm.miw.apaw_practice.domain.models.department.Company;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
@@ -63,5 +65,15 @@ public class CompanyEntity {
                 ", direction='" + direction + '\'' +
                 ", cif='" + cif + '\'' +
                 '}';
+    }
+
+    public void fromCompany(Company company) {
+        BeanUtils.copyProperties(company, this);
+    }
+
+    public Company toCompany() {
+        Company company = new Company();
+        BeanUtils.copyProperties(this, company);
+        return company;
     }
 }

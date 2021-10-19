@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.persistence_ports.game_wow;
 
 import es.upm.miw.apaw_practice.domain.models.game_wow.Raid;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public interface RaidPersistence {
@@ -9,4 +10,5 @@ public interface RaidPersistence {
     Raid create(Raid raid);
     Raid update(Raid raid);
     Stream<Raid> readAll();
+    Stream<Raid> findByFinishTrue();
 }

@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface TvSeriesRepository extends MongoRepository<TvSeriesEntity,String> {
     Optional<TvSeriesEntity> findByTitle(String title);
+
+    int deleteByTitle(String title);
 }
