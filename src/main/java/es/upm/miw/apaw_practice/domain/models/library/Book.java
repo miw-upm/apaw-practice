@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.library;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
@@ -125,12 +126,15 @@ public class Book {
 
         @Override
         public BookBuilders.Author category(Category category) {
-            this.book.category=category;
+            this.book.category = category;
             return this;
         }
 
         @Override
         public BookBuilders.Optionals authors(Author author) {
+            if (this.book.authors == null) {
+                this.book.authors = new ArrayList<>();
+            }
             this.book.authors.add(author);
             return this;
         }

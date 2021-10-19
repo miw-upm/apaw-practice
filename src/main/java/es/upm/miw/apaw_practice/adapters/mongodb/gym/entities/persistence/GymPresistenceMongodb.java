@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.GymEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.GymRepository;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.gym.Gym;
@@ -16,11 +17,20 @@ public class GymPresistenceMongodb implements GymPersistence {
         this.gymRepository = gymRepository;
     }
 
+    @Override
+    public Gym readByAddress(String address) {
+        return this.gymRepository
+                .findByAddress(address)
+                .orElseThrow(() -> new NotFoundException("Gym Address: " + address)).ToGym();
+
+    }
 
     @Override
-    public Gym findByLabel(String label) {
-        return this.gymRepository.findByLabel(label).
-                orElseThrow(() -> new NotFoundException("Gym with name :" + label)).ToGym();
+    public Gym update(String address, Gym gym) {
+        GymEntity addressUpdate = this.gymRepository.findByAddress(address)
+                .orElseThrow(() -> new NotFoundException("gym Address: " + address));
+        addressUpdate.setCellphone(gym.getCellphone());
+        return this.gymRepository.save(addressUpdate).ToGym();
 
     }
 }

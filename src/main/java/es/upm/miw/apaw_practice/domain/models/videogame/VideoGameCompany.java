@@ -3,18 +3,22 @@ package es.upm.miw.apaw_practice.domain.models.videogame;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Company {
+public class VideoGameCompany {
 
     private String name;
     private LocalDate formationDate;
     private Boolean stockMarket;
-    private List<Console> consoles;
+    private List<Platform> platforms;
 
-    public Company(String name, LocalDate formationDate, Boolean stockMarket, List<Console> consoles) {
+    public VideoGameCompany() {
+        //empty from framework
+    }
+
+    public VideoGameCompany(String name, LocalDate formationDate, Boolean stockMarket, List<Platform> platforms) {
         this.name = name;
         this.formationDate = formationDate;
         this.stockMarket = stockMarket;
-        this.consoles = consoles;
+        this.platforms = platforms;
     }
 
     public String getName() {
@@ -41,12 +45,12 @@ public class Company {
         this.stockMarket = stockMarket;
     }
 
-    public List<Console> getConsoles() {
-        return consoles;
+    public List<Platform> getConsoles() {
+        return platforms;
     }
 
-    public void setConsoles(List<Console> consoles) {
-        this.consoles = consoles;
+    public void setConsoles(List<Platform> platforms) {
+        this.platforms = platforms;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class Company {
                 "name='" + name + '\'' +
                 ", formationDate=" + formationDate +
                 ", stockMarket=" + stockMarket +
-                ", consoles=" + consoles +
+                ", consoles=" + platforms +
                 '}';
     }
 }

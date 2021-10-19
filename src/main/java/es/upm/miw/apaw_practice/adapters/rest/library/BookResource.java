@@ -10,7 +10,8 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping(BookResource.BOOKS)
 public class BookResource {
-    static final String BOOKS ="/library/books";
+    static final String BOOKS = "/library/books";
+    static final String FULLNAME = "/fullname";
 
     private final BookService bookService;
 
@@ -21,7 +22,12 @@ public class BookResource {
     }
 
     @GetMapping
-    public Stream<Book> findAll(){
+    public Stream<Book> findAll() {
         return this.bookService.findAll();
+    }
+
+    @GetMapping(FULLNAME)
+    public Stream<String> findCategoryNameByAuthorFullName(@RequestParam String fullname){
+        return this.bookService.findCategoryNameByAuthorFullName(fullname);
     }
 }

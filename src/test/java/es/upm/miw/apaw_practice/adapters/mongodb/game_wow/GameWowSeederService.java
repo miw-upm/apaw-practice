@@ -35,12 +35,12 @@ public class GameWowSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Game_wow Initial Load -----------");
         FeatureEntity[] features = {
-                new FeatureEntity(new Feature("Trinket",158,null,null,"Use: Restores 1625 mana")),
-                new FeatureEntity(new Feature("Neck",null,79,null,null)),
-                new FeatureEntity(new Feature("Feet",106,null,null,"Use: Restores 1625 mana")),
-                new FeatureEntity(new Feature("Chest",null,144,null,"Use: Restores 1625 mana")),
-                new FeatureEntity(new Feature("Waist",106,null,null,null)),
-                new FeatureEntity(new Feature("Legs",171,null,null,"Use: Restores 1625 mana"))
+                new FeatureEntity(new Feature("Trinket",158,null,0,"Use: Restores 1625 mana")),
+                new FeatureEntity(new Feature("Neck",null,79,0,null)),
+                new FeatureEntity(new Feature("Feet",106,null,0,"Use: Restores 1625 mana")),
+                new FeatureEntity(new Feature("Chest",null,144,0,"Use: Restores 1625 mana")),
+                new FeatureEntity(new Feature("Waist",106,null,0,null)),
+                new FeatureEntity(new Feature("Legs",171,null,0,"Use: Restores 1625 mana"))
         };
         this.featureRepository.saveAll(Arrays.asList(features));
 
@@ -63,7 +63,7 @@ public class GameWowSeederService {
         this.bossRepository.saveAll(Arrays.asList(bosses));
 
         RaidEntity[] raids = {
-                new RaidEntity(new Date(), "ICC", "10N", 10, false, List.of(bosses[0], bosses[1], bosses[2])),
+                new RaidEntity(new Date(), "ICC", "10N", 10, true, List.of(bosses[0], bosses[1], bosses[2])),
                 new RaidEntity(new Date(), "ICC", "25N", 25, false, List.of(bosses[3]))
         };
         this.raidRepository.saveAll(Arrays.asList(raids));

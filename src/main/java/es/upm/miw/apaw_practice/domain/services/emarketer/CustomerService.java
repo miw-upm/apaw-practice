@@ -19,4 +19,9 @@ public class CustomerService {
     public Stream<Customer> readAll() {
         return this.customerPersistence.readAll();
     }
+
+    public Customer updateType(String name, Customer customer) {
+        Customer customerToUpdate = this.customerPersistence.readByName(name);
+        return this.customerPersistence.update(customerToUpdate.getName(), customer);
+    }
 }

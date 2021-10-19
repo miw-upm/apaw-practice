@@ -31,9 +31,9 @@ public class GymSeederService {
     public void seedDatabase(){
         LogManager.getLogger(this.getClass()).warn("------- Gym Initial Load -----------");
         AthleteEntity[] athlete = {
-                new AthleteEntity(new Athlete("12345678a", "ada", "perez")),
-                new AthleteEntity(new Athlete("88888888a", "julia", "Jackson")),
-                new AthleteEntity(new Athlete("55555555a", "ana", "ramos"))
+                new AthleteEntity(Athlete.builder().nie("12345678a").name("ada").familyName("perez").build()),
+                new AthleteEntity(Athlete.builder().nie("88888888a").name("julia").familyName("Jackson").build()),
+                new AthleteEntity(Athlete.builder().nie("55555555a").name("ana").familyName("ramos").build())
 
         };
         this.athleteRepository.saveAll(Arrays.asList(athlete));

@@ -32,7 +32,7 @@ public interface BookBuilders {
 
     }
 
-    interface Optionals{
+    interface Optionals {
         Book build();
     }
 

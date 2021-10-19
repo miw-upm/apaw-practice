@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Raid {
 
+    private String id;
     private Date date;
     private String name;
     private String dificulty;
@@ -14,6 +15,15 @@ public class Raid {
 
     public Raid() {
         //empty for framework
+    }
+
+    public Raid(Date date, String name, String dificulty, Integer playerNumber, Boolean finish, List<Boss> bossList) {
+        this.date = date;
+        this.name = name;
+        this.dificulty = dificulty;
+        this.playerNumber = playerNumber;
+        this.finish = finish;
+        this.bossList = bossList;
     }
 
     public Date getDate() {
@@ -64,15 +74,20 @@ public class Raid {
         this.bossList = bossList;
     }
 
+    public String getId() {return id;}
+
+    public void setId(String id) {this.id = id;}
+
     @Override
     public String toString() {
         return "Raid{" +
-                "date=" + date +
+                "id='" + id + '\'' +
+                ", date=" + date +
                 ", name='" + name + '\'' +
                 ", dificulty='" + dificulty + '\'' +
                 ", playerNumber=" + playerNumber +
                 ", finish=" + finish +
-                ", boss=" + bossList +
+                ", bossList=" + bossList +
                 '}';
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -182,6 +183,9 @@ public class BookEntity {
 
         @Override
         public BookEntityBuilders.Optionals authors(AuthorEntity author) {
+            if (this.bookEntity.authors == null) {
+                this.bookEntity.authors = new ArrayList<>();
+            }
             this.bookEntity.authors.add(author);
             return this;
         }

@@ -6,16 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @RestTestConfig
-public class BookResourceIT {
+class BookResourceIT {
     @Autowired
     private WebTestClient webTestClient;
+
     @Test
-    void testFindAll(){
+    void testFindAll() {
         this.webTestClient
                 .get()
                 .uri(BookResource.BOOKS)
                 .exchange()
                 .expectStatus().isOk();
 
+    }
+
+    @Test
+    void testFindCategoryNameByAuthorFullName(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(BookResource.BOOKS + BookResource.FULLNAME)
+                                .queryParam("fullname", "Alda do Espírito Santo")
+                                .build())
+                .exchange()
+                .expectStatus().isOk();
     }
 }
