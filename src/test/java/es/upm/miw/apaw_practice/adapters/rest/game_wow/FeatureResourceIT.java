@@ -13,6 +13,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @RestTestConfig
 public class FeatureResourceIT {
 
@@ -40,5 +43,19 @@ public class FeatureResourceIT {
                 .body(BodyInserters.fromValue(0))
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    @Test
+    void testFindByDescriptionBoss() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder.path(FeatureResource.GAMEWOW_FEATURES + FeatureResource.SEARCH)
+                        .queryParam("q", "descriptionBoss:Lord Marrowgal")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(partDtoList -> partDtoList.get(0), equalTo("[\"Trinket\",\"Neck\"]"))
+                .value(partDtoList -> assertTrue(partDtoList.size() > 0));
     }
 }

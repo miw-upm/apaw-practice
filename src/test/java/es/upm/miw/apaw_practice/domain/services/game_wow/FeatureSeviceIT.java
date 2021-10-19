@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +22,7 @@ public class FeatureSeviceIT {
     private RaidPersistence raidPersistence;
 
     @Test
-    void testUpdateTemple (){
+    void testUpdateTemple() {
         this.featureService.updateTemple(150);
         assertEquals(150, this.featurePersistence.read("Trinket").getTemple());
         assertEquals(150, this.featurePersistence.read("Neck").getTemple());
@@ -33,8 +34,13 @@ public class FeatureSeviceIT {
     }
 
     @Test
-    void testFindByDescriptionBoss (){
-        this.featureService.findByDescriptionBoss("Lord Marrowgal");
-        assertEquals(List.of("Trinket","Neck"), this.raidPersistence.findByDescriptionBoss("Lord Marrowgal"));
+    void testFindByDescriptionBoss() {
+        assertEquals(this.featureService.findByDescriptionBoss("Lord Marrowgal"),
+                this.raidPersistence.findByFinishTrue().flatMap(raid -> raid.getBossList().stream())
+                        .filter(boss -> boss.getDescription().equalsIgnoreCase("Lord Marrowgal"))
+                        .flatMap(boss -> boss.getDropList().stream())
+                        .map(drop -> drop.getFeature().getPart())
+                        .distinct()
+                        .collect(Collectors.toList()));
     }
 }

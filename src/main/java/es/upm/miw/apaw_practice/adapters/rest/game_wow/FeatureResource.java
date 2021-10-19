@@ -38,7 +38,6 @@ public class FeatureResource {
         this.featureService.updateTemple(temple);
     }
 
-    // GET */drops/search?q=boss-effort:value
     @GetMapping(SEARCH)
     public List<String> findByDescriptionBoss(@RequestParam String q){
         String descriptionBoss = new LexicalAnalyzer().extractWithAssure(q, "descriptionBoss", String::new);

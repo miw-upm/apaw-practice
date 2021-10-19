@@ -10,5 +10,5 @@ public interface RaidPersistence {
     Raid create(Raid raid);
     Raid update(Raid raid);
     Stream<Raid> readAll();
-    List<String> findByDescriptionBoss(String descriptionBoss);
+    Stream<Raid> findByFinishTrue();
 }

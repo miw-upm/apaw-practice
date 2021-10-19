@@ -8,8 +8,6 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.RaidPersistenc
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository("raidPersistence")
@@ -56,15 +54,9 @@ public class RaidPersistenceMongodb implements RaidPersistence {
     }
 
     @Override
-    public List<String> findByDescriptionBoss(String descriptionBoss) {
+    public Stream<Raid> findByFinishTrue() {
         return raidRepository
                 .findAll().stream()
-                .filter(raid -> raid.getFinish() == true)
-                .flatMap(raid -> raid.getBossListEntities().stream())
-                .filter(boss -> boss.getDescription().equalsIgnoreCase(descriptionBoss))
-                .flatMap(boss -> boss.getDropList().stream())
-                .map(drop -> drop.getFeature().getPart())
-                .distinct()
-                .collect(Collectors.toList());
+                .filter(raid -> raid.getFinish() == true).map(RaidEntity::toRaid);
     }
 }
