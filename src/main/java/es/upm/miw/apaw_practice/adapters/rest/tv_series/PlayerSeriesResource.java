@@ -21,7 +21,7 @@ public class PlayerSeriesResource {
         this.playerSeriesService = playerSeriesService;
     }
 
-    @GetMapping
+    @GetMapping()
     public Stream<Player> readAll() {
         return this.playerSeriesService.readAll();
     }
