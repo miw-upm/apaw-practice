@@ -31,4 +31,15 @@ class BookResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+    @Test
+    void testFindTop1AuthorNationalityByDescriptionCategory(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(BookResource.BOOKS + BookResource.DESCRIPTION)
+                                .queryParam("desc", "a conflict that takes place in the lives of character")
+                                .build())
+                .exchange()
+                .expectStatus().isOk();
+    }
 }
