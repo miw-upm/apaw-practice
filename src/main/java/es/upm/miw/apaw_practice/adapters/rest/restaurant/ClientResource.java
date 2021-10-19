@@ -20,7 +20,7 @@ public class ClientResource {
         this.clientService = clientService;
     }
 
-    @GetMapping(ID_DNI+WAITERS+WaiterResource.ID_SECTION+WaiterResource.CATEGORY)
+    @GetMapping()
     public Stream<String> readCategoryBySectionWaiterAndDniClient(@PathVariable String dni, @PathVariable String section){
         return this.clientService.readCategoryBySectionWaiterAndDniClient(dni,section);
     }
