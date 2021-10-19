@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class DepartmentEmployeeMongodbIT {
+public class DepartmentEmployeePersistenceMongodbIT {
 
     @Autowired
     private DepartmentEmployeePersistenceMongodb departmentEmployeePersistenceMongodb;
