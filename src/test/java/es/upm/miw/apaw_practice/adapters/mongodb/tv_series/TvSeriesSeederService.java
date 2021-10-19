@@ -61,5 +61,7 @@ public class TvSeriesSeederService {
 
     public void deleteAll() {
         this.producerRepository.deleteAll();
+        this.playerSeriesRepository.deleteAll();
+        this.tvSeriesRepository.deleteAll();
     }
 }
