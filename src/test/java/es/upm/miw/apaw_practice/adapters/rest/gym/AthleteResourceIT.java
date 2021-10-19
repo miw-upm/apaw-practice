@@ -22,7 +22,7 @@ public class AthleteResourceIT {
     @Test
     void testCreate() {
         Athlete athlete =
-                new Athlete("25436587a", "karim", "Ramos");
+                new Athlete("aaaa", "aaaaa", "aaaaa");
         this.webTestClient
                 .post()
                 .uri(AthleteResource.athlets)
