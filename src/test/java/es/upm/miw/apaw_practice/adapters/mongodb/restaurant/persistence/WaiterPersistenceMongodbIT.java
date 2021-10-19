@@ -21,8 +21,7 @@ class WaiterPersistenceMongodbIT {
     void testCreateAndFind(){
         Waiter waiter = new Waiter("bar","employee");
         this.waiterPersistence.create(waiter);
-        assertEquals("bar", this.waiterPersistence.findBySection("bar")
-                                        .collect(Collectors.toList()).get(0).getSection());
+        assertEquals("bar", this.waiterPersistence.findSection().collect(Collectors.toList()).get(4).getSection());
         assertTrue(this.waiterPersistence.findByNumberTable(1).collect(Collectors.toList()).size() == 1);
     }
 }

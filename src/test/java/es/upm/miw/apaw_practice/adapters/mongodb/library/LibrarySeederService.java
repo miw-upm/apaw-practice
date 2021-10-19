@@ -61,8 +61,8 @@ public class LibrarySeederService {
                 BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1D").title("Alegría").available(true).numbersOfPages(351).publicationDate(LocalDate.of(2019, 11, 5)).category(categories[3]).authors(authors[3]).build(),
                 BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1E").title("Mal Nacido").available(true).numbersOfPages(416).publicationDate(LocalDate.of(2019, 7, 11)).category(categories[0]).authors(authors[4]).build(),
                 BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1F").title("The Tragedy of Romeo and Juliet").available(true).numbersOfPages(179).publicationDate(LocalDate.of(1597, 10, 9)).category(categories[1]).authors(authors[5]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1G").title("O Alienista ").available(true).numbersOfPages(66).publicationDate(LocalDate.of(2021, 10, 11)).category(categories[3]).authors(authors[6]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1H").title("Maldad líquida").available(true).numbersOfPages(348).publicationDate(LocalDate.of(2019, 1, 22)).category(categories[5]).authors(authors[7]).authors(authors[8]).build()
+                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1G").title("O Alienista ").available(true).numbersOfPages(66).publicationDate(LocalDate.of(2021, 10, 11)).category(categories[1]).authors(authors[5]).build(),
+                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1H").title("Maldad líquida").available(true).numbersOfPages(348).publicationDate(LocalDate.of(2019, 1, 22)).category(categories[1]).authors(authors[7]).authors(authors[8]).build()
 
         };
         this.bookRepository.saveAll(Arrays.asList(books));

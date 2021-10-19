@@ -36,14 +36,6 @@ public class TablePersistenceMongodb implements TablePersistence {
     }
 
     @Override
-    public Stream<Reserve> readHoldersByNumber(Integer number) {
-        return this.tableRepository.findAll().stream()
-                .filter(table -> number.equals(table.getNumber()))
-                .flatMap(table -> table.getReserves().stream())
-                .map(ReserveEntity::toReserve);
-    }
-
-    @Override
     public Table updateNumPeople(Table table) {
         TableEntity tableEntity = this.readByNumber(table.getNumber());
         List<ReserveEntity> reserveEntities = table.getReserves().stream()
@@ -91,5 +83,11 @@ public class TablePersistenceMongodb implements TablePersistence {
         table.setReserves(Arrays.asList(reserves));
         table.getReserves().get(0).setNumPeople(this.getTotalNumPeople(category));
         return table;
+    }
+
+    @Override
+    public Stream<Reserve> findHolderByNumber(Table table) {
+        return table.getReserves().stream()
+               .map(Reserve::ofHolder);
     }
 }

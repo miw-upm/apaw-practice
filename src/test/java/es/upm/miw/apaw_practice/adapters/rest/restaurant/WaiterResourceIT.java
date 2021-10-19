@@ -32,14 +32,14 @@ class WaiterResourceIT {
     }
 
     @Test
-    void findBySection(){
+    void testFindSection(){
         this.webTestClient
                 .get()
-                .uri(WaiterResource.WAITERS+WaiterResource.ID_SECTION, "dining room")
+                .uri(WaiterResource.WAITERS+WaiterResource.SECTION)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Waiter.class)
-                .value(waiters -> assertEquals("manager",waiters.get(0).getCategory()));
+                .value(waiters -> assertEquals("terrace",waiters.get(0).getSection()));
     }
 
     @Test
