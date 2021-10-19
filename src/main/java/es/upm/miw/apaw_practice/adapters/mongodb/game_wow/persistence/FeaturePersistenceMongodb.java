@@ -10,6 +10,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.FeaturePersist
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository("featurePersistence")
@@ -53,4 +55,6 @@ public class FeaturePersistenceMongodb implements FeaturePersistence {
                 .save(featureEntity)
                 .toFeature();
     }
+
+
 }

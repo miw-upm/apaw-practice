@@ -1,12 +1,11 @@
-package es.upm.miw.apaw_practice.domain.game_wow;
+package es.upm.miw.apaw_practice.domain.services.game_wow;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.FeaturePersistence;
-import es.upm.miw.apaw_practice.domain.services.game_wow.FeatureService;
+import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.RaidPersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,6 +17,8 @@ public class FeatureSeviceIT {
     private FeatureService featureService;
     @Autowired
     private FeaturePersistence featurePersistence;
+    @Autowired
+    private RaidPersistence raidPersistence;
 
     @Test
     void testUpdateTemple (){
@@ -29,5 +30,11 @@ public class FeatureSeviceIT {
         assertEquals(150, this.featurePersistence.read("Waist").getTemple());
         assertEquals(150, this.featurePersistence.read("Legs").getTemple());
         this.featureService.updateTemple(0);
+    }
+
+    @Test
+    void testFindByDescriptionBoss (){
+        this.featureService.findByDescriptionBoss("Lord Marrowgal");
+        assertEquals(List.of("Trinket","Neck"), this.raidPersistence.findByDescriptionBoss("Lord Marrowgal"));
     }
 }

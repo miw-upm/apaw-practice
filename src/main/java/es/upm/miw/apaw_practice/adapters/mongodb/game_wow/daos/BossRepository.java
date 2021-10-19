@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface BossRepository extends MongoRepository <BossEntity, String> {
     List<BossEntity> findByEffort(String effort);
+    List<BossEntity> findByDescription(String description);
     int deleteByDescriptionAndEffort(String description,String effort);
 }
