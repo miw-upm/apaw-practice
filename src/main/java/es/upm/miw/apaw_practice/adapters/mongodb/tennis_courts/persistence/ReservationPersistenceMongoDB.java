@@ -37,20 +37,21 @@ public class ReservationPersistenceMongoDB implements ReservationPersistence {
 
     private ReservationEntity findByOwnerName(String ownerName, LocalDateTime date){
         List<ReservationEntity> reservationEntityList = this.reservationRepository.findByOwnerName(ownerName);
-        if(reservationEntityList.isEmpty()){
-            throw new NotFoundException("Reservation: " + ownerName + "/nDate: " + date.toString());
-        } else{
-          reservationEntityList = reservationEntityList.stream()
-                  .filter(entity -> entity.getDate().isEqual(date))
-                  .collect(Collectors.toList());
-          if(reservationEntityList.size() > 1){
-              throw new ConflictException("Hay varias reservas con el ownerName " + ownerName + " y la misma fecha [" + date + "]");
-          } else{
-              if(reservationEntityList.size() < 1){
-                  throw new NotFoundException("Reservation: " + ownerName + "/nDate: " + date);
-              }
-          }
-        }
+        checkResultError(reservationEntityList, false);
+        reservationEntityList = reservationEntityList.stream()
+                .filter(entity -> entity.getDate().isEqual(date))
+                .collect(Collectors.toList());
+        checkResultError(reservationEntityList, true);
         return reservationEntityList.get(0);
+    }
+
+    private void checkResultError(List<ReservationEntity> reservationEntityList, boolean unique){
+        if(reservationEntityList.isEmpty()){
+            throw new NotFoundException("No se ha encontrado la reserva buscada");
+        }
+        if(unique && reservationEntityList.size() > 1){
+            throw new ConflictException("Existen dos reservas con el mismo dueño y fecha");
+        }
+
     }
 }
