@@ -63,7 +63,7 @@ public class GameWowSeederService {
         this.bossRepository.saveAll(Arrays.asList(bosses));
 
         RaidEntity[] raids = {
-                new RaidEntity(new Date(), "ICC", "10N", 10, false, List.of(bosses[0], bosses[1], bosses[2])),
+                new RaidEntity(new Date(), "ICC", "10N", 10, true, List.of(bosses[0], bosses[1], bosses[2])),
                 new RaidEntity(new Date(), "ICC", "25N", 25, false, List.of(bosses[3]))
         };
         this.raidRepository.saveAll(Arrays.asList(raids));
