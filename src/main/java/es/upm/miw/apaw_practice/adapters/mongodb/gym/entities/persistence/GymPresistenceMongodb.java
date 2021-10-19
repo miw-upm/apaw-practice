@@ -17,14 +17,6 @@ public class GymPresistenceMongodb implements GymPersistence {
         this.gymRepository = gymRepository;
     }
 
-
-    @Override
-    public Gym findByLabel(String label) {
-        return this.gymRepository.findByLabel(label).
-                orElseThrow(() -> new NotFoundException("Gym with name :" + label)).ToGym();
-
-    }
-
     @Override
     public Gym readByAddress(String address) {
         return this.gymRepository
@@ -40,11 +32,5 @@ public class GymPresistenceMongodb implements GymPersistence {
         addressUpdate.setCellphone(gym.getCellphone());
         return this.gymRepository.save(addressUpdate).ToGym();
 
-    }
-
-    @Override
-    public Gym findByAddress(String address) {
-        return this.gymRepository.findByAddress(address).
-                orElseThrow(() -> new NotFoundException("Gym with address:" + address)).ToGym();
     }
 }
