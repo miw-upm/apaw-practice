@@ -28,9 +28,4 @@ class TablePersistenceMongodbIT {
         assertEquals(table.getPrice(), new BigDecimal(30.99));
     }
 
-    @Test
-    void testFindByCategoryWaiter(){
-        Table table = this.tablePersistence.findByCategoryWaiter("employee");
-        assertEquals(18,table.getReserves().get(0).getNumPeople());
-    }
 }
