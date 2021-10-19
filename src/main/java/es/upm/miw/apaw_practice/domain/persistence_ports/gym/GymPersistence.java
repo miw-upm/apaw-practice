@@ -5,11 +5,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GymPersistence {
-    Gym findByLabel(String label);
 
     Gym readByAddress(String address);
 
     Gym update(String address, Gym gym);
 
-    Gym findByAddress(String address);
 }
