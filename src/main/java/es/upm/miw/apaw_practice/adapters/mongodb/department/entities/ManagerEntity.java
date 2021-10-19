@@ -1,6 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.department.entities;
 
+import es.upm.miw.apaw_practice.domain.models.department.Manager;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +13,7 @@ public class ManagerEntity {
     private String id;
     private Integer experienceYears;
     private String phoneNumber;
+    @Indexed(unique = true)
     private String email;
     private List<DepartmentEmployeeEntity> departmentEmployeeEntities;
 
@@ -84,5 +88,11 @@ public class ManagerEntity {
                 ", email='" + email + '\'' +
                 ", departmentEmployeeEntities=" + departmentEmployeeEntities +
                 '}';
+    }
+
+    public Manager toManager() {
+        Manager manager = new Manager();
+        BeanUtils.copyProperties(this, manager);
+        return manager;
     }
 }
