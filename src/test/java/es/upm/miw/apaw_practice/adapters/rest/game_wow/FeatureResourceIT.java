@@ -1,17 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.rest.game_wow;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
-import es.upm.miw.apaw_practice.adapters.rest.shop.ArticleResource;
 import es.upm.miw.apaw_practice.domain.models.game_wow.Feature;
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertTrue;

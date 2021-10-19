@@ -6,7 +6,6 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.RaidPersistenc
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
