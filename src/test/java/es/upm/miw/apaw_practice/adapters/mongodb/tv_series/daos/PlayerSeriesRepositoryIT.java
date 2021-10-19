@@ -19,14 +19,7 @@ public class PlayerSeriesRepositoryIT {
     private PlayerSeriesRepository playerSeriesRepository;
 
     @Test
-    void testFindByName() {
-        assertTrue(this.playerSeriesRepository.findByName("Brittney Karbowski").findFirst().isPresent());
-        List<PlayerSeriesEntity> playerSeriesEntities = this.playerSeriesRepository
-                .findByName("Brittney Karbowski")
-                .collect(Collectors.toList());
-        assertEquals(1, playerSeriesEntities.size());
-        assertEquals(LocalDate.of(1986, 6, 26), playerSeriesEntities.get(0).getBirth());
-        assertEquals("United States", playerSeriesEntities.get(0).getNationality());
-        assertEquals("Fairy Tail", playerSeriesEntities.get(0).getTvSeriesEntities().get(0).getTitle());
+    void testFindAll() {
+        assertEquals(4,playerSeriesRepository.findAll().size());
     }
 }
