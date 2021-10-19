@@ -18,6 +18,15 @@ public class DepartmentResourceIT {
     private WebTestClient webTestClient;
 
     @Test
+    void testFindAll() {
+        this.webTestClient
+                .get()
+                .uri(DepartmentResource.DEPARTMENTS)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
     void testCreate() {
         DepartmentEmployee departmentEmployee =
                 new DepartmentEmployee("08553821F", LocalDate.of(1980,4,11), true);
