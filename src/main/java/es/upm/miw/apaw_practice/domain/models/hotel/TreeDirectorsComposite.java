@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import es.upm.miw.apaw_practice.domain.models.car_hire.VehicleComponent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,5 +49,14 @@ public class TreeDirectorsComposite implements TreeDirectors{
     public void remove(TreeDirectors treeDirector) {
         treeDirectorList.remove(treeDirector);
 
+    }
+
+    @Override
+    public int numberOfNodes() {
+        int sum = 1;
+        for(TreeDirectors directors : treeDirectorList) {
+            sum += directors.numberOfNodes();
+        }
+        return sum;
     }
 }

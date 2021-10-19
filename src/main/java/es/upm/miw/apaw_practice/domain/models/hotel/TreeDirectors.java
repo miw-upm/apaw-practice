@@ -13,4 +13,6 @@ public interface TreeDirectors {
     void add(TreeDirectors treeDirector);
 
     void remove(TreeDirectors treeDirector);
+
+    int numberOfNodes();
 }

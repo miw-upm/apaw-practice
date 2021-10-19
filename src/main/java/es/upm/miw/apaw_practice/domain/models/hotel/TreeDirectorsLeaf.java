@@ -30,11 +30,18 @@ public class TreeDirectorsLeaf implements TreeDirectors {
 
     @Override
     public void add(TreeDirectors treeDirector) {
-        //Do nothing because it is a leaf
+        throw new UnsupportedOperationException("Unsupported operation in Leaf, can not 'add' anything to a 'Leaf'.");
+
     }
 
     @Override
     public void remove(TreeDirectors treeDirector) {
-        //Do nothing because it is a leaf
+        throw new UnsupportedOperationException("Unsupported operation in Leaf, can not 'remove' anything to a 'Leaf'.");
+
+    }
+
+    @Override
+    public int numberOfNodes() {
+        return 1;
     }
 }
