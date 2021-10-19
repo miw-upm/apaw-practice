@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.daos.ClientRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities.ClientEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities.WaiterEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Client;
 import es.upm.miw.apaw_practice.domain.persistence_ports.restaurant.ClientPersistence;
