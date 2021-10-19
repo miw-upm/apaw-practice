@@ -1,8 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Class.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.adapters.mongodb.Class.entities.ClassEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,16 +16,12 @@ class ClassRepositoryIT {
 
     @Test
     void testCreateAndRead() {
-        assertTrue(this.classRepository.findAll().stream()
-                .anyMatch(class1 ->
-                        "wen" == class1.getId() &&
-                                24 == class1.getCredit() &&
-                                "espanol" == class1.getName()
-
-                )
-
-        );
-
+        List<ClassEntity> list = this.classRepository.findAll();
+        assertTrue(list.stream()
+            .anyMatch(myClass ->
+                60 == myClass.getCredit() &&
+                "class1".equals(myClass.getName())
+            ));
     }
 }
 
