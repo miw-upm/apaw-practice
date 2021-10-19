@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.restaurant;
 
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
+import es.upm.miw.apaw_practice.domain.models.restaurant.Client;
 import es.upm.miw.apaw_practice.domain.persistence_ports.restaurant.ClientPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,9 @@ public class ClientService {
         this.clientPersistence = clientPersistence;
     }
 
-    public Stream<String> readCategoryBySectionWaiterAndDniClient(String dni, String section) {
+    public Client read(String dni) {
         this.assertDniExist(dni);
-        return this.clientPersistence.readCategoryBySectionWaiterAndDniClient(dni,section);
+        return this.clientPersistence.readByDni(dni);
     }
 
     public void assertDniExist(String dni){
