@@ -52,4 +52,18 @@ class FootballPlayerResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testFindFootballPlayersByPrincipalRefereeName() {
+        FootballPlayer footballPlayerTest = new FootballPlayer(Boolean.TRUE, 10, 24, "Cristiano");
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.SEARCH2)
+                                .queryParam("q", "Undiano")
+                                .build())
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

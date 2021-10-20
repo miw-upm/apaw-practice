@@ -1,9 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.football.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.football.daos.MatchRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.football.entities.FootballPlayerEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.football.entities.MatchEntity;
-import es.upm.miw.apaw_practice.domain.models.football.FootballPlayer;
 import es.upm.miw.apaw_practice.domain.models.football.Match;
 import es.upm.miw.apaw_practice.domain.models.football.MatchWeatherDto;
 import es.upm.miw.apaw_practice.domain.persistence_ports.football.MatchPersistence;
