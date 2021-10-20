@@ -1,11 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.rest.Class;
 
 import es.upm.miw.apaw_practice.domain.models.Class.Professor;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import es.upm.miw.apaw_practice.domain.services.Class.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Stream;
 
@@ -23,4 +22,9 @@ public class ProfessorResource {
 
     @GetMapping
     public Stream<Professor> readAll(){return this.professorService.readAll();}
+
+    @PostMapping
+    public Professor create(@RequestBody Professor professor) {
+        return this.professorService.create(professor);
+    }
 }
