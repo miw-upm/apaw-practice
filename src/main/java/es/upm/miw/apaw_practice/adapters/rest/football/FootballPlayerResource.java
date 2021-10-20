@@ -16,6 +16,7 @@ public class FootballPlayerResource {
 
     static final String PLAYERS = "/football/players";
     static final String SEARCH = "/search";
+    static final String SEARCH2 = "/search2";
 
     private final FootballPlayerService footballPlayerService;
 
@@ -33,4 +34,10 @@ public class FootballPlayerResource {
     public Integer findGoalsByStadiumName(@RequestParam String q) {
         return this.footballPlayerService.findGoalsByStadiumName(q);
     }
+
+    @GetMapping(SEARCH2)
+    public Stream<FootballPlayer> findFootballPlayersByPrincipalRefereeName(@RequestParam String q) {
+        return this.footballPlayerService.findFootballPlayersByPrincipalRefereeName(q);
+    }
+
 }
