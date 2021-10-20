@@ -24,10 +24,10 @@ class BandResourceIT {
     @Test
     void testCreate() {
         Band band = new Band("The Strokes", "New York City, New York, U.S.", true,
-                List.of(new Artist("Julian", "Casablancas", 43),
-                        new Artist("Nikolai", "Fraiture", 42),
-                        new Artist("Fabrizio", "Moretti", 41),
-                        new Artist("Albert", "Hammond", 41)));
+                List.of(Artist.builder().firstName("Julian").familyName("Casablancas").age(43).build(),
+                        Artist.builder().firstName("Nikolai").familyName("Fraiture").age(42).build(),
+                        Artist.builder().firstName("Fabrizio").familyName("Moretti").age(41).build(),
+                        Artist.builder().firstName("Albert").familyName("Hammond").age(41).build()));
 
         this.webTestClient
                 .post()

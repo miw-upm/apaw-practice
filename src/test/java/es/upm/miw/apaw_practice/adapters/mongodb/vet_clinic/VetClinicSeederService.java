@@ -10,6 +10,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.VetEntity;
 import es.upm.miw.apaw_practice.domain.models.vet_clinic.Vet;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,10 +37,14 @@ public class VetClinicSeederService {
                 new DiagnosisEntity("diagnosis4", "medicine4", false)
         };
         PetEntity[] pets = {
-                new PetEntity(1111, 7, "Neko", "Carmen", List.of(diagnosis[0], diagnosis[1])),
+                new PetEntity(0111, 7, "Neko", "Carmen", List.of(diagnosis[0], diagnosis[1])),
                 new PetEntity(2222, 1, "Kairo", "Maria", List.of(diagnosis[1])),
                 new PetEntity(3333, 10, "Cooper", "", List.of(diagnosis[0], diagnosis[1],
-                        diagnosis[3], diagnosis[2]))
+                        diagnosis[3], diagnosis[2])),
+                new PetEntity(0444, 12, "Coca", "Pedro", List.of(diagnosis[0], diagnosis[1],
+                        diagnosis[3], diagnosis[2])),
+                new PetEntity(5555, 3, "Chetto", "Pablo", List.of(diagnosis[0])),
+                new PetEntity(0666, 6, "Lilith", "Pedro", List.of(diagnosis[0]))
         };
         this.petRepository.saveAll(Arrays.asList(pets));
 

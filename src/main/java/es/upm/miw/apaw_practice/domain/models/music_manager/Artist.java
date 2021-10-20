@@ -11,10 +11,8 @@ public class Artist {
         // empty for framework
     }
 
-    public Artist(String firstName, String familyName, Integer age) {
-        this.firstName = firstName;
-        this.familyName = familyName;
-        this.age = age;
+    public static ArtistBuilders.FirstName builder() {
+        return new Builder();
     }
 
     public String getFirstName() {
@@ -61,5 +59,37 @@ public class Artist {
                 ", familyName='" + familyName + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    public static class Builder implements ArtistBuilders.FirstName, ArtistBuilders.FamilyName, ArtistBuilders.Age, ArtistBuilders.Optionals {
+
+        private final Artist artist;
+
+        public Builder() {
+            this.artist = new Artist();
+        }
+
+        @Override
+        public ArtistBuilders.FamilyName firstName(String firstName) {
+            this.artist.firstName = firstName;
+            return this;
+        }
+
+        @Override
+        public ArtistBuilders.Age familyName(String familyName) {
+            this.artist.familyName = familyName;
+            return this;
+        }
+
+        @Override
+        public ArtistBuilders.Optionals age(Integer age) {
+            this.artist.age = age;
+            return this;
+        }
+
+        @Override
+        public Artist build() {
+            return this.artist;
+        }
     }
 }

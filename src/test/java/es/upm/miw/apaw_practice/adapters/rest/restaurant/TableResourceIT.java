@@ -24,7 +24,7 @@ class TableResourceIT {
     private WebTestClient webTestClient;
 
     @Test
-    void testReadHoldersByNumber(){
+    void testFindHoldersByNumber(){
         this.webTestClient
                 .get()
                 .uri(TABLES+"/1"+RESERVES+HOLDER)
