@@ -22,7 +22,7 @@ public class Tennis_CourtsSeederService {
     private PlayerRepository playerRepository;
 
     public void seedDatabase() {
-        LogManager.getLogger(this.getClass()).info("------- Tennis Courts Initial Load -----------");
+        LogManager.getLogger(this.getClass()).warn("------- Tennis Courts Initial Load -----------");
         EquipmentEntity[] equipment = {
             new EquipmentEntity("Racquet", 2, new BigDecimal("5.0")),
             new EquipmentEntity("Balls", 5, new BigDecimal("1.5")),
