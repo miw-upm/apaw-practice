@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 @RequestMapping(ActorResource.ACTOR)
 public class ActorResource {
 
-    static final String ACTOR = "/cinema/actor";
+    static final String ACTOR = "/cinema/actors";
 
     private final ActorService actorService;
 
