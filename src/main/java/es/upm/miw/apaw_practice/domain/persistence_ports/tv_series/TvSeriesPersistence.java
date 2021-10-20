@@ -10,5 +10,5 @@ public interface TvSeriesPersistence {
 
     void deleteByTitle(String title);
 
-    Stream<TvSeries> readAll();
+    Stream<TvSeries> findAll();
 }

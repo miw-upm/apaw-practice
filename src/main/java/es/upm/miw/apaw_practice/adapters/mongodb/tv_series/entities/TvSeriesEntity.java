@@ -115,6 +115,13 @@ public class TvSeriesEntity {
         tvSeries.setYear(this.year);
         tvSeries.setTitle(this.title);
         tvSeries.setFinished(this.finished);
+        if(this.episodeEntities == null)
+            this.episodeEntities = new ArrayList<>();
+        else
+            for(EpisodeEntity episode : this.episodeEntities) {
+                if(episode != null)
+                    tvSeries.addEpisode(episode.toEpisode());
+        }
         return tvSeries;
     }
 
@@ -139,5 +146,4 @@ public class TvSeriesEntity {
                 ", producerEntity=" + this.producerEntity +
                 '}';
     }
-
 }
