@@ -6,13 +6,11 @@ import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
 import es.upm.miw.apaw_practice.domain.persistence_ports.tennis_courts.ReservationPersistence;
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 @Repository("reservationPersistence")

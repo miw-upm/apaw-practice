@@ -11,10 +11,16 @@ public class ReservationResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    /*@Test
+    @Test
     void testDelete(){
         this.webTestClient.delete()
-                .uri(ReservationResource.RESERVATIONS + ReservationResource.OWNER_NAME);
+                .uri(ReservationResource.RESERVATIONS + "/Pedro" + "/30:9:21/12:00")
+                .exchange()
+                .expectStatus().isOk();
 
-    }*/
+        this.webTestClient.delete()
+                .uri(ReservationResource.RESERVATIONS + "/Pedro" + "/30:9:21/18:00")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }
