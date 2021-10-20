@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
-import es.upm.miw.apaw_practice.domain.models.car_hire.VehicleComponent;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +7,7 @@ public class TreeDirectorsComposite implements TreeDirectors {
     private static TreeDirectorsComposite treeDirectorsComposite;
 
     private final String name;
-    private List<TreeDirectors> treeDirectorList;
+    private final List<TreeDirectors> treeDirectorList;
 
     public TreeDirectorsComposite(String name) {
         this.name = name;
@@ -44,7 +42,7 @@ public class TreeDirectorsComposite implements TreeDirectors {
         return sum;
     }
 
-    public List<TreeDirectors> getTreeDirector() {
+    public List<TreeDirectors> getTreeDirectors() {
         return this.treeDirectorList;
     }
 

@@ -78,12 +78,12 @@ public class DirectorTest {
         directorsComposite.get(1).add(new TreeDirectorsLeaf(directors.get(5)));
 
         directorsComposite.get(1).add(new TreeDirectorsComposite("Hotel Manager"));
-        directorsComposite.get(1).getTreeDirector().get(3).add(directorsLeaf.get(6));
-        directorsComposite.get(1).getTreeDirector().get(3).add(directorsLeaf.get(7));
+        directorsComposite.get(1).getTreeDirectors().get(3).add(directorsLeaf.get(6));
+        directorsComposite.get(1).getTreeDirectors().get(3).add(directorsLeaf.get(7));
 
         directorsComposite.get(1).add(new TreeDirectorsComposite("Marketing Manager"));
-        directorsComposite.get(1).getTreeDirector().get(4).add(directorsLeaf.get(8));
-        directorsComposite.get(1).getTreeDirector().get(4).add(directorsLeaf.get(9));
+        directorsComposite.get(1).getTreeDirectors().get(4).add(directorsLeaf.get(8));
+        directorsComposite.get(1).getTreeDirectors().get(4).add(directorsLeaf.get(9));
 
         treeFather.add(directorsComposite.get(0));
         treeFather.add(directorsComposite.get(1));
@@ -103,8 +103,8 @@ public class DirectorTest {
         assertEquals("Directors", directorsComposite.get(0).getName());
         assertEquals("Subdirectors", directorsComposite.get(1).getName());
 
-        assertEquals("Hotel Manager",((TreeDirectorsComposite) directorsComposite.get(1).getTreeDirector().get(3)).getName());
-        assertEquals("Marketing Manager",((TreeDirectorsComposite) directorsComposite.get(1).getTreeDirector().get(4)).getName());
+        assertEquals("Hotel Manager", ((TreeDirectorsComposite) directorsComposite.get(1).getTreeDirectors().get(3)).getName());
+        assertEquals("Marketing Manager", ((TreeDirectorsComposite) directorsComposite.get(1).getTreeDirectors().get(4)).getName());
 
         assertEquals(2, directorsComposite.size());
         assertEquals(10, directorsLeaf.size());
@@ -113,8 +113,8 @@ public class DirectorTest {
 
         assertEquals(7, directorsComposite.get(1).numberOfNodes());
 
-        assertEquals(2, directorsComposite.get(1).getTreeDirector().get(3).numberOfNodes());
-        assertEquals(2, directorsComposite.get(1).getTreeDirector().get(4).numberOfNodes());
+        assertEquals(2, directorsComposite.get(1).getTreeDirectors().get(3).numberOfNodes());
+        assertEquals(2, directorsComposite.get(1).getTreeDirectors().get(4).numberOfNodes());
 
         assertEquals(10, treeFather.numberOfNodes());
 
