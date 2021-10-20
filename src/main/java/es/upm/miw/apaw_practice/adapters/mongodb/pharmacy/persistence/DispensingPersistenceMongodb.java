@@ -32,7 +32,6 @@ public class DispensingPersistenceMongodb implements DispensingPersistence {
         DispensingEntity dispensingEntity = this.dispensingRepository
                 .findById(dispensing.getId())
                 .orElseThrow(() -> new NotFoundException("Dispensing id:" + dispensing.getId()));
-        if (dispensing.getActiveIngredients() != null) {
             List<ActiveIngredientEntity> activeIngredientEntities = dispensing.getActiveIngredients().stream()
                     .map(activeIngredient -> new ActiveIngredientEntity(
                             this.drugRepository
@@ -43,7 +42,6 @@ public class DispensingPersistenceMongodb implements DispensingPersistence {
                             activeIngredient.getDose())
                     ).collect(Collectors.toList());
             dispensingEntity.setActiveIngredientEntities(activeIngredientEntities);
-        }
         dispensingEntity.setDispensingTimestamp(dispensing.getDispensingTimestamp());
         return this.dispensingRepository.save(dispensingEntity).toDispensing();
     }

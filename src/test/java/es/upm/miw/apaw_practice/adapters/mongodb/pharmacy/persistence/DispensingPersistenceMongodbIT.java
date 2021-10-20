@@ -33,26 +33,7 @@ public class DispensingPersistenceMongodbIT {
     }
 
     @Test
-    void testUpdateEmptyActiveIngredients() {
-        Optional<Dispensing> dispensing = this.dispensingPersistenceMongodb.readAll()
-                .filter(dispensingItem -> dispensingItem.getDispensingTimestamp()
-                        .isEqual(LocalDateTime.of(2021, 7, 2, 21, 34)))
-                .findFirst();
-        assertTrue(dispensing.isPresent());
-        dispensing.get().setDispensingTimestamp(LocalDateTime.of(2023, 7, 2, 21, 34));
-        dispensing.get().getActiveIngredients().clear();
-        this.dispensingPersistenceMongodb.update(dispensing.get());
-        Dispensing findedDispensing = this.dispensingPersistenceMongodb.readById(dispensing.get().getId());
-        assertEquals(dispensing.get().getId(), findedDispensing.getId());
-        assertEquals(0, findedDispensing.getActiveIngredients().size());
-        assertTrue(findedDispensing.getDispensingTimestamp()
-                .isEqual(LocalDateTime.of(2023, 7, 2, 21, 34)));
-        pharmacySeederService.deleteAll();
-        pharmacySeederService.seedDatabase();
-    }
-
-    @Test
-    void testUpdateNotNullActiveIngredients() {
+    void testUpdate() {
         Optional<Dispensing> dispensing = this.dispensingPersistenceMongodb.readAll()
                 .filter(dispensingItem -> dispensingItem.getDispensingTimestamp()
                         .isEqual(LocalDateTime.of(2021, 9, 27, 8, 15)))
