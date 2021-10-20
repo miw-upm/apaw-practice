@@ -34,8 +34,8 @@ class FootballPlayerResourceIT {
         WebTestClient.BodySpec<Integer, ?> goalsScored = this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.SEARCH)
-                                .queryParam("q", "Bernabeu")
+                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.GOALS)
+                                .queryParam("StadiumName", "Bernabeu")
                                 .build())
                 .exchange()
                 .expectStatus().isOk()
@@ -46,8 +46,8 @@ class FootballPlayerResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.SEARCH)
-                                .queryParam("q", "Reino de Leon")
+                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.GOALS)
+                                .queryParam("StadiumName", "Reino de Leon")
                                 .build())
                 .exchange()
                 .expectStatus().isNotFound();
@@ -55,13 +55,12 @@ class FootballPlayerResourceIT {
 
     @Test
     void testFindFootballPlayersByPrincipalRefereeName() {
-        FootballPlayer footballPlayerTest = new FootballPlayer(Boolean.TRUE, 10, 24, "Cristiano");
 
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.SEARCH2)
-                                .queryParam("q", "Undiano")
+                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.DEFENSES)
+                                .queryParam("principalRefereeName", "Undiano")
                                 .build())
                 .exchange()
                 .expectStatus().isOk();

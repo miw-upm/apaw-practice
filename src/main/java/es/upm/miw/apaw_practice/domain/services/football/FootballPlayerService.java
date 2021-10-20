@@ -26,8 +26,8 @@ public class FootballPlayerService {
         return this.footballPlayerPersistence.readAll();
     }
 
-    public Integer findGoalsByStadiumName(String q) {
-        return this.stadiumPersistence.readByName(q)
+    public Integer findGoalsByStadiumName(String StadiumName) {
+        return this.stadiumPersistence.readByName(StadiumName)
                 .getMatches().stream()
                 .flatMap(match -> match.getPlayers().stream())
                 .distinct()
@@ -35,9 +35,9 @@ public class FootballPlayerService {
                 .reduce(0, Integer::sum);
     }
 
-    public Stream<FootballPlayer> findFootballPlayersByPrincipalRefereeName(String q) {
+    public Stream<FootballPlayer> findFootballPlayersByPrincipalRefereeName(String principalRefereeName) {
         return this.matchPersistence.readAll()
-                .filter(match -> match.getPrincipalReferee().getName().equals(q))
+                .filter(match -> match.getPrincipalReferee().getName().equals(principalRefereeName))
                 .flatMap(match -> match.getPlayers().stream())
                 .distinct()
                 .filter(FootballPlayer::isDefense);
