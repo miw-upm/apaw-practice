@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -118,5 +119,12 @@ public class DirectorTest {
 
         assertEquals(10, treeFather.numberOfNodes());
 
+    }
+
+    @AfterAll
+    static void deleteAll() {
+        directors.clear();
+        directorsLeaf.clear();
+        directorsComposite.clear();
     }
 }
