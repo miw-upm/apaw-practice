@@ -17,7 +17,7 @@ public class PlayerSeriesPersistenceMongodbIT {
 
     @Test
     void testReadAll() {
-        List<Player> players = this.playerSeriesPersistence.readAll()
+        List<Player> players = this.playerSeriesPersistence.findAll()
                 .collect(Collectors.toList());
         assertEquals(4, players.size());
         assertEquals("Yuki Kaji",players.get(0).getName());
