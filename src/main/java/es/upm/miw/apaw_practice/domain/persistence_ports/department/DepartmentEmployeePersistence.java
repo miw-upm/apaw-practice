@@ -11,4 +11,6 @@ public interface DepartmentEmployeePersistence {
     DepartmentEmployee read(String dni);
 
     boolean existDni(String dni);
+
+    DepartmentEmployee update(String dni, DepartmentEmployee departmentEmployee);
 }
