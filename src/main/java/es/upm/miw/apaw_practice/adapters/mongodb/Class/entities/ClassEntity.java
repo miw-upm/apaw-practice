@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 
 @Document
@@ -25,6 +26,11 @@ public class ClassEntity {
         this.name = name;
         this.credit = credit;
         this.startTime = StartTime;
+    }
+
+    public ClassEntity(Class myclass){
+        BeanUtils.copyProperties(myclass,this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getName() {

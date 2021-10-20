@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Document
 public class ProfessorEntity {
@@ -26,6 +27,11 @@ public class ProfessorEntity {
         this.course = course;
         this.age = age;
         this.entryDate = EntryDate;
+    }
+
+    public ProfessorEntity(Professor professor){
+        BeanUtils.copyProperties(professor, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getName() {
