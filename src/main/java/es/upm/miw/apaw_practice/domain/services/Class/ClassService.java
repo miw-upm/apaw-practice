@@ -11,9 +11,11 @@ public class ClassService {
     private final ClassPersistence classPersistence;
 
     @Autowired
-    public ClassService(ClassPersistence classPersistence){
+    public ClassService(ClassPersistence classPersistence) {
         this.classPersistence = classPersistence;
     }
 
-    public Stream<es.upm.miw.apaw_practice.domain.models.Class.Class> readAll(){ return this.classPersistence.readAll();}
+    public Stream<es.upm.miw.apaw_practice.domain.models.Class.Class> readAll() {
+        return this.classPersistence.readAll();
+    }
 }

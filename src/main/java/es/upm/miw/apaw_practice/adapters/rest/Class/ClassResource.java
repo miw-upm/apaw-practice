@@ -25,5 +25,7 @@ public class ClassResource {
     }
 
     @GetMapping(theList)
-    public Stream<Class> readAll() {return this.classService.readAll();}
+    public Stream<Class> readAll() {
+        return this.classService.readAll();
+    }
 }

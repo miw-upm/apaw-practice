@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Class.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.Class.daos.ClassRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Class.entities.ClassEntity;
+import es.upm.miw.apaw_practice.domain.models.Class.Class;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Class.ClassPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,14 @@ public class ClassPersistenceMongodb implements ClassPersistence {
     public Stream<es.upm.miw.apaw_practice.domain.models.Class.Class> readAll() {
         return this.classrepository.findAll().stream()
                 .map(ClassEntity::toClass);
+    }
+
+    @Override
+    public Class create(Class myClass){
+        return this.classrepository
+                .save(new ClassEntity(myClass))
+                .toClass();
+
     }
 
 }
