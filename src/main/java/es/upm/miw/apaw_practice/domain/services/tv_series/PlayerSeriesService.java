@@ -17,7 +17,7 @@ public class PlayerSeriesService {
         this.playerSeriesPersistence = playerSeriesPersistence;
     }
 
-    public Stream<Player> readAll() {
-        return this.playerSeriesPersistence.readAll();
+    public Stream<Player> findAll() {
+        return this.playerSeriesPersistence.findAll();
     }
 }
