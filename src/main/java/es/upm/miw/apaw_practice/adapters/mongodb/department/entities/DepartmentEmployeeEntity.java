@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.department.entities;
 
+import es.upm.miw.apaw_practice.domain.models.department.DepartmentEmployee;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,6 +20,11 @@ public class DepartmentEmployeeEntity {
 
     public DepartmentEmployeeEntity() {
         //empty for framework
+    }
+
+    public DepartmentEmployeeEntity(DepartmentEmployee departmentEmployee) {
+        BeanUtils.copyProperties(departmentEmployee, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public DepartmentEmployeeEntity(String dni, LocalDate birthday, Boolean isActive) {
@@ -77,5 +84,15 @@ public class DepartmentEmployeeEntity {
                 ", birthday=" + birthday +
                 ", isActive=" + isActive +
                 '}';
+    }
+
+    public DepartmentEmployee toDepartmentEmployee() {
+        DepartmentEmployee departmentEmployee = new DepartmentEmployee();
+        BeanUtils.copyProperties(this, departmentEmployee);
+        return departmentEmployee;
+    }
+
+    public void fromDepartmentEmployee(DepartmentEmployee departmentEmployee) {
+        BeanUtils.copyProperties(departmentEmployee, this);
     }
 }

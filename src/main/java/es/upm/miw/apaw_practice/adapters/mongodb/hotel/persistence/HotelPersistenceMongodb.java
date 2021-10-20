@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelGuestRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -56,17 +55,17 @@ public class HotelPersistenceMongodb implements HotelPersistence {
 
     @Override
     public List<Hotel> findHotelNameListByGuestName(String name) {
-            return this.hotelRepository.findAll().stream()
-                    .map(HotelEntity::toHotel)
-                    .filter(hotel -> filterHotelByGuestName(hotel, name))
-                    .map(Hotel::ofName)
-                    .collect(Collectors.toList());
+        return this.hotelRepository.findAll().stream()
+                .map(HotelEntity::toHotel)
+                .filter(hotel -> filterHotelByGuestName(hotel, name))
+                .map(Hotel::ofName)
+                .collect(Collectors.toList());
     }
 
     private boolean filterHotelByGuestName(Hotel hotel, String name) {
-        for(Room room: hotel.getRooms()){
-            for(HotelGuest hotelGuest : room.getHotelGuests()){
-                if(hotelGuest.getName().equals(name))
+        for (Room room : hotel.getRooms()) {
+            for (HotelGuest hotelGuest : room.getHotelGuests()) {
+                if (hotelGuest.getName().equals(name))
                     return true;
             }
         }

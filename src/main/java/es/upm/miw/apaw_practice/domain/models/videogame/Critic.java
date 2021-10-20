@@ -6,6 +6,10 @@ public class Critic {
     private Integer expertScore;
     private Double userScore;
 
+    public Critic() {
+        //empty for framework
+    }
+
     public Critic(Boolean mustPlay, Integer expertScore, Double userScore) {
         this.mustPlay = mustPlay;
         this.expertScore = expertScore;

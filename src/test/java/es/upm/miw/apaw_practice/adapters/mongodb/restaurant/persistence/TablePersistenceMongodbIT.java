@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,10 +22,10 @@ class TablePersistenceMongodbIT {
 
     @Test
     void testReadAndUpdate(){
-        assertTrue(this.tablePersistence.readHoldersByNumber(5).collect(Collectors.toList()).size() == 2);
         Table table = this.tablePersistence.readByNumber(4).toTable();
         table.setPrice(new BigDecimal(30.99));
         this.tablePersistence.update(table);
         assertEquals(table.getPrice(), new BigDecimal(30.99));
     }
+
 }
