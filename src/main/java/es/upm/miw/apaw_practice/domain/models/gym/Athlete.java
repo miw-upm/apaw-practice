@@ -2,18 +2,15 @@ package es.upm.miw.apaw_practice.domain.models.gym;
 
 public class Athlete {
     private String nie;
-    private  String name;
-    private  String familyName;
+    private String name;
+    private String familyName;
 
-    public Athlete(){
+    public Athlete() {
         //empty for framework
+
     }
 
-    public Athlete(String nie, String name, String familyName) {
-        this.nie = nie;
-        this.name = name;
-        this.familyName = familyName;
-    }
+    //TO delete
 
     public String getNie() {
         return nie;
@@ -46,5 +43,42 @@ public class Athlete {
                 ", name='" + name + '\'' +
                 ", familyname='" + familyName + '\'' +
                 '}';
+    }
+
+    public static AthleteBuilders.Nie builder() {
+        return new Builder();
+    }
+
+    public static class Builder implements AthleteBuilders.Nie, AthleteBuilders.Name,
+            AthleteBuilders.FamilyName, AthleteBuilders.Optionals {
+
+        private final Athlete athlete;
+
+        public Builder() {
+            this.athlete = new Athlete();
+        }
+
+        @Override
+        public AthleteBuilders.Name nie(String nie) {
+            this.athlete.nie = nie;
+            return this;
+        }
+
+        @Override
+        public AthleteBuilders.FamilyName name(String name) {
+            this.athlete.name = name;
+            return this;
+        }
+
+        @Override
+        public AthleteBuilders.Optionals familyName(String familyName) {
+            this.athlete.familyName = familyName;
+            return this;
+        }
+
+        @Override
+        public Athlete build() {
+            return this.athlete;
+        }
     }
 }

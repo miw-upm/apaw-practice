@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.tennis_courts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
 
@@ -79,5 +80,18 @@ public class Player {
                 ", age=" + this.age +
                 ", equipmentList=" + this.equipmentList +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return dni.equals(player.dni) && Objects.equals(name, player.name) && Objects.equals(surname, player.surname) && Objects.equals(age, player.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni);
     }
 }

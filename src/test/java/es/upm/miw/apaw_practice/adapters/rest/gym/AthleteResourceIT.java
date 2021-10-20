@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
 public class AthleteResourceIT {
@@ -23,7 +22,8 @@ public class AthleteResourceIT {
     @Test
     void testCreate() {
         Athlete athlete =
-                new Athlete("25436587a", "karim", "basly");
+                Athlete.builder().nie("123456a").name("luca").familyName("Modric").build();
+
         this.webTestClient
                 .post()
                 .uri(AthleteResource.athlets)
@@ -37,7 +37,8 @@ public class AthleteResourceIT {
     @Test
     void testCreateConflict() {
         Athlete athlete =
-                new Athlete("88888888a", "ABCD", "abds");
+                Athlete.builder().nie("88888888a").name("sergio").familyName("ramos").build();
+
         this.webTestClient
                 .post()
                 .uri(AthleteResource.athlets)
@@ -55,17 +56,6 @@ public class AthleteResourceIT {
                 .body(BodyInserters.fromValue(athleteNameUpdating))
                 .exchange()
                 .expectStatus().isOk();
-
-        this.webTestClient
-                .get()
-                .uri(uriBuilder ->
-                        uriBuilder.path(AthleteResource.athlets + AthleteResource.ID)
-                                .queryParam("nie", "55555555a")
-                                .build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(Athlete.class)
-                .value(athletes -> assertEquals("karim", athletes.get(0).getName()));
     }
 
     @Test
