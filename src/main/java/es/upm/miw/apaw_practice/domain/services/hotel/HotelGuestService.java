@@ -1,13 +1,10 @@
 package es.upm.miw.apaw_practice.domain.services.hotel;
 
 import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
-import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelGuest;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelGuestPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class HotelGuestService {

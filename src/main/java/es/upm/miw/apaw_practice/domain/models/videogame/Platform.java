@@ -1,16 +1,18 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
-public class Console {
+public class Platform {
 
     private String consoleName;
     private String model;
-    private String color;
     private String memory;
 
-    public Console(String consoleName, String model, String color, String memory) {
+    public Platform() {
+        //empty from framework
+    }
+
+    public Platform(String consoleName, String model, String memory) {
         this.consoleName = consoleName;
         this.model = model;
-        this.color = color;
         this.memory = memory;
     }
 
@@ -30,14 +32,6 @@ public class Console {
         this.model = model;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public String getMemory() {
         return memory;
     }
@@ -48,10 +42,9 @@ public class Console {
 
     @Override
     public String toString() {
-        return "Console{" +
+        return "Platform{" +
                 "consoleName='" + consoleName + '\'' +
                 ", model='" + model + '\'' +
-                ", color='" + color + '\'' +
                 ", memory='" + memory + '\'' +
                 '}';
     }

@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
-public class RenterResourceIT {
+class RenterResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

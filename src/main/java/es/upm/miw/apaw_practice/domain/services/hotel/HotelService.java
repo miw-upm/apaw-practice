@@ -40,9 +40,9 @@ public class HotelService {
     }
 
     public List<Hotel> findHotelNameListByGuestName(String name) {
-        if(this.hotelGuestRepository.findByName(name).isEmpty()){
+        if (this.hotelGuestRepository.findByName(name).isEmpty()) {
             throw new NotFoundException("Name : " + name + " not found");
-        }else{
+        } else {
             return this.hotelPersistence.findHotelNameListByGuestName(name);
         }
 

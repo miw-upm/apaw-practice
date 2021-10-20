@@ -10,8 +10,11 @@ public class Dispensing {
     private List<ActiveIngredient> activeIngredients;
     private LocalDateTime dispensingTimestamp;
 
-    public Dispensing(String id, List<ActiveIngredient> activeIngredients, LocalDateTime dispensingTimestamp) {
-        this.id = id;
+    public Dispensing() {
+        //empty for framework
+    }
+
+    public Dispensing(List<ActiveIngredient> activeIngredients, LocalDateTime dispensingTimestamp) {
         this.activeIngredients = activeIngredients;
         this.dispensingTimestamp = dispensingTimestamp;
     }

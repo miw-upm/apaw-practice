@@ -4,8 +4,8 @@ import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.PetEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 public class PetRepositoryIT {
@@ -14,10 +14,10 @@ public class PetRepositoryIT {
 
     @Test
     void findPetByChipTest(){
-        assertTrue(this.petRepository.findPetByChip(1111).isPresent());
-        PetEntity pet = this.petRepository.findPetByChip(1111).get();
-        assertEquals("Neko", pet.getNick());
-        assertEquals(2, pet.getDiagnosisEntities().size());
+        assertTrue(this.petRepository.findPetByChip(5555).isPresent());
+        PetEntity pet = this.petRepository.findPetByChip(5555).get();
+        assertEquals("Chetto", pet.getNick());
+        assertEquals(1, pet.getDiagnosisEntities().size());
     }
 
     @Test
@@ -26,5 +26,14 @@ public class PetRepositoryIT {
         PetEntity pet = this.petRepository.findPetByNickAndOwner("Kairo", "Maria").get();
         assertEquals(2222, pet.getChip());
         assertEquals(1, pet.getAge());
+    }
+
+    @Test
+    void deleteByNickAndOwnerTest() {
+        this.petRepository.deleteByNickAndOwner("Neko", "Carmen");
+        assertFalse(this.petRepository.findAll().stream()
+                .anyMatch(pet -> "Neko".equals(pet.getNick()) &&
+                        "Carmen".equals(pet.getOwner())
+                ));
     }
 }

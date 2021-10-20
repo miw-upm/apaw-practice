@@ -11,13 +11,16 @@ import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.GameWowSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.GymSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hospital.HospitalSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.HotelSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.library.LibrarySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.RestaurantSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.music_manager.MusicManagerSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.PharmacySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.TvSeriesSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.UniversitySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.VetClinicSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.VideoGameSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.zoo.ZooSeederService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +46,12 @@ public class DatabaseSeederService {
     private final MusicManagerSeederService musicManagerSeederService;
     private final EmarketerSeederService emarketerSeederService;
     private final GameWowSeederService gameWowSeederService;
+    private final PharmacySeederService pharmacySeederService;
     private final HospitalSeederService hospitalSeederService;
+    private final LibrarySeederService librarySeederService;
+    private final VideoGameSeederService videoGameSeederService;
     private final DepartmentSeederService departmentSeederService;
+
     @Autowired
     public DatabaseSeederService(ShopSeederService shopSeederService, ZooSeederService zooSeederService,
                                  CinemaSeederService cinemaSeederService,
@@ -53,8 +60,13 @@ public class DatabaseSeederService {
                                  HotelSeederService hotelSeederService, Tennis_CourtsSeederService tennis_courtsSeederService,
                                  GymSeederService gymSeederService, VetClinicSeederService vetClinicSeederService,
                                  FootballSeederService footballSeederService, CarHireSeederService carHireSeederService,
-                                 RestaurantSeederService restaurantSeederService, MusicManagerSeederService musicManagerSeederService, EmarketerSeederService emarketerSeederService,
-                                 GameWowSeederService gameWowSeederService, HospitalSeederService hospitalSeederService, DepartmentSeederService departmentSeederService) {
+                                 RestaurantSeederService restaurantSeederService, MusicManagerSeederService musicManagerSeederService,
+                                 EmarketerSeederService emarketerSeederService, GameWowSeederService gameWowSeederService,
+                                 HospitalSeederService hospitalSeederService, LibrarySeederService librarySeederService,
+                                 DepartmentSeederService departmentSeederService, VideoGameSeederService videoGameSeederService,
+                                 PharmacySeederService pharmacySeederService ) {
+
+
         this.shopSeederService = shopSeederService;
         this.zooSeederService = zooSeederService;
         this.cinemaSeederService = cinemaSeederService;
@@ -71,9 +83,13 @@ public class DatabaseSeederService {
         this.restaurantSeederService = restaurantSeederService;
         this.musicManagerSeederService = musicManagerSeederService;
         this.emarketerSeederService = emarketerSeederService;
-        this.gameWowSeederService = gameWowSeederService;
+        this.pharmacySeederService = pharmacySeederService;
         this.hospitalSeederService = hospitalSeederService;
+        this.librarySeederService = librarySeederService;
         this.departmentSeederService = departmentSeederService;
+        this.videoGameSeederService = videoGameSeederService;
+        this.gameWowSeederService = gameWowSeederService;
+
         this.seedDatabase();
     }
 
@@ -94,9 +110,12 @@ public class DatabaseSeederService {
         this.restaurantSeederService.seedDatabase();
         this.musicManagerSeederService.seedDatabase();
         this.emarketerSeederService.seedDatabase();
+        this.pharmacySeederService.seedDatabase();
         this.gameWowSeederService.seedDatabase();
         this.hospitalSeederService.seedDatabase();
+        this.librarySeederService.seedDatabase();
         this.departmentSeederService.seedDatabase();
+        this.videoGameSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -117,9 +136,12 @@ public class DatabaseSeederService {
         this.restaurantSeederService.deleteAll();
         this.musicManagerSeederService.deleteAll();
         this.emarketerSeederService.deleteAll();
+        this.pharmacySeederService.deleteAll();
         this.gameWowSeederService.deleteAll();
         this.hospitalSeederService.deleteAll();
+        this.librarySeederService.deleteAll();
         this.departmentSeederService.deleteAll();
+        this.videoGameSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {

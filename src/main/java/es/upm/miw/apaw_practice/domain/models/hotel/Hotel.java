@@ -21,8 +21,8 @@ public class Hotel {
         this.rooms = rooms;
     }
 
-    public Hotel(String name,String direction, Integer numStars) {
-        this.name =  name;
+    public Hotel(String name, String direction, Integer numStars) {
+        this.name = name;
         this.direction = direction;
         this.numberStars = numStars;
         this.rooms = new ArrayList<>();

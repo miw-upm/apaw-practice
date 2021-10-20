@@ -6,6 +6,9 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.university.StudentPersi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class StudentService {
 
@@ -25,6 +28,12 @@ public class StudentService {
         if (this.studentPersistence.existDni(dni)) {
             throw new ConflictException("DNI exist: " + dni);
         }
+    }
+
+    public List<String> findDniListByClassroomSchool(String classroomSchool) {
+        return this.studentPersistence.findStudentsByClassroomSchool(classroomSchool)
+                .map(Student::getDni)
+                .collect(Collectors.toList());
     }
 
 }

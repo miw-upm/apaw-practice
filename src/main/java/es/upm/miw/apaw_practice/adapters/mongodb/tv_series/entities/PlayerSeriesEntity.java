@@ -78,19 +78,31 @@ public class PlayerSeriesEntity {
     }
 
     public Player toPlayer() {
-        return new Player(this.name,this.birth,this.nationality,
-                this.tvSeriesEntities.stream()
+        Player player = new Player();
+        player.setBirth(this.birth);
+        player.setName(this.name);
+        player.setNationality(this.nationality);
+        List<TvSeries> tvSeries = new ArrayList<>();
+        if(this.tvSeriesEntities.size() > 0)
+            if(this.tvSeriesEntities.get(0) == null)
+                tvSeries = new ArrayList<>();
+            else {
+                tvSeries = this.tvSeriesEntities.stream()
                         .map(TvSeriesEntity::toTvSeries)
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList());
+            }
+        player.setTvSeries(tvSeries);
+        return player;
     }
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass()
-                || ((name.equals(((PlayerSeriesEntity) obj).name))
-                && (birth.equals(((PlayerSeriesEntity) obj).birth))
-                && (nationality.equals(((PlayerSeriesEntity) obj).nationality))
-                && (tvSeriesEntities.equals(((PlayerSeriesEntity) obj).tvSeriesEntities)));
+        if (this == obj || obj != null && getClass() == obj.getClass()) return true;
+        assert obj != null;
+        return (name.equals(((PlayerSeriesEntity) obj).name))
+        && (birth.equals(((PlayerSeriesEntity) obj).birth))
+        && (nationality.equals(((PlayerSeriesEntity) obj).nationality))
+        && (tvSeriesEntities.equals(((PlayerSeriesEntity) obj).tvSeriesEntities));
     }
 
     @Override

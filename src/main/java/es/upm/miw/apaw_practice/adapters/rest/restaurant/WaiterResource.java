@@ -14,8 +14,7 @@ public class WaiterResource {
 
     static final String WAITERS = "/restaurant/waiters";
     static final String SEARCH = "/search";
-    static final String ID_SECTION = "/{section}";
-    static final String CATEGORY = "/category";
+    static final String SECTION = "/section";
 
     private final WaiterService waiterService;
 
@@ -29,9 +28,9 @@ public class WaiterResource {
         return this.waiterService.create(waiter);
     }
 
-    @GetMapping(ID_SECTION)
-    public Stream<Waiter> findBySection(@PathVariable String section){
-        return this.waiterService.findBySection(section);
+    @GetMapping(SECTION)
+    public Stream<Waiter> findSection(){
+        return this.waiterService.findSection();
     }
 
     @GetMapping(SEARCH)
