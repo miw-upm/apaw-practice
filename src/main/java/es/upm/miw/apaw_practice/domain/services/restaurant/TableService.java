@@ -20,19 +20,20 @@ public class TableService {
         this.tablePersistence = tablePersistence;
     }
 
-    public Stream<Reserve> readHoldersByNumber(Integer number) {
-        this.assertNumberNoExist(number);
-        return this.tablePersistence.readHoldersByNumber(number);
+    public Stream<Reserve> findHolderByNumber(Integer number) {
+        this.assertNumberExist(number);
+        Table table = this.tablePersistence.readByNumber(number).toTable();
+        return this.tablePersistence.findHolderByNumber(table);
     }
 
-    public void assertNumberNoExist(Integer number) {
+    private void assertNumberExist(Integer number) {
         if (!this.tablePersistence.existNumber(number)) {
             throw new ConflictException("Number no exist: " + number);
         }
     }
 
     public Table updateNumPeople(Integer id, List<Reserve> reserves) {
-        this.assertNumberNoExist(id);
+        this.assertNumberExist(id);
         Table table = this.tablePersistence.readByNumber(id).toTable();
         table.setReserves(reserves);
         return this.tablePersistence.updateNumPeople(table);
@@ -50,6 +51,10 @@ public class TableService {
                     );
                     newTable.setStyle(style);
                     return newTable;})
-                .forEach(table -> this.tablePersistence.update(table));
+                .forEach(this.tablePersistence::update);
+    }
+
+    public Table findByCategoryWaiter(String category) {
+        return this.tablePersistence.findByCategoryWaiter(category);
     }
 }

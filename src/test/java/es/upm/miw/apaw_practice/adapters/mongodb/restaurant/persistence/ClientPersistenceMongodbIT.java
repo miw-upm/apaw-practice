@@ -4,7 +4,6 @@ import es.upm.miw.apaw_practice.TestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,9 +21,7 @@ class ClientPersistenceMongodbIT {
 
     @Test
     void testReadAndDelete(){
-        assertEquals("manager",
-                this.clientPersistence.readCategoryBySectionWaiterAndDniClient("64221329Q","dining room")
-                        .collect(Collectors.toList()).get(0));
+        assertEquals("Maria",this.clientPersistence.readByDni("35935824A").getName());
         this.clientPersistence.delete("35935824A");
         assertTrue(this.clientPersistence.readAll().count() == 6);
     }

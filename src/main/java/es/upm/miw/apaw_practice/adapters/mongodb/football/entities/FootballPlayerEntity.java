@@ -12,16 +12,18 @@ public class FootballPlayerEntity {
     private Boolean defense;
     private Integer goalsScored;
     private Integer age;
+    private String name;
 
     public FootballPlayerEntity() {
         //empty for framework
     }
 
-    public FootballPlayerEntity(Boolean defense, Integer goalsScored, Integer age) {
+    public FootballPlayerEntity(Boolean defense, Integer goalsScored, Integer age, String name) {
         this.id = UUID.randomUUID().toString();
         this.defense = defense;
         this.goalsScored = goalsScored;
         this.age = age;
+        this.name = name;
     }
 
     public Boolean isDefense() {
@@ -63,6 +65,14 @@ public class FootballPlayerEntity {
         return footballPlayer;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public int hashCode() {
         return id.hashCode();
@@ -75,12 +85,12 @@ public class FootballPlayerEntity {
 
     @Override
     public String toString() {
-        return "FootballPlayer{" +
-                "defense=" + defense +
+        return "FootballPlayerEntity{" +
+                "id='" + id + '\'' +
+                ", defense=" + defense +
                 ", goalsScored=" + goalsScored +
                 ", age=" + age +
+                ", name='" + name + '\'' +
                 '}';
     }
-
-
 }

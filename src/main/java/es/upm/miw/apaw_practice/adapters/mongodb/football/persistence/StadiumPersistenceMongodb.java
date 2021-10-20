@@ -32,4 +32,11 @@ public class StadiumPersistenceMongodb implements StadiumPersistence {
         stadiumEntity.setName(stadium.getName());
         this.stadiumRepository.save(stadiumEntity);
     }
+
+    @Override
+    public Stadium readByName(String stadiumName) {
+        return this.stadiumRepository.findByName(stadiumName)
+                .orElseThrow(() -> new NotFoundException("Stadium with name: " + stadiumName))
+                .toStadium();
+    }
 }

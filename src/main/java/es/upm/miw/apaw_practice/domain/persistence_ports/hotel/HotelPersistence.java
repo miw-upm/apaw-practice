@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.domain.models.hotel.Hotel;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Repository
 public interface HotelPersistence {
@@ -13,4 +14,7 @@ public interface HotelPersistence {
     Hotel read(String id);
 
     void update(String id, Hotel hotel);
+
+    List<Hotel> findHotelNameListByGuestName(String name);
+
 }

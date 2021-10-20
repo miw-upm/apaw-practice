@@ -13,9 +13,8 @@ import java.util.stream.Stream;
 public class WaiterResource {
 
     static final String WAITERS = "/restaurant/waiters";
-    static final String SEARCHES = "/searches";
-    static final String ID_SECTION = "/{section}";
-    static final String CATEGORY = "/category";
+    static final String SEARCH = "/search";
+    static final String SECTION = "/section";
 
     private final WaiterService waiterService;
 
@@ -29,11 +28,15 @@ public class WaiterResource {
         return this.waiterService.create(waiter);
     }
 
-    @GetMapping(SEARCHES)
-    public Stream<Waiter> findBySectionAndCategory(@RequestParam String q){
-        String section = new LexicalAnalyzer().extractWithAssure(q, "section");
-        String category = new LexicalAnalyzer().extractWithAssure(q, "category");
-        return this.waiterService.findBySectionAndCategory(section,category);
+    @GetMapping(SECTION)
+    public Stream<Waiter> findSection(){
+        return this.waiterService.findSection();
+    }
+
+    @GetMapping(SEARCH)
+    public Stream<Waiter> findByNumberTable(@RequestParam String q){
+        String number = new LexicalAnalyzer().extractWithAssure(q, "number");
+        return this.waiterService.findByNumberTable(Integer.parseInt(number));
     }
 
 }

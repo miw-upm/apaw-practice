@@ -12,8 +12,6 @@ public interface TablePersistence {
 
     boolean existNumber(Integer number);
 
-    Stream<Reserve> readHoldersByNumber(Integer number);
-
     Table updateNumPeople(Table table);
 
     TableEntity readByNumber(Integer id);
@@ -21,4 +19,8 @@ public interface TablePersistence {
     Stream<Table> readAll();
 
     Table update(Table table);
+
+    Table findByCategoryWaiter(String category);
+
+    Stream<Reserve> findHolderByNumber(Table table);
 }

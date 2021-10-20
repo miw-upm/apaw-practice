@@ -32,11 +32,15 @@ public class SubjectEntity {
     public Subject toSubject() {
         Subject subject = new Subject();
         BeanUtils.copyProperties(this, subject);
+        subject.setClassroom(this.classroom.toClassroom());
         return subject;
     }
 
     public void fromSubject(Subject subject) {
         BeanUtils.copyProperties(subject, this);
+        ClassroomEntity classroomEntity = new ClassroomEntity();
+        BeanUtils.copyProperties(subject.getClassroom(), classroomEntity);
+        this.setClassroom(classroomEntity);
     }
 
     public String getId() {

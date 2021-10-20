@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository("bandPersistence")
 public class BandPersistenceMongodb implements BandPersistence {
@@ -64,4 +65,12 @@ public class BandPersistenceMongodb implements BandPersistence {
                 .save(bandEntity)
                 .toBand();
     }
+
+    @Override
+    public Stream<Band> readAll() {
+        return this.bandRepository.findAll()
+                .stream().map(BandEntity::toBand);
+    }
+
+
 }

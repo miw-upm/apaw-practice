@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.restaurant.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.daos.ClientRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.daos.WaiterRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities.ClientEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.restaurant.entities.WaiterEntity;
 import es.upm.miw.apaw_practice.domain.models.restaurant.Waiter;
 import es.upm.miw.apaw_practice.domain.persistence_ports.restaurant.WaiterPersistence;
@@ -13,18 +15,19 @@ import java.util.stream.Stream;
 public class WaiterPersistenceMongodb implements WaiterPersistence {
 
     private final WaiterRepository waiterRepository;
+    private final ClientRepository clientRepository;
 
     @Autowired
-    public WaiterPersistenceMongodb(WaiterRepository waiterRepository){
+    public WaiterPersistenceMongodb(WaiterRepository waiterRepository, ClientRepository clientRepository){
         this.waiterRepository = waiterRepository;
+        this.clientRepository = clientRepository;
     }
 
     @Override
-    public Stream<Waiter> findBySectionAndCategory(String section, String category) {
+    public Stream<Waiter> findSection() {
         return this.waiterRepository.findAll().stream()
-                .filter(waiter -> section.equals(waiter.getSection()))
-                .filter(waiter -> category.equals(waiter.getCategory()))
-                .map(WaiterEntity::toWaiter);
+                .map(WaiterEntity::toWaiter)
+                .map(Waiter::ofSection);
     }
 
     @Override
@@ -33,4 +36,25 @@ public class WaiterPersistenceMongodb implements WaiterPersistence {
                 .save(new WaiterEntity(waiter))
                 .toWaiter();
     }
+
+    private Stream<String> getSections(Integer number){
+        return this.clientRepository.findAll().stream()
+                .map(ClientEntity::toClient)
+                .filter(client -> number.equals(client.getTable().getNumber()))
+                .flatMap(client -> client.getWaiters().stream())
+                .map(Waiter::getSection)
+                .distinct();
+    }
+
+    @Override
+    public Stream<Waiter> findByNumberTable(Integer number) {
+        return this.getSections(number)
+                .map(section -> {
+                    Waiter waiter = new Waiter();
+                    waiter.setSection(section);
+                    return waiter;
+                });
+    }
+
+
 }

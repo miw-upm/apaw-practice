@@ -23,6 +23,12 @@ public class ClassroomEntity {
         this.id = UUID.randomUUID().toString();
     }
 
+    public Classroom toClassroom() {
+        Classroom classroom = new Classroom();
+        BeanUtils.copyProperties(this, classroom);
+        return classroom;
+    }
+
     public String getId() {
         return id;
     }
