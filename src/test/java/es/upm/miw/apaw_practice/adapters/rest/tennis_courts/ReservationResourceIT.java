@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.tennis_courts;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ public class ReservationResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Autowired
+    private Tennis_CourtsSeederService tennis_courtsSeederService;
 
     @Test
     void testDelete(){
@@ -22,5 +26,7 @@ public class ReservationResourceIT {
                 .uri(ReservationResource.RESERVATIONS + "/Pedro" + "/30:9:21/18:00")
                 .exchange()
                 .expectStatus().isNotFound();
+        this.tennis_courtsSeederService.deleteAll();
+        this.tennis_courtsSeederService.seedDatabase();
     }
 }

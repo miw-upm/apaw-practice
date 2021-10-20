@@ -1,9 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,15 @@ class PlayerPersistenceMongodbIT {
 
     @Autowired
     private PlayerPersistenceMongoDB playerPersistence;
+
+    @Autowired
+    private Tennis_CourtsSeederService tennis_courtsSeederService;
+
+    @AfterEach
+    void afterEach(){
+        this.tennis_courtsSeederService.deleteAll();
+        this.tennis_courtsSeederService.seedDatabase();
+    }
 
     @Test
     void testCreateAndRead(){
