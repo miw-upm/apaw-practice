@@ -15,10 +15,14 @@ public class DispensingService {
         this.dispensingPersistence = dispensingPersistence;
     }
 
-    public void updateDispensing(String id, Dispensing dispensing) {
+    public Dispensing updateDispensing(String id, Dispensing dispensing) {
         Dispensing modifiedDispensing = this.dispensingPersistence.readById(id);
         modifiedDispensing.setActiveIngredients(dispensing.getActiveIngredients());
         modifiedDispensing.setDispensingTimestamp(dispensing.getDispensingTimestamp());
-        this.dispensingPersistence.update(modifiedDispensing);
+        return this.dispensingPersistence.update(modifiedDispensing);
+    }
+
+    public void deleteDispensing(String id) {
+        this.dispensingPersistence.delete(id);
     }
 }

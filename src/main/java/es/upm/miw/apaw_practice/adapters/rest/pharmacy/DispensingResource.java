@@ -20,7 +20,12 @@ public class DispensingResource {
     }
 
     @PutMapping(ID_ID)
-    public void updateDispensing(@PathVariable String id, @RequestBody Dispensing dispensing) {
-        this.dispensingService.updateDispensing(id, dispensing);
+    public Dispensing updateDispensing(@PathVariable String id, @RequestBody Dispensing dispensing) {
+        return this.dispensingService.updateDispensing(id, dispensing);
+    }
+
+    @DeleteMapping(ID_ID)
+    public void deleteDispensing(@PathVariable String id) {
+        this.dispensingService.deleteDispensing(id);
     }
 }

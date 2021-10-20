@@ -13,4 +13,6 @@ public interface DispensingPersistence {
     Dispensing readById(String id);
 
     Stream<Dispensing> readAll();
+
+    void delete(String id);
 }

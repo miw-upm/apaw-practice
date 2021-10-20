@@ -14,14 +14,21 @@ public class DispensingResourceIT {
     private WebTestClient webTestClient;
 
     @Test
-    void testUpdateDispensings() {
-        Dispensing dispensing = new Dispensing();
-
+    void testUpdateDispensing() {
         this.webTestClient
                 .put()
                 .uri(DispensingResource.DISPENSINGS + DispensingResource.ID_ID, "kk")
-                .body(BodyInserters.fromValue(dispensing))
+                .body(BodyInserters.fromValue(new Dispensing()))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDeleteDispensing() {
+        this.webTestClient
+                .delete()
+                .uri(DispensingResource.DISPENSINGS + DispensingResource.ID_ID, "kk")
+                .exchange()
+                .expectStatus().isOk();
     }
 }
