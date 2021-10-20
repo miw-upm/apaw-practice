@@ -28,8 +28,8 @@ public class TableResource {
     }
 
     @GetMapping(ID_NUMBER+RESERVES+HOLDER)
-    public Stream<Reserve> readHoldersByNumber(@PathVariable Integer number){
-        return this.tableService.readHoldersByNumber(number);
+    public Stream<Reserve> findHolderByNumber(@PathVariable Integer number){
+        return this.tableService.findHolderByNumber(number);
     }
 
     @PutMapping(ID_NUMBER+RESERVES)
