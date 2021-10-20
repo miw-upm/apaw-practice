@@ -22,10 +22,16 @@ class BookPersistenceMongodbIT {
     }
 
     @Test
-    void testFindDistinctCategoryNameByAuthorFullName(){
+    void testFindDistinctCategoryNameByAuthorFullName() {
         Stream<String> categoryNames = bookPersistenceMongodb.findDistinctCategoryNameByAuthorFullName("Alda do Espírito Santo");
-        assertTrue(categoryNames.anyMatch(x->x.equals("Poetry")));
+        assertTrue(categoryNames.anyMatch(x -> x.equals("Poetry")));
         Stream<String> categoryNamesFalse = bookPersistenceMongodb.findDistinctCategoryNameByAuthorFullName("Alda do Espírito Santo");
-        assertFalse(categoryNamesFalse.anyMatch(x->x.equals("Thriller")));
+        assertFalse(categoryNamesFalse.anyMatch(x -> x.equals("Thriller")));
+    }
+
+    @Test
+    void testFindTop1AuthorNationalityByDescriptionCategory() {
+        String nationality = bookPersistenceMongodb.findTop1AuthorNationalityByDescriptionCategory("a conflict that takes place in the lives of character");
+        assertEquals("English", nationality);
     }
 }
