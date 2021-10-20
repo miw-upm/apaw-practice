@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.tv_series;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TvSeries {
@@ -54,7 +55,10 @@ public class TvSeries {
     }
 
     public void addEpisode(Episode episode) {
-        this.episodes.add(episode);
+        if(this.episodes == null)
+            this.episodes = new ArrayList<>();
+        if(episode != null)
+            this.episodes.add(episode);
     }
 
     public List<Episode> getEpisodes() {

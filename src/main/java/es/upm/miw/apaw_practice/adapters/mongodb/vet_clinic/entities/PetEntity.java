@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.vet_clinic.Pet;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -83,5 +85,11 @@ public class PetEntity {
     @Override
     public int hashCode() {
         return chip.hashCode();
+    }
+
+    public Pet toPet() {
+        Pet pet = new Pet();
+        BeanUtils.copyProperties(this, pet);
+        return pet;
     }
 }

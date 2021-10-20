@@ -13,12 +13,12 @@ public class TvSeriesPersistenceMongodbIT {
 
     @Test
     void testReadAll() {
-        assertEquals(4,this.tvSeriesPersistence.readAll().count());
+        assertEquals(4,this.tvSeriesPersistence.findAll().count());
     }
 
     @Test
     void testDeleteByTitle() {
         this.tvSeriesPersistence.deleteByTitle("Kimetsu No Yaiba");
-        assertEquals(3,this.tvSeriesPersistence.readAll().count());
+        assertEquals(3,this.tvSeriesPersistence.findAll().count());
     }
 }

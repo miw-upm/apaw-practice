@@ -11,4 +11,6 @@ public interface ManagerPersistence {
     void delete(String email);
 
     boolean existEmail(String email);
+
+
 }

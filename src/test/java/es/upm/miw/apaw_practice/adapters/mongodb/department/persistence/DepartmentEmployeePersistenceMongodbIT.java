@@ -43,4 +43,16 @@ public class DepartmentEmployeePersistenceMongodbIT {
         assertEquals(4, departmentEmployeeBD.getBirthday().getMonthValue());
         assertEquals(11, departmentEmployeeBD.getBirthday().getDayOfMonth());
     }
+
+    @Test
+    void testCreateAndUpdate() {
+        String dni = "12345678H";
+        DepartmentEmployee departmentEmployee =
+                new DepartmentEmployee(dni, LocalDate.of(1980,4,11), false);
+        DepartmentEmployee departmentEmployeeBD = this.departmentEmployeePersistenceMongodb.create(departmentEmployee);
+        departmentEmployeeBD.setActive(true);
+        this.departmentEmployeePersistenceMongodb.update(dni, departmentEmployeeBD);
+        departmentEmployeeBD = this.departmentEmployeePersistenceMongodb.read(dni);
+        assertEquals(true, departmentEmployeeBD.getActive());
+    }
 }
