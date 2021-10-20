@@ -15,10 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ModelResourceIT {
 
     @Autowired
-    WebTestClient webTestClient;
+    private WebTestClient webTestClient;
+
+    //ToDo: testFindModelByVehicleVinNumberBadRequest()
 
     @Test
-    void testGet() {
+    void testFindModelByVehicleVinNumber() {
         this.webTestClient
                 .get()
                 .uri(uriBuilder -> uriBuilder

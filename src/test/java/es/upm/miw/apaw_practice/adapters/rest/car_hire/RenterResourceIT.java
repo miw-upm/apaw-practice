@@ -21,6 +21,9 @@ class RenterResourceIT {
     @Autowired
     RenterRepository renterRepository;
 
+    //ToDo: testCreateConflict()
+    // testUpdateLikedCarNotFound()
+
     @Test
     void testCreate() {
         assertFalse(this.renterRepository.findByDni("12345678A").isPresent());

@@ -32,6 +32,9 @@ class BookingResourceIT {
     @Autowired
     CarHireSeederService carHireSeederService;
 
+    //ToDo: testGetVehiclesVinNumberByRentersNameNotFound()
+    // testGetRentersNameByModelTypeBadRequest()
+
     @AfterEach
     void seedDatabase() {
         this.carHireSeederService.deleteAll();

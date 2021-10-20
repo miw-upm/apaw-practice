@@ -28,6 +28,8 @@ class VehicleResourceIT {
     @Autowired
     ModelRepository modelRepository;
 
+    //ToDo: testUpdateNotFound()
+
     @Test
     void testUpdate() {
         assertTrue(this.vehicleRepository.findByVinNumber("VSSZZZ6KZ1R149943").isPresent());
