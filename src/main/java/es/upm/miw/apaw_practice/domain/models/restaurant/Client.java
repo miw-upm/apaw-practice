@@ -64,4 +64,10 @@ public class Client {
                 ", table=" + table +
                 '}';
     }
+
+    public static Client ofName(Client client) {
+        Client clientDto = new Client();
+        clientDto.setName(client.getName());
+        return clientDto;
+    }
 }

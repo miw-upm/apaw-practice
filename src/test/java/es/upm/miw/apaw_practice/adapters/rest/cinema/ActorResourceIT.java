@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import java.util.List;
+
 @RestTestConfig
 class ActorResourceIT {
 
@@ -30,12 +32,13 @@ class ActorResourceIT {
 
     @Test
     void testUpdateActorAge() {
-        Actor actor =
-                new Actor("Jennifer", "Lawrence", 32);
+        List<Actor> actorList = List.of(new Actor[] {
+                new Actor("Jennifer", "Lawrence", 32)
+        });
         this.webTestClient
-                .post()
+                .patch()
                 .uri(ActorResource.ACTOR)
-                .body(BodyInserters.fromValue(actor))
+                .body(BodyInserters.fromValue(actorList))
                 .exchange()
                 .expectStatus().isOk();
     }

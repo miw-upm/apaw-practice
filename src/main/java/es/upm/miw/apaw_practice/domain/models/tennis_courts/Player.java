@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.tennis_courts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
 
@@ -15,8 +16,16 @@ public class Player {
         //empty for framework
     }
 
-    public Player(String dni, String name, String surname, Integer age){
+    public Player(String dni){
         this.dni = dni;
+        this.name = null;
+        this.surname = null;
+        this.age = null;
+        this.equipmentList = null;
+    }
+
+    public Player(String dni, String name, String surname, Integer age){
+        this(dni);
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -29,10 +38,6 @@ public class Player {
 
     public void setDNI(String dni) {
         this.dni = dni;
-    }
-
-    public String getCompleteName(){
-        return name + " " + surname;
     }
 
     public String getName() {
@@ -79,5 +84,18 @@ public class Player {
                 ", age=" + this.age +
                 ", equipmentList=" + this.equipmentList +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return dni.equals(player.dni) && Objects.equals(name, player.name) && Objects.equals(surname, player.surname) && Objects.equals(age, player.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni);
     }
 }

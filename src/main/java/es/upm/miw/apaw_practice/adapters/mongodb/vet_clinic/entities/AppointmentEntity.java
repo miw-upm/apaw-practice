@@ -1,6 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.vet_clinic.Appointment;
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,6 +26,10 @@ public class AppointmentEntity {
         //empty for framework
     }
 
+    public AppointmentEntity(Appointment appointment) {
+        BeanUtils.copyProperties(appointment, this);
+        this.id = UUID.randomUUID().toString();
+    }
     public AppointmentEntity(LocalDate date, LocalTime hour, Boolean consumed, PetEntity petEntity) {
         this.id = UUID.randomUUID().toString();
         this.date = date;
@@ -69,5 +76,26 @@ public class AppointmentEntity {
 
     public void setPet(PetEntity petEntity) {
         this.petEntity = petEntity;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentEntity{" +
+                "id='" + id + '\'' +
+                ", date=" + date +
+                ", hour=" + hour +
+                ", consumed=" + consumed +
+                ", petEntity=" + petEntity +
+                '}';
+    }
+
+    public Appointment toAppointment() {
+        Appointment appointment = new Appointment();
+        BeanUtils.copyProperties(this, appointment);
+        return appointment;
+    }
+
+    public void fromAppointment(Appointment appointment) {
+        BeanUtils.copyProperties(appointment, this);
     }
 }

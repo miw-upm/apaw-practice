@@ -47,7 +47,7 @@ public class DepartmentSeederService {
         ManagerEntity[] managerRepositories = {
                 new ManagerEntity(5, "123123123", "d.jhon@company1.com",
                         Arrays.asList(departmentEmployeeEntities[0], departmentEmployeeEntities[1])),
-                new ManagerEntity(6, "32131231", "b.ana@company1.com",
+                new ManagerEntity(6, "32131231", "l.ana@company1.com",
                         Arrays.asList(departmentEmployeeEntities[2], departmentEmployeeEntities[3], departmentEmployeeEntities[5])),
                 new ManagerEntity(7, "456456456", "b.ana@company1.com",
                         Arrays.asList(departmentEmployeeEntities[4]))

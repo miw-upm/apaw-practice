@@ -17,4 +17,22 @@ public class CompositeCage implements CageGroup {
                 .map(CageGroup::getLocationCode)
                 .collect(Collectors.joining());
     }
+
+    @Override
+    public void add(CageGroup cageGroup) {
+        cages.add(cageGroup);
+    }
+
+    @Override
+    public void remove(CageGroup cageGroup) {
+        cages.remove(cageGroup);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj
+                || obj != null
+                && getClass() == obj.getClass()
+                && ((getLocationCode().equals(((CageGroup) obj).getLocationCode())));
+    }
 }

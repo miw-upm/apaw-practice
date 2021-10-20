@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class VehicleCompositeTest {
+class VehicleCompositeTest {
 
     private static final List<Vehicle> vehicles = new ArrayList<>();
     private static final List<VehicleLeaf> vehiclesLeaf = new ArrayList<>();
