@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.emarketer.entities;
 
+import es.upm.miw.apaw_practice.domain.models.emarketer.Emarketer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -79,6 +81,14 @@ public class EmarketerEntity {
 
     public void setPlanEntities(List<PlanEntity> planEntities) {
         this.planEntities = planEntities;
+    }
+
+    public Emarketer toEmarketer() {
+        Emarketer emarketer = new Emarketer();
+        BeanUtils.copyProperties(this, emarketer, "id");
+        this.planEntities.forEach(plansEntity -> emarketer.addPlan(plansEntity.toPlan()));
+        this.cupsEntities.forEach(cupsEntity -> emarketer.addCups(cupsEntity.toCups()));
+        return emarketer;
     }
 
     @Override

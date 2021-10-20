@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.emarketer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Emarketer {
@@ -7,8 +8,8 @@ public class Emarketer {
     private String name;
     private String address;
     private Boolean systemic;
-    private List<Cups> cups;
-    private List<Plan> plans;
+    private List<Cups> cups = new ArrayList<>();
+    private List<Plan> plans = new ArrayList<>();
 
     public Emarketer() {
         //empty for framework
@@ -60,6 +61,18 @@ public class Emarketer {
 
     public void setPlan(List<Plan> plans) {
         this.plans = plans;
+    }
+
+    public void addPlan(Plan plan) {
+        assert plan != null;
+
+        this.plans.add(plan);
+    }
+
+    public void addCups(Cups cup) {
+        assert cup != null;
+
+        this.cups.add(cup);
     }
 
     @Override

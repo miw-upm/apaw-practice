@@ -20,7 +20,7 @@ public class TvSeriesPersistenceMongodb implements TvSeriesPersistence {
     }
 
     @Override
-    public Stream<TvSeries> readAll() {
+    public Stream<TvSeries> findAll() {
         return this.tvSeriesRepository.findAll().stream()
                 .map(TvSeriesEntity::toTvSeries);
     }

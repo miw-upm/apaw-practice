@@ -20,7 +20,7 @@ public class PlayerSeriesPersistenceMongodb implements PlayerSeriesPersistence {
     }
 
     @Override
-    public Stream<Player> readAll() {
+    public Stream<Player> findAll() {
         return playerSeriesRepository.findAll().stream()
                 .map(PlayerSeriesEntity::toPlayer);
     }
