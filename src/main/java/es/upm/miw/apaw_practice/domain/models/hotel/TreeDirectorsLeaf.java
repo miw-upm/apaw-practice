@@ -15,13 +15,13 @@ public class TreeDirectorsLeaf implements TreeDirectors {
 
     @Override
     public void add(TreeDirectors treeDirector) {
-        throw new UnsupportedOperationException("Unsupported operation in Leaf, can not 'add' anything to a 'Leaf'.");
+       // Nothing because it's a leaf
 
     }
 
     @Override
     public void remove(TreeDirectors treeDirector) {
-        throw new UnsupportedOperationException("Unsupported operation in Leaf, can not 'remove' anything to a 'Leaf'.");
+        // Nothing because it's a leaf
 
     }
 
@@ -29,4 +29,5 @@ public class TreeDirectorsLeaf implements TreeDirectors {
     public int numberOfNodes() {
         return 1;
     }
+
 }

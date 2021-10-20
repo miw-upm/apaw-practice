@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 @TestConfig
-public class HotelGuestBuilderTest {
+public class HotelGuestTest {
     @Test
     void testBuilder() {
         LocalDateTime entryDate = LocalDateTime.of(2005, 6, 21, 8, 30);
