@@ -10,6 +10,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.car_workshop.CarPersist
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 @Repository("carPersistence")
 public class CarPersistenceMongodb implements CarPersistence {
 
@@ -40,5 +42,12 @@ public class CarPersistenceMongodb implements CarPersistence {
                 .orElseThrow(() -> new NotFoundException("LicensePlate: " + licensePlate));
         car.setOwnerEntity(new OwnerEntity(owner.getDni(), owner.getName()));
         this.carRepository.save(car);
+    }
+
+    @Override
+    public Stream<Car> findByOwnerAndRevision(Owner owner, Boolean revision) {
+        return this.carRepository.findByOwner(owner)
+                .filter(car -> car.isRevision() == revision)
+                .map(CarEntity::toCar);
     }
 }

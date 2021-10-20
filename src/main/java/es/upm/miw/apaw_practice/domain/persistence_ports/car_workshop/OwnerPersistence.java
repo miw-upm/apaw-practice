@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OwnerPersistence {
     Owner readByDni(String dni);
+
+    Owner findByName(String name);
 }

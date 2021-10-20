@@ -81,6 +81,12 @@ public class CarEntity {
         this.tyreSpecsEntities = tyreSpecsEntities;
     }
 
+    public Car toCar() {
+        Car car = new Car();
+        BeanUtils.copyProperties(this, car);
+        return car;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(this.licensePlate);
@@ -103,4 +109,6 @@ public class CarEntity {
                 ", tyreSpecsEntities=" + this.tyreSpecsEntities.toString() +
                 '}';
     }
+
+
 }

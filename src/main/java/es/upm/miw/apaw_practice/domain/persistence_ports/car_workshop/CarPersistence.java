@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Owner;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 @Repository
 public interface CarPersistence {
     void create(Car car);
@@ -11,4 +13,6 @@ public interface CarPersistence {
     boolean existLicensePlate(String licensePlate);
 
     void updateOwner(String licensePlate, Owner owner);
+
+    Stream<Car> findByOwnerAndRevision(Owner owner, Boolean revision);
 }

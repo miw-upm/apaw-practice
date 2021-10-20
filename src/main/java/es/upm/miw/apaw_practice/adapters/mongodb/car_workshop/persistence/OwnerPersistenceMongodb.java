@@ -24,4 +24,11 @@ public class OwnerPersistenceMongodb implements OwnerPersistence {
                 .toOwner();
     }
 
+    @Override
+    public Owner findByName(String name) {
+        return this.ownerRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Owner name: " + name))
+                .toOwner();
+    }
+
 }
