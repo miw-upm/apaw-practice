@@ -9,21 +9,6 @@ public class TreeDirectorsLeaf implements TreeDirectors {
     }
 
     @Override
-    public String dni() {
-        return this.director.getDni();
-    }
-
-    @Override
-    public String email() {
-        return this.director.getEmail();
-    }
-
-    @Override
-    public Integer telephone() {
-        return this.director.getTelephone();
-    }
-
-    @Override
     public boolean isComposite() {
         return false;
     }

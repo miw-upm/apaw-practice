@@ -1,38 +1,20 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
-import es.upm.miw.apaw_practice.domain.models.car_hire.VehicleComponent;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeDirectorsComposite implements TreeDirectors{
+public class TreeDirectorsComposite implements TreeDirectors {
 
-    private final String dni;
-    private final String email;
-    private final Integer telephone;
-
+    private final String name;
     private final List<TreeDirectors> treeDirectorList;
 
-    public TreeDirectorsComposite(String dni, String email, Integer telephone) {
-        this.dni = dni;
-        this.email = email;
-        this.telephone = telephone;
+    public TreeDirectorsComposite(String name) {
+        this.name = name;
         this.treeDirectorList = new ArrayList<>();
     }
 
-    @Override
-    public String dni() {
-        return this.dni;
-    }
-
-    @Override
-    public String email() {
-        return this.email;
-    }
-
-    @Override
-    public Integer telephone() {
-        return this.telephone;
+    public String getName() {
+        return this.name;
     }
 
     @Override
@@ -54,7 +36,7 @@ public class TreeDirectorsComposite implements TreeDirectors{
     @Override
     public int numberOfNodes() {
         int sum = 1;
-        for(TreeDirectors directors : treeDirectorList) {
+        for (TreeDirectors directors : treeDirectorList) {
             sum += directors.numberOfNodes();
         }
         return sum;
