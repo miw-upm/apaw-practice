@@ -24,7 +24,7 @@ public class SubjectServiceIT {
 
     @Test
     void testUpdateClassroom() {
-        Classroom classroom = new Classroom("ETSISI", 8002, 15);
+        Classroom classroom = Classroom.builder().school("ETSISI").number(8002).capacity(15).build();
         this.subjectService.updateClassroom(615000246, classroom);
         Classroom persistedClassroom = this.subjectPersistence.readByReference(615000246).getClassroom();
         assertEquals(classroom.getSchool(), persistedClassroom.getSchool());

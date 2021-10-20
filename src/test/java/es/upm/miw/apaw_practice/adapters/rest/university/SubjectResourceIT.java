@@ -23,7 +23,7 @@ public class SubjectResourceIT {
 
     @Test
     void testUpdateClassroom() {
-        Classroom classroom = new Classroom("ETSISI", 3004, 10);
+        Classroom classroom = Classroom.builder().school("ETSISI").number(3004).capacity(10).build();
         this.webTestClient
                 .put()
                 .uri(SUBJECTS + REFERENCE_ID + CLASSROOM, 613000096)
@@ -34,7 +34,7 @@ public class SubjectResourceIT {
 
     @Test
     void testUpdateClassroomNotFound() {
-        Classroom classroom = new Classroom("ETSISI", 3004, 10);
+        Classroom classroom = Classroom.builder().school("ETSISI").number(3004).capacity(10).build();
         this.webTestClient
                 .put()
                 .uri(SUBJECTS + REFERENCE_ID + CLASSROOM, 111)
