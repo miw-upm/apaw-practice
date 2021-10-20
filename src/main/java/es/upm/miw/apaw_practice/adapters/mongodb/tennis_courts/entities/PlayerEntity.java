@@ -105,4 +105,8 @@ public class PlayerEntity {
        player.setEquipmentList(toEquipmentList(this.equipmentList));
        return player;
     }
+
+    public static PlayerEntity fromPlayer(Player player){
+        return new PlayerEntity(player.getDNI(), player.getName(), player.getSurname(), player.getAge(), PlayerEntity.toEquipmentEntityList(player.getEquipmentList()));
+    }
 }

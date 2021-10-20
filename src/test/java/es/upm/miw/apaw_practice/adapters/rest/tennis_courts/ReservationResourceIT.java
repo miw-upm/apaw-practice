@@ -23,9 +23,9 @@ public class ReservationResourceIT {
                 .expectStatus().isOk();
 
         this.webTestClient.delete()
-                .uri(ReservationResource.RESERVATIONS + "/Pedro" + "/30:9:21/18:00")
+                .uri(ReservationResource.RESERVATIONS + "/Pedro" + "/30:9:21/12:00")
                 .exchange()
-                .expectStatus().isNotFound();
+                .expectStatus().isOk();
         this.tennis_courtsSeederService.deleteAll();
         this.tennis_courtsSeederService.seedDatabase();
     }
