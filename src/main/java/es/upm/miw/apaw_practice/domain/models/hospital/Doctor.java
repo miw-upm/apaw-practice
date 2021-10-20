@@ -8,6 +8,10 @@ public class Doctor {
     private String surname;
     private LocalDate activeSince;
 
+    public static DoctorBuilder.Nick builder(){
+        return new Builder();
+    }
+
     public Doctor(){
         //empty for framework
     }
@@ -18,11 +22,13 @@ public class Doctor {
         this.activeSince = null;
     }
 
+    /*
     public Doctor(String nick, String surname, LocalDate activeSince) {
         this.nick = nick;
         this.surname = surname;
         this.activeSince = activeSince;
     }
+    */
 
     public String getNick() {
         return nick;
@@ -57,4 +63,37 @@ public class Doctor {
                 '}';
     }
 
+    public static class Builder implements DoctorBuilder.Nick, DoctorBuilder.Surname,
+            DoctorBuilder.ActiveSince, DoctorBuilder.Optionals{
+
+        private final Doctor doctor;
+
+        public Builder() {
+            this.doctor = new Doctor();
+        }
+
+        @Override
+        public DoctorBuilder.Surname nick(String nick) {
+            this.doctor.nick = nick;
+            return this;
+        }
+
+        @Override
+        public DoctorBuilder.ActiveSince surname(String surname) {
+            this.doctor.surname = surname;
+            return this;
+        }
+
+        @Override
+        public DoctorBuilder.Optionals activeSince(LocalDate activeSince) {
+            this.doctor.activeSince = activeSince;
+            return this;
+        }
+
+        @Override
+        public Doctor build() {
+            return this.doctor;
+        }
+
+    }
 }
