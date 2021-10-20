@@ -2,10 +2,13 @@ package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.daos.PetRepository;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.vet_clinic.Diagnosis;
 import es.upm.miw.apaw_practice.domain.models.vet_clinic.Pet;
 import es.upm.miw.apaw_practice.domain.persistence_ports.vet_clinic.PetPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository("petPersistence")
 public class PetPersistenceMongodb implements PetPersistence {
@@ -29,4 +32,19 @@ public class PetPersistenceMongodb implements PetPersistence {
                         ", and owner: " + owner))
                 .toPet();
     }
+
+    @Override
+    public Pet readByChip(Integer chip) {
+        return this.petRepository
+                .findPetByChip(chip)
+                .orElseThrow(() -> new NotFoundException("Pet chip: " + chip))
+                .toPet();
+    }
+
+    @Override
+    public Pet update(Pet pet, List<Diagnosis> diagnosisList) {
+        pet.setDiagnosis(diagnosisList);
+        return pet;
+    }
+
 }
