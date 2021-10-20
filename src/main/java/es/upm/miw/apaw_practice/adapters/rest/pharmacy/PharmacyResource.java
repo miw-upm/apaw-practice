@@ -20,7 +20,7 @@ public class PharmacyResource {
     }
 
     @PostMapping
-    public void updateDispensing(@RequestBody Pharmacy pharmacy) {
+    public void createPharmacy(@RequestBody Pharmacy pharmacy) {
         this.pharmacyService.createPharmacy(pharmacy);
     }
 }
