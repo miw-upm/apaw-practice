@@ -16,7 +16,11 @@ public class VetResourceIT {
 
     @Test
     void createTest() {
-        Vet vet = new Vet(555, "vet5", "surname5");
+        Vet vet = Vet.builder()
+                .vetNumber(555)
+                .name("vet5")
+                .surname("surname5")
+                .build();
         this.webTestClient
                 .post()
                 .uri(VetResource.VETS)
@@ -27,7 +31,11 @@ public class VetResourceIT {
 
     @Test
     void createVetConflictTest() {
-        Vet vet = new Vet(111, "repeated", "repeated");
+        Vet vet = Vet.builder()
+                .vetNumber(111)
+                .name("repeated")
+                .surname("repeated")
+                .build();
         this.webTestClient
                 .post()
                 .uri(VetResource.VETS)
