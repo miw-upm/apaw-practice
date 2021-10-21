@@ -2,14 +2,14 @@ package es.upm.miw.apaw_practice.adapters.mongodb.game_wow.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.daos.FeatureRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.game_wow.entities.FeatureEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.ArticleEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.game_wow.Feature;
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import es.upm.miw.apaw_practice.domain.persistence_ports.game_wow.FeaturePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository("featurePersistence")
@@ -53,4 +53,11 @@ public class FeaturePersistenceMongodb implements FeaturePersistence {
                 .save(featureEntity)
                 .toFeature();
     }
+
+    @Override
+    public List<Feature> readBySpellPower(Integer spellPower) {
+       return this.featureRepository.findBySpellPower(spellPower).stream().map(FeatureEntity::toFeature).collect(Collectors.toList());
+    }
+
+
 }

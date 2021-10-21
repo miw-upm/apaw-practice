@@ -33,12 +33,12 @@ public class UniversitySeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- University Initial Load -----------");
         ClassroomEntity[] classrooms = {
-                new ClassroomEntity(new Classroom("ETSISI", 1302, 20)),
-                new ClassroomEntity(new Classroom("ETSISI", 3101, 40)),
-                new ClassroomEntity(new Classroom("ETSISI", 4302, 30)),
-                new ClassroomEntity(new Classroom("ETSISI", 3004, 10)),
-                new ClassroomEntity(new Classroom("ETSISI", 8002, 15)),
-                new ClassroomEntity(new Classroom("ETSIINF", 9021, 50))
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(1302).capacity(20).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(3101).capacity(40).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(4302).capacity(30).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(3004).capacity(10).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(8002).capacity(15).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSIINF").number(9021).capacity(50).build())
         };
         this.classroomRepository.saveAll(Arrays.asList(classrooms));
         SubjectEntity[] subjects = {

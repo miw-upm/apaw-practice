@@ -91,4 +91,8 @@ public class DepartmentEmployeeEntity {
         BeanUtils.copyProperties(this, departmentEmployee);
         return departmentEmployee;
     }
+
+    public void fromDepartmentEmployee(DepartmentEmployee departmentEmployee) {
+        BeanUtils.copyProperties(departmentEmployee, this);
+    }
 }

@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.domain.services.pharmacy;
 
 import es.upm.miw.apaw_practice.domain.models.pharmacy.Drug;
 import es.upm.miw.apaw_practice.domain.persistence_ports.pharmacy.DrugPersistence;
-import es.upm.miw.apaw_practice.domain.persistence_ports.shop.ArticlePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
