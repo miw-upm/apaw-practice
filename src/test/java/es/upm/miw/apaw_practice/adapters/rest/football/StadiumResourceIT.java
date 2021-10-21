@@ -1,14 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.rest.football;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.football.persistence.StadiumPersistenceMongodb;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.football.Stadium;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
 class StadiumResourceIT {

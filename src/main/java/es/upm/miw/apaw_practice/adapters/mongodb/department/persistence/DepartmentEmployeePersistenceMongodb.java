@@ -40,4 +40,15 @@ public class DepartmentEmployeePersistenceMongodb implements DepartmentEmployeeP
                 .isPresent();
     }
 
+    @Override
+    public DepartmentEmployee update(String dni, DepartmentEmployee departmentEmployee) {
+        DepartmentEmployeeEntity departmentEmployeeEntity = this.departmentEmployeeRepository
+                .findByDni(dni)
+                .orElseThrow(() -> new NotFoundException("Employee dni: " + dni));
+        departmentEmployeeEntity.fromDepartmentEmployee(departmentEmployee);
+        return this.departmentEmployeeRepository
+                .save(departmentEmployeeEntity)
+                .toDepartmentEmployee();
+    }
+
 }
