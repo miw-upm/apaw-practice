@@ -26,7 +26,12 @@ public class AppointmentPersistanceMongodbIT {
     @Test
     void createAndReadTest() {
         List<Vet> vets = new ArrayList<>();
-        vets.add(new Vet(606, "vet606", "surname606"));
+        Vet vet = Vet.builder()
+                .vetNumber(606)
+                .name("vet606")
+                .surname("surname606")
+                .build();
+        vets.add(vet);
         List<Diagnosis> diagnosis = new ArrayList<>();
         Pet pet = new Pet(1203, 20, "Pet1203", "Owner1203", diagnosis);
         Appointment appointmentCreation = new Appointment(LocalDate.of(2021, 10, 10),
@@ -42,7 +47,12 @@ public class AppointmentPersistanceMongodbIT {
     @Test
     void createAndUpdateTest() {
         List<Vet> vets = new ArrayList<>();
-        vets.add(new Vet(66, "vet66", "surname66"));
+        Vet vet = Vet.builder()
+                .vetNumber(66)
+                .name("vet66")
+                .surname("surname66")
+                .build();
+        vets.add(vet);
         List<Diagnosis> diagnosis = new ArrayList<>();
         Pet pet = new Pet(123, 2, "Pet123", "Owner123", diagnosis);
         Appointment appointmentCreation = new Appointment(LocalDate.of(2021, 1, 1),

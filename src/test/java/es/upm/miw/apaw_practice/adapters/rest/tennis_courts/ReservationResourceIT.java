@@ -2,10 +2,10 @@ package es.upm.miw.apaw_practice.adapters.rest.tennis_courts;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Court;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
@@ -55,5 +55,19 @@ public class ReservationResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
 
+    }
+
+    @Test
+    void testGet(){
+        this.webTestClient.get()
+                .uri(ReservationResource.RESERVATIONS + "/Rob" + "/30:9:21" + "/12:00" + ReservationResource.COURT)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Court.class)
+                .value(court -> assertEquals(3, court.getNumber()));
+        this.webTestClient.get()
+                .uri(ReservationResource.RESERVATIONS + "/Samanta" + "/30:9:21" + "/12:00" + ReservationResource.COURT)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

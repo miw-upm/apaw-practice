@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.services.tennis_courts;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,5 +57,12 @@ public class ReservationServiceIT {
         assertEquals(4, updatedPlayerList.size());
         seeder.deleteAll();
         seeder.seedDatabase();
+    }
+
+    @Test
+    void testGet(){
+        assertEquals(3, this.reservationService.get("Rob", "30:09:21", "12:00").getNumber());
+        assertThrows(NotFoundException.class, () -> this.reservationService.get("Rob", "28:09:21", "12:00"));
+        assertThrows(NotFoundException.class, () -> this.reservationService.get("Samanta", "30:09:21", "12:00"));
     }
 }
