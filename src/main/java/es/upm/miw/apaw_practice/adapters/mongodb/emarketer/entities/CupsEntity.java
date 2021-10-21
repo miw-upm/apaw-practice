@@ -74,6 +74,8 @@ public class CupsEntity {
     public Cups toCups() {
         Cups cups = new Cups();
         BeanUtils.copyProperties(this, cups);
+        cups.setCustomer(this.customerEntity.toCustomer());
+        this.customerEntity.toCustomer();
         return cups;
     }
 
