@@ -37,7 +37,5 @@ class CategoryResourceIT {
                 .body(BodyInserters.fromValue(categoryDescriptionUpdatingList))
                 .exchange()
                 .expectStatus().isNotFound();
-
     }
-
 }
