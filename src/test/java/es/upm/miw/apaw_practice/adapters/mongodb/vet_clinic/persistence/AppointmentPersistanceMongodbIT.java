@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -39,7 +40,7 @@ public class AppointmentPersistanceMongodbIT {
     }
 
     @Test
-    void CreateAndUpdateTest() {
+    void createAndUpdateTest() {
         List<Vet> vets = new ArrayList<>();
         vets.add(new Vet(66, "vet66", "surname66"));
         List<Diagnosis> diagnosis = new ArrayList<>();
@@ -53,5 +54,11 @@ public class AppointmentPersistanceMongodbIT {
         appointmentDB = this.appointmentPersistance.read(LocalDate.of(2021, 1, 1),
                 LocalTime.of(16, 0));
         assertEquals(true, appointmentDB.getConsumed());
+    }
+
+    @Test
+    void findByConsumedTest() {
+        Stream<Appointment> appointments = this.appointmentPersistance.findByConsumed(false);
+        assertEquals(appointments.count(), 2);
     }
 }
