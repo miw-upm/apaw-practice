@@ -76,6 +76,23 @@ class VehicleResourceIT {
                                 model.getVehicleEntities().get(0).getKilometersAmount().equals(40000) &&
                                 model.getVehicleEntities().get(0).getDailyCost().equals(new BigDecimal("35")) &&
                                 model.getVehicleEntities().get(0).getGoodCondition().equals(false)
-                ));
+                )
+        );
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        Vehicle vehicleInvented = Vehicle.builder()
+                .vinNumber("0000")
+                .dailyCost(new BigDecimal("1"))
+                .kilometersAmount(10)
+                .goodCondition(Boolean.TRUE)
+                .build();
+        this.webTestClient
+                .put()
+                .uri(VehicleResource.VEHICLES + VehicleResource.VIN_NUMBER, vehicleInvented.getVinNumber())
+                .body(BodyInserters.fromValue(vehicleInvented))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
