@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.tv_series.entities;
 
 import es.upm.miw.apaw_practice.domain.models.tv_series.Episode;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -109,9 +110,19 @@ public class TvSeriesEntity {
         return this.episodeEntities;
     }
 
+    public void fromTvSeries(TvSeries tvSeries) {
+        BeanUtils.copyProperties(tvSeries,this);
+        this.producerEntity = new ProducerEntity();
+        this.producerEntity.fromProducer(tvSeries.getProducer());
+        this.id = UUID.randomUUID().toString();
+    }
+
     public TvSeries toTvSeries() {
         TvSeries tvSeries = new TvSeries();
-        tvSeries.setProducer(this.producerEntity.toProducer());
+        if(producerEntity == null)
+            this.producerEntity = new ProducerEntity();
+        else
+            tvSeries.setProducer(this.producerEntity.toProducer());
         tvSeries.setYear(this.year);
         tvSeries.setTitle(this.title);
         tvSeries.setFinished(this.finished);
