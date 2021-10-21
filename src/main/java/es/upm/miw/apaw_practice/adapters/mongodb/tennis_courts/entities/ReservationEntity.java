@@ -61,8 +61,20 @@ public class ReservationEntity {
         return players;
     }
 
+    public List<Player> getPlayersDNIs(){
+        return this.players.stream()
+                .map(playerEntity -> new Player(playerEntity.getDni()))
+                .collect(Collectors.toList());
+    }
+
     public void setPlayers(List<PlayerEntity> players) {
         this.players = players;
+    }
+
+    public void setPlayersFromPlayerList(List<Player> players){
+        this.players = players.stream()
+                .map(PlayerEntity::fromPlayer)
+                .collect(Collectors.toList());
     }
 
     public static List<Player> toPlayerList(List<PlayerEntity> playerEntityList){

@@ -13,6 +13,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @RestTestConfig
 public class RaidResourceIT {
 
@@ -34,4 +37,20 @@ public class RaidResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void findPlayerNumberAdditionBySpellPower (){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder.path(RaidResource.GAMEWOW_RAIDS + RaidResource.SEARCH)
+                        .queryParam("q", "spellPower:106")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Integer.class)
+                .value(additionDto -> additionDto.get(0), equalTo(10))
+                .value(additionDto -> assertTrue(additionDto.size() > 0));
+    }
+
+
 }

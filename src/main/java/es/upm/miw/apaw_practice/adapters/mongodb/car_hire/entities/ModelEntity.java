@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities;
 
 import es.upm.miw.apaw_practice.domain.models.car_hire.Model;
+import es.upm.miw.apaw_practice.domain.models.car_hire.Vehicle;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class ModelEntity {
@@ -28,9 +30,10 @@ public class ModelEntity {
     public ModelEntity(Model model) {
         BeanUtils.copyProperties(model, this, "vehicleList");
         this.vehicleEntities = new ArrayList<>();
-        model.getVehicleList().forEach(vehicle -> {VehicleEntity vehicleEntity = new VehicleEntity();
-                                                    BeanUtils.copyProperties(vehicle, vehicleEntity);
-                                                    this.vehicleEntities.add(vehicleEntity);});
+        this.setVehicleEntities(model.getVehicleList().stream()
+                .map(this::vehicleToEntity)
+                .collect(Collectors.toList())
+        );
         this.id = UUID.randomUUID().toString();
     }
 
@@ -72,6 +75,12 @@ public class ModelEntity {
 
     public void setVehicleEntities(List<VehicleEntity> vehicleEntities) {
         this.vehicleEntities = vehicleEntities;
+    }
+
+    public VehicleEntity vehicleToEntity(Vehicle vehicle) {
+        VehicleEntity vehicleEntity = new VehicleEntity();
+        BeanUtils.copyProperties(vehicle, vehicleEntity);
+        return vehicleEntity;
     }
 
     public Model toModel() {

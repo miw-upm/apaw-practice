@@ -82,4 +82,8 @@ public class VetEntity {
         BeanUtils.copyProperties(this, vet);
         return vet;
     }
+
+    public void fromVet (Vet vet) {
+        BeanUtils.copyProperties(vet, this);
+    }
 }
