@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.tennis_courts;
 
 import es.upm.miw.apaw_practice.domain.models.shop.Article;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Court;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
 import es.upm.miw.apaw_practice.domain.services.tennis_courts.ReservationService;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
@@ -20,6 +22,7 @@ public class ReservationResource {
     public static final String OWNER_NAME = "/{ownerName}";
     public static final String DATE = "/{stringDate}"; // DD:MM:AA
     public static final String TIME = "/{stringTime}"; // HH:MM
+    public static final String COURT = "/court";
 
     private final ReservationService reservationService;
 
@@ -38,6 +41,11 @@ public class ReservationResource {
         Reservation reservation = new Reservation();
         reservation.setPlayers(List.of(players));
         return this.reservationService.updatePlayerList(ownerName, stringDate, stringTime, reservation);
+    }
+
+    @GetMapping(ReservationResource.OWNER_NAME + ReservationResource.DATE + ReservationResource.TIME + ReservationResource.COURT)
+    public Court get(@PathVariable String ownerName, @PathVariable String stringDate, @PathVariable String stringTime){
+        return this.reservationService.get(ownerName, stringDate, stringTime);
     }
 
 }

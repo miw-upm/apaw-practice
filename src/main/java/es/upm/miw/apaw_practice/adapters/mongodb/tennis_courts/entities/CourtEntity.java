@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Court;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -71,6 +72,10 @@ public class CourtEntity {
 
     public void setReservations(List<ReservationEntity> reservations) {
         this.reservations = reservations;
+    }
+
+    public Court toCourt(){
+        return new Court(this.number, this.occupied, this.price);
     }
 
     @Override

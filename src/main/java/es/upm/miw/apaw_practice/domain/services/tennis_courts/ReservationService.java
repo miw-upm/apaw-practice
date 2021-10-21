@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.domain.services.tennis_courts;
 
 import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Court;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
 import es.upm.miw.apaw_practice.domain.persistence_ports.tennis_courts.ReservationPersistence;
@@ -29,6 +31,11 @@ public class ReservationService {
     public Stream<Player> updatePlayerList(String ownerName, String stringDate, String stringTime, Reservation reservation){
         LocalDateTime date = extractDateFromString(stringDate, stringTime);
         return this.reservationPersistence.updatePlayerList(ownerName, date, reservation);
+    }
+
+    public Court get(String ownerName, String stringDate, String stringTime){
+        LocalDateTime date = extractDateFromString(stringDate, stringTime);
+        return this.reservationPersistence.get(ownerName, date);
     }
 
     public static LocalDateTime extractDateFromString(String date, String time){
