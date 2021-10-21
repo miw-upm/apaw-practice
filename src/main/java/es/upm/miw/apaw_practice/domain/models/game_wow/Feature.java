@@ -73,6 +73,26 @@ public class Feature {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+
+        if(this == obj)
+            return true;
+
+        Feature objFeature = (Feature) obj;
+
+        if(this.part.equals(objFeature.part) &&
+           this.spellPower == objFeature.spellPower &&
+           this.meleeAtack == objFeature.meleeAtack &&
+           this.temple == objFeature.temple &&
+           ((this.extraSpell == null && objFeature.extraSpell == null) || (this.extraSpell != null && this.extraSpell.equals(objFeature.extraSpell))))
+            return true;
+
+        return false;
+    }
+
     public FeatureEntity toFeatureEntity(Feature feature) {
         return new FeatureEntity(feature);
     }

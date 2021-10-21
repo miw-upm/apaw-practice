@@ -52,6 +52,24 @@ public class Boss {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+
+        if(this == obj)
+            return true;
+
+        Boss objboss = (Boss) obj;
+
+        if(this.description.equalsIgnoreCase(objboss.description) &&
+                this.effort.equalsIgnoreCase(objboss.effort) &&
+                this.dropList.equals(objboss.dropList))
+            return true;
+
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "Boss{" +
                 "boss='" + description + '\'' +

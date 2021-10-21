@@ -26,6 +26,11 @@ public class RenterPersistenceMongodb implements RenterPersistence {
     }
 
     @Override
+    public boolean existDni(String dni) {
+        return this.renterRepository.findByDni(dni).isPresent();
+    }
+
+    @Override
     public Renter readByDni(String dni) {
         return this.renterRepository.findByDni(dni)
                 .orElseThrow(() -> new NotFoundException("Renter with DNI: " + dni))

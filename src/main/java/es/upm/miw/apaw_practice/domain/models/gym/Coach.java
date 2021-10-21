@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.gym;
 
-import java.util.List;
-
 public class Coach {
     private String dni;
     private String firstName;
@@ -12,16 +10,9 @@ public class Coach {
 
 
     public Coach(){
-       //empty for framework
+        //empty for framework
     }
 
-    public Coach(String dni, String firstName, String lastName, Integer phone, Lesson lesson) {
-        this.dni = dni;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.lesson = lesson;
-    }
 
     public String getDni() {
         return dni;
@@ -54,7 +45,7 @@ public class Coach {
     }
 
     public void setPhone(Integer phone) {
-       this.phone = phone;
+        this.phone = phone;
     }
 
     public Lesson getLesson() {
@@ -75,4 +66,57 @@ public class Coach {
                 ", lesson=" + lesson +
                 '}';
     }
+
+    public static CoachBuilders.Dni builder() {
+        return new Builder();
+    }
+
+    public static class Builder implements CoachBuilders.Dni, CoachBuilders.FirstName, CoachBuilders.LastName, CoachBuilders.Phone,
+            CoachBuilders.Lessons, CoachBuilders.Optionals {
+        private Coach coach;
+
+        public Builder() {
+            this.coach = new Coach();
+        }
+
+
+        @Override
+        public CoachBuilders.FirstName dni(String dni) {
+            this.coach.dni = dni;
+            return this;
+        }
+
+        @Override
+        public CoachBuilders.LastName firstName(String firstName) {
+            this.coach.firstName = firstName;
+            return this;
+        }
+
+        @Override
+        public CoachBuilders.Phone lastname(String lastname) {
+            this.coach.lastName = lastname;
+            return this;
+        }
+
+        @Override
+        public CoachBuilders.Lessons phone(Integer phone) {
+            this.coach.phone = phone;
+            return this;
+        }
+
+        @Override
+        public CoachBuilders.Optionals lessons(Lesson lesson) {
+            this.coach.lesson = lesson;
+            return this;
+        }
+
+        @Override
+        public Coach bulid() {
+            return this.coach;
+        }
+    }
+
 }
+
+
+
