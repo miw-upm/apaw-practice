@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.music_manager;
 
 import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
+import es.upm.miw.apaw_practice.domain.models.music_manager.Song;
 import es.upm.miw.apaw_practice.domain.services.music_manager.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,19 @@ public class SongResource {
     }
 
     @DeleteMapping(SONGTITLE_ID)
-    public void delete(@PathVariable String songTitle) { this.songService.delete(songTitle); }
+    public void delete(@PathVariable String songTitle) {
+        this.songService.delete(songTitle);
+    }
 
     @GetMapping(SONGTITLE + SEARCH)
-    public Stream<String> getSongTitlesByArtist(@RequestParam String q) {
-        return this.songService.findSongTitlesByArtistFirstName(new LexicalAnalyzer().extractWithAssure(q, "firstName"));
+    public Stream<Song> getSongTitlesByArtist(@RequestParam String q) {
+        Stream<String> songTitleStream = this.songService.findSongTitlesByArtistFirstName(
+                new LexicalAnalyzer().extractWithAssure(q, "firstName"));
+
+        return songTitleStream.map(songTitle -> {
+            Song song = new Song();
+            song.setSongTitle(songTitle);
+            return song;
+        });
     }
 }

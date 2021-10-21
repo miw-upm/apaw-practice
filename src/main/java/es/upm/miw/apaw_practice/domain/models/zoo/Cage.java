@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.zoo;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.zoo.entities.CageEntity;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

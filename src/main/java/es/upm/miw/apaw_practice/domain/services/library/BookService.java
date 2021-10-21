@@ -20,4 +20,12 @@ public class BookService {
     public Stream<Book> findAll() {
         return this.bookPersistence.findAll();
     }
+
+    public Stream<String> findCategoryNameByAuthorFullName(String authorFullName) {
+        return this.bookPersistence.findDistinctCategoryNameByAuthorFullName(authorFullName);
+    }
+
+    public String findTop1AuthorNationalityByDescriptionCategory(String description) {
+        return this.bookPersistence.findTop1AuthorNationalityByDescriptionCategory(description);
+    }
 }

@@ -14,6 +14,11 @@ public class Dispensing {
         //empty for framework
     }
 
+    public Dispensing(List<ActiveIngredient> activeIngredients, LocalDateTime dispensingTimestamp) {
+        this.activeIngredients = activeIngredients;
+        this.dispensingTimestamp = dispensingTimestamp;
+    }
+
     public String getId() {
         return id;
     }

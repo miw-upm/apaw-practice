@@ -49,5 +49,11 @@ public class Reserve {
                 ", holder='" + holder + '\'' +
                 '}';
     }
+
+    public static Reserve ofHolder(Reserve reserve) {
+        Reserve reserveDto = new Reserve();
+        reserveDto.setHolder(reserve.getHolder());
+        return reserveDto;
+    }
 }
 
