@@ -22,11 +22,8 @@ public class AuthorEntity {
         //empty for framework
     }
 
-    public AuthorEntity(String fullName, String nationality, String writingStyle) {
-        this.id = UUID.randomUUID().toString();
-        this.fullName = fullName;
-        this.nationality = nationality;
-        this.writingStyle = writingStyle;
+    public static Builder builder(String fullName, String nationality) {
+        return new Builder(fullName, nationality);
     }
 
     public String getId() {
@@ -92,5 +89,26 @@ public class AuthorEntity {
                 ", nationality='" + nationality + '\'' +
                 ", writingStyle='" + writingStyle + '\'' +
                 '}';
+    }
+
+    public static class Builder {
+
+        private final AuthorEntity authorEntity;
+
+        public Builder(String fullName, String nationality) {
+            this.authorEntity = new AuthorEntity();
+            this.authorEntity.id = UUID.randomUUID().toString();
+            this.authorEntity.fullName = fullName;
+            this.authorEntity.nationality = nationality;
+        }
+
+        public Builder writingStyle(String writingStyle) {
+            this.authorEntity.writingStyle = writingStyle;
+            return this;
+        }
+
+        public AuthorEntity build() {
+            return this.authorEntity;
+        }
     }
 }

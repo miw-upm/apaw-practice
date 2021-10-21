@@ -9,9 +9,8 @@ public class Category {
         // empty for framework
     }
 
-    public Category(String name, String description) {
-        this.name = name;
-        this.description = description;
+    public static Builder builder(String name, String desc) {
+        return new Builder(name, desc);
     }
 
     public String getId() {
@@ -36,5 +35,19 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public static class Builder {
+
+        private final Category category;
+
+        public Builder(String name, String desc) {
+            this.category = new Category();
+            this.category.name = name;
+            this.category.description = desc;
+        }
+        public Category build(){
+            return this.category;
+        }
     }
 }
