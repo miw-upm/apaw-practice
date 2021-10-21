@@ -50,7 +50,6 @@ public class ReservationServiceIT {
 
     @Test
     void testUpdatePlayerList(){
-        LocalDateTime requestDate = LocalDateTime.of(2021, 9, 30, 11, 0);
         Reservation reservation = new Reservation();
         reservation.setPlayers(List.of(new Player("00000001R"), new Player("00000002R")));
         List<Player> updatedPlayerList = this.reservationService.updatePlayerList("Nacho", "30:9:21", "11:00", reservation)

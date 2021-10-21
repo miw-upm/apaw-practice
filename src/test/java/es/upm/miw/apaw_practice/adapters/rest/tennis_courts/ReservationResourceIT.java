@@ -50,7 +50,7 @@ public class ReservationResourceIT {
                 .value(playersDNIs -> assertEquals(4, playersDNIs.size()))
                 .value(playersDNIs -> assertEquals("00000003R", playersDNIs.get(0).getDNI()));
         this.webTestClient.patch()
-                .uri(ReservationResource.RESERVATIONS + "/Sandra" + "/30:9:21" + "/13:00")
+                .uri(ReservationResource.RESERVATIONS + "/Sandra" + "/30:9:21" + "/11:00")
                 .body(BodyInserters.fromValue(players))
                 .exchange()
                 .expectStatus().isNotFound();

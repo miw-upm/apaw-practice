@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.persistence;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.daos.PlayerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.daos.ReservationRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities.ReservationEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
@@ -51,7 +52,7 @@ public class ReservationPersistenceMongoDB implements ReservationPersistence {
         List<Player> playersToInclude = new ArrayList<>();
         for (Player playerDNIContainer: reservation.getPlayers()) {
             playersToInclude.add(this.playerRepository.findByDni(playerDNIContainer.getDNI())
-                    .orElseThrow(() -> new NotFoundException("El DNI aportado no pertenece a ningún jugador registrado"))
+                    .orElseThrow(() -> new BadRequestException("El DNI aportado no pertenece a ningún jugador registrado"))
                     .toPlayer()
             );
         }
