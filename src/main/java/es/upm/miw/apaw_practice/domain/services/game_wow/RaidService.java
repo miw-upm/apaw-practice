@@ -50,6 +50,7 @@ public class RaidService {
                         .isPresent())
                 .collect(Collectors.toList());
         return raidPersistence.readAll()
+                .filter(raid -> raid.getBossList() != null)
                 .filter(raid -> raid.getBossList().stream()
                         .filter(boss -> bossList.contains(boss))
                         .findAny()
