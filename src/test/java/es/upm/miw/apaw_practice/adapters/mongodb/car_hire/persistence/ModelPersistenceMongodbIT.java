@@ -36,6 +36,7 @@ class ModelPersistenceMongodbIT {
     @Test
     void testAssertExistVinNumber() {
         assertFalse(this.modelPersistenceMongodb.assertExistVinNumber("Invented"));
+        assertTrue(this.modelPersistenceMongodb.assertExistVinNumber("VSSZZZ6KZ1R149943"));
     }
 }
 

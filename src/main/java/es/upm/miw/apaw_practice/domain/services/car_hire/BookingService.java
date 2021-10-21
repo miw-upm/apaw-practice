@@ -10,7 +10,10 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.car_hire.ModelPersisten
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -51,7 +54,19 @@ public class BookingService {
         return this.readAllModels().anyMatch(model -> model.getType().equals(type));
     }
 
-    public Stream<Renter> getRentersNameByModelType(String type) {
+    public Set<String> getRentersNameDistinct(Supplier<Stream<Vehicle>> vehicles) {
+        return this.readAll()
+                .filter(booking -> booking.getVehicleList().stream()
+                        .anyMatch(vehicle -> vehicles.get()
+                                .anyMatch(vehicleInLoopOfVehicles -> vehicleInLoopOfVehicles.getVinNumber().equals(vehicle.getVinNumber()))
+                        )
+                )
+                .map(Booking::getRenter)
+                .map(Renter::getName)
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Renter> getRentersNameByModelType(String type) {
         if (!this.assertExistModelType(type)) {
             throw new NotFoundException("Model type: " + type);
         } else {
@@ -60,13 +75,14 @@ public class BookingService {
                             .filter(model -> model.getType().equals(type))
                             .flatMap(model -> model.getVehicleList().stream())
                     );
-            return this.readAll()
-                    .filter(booking -> booking.getVehicleList().stream()
-                            .anyMatch(vehicle -> vehicles.get()
-                                    .anyMatch(vehicleInLoopOfVehicles -> vehicleInLoopOfVehicles.getVinNumber().equals(vehicle.getVinNumber()))
-                            )
-                    )
-                    .map(Booking::getRenter);
+            Set<String> rentersName = this.getRentersNameDistinct(vehicles);
+            Set<Renter> renters = new LinkedHashSet<>();
+            for (String name : rentersName) {
+                Renter renter = new Renter();
+                renter.setName(name);
+                renters.add(renter);
+            }
+            return renters;
         }
     }
 }

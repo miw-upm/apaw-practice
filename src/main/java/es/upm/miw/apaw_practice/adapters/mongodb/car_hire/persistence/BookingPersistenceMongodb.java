@@ -32,8 +32,13 @@ public class BookingPersistenceMongodb implements BookingPersistence {
     }
 
     @Override
+    public boolean assertExistRenterName(String name) {
+        return this.readAll().anyMatch(booking -> booking.getRenter().getName().equals(name));
+    }
+
+    @Override
     public Stream<Booking> readByRenterName(String name) {
-        if (this.readAll().noneMatch(booking -> booking.getRenter().getName().equals(name))) {
+        if (!this.assertExistRenterName(name)) {
             throw new NotFoundException("Renter with name: " + name);
         } else {
             return this.readAll().filter(booking -> booking.getRenter().getName().equals(name));

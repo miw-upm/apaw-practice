@@ -13,4 +13,7 @@ public interface BookingPersistence {
     Stream<Booking> readAll();
 
     Stream<Booking> readByRenterName(String name);
+
+    boolean assertExistRenterName(String name);
+
 }

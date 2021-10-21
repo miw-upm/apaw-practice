@@ -59,4 +59,10 @@ class BookingPersistenceMongodbIT {
         this.bookingPersistenceMongodb.delete("1404");
         assertThrows(NotFoundException.class, () -> this.bookingPersistenceMongodb.readByRenterName("Alejandro"));
     }
+
+    @Test
+    void testAssertExistRenterName() {
+        assertFalse(this.bookingPersistenceMongodb.assertExistRenterName("Invented"));
+        assertTrue(this.bookingPersistenceMongodb.assertExistRenterName("Pablo"));
+    }
 }
