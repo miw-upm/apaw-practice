@@ -19,7 +19,7 @@ public class Spectator {
         this.registrationDate = registrationDate;
     }
 
-    public static SpectatorBuilder.IdCard builder() {return new Builder(spectator); }
+    public static SpectatorBuilder.IdCard builder() {return new Builder(); }
 
     public String getIdCard() {
         return idCard;
