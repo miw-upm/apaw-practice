@@ -14,9 +14,7 @@ public class BookResource {
     static final String FULLNAME = "/fullname";
     static final String DESCRIPTION = "/desc";
 
-
     private final BookService bookService;
-
 
     @Autowired
     public BookResource(BookService bookService) {

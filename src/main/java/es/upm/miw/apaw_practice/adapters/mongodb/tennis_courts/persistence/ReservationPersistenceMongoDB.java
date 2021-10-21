@@ -1,7 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.daos.PlayerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.daos.ReservationRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities.ReservationEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,10 +23,12 @@ import java.util.stream.Stream;
 public class ReservationPersistenceMongoDB implements ReservationPersistence {
 
     private final ReservationRepository reservationRepository;
+    private final PlayerRepository playerRepository;
 
     @Autowired
-    public ReservationPersistenceMongoDB(ReservationRepository reservationRepository){
+    public ReservationPersistenceMongoDB(ReservationRepository reservationRepository, PlayerRepository playerRepository){
         this.reservationRepository = reservationRepository;
+        this.playerRepository = playerRepository;
     }
 
     @Override
@@ -43,11 +48,18 @@ public class ReservationPersistenceMongoDB implements ReservationPersistence {
     public Stream<Player> updatePlayerList(String ownerName, LocalDateTime date, Reservation reservation){
         ReservationEntity reservationEntity = this.findByOwnerName(ownerName, date)
                 .orElseThrow(() -> new NotFoundException("No se ha encontrado la reserva buscada"));
-        List<Player> players = ReservationEntity.toPlayerList(reservationEntity.getPlayers());
-        players.addAll(reservation.getPlayers());
-        reservationEntity.setPlayersFromPlayerList(players);
+        List<Player> originalPlayers = ReservationEntity.toPlayerList(reservationEntity.getPlayers());
+        List<Player> playersToInclude = new ArrayList<>();
+        for (Player playerDNIContainer: reservation.getPlayers()) {
+            playersToInclude.add(this.playerRepository.findByDni(playerDNIContainer.getDNI())
+                    .orElseThrow(() -> new BadRequestException("El DNI aportado no pertenece a ningún jugador registrado"))
+                    .toPlayer()
+            );
+        }
+        originalPlayers.addAll(playersToInclude);
+        reservationEntity.setPlayersFromPlayerList(originalPlayers);
         return this.reservationRepository.save(reservationEntity)
-                .getPlayersIds().stream();
+                .getPlayersDNIs().stream();
     }
 
     private Optional<ReservationEntity> findByOwnerName(String ownerName, LocalDateTime date){
