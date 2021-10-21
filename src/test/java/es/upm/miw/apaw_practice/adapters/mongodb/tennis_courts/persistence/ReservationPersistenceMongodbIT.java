@@ -6,7 +6,6 @@ import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
-import es.upm.miw.apaw_practice.domain.services.tennis_courts.ReservationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -47,6 +46,14 @@ public class ReservationPersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> this.reservationPersistenceMongoDB.updatePlayerList("Nacho", requestDate.withHour(18), reservation));
         seeder.deleteAll();
         seeder.seedDatabase();
+    }
+
+    @Test
+    void testGet(){
+        LocalDateTime requestDate = LocalDateTime.of(2021, 9, 30, 12, 0);
+        assertEquals(3, this.reservationPersistenceMongoDB.get("Rob", requestDate).getNumber());
+        assertThrows(NotFoundException.class, () -> this.reservationPersistenceMongoDB.get("Rob", requestDate.withHour(1)));
+        assertThrows(NotFoundException.class, () -> this.reservationPersistenceMongoDB.get("Samanta", requestDate));
     }
 
 }
