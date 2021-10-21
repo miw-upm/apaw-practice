@@ -22,7 +22,7 @@ public class PlayerSeriesResource {
     }
 
     @GetMapping()
-    public Stream<Player> readAll() {
-        return this.playerSeriesService.readAll();
+    public Stream<Player> findAll() {
+        return this.playerSeriesService.findAll();
     }
 }

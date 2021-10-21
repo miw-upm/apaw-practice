@@ -48,4 +48,21 @@ public class DispensingPersistenceMongodbIT {
         pharmacySeederService.deleteAll();
         pharmacySeederService.seedDatabase();
     }
+
+    @Test
+    void testDelete() {
+        Optional<Dispensing> dispensing = this.dispensingPersistenceMongodb.readAll()
+                .filter(dispensingItem -> dispensingItem.getDispensingTimestamp()
+                        .isEqual(LocalDateTime.of(2021, 1, 5, 13, 20)))
+                .findFirst();
+        assertTrue(dispensing.isPresent());
+        this.dispensingPersistenceMongodb.delete(dispensing.get().getId());
+        Optional<Dispensing> newSearchDispensing = this.dispensingPersistenceMongodb.readAll()
+                .filter(dispensingItem -> dispensingItem.getDispensingTimestamp()
+                        .isEqual(LocalDateTime.of(2021, 1, 5, 13, 20)))
+                .findFirst();
+        assertTrue(!newSearchDispensing.isPresent());
+        pharmacySeederService.deleteAll();
+        pharmacySeederService.seedDatabase();
+    }
 }
