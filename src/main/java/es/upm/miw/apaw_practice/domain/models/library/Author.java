@@ -7,12 +7,11 @@ public class Author {
     private String writingStyle;
 
     public Author() {
+        // empty for framework
     }
 
-    public Author(String fullName, String nationality, String writingStyle) {
-        this.fullName = fullName;
-        this.nationality = nationality;
-        this.writingStyle = writingStyle;
+    public static Builder builder(String fullName, String nationality) {
+        return new Builder(fullName, nationality);
     }
 
     public String getId() {
@@ -45,5 +44,27 @@ public class Author {
 
     public void setWritingStyle(String writingStyle) {
         this.writingStyle = writingStyle;
+    }
+
+
+
+    public static class Builder {
+
+        private final Author author;
+
+        public Builder(String fullName, String nationality) {
+            this.author = new Author();
+            this.author.fullName = fullName;
+            this.author.nationality = nationality;
+        }
+
+        public Builder writingStyle(String writingStyle) {
+            this.author.writingStyle = writingStyle;
+            return this;
+        }
+
+        public Author build() {
+            return this.author;
+        }
     }
 }
