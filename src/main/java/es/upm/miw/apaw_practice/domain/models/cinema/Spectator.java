@@ -19,6 +19,8 @@ public class Spectator {
         this.registrationDate = registrationDate;
     }
 
+    public static SpectatorBuilder.IdCard builder() {return new Builder(spectator); }
+
     public String getIdCard() {
         return idCard;
     }
@@ -59,5 +61,43 @@ public class Spectator {
                 ", familyName='" + familyName + '\'' +
                 ", registrationDate=" + registrationDate +
                 '}';
+    }
+
+    public static class Builder implements SpectatorBuilder.IdCard, SpectatorBuilder.Name, SpectatorBuilder.Optionals {
+
+        private final Spectator spectator;
+
+        public Builder() {
+            this.spectator = new Spectator();
+        }
+
+        @Override
+        public SpectatorBuilder.Name idCard(String idCard) {
+            this.spectator.idCard = idCard;
+            return this;
+        }
+
+        @Override
+        public SpectatorBuilder.Optionals name(String name) {
+            this.spectator.name = name;
+            return this;
+        }
+
+        @Override
+        public SpectatorBuilder.Optionals familyName(String familyName) {
+            this.spectator.familyName = familyName;
+            return this;
+        }
+
+        @Override
+        public SpectatorBuilder.Optionals registrationDate(LocalDate registrationDate) {
+            this.spectator.registrationDate = registrationDate;
+            return this;
+        }
+
+        @Override
+        public Spectator build() {
+            return this.spectator;
+        }
     }
 }
