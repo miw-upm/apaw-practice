@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,5 +53,11 @@ public class AppointmentServiceIT {
                         true, pet, vets)
         );
         this.appointmentService.updateConsumed(appointmentList.stream());
+    }
+
+    @Test
+    void findByConsumedTest() {
+        Stream<Appointment> appointments = this.appointmentService.findByConsumed(false);
+        assertEquals(false, appointments.findFirst().get().getConsumed());
     }
 }

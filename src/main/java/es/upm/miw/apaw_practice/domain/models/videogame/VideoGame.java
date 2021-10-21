@@ -1,7 +1,11 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
+import es.upm.miw.apaw_practice.domain.models.shop.Tag;
+
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VideoGame {
 
@@ -21,6 +25,26 @@ public class VideoGame {
         this.rating = rating;
         this.critic = critic;
         this.platforms = platforms;
+    }
+
+    public static VideoGame ofPlatformConsoleName(VideoGame game) {
+        game.setPlatforms(
+                game.platforms.stream()
+                        .map(Platform::ofConsoleName)
+                        .collect(Collectors.toList())
+        );
+        return game;
+    }
+
+    public static VideoGame ofTitlePlatformConsoleName(VideoGame game) {
+        VideoGame gameDto = new VideoGame();
+        gameDto.setTitle(game.getTitle());
+        gameDto.setPlatforms(
+                game.platforms.stream()
+                        .map(Platform::ofConsoleName)
+                        .collect(Collectors.toList())
+        );
+        return gameDto;
     }
 
     public String getTitle() {
@@ -55,11 +79,11 @@ public class VideoGame {
         this.critic = critic;
     }
 
-    public List<Platform> getConsoles() {
+    public List<Platform> getPlatforms() {
         return platforms;
     }
 
-    public void setConsoles(List<Platform> platforms) {
+    public void setPlatforms(List<Platform> platforms) {
         this.platforms = platforms;
     }
 
@@ -70,7 +94,7 @@ public class VideoGame {
                 ", releaseDate=" + releaseDate +
                 ", rating='" + rating + '\'' +
                 ", critic=" + critic +
-                ", consoles=" + platforms +
+                ", platforms=" + platforms +
                 '}';
     }
 }

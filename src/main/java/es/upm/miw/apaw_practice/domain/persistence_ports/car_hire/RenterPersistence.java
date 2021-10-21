@@ -11,4 +11,6 @@ public interface RenterPersistence {
     Renter readByDni(String dni);
 
     Renter update(String dni, Renter renter);
+
+    boolean existDni(String dni);
 }

@@ -2,6 +2,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.car_hire.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.daos.ModelRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities.ModelEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities.VehicleEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Model;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car_hire.ModelPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +30,24 @@ public class ModelPersistenceMongodb implements ModelPersistence {
     }
 
     @Override
+    public boolean assertExistVinNumber(String vinNumber) {
+        return this.modelRepository.findAll().stream()
+                .flatMap(modelEntity -> modelEntity.getVehicleEntities().stream())
+                .anyMatch(vehicleEntity -> vehicleEntity.getVinNumber().equals(vinNumber));
+    }
+
+    @Override
     public Model readByVinNumber(String vinNumber) {
-        return this.modelRepository
-                .findAll().stream()
-                .filter(modelEntity ->
-                        modelEntity.getVehicleEntities().stream()
-                                .anyMatch(vehicleEntity ->
-                                        vehicleEntity.getVinNumber().equals(vinNumber)))
-                .map(ModelEntity::toModel)
-                .collect(Collectors.toList()).get(0);
+        if (!this.assertExistVinNumber(vinNumber)) {
+            throw new NotFoundException("Vehicle VIN_Number: " + vinNumber);
+        } else {
+            return this.modelRepository
+                    .findAll().stream()
+                    .filter(modelEntity -> modelEntity.getVehicleEntities().stream()
+                            .anyMatch(vehicleEntity -> vehicleEntity.getVinNumber().equals(vinNumber))
+                    )
+                    .map(ModelEntity::toModel)
+                    .collect(Collectors.toList()).get(0);
+        }
     }
 }

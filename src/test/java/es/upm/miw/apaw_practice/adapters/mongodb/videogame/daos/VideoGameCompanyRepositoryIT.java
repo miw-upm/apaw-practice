@@ -21,9 +21,9 @@ public class VideoGameCompanyRepositoryIT {
                                 company.getId() != null &&
                                 company.getFormationDate() != null &&
                                 company.getFormationDate().equals(LocalDate.of(1889, 9, 23)) &&
-                                2 == company.getPlatforms().size() &&
-                                "8gb".equals(company.getPlatforms().get(1).getMemory()) &&
-                                "oled".equals(company.getPlatforms().get(0).getModel())
+                                2 == company.getPlatformEntities().size() &&
+                                "8gb".equals(company.getPlatformEntities().get(1).getMemory()) &&
+                                "oled".equals(company.getPlatformEntities().get(0).getModel())
                 ));
     }
 }
