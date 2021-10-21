@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.vet_clinic;
 
-import java.util.List;
-
 public class Vet {
     private Integer vetNumber;
     private String name;
@@ -11,10 +9,14 @@ public class Vet {
         //empty for framework
     }
 
-    public Vet(Integer vetNumber, String name, String surname){
+    /*public Vet(Integer vetNumber, String name, String surname){
         this.vetNumber = vetNumber;
         this.name = name;
         this.surname = surname;
+    }*/
+
+    public static VetBuilder.VetNumber builder() {
+        return new Builder();
     }
 
     public Integer getVetNumber() {
@@ -48,5 +50,38 @@ public class Vet {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}';
+    }
+
+    public static class Builder implements VetBuilder.VetNumber, VetBuilder.Name,
+            VetBuilder.Surname, VetBuilder.Optionals {
+
+        private final Vet vet;
+
+        public Builder() {
+            this.vet = new Vet();
+        }
+
+        @Override
+        public VetBuilder.Name vetNumber(Integer vetnumber) {
+            this.vet.vetNumber = vetnumber;
+            return this;
+        }
+
+        @Override
+        public VetBuilder.Surname name(String name) {
+            this.vet.name = name;
+            return this;
+        }
+
+        @Override
+        public VetBuilder.Optionals surname(String surname) {
+            this.vet.surname = surname;
+            return this;
+        }
+
+        @Override
+        public Vet build() {
+            return this.vet;
+        }
     }
 }
