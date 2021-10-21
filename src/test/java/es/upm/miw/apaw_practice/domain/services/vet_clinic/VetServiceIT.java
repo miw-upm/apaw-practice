@@ -20,7 +20,11 @@ public class VetServiceIT {
 
     @Test
     void createTest() {
-        Vet vet = new Vet(888, "vet8", "surname8");
+        Vet vet = Vet.builder()
+                .vetNumber(888)
+                .name("vet8")
+                .surname("surname8")
+                .build();
         this.vetService.create(vet);
         Vet persistedVet = this.vetPersistence.readByVetNumber(888);
         assertEquals(vet.getVetNumber(), persistedVet.getVetNumber());
