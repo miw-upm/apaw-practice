@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.tennis_courts;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
@@ -17,6 +18,9 @@ class PlayerResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Autowired
+    private Tennis_CourtsSeederService tennis_courtsSeederService;
 
     @Test
     void testCreate(){
@@ -50,6 +54,8 @@ class PlayerResourceIT {
                 .body(BodyInserters.fromValue(List.of(equipments)))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.NOT_FOUND);
+        this.tennis_courtsSeederService.deleteAll();
+        this.tennis_courtsSeederService.seedDatabase();
     }
 }
 

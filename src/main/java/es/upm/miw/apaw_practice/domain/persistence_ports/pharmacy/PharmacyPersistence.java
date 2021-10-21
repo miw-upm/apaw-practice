@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 public interface PharmacyPersistence {
 
     Pharmacy create(Pharmacy pharmacy);
+
+    Pharmacy read(String registrationNumber);
+
+    Pharmacy update(String registrationNumber, Pharmacy pharmacy);
 }
-
-
