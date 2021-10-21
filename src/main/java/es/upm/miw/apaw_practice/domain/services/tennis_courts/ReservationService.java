@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.services.tennis_courts;
 
-import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
-import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Court;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
@@ -53,7 +51,6 @@ public class ReservationService {
         int nextIndex;
         List<Integer> values = new ArrayList<>();
 
-        int i = 0;
         while(str.indexOf(":", index) > 0){
             nextIndex = str.indexOf(":", index);
             values.add(Integer.parseInt(str.substring(index, nextIndex)));
