@@ -9,12 +9,6 @@ public class Vet {
         //empty for framework
     }
 
-    /*public Vet(Integer vetNumber, String name, String surname){
-        this.vetNumber = vetNumber;
-        this.name = name;
-        this.surname = surname;
-    }*/
-
     public static VetBuilder.VetNumber builder() {
         return new Builder();
     }
