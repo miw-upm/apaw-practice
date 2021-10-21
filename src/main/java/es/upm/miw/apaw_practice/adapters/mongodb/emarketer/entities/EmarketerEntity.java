@@ -85,7 +85,8 @@ public class EmarketerEntity {
 
     public Emarketer toEmarketer() {
         Emarketer emarketer = new Emarketer();
-        BeanUtils.copyProperties(this, emarketer, "id");
+        BeanUtils.copyProperties(this, emarketer);
+        emarketer.setSystemic(this.systemic);
         this.planEntities.forEach(plansEntity -> emarketer.addPlan(plansEntity.toPlan()));
         this.cupsEntities.forEach(cupsEntity -> emarketer.addCups(cupsEntity.toCups()));
         return emarketer;

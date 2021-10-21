@@ -33,6 +33,14 @@ public class ReservationEntity {
         this.players = players;
     }
 
+    public String getId(){
+        return id;
+    }
+
+    public String setId(String id){
+        return this.id = id;
+    }
+
     public String getOwnerName() {
         return ownerName;
     }

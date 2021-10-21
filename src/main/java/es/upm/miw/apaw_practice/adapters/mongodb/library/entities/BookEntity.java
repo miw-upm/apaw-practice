@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Document
 public class BookEntity {
@@ -31,8 +32,14 @@ public class BookEntity {
         // empty for framework
     }
 
-    public static BookEntityBuilders.Id builder() {
-        return new BookEntity.Builder();
+    public static BookEntityBuilders.Isbn builder() {
+        return new Builder();
+    }
+
+    public Book toBook() {
+        Book book = new Book();
+        BeanUtils.copyProperties(this, book);
+        return book;
     }
 
     public String getId() {
@@ -126,23 +133,13 @@ public class BookEntity {
                 '}';
     }
 
-    public Book toBook() {
-        Book book = new Book();
-        BeanUtils.copyProperties(this, book);
-        return book;
-    }
+    public static class Builder implements BookEntityBuilders.Isbn, BookEntityBuilders.Title, BookEntityBuilders.Available, BookEntityBuilders.NumbersOfPages, BookEntityBuilders.PublicationDate, BookEntityBuilders.ICategory, BookEntityBuilders.IAuthor, BookEntityBuilders.Optionals {
 
-    public static class Builder implements BookEntityBuilders.Id, BookEntityBuilders.Isbn, BookEntityBuilders.Title, BookEntityBuilders.Available, BookEntityBuilders.NumbersOfPages, BookEntityBuilders.PublicationDate, BookEntityBuilders.CategoryEntity, BookEntityBuilders.Optionals {
         private final BookEntity bookEntity;
 
         public Builder() {
             this.bookEntity = new BookEntity();
-        }
-
-        @Override
-        public BookEntityBuilders.Isbn id(String id) {
-            this.bookEntity.id = id;
-            return this;
+            this.bookEntity.id = UUID.randomUUID().toString();
         }
 
         @Override
@@ -170,13 +167,13 @@ public class BookEntity {
         }
 
         @Override
-        public BookEntityBuilders.CategoryEntity publicationDate(LocalDate publicationDate) {
+        public BookEntityBuilders.ICategory publicationDate(LocalDate publicationDate) {
             this.bookEntity.publicationDate = publicationDate;
             return this;
         }
 
         @Override
-        public BookEntityBuilders.Optionals category(CategoryEntity category) {
+        public BookEntityBuilders.IAuthor category(CategoryEntity category) {
             this.bookEntity.category = category;
             return this;
         }
