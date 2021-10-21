@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.car_hire;
 
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Booking;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Model;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Renter;
@@ -46,18 +47,26 @@ public class BookingService {
         return this.modelPersistence.readAll();
     }
 
+    public boolean assertExistModelType(String type) {
+        return this.readAllModels().anyMatch(model -> model.getType().equals(type));
+    }
+
     public Stream<Renter> getRentersNameByModelType(String type) {
-        Supplier<Stream<Vehicle>> vehicles =
-                (() -> this.readAllModels()
-                .filter(model -> model.getType().equals(type))
-                .flatMap(model -> model.getVehicleList().stream())
-                );
-        return this.readAll()
-                .filter(booking -> booking.getVehicleList().stream()
-                        .anyMatch(vehicle -> vehicles.get()
-                                .anyMatch(vehicleInLoopOfVehicles -> vehicleInLoopOfVehicles.getVinNumber().equals(vehicle.getVinNumber()))
-                        )
-                )
-                .map(Booking::getRenter);
+        if (!this.assertExistModelType(type)) {
+            throw new NotFoundException("Model type: " + type);
+        } else {
+            Supplier<Stream<Vehicle>> vehicles =
+                    (() -> this.readAllModels()
+                            .filter(model -> model.getType().equals(type))
+                            .flatMap(model -> model.getVehicleList().stream())
+                    );
+            return this.readAll()
+                    .filter(booking -> booking.getVehicleList().stream()
+                            .anyMatch(vehicle -> vehicles.get()
+                                    .anyMatch(vehicleInLoopOfVehicles -> vehicleInLoopOfVehicles.getVinNumber().equals(vehicle.getVinNumber()))
+                            )
+                    )
+                    .map(Booking::getRenter);
+        }
     }
 }

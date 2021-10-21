@@ -7,6 +7,7 @@ import es.upm.miw.apaw_practice.domain.models.car_hire.Renter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
@@ -20,9 +21,6 @@ class RenterResourceIT {
 
     @Autowired
     RenterRepository renterRepository;
-
-    //ToDo: testCreateConflict()
-    // testUpdateLikedCarNotFound()
 
     @Test
     void testCreate() {
@@ -46,7 +44,19 @@ class RenterResourceIT {
     }
 
     @Test
-    void updateLikedCar() {
+    void testCreateConflict() {
+        Renter renter = new Renter("Repeated", "51435421N");
+        Assertions.assertNull(renter.getLikedCar());
+        this.webTestClient
+                .post()
+                .uri(RenterResource.RENTER)
+                .body(BodyInserters.fromValue(renter))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void testUpdateLikedCar() {
         assertTrue(this.renterRepository.findByDni("51435421N").isPresent());
         RenterEntity renterEntityToUpdate = this.renterRepository.findByDni("51435421N").get();
         assertEquals("Pablo", renterEntityToUpdate.getName());
@@ -66,5 +76,16 @@ class RenterResourceIT {
 
         RenterEntity renterEntityUpdated = this.renterRepository.findByDni("51435421N").get();
         assertTrue(renterEntityUpdated.getLikedCar());
+    }
+
+    @Test
+    void testUpdateLikedCarNotFound() {
+        Renter renterInvented = new Renter("name", "000");
+        this.webTestClient
+                .patch()
+                .uri(RenterResource.RENTER + RenterResource.DNI, renterInvented.getDni())
+                .body(BodyInserters.fromValue(renterInvented))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

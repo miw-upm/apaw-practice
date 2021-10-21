@@ -32,9 +32,6 @@ class BookingResourceIT {
     @Autowired
     CarHireSeederService carHireSeederService;
 
-    //ToDo: testGetVehiclesVinNumberByRentersNameNotFound()
-    // testGetRentersNameByModelTypeBadRequest()
-
     @AfterEach
     void seedDatabase() {
         this.carHireSeederService.deleteAll();
@@ -86,6 +83,15 @@ class BookingResourceIT {
     }
 
     @Test
+    void testGetVehiclesVinNumberByRentersNameNotFound() {
+        this.webTestClient
+                .get()
+                .uri(BookingResource.BOOKING + BookingResource.RENTERS + BookingResource.RENTERS_NAME, "Invented")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
     void testGetRentersNameByModelType() {
         this.webTestClient
                 .get()
@@ -111,5 +117,29 @@ class BookingResourceIT {
                 .expectBodyList(Renter.class)
                 .value(renters -> assertEquals(1, renters.size()))
                 .value(renters -> assertEquals("Manuel", renters.get(0).getName()));
+    }
+
+    @Test
+    void testGetRentersNameByModelTypeBadRequest() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(BookingResource.BOOKING + BookingResource.VEHICLES + BookingResource.SEARCH)
+                        .queryParam("q", "jajaja:Opel Insignia")
+                        .build())
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testGetRentersNameByModelTypeNotFound() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(BookingResource.BOOKING + BookingResource.VEHICLES + BookingResource.SEARCH)
+                        .queryParam("q", "Model_Type:Invented")
+                        .build())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

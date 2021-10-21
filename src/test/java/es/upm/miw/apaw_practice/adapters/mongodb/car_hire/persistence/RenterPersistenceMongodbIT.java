@@ -39,4 +39,9 @@ class RenterPersistenceMongodbIT {
         renter = this.renterPersistenceMongodb.readByDni("123");
         assertTrue(renter.getLikedCar());
     }
+
+    @Test
+    void testExistDni() {
+        assertTrue(this.renterPersistenceMongodb.existDni("51435421N"));
+    }
 }

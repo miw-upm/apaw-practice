@@ -30,18 +30,24 @@ public class ModelPersistenceMongodb implements ModelPersistence {
     }
 
     @Override
+    public boolean assertExistVinNumber(String vinNumber) {
+        return this.modelRepository.findAll().stream()
+                .flatMap(modelEntity -> modelEntity.getVehicleEntities().stream())
+                .anyMatch(vehicleEntity -> vehicleEntity.getVinNumber().equals(vinNumber));
+    }
+
+    @Override
     public Model readByVinNumber(String vinNumber) {
-        Stream<VehicleEntity> vehicleEntities = this.modelRepository.findAll().stream()
-                .flatMap(modelEntity -> modelEntity.getVehicleEntities().stream());
-        if (vehicleEntities.noneMatch(vehicleEntity -> vehicleEntity.getVinNumber().equals(vinNumber))) {
+        if (!this.assertExistVinNumber(vinNumber)) {
             throw new NotFoundException("Vehicle VIN_Number: " + vinNumber);
+        } else {
+            return this.modelRepository
+                    .findAll().stream()
+                    .filter(modelEntity -> modelEntity.getVehicleEntities().stream()
+                            .anyMatch(vehicleEntity -> vehicleEntity.getVinNumber().equals(vinNumber))
+                    )
+                    .map(ModelEntity::toModel)
+                    .collect(Collectors.toList()).get(0);
         }
-        return this.modelRepository
-                .findAll().stream()
-                .filter(modelEntity -> modelEntity.getVehicleEntities().stream()
-                                .anyMatch(vehicleEntity -> vehicleEntity.getVinNumber().equals(vinNumber))
-                )
-                .map(ModelEntity::toModel)
-                .collect(Collectors.toList()).get(0);
     }
 }
