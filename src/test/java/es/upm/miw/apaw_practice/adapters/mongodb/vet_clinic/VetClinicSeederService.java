@@ -58,6 +58,8 @@ public class VetClinicSeederService {
                 new AppointmentEntity(LocalDate.of(2021, 2, 16), LocalTime.of(9, 00),
                         true, pets[1]),
                 new AppointmentEntity(LocalDate.of(2021, 12, 4), LocalTime.of(16, 45),
+                        false, pets[1]),
+                new AppointmentEntity(LocalDate.of(2021, 12, 4), LocalTime.of(17, 45),
                         false, pets[1])
         };
         this.appointmentRepository.saveAll(Arrays.asList(appointments));
@@ -67,7 +69,7 @@ public class VetClinicSeederService {
                 new VetEntity(new Vet(222, "vet2", ""), List.of(appointments[0], appointments[1])),
                 new VetEntity(new Vet(333, "vet3", "surname3"), List.of()),
                 new VetEntity(new Vet(444, "", "surname4"), List.of(appointments[2], appointments[3],
-                        appointments[4]))
+                        appointments[4], appointments[5]))
         };
         this.vetRepository.saveAll(Arrays.asList(vets));
     }
