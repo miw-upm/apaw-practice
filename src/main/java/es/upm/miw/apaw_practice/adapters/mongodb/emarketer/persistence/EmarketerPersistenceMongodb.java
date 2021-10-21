@@ -38,4 +38,11 @@ public class EmarketerPersistenceMongodb implements EmarketerPersistence {
                         .anyMatch(cup -> cup.getCups().equals(cups)));
     }
 
+    @Override
+    public Stream<Emarketer> readByPlanDescription(String description) {
+        return this.readAll()
+                .filter(emarketer -> emarketer.getPlans().stream()
+                        .anyMatch(plan -> plan.getDescription().equals(description)));
+    }
+
 }
