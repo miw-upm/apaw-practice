@@ -28,6 +28,13 @@ public class PlatformEntity {
         this.id = UUID.randomUUID().toString();
     }
 
+    public PlatformEntity(String consoleName, String model, String memory) {
+        this.id = UUID.randomUUID().toString();
+        this.consoleName = consoleName;
+        this.model = model;
+        this.memory = memory;
+    }
+
     public String getId() {
         return id;
     }
