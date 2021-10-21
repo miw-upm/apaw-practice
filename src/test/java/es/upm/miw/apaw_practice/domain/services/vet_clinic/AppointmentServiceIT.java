@@ -58,6 +58,6 @@ public class AppointmentServiceIT {
     @Test
     void findByConsumedTest() {
         Stream<Appointment> appointments = this.appointmentService.findByConsumed(false);
-        assertEquals(3, appointments.count());
+        assertEquals(2, appointments.count());
     }
 }
