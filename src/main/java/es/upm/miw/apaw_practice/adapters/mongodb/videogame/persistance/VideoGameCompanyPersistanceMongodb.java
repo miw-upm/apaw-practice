@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.videogame.persistance;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.PlatformRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.VideoGameCompanyRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.PlatformEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.VideoGameCompanyEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.videogame.VideoGameCompany;
@@ -10,6 +11,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.VideoGameComp
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository("videoGameCompanyPersistance")
@@ -38,8 +41,19 @@ public class VideoGameCompanyPersistanceMongodb implements VideoGameCompanyPersi
 
     @Override
     public VideoGameCompany update(VideoGameCompany videoGameCompany) {
-        return null;
+        VideoGameCompanyEntity videoGameCompanyEntity = this.videoGameCompanyRepository
+                .findById(videoGameCompany.getName())
+                .orElseThrow(() -> new NotFoundException("Company name:" + videoGameCompany.getName()));
+        List<PlatformEntity> platformEntities = videoGameCompany.getPlatforms().stream()
+                .map(platform -> new PlatformEntity(
+                        this.platformRepository
+                                .findByConsoleName(platform.getConsoleName())
+                                .orElseThrow(() -> new NotFoundException("Platform consoleName: " + platform.getConsoleName())).getConsoleName(),
+                        platform.getModel(),
+                        platform.getMemory())
+                ).collect(Collectors.toList());
+        videoGameCompanyEntity.setPlatformEntities(platformEntities);
+        return this.videoGameCompanyRepository.save(videoGameCompanyEntity).toVideoGameCompany();
     }
-
 
 }
