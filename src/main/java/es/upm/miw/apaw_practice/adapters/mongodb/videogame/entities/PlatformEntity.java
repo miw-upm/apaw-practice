@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
+import es.upm.miw.apaw_practice.domain.models.videogame.Platform;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,11 +23,9 @@ public class PlatformEntity {
         //empty from framework
     }
 
-    public PlatformEntity(String consoleName, String model, String memory) {
+    public PlatformEntity(Platform platform) {
+        BeanUtils.copyProperties(platform, this);
         this.id = UUID.randomUUID().toString();
-        this.consoleName = consoleName;
-        this.model = model;
-        this.memory = memory;
     }
 
     public String getId() {
@@ -58,6 +58,26 @@ public class PlatformEntity {
 
     public void setMemory(String memory) {
         this.memory = memory;
+    }
+
+    public void fromPlatform(Platform platform) {
+        BeanUtils.copyProperties(platform, this);
+    }
+
+    public Platform toPlatform() {
+        Platform platform = new Platform();
+        BeanUtils.copyProperties(this, platform);
+        return platform;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (consoleName.equals(((PlatformEntity) obj).consoleName));
+    }
+
+    @Override
+    public int hashCode() {
+        return consoleName.hashCode();
     }
 
     @Override
