@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
 import es.upm.miw.apaw_practice.domain.models.videogame.Critic;
+import es.upm.miw.apaw_practice.domain.models.videogame.Platform;
+import es.upm.miw.apaw_practice.domain.models.videogame.VideoGame;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -9,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class VideoGameEntity {
@@ -16,25 +19,24 @@ public class VideoGameEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-
     private String title;
     private LocalDate releaseDate;
     private String rating;
-    private Critic critic;
+    private CriticEntity criticEntity;
     @DBRef
-    private List<PlatformEntity> platforms;
+    private List<PlatformEntity> platformEntities;
 
     public VideoGameEntity() {
         //empty for framework
     }
 
-    public VideoGameEntity(String title, LocalDate releaseDate, String rating, Critic critic, List<PlatformEntity> platforms) {
+    public VideoGameEntity(String title, LocalDate releaseDate, String rating, CriticEntity criticEntity, List<PlatformEntity> platformEntities) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.critic = critic;
-        this.platforms = platforms;
+        this.criticEntity = criticEntity;
+        this.platformEntities = platformEntities;
     }
 
     public String getId() {
@@ -69,20 +71,37 @@ public class VideoGameEntity {
         this.rating = rating;
     }
 
-    public Critic getCritic() {
-        return critic;
+    public CriticEntity getCriticEntity() {
+        return criticEntity;
     }
 
-    public void setCritic(Critic critic) {
-        this.critic = critic;
+    public void setCriticEntity(CriticEntity criticEntity) {
+        this.criticEntity = criticEntity;
     }
 
-    public List<PlatformEntity> getPlatforms() {
-        return platforms;
+    public List<PlatformEntity> getPlatformEntities() {
+        return platformEntities;
     }
 
-    public void setPlatforms(List<PlatformEntity> platforms) {
-        this.platforms = platforms;
+    public void setPlatformEntities(List<PlatformEntity> platformEntities) {
+        this.platformEntities = platformEntities;
+    }
+
+    public VideoGame toVideoGame() {
+        List<Platform> platforms = this.platformEntities.stream()
+                .map(PlatformEntity::toPlatform)
+                .collect(Collectors.toList());
+        return new VideoGame(title, releaseDate, rating, new Critic(), platforms);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.title.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (title.equals(((VideoGameEntity) obj).title));
     }
 
     @Override
@@ -92,8 +111,8 @@ public class VideoGameEntity {
                 ", title='" + title + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", rating='" + rating + '\'' +
-                ", critic=" + critic +
-                ", platforms=" + platforms +
+                ", criticEntity=" + criticEntity +
+                ", platformEntities=" + platformEntities +
                 '}';
     }
 }

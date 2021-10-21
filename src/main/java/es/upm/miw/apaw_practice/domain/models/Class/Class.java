@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.Class;
 
+
 import java.time.LocalDate;
 
 public class Class {

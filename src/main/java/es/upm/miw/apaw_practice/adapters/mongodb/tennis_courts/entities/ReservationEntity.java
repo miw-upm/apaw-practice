@@ -61,7 +61,7 @@ public class ReservationEntity {
         return players;
     }
 
-    public List<Player> getPlayersIds(){
+    public List<Player> getPlayersDNIs(){
         return this.players.stream()
                 .map(playerEntity -> new Player(playerEntity.getDni()))
                 .collect(Collectors.toList());
