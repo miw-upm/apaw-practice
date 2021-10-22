@@ -9,17 +9,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class PatientRepositoryIT {
+class PatientRepositoryIT {
 
     @Autowired
     private PatientRepository patientRepository;
 
     @Test
-    void testFindByDni(){
+    void testFindByDni() {
         assertTrue(this.patientRepository.findByDni("03457384C").isPresent());
         PatientEntity patientEntity = this.patientRepository.findByDni("03457384C").get();
         assertEquals("03457384C", patientEntity.getDni());
         assertEquals("Male", patientEntity.getGender());
-        assertEquals(23,patientEntity.getAge());
+        assertEquals(23, patientEntity.getAge());
     }
 }

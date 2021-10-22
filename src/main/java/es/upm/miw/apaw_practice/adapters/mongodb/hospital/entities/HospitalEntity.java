@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.hospital.Hospital;
-import es.upm.miw.apaw_practice.domain.models.hospital.Patient;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -19,7 +18,7 @@ public class HospitalEntity {
     @DBRef
     private List<PatientEntity> patients;
 
-    public HospitalEntity(){
+    public HospitalEntity() {
         //empty for framework
     }
 
@@ -31,7 +30,7 @@ public class HospitalEntity {
         this.patients = patients;
     }
 
-    public HospitalEntity(Hospital hospital){
+    public HospitalEntity(Hospital hospital) {
         BeanUtils.copyProperties(hospital, this);
         this.id = UUID.randomUUID().toString();
     }
@@ -78,7 +77,7 @@ public class HospitalEntity {
 
     public Hospital toHospital() {
         Hospital hospital = new Hospital();
-        BeanUtils.copyProperties(this,hospital,"patients");
+        BeanUtils.copyProperties(this, hospital, "patients");
         if (this.getPatients() != null) {
             hospital.setPatients(this.patients.stream()
                     .map(PatientEntity::toPatient)

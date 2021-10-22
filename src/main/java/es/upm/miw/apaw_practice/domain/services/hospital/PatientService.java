@@ -11,7 +11,7 @@ public class PatientService {
     private final PatientPersistence patientPersistence;
 
     @Autowired
-    public PatientService(PatientPersistence patientPersistence){
+    public PatientService(PatientPersistence patientPersistence) {
         this.patientPersistence = patientPersistence;
     }
 
@@ -20,6 +20,6 @@ public class PatientService {
     }
 
     public Patient update(String dni, Patient patient) {
-        return this.patientPersistence.update(dni,patient);
+        return this.patientPersistence.update(dni, patient);
     }
 }

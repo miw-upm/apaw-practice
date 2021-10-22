@@ -5,7 +5,7 @@ public class DiseaseUpdate {
     private String alias;
     private String description;
 
-    public DiseaseUpdate(){
+    public DiseaseUpdate() {
         //empty for framework
     }
 

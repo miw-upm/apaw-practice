@@ -10,24 +10,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-public class PatientPersistenceMongodbIT {
+class PatientPersistenceMongodbIT {
 
     @Autowired
     private PatientPersistenceMongodb patientPersistenceMongodb;
 
     @Test
-    void testUpdate(){
-        Patient patient = new Patient("12345678Z","Female",46,null,null);
+    void testUpdate() {
+        Patient patient = new Patient("12345678Z", "Female", 46, null, null);
         Patient patient2 = this.patientPersistenceMongodb.update("12345678Z", patient);
-        assertEquals("12345678Z",patient2.getDni());
-        assertEquals("Female",patient2.getGender());
-        assertEquals(46,patient2.getAge());
+        assertEquals("12345678Z", patient2.getDni());
+        assertEquals("Female", patient2.getGender());
+        assertEquals(46, patient2.getAge());
     }
 
     @Test
-    void testFindAllWithDiseaseSeverity(){
+    void testFindAllWithDiseaseSeverity() {
         List<Patient> patients = this.patientPersistenceMongodb.findAllWithDiseaseSeverity(Boolean.TRUE);
-        assertEquals("03457384C",patients.get(0).getDni());
+        assertEquals("03457384C", patients.get(0).getDni());
     }
 
 }

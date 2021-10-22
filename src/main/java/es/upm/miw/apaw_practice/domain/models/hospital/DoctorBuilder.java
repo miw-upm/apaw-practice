@@ -4,19 +4,19 @@ import java.time.LocalDate;
 
 public interface DoctorBuilder {
 
-    interface Nick{
+    interface Nick {
         Surname nick(String nick);
     }
 
-    interface Surname{
+    interface Surname {
         ActiveSince surname(String surname);
     }
 
-    interface ActiveSince{
+    interface ActiveSince {
         Optionals activeSince(LocalDate activeSince);
     }
 
-    interface Optionals{
+    interface Optionals {
         Doctor build();
     }
 }

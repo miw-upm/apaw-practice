@@ -10,19 +10,20 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RestTestConfig
-public class DiseaseResourceIT {
+class DiseaseResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
 
     @Test
-    void testUpdateDescriptions(){
+    void testUpdateDescriptions() {
         DiseaseUpdate diseaseUpdate1 = new DiseaseUpdate("Common cold", "New Description");
         DiseaseUpdate diseaseUpdate2 = new DiseaseUpdate("Conjunctivitis", "New Description 2");
-        List<DiseaseUpdate> diseaseUpdates = List.of(diseaseUpdate1,diseaseUpdate2);
+        List<DiseaseUpdate> diseaseUpdates = List.of(diseaseUpdate1, diseaseUpdate2);
 
         this.webTestClient
                 .patch()
@@ -33,7 +34,7 @@ public class DiseaseResourceIT {
     }
 
     @Test
-    void testFindAliasByDoctorNick(){
+    void testFindAliasByDoctorNick() {
         this.webTestClient
                 .get()
                 .uri(uriBuilder -> uriBuilder.path(DiseaseResource.DISEASES + DiseaseResource.SEARCH)
@@ -43,7 +44,7 @@ public class DiseaseResourceIT {
                 .expectStatus().isOk()
                 .expectBodyList(Disease.class)
                 .value(diseases -> assertTrue(diseases.size() > 0))
-                .value(diseases -> assertEquals(diseases.get(0).getAlias(), "Kidney failure"))
-                .value(diseases -> assertEquals(diseases.get(1).getAlias(), "Common cold"));
+                .value(diseases -> assertEquals("Kidney failure", diseases.get(0).getAlias()))
+                .value(diseases -> assertEquals("Common cold", diseases.get(1).getAlias()));
     }
 }

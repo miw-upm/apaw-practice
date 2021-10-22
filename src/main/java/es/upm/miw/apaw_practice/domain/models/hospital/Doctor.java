@@ -9,18 +9,18 @@ public class Doctor {
     private String surname;
     private LocalDate activeSince;
 
-    public static DoctorBuilder.Nick builder(){
-        return new Builder();
-    }
-
-    public Doctor(){
+    public Doctor() {
         //empty for framework
     }
 
-    public Doctor(String nick){
+    public Doctor(String nick) {
         this.nick = nick;
         this.surname = null;
         this.activeSince = null;
+    }
+
+    public static DoctorBuilder.Nick builder() {
+        return new Builder();
     }
 
     @Override
@@ -35,14 +35,6 @@ public class Doctor {
     public int hashCode() {
         return Objects.hash(nick, surname, activeSince);
     }
-
-    /*
-    public Doctor(String nick, String surname, LocalDate activeSince) {
-        this.nick = nick;
-        this.surname = surname;
-        this.activeSince = activeSince;
-    }
-    */
 
     public String getNick() {
         return nick;
@@ -68,17 +60,8 @@ public class Doctor {
         this.activeSince = activeSince;
     }
 
-    @Override
-    public String toString() {
-        return "Doctor{" +
-                "nick='" + this.nick + '\'' +
-                ", surname='" + this.surname + '\'' +
-                ", activeSince=" + this.activeSince +
-                '}';
-    }
-
     public static class Builder implements DoctorBuilder.Nick, DoctorBuilder.Surname,
-            DoctorBuilder.ActiveSince, DoctorBuilder.Optionals{
+            DoctorBuilder.ActiveSince, DoctorBuilder.Optionals {
 
         private final Doctor doctor;
 

@@ -9,13 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class DiseaseRepositoryIT {
+class DiseaseRepositoryIT {
 
     @Autowired
     private DiseaseRepository diseaseRepository;
 
     @Test
-    void testFindByAlias(){
+    void testFindByAlias() {
         assertTrue(this.diseaseRepository.findByAlias("Conjunctivitis").isPresent());
         DiseaseEntity diseaseEntity = this.diseaseRepository.findByAlias("Conjunctivitis").get();
         assertEquals("Conjunctivitis", diseaseEntity.getAlias());

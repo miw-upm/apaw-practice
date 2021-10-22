@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class DiseaseServiceIT {
+class DiseaseServiceIT {
 
     @Autowired
     private DiseaseService diseaseService;
@@ -20,7 +22,7 @@ public class DiseaseServiceIT {
     private DiseasePersistence diseasePersistence;
 
     @Test
-    void testFindAliasByDoctorNick(){
+    void testFindAliasByDoctorNick() {
         List<Disease> diseases = this.diseaseService.findAliasByDoctorNick("Marta")
                 .collect(Collectors.toList());
         assertTrue(diseases.size() > 0);
