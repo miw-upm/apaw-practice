@@ -14,7 +14,7 @@ public class SubjectArea implements SubjectComponent{
     }
 
     @Override
-    public boolean isComposite() {
+    public boolean isArea() {
         return true;
     }
 
@@ -26,6 +26,11 @@ public class SubjectArea implements SubjectComponent{
     @Override
     public void remove(SubjectComponent subjectComponent) {
         this.subjectComponents.remove(subjectComponent);
+    }
+
+    @Override
+    public SubjectComponent get(Integer index) {
+        return this.subjectComponents.get(index);
     }
 
     @Override
