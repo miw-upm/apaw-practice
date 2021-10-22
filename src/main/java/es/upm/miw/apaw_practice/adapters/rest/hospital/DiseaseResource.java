@@ -25,13 +25,13 @@ public class DiseaseResource {
     }
 
     @PatchMapping
-    public void updateDescription(@RequestBody List<DiseaseUpdate> diseaseUpdates){
+    public void updateDescription(@RequestBody List<DiseaseUpdate> diseaseUpdates) {
         this.diseaseService.updateDiseases(diseaseUpdates);
     }
 
     @GetMapping(SEARCH)
-    public Stream<Disease> findAliasByDoctorNick(@RequestParam String q){
-        String nick = new LexicalAnalyzer().extractWithAssure(q,"doctorNick");
+    public Stream<Disease> findAliasByDoctorNick(@RequestParam String q) {
+        String nick = new LexicalAnalyzer().extractWithAssure(q, "doctorNick");
         return this.diseaseService.findAliasByDoctorNick(nick);
     }
 

@@ -9,7 +9,7 @@ public class Hospital {
     private Integer availableRooms;
     private List<Patient> patients;
 
-    public Hospital(){
+    public Hospital() {
         //empty for framework
     }
 

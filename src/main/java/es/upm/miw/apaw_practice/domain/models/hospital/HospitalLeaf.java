@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.hospital;
 
-public class HospitalLeaf implements HospitalComponent{
+public class HospitalLeaf implements HospitalComponent {
 
     private final Hospital hospital;
 

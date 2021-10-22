@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.hospital;
 
 import es.upm.miw.apaw_practice.domain.models.hospital.Disease;
-import es.upm.miw.apaw_practice.domain.models.hospital.Patient;
 import es.upm.miw.apaw_practice.domain.models.hospital.DiseaseUpdate;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hospital.DiseasePersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hospital.HospitalPersistence;
@@ -25,7 +24,7 @@ public class DiseaseService {
 
     public void updateDiseases(List<DiseaseUpdate> diseaseUpdates) {
         diseaseUpdates.forEach(diseaseUpdate ->
-                this.diseasePersistence.updateDescription(diseaseUpdate.getAlias(),diseaseUpdate.getDescription())
+                this.diseasePersistence.updateDescription(diseaseUpdate.getAlias(), diseaseUpdate.getDescription())
         );
     }
 
@@ -36,6 +35,6 @@ public class DiseaseService {
                 .distinct()
                 .filter(patient -> patient.getDoctor().getNick().equals(nick))
                 .flatMap(patient -> patient.getDiseases().stream())
-                .map(disease -> new Disease(null,null,disease.getAlias()));
+                .map(disease -> new Disease(null, null, disease.getAlias()));
     }
 }

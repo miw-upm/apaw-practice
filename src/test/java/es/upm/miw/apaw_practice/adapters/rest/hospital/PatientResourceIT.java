@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.hospital;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.hospital.entities.PatientEntity;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.hospital.Patient;
 import org.junit.jupiter.api.Assertions;
@@ -9,15 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import java.util.List;
-
 import static es.upm.miw.apaw_practice.adapters.rest.hospital.PatientResource.DNI_ID;
 import static es.upm.miw.apaw_practice.adapters.rest.hospital.PatientResource.PATIENTS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @RestTestConfig
-public class PatientResourceIT {
+class PatientResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -34,7 +31,7 @@ public class PatientResourceIT {
 
 
     @Test
-    void testUpdate(){
+    void testUpdate() {
         Patient patient = new Patient("03468384F", "Male", 47, null, null);
 
         this.webTestClient

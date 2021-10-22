@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class DoctorServiceIT {
+class DoctorServiceIT {
 
     @Autowired
     private DoctorService doctorService;
@@ -22,7 +22,7 @@ public class DoctorServiceIT {
     private DoctorPersistence doctorPersistence;
 
     @Test
-    void testFindSurnamesByDiseaseSeverity(){
+    void testFindSurnamesByDiseaseSeverity() {
         List<Doctor> doctors = this.doctorService.findSurnamesByDiseaseSeverity(Boolean.TRUE)
                 .collect(Collectors.toList());
         assertTrue(doctors.size() > 0);
