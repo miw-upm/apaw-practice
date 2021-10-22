@@ -22,7 +22,9 @@ public class MatchTest {
                 FootballPlayer.builder().defense(Boolean.FALSE).goalsScored(7).age(35).name("FootballPlayerTest5").build(),
                 FootballPlayer.builder().defense(Boolean.FALSE).goalsScored(8).age(40).name("FootballPlayerTest6").build()
         };
-        PrincipalReferee principalRefereeTest = new PrincipalReferee("test", "Ciudadtest", 99);
+
+        PrincipalReferee principalRefereeTest = PrincipalReferee.builder().name("test").cityBorn("Ciudadtest").age(99).build();
+
         Match match = Match.builder().date(LocalDateTime.of(2021, 10, 20, 21, 0))
                 .weather("Cloudy")
                 .round(7)
@@ -35,6 +37,7 @@ public class MatchTest {
         assertEquals(LocalDateTime.of(2021, 10, 20, 21, 0), match.getDate());
         assertEquals("Cloudy", match.getWeather());
         assertEquals(7, match.getRound());
+
 
     }
 }
