@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hospital.entities;
+
 import es.upm.miw.apaw_practice.domain.models.hospital.Disease;
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,11 +15,11 @@ public class DiseaseEntity {
     private Boolean severe;
     private String alias;
 
-    public DiseaseEntity(){
+    public DiseaseEntity() {
         //Empty for framework
     }
 
-    public DiseaseEntity(Disease disease){
+    public DiseaseEntity(Disease disease) {
         BeanUtils.copyProperties(disease, this);
         this.id = UUID.randomUUID().toString();
     }
@@ -56,7 +56,7 @@ public class DiseaseEntity {
         this.id = id;
     }
 
-    public Disease toDisease(){
+    public Disease toDisease() {
         Disease disease = new Disease();
         BeanUtils.copyProperties(this, disease);
         return disease;

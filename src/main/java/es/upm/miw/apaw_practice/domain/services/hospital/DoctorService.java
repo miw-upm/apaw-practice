@@ -7,8 +7,6 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.hospital.PatientPersist
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -18,7 +16,7 @@ public class DoctorService {
     private final PatientPersistence patientPersistence;
 
     @Autowired
-    public DoctorService(DoctorPersistence doctorPersistence, PatientPersistence patientPersistence){
+    public DoctorService(DoctorPersistence doctorPersistence, PatientPersistence patientPersistence) {
         this.doctorPersistence = doctorPersistence;
         this.patientPersistence = patientPersistence;
     }

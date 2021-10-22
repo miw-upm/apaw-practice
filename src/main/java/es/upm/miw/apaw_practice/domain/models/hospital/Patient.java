@@ -11,7 +11,7 @@ public class Patient {
     private List<Disease> diseases;
     private Doctor doctor;
 
-    public Patient(){
+    public Patient() {
         //empty for framework
     }
 
@@ -76,12 +76,4 @@ public class Patient {
         this.doctor = doctor;
     }
 
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "dni=" + this.dni +
-                ", gender='" + this.gender + '\'' +
-                ", age=" + this.age +
-                '}';
-    }
 }

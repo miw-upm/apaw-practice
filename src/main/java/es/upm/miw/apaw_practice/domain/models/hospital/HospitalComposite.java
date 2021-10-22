@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.hospital;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HospitalComposite implements HospitalComponent{
+public class HospitalComposite implements HospitalComponent {
 
     private final List<HospitalComponent> hospitalComponents;
 

@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class HospitalCompositeTest {
+class HospitalCompositeTest {
 
     private Hospital hospital1, hospital2;
     private HospitalComposite hospitalComposite;
     private HospitalLeaf hospitalLeaf1, hospitalLeaf2;
 
     @BeforeEach
-    void before(){
+    void before() {
         hospital1 = new Hospital("Hospital number 1", "Street number 1", 150, null);
         hospital2 = new Hospital("Hospital number 2", "Street number 2", 490, null);
         hospitalComposite = new HospitalComposite();
@@ -24,26 +24,28 @@ public class HospitalCompositeTest {
     }
 
     @Test
-    void testNumberOfNodes(){
-        assertEquals(this.hospitalComposite.numberOfNodes(),1);
-        assertEquals(this.hospitalLeaf1.numberOfNodes(),0);
+    void testNumberOfNodes() {
+        assertEquals(1, this.hospitalComposite.numberOfNodes());
+        assertEquals(0, this.hospitalLeaf1.numberOfNodes());
     }
 
     @Test
-    void testIsComposite(){
+    void testIsComposite() {
         assertTrue(this.hospitalComposite.isComposite());
         assertFalse(this.hospitalLeaf1.isComposite());
     }
 
     @Test
-    void testAdd(){
+    void testAdd() {
+        this.hospitalLeaf1.add(hospitalLeaf2);
         this.hospitalComposite.add(this.hospitalLeaf2);
-        assertEquals(this.hospitalComposite.numberOfNodes(),2);
+        assertEquals(2, this.hospitalComposite.numberOfNodes());
     }
 
     @Test
-    void testRemove(){
+    void testRemove() {
+        this.hospitalLeaf1.remove(hospitalLeaf2);
         this.hospitalComposite.remove(this.hospitalLeaf2);
-        assertEquals(this.hospitalComposite.numberOfNodes(),1);
+        assertEquals(1, this.hospitalComposite.numberOfNodes());
     }
 }

@@ -36,25 +36,25 @@ public class HospitalSeederService {
                 new DoctorEntity(Doctor.builder()
                         .nick("John")
                         .surname("Doe")
-                        .activeSince(LocalDate.of(1989,11,23))
+                        .activeSince(LocalDate.of(1989, 11, 23))
                         .build()),
                 new DoctorEntity(Doctor.builder()
                         .nick("Marta")
                         .surname("Lopez")
-                        .activeSince(LocalDate.of(1999,4,2))
+                        .activeSince(LocalDate.of(1999, 4, 2))
                         .build()),
                 new DoctorEntity(Doctor.builder()
                         .nick("Jose")
                         .surname("Vazquez")
-                        .activeSince(LocalDate.of(1980,6,5))
+                        .activeSince(LocalDate.of(1980, 6, 5))
                         .build())
         };
         this.doctorRepository.saveAll(Arrays.asList(doctors));
 
         DiseaseEntity[] diseases = {
-                new DiseaseEntity(new Disease("Mild coughing and fever", Boolean.FALSE,"Common cold")),
-                new DiseaseEntity(new Disease("Severe organ failure", Boolean.TRUE,"Kidney failure")),
-                new DiseaseEntity(new Disease("Eye membrane inflamation", Boolean.FALSE,"Conjunctivitis"))
+                new DiseaseEntity(new Disease("Mild coughing and fever", Boolean.FALSE, "Common cold")),
+                new DiseaseEntity(new Disease("Severe organ failure", Boolean.TRUE, "Kidney failure")),
+                new DiseaseEntity(new Disease("Eye membrane inflamation", Boolean.FALSE, "Conjunctivitis"))
         };
         this.diseaseRepository.saveAll(Arrays.asList(diseases));
 
@@ -67,9 +67,9 @@ public class HospitalSeederService {
         this.patientRepository.saveAll(Arrays.asList(patients));
 
         HospitalEntity[] hospitals = {
-                new HospitalEntity("Los Angeles Community Hospital", "E Olympic Blvd", 300, List.of(patients[0],patients[1])),
-                new HospitalEntity("Kindred Hospital Los Angeles", "W Slauson Ave", 400, List.of(patients[0],patients[2])),
-                new HospitalEntity("LAC+USC Medical Center", "Marengo Street", 200, List.of(patients[1],patients[2]))
+                new HospitalEntity("Los Angeles Community Hospital", "E Olympic Blvd", 300, List.of(patients[0], patients[1])),
+                new HospitalEntity("Kindred Hospital Los Angeles", "W Slauson Ave", 400, List.of(patients[0], patients[2])),
+                new HospitalEntity("LAC+USC Medical Center", "Marengo Street", 200, List.of(patients[1], patients[2]))
         };
         this.hospitalRepository.saveAll(Arrays.asList(hospitals));
     }
