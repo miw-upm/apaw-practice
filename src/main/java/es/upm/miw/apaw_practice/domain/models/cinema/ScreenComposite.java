@@ -23,7 +23,7 @@ public class ScreenComposite implements ScreenComponent{
 
     @Override
     public boolean isComposite() {
-        return false;
+        return true;
     }
 
     @Override

@@ -1,8 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.cinema;
 
-import es.upm.miw.apaw_practice.domain.models.car_workshop.CarComponent;
-
-public class ScreenLeaf implements CarComponent {
+public class ScreenLeaf implements ScreenComponent {
 
     private final Screen screen;
 
@@ -20,12 +18,12 @@ public class ScreenLeaf implements CarComponent {
     }
 
     @Override
-    public void add(CarComponent treeCars) {
+    public void add(ScreenComponent treeScreen) {
         // Do nothing because it is a leaf
     }
 
     @Override
-    public void remove(CarComponent treeCars) {
+    public void remove(ScreenComponent treeScreen) {
         // Do nothing because it is a leaf
     }
 
