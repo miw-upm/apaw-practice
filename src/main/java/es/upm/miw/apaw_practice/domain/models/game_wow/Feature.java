@@ -14,13 +14,7 @@ public class Feature {
         //empty for framework
     }
 
-    public Feature(String part, Integer spellPower, Integer meleeAtack, Integer temple, String extraSpell) {
-        this.part = part;
-        this.spellPower = spellPower;
-        this.meleeAtack = meleeAtack;
-        this.temple = temple;
-        this.extraSpell = extraSpell;
-    }
+    public static FeatureBuilder.Part builder() {return new Builder();}
 
     public String getPart() {
         return part;
@@ -95,5 +89,49 @@ public class Feature {
 
     public FeatureEntity toFeatureEntity(Feature feature) {
         return new FeatureEntity(feature);
+    }
+
+    public static class Builder implements FeatureBuilder.Part, FeatureBuilder.Optionals {
+
+        private final Feature feature;
+
+        public Builder() {
+            this.feature = new Feature();
+        }
+
+        @Override
+        public FeatureBuilder.Optionals part(String part) {
+            this.feature.part = part;
+            return this;
+        }
+
+        @Override
+        public FeatureBuilder.Optionals spellPower(Integer spellPower) {
+            this.feature.spellPower = spellPower;
+            return this;
+        }
+
+        @Override
+        public FeatureBuilder.Optionals meleeAtack(Integer meleeatack) {
+            this.feature.meleeAtack = meleeatack;
+            return this;
+        }
+
+        @Override
+        public FeatureBuilder.Optionals temple(Integer temple) {
+            this.feature.temple = temple;
+            return this;
+        }
+
+        @Override
+        public FeatureBuilder.Optionals extraSpell(String extraSpell) {
+            this.feature.extraSpell = extraSpell;
+            return this;
+        }
+
+        @Override
+        public Feature build() {
+            return this.feature;
+        }
     }
 }
