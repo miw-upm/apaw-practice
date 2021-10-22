@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.tennis_courts;
 
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Court;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
 import es.upm.miw.apaw_practice.domain.persistence_ports.tennis_courts.ReservationPersistence;
@@ -30,6 +31,11 @@ public class ReservationService {
         return this.reservationPersistence.updatePlayerList(ownerName, date, reservation);
     }
 
+    public Court get(String ownerName, String stringDate, String stringTime){
+        LocalDateTime date = extractDateFromString(stringDate, stringTime);
+        return this.reservationPersistence.get(ownerName, date);
+    }
+
     public static LocalDateTime extractDateFromString(String date, String time){
         int[] dateValues;
         int[] timeValues;
@@ -45,7 +51,6 @@ public class ReservationService {
         int nextIndex;
         List<Integer> values = new ArrayList<>();
 
-        int i = 0;
         while(str.indexOf(":", index) > 0){
             nextIndex = str.indexOf(":", index);
             values.add(Integer.parseInt(str.substring(index, nextIndex)));

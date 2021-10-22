@@ -18,9 +18,10 @@ public class Book {
         // empty for framework
     }
 
-    public static BookBuilders.Isbn builder() {
+    public static BookBuilders.Isbn builder(){
         return new Builder();
     }
+
 
     public String getId() {
         return id;
@@ -86,10 +87,14 @@ public class Book {
         this.authors = authors;
     }
 
-    public static class Builder implements BookBuilders.Isbn, BookBuilders.Title, BookBuilders.Available, BookBuilders.NumbersOfPages, BookBuilders.PublicationDate, BookBuilders.Category, BookBuilders.Author, BookBuilders.Optionals {
+    public static class Builder implements
+            BookBuilders.Isbn, BookBuilders.Title, BookBuilders.Available,
+            BookBuilders.NumbersOfPages, BookBuilders.PublicationDate, BookBuilders.ICategory,
+            BookBuilders.IAuthor, BookBuilders.Optionals {
+
         private final Book book;
 
-        public Builder() {
+        public Builder(){
             this.book = new Book();
         }
 
@@ -118,21 +123,20 @@ public class Book {
         }
 
         @Override
-        public BookBuilders.Category publicationDate(LocalDate publicationDate) {
+        public BookBuilders.ICategory publicationDate(LocalDate publicationDate) {
             this.book.publicationDate = publicationDate;
             return this;
         }
 
-
         @Override
-        public BookBuilders.Author category(Category category) {
+        public BookBuilders.IAuthor category(Category category) {
             this.book.category = category;
             return this;
         }
 
         @Override
         public BookBuilders.Optionals authors(Author author) {
-            if (this.book.authors == null) {
+            if(this.book.authors == null){
                 this.book.authors = new ArrayList<>();
             }
             this.book.authors.add(author);

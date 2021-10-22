@@ -17,8 +17,7 @@ public class DispensingService {
 
     public Dispensing updateDispensing(String id, Dispensing dispensing) {
         Dispensing modifiedDispensing = this.dispensingPersistence.readById(id);
-        modifiedDispensing.setActiveIngredients(dispensing.getActiveIngredients());
-        modifiedDispensing.setDispensingTimestamp(dispensing.getDispensingTimestamp());
+        dispensing.setId(modifiedDispensing.getId());
         return this.dispensingPersistence.update(modifiedDispensing);
     }
 

@@ -8,6 +8,10 @@ public class VehicleLeaf implements VehicleComponent{
         this.vehicle = vehicle;
     }
 
+    public Vehicle getVehicle() {
+        return this.vehicle;
+    }
+
     @Override
     public void add(VehicleComponent vehicleComponent) {
         throw new UnsupportedOperationException("Unsupported operation in Leaf, can not 'add' anything to a 'Leaf'.");
@@ -26,5 +30,15 @@ public class VehicleLeaf implements VehicleComponent{
     @Override
     public int numberOfNodes() {
         return 1;
+    }
+
+    @Override
+    public int numberOfLeafNodes() {
+        return 1;
+    }
+
+    @Override
+    public int numberOfCompositeNodes() {
+        return 0;
     }
 }

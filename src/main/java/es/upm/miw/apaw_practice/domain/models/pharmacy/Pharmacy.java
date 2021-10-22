@@ -14,6 +14,12 @@ public class Pharmacy {
         //empty for framework
     }
 
+    public Pharmacy(String address, Integer postalCode, List<Drug> drug) {
+        this.address = address;
+        this.postalCode = postalCode;
+        this.drug = drug;
+    }
+
     public String getRegistrationNumber() {
         return registrationNumber;
     }
