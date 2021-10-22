@@ -28,12 +28,15 @@ public class RaidPersistenceMongodbIT {
     @Test
     void testUpdate () {
         Date raidDate = new Date();
-        Feature feature = new Feature("Legs", 171, 200, 100, "Use: Restores 1625 mana");
-        Drop drop = new Drop("Plaguebringer's Stained Pants", "mage,priest,warlock", 264, feature);
-       // Boss boss = new Boss("Festergut", "25N", List.of(drop));
+        Feature feature = Feature.builder()
+                .part("Legs")
+                .spellPower(171)
+                .meleeAtack(200)
+                .temple(100)
+                .extraSpell("Use: Restores 1625 mana")
+                .build();
         Boss boss = bossPersistenceMongodb.findByEffort("25N").findFirst().get();
         Raid raidCreation = new Raid(raidDate, "ICC", "25N", 25, false, List.of(boss));
-
         Raid raidBD = this.raidPersistenceMongodb.create(raidCreation);
         raidBD.setDificulty("25H");
         this.raidPersistenceMongodb.update(raidBD);

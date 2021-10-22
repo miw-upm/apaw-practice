@@ -60,8 +60,9 @@ public class HospitalSeederService {
 
         PatientEntity[] patients = {
                 new PatientEntity("03457384C", "Male", 23, List.of(diseases[1], diseases[0]), doctors[1]),
-                new PatientEntity("03468384F", "Female", 23, List.of(diseases[2], diseases[0]), doctors[0]),
-                new PatientEntity("12357798M", "Male", 23, List.of(diseases[1]), doctors[2])
+                new PatientEntity("03468384F", "Female", 21, List.of(diseases[2], diseases[0]), doctors[0]),
+                new PatientEntity("12357798M", "Male", 20, List.of(diseases[0]), doctors[2]),
+                new PatientEntity("12345678Z", "Male", 10, null, null)
         };
         this.patientRepository.saveAll(Arrays.asList(patients));
 

@@ -1,8 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.ArticleItemEntity;
-import es.upm.miw.apaw_practice.domain.models.shop.ArticleItem;
-import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
 import es.upm.miw.apaw_practice.domain.models.videogame.Platform;
 import es.upm.miw.apaw_practice.domain.models.videogame.VideoGameCompany;
 import org.springframework.beans.BeanUtils;
