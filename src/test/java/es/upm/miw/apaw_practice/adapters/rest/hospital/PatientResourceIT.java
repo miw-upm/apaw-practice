@@ -35,18 +35,18 @@ public class PatientResourceIT {
 
     @Test
     void testUpdate(){
-        Patient patient = new Patient("03457384C", "Female", 47, null, null);
+        Patient patient = new Patient("03468384F", "Male", 47, null, null);
 
         this.webTestClient
                 .put()
-                .uri(PatientResource.PATIENTS + DNI_ID, "03457384C")
+                .uri(PatientResource.PATIENTS + DNI_ID, "03468384F")
                 .body(BodyInserters.fromValue(patient))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Patient.class)
                 .value(Assertions::assertNotNull)
-                .value(updatedPatient -> assertEquals(updatedPatient.getAge(), 47))
-                .value(updatedPatient -> assertEquals(updatedPatient.getGender(), "Female"));
+                .value(updatedPatient -> assertEquals(47, updatedPatient.getAge()))
+                .value(updatedPatient -> assertEquals("Male", updatedPatient.getGender()));
     }
 
 }
