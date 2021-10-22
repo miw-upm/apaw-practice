@@ -35,7 +35,7 @@ public class DoctorResourceIT {
     }
 
     @Test
-    void testFindByDiseaseSeverity(){
+    void testFindSurnamesByDiseaseSeverity(){
         this.webTestClient
                 .get()
                 .uri(uriBuilder -> uriBuilder.path(DoctorResource.DOCTORS + DoctorResource.SEARCH)

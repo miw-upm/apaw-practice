@@ -29,9 +29,9 @@ public class HospitalPersistenceMongodb implements HospitalPersistence {
     }
 
     @Override
-    public Stream<Hospital> findByAvailableRoomsGreaterThan(int i) {
+    public Stream<Hospital> findByAvailableRoomsGreaterThan(int rooms) {
         return this.hospitalRepository.findAll().stream()
-                .filter(hospitalEntity -> hospitalEntity.getAvailableRooms() > i)
+                .filter(hospitalEntity -> hospitalEntity.getAvailableRooms() > rooms)
                 .map(HospitalEntity::toHospital);
     }
 }
