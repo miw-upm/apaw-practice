@@ -14,7 +14,7 @@ public class Subject {
         //empty for framework
     }
 
-    public Subject(String topic, Integer reference, Integer credits, Classroom classroom, List<Student> students) {
+    public Subject(Integer reference, String topic, Integer credits, Classroom classroom, List<Student> students) {
         this.reference = reference;
         this.topic = topic;
         this.credits = credits;
