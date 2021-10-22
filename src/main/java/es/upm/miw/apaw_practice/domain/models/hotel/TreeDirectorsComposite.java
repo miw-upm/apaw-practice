@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeDirectorsComposite implements TreeDirectors {
-    private static TreeDirectorsComposite treeDirectorsComposite;
 
     private final String name;
     private final List<TreeDirectors> treeDirectorList;
