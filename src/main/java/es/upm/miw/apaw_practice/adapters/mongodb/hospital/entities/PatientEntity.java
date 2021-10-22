@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class PatientEntity {
 
@@ -77,7 +78,15 @@ public class PatientEntity {
 
     public Patient toPatient() {
         Patient patient = new Patient();
-        BeanUtils.copyProperties(this,patient);
+        BeanUtils.copyProperties(this,patient, "diseases", "doctor");
+        if (this.diseases != null) {
+            patient.setDiseases(this.diseases.stream()
+                    .map(DiseaseEntity::toDisease)
+                    .collect(Collectors.toList()));
+        }
+        if (this.doctor != null) {
+            patient.setDoctor(this.doctor.toDoctor());
+        }
         return patient;
     }
 }

@@ -11,4 +11,6 @@ public interface ModelPersistence {
     Model readByVinNumber(String vinNumber);
 
     Stream<Model> readAll();
+
+    boolean assertExistVinNumber(String vinNumber);
 }

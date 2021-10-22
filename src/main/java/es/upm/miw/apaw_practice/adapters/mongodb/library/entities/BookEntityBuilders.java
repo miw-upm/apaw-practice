@@ -3,10 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.library.entities;
 import java.time.LocalDate;
 
 public interface BookEntityBuilders {
-    interface Id {
-        Isbn id(String id);
-    }
-
     interface Isbn {
         Title isbn(String isbn);
     }
@@ -24,15 +20,19 @@ public interface BookEntityBuilders {
     }
 
     interface PublicationDate {
-        CategoryEntity publicationDate(LocalDate publicationDate);
+        ICategory publicationDate(LocalDate publicationDate);
     }
 
-    interface CategoryEntity {
-        Optionals category(es.upm.miw.apaw_practice.adapters.mongodb.library.entities.CategoryEntity category);
+    interface ICategory {
+        IAuthor category(CategoryEntity category);
+    }
+
+    interface IAuthor {
+        Optionals authors(AuthorEntity author);
     }
 
     interface Optionals {
-        Optionals authors(es.upm.miw.apaw_practice.adapters.mongodb.library.entities.AuthorEntity author);
+        Optionals authors(AuthorEntity author);
 
         BookEntity build();
     }

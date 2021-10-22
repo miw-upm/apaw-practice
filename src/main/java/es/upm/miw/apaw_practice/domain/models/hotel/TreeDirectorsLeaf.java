@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.hotel;
 
 public class TreeDirectorsLeaf implements TreeDirectors {
 
-    private final Director director;
+    private Director director;
 
     public TreeDirectorsLeaf(Director director) {
         this.director = director;

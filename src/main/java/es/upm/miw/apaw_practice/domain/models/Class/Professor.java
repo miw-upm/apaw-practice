@@ -9,35 +9,55 @@ public class Professor {
     private int age;
     private LocalDate EntryDate;
 
-    public Professor(){
+    public Professor() {
         //empty for framework
     }
 
-    public Professor(String name,String course,int age,LocalDate EntryDate){
+    public Professor(String name, String course, int age, LocalDate EntryDate) {
         this.name = name;
         this.course = course;
         this.age = age;
         this.EntryDate = EntryDate;
     }
 
-    public String getName(){ return name;}
-    public void setName(String name){ this.name = name;}
+    public String getName() {
+        return name;
+    }
 
-    public String getCourse(){ return course;}
-    public void setCourse(String course){ this.course = course;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public int getAge(){ return age;}
-    public void setAge(int age){ this.age = age;}
+    public String getCourse() {
+        return course;
+    }
 
-    public LocalDate getEntryData(){ return EntryDate;}
-    public void setEntryDate(LocalDate EntryData){ this.EntryDate = EntryData;}
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public LocalDate getEntryData() {
+        return EntryDate;
+    }
+
+    public void setEntryDate(LocalDate EntryData) {
+        this.EntryDate = EntryData;
+    }
 
 
     @Override
-    public String toString(){
-        return "Album{" +
+    public String toString() {
+        return "Professor {" +
                 "name =" + name + '\'' +
-                ", course =" + course +  '\'' +
+                ", course =" + course + '\'' +
                 ", age =" + age + '\'' +
                 ", EntryDate =" + EntryDate + '\'' +
                 '}';

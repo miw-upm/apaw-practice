@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DirectorTest {
+class DirectorTest {
 
     private static final List<Director> directors = new ArrayList<>();
     private static final List<TreeDirectorsLeaf> directorsLeaf = new ArrayList<>();

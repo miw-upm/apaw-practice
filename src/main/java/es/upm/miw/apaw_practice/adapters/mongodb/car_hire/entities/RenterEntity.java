@@ -61,7 +61,7 @@ public class RenterEntity {
 
     public Renter toRenter() {
         Renter renter = new Renter();
-        BeanUtils.copyProperties(this, renter);
+        BeanUtils.copyProperties(this, renter, "id");
         return renter;
     }
 

@@ -13,6 +13,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.Date;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @RestTestConfig
 public class RaidResourceIT {
 
@@ -22,7 +25,13 @@ public class RaidResourceIT {
     @Test
     void testUpdate() {
         Date raidDate = new Date();
-        Feature feature = new Feature("Legs", 171, 200, 100, "Use: Restores 1625 mana");
+        Feature feature = Feature.builder()
+                .part("Legs")
+                .spellPower(171)
+                .meleeAtack(200)
+                .temple(100)
+                .extraSpell("Use: Restores 1625 mana")
+                .build();
         Drop drop = new Drop("Plaguebringer's Stained Pants", "mage,priest,warlock", 264, feature);
         Boss boss = new Boss("Festergut", "25N", List.of(drop));
         Raid raidCreation = new Raid(raidDate, "ICC", "25N", 25, false, List.of(boss));
@@ -34,4 +43,20 @@ public class RaidResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void findPlayerNumberAdditionBySpellPower (){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder.path(RaidResource.GAMEWOW_RAIDS + RaidResource.SEARCH)
+                        .queryParam("q", "spellPower:106")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Integer.class)
+                .value(additionDto -> additionDto.get(0), equalTo(10))
+                .value(additionDto -> assertTrue(additionDto.size() > 0));
+    }
+
+
 }
