@@ -29,15 +29,15 @@ public class SubjectComponentTest {
         SubjectComponent subjectAreaChild = new SubjectArea("Tecnologías Web para Móviles");
         subjectAreaChild.add(this.subjectFem);
         this.subjectArea.add(subjectAreaChild);
-        assertEquals(this.subjectArea.get(0).getDescription(), "Ingeniería Web: Visión General");
-        assertEquals(this.subjectArea.get(1).getDescription(), "Tecnologías Web para Móviles");
-        assertEquals(subjectAreaChild.get(0).getDescription(), "Front-end para Móviles");
+        assertEquals("Ingeniería Web: Visión General", this.subjectArea.get(0).getDescription());
+        assertEquals("Tecnologías Web para Móviles", this.subjectArea.get(1).getDescription());
+        assertEquals("Front-end para Móviles", subjectAreaChild.get(0).getDescription());
     }
 
     @Test
     void testRemoveArea() {
         this.subjectArea.add(this.subjectIwvg);
-        assertEquals(this.subjectArea.get(0).getDescription(), "Ingeniería Web: Visión General");
+        assertEquals("Ingeniería Web: Visión General", this.subjectArea.get(0).getDescription());
         this.subjectArea.remove(this.subjectIwvg);
         assertThrows(IndexOutOfBoundsException.class, () -> this.subjectArea.get(0));
     }
