@@ -12,11 +12,15 @@ public class CourseService {
     private final CoursePersistence coursePersistence;
 
     @Autowired
-    public CourseService(CoursePersistence coursePersistence){
-        this.coursePersistence = coursePersistence ;
+    public CourseService(CoursePersistence coursePersistence) {
+        this.coursePersistence = coursePersistence;
     }
 
-    public Stream<Course> readAll(){ return this.coursePersistence.readAll();}
+    public Stream<Course> readAll() {
+        return this.coursePersistence.readAll();
+    }
 
-    public void delete(String name){ this.coursePersistence.delete(name);}
+    public void delete(String name) {
+        this.coursePersistence.delete(name);
+    }
 }

@@ -17,15 +17,17 @@ public class CourseResource {
     private final CourseService courseService;
 
     @Autowired
-    public CourseResource(CourseService courseService){
+    public CourseResource(CourseService courseService) {
         this.courseService = courseService;
     }
 
     @GetMapping
-    public Stream<Course> readAll(){return this.courseService.readAll();}
+    public Stream<Course> readAll() {
+        return this.courseService.readAll();
+    }
 
     @DeleteMapping(theName)
-    public void delete(@PathVariable String name) { this.courseService.delete(name);}
-
-
+    public void delete(@PathVariable String name) {
+        this.courseService.delete(name);
+    }
 }

@@ -21,10 +21,12 @@ public class LearnerResource {
     }
 
     @GetMapping
-    public Stream<Learner> readAll(){return this.learnerService.readAll();}
+    public Stream<Learner> readAll() {
+        return this.learnerService.readAll();
+    }
 
     @PutMapping(theName)
-    public void update(@PathVariable String name,@RequestBody Learner learner){
-        this.learnerService.updateName(name, learner);
+    public void update(@PathVariable String name, @RequestBody Learner learner) {
+        this.learnerService.updateByName(name, learner);
     }
 }

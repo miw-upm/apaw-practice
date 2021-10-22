@@ -42,7 +42,7 @@ public class Learner {
 
     @Override
     public String toString() {
-        return "Album{" +
+        return "Learner {" +
                 "name =" + name + '\'' +
                 ", age =" + age + '\'' +
                 ", Is_spanish ='" + isSpanish + '\'' +

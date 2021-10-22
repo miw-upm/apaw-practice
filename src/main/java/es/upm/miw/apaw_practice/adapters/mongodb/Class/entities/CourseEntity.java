@@ -15,7 +15,6 @@ public class CourseEntity {
     private int numberOfStudents;
 
     public CourseEntity() {
-        //empty for framework
     }
 
     public CourseEntity(String name, int credit, int NumberOfStudents) {
@@ -56,7 +55,7 @@ public class CourseEntity {
         this.id = id;
     }
 
-    public Course toCourse(){
+    public Course toCourse() {
         Course course = new Course();
         BeanUtils.copyProperties(this, course);
         return course;
@@ -74,10 +73,10 @@ public class CourseEntity {
 
     @Override
     public String toString() {
-        return "Album{" +
-                "name =" + name + '\'' +
-                ", credit =" + credit + '\'' +
-                ", NumberOfStudents ='" + numberOfStudents + '\'' +
-                '}';
+        return "Course {" +
+            "name =" + name + '\'' +
+            ", credit =" + credit + '\'' +
+            ", NumberOfStudents ='" + numberOfStudents + '\'' +
+        '}';
     }
 }
