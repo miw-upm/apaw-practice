@@ -16,10 +16,10 @@ public class DiseaseRepositoryIT {
 
     @Test
     void testFindByAlias(){
-        assertTrue(this.diseaseRepository.findByAlias("Common cold").isPresent());
-        DiseaseEntity diseaseEntity = this.diseaseRepository.findByAlias("Common cold").get();
-        assertEquals("Common cold", diseaseEntity.getAlias());
+        assertTrue(this.diseaseRepository.findByAlias("Conjunctivitis").isPresent());
+        DiseaseEntity diseaseEntity = this.diseaseRepository.findByAlias("Conjunctivitis").get();
+        assertEquals("Conjunctivitis", diseaseEntity.getAlias());
         assertEquals(Boolean.FALSE, diseaseEntity.getSevere());
-        assertEquals("Mild coughing and fever", diseaseEntity.getDescription());
+        assertEquals("Eye membrane inflamation", diseaseEntity.getDescription());
     }
 }
