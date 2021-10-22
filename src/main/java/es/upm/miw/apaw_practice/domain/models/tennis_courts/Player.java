@@ -16,8 +16,16 @@ public class Player {
         //empty for framework
     }
 
-    public Player(String dni, String name, String surname, Integer age){
+    public Player(String dni){
         this.dni = dni;
+        this.name = null;
+        this.surname = null;
+        this.age = null;
+        this.equipmentList = null;
+    }
+
+    public Player(String dni, String name, String surname, Integer age){
+        this(dni);
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -30,10 +38,6 @@ public class Player {
 
     public void setDNI(String dni) {
         this.dni = dni;
-    }
-
-    public String getCompleteName(){
-        return name + " " + surname;
     }
 
     public String getName() {

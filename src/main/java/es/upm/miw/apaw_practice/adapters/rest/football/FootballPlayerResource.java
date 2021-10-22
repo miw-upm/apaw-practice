@@ -15,7 +15,8 @@ import java.util.stream.Stream;
 public class FootballPlayerResource {
 
     static final String PLAYERS = "/football/players";
-    static final String SEARCH = "/search";
+    static final String GOALS = "/goalsScoredSum";
+    static final String DEFENSES = "/defenses";
 
     private final FootballPlayerService footballPlayerService;
 
@@ -29,8 +30,14 @@ public class FootballPlayerResource {
         return this.footballPlayerService.readAll();
     }
 
-    @GetMapping(SEARCH)
-    public Integer findGoalsByStadiumName(@RequestParam String q) {
-        return this.footballPlayerService.findGoalsByStadiumName(q);
+    @GetMapping(GOALS)
+    public Integer findGoalsByStadiumName(@RequestParam String StadiumName) {
+        return this.footballPlayerService.findGoalsByStadiumName(StadiumName);
     }
+
+    @GetMapping(DEFENSES)
+    public Stream<FootballPlayer> findFootballPlayersByPrincipalRefereeName(@RequestParam String principalRefereeName) {
+        return this.footballPlayerService.findFootballPlayersByPrincipalRefereeName(principalRefereeName);
+    }
+
 }

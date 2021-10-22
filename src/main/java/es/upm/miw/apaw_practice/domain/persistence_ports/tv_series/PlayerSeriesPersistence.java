@@ -8,5 +8,5 @@ import java.util.stream.Stream;
 @Repository
 public interface PlayerSeriesPersistence {
 
-    Stream<Player> readAll();
+    Stream<Player> findAll();
 }

@@ -33,9 +33,21 @@ public class HospitalSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Hospital Initial Load -----------");
         DoctorEntity[] doctors = {
-                new DoctorEntity(new Doctor("John", "Doe", LocalDate.of(1989,11,23))),
-                new DoctorEntity(new Doctor("Marta", "Lopez", LocalDate.of(1999,4,2))),
-                new DoctorEntity(new Doctor("Jose", "Vazquez", LocalDate.of(1980,6,5)))
+                new DoctorEntity(Doctor.builder()
+                        .nick("John")
+                        .surname("Doe")
+                        .activeSince(LocalDate.of(1989,11,23))
+                        .build()),
+                new DoctorEntity(Doctor.builder()
+                        .nick("Marta")
+                        .surname("Lopez")
+                        .activeSince(LocalDate.of(1999,4,2))
+                        .build()),
+                new DoctorEntity(Doctor.builder()
+                        .nick("Jose")
+                        .surname("Vazquez")
+                        .activeSince(LocalDate.of(1980,6,5))
+                        .build())
         };
         this.doctorRepository.saveAll(Arrays.asList(doctors));
 
@@ -49,7 +61,7 @@ public class HospitalSeederService {
         PatientEntity[] patients = {
                 new PatientEntity("03457384C", "Male", 23, List.of(diseases[1], diseases[0]), doctors[1]),
                 new PatientEntity("03468384F", "Female", 23, List.of(diseases[2], diseases[0]), doctors[0]),
-                new PatientEntity("12357798M", "Male", 23, List.of(diseases[1]), doctors[2])
+                new PatientEntity("12357798M", "Male", 23, List.of(diseases[0]), doctors[2])
         };
         this.patientRepository.saveAll(Arrays.asList(patients));
 

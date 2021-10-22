@@ -62,4 +62,23 @@ public class Drop {
                 ", feature=" + feature +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+
+        if(this == obj)
+            return true;
+
+        Drop objDrop = (Drop) obj;
+
+        if(this.title.equalsIgnoreCase(objDrop.title) &&
+           this.race.equalsIgnoreCase(objDrop.race) &&
+           this.level.equals(objDrop.level) &&
+           this.feature.equals(objDrop.feature))
+            return true;
+
+        return false;
+    }
 }

@@ -15,7 +15,7 @@ class AuthorServiceIT {
 
     @Test
     void testUpdate(){
-        Author author = new Author("Juan Gómez-Jurado","Portuguese","Thriller");
+        Author author = Author.builder("Juan Gómez-Jurado","Portuguese").writingStyle("Thriller").build();
         Author authorUpdated = this.authorService.update(author);
         assertEquals("Portuguese",authorUpdated.getNationality());
     }

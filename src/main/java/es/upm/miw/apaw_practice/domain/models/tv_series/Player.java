@@ -1,7 +1,9 @@
 package es.upm.miw.apaw_practice.domain.models.tv_series;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
     private String name;
@@ -49,7 +51,7 @@ public class Player {
     }
 
     public void setTvSeries(List<TvSeries> tvSeries) {
-        this.tvSeries = tvSeries;
+        this.tvSeries = Objects.requireNonNullElseGet(tvSeries, ArrayList::new);
     }
 
     @Override

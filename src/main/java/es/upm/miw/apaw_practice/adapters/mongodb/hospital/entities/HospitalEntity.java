@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class HospitalEntity {
     @Id
@@ -77,7 +78,12 @@ public class HospitalEntity {
 
     public Hospital toHospital() {
         Hospital hospital = new Hospital();
-        BeanUtils.copyProperties(this,hospital);
+        BeanUtils.copyProperties(this,hospital,"patients");
+        if (this.getPatients() != null) {
+            hospital.setPatients(this.patients.stream()
+                    .map(PatientEntity::toPatient)
+                    .collect(Collectors.toList()));
+        }
         return hospital;
     }
 

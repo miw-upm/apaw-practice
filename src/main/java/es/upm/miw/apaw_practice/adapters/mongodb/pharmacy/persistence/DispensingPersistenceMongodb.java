@@ -61,4 +61,9 @@ public class DispensingPersistenceMongodb implements DispensingPersistence {
                 .map(DispensingEntity::toDispensing);
     }
 
+    @Override
+    public void delete(String id) {
+        this.dispensingRepository.deleteById(id);
+    }
+
 }

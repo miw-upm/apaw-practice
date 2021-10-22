@@ -19,7 +19,13 @@ public class FeaturePersistenceMongodbIT {
 
     @Test
     void testCreateAndRead(){
-        Feature feature = new Feature("Head", 158, 120, 80, "Use: Restores 2000 mana");
+        Feature feature = Feature.builder()
+                .part("Head")
+                .spellPower(158)
+                .meleeAtack(120)
+                .temple(80)
+                .extraSpell("Use: Restores 2000 mana")
+                .build();
         this.featurePersistenceMongodb.create(feature);
         Feature featureBD = this.featurePersistenceMongodb.read("Head");
         assertEquals(158, featureBD.getSpellPower());

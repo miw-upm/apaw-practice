@@ -78,8 +78,14 @@ public class VetEntity {
     }
 
     public Vet toVet() {
-        Vet vet = new Vet();
-        BeanUtils.copyProperties(this, vet);
-        return vet;
+        return Vet.builder()
+                .vetNumber(this.vetNumber)
+                .name(this.name)
+                .surname(this.surname)
+                .build();
+    }
+
+    public void fromVet (Vet vet) {
+        BeanUtils.copyProperties(vet, this);
     }
 }
