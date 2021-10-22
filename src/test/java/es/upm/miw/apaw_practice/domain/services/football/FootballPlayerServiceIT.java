@@ -20,7 +20,7 @@ class FootballPlayerServiceIT {
     @Test
     void testFindFootballPlayersByPrincipalRefereeName() {
 
-        FootballPlayer expectedFootballPlayer = new FootballPlayer(Boolean.TRUE, 10, 24, "Cristiano");
+        FootballPlayer expectedFootballPlayer = FootballPlayer.builder().defense(Boolean.TRUE).goalsScored(10).age(24).name("Cristiano").build();
         List<FootballPlayer> result = this.footballPlayerService.findFootballPlayersByPrincipalRefereeName("Undiano").collect(Collectors.toList());
 
         assertEquals(expectedFootballPlayer.isDefense(), result.get(0).isDefense());
@@ -29,8 +29,9 @@ class FootballPlayerServiceIT {
         assertEquals(expectedFootballPlayer.getName(), result.get(0).getName());
 
         List<FootballPlayer> expectedFootballPlayers2 = new ArrayList<>();
-        expectedFootballPlayers2.add(new FootballPlayer(Boolean.TRUE, 10, 24, "Cristiano"));
-        expectedFootballPlayers2.add(new FootballPlayer(Boolean.TRUE, 2, 24, "Yuri"));
+        expectedFootballPlayers2.add(FootballPlayer.builder().defense(Boolean.TRUE).goalsScored(10).age(24).name("Cristiano").build());
+        expectedFootballPlayers2.add(FootballPlayer.builder().defense(Boolean.TRUE).goalsScored(2).age(24).name("Yuri").build());
+
         List<FootballPlayer> result2 = this.footballPlayerService.findFootballPlayersByPrincipalRefereeName("Jose").collect(Collectors.toList());
 
         assertEquals(expectedFootballPlayers2.get(0).isDefense(), result2.get(0).isDefense());
