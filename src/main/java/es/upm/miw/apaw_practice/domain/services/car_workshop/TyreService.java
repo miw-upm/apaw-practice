@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.car_workshop;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities.OwnerEntity;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Owner;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car_workshop.CarPersistence;
@@ -8,6 +9,9 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.car_workshop.TyrePersis
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -29,8 +33,9 @@ public class TyreService {
     }
 
     public Stream<String> findModelByOwnerNameAndRevision(String ownerName, Boolean revision) {
-        Owner owner = this.ownerPersistence.findByName(ownerName);
+        OwnerEntity owner = this.ownerPersistence.findByName(ownerName);
         Stream<Car> cars = this.carPersistence.findByOwnerAndRevision(owner, revision);
-        return this.tyrePersistence.findDistinctModelByCar(cars);
+        Car car = cars.findFirst().orElse(new Car());
+        return this.tyrePersistence.findDistinctModelByCar(Stream.of(car));
     }
 }

@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Tyre;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Repository

@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.persistence_ports.car_workshop;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities.OwnerEntity;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Owner;
 import org.springframework.stereotype.Repository;
@@ -14,5 +15,7 @@ public interface CarPersistence {
 
     void updateOwner(String licensePlate, Owner owner);
 
-    Stream<Car> findByOwnerAndRevision(Owner owner, Boolean revision);
+    Stream<Car> findByOwnerAndRevision(OwnerEntity owner, Boolean revision);
+
+    Car findByLicensePlate(String licensePlate);
 }
