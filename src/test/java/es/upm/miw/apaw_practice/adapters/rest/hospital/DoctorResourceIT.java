@@ -33,4 +33,18 @@ public class DoctorResourceIT {
                 .value(doctors -> assertEquals("Marta", doctors.get(1).getNick()))
                 .value(doctors -> assertEquals("Jose", doctors.get(2).getNick()));
     }
+
+    @Test
+    void testFindByDiseaseSeverity(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder.path(DoctorResource.DOCTORS + DoctorResource.SEARCH)
+                        .queryParam("q","diseaseSeverity:true")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Doctor.class)
+                .value(doctors -> assertTrue(doctors.size() > 0))
+                .value(doctors -> assertEquals("Lopez", doctors.get(0).getSurname()));
+    }
 }

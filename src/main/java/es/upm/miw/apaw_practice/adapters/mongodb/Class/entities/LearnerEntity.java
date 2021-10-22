@@ -56,7 +56,7 @@ public class LearnerEntity {
         this.id = id;
     }
 
-    public Learner toLearner(){
+    public Learner toLearner() {
         Learner learner = new Learner();
         BeanUtils.copyProperties(this, learner);
         return learner;
@@ -74,10 +74,10 @@ public class LearnerEntity {
 
     @Override
     public String toString() {
-        return "Album {" +
-                "name =" + name + '\'' +
-                ", age =" + age + '\'' +
-                ", Is_spanish ='" + isSpanish + '\'' +
-                '}';
+        return "Learner {" +
+            "name =" + name + '\'' +
+            ", age =" + age + '\'' +
+            ", Is_spanish ='" + isSpanish + '\'' +
+        '}';
     }
 }

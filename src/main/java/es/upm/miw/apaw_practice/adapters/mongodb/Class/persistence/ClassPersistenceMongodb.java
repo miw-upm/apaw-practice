@@ -20,18 +20,17 @@ public class ClassPersistenceMongodb implements ClassPersistence {
     }
 
     @Override
-    public Stream<es.upm.miw.apaw_practice.domain.models.Class.Class> readAll() {
+    public Stream<Class> readAll() {
         return this.classrepository.findAll().stream()
                 .map(ClassEntity::toClass);
     }
 
     @Override
-    public Class create(Class myClass){
+    public Class create(Class myClass) {
         return this.classrepository
                 .save(new ClassEntity(myClass))
                 .toClass();
 
     }
-
 }
 

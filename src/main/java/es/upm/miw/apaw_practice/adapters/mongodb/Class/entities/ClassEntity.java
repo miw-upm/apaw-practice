@@ -19,7 +19,6 @@ public class ClassEntity {
     private LocalDate startTime;
 
     public ClassEntity() {
-        //empty for framework
     }
 
     public ClassEntity(String name, int credit, LocalDate StartTime) {
@@ -28,8 +27,8 @@ public class ClassEntity {
         this.startTime = StartTime;
     }
 
-    public ClassEntity(Class myclass){
-        BeanUtils.copyProperties(myclass,this);
+    public ClassEntity(Class myClass) {
+        BeanUtils.copyProperties(myClass, this);
         this.id = UUID.randomUUID().toString();
     }
 
@@ -83,11 +82,11 @@ public class ClassEntity {
 
     @Override
     public String toString() {
-        return "Class{" +
-                "name =" + name + '\'' +
-                ", credit =" + credit + '\'' +
-                ", startTime=" + startTime + '\'' +
-                '}';
+        return "Class {" +
+            "name = " + name + '\'' +
+            ", credit =" + credit + '\'' +
+            ", startTime=" + startTime + '\'' +
+        '}';
     }
 
 }

@@ -14,7 +14,7 @@ public class CoursePersistenceMongodb implements CoursePersistence {
     private final CourseRepository courseRepository;
 
     @Autowired
-    public CoursePersistenceMongodb(CourseRepository courseRepository){
+    public CoursePersistenceMongodb(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
     }
 
@@ -25,7 +25,7 @@ public class CoursePersistenceMongodb implements CoursePersistence {
     }
 
     @Override
-    public void delete(String name){
+    public void delete(String name) {
         this.courseRepository.deleteByName(name);
     }
 }

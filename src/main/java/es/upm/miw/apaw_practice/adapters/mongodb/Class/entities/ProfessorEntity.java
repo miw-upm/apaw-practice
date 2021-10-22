@@ -19,7 +19,6 @@ public class ProfessorEntity {
     private LocalDate entryDate;
 
     public ProfessorEntity() {
-        //empty for framework
     }
 
     public ProfessorEntity(String name, String course, int age, LocalDate EntryDate) {
@@ -92,12 +91,12 @@ public class ProfessorEntity {
 
     @Override
     public String toString() {
-        return "Album{" +
-                "name =" + name + '\'' +
-                ", course =" + course + '\'' +
-                ", age =" + age + '\'' +
-                ", EntryDate =" + entryDate + '\'' +
-                '}';
+        return "Professor {" +
+            "name =" + name + '\'' +
+            ", course =" + course + '\'' +
+            ", age =" + age + '\'' +
+            ", EntryDate =" + entryDate + '\'' +
+        '}';
     }
 
 }

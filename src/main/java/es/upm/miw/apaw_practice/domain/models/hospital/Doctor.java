@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.hospital;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Doctor {
 
@@ -20,6 +21,19 @@ public class Doctor {
         this.nick = nick;
         this.surname = null;
         this.activeSince = null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Doctor doctor = (Doctor) o;
+        return Objects.equals(nick, doctor.nick) && Objects.equals(surname, doctor.surname) && Objects.equals(activeSince, doctor.activeSince);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nick, surname, activeSince);
     }
 
     /*

@@ -15,16 +15,15 @@ import java.util.stream.Stream;
 public class ClassResource {
 
     static final String theClass = "/class";
-    static final String theList = "/list";
 
     private final ClassService classService;
 
     @Autowired
-    public ClassResource(ClassService classService){
+    public ClassResource(ClassService classService) {
         this.classService = classService;
     }
 
-    @GetMapping(theList)
+    @GetMapping
     public Stream<Class> readAll() {
         return this.classService.readAll();
     }
