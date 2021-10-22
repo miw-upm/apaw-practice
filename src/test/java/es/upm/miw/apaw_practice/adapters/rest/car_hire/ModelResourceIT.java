@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ModelResourceIT {
 
     @Autowired
-    WebTestClient webTestClient;
+    private WebTestClient webTestClient;
 
     @Test
-    void testGet() {
+    void testFindModelByVehicleVinNumber() {
         this.webTestClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -34,5 +34,29 @@ class ModelResourceIT {
                 .value(model -> assertEquals(new BigDecimal("50"), model.getVehicleList().get(0).getDailyCost()))
                 .value(model -> assertEquals(32000, model.getVehicleList().get(0).getKilometersAmount()))
                 .value(model -> assertTrue(model.getVehicleList().get(0).getGoodCondition()));
+    }
+
+    @Test
+    void testFindModelByVehicleVinNumberBadRequest() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ModelResource.MODELS + ModelResource.SEARCH)
+                        .queryParam("q", "jaja:WVGZZZ5NZJM131395")
+                        .build())
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testFindModelByVehicleVinNumberNotFound() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ModelResource.MODELS + ModelResource.SEARCH)
+                        .queryParam("q", "VIN_Number:0000")
+                        .build())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

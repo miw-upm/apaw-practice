@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
+import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,11 +16,11 @@ public class VideoGameCompany {
         //empty from framework
     }
 
-    public VideoGameCompany(String name, LocalDate formationDate, Boolean stockMarket, List<Platform> platforms) {
-        this.name = name;
-        this.formationDate = formationDate;
-        this.stockMarket = stockMarket;
-        this.platforms = platforms;
+    public static VideoGameCompany ofNameStockMarket(VideoGameCompany videoGameCompany) {
+        VideoGameCompany videoGameCompanyDto = new VideoGameCompany();
+        videoGameCompanyDto.setName(videoGameCompany.getName());
+        videoGameCompanyDto.setStockMarket(videoGameCompany.getStockMarket());
+        return videoGameCompanyDto;
     }
 
     public String getName() {
@@ -45,21 +47,21 @@ public class VideoGameCompany {
         this.stockMarket = stockMarket;
     }
 
-    public List<Platform> getConsoles() {
+    public List<Platform> getPlatforms() {
         return platforms;
     }
 
-    public void setConsoles(List<Platform> platforms) {
+    public void setPlatforms(List<Platform> platforms) {
         this.platforms = platforms;
     }
 
     @Override
     public String toString() {
-        return "Company{" +
+        return "VideoGameCompany{" +
                 "name='" + name + '\'' +
                 ", formationDate=" + formationDate +
                 ", stockMarket=" + stockMarket +
-                ", consoles=" + platforms +
+                ", platforms=" + platforms +
                 '}';
     }
 }

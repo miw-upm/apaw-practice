@@ -21,10 +21,8 @@ public class CategoryEntity {
         // empty for framework
     }
 
-    public CategoryEntity(String name, String description) {
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.description = description;
+    public static Builder builder(String name, String desc) {
+        return new Builder(name, desc);
     }
 
     public Category toCategory() {
@@ -81,5 +79,21 @@ public class CategoryEntity {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public static class Builder {
+
+        private final CategoryEntity categoryEntity;
+
+        public Builder(String name, String desc) {
+            this.categoryEntity = new CategoryEntity();
+            this.categoryEntity.id = UUID.randomUUID().toString();
+            this.categoryEntity.name = name;
+            this.categoryEntity.description = desc;
+        }
+
+        public CategoryEntity build() {
+            return this.categoryEntity;
+        }
     }
 }

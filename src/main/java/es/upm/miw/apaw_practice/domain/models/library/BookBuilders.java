@@ -3,37 +3,36 @@ package es.upm.miw.apaw_practice.domain.models.library;
 import java.time.LocalDate;
 
 public interface BookBuilders {
-    interface Isbn {
+
+    interface Isbn{
         Title isbn(String isbn);
     }
 
-    interface Title {
+    interface Title{
         Available title(String title);
     }
 
-    interface Available {
+    interface Available{
         NumbersOfPages available(Boolean available);
     }
 
-    interface NumbersOfPages {
+    interface NumbersOfPages{
         PublicationDate numbersOfPages(Integer numbersOfPages);
     }
 
-    interface PublicationDate {
-        Category publicationDate(LocalDate publicationDate);
+    interface PublicationDate{
+        ICategory publicationDate(LocalDate publicationDate);
     }
 
-    interface Category {
-        Author category(es.upm.miw.apaw_practice.domain.models.library.Category category);
+    interface ICategory{
+        IAuthor category(Category category);
     }
 
-    interface Author {
-        Optionals authors(es.upm.miw.apaw_practice.domain.models.library.Author author);
-
+    interface IAuthor{
+        Optionals authors(Author author);
     }
 
-    interface Optionals {
+    interface Optionals{
         Book build();
     }
-
 }

@@ -15,4 +15,6 @@ public interface EmarketerPersistence {
 
     Stream<Emarketer> readByCups(String cups);
 
+    Stream<Emarketer> readByPlanDescription(String description);
+
 }

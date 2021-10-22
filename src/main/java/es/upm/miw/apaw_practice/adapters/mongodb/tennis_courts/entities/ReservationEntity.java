@@ -33,6 +33,14 @@ public class ReservationEntity {
         this.players = players;
     }
 
+    public String getId(){
+        return id;
+    }
+
+    public String setId(String id){
+        return this.id = id;
+    }
+
     public String getOwnerName() {
         return ownerName;
     }
@@ -61,7 +69,7 @@ public class ReservationEntity {
         return players;
     }
 
-    public List<Player> getPlayersIds(){
+    public List<Player> getPlayersDNIs(){
         return this.players.stream()
                 .map(playerEntity -> new Player(playerEntity.getDni()))
                 .collect(Collectors.toList());

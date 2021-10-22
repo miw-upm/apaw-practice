@@ -20,7 +20,7 @@ public class VideoGameRepositoryIT {
     void testFindByTitle() {
         assertTrue(this.videoGameRepository.findByTitle("bayonetta 2").isPresent());
         VideoGameEntity videoGameEntity = this.videoGameRepository.findByTitle("bayonetta 2").get();
-        assertEquals(8.5, videoGameEntity.getCritic().getUserScore());
-        assertEquals("switch", videoGameEntity.getPlatforms().get(0).getConsoleName());
+        assertEquals(8.5, videoGameEntity.getCriticEntity().getUserScore());
+        assertEquals("switch", videoGameEntity.getPlatformEntities().get(0).getConsoleName());
     }
 }
