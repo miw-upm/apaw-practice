@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities;
 
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
-import es.upm.miw.apaw_practice.domain.models.car_workshop.Tyre;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.TyreSpecification;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -91,9 +90,9 @@ public class CarEntity {
         if (this.owner != null) {
             car.setOwner(this.owner.toOwner());
         }
-        if (this.tyreSpecsEntities != null){
+        if (this.tyreSpecsEntities != null) {
             List<TyreSpecification> tyreSpecs = new ArrayList<>();
-            for(TyreSpecificationEntity tyreSpecification : this.tyreSpecsEntities){
+            for (TyreSpecificationEntity tyreSpecification : this.tyreSpecsEntities) {
                 tyreSpecs.add(tyreSpecification.toTyreSpecification());
             }
             car.setTyreSpecs(tyreSpecs);

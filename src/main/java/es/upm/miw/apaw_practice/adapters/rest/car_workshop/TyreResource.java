@@ -30,8 +30,8 @@ public class TyreResource {
 
     @GetMapping(SEARCH)
     public Stream<String> findModelByOwnerNameAndRevision(@RequestParam String q) {
-        //q=ownerName:name;revision:true
-        String ownerName = new LexicalAnalyzer().extractWithAssure(q,"ownerName");
+        //q=ownerName:name;revision:boolean
+        String ownerName = new LexicalAnalyzer().extractWithAssure(q, "ownerName");
         Boolean revision = Boolean.parseBoolean(new LexicalAnalyzer().extractWithAssure(q, "revision"));
         return this.tyreService.findModelByOwnerNameAndRevision(ownerName, revision);
     }
