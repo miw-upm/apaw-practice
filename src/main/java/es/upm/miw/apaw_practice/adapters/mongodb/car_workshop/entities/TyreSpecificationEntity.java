@@ -27,7 +27,7 @@ public class TyreSpecificationEntity {
         this.loadSpeedIndex = loadSpeedIndex;
     }
 
-    public TyreSpecificationEntity(TyreSpecification tyreSpecification){
+    public TyreSpecificationEntity(TyreSpecification tyreSpecification) {
         this.id = UUID.randomUUID().toString();
 
     }

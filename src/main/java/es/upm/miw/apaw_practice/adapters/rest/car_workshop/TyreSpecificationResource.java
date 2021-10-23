@@ -19,20 +19,17 @@ public class TyreSpecificationResource {
     private final TyreSpecificationService tyreSpecificationService;
 
     @Autowired
-    public TyreSpecificationResource(TyreSpecificationService tyreSpecificationService){
+    public TyreSpecificationResource(TyreSpecificationService tyreSpecificationService) {
         this.tyreSpecificationService = tyreSpecificationService;
     }
 
     @PatchMapping(LOAD_SPEED_INDEX)
-    public void updateLoadSpeedIndex(@RequestBody TyreSpecsModification tyreSpecsModification){
-        if(tyreSpecsModification.getNewSpec() != null &&
-            tyreSpecsModification.getOldSpec() != null){
+    public void updateLoadSpeedIndex(@RequestBody TyreSpecsModification tyreSpecsModification) {
+        if (tyreSpecsModification.getNewSpec() != null &&
+                tyreSpecsModification.getOldSpec() != null) {
             this.tyreSpecificationService.updateLoadSpeedIndex(tyreSpecsModification);
-        } else
-        {
+        } else {
             throw new BadRequestException("Insufficient information.");
-        };
-
-
+        }
     }
 }

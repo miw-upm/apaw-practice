@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class OwnerServiceIT {
+class OwnerServiceIT {
     @Autowired
     OwnerService ownerService;
 
     @Test
-    void testFindByTyreSpecificationDiameterGreaterThan(){
+    void testFindByTyreSpecificationDiameterGreaterThan() {
         List<String> dnis = this.ownerService.findByTyreSpecificationDiameterGreaterThan(16)
                 .collect(Collectors.toList());
         assertEquals(2, dnis.size());

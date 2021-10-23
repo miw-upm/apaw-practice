@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class CarCompositeTest {
+class CarCompositeTest {
 
     private Car car1;
     private Car car2;

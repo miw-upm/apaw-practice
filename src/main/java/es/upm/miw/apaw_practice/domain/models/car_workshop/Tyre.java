@@ -13,12 +13,6 @@ public class Tyre {
         //empty for framework
     }
 
-    public Tyre(String manufacturer, String model, BigDecimal price) {
-        this.manufacturer = manufacturer;
-        this.model = model;
-        this.price = price;
-    }
-
     public static TyreBuilder.Manufacturer builder() {
         return new Builder();
     }
