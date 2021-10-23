@@ -45,6 +45,10 @@ public class EquipmentEntity {
         this.pricePerUnit = pricePerUnit;
     }
 
+    public BigDecimal getTotalPrice(){
+        return this.pricePerUnit.multiply(BigDecimal.valueOf(this.quantity));
+    }
+
 
     @Override
     public boolean equals(Object o) {

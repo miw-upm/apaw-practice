@@ -4,4 +4,5 @@ import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities.CourtEnt
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CourtRepository extends MongoRepository<CourtEntity, String> {
+    CourtEntity findByNumber(int number);
 }
