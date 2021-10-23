@@ -31,7 +31,7 @@ class ScreenPersistenceMongodbIT {
                 new Spectator("544588J", "Marta", "Vernia", LocalDate.of(2021, 04, 10)),
                 new Spectator("994578J", "Javier", "Vernia", LocalDate.of(2021, 04, 10))
         });
-        Screen screen = this.screenPersistenceMongodb.readByNumber(2);
+        Screen screen = this.screenPersistenceMongodb.readByNumber(1);
         Screen newScreen = this.screenPersistenceMongodb.update(screen, spectatorList);
         assertEquals(screen.getSpectators(), spectatorList);
     }
