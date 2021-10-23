@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @TestConfig
-public class ClassroomIT {
+public class ClassroomTest {
 
     @Test
     void testBuilder() {
