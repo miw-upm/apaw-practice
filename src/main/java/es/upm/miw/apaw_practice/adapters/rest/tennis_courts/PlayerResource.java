@@ -37,9 +37,9 @@ public class PlayerResource {
         this.playerService.updateEquipment(dni, equipmentList);
     }
 
-    @GetMapping(PlayerResource.PLAYERS + PlayerResource.NAME + PlayerResource.COURTS + PlayerResource.OCCUPIED)
+    @GetMapping(PlayerResource.NAME + PlayerResource.COURTS + PlayerResource.OCCUPIED)
     public CourtNumberList get(@PathVariable String name){
-        return this.playerService.getOccupiedCourt(name);
+        return this.playerService.getOccupiedCourts(name);
     }
 
     

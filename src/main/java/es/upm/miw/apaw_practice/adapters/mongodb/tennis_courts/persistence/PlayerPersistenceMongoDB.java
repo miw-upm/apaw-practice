@@ -50,7 +50,7 @@ public class PlayerPersistenceMongoDB implements PlayerPersistence {
     @Override
     public CourtNumberList getOccupiedCourts(String name){
         return new CourtNumberList(this.courtRepository.findAll().stream()
-                .filter(courtEntity -> courtEntity.getReservations().stream()
+                .filter(courtEntity -> courtEntity.getOccupied() && courtEntity.getReservations().stream()
                         .anyMatch(reservationEntity -> reservationEntity.getPlayers().stream()
                                 .anyMatch(playerEntity -> playerEntity.getName().equals(name))))
                 .map(CourtEntity::getNumber).collect(Collectors.toList()));

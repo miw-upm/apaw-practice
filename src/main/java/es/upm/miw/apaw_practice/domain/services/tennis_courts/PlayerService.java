@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.tennis_courts;
 
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.CourtNumberList;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
@@ -27,7 +28,11 @@ public class PlayerService {
         this.playerPersistence.updateEquipment(dni, equipmentList);
     }
 
-    public CourtNumberList getOccupiedCourt(String name){
-        return this.playerPersistence.getOccupiedCourts(name);
+    public CourtNumberList getOccupiedCourts(String name){
+        CourtNumberList numbers = this.playerPersistence.getOccupiedCourts(name);
+        if(numbers.getNumbers().isEmpty()){
+            throw new NotFoundException("No se ha encontrado ninguna pista ocupada mediante el nombre " + name);
+        }
+        return numbers;
     }
 }
