@@ -14,7 +14,8 @@ public class Dispensing {
         //empty for framework
     }
 
-    public Dispensing(List<ActiveIngredient> activeIngredients, LocalDateTime dispensingTimestamp) {
+    public Dispensing(String id, List<ActiveIngredient> activeIngredients, LocalDateTime dispensingTimestamp) {
+        this.id = id;
         this.activeIngredients = activeIngredients;
         this.dispensingTimestamp = dispensingTimestamp;
     }
@@ -51,17 +52,4 @@ public class Dispensing {
         return id.equals(that.id);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Dispensing{" +
-                "id='" + id + '\'' +
-                ", activeIngredients=" + activeIngredients +
-                ", dispensingTimestamp=" + dispensingTimestamp +
-                '}';
-    }
 }

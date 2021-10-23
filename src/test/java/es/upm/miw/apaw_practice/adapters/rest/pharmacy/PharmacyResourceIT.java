@@ -23,14 +23,14 @@ public class PharmacyResourceIT {
         this.webTestClient
                 .post()
                 .uri(PharmacyResource.PHARMACIES)
-                .body(BodyInserters.fromValue(new Pharmacy()))
+                .body(BodyInserters.fromValue(new Pharmacy("789121", "Calle Rafael Ramos Cea nº28", 29002, List.of(new Drug("A9001", "Frenadol Complex", true, new BigDecimal("5.39"))))))
                 .exchange()
                 .expectStatus().isOk();
     }
 
     @Test
     void testUpdateDrugs() {
-        List<Drug> drugs = List.of(new Drug("1234","Drug 1",true,new BigDecimal(2.30)));
+        List<Drug> drugs = List.of(new Drug("1234","Drug 1",true,new BigDecimal("2.3")));
         this.webTestClient
                 .patch()
                 .uri(PharmacyResource.PHARMACIES)

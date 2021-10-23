@@ -29,6 +29,9 @@ public class DispensingPersistenceMongodb implements DispensingPersistence {
 
     @Override
     public Dispensing update(Dispensing dispensing) {
+        if(dispensing.getId() == null){
+            throw new NotFoundException("The dispensing id can't be null");
+        }
         DispensingEntity dispensingEntity = this.dispensingRepository
                 .findById(dispensing.getId())
                 .orElseThrow(() -> new NotFoundException("Dispensing id:" + dispensing.getId()));

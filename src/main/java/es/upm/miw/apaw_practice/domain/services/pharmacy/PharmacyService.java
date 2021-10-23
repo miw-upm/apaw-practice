@@ -29,7 +29,7 @@ public class PharmacyService {
     public void updateDrugs(Stream<PharmacyDrugsUpdating> pharmacyDrugsUpdatingList) {
         pharmacyDrugsUpdatingList.map(pharmacyNewDrugList -> {
                     Pharmacy pharmacy = this.pharmacyPersistence.read(pharmacyNewDrugList.getRegistrationNumber());
-                    pharmacy.setDrug(pharmacyNewDrugList.getDrugs());
+                    pharmacy.setDrugs(pharmacyNewDrugList.getDrugs());
                     return pharmacy;
                 })
                 .forEach(pharmacy -> this.pharmacyPersistence.update(pharmacy.getRegistrationNumber(), pharmacy));

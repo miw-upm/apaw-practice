@@ -44,7 +44,7 @@ public class DispensingPersistenceMongodbIT {
         Dispensing findedDispensing = this.dispensingPersistenceMongodb.readById(dispensing.get().getId());
         assertEquals(dispensing.get().getId(), findedDispensing.getId());
         assertEquals(2, findedDispensing.getActiveIngredients().size());
-        assertEquals("A9001", findedDispensing.getActiveIngredients().get(0).getDrug().getBarcode());
+        assertEquals("A9003", findedDispensing.getActiveIngredients().get(0).getDrug().getBarcode());
         pharmacySeederService.deleteAll();
         pharmacySeederService.seedDatabase();
     }

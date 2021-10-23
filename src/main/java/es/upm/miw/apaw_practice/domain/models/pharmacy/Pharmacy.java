@@ -8,16 +8,17 @@ public class Pharmacy {
     String registrationNumber;
     String address;
     Integer postalCode;
-    List<Drug> drug;
+    List<Drug> drugs;
 
     public Pharmacy() {
         //empty for framework
     }
 
-    public Pharmacy(String address, Integer postalCode, List<Drug> drug) {
+    public Pharmacy(String registrationNumber,String address, Integer postalCode, List<Drug> drugs) {
+        this.registrationNumber = registrationNumber;
         this.address = address;
         this.postalCode = postalCode;
-        this.drug = drug;
+        this.drugs = drugs;
     }
 
     public String getRegistrationNumber() {
@@ -44,34 +45,12 @@ public class Pharmacy {
         this.postalCode = postalCode;
     }
 
-    public List<Drug> getDrug() {
-        return drug;
+    public List<Drug> getDrugs() {
+        return drugs;
     }
 
-    public void setDrug(List<Drug> drug) {
-        this.drug = drug;
+    public void setDrugs(List<Drug> drugs) {
+        this.drugs = drugs;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pharmacy pharmacy = (Pharmacy) o;
-        return registrationNumber.equals(pharmacy.registrationNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(registrationNumber);
-    }
-
-    @Override
-    public String toString() {
-        return "Pharmacy{" +
-                "registrationNumber='" + registrationNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", postalCode=" + postalCode +
-                ", drug=" + drug +
-                '}';
-    }
 }
