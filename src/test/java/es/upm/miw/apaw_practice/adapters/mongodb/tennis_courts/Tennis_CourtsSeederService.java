@@ -22,7 +22,7 @@ public class Tennis_CourtsSeederService {
     private PlayerRepository playerRepository;
 
     public void seedDatabase() {
-        LogManager.getLogger(this.getClass()).info("------- Tennis Courts Initial Load -----------");
+        LogManager.getLogger(this.getClass()).warn("------- Tennis Courts Initial Load -----------");
         EquipmentEntity[] equipment = {
             new EquipmentEntity("Racquet", 2, new BigDecimal("5.0")),
             new EquipmentEntity("Balls", 5, new BigDecimal("1.5")),
@@ -55,7 +55,7 @@ public class Tennis_CourtsSeederService {
             new CourtEntity(1, new BigDecimal("10.5"),false, List.of(reservation[0], reservation[2])),
             new CourtEntity(2, new BigDecimal("10.5"),true, List.of(reservation[1], reservation[5])),
             new CourtEntity(3, new BigDecimal("11.0"),true, List.of(reservation[3])),
-            new CourtEntity(4, new BigDecimal("11.0"),false, List.of(reservation[4]))
+            new CourtEntity(4, new BigDecimal("11.0"),true, List.of(reservation[4]))
         };
         courtRepository.saveAll(Arrays.asList(courts));
 

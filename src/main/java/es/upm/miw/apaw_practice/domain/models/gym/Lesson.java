@@ -7,21 +7,17 @@ import java.util.List;
 public class Lesson {
     private String title ;
     private LocalDateTime time;
-    private String description ;
-    private Boolean finished ;
-    private List<Athlete> athletes ;
+    private String description;
+    private Boolean finished;
+    private List<Athlete> athletes;
 
 
-    public Lesson(){
+    public Lesson() {
         //empty for framework
     }
 
-    public Lesson(String title, LocalDateTime time, String description, Boolean finished, List<Athlete> athletes) {
-        this.title = title;
-        this.time = time;
-        this.description = description;
-        this.finished = finished;
-        this.athletes = athletes;
+    public static LessonBuilders.Title builder() {
+        return new Builder();
     }
 
     public String getTitle() {
@@ -73,5 +69,52 @@ public class Lesson {
                 ", finished=" + finished +
                 ", athletes=" + athletes +
                 '}';
+    }
+
+    public static class Builder implements LessonBuilders.Title, LessonBuilders.Description, LessonBuilders.Time,
+            LessonBuilders.Finished, LessonBuilders.Athlete, LessonBuilders.Optionals {
+
+        private Lesson lesson;
+
+        public Builder() {
+            this.lesson = new Lesson();
+        }
+
+        @Override
+        public LessonBuilders.Time title(String title) {
+            this.lesson.title = title;
+            return this;
+        }
+
+        @Override
+        public LessonBuilders.Description time(LocalDateTime time) {
+            this.lesson.time = time;
+            return this;
+        }
+
+        @Override
+        public LessonBuilders.Finished description(String description) {
+            this.lesson.description = description;
+            return this;
+        }
+
+        @Override
+        public LessonBuilders.Athlete finished(Boolean finished) {
+            this.lesson.finished = finished;
+            return this;
+        }
+
+        @Override
+        public LessonBuilders.Optionals athletes(List<Athlete> athletes) {
+            this.lesson.athletes = athletes;
+            return this;
+        }
+
+        @Override
+        public Lesson build() {
+            return this.lesson;
+        }
+
+
     }
 }

@@ -9,5 +9,7 @@ import java.util.stream.Stream;
 public interface BossPersistence {
     Stream<Boss> findByEffort(String effort);
     void delete(String description, String effort);
+
+    Stream<Boss> readAll();
 }
 

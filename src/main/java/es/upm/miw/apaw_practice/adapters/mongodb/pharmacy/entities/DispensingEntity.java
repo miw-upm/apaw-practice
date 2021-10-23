@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities;
 
+import es.upm.miw.apaw_practice.domain.models.pharmacy.ActiveIngredient;
 import es.upm.miw.apaw_practice.domain.models.pharmacy.Dispensing;
-import es.upm.miw.apaw_practice.domain.models.pharmacy.Drug;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class DispensingEntity {
@@ -18,16 +19,8 @@ public class DispensingEntity {
     @Id
     private String id;
     private LocalDateTime dispensingTimestamp;
+    @DBRef
     private List<ActiveIngredientEntity> activeIngredientEntities;
-
-    public DispensingEntity() {
-        //empty from framework
-    }
-
-    public DispensingEntity(Dispensing dispensing) {
-        BeanUtils.copyProperties(dispensing, this);
-        this.id = UUID.randomUUID().toString();
-    }
 
     public DispensingEntity(LocalDateTime dispensingTimestamp, List<ActiveIngredientEntity> activeIngredientEntities) {
         this.id = UUID.randomUUID().toString();
@@ -61,12 +54,12 @@ public class DispensingEntity {
 
     public Dispensing toDispensing() {
         Dispensing dispensing = new Dispensing();
-        BeanUtils.copyProperties(this, dispensing);
+        BeanUtils.copyProperties(this, dispensing, "activeIngredientsEntities");
+        List<ActiveIngredient> activeIngredients = this.activeIngredientEntities.stream()
+                .map(ActiveIngredientEntity::toActiveIngredient)
+                .collect(Collectors.toList());
+        dispensing.setActiveIngredients(activeIngredients);
         return dispensing;
-    }
-
-    public void fromDrug(Drug drug) {
-        BeanUtils.copyProperties(drug, this);
     }
 
     @Override

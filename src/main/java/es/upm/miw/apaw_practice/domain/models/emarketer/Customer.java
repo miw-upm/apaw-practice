@@ -49,4 +49,42 @@ public class Customer {
                 '}';
     }
 
+    public static CustomerBuilders.Name builder() {
+        return new Builder();
+    }
+
+    public static class Builder implements CustomerBuilders.Name, CustomerBuilders.Address, CustomerBuilders.Type,
+            CustomerBuilders.Optionals {
+
+        private Customer customer;
+
+        public Builder() {
+            this.customer = new Customer();
+        }
+
+        @Override
+        public CustomerBuilders.Address name(String name) {
+            this.customer.name = name;
+            return this;
+        }
+
+        @Override
+        public CustomerBuilders.Type address(String address) {
+            this.customer.address = address;
+            return this;
+        }
+
+        @Override
+        public CustomerBuilders.Optionals type(String type) {
+            this.customer.type = type;
+            return this;
+        }
+
+        @Override
+        public Customer build() {
+            return this.customer;
+        }
+    }
+
+
 }

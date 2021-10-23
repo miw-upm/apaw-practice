@@ -34,15 +34,15 @@ public class MusicManagerSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Music Manager Initial Load -----------");
         ArtistEntity[] artists = {
-                new ArtistEntity(new Artist("John", "Lennon", 40)),
-                new ArtistEntity(new Artist("Paul", "McCartney", 79)),
-                new ArtistEntity(new Artist("George", "Harrison", 58)),
-                new ArtistEntity(new Artist("Ringo", "Starr", 81)),
-                new ArtistEntity(new Artist("Kurt", "Cobain", 27)),
-                new ArtistEntity(new Artist("Dave", "Grohl", 52)),
-                new ArtistEntity(new Artist("Krist", "Novoselic", 56)),
-                new ArtistEntity(new Artist("Nate", "Mendel", 52)),
-                new ArtistEntity(new Artist("Pat", "Smear", 62))
+                new ArtistEntity(Artist.builder().firstName("John").familyName("Lennon").age(40).build()),
+                new ArtistEntity(Artist.builder().firstName("Paul").familyName("McCartney").age(79).build()),
+                new ArtistEntity(Artist.builder().firstName("George").familyName("Harrison").age(58).build()),
+                new ArtistEntity(Artist.builder().firstName("Ringo").familyName("Starr").age(81).build()),
+                new ArtistEntity(Artist.builder().firstName("Kurt").familyName("Cobain").age(27).build()),
+                new ArtistEntity(Artist.builder().firstName("Dave").familyName("Grohl").age(52).build()),
+                new ArtistEntity(Artist.builder().firstName("Krist").familyName("Novoselic").age(56).build()),
+                new ArtistEntity(Artist.builder().firstName("Nate").familyName("Mendel").age(52).build()),
+                new ArtistEntity(Artist.builder().firstName("Pat").familyName("Smear").age(62).build())
         };
         this.artistRepository.saveAll(Arrays.asList(artists));
         BandEntity[] bands = {

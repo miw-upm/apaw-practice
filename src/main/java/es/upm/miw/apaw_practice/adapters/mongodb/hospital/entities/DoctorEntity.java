@@ -16,11 +16,11 @@ public class DoctorEntity {
     private String surname;
     private LocalDate activeSince;
 
-    public DoctorEntity(){
+    public DoctorEntity() {
         //Empty for framework
     }
 
-    public DoctorEntity(Doctor doctor){
+    public DoctorEntity(Doctor doctor) {
         BeanUtils.copyProperties(doctor, this);
         this.id = UUID.randomUUID().toString();
     }
@@ -57,7 +57,7 @@ public class DoctorEntity {
         this.activeSince = activeSince;
     }
 
-    public Doctor toDoctor(){
+    public Doctor toDoctor() {
         Doctor doctor = new Doctor();
         BeanUtils.copyProperties(this, doctor);
         return doctor;

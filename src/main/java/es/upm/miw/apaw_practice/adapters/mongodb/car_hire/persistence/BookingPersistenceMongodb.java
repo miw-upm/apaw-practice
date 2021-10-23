@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.car_hire.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.daos.BookingRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities.BookingEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Booking;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car_hire.BookingPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,16 @@ public class BookingPersistenceMongodb implements BookingPersistence {
     }
 
     @Override
+    public boolean assertExistRenterName(String name) {
+        return this.readAll().anyMatch(booking -> booking.getRenter().getName().equals(name));
+    }
+
+    @Override
     public Stream<Booking> readByRenterName(String name) {
-        return this.readAll()
-                .filter(booking ->
-                        booking.getRenter().getName().equals(name));
+        if (!this.assertExistRenterName(name)) {
+            throw new NotFoundException("Renter with name: " + name);
+        } else {
+            return this.readAll().filter(booking -> booking.getRenter().getName().equals(name));
+        }
     }
 }

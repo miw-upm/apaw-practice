@@ -12,11 +12,8 @@ public class Manager {
         //empty for framework
     }
 
-    public Manager(Integer experienceYears, String phoneNumber, String email, List<DepartmentEmployee> departmentEmployees) {
-        this.experienceYears = experienceYears;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.departmentEmployees = departmentEmployees;
+    public static ManagerBuilder.Email builder() {
+        return new Builder();
     }
 
     public Integer getExperienceYears() {
@@ -59,5 +56,43 @@ public class Manager {
                 ", email='" + email + '\'' +
                 ", departmentEmployees=" + departmentEmployees +
                 '}';
+    }
+
+    public static class Builder implements ManagerBuilder.Email, ManagerBuilder.PhoneNumber, ManagerBuilder.ExperienceYears, ManagerBuilder.DepartmentEmployees, ManagerBuilder.Optionals {
+
+        private final Manager manager;
+
+        public Builder() {
+            this.manager = new Manager();
+        }
+
+        @Override
+        public ManagerBuilder.PhoneNumber email(String email) {
+            this.manager.email = email;
+            return this;
+        }
+
+        @Override
+        public ManagerBuilder.ExperienceYears phoneNumber(String phoneNumber) {
+            this.manager.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        @Override
+        public ManagerBuilder.DepartmentEmployees experienceYears(Integer experienceYears) {
+            this.manager.experienceYears = experienceYears;
+            return this;
+        }
+
+        @Override
+        public ManagerBuilder.Optionals departmentEmployees(List<DepartmentEmployee> departmentEmployeeList) {
+            this.manager.departmentEmployees = departmentEmployeeList;
+            return this;
+        }
+
+        @Override
+        public Manager build() {
+            return this.manager;
+        }
     }
 }

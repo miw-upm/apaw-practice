@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
 import es.upm.miw.apaw_practice.domain.persistence_ports.cinema.ActorPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.stream.Stream;
 
 
@@ -27,5 +29,9 @@ public class ActorService {
             return actor;
         })
                 .forEach(actor -> this.actorPersistence.update(actor.getAge(), actor));
+    }
+
+    public List<String> getSpectatorsNamesByAge(Integer age) {
+        return this.actorPersistence.getSpectatorsNamesByAge(age);
     }
 }
