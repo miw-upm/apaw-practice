@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.tv_series;
 
+import es.upm.miw.apaw_practice.domain.models.tv_series.Episode;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeriesFinishedUpdating;
 import es.upm.miw.apaw_practice.domain.persistence_ports.tv_series.TvSeriesPersistence;
@@ -24,5 +25,11 @@ public class TvSeriesService {
         TvSeries tvSeries = this.tvSeriesPersistence.read(tvSeriesFinishedUpdatingList.getTitle());
         tvSeries.setFinished(tvSeriesFinishedUpdatingList.getFinished());
         this.tvSeriesPersistence.update(tvSeries.getTitle(), tvSeries);
+    }
+
+    public void createEpisode(String title, Episode episode) {
+        TvSeries tvSeries = this.tvSeriesPersistence.read(title);
+        tvSeries.addEpisode(episode);
+        this.tvSeriesPersistence.update(title,tvSeries);
     }
 }

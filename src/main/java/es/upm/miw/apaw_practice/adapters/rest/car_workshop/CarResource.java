@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.rest.car_workshop;
 
 import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
-import es.upm.miw.apaw_practice.domain.models.car_workshop.Owner;
 import es.upm.miw.apaw_practice.domain.services.car_workshop.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,6 @@ public class CarResource {
     @PutMapping(CarResource.LICENSE_PLATE + CarResource.OWNERS_DNI)
     public void updateOwner(@PathVariable("licensePlate") String licensePlate, @PathVariable("dni") String ownerDni) {
         this.carService.updateOwner(licensePlate, ownerDni);
-
     }
 
 }

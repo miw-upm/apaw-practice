@@ -15,7 +15,7 @@ class AuthorPersistenceMongodbIT {
 
     @Test
     void testUpdate() {
-        Author author = new Author("Alda do Espírito Santo", "Sao Tome and Principe", "Poetry");
+        Author author = Author.builder("Alda do Espírito Santo", "Sao Tome and Principe").writingStyle("Poetry").build();
         Author author1 = this.authorPersistenceMongodb.update(author);
         assertEquals(author1.getFullName(), author.getFullName());
         assertEquals(author1.getNationality(), author.getNationality());

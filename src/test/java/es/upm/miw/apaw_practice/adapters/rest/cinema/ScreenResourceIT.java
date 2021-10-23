@@ -31,4 +31,15 @@ public class ScreenResourceIT {
                 .expectStatus().isOk();
     }
 
+    @Test
+    void testGetActorsNameByScreenNumber() {
+        this.webTestClient
+                .get()
+                .uri(ScreenResource.SCREENS + ScreenResource.NUMBER_ID + ScreenResource.ACTORS_NAME, 2)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(name -> name.get(0).equals("Jennifer"));
+    }
+
 }

@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.persistence;
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.CourtNumberList;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import org.junit.jupiter.api.AfterEach;
@@ -59,5 +60,16 @@ class PlayerPersistenceMongodbIT {
                 new Equipment("Shoes", 2, new BigDecimal("4"))
         };
         assertThrows(NotFoundException.class, () -> this.playerPersistence.updateEquipment("otro",List.of(equipments)));
+    }
+
+    @Test
+    void testGet(){
+        int[] expectedCourtNumbers = {2, 4};
+        CourtNumberList result = this.playerPersistence.getOccupiedCourts("Nacho");
+        assertEquals(2, result.getNumbers().size());
+        for (int i = 0; i < result.getNumbers().size(); i++) {
+            assertEquals(expectedCourtNumbers[i], result.getNumbers().get(i));
+        }
+        assertEquals(0, this.playerPersistence.getOccupiedCourts("Pepe").getNumbers().size());
     }
 }

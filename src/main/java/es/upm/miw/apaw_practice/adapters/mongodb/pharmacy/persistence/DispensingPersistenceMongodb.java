@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.daos.ActiveIngredientRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.daos.DispensingRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.daos.DrugRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities.ActiveIngredientEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities.DispensingEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -19,12 +19,12 @@ public class DispensingPersistenceMongodb implements DispensingPersistence {
 
     private final DispensingRepository dispensingRepository;
 
-    private final DrugRepository drugRepository;
+    private final ActiveIngredientRepository activeIngredientRepository;
 
     @Autowired
-    public DispensingPersistenceMongodb(DispensingRepository dispensingRepository, DrugRepository drugRepository) {
+    public DispensingPersistenceMongodb(DispensingRepository dispensingRepository, ActiveIngredientRepository activeIngredientRepository) {
         this.dispensingRepository = dispensingRepository;
-        this.drugRepository = drugRepository;
+        this.activeIngredientRepository = activeIngredientRepository;
     }
 
     @Override
@@ -32,16 +32,12 @@ public class DispensingPersistenceMongodb implements DispensingPersistence {
         DispensingEntity dispensingEntity = this.dispensingRepository
                 .findById(dispensing.getId())
                 .orElseThrow(() -> new NotFoundException("Dispensing id:" + dispensing.getId()));
-            List<ActiveIngredientEntity> activeIngredientEntities = dispensing.getActiveIngredients().stream()
-                    .map(activeIngredient -> new ActiveIngredientEntity(
-                            this.drugRepository
-                                    .findByBarcode(activeIngredient.getDrug().getBarcode())
-                                    .orElseThrow(() -> new NotFoundException("Drug barcode: "
-                                            + activeIngredient.getDrug().getBarcode())),
-                            activeIngredient.getComponents(),
-                            activeIngredient.getDose())
-                    ).collect(Collectors.toList());
-            dispensingEntity.setActiveIngredientEntities(activeIngredientEntities);
+        List<ActiveIngredientEntity> activeIngredientEntities = dispensing.getActiveIngredients().stream()
+                .map(activeIngredient -> this.activeIngredientRepository.findByCode(activeIngredient.getCode())
+                        .orElseThrow(() -> new NotFoundException("Active Ingredient code:" + activeIngredient.getCode())))
+                .collect(Collectors.toList());
+
+        dispensingEntity.setActiveIngredientEntities(activeIngredientEntities);
         dispensingEntity.setDispensingTimestamp(dispensing.getDispensingTimestamp());
         return this.dispensingRepository.save(dispensingEntity).toDispensing();
     }

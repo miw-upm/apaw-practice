@@ -11,7 +11,7 @@ public class TyreSpecificationService {
     private final TyreSpecificationPersistence tyreSpecsPersistence;
 
     @Autowired
-    public TyreSpecificationService(TyreSpecificationPersistence tyreSpecsPersistence){
+    public TyreSpecificationService(TyreSpecificationPersistence tyreSpecsPersistence) {
         this.tyreSpecsPersistence = tyreSpecsPersistence;
     }
 

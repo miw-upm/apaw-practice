@@ -8,12 +8,12 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 @RestTestConfig
-public class TyreSpecificationResourceIT {
+class TyreSpecificationResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
     @Test
-    void testUpdateLoadSpeedIndex(){
+    void testUpdateLoadSpeedIndex() {
         TyreSpecsModification tyreSpecsModification = new TyreSpecsModification("90T", "95T");
         this.webTestClient
                 .patch()
@@ -24,7 +24,7 @@ public class TyreSpecificationResourceIT {
     }
 
     @Test
-    void testUpdateLoadSpeedIndexBadRequest(){
+    void testUpdateLoadSpeedIndexBadRequest() {
         TyreSpecsModification tyreSpecsModification = new TyreSpecsModification();
         this.webTestClient
                 .patch()

@@ -4,21 +4,24 @@ import es.upm.miw.apaw_practice.domain.models.pharmacy.Pharmacy;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Document
 public class PharmacyEntity {
-    @DBRef
-    List<DrugEntity> drugs;
+
     @Id
     private String registrationNumber;
     private String address;
     private Integer postalCode;
+    @DBRef
+    List<DrugEntity> drugEntities;
 
     public PharmacyEntity() {
-        //empty from framework
+        //empty for framework
     }
 
     public PharmacyEntity(Pharmacy pharmacy) {
@@ -26,19 +29,15 @@ public class PharmacyEntity {
         this.registrationNumber = UUID.randomUUID().toString();
     }
 
-    public PharmacyEntity(String address, Integer postalCode, List<DrugEntity> drugs) {
+    public PharmacyEntity(String address, Integer postalCode, List<DrugEntity> drugEntities) {
         this.registrationNumber = UUID.randomUUID().toString();
         this.address = address;
         this.postalCode = postalCode;
-        this.drugs = drugs;
+        this.drugEntities = drugEntities;
     }
 
     public String getRegistrationNumber() {
         return registrationNumber;
-    }
-
-    public void setRegistrationNumber(String registrationNumber) {
-        this.registrationNumber = registrationNumber;
     }
 
     public String getAddress() {
@@ -57,12 +56,12 @@ public class PharmacyEntity {
         this.postalCode = postalCode;
     }
 
-    public List<DrugEntity> getDrugs() {
-        return drugs;
+    public List<DrugEntity> getDrugEntities() {
+        return drugEntities;
     }
 
-    public void setDrugs(List<DrugEntity> drugs) {
-        this.drugs = drugs;
+    public void setDrugEntities(List<DrugEntity> drugEntities) {
+        this.drugEntities = drugEntities;
     }
 
     public Pharmacy toPharmacy() {
@@ -94,7 +93,7 @@ public class PharmacyEntity {
                 "registrationNumber='" + registrationNumber + '\'' +
                 ", address='" + address + '\'' +
                 ", postalCode=" + postalCode +
-                ", drugs=" + drugs +
+                ", drugEntities=" + drugEntities +
                 '}';
     }
 }

@@ -1,11 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.daos.CourtRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.daos.PlayerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.daos.ReservationRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities.ReservationEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.Court;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Reservation;
 import es.upm.miw.apaw_practice.domain.persistence_ports.tennis_courts.ReservationPersistence;
@@ -24,11 +26,13 @@ public class ReservationPersistenceMongoDB implements ReservationPersistence {
 
     private final ReservationRepository reservationRepository;
     private final PlayerRepository playerRepository;
+    private final CourtRepository courtRepository;
 
     @Autowired
-    public ReservationPersistenceMongoDB(ReservationRepository reservationRepository, PlayerRepository playerRepository){
+    public ReservationPersistenceMongoDB(ReservationRepository reservationRepository, PlayerRepository playerRepository, CourtRepository courtRepository){
         this.reservationRepository = reservationRepository;
         this.playerRepository = playerRepository;
+        this.courtRepository = courtRepository;
     }
 
     @Override
@@ -62,6 +66,17 @@ public class ReservationPersistenceMongoDB implements ReservationPersistence {
                 .getPlayersDNIs().stream();
     }
 
+    @Override
+    public Court get(String ownerName, LocalDateTime date){
+        return this.courtRepository.findAll().stream()
+                .filter(courtRepository -> courtRepository.getReservations().stream()
+                        .anyMatch(reservation -> reservation.getOwnerName().equals(ownerName) && reservation.getDate().isEqual(date))
+                )
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("No se ha encontrado ninguna pista con los datos pedidos"))
+                .toCourt();
+    }
+
     private Optional<ReservationEntity> findByOwnerName(String ownerName, LocalDateTime date){
         List<ReservationEntity> reservationEntityList = this.reservationRepository.findByOwnerName(ownerName)
                 .filter(entity -> entity.getDate().isEqual(date)).collect(Collectors.toList());
@@ -70,4 +85,5 @@ public class ReservationPersistenceMongoDB implements ReservationPersistence {
         }
         return reservationEntityList.stream().findFirst();
     }
+
 }

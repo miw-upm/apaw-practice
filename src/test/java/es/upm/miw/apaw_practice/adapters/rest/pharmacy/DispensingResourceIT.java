@@ -17,7 +17,7 @@ public class DispensingResourceIT {
     void testUpdateDispensing() {
         this.webTestClient
                 .put()
-                .uri(DispensingResource.DISPENSINGS + DispensingResource.ID_ID, "kk")
+                .uri(DispensingResource.DISPENSINGS)
                 .body(BodyInserters.fromValue(new Dispensing()))
                 .exchange()
                 .expectStatus().isNotFound();

@@ -16,7 +16,7 @@ public class VideoGameResource {
 
     static final String GAMES = "/videogame/games";
 
-    static final String TITLE = "/{title}";
+    static final String TITLE_ID = "/{title}";
 
     private final VideoGameService videoGameService;
 
@@ -25,8 +25,13 @@ public class VideoGameResource {
         this.videoGameService = videoGameService;
     }
 
-    @GetMapping(TITLE)
+    @GetMapping(TITLE_ID)
     public VideoGame read(@PathVariable String title) {
         return VideoGame.ofPlatformConsoleName(this.videoGameService.read(title));
+    }
+
+    @DeleteMapping(TITLE_ID)
+    public void delete(@PathVariable String title) {
+        this.videoGameService.delete(title);
     }
 }
