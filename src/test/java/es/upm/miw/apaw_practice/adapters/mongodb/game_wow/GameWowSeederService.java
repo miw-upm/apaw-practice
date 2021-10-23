@@ -35,12 +35,59 @@ public class GameWowSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Game_wow Initial Load -----------");
         FeatureEntity[] features = {
-                new FeatureEntity(new Feature("Trinket",158,null,0,"Use: Restores 1625 mana")),
-                new FeatureEntity(new Feature("Neck",null,79,0,null)),
-                new FeatureEntity(new Feature("Feet",106,null,0,"Use: Restores 1625 mana")),
-                new FeatureEntity(new Feature("Chest",null,144,0,"Use: Restores 1625 mana")),
-                new FeatureEntity(new Feature("Waist",106,null,0,null)),
-                new FeatureEntity(new Feature("Legs",171,null,0,"Use: Restores 1625 mana"))
+                new FeatureEntity(Feature.builder()
+                        .part("Trinket")
+                        .spellPower(158)
+                        .meleeAtack(null)
+                        .temple(0)
+                        .extraSpell("Use: Restores 1625 mana")
+                        .build()
+                ),
+                new FeatureEntity(
+                        Feature.builder()
+                                .part("Neck")
+                                .spellPower(null)
+                                .meleeAtack(79)
+                                .temple(0)
+                                .extraSpell(null)
+                                .build()
+                ),
+                new FeatureEntity(
+                        Feature.builder()
+                                .part("Feet")
+                                .spellPower(106)
+                                .meleeAtack(null)
+                                .temple(0)
+                                .extraSpell("Use: Restores 1625 mana")
+                                .build()
+                ),
+                new FeatureEntity(
+                        Feature.builder()
+                                .part("Chest")
+                                .spellPower(null)
+                                .meleeAtack(144)
+                                .temple(0)
+                                .extraSpell("Use: Restores 1625 mana")
+                                .build()
+                ),
+                new FeatureEntity(
+                        Feature.builder()
+                                .part("Waist")
+                                .spellPower(106)
+                                .meleeAtack(null)
+                                .temple(0)
+                                .extraSpell(null)
+                                .build()
+                ),
+                new FeatureEntity(
+                        Feature.builder()
+                                .part("Legs")
+                                .spellPower(171)
+                                .meleeAtack(null)
+                                .temple(0)
+                                .extraSpell("Use: Restores 1625 mana")
+                                .build()
+                        )
         };
         this.featureRepository.saveAll(Arrays.asList(features));
 

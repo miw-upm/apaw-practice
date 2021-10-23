@@ -65,11 +65,14 @@ public class VetClinicSeederService {
         this.appointmentRepository.saveAll(Arrays.asList(appointments));
 
         VetEntity[] vets = {
-                new VetEntity(new Vet(111, "vet1", "surname1"),  List.of(appointments[0])),
-                new VetEntity(new Vet(222, "vet2", ""), List.of(appointments[0], appointments[1])),
-                new VetEntity(new Vet(333, "vet3", "surname3"), List.of()),
-                new VetEntity(new Vet(444, "", "surname4"), List.of(appointments[2], appointments[3],
-                        appointments[4], appointments[5]))
+                new VetEntity(Vet.builder().vetNumber(111).name("vet1").surname("surname1").build(),
+                        List.of(appointments[0])),
+                new VetEntity(Vet.builder().vetNumber(222).name("vet2").surname("").build(),
+                        List.of(appointments[0], appointments[1])),
+                new VetEntity(Vet.builder().vetNumber(333).name("vet3").surname("surname3").build(),
+                        List.of()),
+                new VetEntity(Vet.builder().vetNumber(444).name("").surname("surname4").build(),
+                        List.of(appointments[2], appointments[3], appointments[4], appointments[5]))
         };
         this.vetRepository.saveAll(Arrays.asList(vets));
     }

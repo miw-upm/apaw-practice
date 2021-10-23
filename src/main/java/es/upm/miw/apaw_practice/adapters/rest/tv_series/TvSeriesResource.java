@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.tv_series;
 
+import es.upm.miw.apaw_practice.domain.models.tv_series.Episode;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeriesFinishedUpdating;
 import es.upm.miw.apaw_practice.domain.services.tv_series.TvSeriesService;
@@ -14,6 +15,7 @@ public class TvSeriesResource {
 
     static final String TV_SERIES = "/tv_series";
     static final String TITLE = "/{title}";
+    static final String EPISODES = "/episodes";
 
     private final TvSeriesService tvSeriesService;
 
@@ -30,5 +32,10 @@ public class TvSeriesResource {
     @PatchMapping
     public void updateFinished(@RequestBody TvSeriesFinishedUpdating tvSeriesFinishedUpdating) {
         this.tvSeriesService.updateFinished(tvSeriesFinishedUpdating);
+    }
+
+    @PostMapping(TITLE + EPISODES)
+    public void createEpisode(@PathVariable String title, @RequestBody Episode episode) {
+        this.tvSeriesService.createEpisode(title, episode);
     }
 }

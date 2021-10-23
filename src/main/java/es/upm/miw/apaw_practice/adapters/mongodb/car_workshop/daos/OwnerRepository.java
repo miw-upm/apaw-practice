@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface OwnerRepository extends MongoRepository<OwnerEntity, String> {
     Optional<OwnerEntity> findByDni(String dni);
+
+    Optional<OwnerEntity> findByName(String name);
 }

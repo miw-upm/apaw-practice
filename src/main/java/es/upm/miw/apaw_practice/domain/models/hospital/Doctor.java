@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.hospital;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Doctor {
 
@@ -8,27 +9,32 @@ public class Doctor {
     private String surname;
     private LocalDate activeSince;
 
-    public static DoctorBuilder.Nick builder(){
-        return new Builder();
-    }
-
-    public Doctor(){
+    public Doctor() {
         //empty for framework
     }
 
-    public Doctor(String nick){
+    public Doctor(String nick) {
         this.nick = nick;
         this.surname = null;
         this.activeSince = null;
     }
 
-    /*
-    public Doctor(String nick, String surname, LocalDate activeSince) {
-        this.nick = nick;
-        this.surname = surname;
-        this.activeSince = activeSince;
+    public static DoctorBuilder.Nick builder() {
+        return new Builder();
     }
-    */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Doctor doctor = (Doctor) o;
+        return Objects.equals(nick, doctor.nick) && Objects.equals(surname, doctor.surname) && Objects.equals(activeSince, doctor.activeSince);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nick, surname, activeSince);
+    }
 
     public String getNick() {
         return nick;
@@ -54,17 +60,8 @@ public class Doctor {
         this.activeSince = activeSince;
     }
 
-    @Override
-    public String toString() {
-        return "Doctor{" +
-                "nick='" + this.nick + '\'' +
-                ", surname='" + this.surname + '\'' +
-                ", activeSince=" + this.activeSince +
-                '}';
-    }
-
     public static class Builder implements DoctorBuilder.Nick, DoctorBuilder.Surname,
-            DoctorBuilder.ActiveSince, DoctorBuilder.Optionals{
+            DoctorBuilder.ActiveSince, DoctorBuilder.Optionals {
 
         private final Doctor doctor;
 

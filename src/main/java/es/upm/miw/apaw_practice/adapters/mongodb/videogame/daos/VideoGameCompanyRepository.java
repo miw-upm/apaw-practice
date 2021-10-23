@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface VideoGameCompanyRepository extends MongoRepository<VideoGameCompanyEntity, String> {
-    Optional<Object> findByName(String name);
+    Optional<VideoGameCompanyEntity> findByName(String name);
 }

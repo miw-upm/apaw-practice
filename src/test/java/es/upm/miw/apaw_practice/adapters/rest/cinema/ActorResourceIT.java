@@ -42,4 +42,15 @@ class ActorResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void testGetSpectatorsNamesByAge() {
+        this.webTestClient
+                .get()
+                .uri(ActorResource.ACTOR + ActorResource.AGE_ID + ActorResource.SPECTATORS_NAME, 30)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(name -> name.get(0).equals("Zoe"));
+    }
 }

@@ -10,7 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.time.LocalDate;
 
 import static es.upm.miw.apaw_practice.adapters.rest.videogame.VideoGameResource.GAMES;
-import static es.upm.miw.apaw_practice.adapters.rest.videogame.VideoGameResource.TITLE;
+import static es.upm.miw.apaw_practice.adapters.rest.videogame.VideoGameResource.TITLE_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
@@ -23,7 +23,7 @@ public class VideoGameResourceIT {
     void testRead() {
         this.webTestClient
             .get()
-            .uri(GAMES + TITLE, "nba 2k21")
+            .uri(GAMES + TITLE_ID, "nba 2k21")
             .exchange()
             .expectStatus().isOk()
             .expectBody(VideoGame.class)
@@ -42,9 +42,18 @@ public class VideoGameResourceIT {
     void testReadNotFound() {
         this.webTestClient
                 .get()
-                .uri(GAMES + TITLE, "kk")
+                .uri(GAMES + TITLE_ID, "other")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDelete() {
+        this.webTestClient
+                .delete()
+                .uri(GAMES + TITLE_ID, "ratchet & clank: rift apart")
+                .exchange()
+                .expectStatus().isOk();
     }
 
 }

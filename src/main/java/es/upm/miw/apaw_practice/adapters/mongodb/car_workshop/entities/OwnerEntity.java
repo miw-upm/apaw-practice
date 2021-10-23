@@ -30,6 +30,13 @@ public class OwnerEntity {
         this.registrationDate = LocalDate.now();
     }
 
+    public OwnerEntity(Owner owner) {
+        this.id = UUID.randomUUID().toString();
+        this.dni = owner.getDni();
+        this.name = owner.getName();
+        this.registrationDate = LocalDate.now();
+    }
+
     public String getDni() {
         return this.dni;
     }
@@ -54,6 +61,12 @@ public class OwnerEntity {
         Owner owner = new Owner();
         BeanUtils.copyProperties(this, owner);
         return owner;
+    }
+
+    public OwnerEntity fromOwner(Owner owner) {
+        this.id = UUID.randomUUID().toString();
+        BeanUtils.copyProperties(owner, this);
+        return this;
     }
 
     @Override
