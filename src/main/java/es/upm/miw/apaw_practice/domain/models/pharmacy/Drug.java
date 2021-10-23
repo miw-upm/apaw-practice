@@ -52,27 +52,4 @@ public class Drug {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Drug drug = (Drug) o;
-        return barcode.equals(drug.barcode);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(barcode);
-    }
-
-    @Override
-    public String toString() {
-        return "Drug{" +
-                "barcode='" + barcode + '\'' +
-                ", name='" + name + '\'' +
-                ", commercialized=" + commercialized +
-                ", price=" + price +
-                '}';
-    }
 }

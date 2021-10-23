@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities;
 
+import es.upm.miw.apaw_practice.domain.models.pharmacy.Drug;
 import es.upm.miw.apaw_practice.domain.models.pharmacy.Pharmacy;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -7,8 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class PharmacyEntity {
@@ -25,12 +25,15 @@ public class PharmacyEntity {
     }
 
     public PharmacyEntity(Pharmacy pharmacy) {
-        BeanUtils.copyProperties(pharmacy, this);
-        this.registrationNumber = UUID.randomUUID().toString();
+        BeanUtils.copyProperties(pharmacy, this,"drugEntities");
+        List<DrugEntity> drugs = pharmacy.getDrugs().stream()
+                .map(DrugEntity::new)
+                .collect(Collectors.toList());
+        this.setDrugEntities(drugs);
     }
 
-    public PharmacyEntity(String address, Integer postalCode, List<DrugEntity> drugEntities) {
-        this.registrationNumber = UUID.randomUUID().toString();
+    public PharmacyEntity(String registrationNumber, String address, Integer postalCode, List<DrugEntity> drugEntities) {
+        this.registrationNumber = registrationNumber;
         this.address = address;
         this.postalCode = postalCode;
         this.drugEntities = drugEntities;
@@ -66,7 +69,11 @@ public class PharmacyEntity {
 
     public Pharmacy toPharmacy() {
         Pharmacy pharmacy = new Pharmacy();
-        BeanUtils.copyProperties(this, pharmacy);
+        BeanUtils.copyProperties(this, pharmacy, "drugEntities");
+        List<Drug> drugs = this.drugEntities.stream()
+                .map(DrugEntity::toDrug)
+                .collect(Collectors.toList());
+        pharmacy.setDrugs(drugs);
         return pharmacy;
     }
 
@@ -74,26 +81,4 @@ public class PharmacyEntity {
         BeanUtils.copyProperties(pharmacy, this);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PharmacyEntity that = (PharmacyEntity) o;
-        return registrationNumber.equals(that.registrationNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(registrationNumber);
-    }
-
-    @Override
-    public String toString() {
-        return "PharmacyEntity{" +
-                "registrationNumber='" + registrationNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", postalCode=" + postalCode +
-                ", drugEntities=" + drugEntities +
-                '}';
-    }
 }

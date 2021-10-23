@@ -10,15 +10,16 @@ public class ActiveIngredient {
     private List<String> components;
     private Integer dose;
 
-    public ActiveIngredient(String code, List<String> components, Integer dose, Drug drug) {
-        this.code = code;
-        this.components = components;
-        this.dose = dose;
-        this.drug = drug;
-    }
 
     public ActiveIngredient() {
         //empty from framework
+    }
+
+    public ActiveIngredient(String code, Drug drug, List<String> components, Integer dose) {
+        this.code = code;
+        this.drug = drug;
+        this.components = components;
+        this.dose = dose;
     }
 
     public String getCode() {
@@ -53,21 +54,4 @@ public class ActiveIngredient {
         this.drug = drug;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ActiveIngredient that = (ActiveIngredient) o;
-        return code.equals(that.code);
-    }
-
-    @Override
-    public String toString() {
-        return "ActiveIngredient{" +
-                "code='" + code + '\'' +
-                ", drug=" + drug +
-                ", components=" + components +
-                ", dose=" + dose +
-                '}';
-    }
 }

@@ -15,10 +15,8 @@ public class DispensingService {
         this.dispensingPersistence = dispensingPersistence;
     }
 
-    public Dispensing updateDispensing(String id, Dispensing dispensing) {
-        Dispensing modifiedDispensing = this.dispensingPersistence.readById(id);
-        dispensing.setId(modifiedDispensing.getId());
-        return this.dispensingPersistence.update(modifiedDispensing);
+    public Dispensing updateDispensing(Dispensing dispensing) {
+        return this.dispensingPersistence.update(dispensing);
     }
 
     public void deleteDispensing(String id) {

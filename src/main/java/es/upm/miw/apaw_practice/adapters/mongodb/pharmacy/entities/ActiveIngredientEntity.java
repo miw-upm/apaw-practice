@@ -4,19 +4,15 @@ import es.upm.miw.apaw_practice.domain.models.pharmacy.ActiveIngredient;
 import es.upm.miw.apaw_practice.domain.models.pharmacy.Drug;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-import java.util.UUID;
 
 @Document
 public class ActiveIngredientEntity {
 
     @Id
-    private String id;
-    @Indexed(unique = true)
     private String code;
     @DBRef
     private DrugEntity drugEntity;
@@ -28,19 +24,10 @@ public class ActiveIngredientEntity {
     }
 
     public ActiveIngredientEntity(String code, List<String> components, Integer dose, DrugEntity drugEntity) {
-        this.id = UUID.randomUUID().toString();
         this.code = code;
         this.drugEntity = drugEntity;
         this.components = components;
         this.dose = dose;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getCode() {
@@ -83,13 +70,4 @@ public class ActiveIngredientEntity {
         return activeIngredient;
     }
 
-    @Override
-    public String toString() {
-        return "ActiveIngredientEntity{" +
-                "code='" + code +
-                ", drugEntity=" + drugEntity +
-                ", components=" + components +
-                ", dose=" + dose +
-                '}';
-    }
 }
