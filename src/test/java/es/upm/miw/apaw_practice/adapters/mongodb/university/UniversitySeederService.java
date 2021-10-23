@@ -33,11 +33,12 @@ public class UniversitySeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- University Initial Load -----------");
         ClassroomEntity[] classrooms = {
-                new ClassroomEntity(new Classroom("ETSISI", 1302, 20)),
-                new ClassroomEntity(new Classroom("ETSISI", 3101, 40)),
-                new ClassroomEntity(new Classroom("ETSISI", 4302, 30)),
-                new ClassroomEntity(new Classroom("ETSISI", 3004, 10)),
-                new ClassroomEntity(new Classroom("ETSISI", 8002, 15))
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(1302).capacity(20).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(3101).capacity(40).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(4302).capacity(30).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(3004).capacity(10).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSISI").number(8002).capacity(15).build()),
+                new ClassroomEntity(Classroom.builder().school("ETSIINF").number(9021).capacity(50).build())
         };
         this.classroomRepository.saveAll(Arrays.asList(classrooms));
         SubjectEntity[] subjects = {
@@ -46,7 +47,8 @@ public class UniversitySeederService {
                 new SubjectEntity(615000246, "Inteligencia artificial", 3, classrooms[1]),
                 new SubjectEntity(615000243, "Programación Orientada a Objetos", 6, classrooms[2]),
                 new SubjectEntity(615000225, "Análisis matemático", 6, classrooms[0]),
-                new SubjectEntity(615000232, "Fundamentos de Seguridad", 3, classrooms[0])
+                new SubjectEntity(615000232, "Fundamentos de Seguridad", 3, classrooms[0]),
+                new SubjectEntity(105000002, "Lógica", 6, classrooms[5])
         };
         this.subjectRepository.saveAll(Arrays.asList(subjects));
         DegreeEntity[] degrees = {
@@ -57,7 +59,9 @@ public class UniversitySeederService {
         this.degreeRepository.saveAll(Arrays.asList(degrees));
         StudentEntity[] students = {
                 new StudentEntity(new Student("12345678X", "Ada Lovelace", true), Arrays.asList(subjects)),
-                new StudentEntity(new Student("112233445E", "Alan Turing", true), List.of(subjects[2], subjects[3]))
+                new StudentEntity(new Student("112233445E", "Alan Turing", true), List.of(subjects[2], subjects[3])),
+                new StudentEntity(new Student("999999999W", "Bárbara Liskov", false), List.of(subjects[6]))
+
         };
         this.studentRepository.saveAll(Arrays.asList(students));
     }

@@ -7,8 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.car_hire.entities.VehicleEntity
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Renter;
 import es.upm.miw.apaw_practice.domain.models.car_hire.Vehicle;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
-public class BookingResourceIT {
+class BookingResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -33,8 +32,9 @@ public class BookingResourceIT {
     @Autowired
     CarHireSeederService carHireSeederService;
 
-    @BeforeEach
+    @AfterEach
     void seedDatabase() {
+        this.carHireSeederService.deleteAll();
         this.carHireSeederService.seedDatabase();
     }
 
@@ -83,6 +83,15 @@ public class BookingResourceIT {
     }
 
     @Test
+    void testGetVehiclesVinNumberByRentersNameNotFound() {
+        this.webTestClient
+                .get()
+                .uri(BookingResource.BOOKING + BookingResource.RENTERS + BookingResource.RENTERS_NAME, "Invented")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
     void testGetRentersNameByModelType() {
         this.webTestClient
                 .get()
@@ -108,5 +117,29 @@ public class BookingResourceIT {
                 .expectBodyList(Renter.class)
                 .value(renters -> assertEquals(1, renters.size()))
                 .value(renters -> assertEquals("Manuel", renters.get(0).getName()));
+    }
+
+    @Test
+    void testGetRentersNameByModelTypeBadRequest() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(BookingResource.BOOKING + BookingResource.VEHICLES + BookingResource.SEARCH)
+                        .queryParam("q", "jajaja:Opel Insignia")
+                        .build())
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testGetRentersNameByModelTypeNotFound() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(BookingResource.BOOKING + BookingResource.VEHICLES + BookingResource.SEARCH)
+                        .queryParam("q", "Model_Type:Invented")
+                        .build())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

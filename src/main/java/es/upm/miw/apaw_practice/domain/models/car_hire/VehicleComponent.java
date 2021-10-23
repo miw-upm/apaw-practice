@@ -9,4 +9,8 @@ public interface VehicleComponent {
     Boolean isComposite();
 
     int numberOfNodes();
+
+    int numberOfLeafNodes();
+
+    int numberOfCompositeNodes();
 }

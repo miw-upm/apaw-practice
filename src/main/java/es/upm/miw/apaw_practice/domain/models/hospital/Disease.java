@@ -6,7 +6,7 @@ public class Disease {
     private Boolean severe;
     private String alias;
 
-    public Disease(){
+    public Disease() {
         //empty for framework
     }
 

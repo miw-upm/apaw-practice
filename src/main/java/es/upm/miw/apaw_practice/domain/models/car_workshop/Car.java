@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.car_workshop;
 import java.util.List;
 import java.util.Objects;
 
-public class Car {
+public class Car implements CarComponent{
 
     private String licensePlate;
     private Boolean revision;
@@ -35,7 +35,7 @@ public class Car {
         this.licensePlate = licensePlate;
     }
 
-    public boolean getRevision() {
+    public boolean isRevision() {
         return revision;
     }
 
@@ -81,9 +81,23 @@ public class Car {
                 '}';
     }
 
-    public void doDefault() {
-        if (Objects.isNull(owner)) {
-            this.owner = new Owner("00000000Z", "John Doe");
-        }
+    @Override
+    public boolean isComposite() {
+        return false;
+    }
+
+    @Override
+    public void add(CarComponent treeCars) {
+        // Do nothing because it is a leaf
+    }
+
+    @Override
+    public void remove(CarComponent treeCars) {
+        // Do nothing because it is a leaf
+    }
+
+    @Override
+    public int numberOfNodes() {
+        return 1;
     }
 }

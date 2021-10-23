@@ -29,4 +29,10 @@ public class BossPersistenceMongodb implements BossPersistence {
     public void delete(String description, String effort) {
         this.bossRepository.deleteByDescriptionAndEffort(description, effort);
     }
+
+    @Override
+    public Stream<Boss> readAll() {
+        return this.bossRepository.findAll().stream()
+                .map(BossEntity::toBoss);
+    }
 }

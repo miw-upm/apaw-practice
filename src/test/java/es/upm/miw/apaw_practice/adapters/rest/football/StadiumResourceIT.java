@@ -23,6 +23,14 @@ class StadiumResourceIT {
                 .body(BodyInserters.fromValue(stadium))
                 .exchange()
                 .expectStatus().isOk();
+
+        stadium.setName("Bernabeu");
+        this.webTestClient
+                .put()
+                .uri(StadiumResource.STADIUMS + "/Madrid" + StadiumResource.NAME)
+                .body(BodyInserters.fromValue(stadium))
+                .exchange()
+                .expectStatus().isOk();
     }
 
     @Test

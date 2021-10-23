@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.music_manager;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Band {
     private String bandName;
@@ -49,6 +50,19 @@ public class Band {
 
     public void setArtists(List<Artist> artists) {
         this.artists = artists;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Band)) return false;
+        Band band = (Band) o;
+        return Objects.equals(bandName, band.bandName) && Objects.equals(origin, band.origin) && Objects.equals(active, band.active) && Objects.equals(artists, band.artists);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bandName, origin, active, artists);
     }
 
     @Override

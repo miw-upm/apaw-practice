@@ -29,13 +29,13 @@ class FootballPlayerResourceIT {
                 .value(players -> assertTrue(players.get(3).isDefense()));
     }
 
-   /* @Test
+    @Test
     void testFindGoalsByStadiumName() {
         WebTestClient.BodySpec<Integer, ?> goalsScored = this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.SEARCH)
-                                .queryParam("q", "Bernabeu")
+                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.GOALS)
+                                .queryParam("StadiumName", "Bernabeu")
                                 .build())
                 .exchange()
                 .expectStatus().isOk()
@@ -46,10 +46,23 @@ class FootballPlayerResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.SEARCH)
-                                .queryParam("q", "Reino de Leon")
+                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.GOALS)
+                                .queryParam("StadiumName", "Reino de Leon")
                                 .build())
                 .exchange()
                 .expectStatus().isNotFound();
-    }*/
+    }
+
+    @Test
+    void testFindFootballPlayersByPrincipalRefereeName() {
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(FootballPlayerResource.PLAYERS + FootballPlayerResource.DEFENSES)
+                                .queryParam("principalRefereeName", "Undiano")
+                                .build())
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

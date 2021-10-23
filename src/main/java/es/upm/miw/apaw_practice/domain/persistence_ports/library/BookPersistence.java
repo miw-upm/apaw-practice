@@ -7,5 +7,10 @@ import java.util.stream.Stream;
 
 @Repository
 public interface BookPersistence {
+
     Stream<Book> findAll();
+
+    Stream<String> findDistinctCategoryNameByAuthorFullName(String authorFullName);
+
+    String findTop1AuthorNationalityByDescriptionCategory(String description);
 }

@@ -9,8 +9,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import static com.mongodb.internal.connection.tlschannel.util.Util.assertTrue;
-
 @Repository("vehiclePersistence")
 public class VehiclePersistenceMongodb implements VehiclePersistence {
 
@@ -31,10 +29,14 @@ public class VehiclePersistenceMongodb implements VehiclePersistence {
 
     @Override
     public Vehicle update(Vehicle vehicle) {
-        assertTrue(this.vehicleRepository.findByVinNumber(vehicle.getVinNumber()).isPresent());
-        VehicleEntity vehicleEntity = this.vehicleRepository
-                .findByVinNumber(vehicle.getVinNumber()).get();
-        BeanUtils.copyProperties(vehicle, vehicleEntity, "id", "vinNumber");
-        return this.vehicleRepository.save(vehicleEntity).toVehicle();
+        if (this.vehicleRepository.findByVinNumber(vehicle.getVinNumber()).isEmpty()) {
+            throw new NotFoundException("Vehicle VIN_Number: " + vehicle.getVinNumber());
+        } else {
+            VehicleEntity vehicleEntity = this.vehicleRepository.findByVinNumber(vehicle.getVinNumber()).get();
+            BeanUtils.copyProperties(vehicle, vehicleEntity, "id", "vinNumber");
+            return this.vehicleRepository
+                    .save(vehicleEntity)
+                    .toVehicle();
+        }
     }
 }

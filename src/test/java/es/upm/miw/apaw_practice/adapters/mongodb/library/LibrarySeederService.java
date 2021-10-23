@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.UUID;
 
 @Service
 public class LibrarySeederService {
@@ -32,38 +31,37 @@ public class LibrarySeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Library Initial Load -----------");
         CategoryEntity[] categories = {
-                new CategoryEntity("Horror", "causes discomfort and fear"),
-                new CategoryEntity("Drama", "a conflict that takes place in the lives of character"),
-                new CategoryEntity("Poetry", "authors choose a particular rhythm and style to evoke and portray various emotions and ideas"),
-                new CategoryEntity("Thriller", "the hero attempt to stop and defeat the villain to save their own life rather than uncover a specific crime"),
-                new CategoryEntity("Romance", "makes your heart all warm and fuzzy focuses on the love story of the main protagonists"),
-                new CategoryEntity("Society", "makes your heart all warm and fuzzy focuses on the love story of the main protagonists")
+                CategoryEntity.builder("Horror", "causes discomfort and fear").build(),
+                CategoryEntity.builder("Drama", "a conflict that takes place in the lives of character").build(),
+                CategoryEntity.builder("Poetry", "authors choose a particular rhythm and style to evoke and portray various emotions and ideas").build(),
+                CategoryEntity.builder("Thriller", "the hero attempt to stop and defeat the villain to save their own life rather than uncover a specific crime").build(),
+                CategoryEntity.builder("Romance", "makes your heart all warm and fuzzy focuses on the love story of the main protagonists").build(),
+                CategoryEntity.builder("Society", "makes your heart all warm and fuzzy focuses on the love story of the main protagonists").build()
         };
         this.categoryRepository.saveAll(Arrays.asList(categories));
 
         AuthorEntity[] authors = {
-                new AuthorEntity("Alda do Espírito Santo", "Santomean", "Poetry"),
-                new AuthorEntity("José Saramago", "Portuguese", "Romance"),
-                new AuthorEntity("Juan Gómez-Jurado", "Spanish", "Thriller"),
-                new AuthorEntity("Manuel Vilas", "Spanish", "Poetry"),
-                new AuthorEntity("Francisco Javier Olmedo", "Spanish", "Horror"),
-                new AuthorEntity("William Shakespeare", "English", "Drama"),
-                new AuthorEntity("Machado de Assis", "Brazilian", "Poetry"),
-                new AuthorEntity("Zygmunt Bauman", "", ""),
-                new AuthorEntity("Leonidas Donskis", "", "")
+                AuthorEntity.builder("Alda do Espírito Santo", "Santomean").writingStyle("Poetry").build(),
+                AuthorEntity.builder("José Saramago", "Portuguese").writingStyle("Romance").build(),
+                AuthorEntity.builder("Juan Gómez-Jurado", "Spanish").writingStyle("Thriller").build(),
+                AuthorEntity.builder("Manuel Vilas", "Spanish").writingStyle("Poetry").build(),
+                AuthorEntity.builder("Francisco Javier Olmedo", "Spanish").writingStyle("Horror").build(),
+                AuthorEntity.builder("William Shakespeare", "English").writingStyle("Drama").build(),
+                AuthorEntity.builder("Machado de Assis", "Brazilian").writingStyle("Poetry").build(),
+                AuthorEntity.builder("Zygmunt Bauman", "Polish").writingStyle("Social").build(),
+                AuthorEntity.builder("Leonidas Donskis", "Lithuanian").writingStyle("Politics").build()
         };
         this.authorRepository.saveAll(Arrays.asList(authors));
 
         BookEntity[] books = {
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1A").title("Mataram o rio da minha cidade").available(true).numbersOfPages(77).publicationDate(LocalDate.of(2002, 3, 12)).category(categories[2]).authors(authors[0]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1B").title("Ensaio sobre a Cegueira").available(true).numbersOfPages(344).publicationDate(LocalDate.of(1995, 1, 1)).category(categories[4]).authors(authors[1]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1C").title("Reina roja").available(true).numbersOfPages(568).publicationDate(LocalDate.of(2018, 11, 8)).category(categories[3]).authors(authors[2]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1D").title("Alegría").available(true).numbersOfPages(351).publicationDate(LocalDate.of(2019, 11, 5)).category(categories[3]).authors(authors[3]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1E").title("Mal Nacido").available(true).numbersOfPages(416).publicationDate(LocalDate.of(2019, 7, 11)).category(categories[0]).authors(authors[4]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1F").title("The Tragedy of Romeo and Juliet").available(true).numbersOfPages(179).publicationDate(LocalDate.of(1597, 10, 9)).category(categories[1]).authors(authors[5]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1G").title("O Alienista ").available(true).numbersOfPages(66).publicationDate(LocalDate.of(2021, 10, 11)).category(categories[3]).authors(authors[6]).build(),
-                BookEntity.builder().id(UUID.randomUUID().toString()).isbn("1H").title("Maldad líquida").available(true).numbersOfPages(348).publicationDate(LocalDate.of(2019, 1, 22)).category(categories[5]).authors(authors[7]).authors(authors[8]).build()
-
+                BookEntity.builder().isbn("1A").title("Mataram o rio da minha cidade").available(true).numbersOfPages(77).publicationDate(LocalDate.of(2002, 3, 12)).category(categories[2]).authors(authors[0]).build(),
+                BookEntity.builder().isbn("1B").title("Ensaio sobre a Cegueira").available(true).numbersOfPages(344).publicationDate(LocalDate.of(1995, 1, 1)).category(categories[4]).authors(authors[1]).build(),
+                BookEntity.builder().isbn("1C").title("Reina roja").available(true).numbersOfPages(568).publicationDate(LocalDate.of(2018, 11, 8)).category(categories[3]).authors(authors[2]).build(),
+                BookEntity.builder().isbn("1D").title("Alegría").available(true).numbersOfPages(351).publicationDate(LocalDate.of(2019, 11, 5)).category(categories[3]).authors(authors[3]).build(),
+                BookEntity.builder().isbn("1E").title("Mal Nacido").available(true).numbersOfPages(416).publicationDate(LocalDate.of(2019, 7, 11)).category(categories[0]).authors(authors[4]).build(),
+                BookEntity.builder().isbn("1F").title("The Tragedy of Romeo and Juliet").available(true).numbersOfPages(179).publicationDate(LocalDate.of(1597, 10, 9)).category(categories[1]).authors(authors[5]).build(),
+                BookEntity.builder().isbn("1G").title("O Alienista ").available(true).numbersOfPages(66).publicationDate(LocalDate.of(2021, 10, 11)).category(categories[1]).authors(authors[5]).build(),
+                BookEntity.builder().isbn("1H").title("Maldad líquida").available(true).numbersOfPages(348).publicationDate(LocalDate.of(2019, 1, 22)).category(categories[1]).authors(authors[7]).authors(authors[8]).build()
         };
         this.bookRepository.saveAll(Arrays.asList(books));
 

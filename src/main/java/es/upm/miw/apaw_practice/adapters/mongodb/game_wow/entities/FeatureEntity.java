@@ -23,7 +23,7 @@ public class FeatureEntity {
     }
 
     public FeatureEntity(Feature feature) {
-        BeanUtils.copyProperties(feature,this);
+        BeanUtils.copyProperties(feature, this);
         this.id = UUID.randomUUID().toString();
     }
 
@@ -75,7 +75,18 @@ public class FeatureEntity {
         this.extraSpell = extraSpell;
     }
 
-    public Feature toFeature(){
-        return new Feature(this.part,this.spellPower,this.meleeAtack,this.temple,this.extraSpell);
+    public Feature toFeature() {
+        return Feature.builder()
+                .part(this.part)
+                .spellPower(this.spellPower)
+                .meleeAtack(this.meleeAtack)
+                .temple(this.temple)
+                .extraSpell(this.extraSpell)
+                .build();
+
+    }
+
+    public void fromFeature(Feature feature) {
+        BeanUtils.copyProperties(feature, this);
     }
 }

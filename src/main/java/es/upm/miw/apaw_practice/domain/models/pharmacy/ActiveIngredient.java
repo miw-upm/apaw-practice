@@ -1,17 +1,32 @@
 package es.upm.miw.apaw_practice.domain.models.pharmacy;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ActiveIngredient {
 
+    private String code;
+    private Drug drug;
     private List<String> components;
     private Integer dose;
-    private Drug drug;
 
-    public ActiveIngredient(List<String> components, Integer dose, Drug drug) {
+    public ActiveIngredient(String code, List<String> components, Integer dose, Drug drug) {
+        this.code = code;
         this.components = components;
         this.dose = dose;
         this.drug = drug;
+    }
+
+    public ActiveIngredient() {
+        //empty from framework
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public List<String> getComponents() {
@@ -39,11 +54,20 @@ public class ActiveIngredient {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActiveIngredient that = (ActiveIngredient) o;
+        return code.equals(that.code);
+    }
+
+    @Override
     public String toString() {
         return "ActiveIngredient{" +
-                "components=" + components +
-                ", dose=" + dose +
+                "code='" + code + '\'' +
                 ", drug=" + drug +
+                ", components=" + components +
+                ", dose=" + dose +
                 '}';
     }
 }

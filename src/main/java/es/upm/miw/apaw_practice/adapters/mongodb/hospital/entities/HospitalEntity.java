@@ -1,13 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.hospital.Hospital;
-import es.upm.miw.apaw_practice.domain.models.hospital.Patient;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class HospitalEntity {
     @Id
@@ -18,7 +18,7 @@ public class HospitalEntity {
     @DBRef
     private List<PatientEntity> patients;
 
-    public HospitalEntity(){
+    public HospitalEntity() {
         //empty for framework
     }
 
@@ -28,6 +28,11 @@ public class HospitalEntity {
         this.address = address;
         this.availableRooms = availableRooms;
         this.patients = patients;
+    }
+
+    public HospitalEntity(Hospital hospital) {
+        BeanUtils.copyProperties(hospital, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
@@ -70,6 +75,17 @@ public class HospitalEntity {
         this.patients = patients;
     }
 
+    public Hospital toHospital() {
+        Hospital hospital = new Hospital();
+        BeanUtils.copyProperties(this, hospital, "patients");
+        if (this.getPatients() != null) {
+            hospital.setPatients(this.patients.stream()
+                    .map(PatientEntity::toPatient)
+                    .collect(Collectors.toList()));
+        }
+        return hospital;
+    }
+
     @Override
     public String toString() {
         return "HospitalEntity{" +
@@ -80,4 +96,5 @@ public class HospitalEntity {
                 ", patients=" + this.patients +
                 '}';
     }
+
 }

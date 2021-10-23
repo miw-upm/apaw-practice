@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.services.gym;
 
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
+import es.upm.miw.apaw_practice.domain.models.gym.AthleteNameUpdating;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gym.AthletePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,4 +27,10 @@ public class AthleteService {
             throw new ConflictException("Nie exist: " + nie);
         }
     }
+
+
+    public void updateAtheleteName(AthleteNameUpdating athleteNameUpdating) {
+        this.athletePersistence.updateNextFumigation(athleteNameUpdating);
+    }
+
 }

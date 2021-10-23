@@ -1,7 +1,11 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
+import es.upm.miw.apaw_practice.domain.models.shop.Tag;
+
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VideoGame {
 
@@ -9,14 +13,38 @@ public class VideoGame {
     private LocalDate releaseDate;
     private String rating;
     private Critic critic;
-    private List<Console> consoles;
+    private List<Platform> platforms;
 
-    public VideoGame(String title, LocalDate releaseDate, String rating, Critic critic, List<Console> consoles) {
+    public VideoGame() {
+        //empty for framework
+    }
+
+    public VideoGame(String title, LocalDate releaseDate, String rating, Critic critic, List<Platform> platforms) {
         this.title = title;
         this.releaseDate = releaseDate;
         this.rating = rating;
         this.critic = critic;
-        this.consoles = consoles;
+        this.platforms = platforms;
+    }
+
+    public static VideoGame ofPlatformConsoleName(VideoGame game) {
+        game.setPlatforms(
+                game.platforms.stream()
+                        .map(Platform::ofConsoleName)
+                        .collect(Collectors.toList())
+        );
+        return game;
+    }
+
+    public static VideoGame ofTitlePlatformConsoleName(VideoGame game) {
+        VideoGame gameDto = new VideoGame();
+        gameDto.setTitle(game.getTitle());
+        gameDto.setPlatforms(
+                game.platforms.stream()
+                        .map(Platform::ofConsoleName)
+                        .collect(Collectors.toList())
+        );
+        return gameDto;
     }
 
     public String getTitle() {
@@ -51,12 +79,12 @@ public class VideoGame {
         this.critic = critic;
     }
 
-    public List<Console> getConsoles() {
-        return consoles;
+    public List<Platform> getPlatforms() {
+        return platforms;
     }
 
-    public void setConsoles(List<Console> consoles) {
-        this.consoles = consoles;
+    public void setPlatforms(List<Platform> platforms) {
+        this.platforms = platforms;
     }
 
     @Override
@@ -66,7 +94,7 @@ public class VideoGame {
                 ", releaseDate=" + releaseDate +
                 ", rating='" + rating + '\'' +
                 ", critic=" + critic +
-                ", consoles=" + consoles +
+                ", platforms=" + platforms +
                 '}';
     }
 }

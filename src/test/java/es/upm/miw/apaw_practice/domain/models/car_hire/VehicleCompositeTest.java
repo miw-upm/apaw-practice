@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class VehicleCompositeTest {
+class VehicleCompositeTest {
 
     private static final List<Vehicle> vehicles = new ArrayList<>();
     private static final List<VehicleLeaf> vehiclesLeaf = new ArrayList<>();
@@ -68,6 +68,12 @@ public class VehicleCompositeTest {
         assertThrows(UnsupportedOperationException.class, () -> vehiclesLeaf.get(0).add(vehiclesLeaf.get(1)));
         assertFalse(vehiclesLeaf.get(0).isComposite());
         assertEquals(1, vehiclesLeaf.get(0).numberOfNodes());
+
+        assertNull(vehiclesLeaf.get(0).getVehicle().getId());
+        assertEquals("8763JAJA", vehiclesLeaf.get(0).getVehicle().getVinNumber());
+        assertEquals(0, vehiclesLeaf.get(0).getVehicle().getDailyCost().compareTo(new BigDecimal("50")));
+        assertEquals(50000, vehiclesLeaf.get(0).getVehicle().getKilometersAmount());
+        assertEquals(Boolean.TRUE, vehiclesLeaf.get(0).getVehicle().getGoodCondition());
     }
 
     @Test
@@ -79,15 +85,26 @@ public class VehicleCompositeTest {
         assertNotEquals(vehiclesLeaf.get(0), vehiclesComposite.get(0).getVehicleComponents().get(0));
         assertEquals(4, vehiclesComposite.get(0).numberOfNodes());
         vehiclesComposite.get(0).add(vehiclesLeaf.get(0));
+
         assertEquals(5, vehiclesComposite.get(0).numberOfNodes());
+        assertEquals(4, vehiclesComposite.get(0).numberOfLeafNodes());
+        assertEquals(1, vehiclesComposite.get(0).numberOfCompositeNodes());
 
         assertEquals(3, vehiclesComposite.get(1).getVehicleComponents().get(2).numberOfNodes());
+        assertEquals(2, vehiclesComposite.get(1).getVehicleComponents().get(2).numberOfLeafNodes());
+        assertEquals(1, vehiclesComposite.get(1).getVehicleComponents().get(2).numberOfCompositeNodes());
 
         assertEquals(3, vehiclesComposite.get(1).getVehicleComponents().get(3).numberOfNodes());
+        assertEquals(2, vehiclesComposite.get(1).getVehicleComponents().get(3).numberOfLeafNodes());
+        assertEquals(1, vehiclesComposite.get(1).getVehicleComponents().get(3).numberOfCompositeNodes());
 
         assertEquals(9, vehiclesComposite.get(1).numberOfNodes());
+        assertEquals(6, vehiclesComposite.get(1).numberOfLeafNodes());
+        assertEquals(3, vehiclesComposite.get(1).numberOfCompositeNodes());
 
         assertEquals(15, treeFather.numberOfNodes());
+        assertEquals(10, treeFather.numberOfLeafNodes());
+        assertEquals(5, treeFather.numberOfCompositeNodes());
     }
 
     @AfterAll

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
@@ -43,15 +42,6 @@ public class BookingResource {
     @GetMapping(BookingResource.VEHICLES + BookingResource.SEARCH)
     public Set<Renter> getRentersNameByModelType(@RequestParam String q) {
         String type = new LexicalAnalyzer().extractWithAssure(q, "Model_Type:");
-        Set<String> rentersName = this.bookingService.getRentersNameByModelType(type)
-                .map(Renter::getName)
-                .collect(Collectors.toSet());
-        Set<Renter> renters = new LinkedHashSet<>();
-        for (String name : rentersName) {
-            Renter renter = new Renter();
-            renter.setName(name);
-            renters.add(renter);
-        }
-        return renters;
+        return this.bookingService.getRentersNameByModelType(type);
     }
 }

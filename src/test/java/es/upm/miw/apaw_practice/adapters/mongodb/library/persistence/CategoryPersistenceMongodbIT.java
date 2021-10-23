@@ -23,7 +23,7 @@ class CategoryPersistenceMongodbIT {
 
     @Test
     void testUpdate() {
-        Category category = new Category("Poetry", "Test Description");
+        Category category = Category.builder("Thriller","Test Description").build();
         Category cat = this.categoryPersistenceMongodb.update(category);
         assertEquals(cat.getDescription(), category.getDescription());
         assertEquals(cat.getName(), category.getName());
@@ -31,7 +31,7 @@ class CategoryPersistenceMongodbIT {
 
     @Test
     void testUpdateFail() {
-        Category category = new Category("Horro", "causes discomfor and fear");
+        Category category = Category.builder("Horro", "causes discomfor and fear").build();
         assertThrows(NotFoundException.class, () -> this.categoryPersistenceMongodb.update(category));
     }
 }

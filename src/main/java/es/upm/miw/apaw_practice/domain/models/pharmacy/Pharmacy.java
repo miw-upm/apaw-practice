@@ -10,8 +10,11 @@ public class Pharmacy {
     Integer postalCode;
     List<Drug> drug;
 
-    public Pharmacy(String registrationNumber, String address, Integer postalCode, List<Drug> drug) {
-        this.registrationNumber = registrationNumber;
+    public Pharmacy() {
+        //empty for framework
+    }
+
+    public Pharmacy(String address, Integer postalCode, List<Drug> drug) {
         this.address = address;
         this.postalCode = postalCode;
         this.drug = drug;
