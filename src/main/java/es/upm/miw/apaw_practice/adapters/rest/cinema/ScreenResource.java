@@ -14,6 +14,7 @@ public class ScreenResource {
 
     static final String SCREENS = "/cinema/screens";
     static final String NUMBER_ID = "/{number}";
+    static final String ACTORS_NAME = "/films/actors/names";
 
     private final ScreenService screenService;
 
@@ -25,6 +26,11 @@ public class ScreenResource {
     @PutMapping(NUMBER_ID)
     public Screen update(@PathVariable Integer number, @RequestBody List<Spectator> spectatorList) {
         return this.screenService.updateSpectators(number, spectatorList);
+    }
+
+    @GetMapping(NUMBER_ID + ACTORS_NAME)
+    public List<String> getActorsNameByScreenNumber(@PathVariable Integer number) {
+        return this.screenService.getActorsNameByScreenNumber(number);
     }
 
 }

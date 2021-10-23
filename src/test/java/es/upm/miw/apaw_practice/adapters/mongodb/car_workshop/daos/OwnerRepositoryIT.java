@@ -15,9 +15,17 @@ public class OwnerRepositoryIT {
     private OwnerRepository ownerRepository;
 
     @Test
-    void testFindByDni(){
+    void testFindByDni() {
         assertTrue(this.ownerRepository.findByDni("00000000Z").isPresent());
         OwnerEntity owner = this.ownerRepository.findByDni("00000000Z").get();
+        assertEquals("00000000Z", owner.getDni());
+        assertEquals("John Doe", owner.getName());
+    }
+
+    @Test
+    void testFindByName() {
+        assertTrue(this.ownerRepository.findByName("John Doe").isPresent());
+        OwnerEntity owner = this.ownerRepository.findByName("John Doe").get();
         assertEquals("00000000Z", owner.getDni());
         assertEquals("John Doe", owner.getName());
     }

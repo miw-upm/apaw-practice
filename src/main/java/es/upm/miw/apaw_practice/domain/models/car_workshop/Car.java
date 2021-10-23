@@ -35,7 +35,7 @@ public class Car implements CarComponent{
         this.licensePlate = licensePlate;
     }
 
-    public boolean getRevision() {
+    public boolean isRevision() {
         return revision;
     }
 

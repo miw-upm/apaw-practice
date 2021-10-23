@@ -9,8 +9,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository("patientPersistence")
-public class PatientPersistenceMongodb implements PatientPersistence{
+public class PatientPersistenceMongodb implements PatientPersistence {
 
     private final PatientRepository patientRepository;
 
@@ -27,9 +30,22 @@ public class PatientPersistenceMongodb implements PatientPersistence{
     @Override
     public Patient update(String dni, Patient patient) {
         PatientEntity patientEntity = this.patientRepository
-                .findByDni(patient.getDni()).get();
+                .findByDni(dni)
+                .orElseThrow(() -> new NotFoundException("Patient dni: " + dni));
 
         BeanUtils.copyProperties(patient, patientEntity, "id");
         return this.patientRepository.save(patientEntity).toPatient();
     }
+
+    @Override
+    public List<Patient> findAllWithDiseaseSeverity(Boolean severity) {
+        return this.patientRepository.findAll().stream()
+                .map(PatientEntity::toPatient)
+                .filter(patient -> patient.getDiseases() != null)
+                .filter(patient -> patient.getDiseases().stream()
+                        .anyMatch(disease -> disease.getSevere() == severity)
+                ).collect(Collectors.toList());
+    }
+
+
 }

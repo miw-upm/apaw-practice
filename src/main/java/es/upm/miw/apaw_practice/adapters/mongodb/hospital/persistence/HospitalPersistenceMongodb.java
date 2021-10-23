@@ -7,6 +7,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.hospital.HospitalPersis
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 @Repository("hospitalPersistence")
 public class HospitalPersistenceMongodb implements HospitalPersistence {
 
@@ -22,5 +24,12 @@ public class HospitalPersistenceMongodb implements HospitalPersistence {
         return this.hospitalRepository
                 .save(new HospitalEntity(hospital))
                 .toHospital();
+    }
+
+    @Override
+    public Stream<Hospital> findByAvailableRoomsGreaterThan(int rooms) {
+        return this.hospitalRepository.findAll().stream()
+                .filter(hospitalEntity -> hospitalEntity.getAvailableRooms() > rooms)
+                .map(HospitalEntity::toHospital);
     }
 }
