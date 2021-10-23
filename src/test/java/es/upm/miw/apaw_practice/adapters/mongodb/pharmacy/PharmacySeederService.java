@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.pharmacy;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.daos.ActiveIngredientRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.daos.DispensingRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.daos.DrugRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.daos.PharmacyRepository;
@@ -26,16 +27,18 @@ public class PharmacySeederService {
     private DispensingRepository dispensingRepository;
     @Autowired
     private PharmacyRepository pharmacyRepository;
+    @Autowired
+    private ActiveIngredientRepository activeIngredientRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Pharmacy Initial Load -----------");
         DrugEntity[] drugs = {
-                new DrugEntity(new Drug("A9001", "Frenadol Complex", true, new BigDecimal(5.39))),
-                new DrugEntity(new Drug("A9002", "Stopcold", true, new BigDecimal(2.28))),
-                new DrugEntity(new Drug("A9003", "Espidifen", true, new BigDecimal(8.12))),
-                new DrugEntity(new Drug("A9004", "Neobrufen", true, new BigDecimal(10.05))),
-                new DrugEntity(new Drug("A9005", "Pirexin", false, new BigDecimal(5.15))),
-                new DrugEntity(new Drug("A9006", "Naxopreno Normon", true, new BigDecimal(3.15))),
+                new DrugEntity(new Drug("A9001", "Frenadol Complex", true, new BigDecimal("5.39"))),
+                new DrugEntity(new Drug("A9002", "Stopcold", true, new BigDecimal("2.28"))),
+                new DrugEntity(new Drug("A9003", "Espidifen", true, new BigDecimal("8.12"))),
+                new DrugEntity(new Drug("A9004", "Neobrufen", true, new BigDecimal("10.05"))),
+                new DrugEntity(new Drug("A9005", "Pirexin", false, new BigDecimal("5.15"))),
+                new DrugEntity(new Drug("A9006", "Naxopreno Normon", true, new BigDecimal("3.15"))),
         };
         this.drugRepository.saveAll(Arrays.asList(drugs));
         PharmacyEntity[] pharmacy = {
@@ -47,21 +50,23 @@ public class PharmacySeederService {
         };
         this.pharmacyRepository.saveAll(Arrays.asList(pharmacy));
         ActiveIngredientEntity[] activeIngredients = {
-                new ActiveIngredientEntity(drugs[0], List.of("75% Paracetamol", "15% Cafeína"), 1000),
-                new ActiveIngredientEntity(drugs[0], List.of("75% Paracetamol", "15% Cafeína"), 500),
-                new ActiveIngredientEntity(drugs[1], List.of("75% Paracetamol", "15% Cafeína"), 1000),
-                new ActiveIngredientEntity(drugs[2], List.of("100% Ibuprofeno"), 600),
-                new ActiveIngredientEntity(drugs[3], List.of("100% Ibuprofeno"), 600),
-                new ActiveIngredientEntity(drugs[4], List.of("100% Ibuprofeno"), 600),
-                new ActiveIngredientEntity(drugs[5], List.of("100% Naxopreno"), 400),
+                new ActiveIngredientEntity("B9001", List.of("75% Paracetamol", "15% Cafeína"),1000,drugs[0]),
+                new ActiveIngredientEntity("B9002", List.of("75% Paracetamol", "15% Cafeína"),700,drugs[0]),
+                new ActiveIngredientEntity("B9003", List.of("100% Paracetamol"),1000,drugs[0]),
+                new ActiveIngredientEntity("B9004", List.of("100% Ibuprofeno"),600,drugs[2]),
+                new ActiveIngredientEntity("B9005", List.of("100% Ibuprofeno"),600,drugs[3]),
+                new ActiveIngredientEntity("B9006", List.of("100% Ibuprofeno"),600,drugs[4]),
+                new ActiveIngredientEntity("B9007", List.of("100% Naxopreno"),400,drugs[5]),
         };
+
+        this.activeIngredientRepository.saveAll(Arrays.asList(activeIngredients));
         DispensingEntity[] dispensings = {
-                new DispensingEntity(LocalDateTime.of(2021, 7, 2, 21, 34), Arrays.asList(activeIngredients[0])),
-                new DispensingEntity(LocalDateTime.of(2021, 8, 12, 9, 00), Arrays.asList(activeIngredients[1], activeIngredients[2])),
-                new DispensingEntity(LocalDateTime.of(2021, 2, 1, 20, 05), Arrays.asList(activeIngredients[2], activeIngredients[3])),
-                new DispensingEntity(LocalDateTime.of(2021, 9, 27, 8, 15), Arrays.asList(activeIngredients[5])),
+                new DispensingEntity(LocalDateTime.of(2021, 7, 2, 21, 34), List.of(activeIngredients[0])),
+                new DispensingEntity(LocalDateTime.of(2021, 8, 12, 9, 0), Arrays.asList(activeIngredients[1], activeIngredients[2])),
+                new DispensingEntity(LocalDateTime.of(2021, 2, 1, 20, 5), Arrays.asList(activeIngredients[2], activeIngredients[3])),
+                new DispensingEntity(LocalDateTime.of(2021, 9, 27, 8, 15), List.of(activeIngredients[5])),
                 new DispensingEntity(LocalDateTime.of(2021, 10, 28, 23, 15), Arrays.asList(activeIngredients[3], activeIngredients[5])),
-                new DispensingEntity(LocalDateTime.of(2021, 1, 5, 13, 20), Arrays.asList(activeIngredients[3])),
+                new DispensingEntity(LocalDateTime.of(2021, 1, 5, 13, 20), List.of(activeIngredients[3])),
         };
         this.dispensingRepository.saveAll(Arrays.asList(dispensings));
 
