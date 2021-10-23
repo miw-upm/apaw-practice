@@ -19,7 +19,7 @@ class PrincipalRefereePersistenceMongodbIT {
 
     @Test
     void testCreateAndRead() {
-        PrincipalReferee principalReferee = new PrincipalReferee("Merayo", "Ponferrada", 27);
+        PrincipalReferee principalReferee = PrincipalReferee.builder().name("Merayo").cityBorn("Ponferrada").age(27).build();
         this.principalRefereePersistenceMongodb.create(principalReferee);
         assertTrue(this.principalRefereeRepository.findAll().stream()
                 .anyMatch(principalRefereeBD ->

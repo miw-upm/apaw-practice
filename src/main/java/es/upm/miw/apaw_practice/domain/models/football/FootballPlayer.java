@@ -12,11 +12,8 @@ public class FootballPlayer {
         //empty for framework
     }
 
-    public FootballPlayer(Boolean defense, Integer goalsScored, Integer age, String name) {
-        this.defense = defense;
-        this.goalsScored = goalsScored;
-        this.age = age;
-        this.name = name;
+    public static FootballPlayerBuilders.Defense builder() {
+        return new Builder();
     }
 
     public Boolean isDefense() {
@@ -72,5 +69,42 @@ public class FootballPlayer {
                 ", age=" + age +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public static class Builder implements FootballPlayerBuilders.Name, FootballPlayerBuilders.Age, FootballPlayerBuilders.GoalsScored, FootballPlayerBuilders.Defense, FootballPlayerBuilders.FootballPlayerBuild {
+        private final FootballPlayer footballPlayer;
+
+        public Builder() {
+            this.footballPlayer = new FootballPlayer();
+        }
+
+        @Override
+        public FootballPlayerBuilders.GoalsScored defense(Boolean defense) {
+            this.footballPlayer.defense = defense;
+            return this;
+        }
+
+        @Override
+        public FootballPlayerBuilders.Age goalsScored(Integer goalsScored) {
+            this.footballPlayer.goalsScored = goalsScored;
+            return this;
+        }
+
+        @Override
+        public FootballPlayerBuilders.Name age(Integer age) {
+            this.footballPlayer.age = age;
+            return this;
+        }
+
+        @Override
+        public FootballPlayerBuilders.FootballPlayerBuild name(String name) {
+            this.footballPlayer.name = name;
+            return this;
+        }
+
+        @Override
+        public FootballPlayer build() {
+            return this.footballPlayer;
+        }
     }
 }

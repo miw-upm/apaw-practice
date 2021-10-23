@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.car_workshop;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
-import es.upm.miw.apaw_practice.domain.models.car_workshop.Tyre;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -13,7 +12,7 @@ class TyreResourceIT {
     private WebTestClient webTestClient;
 
     @Test
-    void testDeleteByManufacturer(){
+    void testDeleteByManufacturer() {
         this.webTestClient
                 .delete()
                 .uri(TyreResource.TYRES + TyreResource.MANUFACTURER, "Hankook")
@@ -22,7 +21,7 @@ class TyreResourceIT {
     }
 
     @Test
-    void testFindModelByOwnerNameAndRevision(){
+    void testFindModelByOwnerNameAndRevision() {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
