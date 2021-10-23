@@ -25,13 +25,11 @@ public class ActorPersistenceMongodb implements ActorPersistence {
 
     private final ActorRepository actorRepository;
     private final FilmRepository filmRepository;
-    private final ScreenRepository screenRepository;
 
     @Autowired
-    public ActorPersistenceMongodb(ActorRepository actorRepository, FilmRepository filmRepository, ScreenRepository screenRepository) {
+    public ActorPersistenceMongodb(ActorRepository actorRepository, FilmRepository filmRepository) {
         this.actorRepository = actorRepository;
         this.filmRepository = filmRepository;
-        this.screenRepository = screenRepository;
     }
 
     @Override

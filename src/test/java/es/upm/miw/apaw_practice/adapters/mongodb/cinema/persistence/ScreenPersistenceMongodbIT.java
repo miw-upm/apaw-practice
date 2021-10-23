@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
 class ScreenPersistenceMongodbIT {
@@ -34,5 +35,11 @@ class ScreenPersistenceMongodbIT {
         Screen screen = this.screenPersistenceMongodb.readByNumber(1);
         Screen newScreen = this.screenPersistenceMongodb.update(screen, spectatorList);
         assertEquals(screen.getSpectators(), spectatorList);
+    }
+
+    @Test
+    void testGetActorsNameByScreenNumber() {
+        List<String> nameList = this.screenPersistenceMongodb.getActorsNameByScreenNumber(2);
+        assertEquals(4, nameList.size());
     }
 }
