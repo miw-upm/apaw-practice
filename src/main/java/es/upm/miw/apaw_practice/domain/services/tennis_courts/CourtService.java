@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Service
 public class CourtService {
 
-    private CourtPersistence courtPersistence;
+    private final CourtPersistence courtPersistence;
 
     @Autowired
     public CourtService(CourtPersistence courtPersistence){
