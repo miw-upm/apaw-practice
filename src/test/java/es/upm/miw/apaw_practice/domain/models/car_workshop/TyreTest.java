@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-
-public class TyreTest {
+class TyreTest {
 
     @Test
     void testBuilder() {
