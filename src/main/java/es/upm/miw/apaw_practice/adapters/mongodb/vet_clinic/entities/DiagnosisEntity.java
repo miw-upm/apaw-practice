@@ -31,8 +31,8 @@ public class DiagnosisEntity {
         this.medicine = medicine;
     }
 
-    public Boolean getCritical() {
-        return critical;
+    public Boolean isCritical() {
+        return this.critical;
     }
 
     public void setCritical(Boolean critical) {

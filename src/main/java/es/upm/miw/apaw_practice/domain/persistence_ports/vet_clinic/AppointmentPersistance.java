@@ -13,6 +13,5 @@ public interface AppointmentPersistance {
     Appointment create(Appointment appointment);
     Appointment update(LocalDate date, LocalTime hour, Appointment appointment);
     Appointment read(LocalDate date, LocalTime hour);
-    //Stream<Appointment> findByDateAndVet(LocalDate date, Vet vet);
     Stream<Appointment> findByConsumed(Boolean consumed);
 }

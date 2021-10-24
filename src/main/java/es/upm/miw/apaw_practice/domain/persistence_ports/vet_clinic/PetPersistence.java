@@ -12,4 +12,5 @@ public interface PetPersistence {
     Pet readByNickAndOwner(String nick, String owner);
     Pet readByChip(Integer chip);
     Pet update(Pet pet, List<Diagnosis> diagnosisList);
+    List<String> findNicksByVetNumber(Integer vetNumber);
 }

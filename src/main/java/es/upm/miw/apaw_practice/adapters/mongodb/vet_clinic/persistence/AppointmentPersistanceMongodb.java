@@ -42,15 +42,6 @@ public class AppointmentPersistanceMongodb implements AppointmentPersistance {
                 .toAppointment();
     }
 
-    /*@Override
-    public Stream<Appointment> findByDateAndVet(LocalDate date, Vet vet) {
-        VetEntity vetEntity = new VetEntity();
-        vetEntity.fromVet(vet);
-        return vetEntity.getAppointmentEntities().stream()
-                .filter(appointment -> date.equals(appointment.getDate()))
-                .map(AppointmentEntity::toAppointment);
-    }*/
-
     @Override
     public Stream<Appointment> findByConsumed(Boolean consumed) {
         return this.appointmentRepository.findAll().stream()

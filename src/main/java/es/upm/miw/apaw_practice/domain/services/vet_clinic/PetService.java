@@ -25,4 +25,8 @@ public class PetService {
         Pet pet = this.petPersistence.readByChip(chip);
         return this.petPersistence.update(pet, diagnosisList);
     }
+
+    public List<String> findNicksByVetNumber(Integer vetNumber){
+        return this.petPersistence.findNicksByVetNumber(vetNumber);
+    }
 }

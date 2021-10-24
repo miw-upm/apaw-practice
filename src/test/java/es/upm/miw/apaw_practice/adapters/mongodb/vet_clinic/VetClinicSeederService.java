@@ -44,7 +44,10 @@ public class VetClinicSeederService {
                 new PetEntity(0444, 12, "Coca", "Pedro", List.of(diagnosis[0], diagnosis[1],
                         diagnosis[3], diagnosis[2])),
                 new PetEntity(5555, 3, "Chetto", "Pablo", List.of(diagnosis[0])),
-                new PetEntity(0666, 6, "Lilith", "Pedro", List.of(diagnosis[0]))
+                new PetEntity(0666, 6, "Lilith", "Pedro", List.of(diagnosis[0])),
+                new PetEntity(9777, 9, "Makalu", "Gg", List.of(diagnosis[2])),
+                new PetEntity(9888, 3, "Makalu", "Mery", List.of(diagnosis[2])),
+                new PetEntity(066, 7, "Lua", "Carmen", List.of(diagnosis[0], diagnosis[1])),
         };
         this.petRepository.saveAll(Arrays.asList(pets));
 
@@ -60,13 +63,17 @@ public class VetClinicSeederService {
                 new AppointmentEntity(LocalDate.of(2021, 12, 4), LocalTime.of(16, 45),
                         false, pets[1]),
                 new AppointmentEntity(LocalDate.of(2021, 12, 4), LocalTime.of(17, 45),
-                        false, pets[1])
+                        false, pets[1]),
+                new AppointmentEntity(LocalDate.of(2022, 11, 4), LocalTime.of(12, 45),
+                        false, pets[6]),
+                new AppointmentEntity(LocalDate.of(2021, 11, 8), LocalTime.of(18, 15),
+                        false, pets[7])
         };
         this.appointmentRepository.saveAll(Arrays.asList(appointments));
 
         VetEntity[] vets = {
                 new VetEntity(Vet.builder().vetNumber(111).name("vet1").surname("surname1").build(),
-                        List.of(appointments[0])),
+                        List.of(appointments[0], appointments[1], appointments[6], appointments[7])),
                 new VetEntity(Vet.builder().vetNumber(222).name("vet2").surname("").build(),
                         List.of(appointments[0], appointments[1])),
                 new VetEntity(Vet.builder().vetNumber(333).name("vet3").surname("surname3").build(),
