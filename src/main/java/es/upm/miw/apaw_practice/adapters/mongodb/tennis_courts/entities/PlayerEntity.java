@@ -96,7 +96,11 @@ public class PlayerEntity {
 
     public static List<Equipment> toEquipmentList(List<EquipmentEntity> equipmentList){
         return equipmentList.stream()
-                .map(equipment -> new Equipment(equipment.getType(), equipment.getQuantity(), equipment.getPricePerUnit()))
+                .map(equipment -> Equipment.builder()
+                        .type(equipment.getType())
+                        .quantity(equipment.getQuantity())
+                        .pricePerUnit(equipment.getPricePerUnit())
+                        .build())
                 .collect(Collectors.toList());
     }
 
