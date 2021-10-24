@@ -2,13 +2,10 @@ package es.upm.miw.apaw_practice.adapters.rest.tv_series;
 
 import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.tv_series.Episode;
-import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeriesFinishedUpdating;
 import es.upm.miw.apaw_practice.domain.services.tv_series.TvSeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Optional;
 
 @RestController

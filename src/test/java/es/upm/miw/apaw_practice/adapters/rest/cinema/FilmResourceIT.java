@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static es.upm.miw.apaw_practice.adapters.rest.cinema.FilmResource.*;
-import java.util.List;
 
 @RestTestConfig
 class FilmResourceIT {
-
     @Autowired
     private WebTestClient webTestClient;
 

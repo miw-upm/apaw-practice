@@ -11,7 +11,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import static es.upm.miw.apaw_practice.adapters.rest.tv_series.TvSeriesResource.*;
 
 @RestTestConfig
-public class TvSeriesResourceIT {
+class TvSeriesResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -49,7 +49,11 @@ public class TvSeriesResourceIT {
 
     @Test
     void testCreateEpisode() {
-        Episode episode = new Episode(1,2,25);
+        Episode episode = Episode.builder()
+                .number(1)
+                .season(2)
+                .duration(25)
+                .build();
         this.webTestClient
                 .post()
                 .uri(TV_SERIES + TITLE + EPISODES, "Kimetsu No Yaiba")

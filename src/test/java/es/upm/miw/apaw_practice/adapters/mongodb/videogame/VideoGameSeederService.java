@@ -30,13 +30,21 @@ public class VideoGameSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- VideoGame Initial Load -----------");
 
+        CriticEntity[] critics = {
+                new CriticEntity(false, 79, 2.5),
+                new CriticEntity(false, 79, 2.5),
+                new CriticEntity(true, 92, 8.2),
+                new CriticEntity(true, 92, 8.5),
+                new CriticEntity(false, 84, 9.1),
+        };
+
         PlatformEntity[] platforms = {
-            new PlatformEntity(new Platform("switch", "oled", "64gb")),
-            new PlatformEntity(new Platform("wiiu", "deluxe", "8gb")),
-            new PlatformEntity(new Platform("xbox", "series x", "1tb")),
-            new PlatformEntity(new Platform("xbox", "one s", "1tb")),
-            new PlatformEntity(new Platform("playstation", "ps5", "825gb")),
-            new PlatformEntity(new Platform("playstation", "ps4", "1tb")),
+            new PlatformEntity(new Platform("oled", "switch", "64gb")),
+            new PlatformEntity(new Platform("deluxe", "wiiu", "8gb")),
+            new PlatformEntity(new Platform("series x", "xbox", "1tb")),
+            new PlatformEntity(new Platform("one s", "xbox", "1tb")),
+            new PlatformEntity(new Platform("ps5", "playstation", "825gb")),
+            new PlatformEntity(new Platform("ps4", "playstation", "1tb")),
         };
         this.platformRepository.saveAll(Arrays.asList(platforms));
 
@@ -48,11 +56,11 @@ public class VideoGameSeederService {
         this.videoGameCompanyRepository.saveAll(Arrays.asList(companies));
 
         VideoGameEntity[] videogames = {
-            new VideoGameEntity("nba 2k21", LocalDate.of(2020, 9, 3), "e", new CriticEntity(false, 79, 2.5), List.of(platforms[0], platforms[3], platforms[5])),
-            new VideoGameEntity("ratchet & clank: rift apart", LocalDate.of(2021, 6, 11), "e10+", new CriticEntity(false, 88, 8.7), List.of(platforms[4])),
-            new VideoGameEntity("forza horizon 4", LocalDate.of(2020, 9, 3), "e", new CriticEntity(true, 92, 8.2), List.of(platforms[2], platforms[3])),
-            new VideoGameEntity("bayonetta 2", LocalDate.of(2014, 9, 20), "e", new CriticEntity(true, 92, 8.5), List.of(platforms[0], platforms[1])),
-            new VideoGameEntity("xenoblade chronicles x", LocalDate.of(2015, 4, 29), "e", new CriticEntity(false, 84, 9.1), List.of(platforms[1]))
+            new VideoGameEntity("nba 2k21", LocalDate.of(2020, 9, 3), "e", critics[0], List.of(platforms[0], platforms[3], platforms[5])),
+            new VideoGameEntity("ratchet & clank: rift apart", LocalDate.of(2021, 6, 11), "e10+", critics[1], List.of(platforms[4])),
+            new VideoGameEntity("forza horizon 4", LocalDate.of(2020, 9, 3), "e", critics[2], List.of(platforms[2], platforms[3])),
+            new VideoGameEntity("bayonetta 2", LocalDate.of(2014, 9, 20), "e", critics[3], List.of(platforms[0], platforms[1])),
+            new VideoGameEntity("xenoblade chronicles x", LocalDate.of(2015, 4, 29), "e", critics[4], List.of(platforms[1]))
         };
         this.videoGameRepository.saveAll(Arrays.asList(videogames));
     }

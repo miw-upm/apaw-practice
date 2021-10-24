@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Document
@@ -81,4 +82,26 @@ public class PharmacyEntity {
         BeanUtils.copyProperties(pharmacy, this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PharmacyEntity that = (PharmacyEntity) o;
+        return registrationNumber.equals(that.registrationNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(registrationNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "PharmacyEntity{" +
+                "registrationNumber='" + registrationNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", postalCode=" + postalCode +
+                ", drugEntities=" + drugEntities +
+                '}';
+    }
 }

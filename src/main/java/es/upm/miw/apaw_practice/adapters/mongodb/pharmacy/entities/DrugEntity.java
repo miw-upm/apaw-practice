@@ -70,8 +70,26 @@ public class DrugEntity {
         return drug;
     }
 
-    public void fromDrug(Drug drug) {
-        BeanUtils.copyProperties(drug, this);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DrugEntity that = (DrugEntity) o;
+        return barcode.equals(that.barcode);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(barcode);
+    }
+
+    @Override
+    public String toString() {
+        return "DrugEntity{" +
+                "barcode='" + barcode + '\'' +
+                ", name='" + name + '\'' +
+                ", commercialized=" + commercialized +
+                ", price=" + price +
+                '}';
+    }
 }

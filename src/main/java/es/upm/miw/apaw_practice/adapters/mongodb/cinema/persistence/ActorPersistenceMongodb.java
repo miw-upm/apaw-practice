@@ -2,13 +2,10 @@ package es.upm.miw.apaw_practice.adapters.mongodb.cinema.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.ActorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.FilmRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.ScreenRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ActorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.FilmEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
-import es.upm.miw.apaw_practice.domain.models.cinema.Film;
-import es.upm.miw.apaw_practice.domain.models.cinema.Screen;
 import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
 import es.upm.miw.apaw_practice.domain.persistence_ports.cinema.ActorPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
