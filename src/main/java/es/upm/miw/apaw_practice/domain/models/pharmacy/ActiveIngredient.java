@@ -54,4 +54,26 @@ public class ActiveIngredient {
         this.drug = drug;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActiveIngredient that = (ActiveIngredient) o;
+        return code.equals(that.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
+    }
+
+    @Override
+    public String toString() {
+        return "ActiveIngredient{" +
+                "code='" + code + '\'' +
+                ", drug=" + drug +
+                ", components=" + components +
+                ", dose=" + dose +
+                '}';
+    }
 }

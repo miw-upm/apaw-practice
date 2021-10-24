@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.pharmacy;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Drug {
 
@@ -93,5 +94,29 @@ public class Drug {
         public Drug build() {
             return this.drug;
         }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Drug drug = (Drug) o;
+        return barcode.equals(drug.barcode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(barcode);
+    }
+
+    @Override
+    public String toString() {
+        return "Drug{" +
+                "barcode='" + barcode + '\'' +
+                ", name='" + name + '\'' +
+                ", commercialized=" + commercialized +
+                ", price=" + price +
+                '}';
     }
 }

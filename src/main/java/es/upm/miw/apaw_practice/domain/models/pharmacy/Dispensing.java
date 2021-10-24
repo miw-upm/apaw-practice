@@ -52,4 +52,17 @@ public class Dispensing {
         return id.equals(that.id);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Dispensing{" +
+                "id='" + id + '\'' +
+                ", activeIngredients=" + activeIngredients +
+                ", dispensingTimestamp=" + dispensingTimestamp +
+                '}';
+    }
 }

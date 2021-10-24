@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Objects;
 
 @Document
 public class ActiveIngredientEntity {
@@ -70,4 +71,26 @@ public class ActiveIngredientEntity {
         return activeIngredient;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActiveIngredientEntity that = (ActiveIngredientEntity) o;
+        return code.equals(that.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
+    }
+
+    @Override
+    public String toString() {
+        return "ActiveIngredientEntity{" +
+                "code='" + code + '\'' +
+                ", drugEntity=" + drugEntity +
+                ", components=" + components +
+                ", dose=" + dose +
+                '}';
+    }
 }
