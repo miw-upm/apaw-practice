@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.pharmacy;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 public class Drug {
 
@@ -12,6 +11,10 @@ public class Drug {
 
     public Drug() {
         //empty for framework
+    }
+
+    public static DrugBuilders.Barcode builder() {
+        return new Builder();
     }
 
     public Drug(String barcode, String name, Boolean commercialized, BigDecimal price) {
@@ -51,5 +54,44 @@ public class Drug {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public static class Builder implements DrugBuilders.Barcode, DrugBuilders.Name, DrugBuilders.Commercialized, DrugBuilders.Price, DrugBuilders.Optionals {
+
+        private final Drug drug;
+
+        public Builder() {
+            this.drug = new Drug();
+        }
+
+        @Override
+        public DrugBuilders.Name barcode(String barcode) {
+            this.drug.barcode = barcode;
+            return this;
+        }
+
+        @Override
+        public DrugBuilders.Commercialized name(String name) {
+            this.drug.name = name;
+            return this;
+        }
+
+        @Override
+        public DrugBuilders.Price commercialized(Boolean commercialized) {
+            this.drug.commercialized = commercialized;
+            return this;
+        }
+
+        @Override
+        public DrugBuilders.Optionals price(BigDecimal price) {
+            this.drug.price = price;
+            return this;
+        }
+
+
+        @Override
+        public Drug build() {
+            return this.drug;
+        }
     }
 }
