@@ -28,5 +28,4 @@ public class MatchResource {
     public void updateWeather(@RequestBody MatchWeatherDto matchWeatherDto) {
         this.matchservice.updateWeather(matchWeatherDto);
     }
-
 }
