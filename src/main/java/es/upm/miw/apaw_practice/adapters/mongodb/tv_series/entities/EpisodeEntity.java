@@ -44,7 +44,11 @@ public class EpisodeEntity {
     }
 
     public Episode toEpisode() {
-        return new Episode(this.number,this.season,this.duration);
+        return Episode.builder()
+                .number(this.number)
+                .season(this.season)
+                .duration(this.duration)
+                .build();
     }
 
     public void fromEpisode(Episode episode) {

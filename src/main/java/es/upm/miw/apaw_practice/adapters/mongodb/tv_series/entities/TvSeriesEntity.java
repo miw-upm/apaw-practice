@@ -57,13 +57,13 @@ public class TvSeriesEntity {
     }
 
     private void episodesFromTvSeries(List<Episode> episodes) {
-        List<EpisodeEntity> episodeEntities = new ArrayList<>();
+        List<EpisodeEntity> newEpisodeEntities = new ArrayList<>();
         for(Episode episode : episodes) {
             EpisodeEntity episodeEntity = new EpisodeEntity();
             episodeEntity.fromEpisode(episode);
-            episodeEntities.add(episodeEntity);
+            newEpisodeEntities.add(episodeEntity);
         }
-        this.episodeEntities = episodeEntities;
+        this.episodeEntities = newEpisodeEntities;
     }
 
     public String getId() {
