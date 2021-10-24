@@ -27,7 +27,7 @@ public class GymResourceIT {
 
         this.webTestClient
                 .put()
-                .uri(GymResource.Gyms + GymResource.Address + GymResource.cellphone, "calle toledo 32")
+                .uri(GymResource.GYMS + GymResource.ADDRESS + GymResource.CELLPHONE, "calle toledo 32")
                 .body(BodyInserters.fromValue(gym))
                 .exchange()
                 .expectStatus().isOk();
@@ -38,7 +38,7 @@ public class GymResourceIT {
         String label = "Basic Fit";
         this.webTestClient
                 .get()
-                .uri(GymResource.Gyms + GymResource.SEARCH, label)
+                .uri(GymResource.GYMS + GymResource.SEARCH, label)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Athlete.class)

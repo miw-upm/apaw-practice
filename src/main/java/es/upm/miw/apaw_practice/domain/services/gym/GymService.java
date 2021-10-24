@@ -19,12 +19,12 @@ public class GymService {
 
 
     public Gym updateCellphone(String address, Gym gym) {
-        Gym gymToupdate = this.gymPersistence.readByAddress(address);
+        Gym gymToUpdate = this.gymPersistence.readByAddress(address);
 
-        return this.gymPersistence.update(gymToupdate.getAddress(), gym);
+        return this.gymPersistence.update(gymToUpdate.getAddress(), gym);
     }
 
-    public List<Athlete> findAthletByGymLabel(String label) {
+    public List<Athlete> findAthleteByGymLabel(String label) {
 
         return this.gymPersistence.findAthleteByGymLabel(label);
     }

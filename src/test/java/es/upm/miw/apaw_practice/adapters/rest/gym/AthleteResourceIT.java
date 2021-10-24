@@ -26,7 +26,7 @@ public class AthleteResourceIT {
 
         this.webTestClient
                 .post()
-                .uri(AthleteResource.athlets)
+                .uri(AthleteResource.ATHLETE)
                 .body(BodyInserters.fromValue(athlete))
                 .exchange()
                 .expectStatus().isOk()
@@ -41,7 +41,7 @@ public class AthleteResourceIT {
 
         this.webTestClient
                 .post()
-                .uri(AthleteResource.athlets)
+                .uri(AthleteResource.ATHLETE)
                 .body(BodyInserters.fromValue(athlete))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
@@ -52,7 +52,7 @@ public class AthleteResourceIT {
         AthleteNameUpdating athleteNameUpdating = new AthleteNameUpdating("ana", "karim");
         this.webTestClient
                 .patch()
-                .uri(AthleteResource.athlets + AthleteResource.Name)
+                .uri(AthleteResource.ATHLETE + AthleteResource.NAME)
                 .body(BodyInserters.fromValue(athleteNameUpdating))
                 .exchange()
                 .expectStatus().isOk();
@@ -63,7 +63,7 @@ public class AthleteResourceIT {
         AthleteNameUpdating athleteNameUpdating = new AthleteNameUpdating();
         this.webTestClient
                 .patch()
-                .uri(AthleteResource.athlets + AthleteResource.Name)
+                .uri(AthleteResource.ATHLETE + AthleteResource.NAME)
                 .body(BodyInserters.fromValue(athleteNameUpdating))
                 .exchange()
                 .expectStatus().isBadRequest();

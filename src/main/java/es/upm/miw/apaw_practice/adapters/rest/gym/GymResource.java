@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(GymResource.Gyms)
+@RequestMapping(GymResource.GYMS)
 public class GymResource {
-    static final String Gyms = "/gym/gym";
-    static final String Address = "/{address}";
-    static final String cellphone = "/cellphone";
+    static final String GYMS = "/gym/gym";
+    static final String ADDRESS = "/{address}";
+    static final String CELLPHONE = "/cellphone";
     static final String SEARCH = "/{label}";
 
 
@@ -24,14 +24,14 @@ public class GymResource {
         this.gymService = gymService;
     }
 
-    @PutMapping(GymResource.Address + GymResource.cellphone)
+    @PutMapping(GymResource.ADDRESS + GymResource.CELLPHONE)
     public Gym updateCellPhone(@PathVariable String address, @RequestBody Gym gym) {
         return this.gymService.updateCellphone(address, gym);
     }
 
     @GetMapping(GymResource.SEARCH)
-    public List<Athlete> findAthletByGymLabel(@PathVariable String label) {
-        return this.gymService.findAthletByGymLabel(label);
+    public List<Athlete> findAthleteByGymLabel(@PathVariable String label) {
+        return this.gymService.findAthleteByGymLabel(label);
 
     }
 

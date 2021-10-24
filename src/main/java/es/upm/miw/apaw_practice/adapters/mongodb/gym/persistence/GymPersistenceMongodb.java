@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.GymRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.LessonRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.GymEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
@@ -16,14 +15,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository("GymPersistence")
-public class GymPresistenceMongodb implements GymPersistence {
+public class GymPersistenceMongodb implements GymPersistence {
     private final GymRepository gymRepository;
-    private final LessonRepository lessonRepository;
 
     @Autowired
-    public GymPresistenceMongodb(GymRepository gymRepository, LessonRepository lessonRepository) {
+    public GymPersistenceMongodb(GymRepository gymRepository) {
         this.gymRepository = gymRepository;
-        this.lessonRepository = lessonRepository;
+
     }
 
     @Override

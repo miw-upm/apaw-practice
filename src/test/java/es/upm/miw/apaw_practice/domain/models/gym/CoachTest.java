@@ -22,7 +22,7 @@ public class CoachTest {
                 .lastname("escobar")
                 .phone(123456)
                 .lessons(lesson)
-                .bulid();
+                .build();
         assertEquals("12345678a", coach.getDni());
         assertEquals("karim", coach.getFirstName());
         assertEquals("escobar", coach.getLastName());
