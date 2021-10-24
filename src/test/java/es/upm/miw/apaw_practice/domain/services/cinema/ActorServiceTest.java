@@ -12,10 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
 public class ActorServiceTest {
-
     @Autowired
     private ActorService actorService;
-    private ActorPersistence actorPersistence;
 
     @Test
     void testCreate () {

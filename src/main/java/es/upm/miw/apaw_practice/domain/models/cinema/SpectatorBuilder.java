@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.cinema;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 public interface SpectatorBuilder {
 

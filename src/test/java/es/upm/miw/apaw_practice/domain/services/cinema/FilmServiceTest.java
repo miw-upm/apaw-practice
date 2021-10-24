@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
 class FilmServiceTest {
-
     @Autowired
     private FilmService filmService;
 

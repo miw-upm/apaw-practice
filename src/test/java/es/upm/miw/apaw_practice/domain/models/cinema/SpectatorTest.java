@@ -4,7 +4,6 @@ import es.upm.miw.apaw_practice.TestConfig;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 @TestConfig
 public class SpectatorTest {
 
