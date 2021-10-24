@@ -2,15 +2,10 @@ package es.upm.miw.apaw_practice.adapters.mongodb.cinema.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 @TestConfig
 public class ActorPersistenceMongodbIT {

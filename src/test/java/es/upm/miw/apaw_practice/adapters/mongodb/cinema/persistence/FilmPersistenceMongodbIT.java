@@ -27,7 +27,6 @@ class FilmPersistenceMongodbIT {
     @Test
     void testFindByScreenNumber() {
         Stream<Film> films = this.filmPersistenceMongodb.findByScreenNumber(2);
-        System.out.println(this.filmPersistenceMongodb.findByScreenNumber(2).findFirst());
         assertEquals(films.count(), 2);
     }
 
