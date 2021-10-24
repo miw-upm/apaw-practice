@@ -1,12 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.gym.Coach;
+import es.upm.miw.apaw_practice.domain.models.gym.Lesson;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -97,5 +99,13 @@ public class CoachEntity {
     @Override
     public int hashCode() {
         return Objects.hash(dni);
+    }
+
+    public Coach toCoach() {
+        Coach coach = new Coach();
+        BeanUtils.copyProperties(this, coach, "lesson");
+        Lesson lesson = this.lesson.toLesson();
+        coach.setLesson(lesson);
+        return coach;
     }
 }
