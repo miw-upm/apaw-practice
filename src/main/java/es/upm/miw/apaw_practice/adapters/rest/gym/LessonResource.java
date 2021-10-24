@@ -25,12 +25,12 @@ public class LessonResource {
 
     @GetMapping(Search)
     public Lesson findByLabel(@RequestParam String title) {
-        return this.lessonService.findBytitle(title);
+        return this.lessonService.findByTitle(title);
     }
 
 
     @GetMapping(TITLE + NAME)
-    public List<String> findGymBYTitleandName(@PathVariable("title") String title, @PathVariable("name") String name) {
-        return this.lessonService.findGymByTitelAndName(title, name);
+    public List<String> findGymByTitleAndName(@PathVariable("title") String title, @PathVariable("name") String name) {
+        return this.lessonService.findGymByTitleAndName(title, name);
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static es.upm.miw.apaw_practice.adapters.rest.gym.CoachResource.DNI;
-import static es.upm.miw.apaw_practice.adapters.rest.gym.CoachResource.gyms;
+import static es.upm.miw.apaw_practice.adapters.rest.gym.CoachResource.GYMS;
 
 @RestTestConfig
 public class CoachResourceIT {
@@ -17,7 +17,7 @@ public class CoachResourceIT {
     void testDelete() {
         this.webTestClient
                 .delete()
-                .uri(gyms + DNI, "2356892A")
+                .uri(GYMS + DNI, "2356892A")
                 .exchange()
                 .expectStatus().isOk();
     }

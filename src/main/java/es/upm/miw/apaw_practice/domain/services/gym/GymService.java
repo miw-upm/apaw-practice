@@ -1,9 +1,12 @@
 package es.upm.miw.apaw_practice.domain.services.gym;
 
+import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
 import es.upm.miw.apaw_practice.domain.models.gym.Gym;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gym.GymPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GymService {
@@ -16,8 +19,13 @@ public class GymService {
 
 
     public Gym updateCellphone(String address, Gym gym) {
-        Gym gymToupdate = this.gymPersistence.readByAddress(address);
+        Gym gymToUpdate = this.gymPersistence.readByAddress(address);
 
-        return this.gymPersistence.update(gymToupdate.getAddress(), gym);
+        return this.gymPersistence.update(gymToUpdate.getAddress(), gym);
+    }
+
+    public List<Athlete> findAthleteByGymLabel(String label) {
+
+        return this.gymPersistence.findAthleteByGymLabel(label);
     }
 }

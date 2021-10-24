@@ -17,11 +17,11 @@ public class LessonService {
     }
 
 
-    public Lesson findBytitle(String title) {
+    public Lesson findByTitle(String title) {
         return this.lessonPersistence.findByTitle(title);
     }
 
-    public List<String> findGymByTitelAndName(String title, String name) {
+    public List<String> findGymByTitleAndName(String title, String name) {
         return this.lessonPersistence.findGymByTitleAndName(title, name);
     }
 }
