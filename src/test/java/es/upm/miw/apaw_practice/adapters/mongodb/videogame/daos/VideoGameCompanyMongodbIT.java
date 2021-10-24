@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class VideoGameCompanyRepositoryIT {
+public class VideoGameCompanyMongodbIT {
 
     @Autowired
     private VideoGameCompanyRepository videoGameCompanyRepository;
@@ -23,7 +23,7 @@ public class VideoGameCompanyRepositoryIT {
                                 company.getFormationDate().equals(LocalDate.of(1889, 9, 23)) &&
                                 2 == company.getPlatformEntities().size() &&
                                 "8gb".equals(company.getPlatformEntities().get(1).getMemory()) &&
-                                "oled".equals(company.getPlatformEntities().get(0).getModel())
+                                "oled".equals(company.getPlatformEntities().get(0).getConsoleName())
                 ));
     }
 }

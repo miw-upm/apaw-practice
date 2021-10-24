@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.stream.Stream;
 
 @Repository
-public interface PlatformPersistance {
+public interface PlatformPersistence {
 
     Stream<Platform> readAll();
 

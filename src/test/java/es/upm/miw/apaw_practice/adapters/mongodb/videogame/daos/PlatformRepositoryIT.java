@@ -4,8 +4,6 @@ import es.upm.miw.apaw_practice.TestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
@@ -18,10 +16,10 @@ public class PlatformRepositoryIT {
     void testCreateAndRead() {
         assertTrue(this.platformRepository.findAll().stream()
                 .anyMatch(platform ->
-                        "ps5".equals(platform.getModel()) &&
+                        "ps5".equals(platform.getConsoleName()) &&
                                 platform.getId() != null &&
                                 platform.getConsoleName() != null &&
-                                "playstation".equals(platform.getConsoleName()) &&
+                                "playstation".equals(platform.getModel()) &&
                                 platform.getMemory() != null &&
                                 "825gb".equals(platform.getMemory())
                 ));
