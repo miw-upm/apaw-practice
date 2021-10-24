@@ -26,7 +26,7 @@ public class ActiveIngredientService {
     }
 
     public Stream<ActiveIngredient> findByPharmacyAndByRepetition(String pharmacyRegistrationNumber, Boolean repeated) {
-        Stream<ActiveIngredient> activeIngredientsByPharmacy = this.pharmacyPersistence.read(pharmacyRegistrationNumber).getDrugs().stream()
+        Stream<ActiveIngredient> activeIngredientsByPharmacy = this.pharmacyPersistence.readByRegistrationNumber(pharmacyRegistrationNumber).getDrugs().stream()
                 .flatMap(drugs -> this.activeIngredientPersistence.readByDrugBarcode(drugs.getBarcode()));
         if (!repeated) {
             Set<List<String>> allComponents = new HashSet<>();

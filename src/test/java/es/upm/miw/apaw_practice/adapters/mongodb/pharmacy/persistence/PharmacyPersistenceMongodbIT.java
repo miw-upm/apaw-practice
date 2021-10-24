@@ -25,11 +25,11 @@ public class PharmacyPersistenceMongodbIT {
     @Test
     void testCreateAndUpdate() {
         Pharmacy pharmacy =
-                new Pharmacy("666666","Calle Estrella nº35", 27009, List.of(new Drug("A9001", "Frenadol Complex", true, new BigDecimal(5.39))));
+                new Pharmacy("666666","Calle Estrella nº35", 27009, List.of(new Drug("A9001", "Frenadol Complex", true, new BigDecimal("5.39"))));
         Pharmacy pharmacyBD = this.pharmacyPersistence.create(pharmacy);
         pharmacyBD.setPostalCode(1234);
         this.pharmacyPersistence.update(pharmacyBD.getRegistrationNumber(), pharmacyBD);
-        pharmacyBD = this.pharmacyPersistence.read(pharmacyBD.getRegistrationNumber());
+        pharmacyBD = this.pharmacyPersistence.readByRegistrationNumber(pharmacyBD.getRegistrationNumber());
         assertEquals(1234, pharmacyBD.getPostalCode());
         pharmacySeederService.deleteAll();
         pharmacySeederService.seedDatabase();
