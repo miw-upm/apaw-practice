@@ -53,4 +53,26 @@ public class Pharmacy {
         this.drugs = drugs;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pharmacy pharmacy = (Pharmacy) o;
+        return registrationNumber.equals(pharmacy.registrationNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(registrationNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "Pharmacy{" +
+                "registrationNumber='" + registrationNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", postalCode=" + postalCode +
+                ", drugs=" + drugs +
+                '}';
+    }
 }
