@@ -25,4 +25,10 @@ public class DrugPersistenceMongodb implements DrugPersistence {
                 .findAll().stream()
                 .map(DrugEntity::toDrug);
     }
+
+    @Override
+    public Drug readByBarcode(String barcode) {
+        return this.drugRepository
+                .findByBarcode(barcode).get().toDrug();
+    }
 }

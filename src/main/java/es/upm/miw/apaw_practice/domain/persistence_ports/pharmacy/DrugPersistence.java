@@ -7,5 +7,9 @@ import java.util.stream.Stream;
 
 @Repository
 public interface DrugPersistence {
+
     Stream<Drug> readAll();
+
+    Drug readByBarcode(String barcode);
+
 }
