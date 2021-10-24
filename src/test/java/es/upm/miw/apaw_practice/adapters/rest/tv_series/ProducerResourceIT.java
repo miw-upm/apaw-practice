@@ -10,7 +10,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class ProducerResourceIT {
+class ProducerResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

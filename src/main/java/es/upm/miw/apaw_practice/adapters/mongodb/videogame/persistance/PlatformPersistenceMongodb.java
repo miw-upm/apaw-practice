@@ -4,19 +4,19 @@ import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.PlatformReposito
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.PlatformEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.videogame.Platform;
-import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.PlatformPersistance;
+import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.PlatformPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository("platformPersistance")
-public class PlatformPersistanceMongodb implements PlatformPersistance {
+@Repository("platformPersistence")
+public class PlatformPersistenceMongodb implements PlatformPersistence {
 
     private final PlatformRepository platformRepository;
 
     @Autowired
-    public PlatformPersistanceMongodb(PlatformRepository platformRepository) {
+    public PlatformPersistenceMongodb(PlatformRepository platformRepository) {
         this.platformRepository = platformRepository;
     }
 

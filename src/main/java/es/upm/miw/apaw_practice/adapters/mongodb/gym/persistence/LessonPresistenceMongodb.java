@@ -48,7 +48,7 @@ public class LessonPresistenceMongodb implements LessonPersistence {
                 .orElseThrow(() -> new NotFoundException("Athlete with Name" + name));
         List<String> labelList = new ArrayList<>();
 
-        if (checkIfAthlet(athlete, lesson)) {
+        if (checkIfAthlete(athlete, lesson)) {
             List<Coach> coaches = this.coachRepository.findAll().stream()
                     .filter(coachEntity -> coachEntity.getLesson().getTitle().equals(title))
                     .map(CoachEntity::toCoach)
@@ -68,7 +68,7 @@ public class LessonPresistenceMongodb implements LessonPersistence {
 
     }
 
-    private boolean checkIfAthlet(Athlete athlete, Lesson lesson) {
+    private boolean checkIfAthlete(Athlete athlete, Lesson lesson) {
         for (Athlete athlete1 : lesson.getAthletes()) {
             if (athlete1 == athlete)
                 return true;

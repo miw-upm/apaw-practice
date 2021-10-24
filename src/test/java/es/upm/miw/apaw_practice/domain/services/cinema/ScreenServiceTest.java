@@ -14,15 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
 class ScreenServiceTest {
-
     @Autowired
     private ScreenService screenService;
 
-    @Autowired
-    private ScreenPersistence screenPersistence;
-
     @Test
-
     void testUpdateSpectators() {
         Integer number = 2;
         List<Spectator> spectatorList = List.of(new Spectator[]{
@@ -33,5 +28,13 @@ class ScreenServiceTest {
         Screen screen = screenService.updateSpectators(number, spectatorList);
         assertEquals(spectatorList, screen.getSpectators());
         assertEquals(3, screen.getSpectators().size());
+    }
+
+    @Test
+    void testGetActorsNameByScreenNumber() {
+        List<String> names = screenService.getActorsNameByScreenNumber(2);
+        assertEquals(4, names.size());
+        assertEquals("Woody", names.get(0));
+
     }
 }

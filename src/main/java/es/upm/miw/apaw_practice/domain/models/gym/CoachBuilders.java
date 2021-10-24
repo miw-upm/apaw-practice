@@ -23,6 +23,6 @@ public interface CoachBuilders {
     }
 
     interface Optionals {
-        Coach bulid();
+        Coach build();
     }
 }

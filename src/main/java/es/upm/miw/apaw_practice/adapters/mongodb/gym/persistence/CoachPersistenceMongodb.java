@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("CoachPersistence")
-public class CoachPresistenceMongodb implements CoachPersistence {
+public class CoachPersistenceMongodb implements CoachPersistence {
     private final CoachRepository coachRepository;
 
     @Autowired
-    public CoachPresistenceMongodb(CoachRepository coachRepository) {
+    public CoachPersistenceMongodb(CoachRepository coachRepository) {
         this.coachRepository = coachRepository;
     }
 

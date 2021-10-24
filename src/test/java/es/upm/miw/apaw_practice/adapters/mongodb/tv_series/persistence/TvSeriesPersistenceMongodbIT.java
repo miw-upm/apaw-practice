@@ -11,7 +11,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class TvSeriesPersistenceMongodbIT {
+class TvSeriesPersistenceMongodbIT {
 
     @Autowired
     private TvSeriesPersistenceMongodb tvSeriesPersistence;

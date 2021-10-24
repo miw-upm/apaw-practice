@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Document
 public class PlatformEntity {
-
     @Id
     private String id;
     @Indexed(unique = true)
@@ -26,13 +25,6 @@ public class PlatformEntity {
     public PlatformEntity(Platform platform) {
         BeanUtils.copyProperties(platform, this);
         this.id = UUID.randomUUID().toString();
-    }
-
-    public PlatformEntity(String consoleName, String model, String memory) {
-        this.id = UUID.randomUUID().toString();
-        this.consoleName = consoleName;
-        this.model = model;
-        this.memory = memory;
     }
 
     public String getId() {
@@ -78,13 +70,13 @@ public class PlatformEntity {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (consoleName.equals(((PlatformEntity) obj).consoleName));
+    public int hashCode() {
+        return consoleName.hashCode();
     }
 
     @Override
-    public int hashCode() {
-        return consoleName.hashCode();
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (consoleName.equals(((PlatformEntity) obj).consoleName));
     }
 
     @Override
