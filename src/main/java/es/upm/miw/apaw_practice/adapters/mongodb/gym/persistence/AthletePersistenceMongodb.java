@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository("AthletePersistence")
-public class AthletePresistenceMongodb implements AthletePersistence {
+public class AthletePersistenceMongodb implements AthletePersistence {
     private final AthleteRepository athleteRepository;
 
     @Autowired
-    public AthletePresistenceMongodb(AthleteRepository athleteRepository) {
+    public AthletePersistenceMongodb(AthleteRepository athleteRepository) {
         this.athleteRepository = athleteRepository;
     }
 
@@ -37,7 +37,7 @@ public class AthletePresistenceMongodb implements AthletePersistence {
 
 
     @Override
-    public void updateNextFumigation(AthleteNameUpdating athleteNameUpdating) {
+    public void updateAthleteName(AthleteNameUpdating athleteNameUpdating) {
         List<AthleteEntity> nameUpdat = this.athleteRepository.findAll().stream()
                 .filter(nameUpd -> nameUpd.getName().equals(athleteNameUpdating.getOldName()))
                 .collect(Collectors.toList());

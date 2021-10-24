@@ -49,6 +49,12 @@ public class Athlete {
         return new Builder();
     }
 
+    public static Athlete nameof(Athlete athlete) {
+        Athlete athlete1 = new Athlete();
+        athlete1.setName(athlete.getName());
+        return athlete1;
+    }
+
     public static class Builder implements AthleteBuilders.Nie, AthleteBuilders.Name,
             AthleteBuilders.FamilyName, AthleteBuilders.Optionals {
 

@@ -9,10 +9,8 @@ public class Episode {
         // empty for framework
     }
 
-    public Episode(Integer number, Integer season, Integer duration) {
-        this.number = number;
-        this.season = season;
-        this.duration = duration;
+    public static EpisodeBuilders.Number builder() {
+        return new Builder();
     }
 
     public Integer getNumber() {
@@ -46,5 +44,37 @@ public class Episode {
                 ", season=" + this.season +
                 ", duration=" + this.duration +
                 '}';
+    }
+
+    public static class Builder implements EpisodeBuilders.Number, EpisodeBuilders.Season, EpisodeBuilders.Duration, EpisodeBuilders.BuildEpisode {
+        private final Episode episode;
+
+        public Builder() {
+            this.episode = new Episode();
+        }
+
+
+        @Override
+        public EpisodeBuilders.Season number(Integer number) {
+            this.episode.number = number;
+            return this;
+        }
+
+        @Override
+        public EpisodeBuilders.Duration season(Integer season) {
+            this.episode.season = season;
+            return this;
+        }
+
+        @Override
+        public EpisodeBuilders.BuildEpisode duration(Integer duration) {
+            this.episode.duration = duration;
+            return this;
+        }
+
+        @Override
+        public Episode build() {
+            return this.episode;
+        }
     }
 }

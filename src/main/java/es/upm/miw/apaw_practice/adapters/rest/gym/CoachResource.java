@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(CoachResource.gyms)
+@RequestMapping(CoachResource.GYMS)
 public class CoachResource {
-    static final String gyms = "/gym/coach";
+    static final String GYMS = "/gym/coach";
     static final String DNI = "/{dni}";
 
     private final CoachService coachService;

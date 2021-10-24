@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @TestConfig
-public class PlayerSeriesPersistenceMongodbIT {
+class PlayerSeriesPersistenceMongodbIT {
 
     @Autowired
     private PlayerSeriesPersistenceMongodb playerSeriesPersistence;

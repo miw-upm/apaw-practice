@@ -29,8 +29,8 @@ public class AthleteService {
     }
 
 
-    public void updateAtheleteName(AthleteNameUpdating athleteNameUpdating) {
-        this.athletePersistence.updateNextFumigation(athleteNameUpdating);
+    public void updateAthleteName(AthleteNameUpdating athleteNameUpdating) {
+        this.athletePersistence.updateAthleteName(athleteNameUpdating);
     }
 
 }
