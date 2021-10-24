@@ -1,7 +1,7 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.persistence;
+package es.upm.miw.apaw_practice.adapters.mongodb.gym.persistence;
 
 
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.CoachRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.CoachRepository;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gym.CoachPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

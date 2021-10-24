@@ -1,7 +1,7 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.persistence;
+package es.upm.miw.apaw_practice.adapters.mongodb.gym.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.GymRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.GymEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.GymRepository;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.gym.Gym;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gym.GymPersistence;

@@ -1,8 +1,8 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.persistence;
+package es.upm.miw.apaw_practice.adapters.mongodb.gym.persistence;
 
 
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.AthleteRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.AthleteEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.AthleteRepository;
 import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
 import es.upm.miw.apaw_practice.domain.models.gym.AthleteNameUpdating;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gym.AthletePersistence;
