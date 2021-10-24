@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
+import es.upm.miw.apaw_practice.domain.models.videogame.Critic;
+import org.springframework.beans.BeanUtils;
+
 public class CriticEntity {
 
     private Boolean mustPlay;
@@ -38,6 +41,12 @@ public class CriticEntity {
 
     public void setUserScore(Double userScore) {
         this.userScore = userScore;
+    }
+
+    public Critic toCritic() {
+        Critic critic = new Critic();
+        BeanUtils.copyProperties(this, critic);
+        return critic;
     }
 
     @Override

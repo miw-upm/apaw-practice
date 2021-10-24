@@ -1,27 +1,17 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
-public class Platform {
+public class PlatformMemoryUpdating {
 
     private String consoleName;
-    private String model;
     private String memory;
 
-    public Platform() {
+    public PlatformMemoryUpdating() {
         //empty from framework
     }
 
-    public Platform(String consoleName, String model, String memory) {
+    public PlatformMemoryUpdating(String consoleName, String memory) {
         this.consoleName = consoleName;
-        this.model = model;
         this.memory = memory;
-    }
-
-    public static Platform ofPlatform(Platform platform) {
-        Platform platformDto = new Platform();
-        platformDto.setConsoleName(platform.getConsoleName());
-        platformDto.setMemory(platform.getMemory());
-        platformDto.setModel(platform.getModel());
-        return platformDto;
     }
 
     public String getConsoleName() {
@@ -30,14 +20,6 @@ public class Platform {
 
     public void setConsoleName(String consoleName) {
         this.consoleName = consoleName;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public String getMemory() {
@@ -50,9 +32,8 @@ public class Platform {
 
     @Override
     public String toString() {
-        return "Platform{" +
+        return "PlatformMemoryUpdating{" +
                 "consoleName='" + consoleName + '\'' +
-                ", model='" + model + '\'' +
                 ", memory='" + memory + '\'' +
                 '}';
     }
