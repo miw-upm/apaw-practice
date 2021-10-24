@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.rest.tennis_courts;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.CourtNumberList;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 class PlayerResourceIT {
@@ -37,9 +40,9 @@ class PlayerResourceIT {
     @Test
     void testUpdate(){
         Equipment[] equipments = {
-                new Equipment("Ball", 5, new BigDecimal("1.5")),
-                new Equipment("Racquet", 1, new BigDecimal("5")),
-                new Equipment("Shoes", 4, new BigDecimal("4"))
+                Equipment.builder().type("Ball").quantity(3).pricePerUnit(new BigDecimal("1.5")).build(),
+                Equipment.builder().type("Racquet").quantity(1).pricePerUnit(new BigDecimal("5")).build(),
+                Equipment.builder().type("Shoes").quantity(4).pricePerUnit(new BigDecimal("4")).build()
         };
         this.webTestClient
                 .put()
@@ -56,6 +59,21 @@ class PlayerResourceIT {
                 .expectStatus().isEqualTo(HttpStatus.NOT_FOUND);
         this.tennis_courtsSeederService.deleteAll();
         this.tennis_courtsSeederService.seedDatabase();
+    }
+
+    @Test
+    void testGet(){
+        this.webTestClient.get()
+                .uri(PlayerResource.PLAYERS + "/Nacho" + PlayerResource.COURTS + PlayerResource.OCCUPIED)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(CourtNumberList.class)
+                .value(courtNumberList -> assertEquals(2, courtNumberList.getNumbers().size()))
+                .value(courtNumberList -> assertEquals(2, courtNumberList.getNumbers().get(0)));
+        this.webTestClient.get()
+                .uri(PlayerResource.PLAYERS + "/Pepe" + PlayerResource.COURTS + PlayerResource.OCCUPIED)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
 

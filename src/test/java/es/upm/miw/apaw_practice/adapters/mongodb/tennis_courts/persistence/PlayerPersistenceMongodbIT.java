@@ -3,9 +3,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.persistence;
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.tennis_courts.CourtNumberList;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,16 @@ class PlayerPersistenceMongodbIT {
     @Autowired
     private Tennis_CourtsSeederService tennis_courtsSeederService;
 
+    private Equipment[] equipments;
+
+    @BeforeEach
+    void beforeEach(){
+        this.equipments = new Equipment[3];
+        equipments[0] = Equipment.builder().type("Ball").quantity(3).pricePerUnit(new BigDecimal("1.5")).build();
+        equipments[1] = Equipment.builder().type("Racquet").quantity(2).pricePerUnit(new BigDecimal("5")).build();
+        equipments[2] = Equipment.builder().type("Shoes").quantity(2).pricePerUnit(new BigDecimal("4")).build();
+    }
+
     @AfterEach
     void afterEach(){
         this.tennis_courtsSeederService.deleteAll();
@@ -39,13 +51,8 @@ class PlayerPersistenceMongodbIT {
 
     @Test
     void testUpdateAndRead(){
-        Equipment[] equipments = {
-                new Equipment("Ball", 3, new BigDecimal("1.5")),
-                new Equipment("Racquet", 2, new BigDecimal("5")),
-                new Equipment("Shoes", 2, new BigDecimal("4"))
-        };
         Player player;
-        this.playerPersistence.updateEquipment("00000006R",List.of(equipments));
+        this.playerPersistence.updateEquipment("00000006R",List.of(this.equipments));
         player = this.playerPersistence.read("00000006R");
         assertEquals("Rob", player.getName());
         assertEquals(3, player.getEquipmentList().size());
@@ -53,11 +60,17 @@ class PlayerPersistenceMongodbIT {
 
     @Test
     void testUpdateFail(){
-        Equipment[] equipments = {
-                new Equipment("Ball", 3, new BigDecimal("1.5")),
-                new Equipment("Racquet", 2, new BigDecimal("5")),
-                new Equipment("Shoes", 2, new BigDecimal("4"))
-        };
-        assertThrows(NotFoundException.class, () -> this.playerPersistence.updateEquipment("otro",List.of(equipments)));
+        assertThrows(NotFoundException.class, () -> this.playerPersistence.updateEquipment("otro",List.of(this.equipments)));
+    }
+
+    @Test
+    void testGet(){
+        int[] expectedCourtNumbers = {2, 4};
+        CourtNumberList result = this.playerPersistence.getOccupiedCourts("Nacho");
+        assertEquals(2, result.getNumbers().size());
+        for (int i = 0; i < result.getNumbers().size(); i++) {
+            assertEquals(expectedCourtNumbers[i], result.getNumbers().get(i));
+        }
+        assertEquals(0, this.playerPersistence.getOccupiedCourts("Pepe").getNumbers().size());
     }
 }

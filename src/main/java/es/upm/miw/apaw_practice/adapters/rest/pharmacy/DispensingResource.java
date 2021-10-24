@@ -19,9 +19,9 @@ public class DispensingResource {
         this.dispensingService = dispensingService;
     }
 
-    @PutMapping(ID_ID)
-    public Dispensing updateDispensing(@PathVariable String id, @RequestBody Dispensing dispensing) {
-        return this.dispensingService.updateDispensing(id, dispensing);
+    @PutMapping
+    public Dispensing updateDispensing(@RequestBody Dispensing dispensing) {
+        return this.dispensingService.updateDispensing(dispensing);
     }
 
     @DeleteMapping(ID_ID)

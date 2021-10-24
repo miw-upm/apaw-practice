@@ -25,7 +25,13 @@ public class RaidResourceIT {
     @Test
     void testUpdate() {
         Date raidDate = new Date();
-        Feature feature = new Feature("Legs", 171, 200, 100, "Use: Restores 1625 mana");
+        Feature feature = Feature.builder()
+                .part("Legs")
+                .spellPower(171)
+                .meleeAtack(200)
+                .temple(100)
+                .extraSpell("Use: Restores 1625 mana")
+                .build();
         Drop drop = new Drop("Plaguebringer's Stained Pants", "mage,priest,warlock", 264, feature);
         Boss boss = new Boss("Festergut", "25N", List.of(drop));
         Raid raidCreation = new Raid(raidDate, "ICC", "25N", 25, false, List.of(boss));

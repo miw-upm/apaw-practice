@@ -26,4 +26,18 @@ public class PlayerSeriesResourceIT {
                 .value(players -> assertEquals(4,players.size()))
                 .value(players -> assertEquals("Brittney Karbowski",players.get(3).getName()));
     }
+
+    @Test
+    void testGetTotalTvSeriesDurationByBusinessName() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(TvSeriesResource.TV_SERIES + TvSeriesResource.SEARCH)
+                                .queryParam("q","businessName:Kodansha, Ltd.")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Integer.class)
+                .value(duration -> assertEquals(1537,duration));
+    }
 }

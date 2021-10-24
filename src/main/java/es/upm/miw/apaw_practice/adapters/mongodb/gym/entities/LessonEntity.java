@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities;
 
+import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
 import es.upm.miw.apaw_practice.domain.models.gym.Lesson;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class LessonEntity {
@@ -88,7 +90,10 @@ public class LessonEntity {
 
     public Lesson toLesson() {
         Lesson lesson = new Lesson();
-        BeanUtils.copyProperties(this, lesson);
+        BeanUtils.copyProperties(this, lesson, "athleteEntity");
+        List<Athlete> athletes = this.athlete.stream()
+                .map(AthleteEntity::toAthlete).collect(Collectors.toList());
+        lesson.setAthletes(athletes);
         return lesson;
     }
 

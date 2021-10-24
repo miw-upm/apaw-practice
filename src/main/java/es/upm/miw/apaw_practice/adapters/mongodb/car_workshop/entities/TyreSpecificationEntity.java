@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities;
 
+import es.upm.miw.apaw_practice.domain.models.car_workshop.TyreSpecification;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,6 +25,11 @@ public class TyreSpecificationEntity {
         this.width = width;
         this.diameter = diameter;
         this.loadSpeedIndex = loadSpeedIndex;
+    }
+
+    public TyreSpecificationEntity(TyreSpecification tyreSpecification) {
+        this.id = UUID.randomUUID().toString();
+
     }
 
     public String getId() {
@@ -80,5 +87,11 @@ public class TyreSpecificationEntity {
                 ", diameter=" + this.diameter +
                 ", loadSpeedIndex='" + this.loadSpeedIndex + '\'' +
                 '}';
+    }
+
+    public TyreSpecification toTyreSpecification() {
+        TyreSpecification tyreSpecification = new TyreSpecification();
+        BeanUtils.copyProperties(this, tyreSpecification);
+        return tyreSpecification;
     }
 }

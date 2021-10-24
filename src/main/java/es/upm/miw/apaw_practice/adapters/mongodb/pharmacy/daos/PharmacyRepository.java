@@ -6,5 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface PharmacyRepository extends MongoRepository<PharmacyEntity, String> {
+
     Optional<PharmacyEntity> findByRegistrationNumber(String registrationNumber);
+
 }

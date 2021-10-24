@@ -10,10 +10,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class CarCompositeTest {
+class CarCompositeTest {
 
-    private Car car1;
-    private Car car2;
+    private CarLeaf car1;
+    private CarLeaf car2;
     private CarComposite composite1;
 
     @BeforeEach
@@ -22,8 +22,8 @@ public class CarCompositeTest {
                 new TyreSpecification(15, 205, "90V", new ArrayList<>()),
                 new TyreSpecification(16, 195, "100T", new ArrayList<>())
         );
-        car1 = new Car("1234ABC", true, new Owner(), tyreSpecs);
-        car2 = new Car("5678DEF", false, new Owner(), new ArrayList<>());
+        car1 = new CarLeaf(new Car("1234ABC", true, new Owner(), tyreSpecs));
+        car2 = new CarLeaf(new Car("5678DEF", false, new Owner(), new ArrayList<>()));
 
         composite1 = new CarComposite("composite1");
         composite1.add(car1);

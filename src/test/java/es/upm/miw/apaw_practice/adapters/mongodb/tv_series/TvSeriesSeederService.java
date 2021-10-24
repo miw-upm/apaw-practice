@@ -47,7 +47,7 @@ public class TvSeriesSeederService {
                 new TvSeriesEntity("Fairy Tail",2009,true,producers[3],episodeEntities1),
                 new TvSeriesEntity("Kimetsu No Yaiba",2019,false,producers[0]),
                 new TvSeriesEntity("Shingeki No Kyojin",2013,false,producers[1],episodeEntities2),
-                new TvSeriesEntity("Vinland Saga",2019,false,producers[1])
+                new TvSeriesEntity("Vinland Saga",2019,false,producers[1],episodeEntities1)
         };
         this.tvSeriesRepository.saveAll(Arrays.asList(tvSeries));
         PlayerSeriesEntity[] players = {

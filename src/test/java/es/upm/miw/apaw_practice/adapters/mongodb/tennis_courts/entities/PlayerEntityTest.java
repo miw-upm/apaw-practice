@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.entities;
 
 import es.upm.miw.apaw_practice.domain.models.tennis_courts.Equipment;
-import es.upm.miw.apaw_practice.domain.models.tennis_courts.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +17,9 @@ class PlayerEntityTest {
     @BeforeEach
     void beforeEach(){
         this.equipments = new ArrayList<>();
-        this.equipments.add(new Equipment("Ball", 3, new BigDecimal("2.5")));
-        this.equipments.add(new Equipment("Racquet", 2, new BigDecimal("5")));
-        this.equipments.add(new Equipment("Shoes", 2, new BigDecimal("4")));
+        this.equipments.add(Equipment.builder().type("Ball").quantity(3).pricePerUnit(new BigDecimal("2.5")).build());
+        this.equipments.add(Equipment.builder().type("Racquet").quantity(2).pricePerUnit(new BigDecimal("5")).build());
+        this.equipments.add(Equipment.builder().type("Shoes").quantity(2).pricePerUnit(new BigDecimal("4")).build());
     }
 
     @Test

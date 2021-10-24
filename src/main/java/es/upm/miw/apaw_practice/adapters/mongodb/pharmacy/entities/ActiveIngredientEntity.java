@@ -1,11 +1,20 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities;
 
 import es.upm.miw.apaw_practice.domain.models.pharmacy.ActiveIngredient;
+import es.upm.miw.apaw_practice.domain.models.pharmacy.Drug;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Objects;
 
+@Document
 public class ActiveIngredientEntity {
+
+    @Id
+    private String code;
     @DBRef
     private DrugEntity drugEntity;
     private List<String> components;
@@ -15,10 +24,19 @@ public class ActiveIngredientEntity {
         //empty for framework
     }
 
-    public ActiveIngredientEntity(DrugEntity drugEntity, List<String> components, Integer dose) {
+    public ActiveIngredientEntity(String code, List<String> components, Integer dose, DrugEntity drugEntity) {
+        this.code = code;
         this.drugEntity = drugEntity;
         this.components = components;
         this.dose = dose;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public List<String> getComponents() {
@@ -46,13 +64,31 @@ public class ActiveIngredientEntity {
     }
 
     public ActiveIngredient toActiveIngredient() {
-        return new ActiveIngredient(this.drugEntity.toDrug(), this.components, this.dose);
+        ActiveIngredient activeIngredient = new ActiveIngredient();
+        BeanUtils.copyProperties(this, activeIngredient, "drugEntity");
+        Drug drug = this.drugEntity.toDrug();
+        activeIngredient.setDrug(drug);
+        return activeIngredient;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActiveIngredientEntity that = (ActiveIngredientEntity) o;
+        return code.equals(that.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
     }
 
     @Override
     public String toString() {
         return "ActiveIngredientEntity{" +
-                "drugEntity=" + drugEntity +
+                "code='" + code + '\'' +
+                ", drugEntity=" + drugEntity +
                 ", components=" + components +
                 ", dose=" + dose +
                 '}';

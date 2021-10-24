@@ -24,4 +24,5 @@ public class DoctorPersistenceMongodb implements DoctorPersistence {
         return this.doctorRepository.findAll().stream()
                 .map(DoctorEntity::toDoctor).map(Doctor::getNick).map(Doctor::new);
     }
+
 }

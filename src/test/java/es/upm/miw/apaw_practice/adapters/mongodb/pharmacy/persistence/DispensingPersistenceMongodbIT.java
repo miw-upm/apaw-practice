@@ -29,22 +29,22 @@ public class DispensingPersistenceMongodbIT {
                 .findFirst();
         assertTrue(dispensing.isPresent());
         Dispensing findedDispensing = this.dispensingPersistenceMongodb.readById(dispensing.get().getId());
-        assertTrue(dispensing.get().equals(findedDispensing));
+        assertEquals(dispensing.get(), findedDispensing);
     }
 
     @Test
     void testUpdate() {
         Optional<Dispensing> dispensing = this.dispensingPersistenceMongodb.readAll()
                 .filter(dispensingItem -> dispensingItem.getDispensingTimestamp()
-                        .isEqual(LocalDateTime.of(2021, 9, 27, 8, 15)))
+                        .isEqual(LocalDateTime.of(2021, 2, 1, 20, 5)))
                 .findFirst();
         assertTrue(dispensing.isPresent());
         dispensing.get().setDispensingTimestamp(LocalDateTime.of(2021, 9, 27, 8, 15));
         this.dispensingPersistenceMongodb.update(dispensing.get());
         Dispensing findedDispensing = this.dispensingPersistenceMongodb.readById(dispensing.get().getId());
         assertEquals(dispensing.get().getId(), findedDispensing.getId());
-        assertEquals(1, findedDispensing.getActiveIngredients().size());
-        assertEquals("A9005", findedDispensing.getActiveIngredients().get(0).getDrug().getBarcode());
+        assertEquals(2, findedDispensing.getActiveIngredients().size());
+        assertEquals("A9003", findedDispensing.getActiveIngredients().get(0).getDrug().getBarcode());
         pharmacySeederService.deleteAll();
         pharmacySeederService.seedDatabase();
     }
@@ -61,7 +61,7 @@ public class DispensingPersistenceMongodbIT {
                 .filter(dispensingItem -> dispensingItem.getDispensingTimestamp()
                         .isEqual(LocalDateTime.of(2021, 1, 5, 13, 20)))
                 .findFirst();
-        assertTrue(!newSearchDispensing.isPresent());
+        assertTrue(newSearchDispensing.isEmpty());
         pharmacySeederService.deleteAll();
         pharmacySeederService.seedDatabase();
     }

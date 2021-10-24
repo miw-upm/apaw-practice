@@ -1,12 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car_workshop.entities;
 
 import es.upm.miw.apaw_practice.domain.models.car_workshop.Car;
+import es.upm.miw.apaw_practice.domain.models.car_workshop.TyreSpecification;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -19,7 +21,7 @@ public class CarEntity {
     private String licensePlate;
     private Boolean revision;
     @DBRef
-    private OwnerEntity ownerEntity;
+    private OwnerEntity owner;
     @DBRef
     private List<TyreSpecificationEntity> tyreSpecsEntities;
 
@@ -28,17 +30,17 @@ public class CarEntity {
     }
 
     public CarEntity(String licensePlate, Boolean revision,
-                     OwnerEntity ownerEntity, List<TyreSpecificationEntity> tyreSpecsEntities) {
+                     OwnerEntity owner, List<TyreSpecificationEntity> tyreSpecsEntities) {
         this.id = UUID.randomUUID().toString();
         this.licensePlate = licensePlate;
         this.revision = revision;
-        this.ownerEntity = ownerEntity;
+        this.owner = owner;
         this.tyreSpecsEntities = tyreSpecsEntities;
     }
 
     public CarEntity(Car car) {
         this.id = UUID.randomUUID().toString();
-        BeanUtils.copyProperties(this, car);
+        BeanUtils.copyProperties(car, this);
     }
 
     public String getId() {
@@ -65,12 +67,12 @@ public class CarEntity {
         this.revision = revision;
     }
 
-    public OwnerEntity getOwnerEntity() {
-        return this.ownerEntity;
+    public OwnerEntity getOwner() {
+        return this.owner;
     }
 
-    public void setOwnerEntity(OwnerEntity ownerEntity) {
-        this.ownerEntity = ownerEntity;
+    public void setOwner(OwnerEntity owner) {
+        this.owner = owner;
     }
 
     public List<TyreSpecificationEntity> getTyreSpecsEntities() {
@@ -79,6 +81,23 @@ public class CarEntity {
 
     public void setTyreSpecsEntities(List<TyreSpecificationEntity> tyreSpecsEntities) {
         this.tyreSpecsEntities = tyreSpecsEntities;
+    }
+
+    public Car toCar() {
+        Car car = new Car();
+        BeanUtils.copyProperties(this, car);
+        car.setRevision(this.revision);
+        if (this.owner != null) {
+            car.setOwner(this.owner.toOwner());
+        }
+        if (this.tyreSpecsEntities != null) {
+            List<TyreSpecification> tyreSpecs = new ArrayList<>();
+            for (TyreSpecificationEntity tyreSpecification : this.tyreSpecsEntities) {
+                tyreSpecs.add(tyreSpecification.toTyreSpecification());
+            }
+            car.setTyreSpecs(tyreSpecs);
+        }
+        return car;
     }
 
     @Override
@@ -99,8 +118,10 @@ public class CarEntity {
                 "id='" + this.id + '\'' +
                 ", licensePlate='" + this.licensePlate + '\'' +
                 ", needsRevision=" + this.revision +
-                ", ownerEntity=" + this.ownerEntity.toString() +
+                ", ownerEntity=" + this.owner.toString() +
                 ", tyreSpecsEntities=" + this.tyreSpecsEntities.toString() +
                 '}';
     }
+
+
 }

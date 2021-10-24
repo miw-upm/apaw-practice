@@ -32,4 +32,20 @@ public class LessonResourceIT {
                 .value(lessons -> assertEquals("lesMils", lessons.get(0).getDescription()))
                 .value(lessons -> assertEquals(true, lessons.get(0).getFinished()));
     }
+
+    @Test
+    void testFindGymBynameAndTitel() {
+
+        this.webTestClient
+                .get()
+                .uri(LessonResource.Lessons + LessonResource.TITLE + LessonResource.NAME, "RPM", "julia")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(label -> assertEquals(1, label.size()));
+    }
+
+
 }
+
+
