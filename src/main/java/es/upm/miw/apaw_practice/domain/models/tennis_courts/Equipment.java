@@ -12,10 +12,8 @@ public class Equipment {
         //empty for framework
     }
 
-    public Equipment(String type, Integer quantity, BigDecimal pricePerUnit){
-        this.type = type;
-        this.quantity = quantity;
-        this.pricePerUnit = pricePerUnit;
+    public static EquipmentBuilders.Type builder(){
+        return new Builder();
     }
 
     public BigDecimal getTotalPrice(){
@@ -54,4 +52,37 @@ public class Equipment {
                 ", pricePerUnit=" + this.pricePerUnit +
                 '}';
     }
+
+    private static class Builder implements EquipmentBuilders.Type, EquipmentBuilders.Quantity, EquipmentBuilders.PricePerUnit, EquipmentBuilders{
+        private final Equipment equipment;
+
+        public Builder(){
+            this.equipment = new Equipment();
+        }
+
+        @Override
+        public Quantity type(String type) {
+            this.equipment.type = type;
+            return this;
+        }
+
+        @Override
+        public PricePerUnit quantity(Integer quantity) {
+            this.equipment.quantity = quantity;
+            return this;
+        }
+
+        @Override
+        public EquipmentBuilders pricePerUnit(BigDecimal pricePerUnit) {
+            this.equipment.pricePerUnit = pricePerUnit;
+            return this;
+        }
+
+        @Override
+        public Equipment build() {
+            return this.equipment;
+        }
+    }
+
+
 }

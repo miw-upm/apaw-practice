@@ -40,9 +40,9 @@ class PlayerResourceIT {
     @Test
     void testUpdate(){
         Equipment[] equipments = {
-                new Equipment("Ball", 5, new BigDecimal("1.5")),
-                new Equipment("Racquet", 1, new BigDecimal("5")),
-                new Equipment("Shoes", 4, new BigDecimal("4"))
+                Equipment.builder().type("Ball").quantity(3).pricePerUnit(new BigDecimal("1.5")).build(),
+                Equipment.builder().type("Racquet").quantity(1).pricePerUnit(new BigDecimal("5")).build(),
+                Equipment.builder().type("Shoes").quantity(4).pricePerUnit(new BigDecimal("4")).build()
         };
         this.webTestClient
                 .put()
