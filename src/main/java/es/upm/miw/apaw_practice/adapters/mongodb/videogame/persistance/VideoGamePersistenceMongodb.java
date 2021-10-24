@@ -4,19 +4,19 @@ import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.VideoGameReposit
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.VideoGameEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.videogame.VideoGame;
-import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.VideoGamePersistance;
+import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.VideoGamePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository("videoGamePersistance")
-public class VideoGamePersistanceMongodb implements VideoGamePersistance {
+@Repository("videoGamePersistence")
+public class VideoGamePersistenceMongodb implements VideoGamePersistence {
 
     private final VideoGameRepository videoGameRepository;
 
     @Autowired
-    public VideoGamePersistanceMongodb(VideoGameRepository videoGameRepository) {
+    public VideoGamePersistenceMongodb(VideoGameRepository videoGameRepository) {
         this.videoGameRepository = videoGameRepository;
     }
 

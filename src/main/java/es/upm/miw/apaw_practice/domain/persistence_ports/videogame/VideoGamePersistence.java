@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.stream.Stream;
 
 @Repository
-public interface VideoGamePersistance {
+public interface VideoGamePersistence {
 
     VideoGame readByTitle(String title);
 

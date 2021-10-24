@@ -1,8 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
-import es.upm.miw.apaw_practice.domain.models.shop.Tag;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,24 +24,14 @@ public class VideoGame {
         this.platforms = platforms;
     }
 
-    public static VideoGame ofPlatformConsoleName(VideoGame game) {
+    public static VideoGame ofPlatformCriticConsoleName(VideoGame game) {
         game.setPlatforms(
                 game.platforms.stream()
-                        .map(Platform::ofConsoleName)
+                        .map(Platform::ofPlatform)
                         .collect(Collectors.toList())
         );
+        game.setCritic(game.getCritic());
         return game;
-    }
-
-    public static VideoGame ofTitlePlatformConsoleName(VideoGame game) {
-        VideoGame gameDto = new VideoGame();
-        gameDto.setTitle(game.getTitle());
-        gameDto.setPlatforms(
-                game.platforms.stream()
-                        .map(Platform::ofConsoleName)
-                        .collect(Collectors.toList())
-        );
-        return gameDto;
     }
 
     public String getTitle() {
