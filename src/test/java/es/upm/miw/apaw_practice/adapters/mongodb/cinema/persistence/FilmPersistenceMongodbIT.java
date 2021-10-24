@@ -14,10 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class FilmPersistenceMongodbIT {
     @Autowired
     private FilmPersistenceMongodb filmPersistenceMongodb;
-    private CinemaSeederService cinemaSeederService;
-
     @Autowired
     private FilmRepository filmRepository;
+
     @Test
     void testReadAll() {
        Stream<Film> films = this.filmPersistenceMongodb.readAll();
