@@ -7,6 +7,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.tv_series.TvSeriesPersi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TvSeriesService {
 
@@ -31,5 +33,9 @@ public class TvSeriesService {
         TvSeries tvSeries = this.tvSeriesPersistence.read(title);
         tvSeries.addEpisode(episode);
         this.tvSeriesPersistence.update(title,tvSeries);
+    }
+
+    public Optional<Integer> getTotalTvSeriesDurationByBusinessName(String businessName) {
+        return this.tvSeriesPersistence.getTotalTvSeriesDurationByBusinessName(businessName);
     }
 }
