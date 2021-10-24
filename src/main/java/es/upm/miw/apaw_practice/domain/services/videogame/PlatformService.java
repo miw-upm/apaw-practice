@@ -31,8 +31,8 @@ public class PlatformService {
         }
     }
 
-    public void updateMemory(Stream<PlatformMemoryUpdating> platformMemoryUpdatingStream) {
-        platformMemoryUpdatingStream.map(platformNewMemory -> {
+    public void updateMemory(Stream<PlatformMemoryUpdating> platformMemoryUpdatingList) {
+        platformMemoryUpdatingList.map(platformNewMemory -> {
                     Platform platform = this.platformPersistence.read(platformNewMemory.getConsoleName());
                     platform.setMemory(platformNewMemory.getMemory());
                     return platform;

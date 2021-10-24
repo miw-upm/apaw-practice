@@ -23,8 +23,8 @@ public class VideoGameRepositoryIT {
         assertEquals(92, videoGameEntity.getCriticEntity().getExpertScore());
         assertTrue(videoGameEntity.getCriticEntity().getMustPlay());
         assertEquals(LocalDate.of(2014, 9, 20), videoGameEntity.getReleaseDate());
-        assertEquals("wiiu", videoGameEntity.getPlatformEntities().get(1).getConsoleName());
+        assertEquals("wiiu", videoGameEntity.getPlatformEntities().get(1).getModel());
         assertEquals("8gb", videoGameEntity.getPlatformEntities().get(1).getMemory());
-        assertEquals("deluxe", videoGameEntity.getPlatformEntities().get(1).getModel());
+        assertEquals("deluxe", videoGameEntity.getPlatformEntities().get(1).getConsoleName());
     }
 }

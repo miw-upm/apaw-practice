@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.videogame;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.VideoGameSeederService;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.videogame.VideoGame;
 import org.junit.jupiter.api.Assertions;
@@ -20,6 +21,9 @@ public class VideoGameResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Autowired
+    private VideoGameSeederService videoGameSeederService;
+
     @Test
     void testRead() {
         this.webTestClient
@@ -36,11 +40,11 @@ public class VideoGameResourceIT {
                 assertEquals(79, videoGameData.getCritic().getExpertScore());
                 assertEquals(2.5, videoGameData.getCritic().getUserScore());
                 assertFalse(videoGameData.getCritic().getMustPlay());
-                assertEquals("switch", videoGameData.getPlatforms().get(0).getConsoleName());
+                assertEquals("switch", videoGameData.getPlatforms().get(0).getModel());
                 assertEquals("64gb", videoGameData.getPlatforms().get(0).getMemory());
-                assertEquals("xbox", videoGameData.getPlatforms().get(1).getConsoleName());
-                assertEquals("one s", videoGameData.getPlatforms().get(1).getModel());
-                assertEquals("playstation", videoGameData.getPlatforms().get(2).getConsoleName());
+                assertEquals("xbox", videoGameData.getPlatforms().get(1).getModel());
+                assertEquals("one s", videoGameData.getPlatforms().get(1).getConsoleName());
+                assertEquals("playstation", videoGameData.getPlatforms().get(2).getModel());
             });
     }
 
@@ -60,6 +64,9 @@ public class VideoGameResourceIT {
                 .uri(GAMES + TITLE_ID, "ratchet & clank: rift apart")
                 .exchange()
                 .expectStatus().isOk();
+
+        videoGameSeederService.deleteAll();
+        videoGameSeederService.seedDatabase();
     }
 
 }

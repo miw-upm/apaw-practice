@@ -5,6 +5,10 @@ public class PlatformMemoryUpdating {
     private String consoleName;
     private String memory;
 
+    public PlatformMemoryUpdating() {
+        //empty from framework
+    }
+
     public PlatformMemoryUpdating(String consoleName, String memory) {
         this.consoleName = consoleName;
         this.memory = memory;

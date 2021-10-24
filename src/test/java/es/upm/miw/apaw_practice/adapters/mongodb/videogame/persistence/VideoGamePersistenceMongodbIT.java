@@ -37,6 +37,6 @@ public class VideoGamePersistenceMongodbIT {
         assertTrue(videoGame.getPlatforms().stream()
                 .map(Platform::getConsoleName)
                 .collect(Collectors.toList())
-                .containsAll(List.of("switch", "wiiu")));
+                .containsAll(List.of("oled", "deluxe")));
     }
 }

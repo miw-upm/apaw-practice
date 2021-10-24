@@ -14,8 +14,6 @@ public class PlatformResource {
 
     static final String PLATFORMS = "/videogame/platforms";
 
-    static final String CONSOLE_NAME_ID = "/{name}";
-
     private final PlatformService platformService;
 
     @Autowired
@@ -23,11 +21,10 @@ public class PlatformResource {
 
     @PostMapping
     public Platform create(@RequestBody Platform platform) {
-        //platform.doDefault();
         return this.platformService.create(platform);
     }
 
-    @PatchMapping(CONSOLE_NAME_ID)
+    @PatchMapping
     public void updateMemory(@RequestBody List<PlatformMemoryUpdating> platformMemoryUpdatingList) {
         this.platformService.updateMemory(platformMemoryUpdatingList.stream());
     }

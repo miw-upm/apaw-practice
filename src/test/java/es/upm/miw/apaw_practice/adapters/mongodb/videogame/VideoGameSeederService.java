@@ -7,7 +7,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.CriticEntity
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.PlatformEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.VideoGameCompanyEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.VideoGameEntity;
-import es.upm.miw.apaw_practice.domain.models.videogame.Critic;
 import es.upm.miw.apaw_practice.domain.models.videogame.Platform;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +39,12 @@ public class VideoGameSeederService {
         };
 
         PlatformEntity[] platforms = {
-            new PlatformEntity(new Platform("switch", "oled", "64gb")),
-            new PlatformEntity(new Platform("wiiu", "deluxe", "8gb")),
-            new PlatformEntity(new Platform("xbox", "series x", "1tb")),
-            new PlatformEntity(new Platform("xbox", "one s", "1tb")),
-            new PlatformEntity(new Platform("playstation", "ps5", "825gb")),
-            new PlatformEntity(new Platform("playstation", "ps4", "1tb")),
+            new PlatformEntity(new Platform("oled", "switch", "64gb")),
+            new PlatformEntity(new Platform("deluxe", "wiiu", "8gb")),
+            new PlatformEntity(new Platform("series x", "xbox", "1tb")),
+            new PlatformEntity(new Platform("one s", "xbox", "1tb")),
+            new PlatformEntity(new Platform("ps5", "playstation", "825gb")),
+            new PlatformEntity(new Platform("ps4", "playstation", "1tb")),
         };
         this.platformRepository.saveAll(Arrays.asList(platforms));
 
