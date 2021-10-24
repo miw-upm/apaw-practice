@@ -5,7 +5,7 @@ public class Diagnosis {
     private String medicine;
     private Boolean critical;
 
-    public Diagnosis(){
+    public Diagnosis() {
         //empty for framework
     }
 

@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.domain.models.vet_clinic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VetComposite implements VetComponent {
 

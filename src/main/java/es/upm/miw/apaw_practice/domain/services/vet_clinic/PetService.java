@@ -26,7 +26,7 @@ public class PetService {
         return this.petPersistence.update(pet, diagnosisList);
     }
 
-    public List<String> findNicksByVetNumber(Integer vetNumber){
+    public List<String> findNicksByVetNumber(Integer vetNumber) {
         return this.petPersistence.findNicksByVetNumber(vetNumber);
     }
 }

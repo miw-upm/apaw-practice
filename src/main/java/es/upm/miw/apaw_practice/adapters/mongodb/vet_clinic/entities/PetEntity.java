@@ -2,13 +2,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities;
 
 
 import es.upm.miw.apaw_practice.domain.models.vet_clinic.Pet;
-import jdk.jshell.Diag;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

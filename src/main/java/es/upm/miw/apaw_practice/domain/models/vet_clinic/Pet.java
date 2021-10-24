@@ -9,8 +9,8 @@ public class Pet {
     private String owner;
     private List<Diagnosis> diagnosis;
 
-    public Pet(){
-      //empty for framework
+    public Pet() {
+        //empty for framework
     }
 
     public Pet(Integer chip, Integer age, String nick, String owner, List<Diagnosis> diagnosis) {
