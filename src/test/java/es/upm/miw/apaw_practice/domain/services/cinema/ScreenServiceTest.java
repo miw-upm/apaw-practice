@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
 class ScreenServiceTest {
-
     @Autowired
     private ScreenService screenService;
 

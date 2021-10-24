@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestTestConfig
 public class ScreenResourceIT {
-
     @Autowired
     private WebTestClient webTestClient;
 

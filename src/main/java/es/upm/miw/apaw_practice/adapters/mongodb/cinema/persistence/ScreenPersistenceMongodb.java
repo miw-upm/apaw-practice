@@ -5,7 +5,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.ScreenRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ActorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.FilmEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
 import es.upm.miw.apaw_practice.domain.models.cinema.Screen;
 import es.upm.miw.apaw_practice.domain.models.cinema.Spectator;
 import es.upm.miw.apaw_practice.domain.persistence_ports.cinema.ScreenPersistence;
