@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import java.math.BigDecimal;
-
 @RestTestConfig
 public class PlatformResourceIT {
 
@@ -28,5 +26,31 @@ public class PlatformResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Platform.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testUpdateConsoles() {
+//        List<PlatformMemoryUpdating> platformMemoryUpdatingList = Arrays.asList(
+//                new PlatformMemoryUpdating("playstation", "1tb")
+//        );
+//        this.webTestClient
+//                .patch()
+//                .uri(PlatformResource.PLATFORMS + PlatformResource.CONSOLE_NAME_ID, "playstation")
+//                .body(BodyInserters.fromValue(platformMemoryUpdatingList))
+//                .exchange()
+//                .expectStatus().isOk();
+    }
+
+    @Test
+    void testUpdateConsolesNotFound() {
+//        List<PlatformMemoryUpdating> platformMemoryUpdatingList = Arrays.asList(
+//                new PlatformMemoryUpdating("intellivision", "12kb")
+//        );
+//        this.webTestClient
+//                .patch()
+//                .uri(PlatformResource.PLATFORMS + PlatformResource.CONSOLE_NAME_ID, "intellivision")
+//                .body(BodyInserters.fromValue(platformMemoryUpdatingList))
+//                .exchange()
+//                .expectStatus().isNotFound();
     }
 }

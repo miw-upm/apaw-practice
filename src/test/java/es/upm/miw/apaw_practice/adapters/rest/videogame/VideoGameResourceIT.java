@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import static es.upm.miw.apaw_practice.adapters.rest.videogame.VideoGameResource.GAMES;
 import static es.upm.miw.apaw_practice.adapters.rest.videogame.VideoGameResource.TITLE_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @RestTestConfig
 public class VideoGameResourceIT {
@@ -32,8 +33,13 @@ public class VideoGameResourceIT {
                 assertEquals("nba 2k21", videoGameData.getTitle());
                 assertEquals("e", videoGameData.getRating());
                 assertEquals(LocalDate.of(2020, 9, 3), videoGameData.getReleaseDate());
+                assertEquals(79, videoGameData.getCritic().getExpertScore());
+                assertEquals(2.5, videoGameData.getCritic().getUserScore());
+                assertFalse(videoGameData.getCritic().getMustPlay());
                 assertEquals("switch", videoGameData.getPlatforms().get(0).getConsoleName());
+                assertEquals("64gb", videoGameData.getPlatforms().get(0).getMemory());
                 assertEquals("xbox", videoGameData.getPlatforms().get(1).getConsoleName());
+                assertEquals("one s", videoGameData.getPlatforms().get(1).getModel());
                 assertEquals("playstation", videoGameData.getPlatforms().get(2).getConsoleName());
             });
     }

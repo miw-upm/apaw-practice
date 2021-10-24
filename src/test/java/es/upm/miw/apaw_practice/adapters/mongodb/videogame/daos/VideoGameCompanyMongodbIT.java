@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class VideoGameCompanyRepositoryIT {
+public class VideoGameCompanyMongodbIT {
 
     @Autowired
     private VideoGameCompanyRepository videoGameCompanyRepository;

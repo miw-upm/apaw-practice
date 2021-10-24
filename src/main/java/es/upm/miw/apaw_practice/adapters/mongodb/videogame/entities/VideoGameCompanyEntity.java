@@ -78,7 +78,8 @@ public class VideoGameCompanyEntity {
 
     public VideoGameCompany toVideoGameCompany() {
         VideoGameCompany videoGameCompany = new VideoGameCompany();
-        BeanUtils.copyProperties(this, videoGameCompany, "platformEntities");
+        BeanUtils.copyProperties(this, videoGameCompany,"platformEntities");
+
         List<Platform> platforms = this.platformEntities.stream()
                 .map(PlatformEntity::toPlatform)
                 .collect(Collectors.toList());
