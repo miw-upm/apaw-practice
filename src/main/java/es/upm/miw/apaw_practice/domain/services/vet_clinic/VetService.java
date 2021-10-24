@@ -11,7 +11,7 @@ public class VetService {
     public final VetPersistence vetPersistence;
 
     @Autowired
-    public VetService (VetPersistence vetPersistence){
+    public VetService(VetPersistence vetPersistence) {
         this.vetPersistence = vetPersistence;
     }
 
@@ -20,7 +20,7 @@ public class VetService {
         return this.vetPersistence.create(vet);
     }
 
-    public void assertVetNumberNotExist(Integer vetNumber){
+    public void assertVetNumberNotExist(Integer vetNumber) {
         if (this.vetPersistence.existVetNumber(vetNumber)) {
             throw new ConflictException("VetNumber exist: " + vetNumber);
         }

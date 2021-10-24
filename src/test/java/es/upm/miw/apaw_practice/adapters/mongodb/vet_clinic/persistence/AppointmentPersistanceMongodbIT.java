@@ -69,6 +69,6 @@ public class AppointmentPersistanceMongodbIT {
     @Test
     void findByConsumedTest() {
         Stream<Appointment> appointments = this.appointmentPersistance.findByConsumed(false);
-        assertEquals(appointments.count(), 2);
+        assertEquals(appointments.count(), 4);
     }
 }

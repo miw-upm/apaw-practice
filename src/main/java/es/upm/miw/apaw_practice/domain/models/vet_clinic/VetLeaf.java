@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.vet_clinic;
 
-public class VetLeaf implements VetComponent{
+public class VetLeaf implements VetComponent {
 
     private final Vet vet;
 

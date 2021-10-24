@@ -9,6 +9,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.vet_clinic.PetPersisten
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,4 +41,11 @@ public class PetServiceIT {
         assertEquals(diagnosisList, pet.getDiagnosis());
     }
 
+    @Test
+    void findNicksByVetNumberTest() {
+        List<String> nicks = new ArrayList<>();
+        nicks.add("Cooper");
+        nicks.add("Makalu");
+        assertEquals(nicks, this.petPersistence.findNicksByVetNumber(111));
+    }
 }

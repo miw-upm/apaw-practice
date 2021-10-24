@@ -3,10 +3,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.persistence;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.daos.AppointmentRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.daos.VetRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.AppointmentEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities.VetEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.vet_clinic.Appointment;
-import es.upm.miw.apaw_practice.domain.models.vet_clinic.Vet;
 import es.upm.miw.apaw_practice.domain.persistence_ports.vet_clinic.AppointmentPersistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,15 +39,6 @@ public class AppointmentPersistanceMongodb implements AppointmentPersistance {
                         ", and hour: " + hour))
                 .toAppointment();
     }
-
-    /*@Override
-    public Stream<Appointment> findByDateAndVet(LocalDate date, Vet vet) {
-        VetEntity vetEntity = new VetEntity();
-        vetEntity.fromVet(vet);
-        return vetEntity.getAppointmentEntities().stream()
-                .filter(appointment -> date.equals(appointment.getDate()))
-                .map(AppointmentEntity::toAppointment);
-    }*/
 
     @Override
     public Stream<Appointment> findByConsumed(Boolean consumed) {

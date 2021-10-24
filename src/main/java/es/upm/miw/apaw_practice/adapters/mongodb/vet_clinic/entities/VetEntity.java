@@ -23,7 +23,7 @@ public class VetEntity {
     private String surname;
 
     public VetEntity() {
-       //empty for framework
+        //empty for framework
     }
 
     public VetEntity(Vet vet, List<AppointmentEntity> appointmentEntities) {
@@ -85,7 +85,7 @@ public class VetEntity {
                 .build();
     }
 
-    public void fromVet (Vet vet) {
+    public void fromVet(Vet vet) {
         BeanUtils.copyProperties(vet, this);
     }
 }

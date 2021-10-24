@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.entities;
 
 import es.upm.miw.apaw_practice.domain.models.vet_clinic.Appointment;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,6 +29,7 @@ public class AppointmentEntity {
         BeanUtils.copyProperties(appointment, this);
         this.id = UUID.randomUUID().toString();
     }
+
     public AppointmentEntity(LocalDate date, LocalTime hour, Boolean consumed, PetEntity petEntity) {
         this.id = UUID.randomUUID().toString();
         this.date = date;

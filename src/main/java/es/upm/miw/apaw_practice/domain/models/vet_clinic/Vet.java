@@ -5,7 +5,7 @@ public class Vet {
     private String name;
     private String surname;
 
-    public Vet(){
+    public Vet() {
         //empty for framework
     }
 

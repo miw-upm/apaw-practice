@@ -37,7 +37,7 @@ public class AppointmentResourceIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Appointment.class)
-                .value(List::size, equalTo(2))
+                .value(List::size, equalTo(4))
                 .value(appointmentDTOList -> appointmentDTOList.get(0).getConsumed(), equalTo(false))
                 .value(appointmentDTOList -> appointmentDTOList.get(1).getConsumed(), equalTo(false));
     }
