@@ -1,13 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.AthleteRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.CoachRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.GymRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.gym.daos.LessonRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.AthleteEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.CoachEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.GymEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.LessonEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.AthleteRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.CoachRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.GymRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.LessonRepository;
 import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;

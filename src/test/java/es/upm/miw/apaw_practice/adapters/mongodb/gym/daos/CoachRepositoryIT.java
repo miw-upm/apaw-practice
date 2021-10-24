@@ -4,7 +4,6 @@ import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.AthleteEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.CoachEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.LessonEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos.CoachRepository;
 import es.upm.miw.apaw_practice.domain.models.gym.Athlete;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

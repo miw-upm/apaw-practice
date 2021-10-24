@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.daos;
+package es.upm.miw.apaw_practice.adapters.mongodb.gym.daos;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.gym.entities.AthleteEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;

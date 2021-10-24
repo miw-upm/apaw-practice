@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gym.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.gym.Coach;
 import es.upm.miw.apaw_practice.domain.models.gym.Gym;
 import nonapi.io.github.classgraph.json.Id;
 import org.springframework.beans.BeanUtils;
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class GymEntity {
@@ -104,5 +106,16 @@ public class GymEntity {
                 ", cellphone=" + cellphone +
                 ", coach=" + coach +
                 '}';
+    }
+
+    public Gym toGym() {
+        Gym gyms = new Gym();
+        BeanUtils.copyProperties(this, gyms, "coachEntity");
+        List<Coach> coache = this.coach.stream()
+                .map(CoachEntity::toCoach).collect(Collectors.toList());
+        gyms.setCoach(coache);
+
+        return gyms;
+
     }
 }
