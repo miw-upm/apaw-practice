@@ -53,8 +53,8 @@ public class TvSeriesPersistenceMongodb implements TvSeriesPersistence {
         String id = tvSeriesEntity.getId();
         tvSeriesEntity.fromTvSeries(tvSeries);
         tvSeriesEntity.setId(id);
-        if(this.producerRepository.findByBusinessName(tvSeries.getProducer().getBusinessName()).isPresent())
-            tvSeriesEntity.setProducerEntity(this.producerRepository.findByBusinessName(tvSeries.getProducer().getBusinessName()).get());
+        this.producerRepository.findByBusinessName(tvSeries.getProducer().getBusinessName())
+                .ifPresent(tvSeriesEntity::setProducerEntity);
         return this.tvSeriesRepository
                 .save(tvSeriesEntity)
                 .toTvSeries();

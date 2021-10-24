@@ -16,13 +16,11 @@ public class ProducerPersistenceMongodb implements ProducerPersistence {
 
     private final ProducerRepository producerRepository;
     private final PlayerSeriesRepository playerSeriesRepository;
-    private final TvSeriesRepository tvSeriesRepository;
 
     @Autowired
-    public ProducerPersistenceMongodb(ProducerRepository producerRepository, PlayerSeriesRepository playerSeriesRepository, TvSeriesRepository tvSeriesRepository) {
+    public ProducerPersistenceMongodb(ProducerRepository producerRepository, PlayerSeriesRepository playerSeriesRepository) {
         this.producerRepository = producerRepository;
         this.playerSeriesRepository = playerSeriesRepository;
-        this.tvSeriesRepository = tvSeriesRepository;
     }
 
     @Override

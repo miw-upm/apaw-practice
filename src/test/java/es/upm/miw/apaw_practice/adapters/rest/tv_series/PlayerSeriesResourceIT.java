@@ -10,7 +10,7 @@ import static es.upm.miw.apaw_practice.adapters.rest.tv_series.PlayerSeriesResou
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class PlayerSeriesResourceIT {
+class PlayerSeriesResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
