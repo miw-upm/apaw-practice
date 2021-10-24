@@ -8,6 +8,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities.ActiveIngredi
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities.DispensingEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities.DrugEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.entities.PharmacyEntity;
+import es.upm.miw.apaw_practice.domain.models.pharmacy.Drug;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,12 +33,12 @@ public class PharmacySeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Pharmacy Initial Load -----------");
         DrugEntity[] drugs = {
-                new DrugEntity("A9001", "Frenadol Complex", true, new BigDecimal("5.39")),
-                new DrugEntity("A9002", "Stopcold", true, new BigDecimal("2.28")),
-                new DrugEntity("A9003", "Espidifen", true, new BigDecimal("8.12")),
-                new DrugEntity("A9004", "Neobrufen", true, new BigDecimal("10.05")),
-                new DrugEntity("A9005", "Pirexin", false, new BigDecimal("5.15")),
-                new DrugEntity("A9006", "Naxopreno Normon", true, new BigDecimal("3.15")),
+                new DrugEntity(Drug.builder().barcode("A9001").name("Frenadol Complex").commercialized(true).price(new BigDecimal("5.39")).build()),
+                new DrugEntity(Drug.builder().barcode("A9002").name("Stopcold").commercialized(true).price(new BigDecimal("2.28")).build()),
+                new DrugEntity(Drug.builder().barcode("A9003").name("Espidifen").commercialized(true).price(new BigDecimal("8.12")).build()),
+                new DrugEntity(Drug.builder().barcode("A9004").name("Neobrufen").commercialized(true).price(new BigDecimal("10.05")).build()),
+                new DrugEntity(Drug.builder().barcode("A9005").name("Pirexin").commercialized(false).price(new BigDecimal("5.15")).build()),
+                new DrugEntity(Drug.builder().barcode("A9006").name("Naxopreno Normon").commercialized(true).price(new BigDecimal("3.15")).build()),
         };
         this.drugRepository.saveAll(Arrays.asList(drugs));
         PharmacyEntity[] pharmacy = {
