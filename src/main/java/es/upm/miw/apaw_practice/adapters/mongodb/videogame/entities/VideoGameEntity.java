@@ -92,7 +92,14 @@ public class VideoGameEntity {
         List<Platform> platforms = this.platformEntities.stream()
                 .map(PlatformEntity::toPlatform)
                 .collect(Collectors.toList());
-        return new VideoGame(title, releaseDate, rating, critic, platforms);
+
+        return VideoGame.builder()
+                .title(title)
+                .platforms(platforms)
+                .rating(rating)
+                .releaseDate(releaseDate)
+                .critic(critic)
+                .build();
     }
 
     @Override
