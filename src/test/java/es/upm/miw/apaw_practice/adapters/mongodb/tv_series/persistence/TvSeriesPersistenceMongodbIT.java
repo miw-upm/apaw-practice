@@ -6,6 +6,8 @@ import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
@@ -26,7 +28,7 @@ public class TvSeriesPersistenceMongodbIT {
     }
 
     @Test
-    void testUpdateAndCreate() {
+    void testUpdate() {
         TvSeries tvSeriesBD = this.tvSeriesPersistence.read("Kimetsu No Yaiba");
         assertFalse(tvSeriesBD.isFinished());
         tvSeriesBD.setFinished(true);
@@ -35,5 +37,10 @@ public class TvSeriesPersistenceMongodbIT {
         tvSeriesBD.setFinished(false);
         this.tvSeriesPersistence.update(tvSeriesBD.getTitle(),tvSeriesBD);
         assertFalse(tvSeriesBD.isFinished());
+    }
+
+    @Test
+    void testGetTotalTvSeriesDurationByBusinessName() {
+        assertEquals(Optional.of(1537),this.tvSeriesPersistence.getTotalTvSeriesDurationByBusinessName("Kodansha, Ltd."));
     }
 }
