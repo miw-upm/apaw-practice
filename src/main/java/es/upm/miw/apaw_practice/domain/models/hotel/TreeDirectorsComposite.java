@@ -17,6 +17,10 @@ public class TreeDirectorsComposite implements TreeDirectors {
         return this.name;
     }
 
+    public List<TreeDirectors> getTreeDirectorList() {
+        return treeDirectorList;
+    }
+
     @Override
     public boolean isComposite() {
         return true;
