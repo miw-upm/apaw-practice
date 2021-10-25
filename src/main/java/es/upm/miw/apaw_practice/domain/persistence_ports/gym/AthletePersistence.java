@@ -11,6 +11,6 @@ public interface AthletePersistence {
 
     boolean existNie(String nie);
 
-    void updateNextFumigation(AthleteNameUpdating athleteNameUpdating);
+    void updateAthleteName(AthleteNameUpdating athleteNameUpdating);
 
 }

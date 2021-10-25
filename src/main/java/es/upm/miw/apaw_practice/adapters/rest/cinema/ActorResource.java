@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(ActorResource.ACTOR)
 public class ActorResource {
 
     static final String ACTOR = "/cinema/actors";
+    static final String AGE_ID = "/{age}";
+    static final String SPECTATORS_NAME = "/films/screens/spectators/names";
 
     private final ActorService actorService;
 
@@ -29,6 +30,11 @@ public class ActorResource {
     @PatchMapping
     public void updateActorAge(@RequestBody List<Actor> actor) {
         this.actorService.updateAge(actor.stream());
+    }
+
+    @GetMapping(AGE_ID + SPECTATORS_NAME)
+    public List<String> getSpectatorsNamesByAge(@PathVariable Integer age) {
+        return this.actorService.getSpectatorsNamesByAge(age);
     }
 
 }

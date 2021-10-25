@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
-import java.util.Objects;
-
 public class Platform {
 
     private String consoleName;
@@ -18,16 +16,12 @@ public class Platform {
         this.memory = memory;
     }
 
-    public static Platform ofConsoleName(Platform platform) {
+    public static Platform ofPlatform(Platform platform) {
         Platform platformDto = new Platform();
         platformDto.setConsoleName(platform.getConsoleName());
+        platformDto.setMemory(platform.getMemory());
+        platformDto.setModel(platform.getModel());
         return platformDto;
-    }
-
-    public void doDefault() {
-        if (Objects.isNull(memory)) {
-            this.memory = "1TB";
-        }
     }
 
     public String getConsoleName() {

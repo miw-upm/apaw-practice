@@ -8,30 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(AthleteResource.athlets)
+@RequestMapping(AthleteResource.ATHLETE)
 public class AthleteResource {
-    static final String athlets = "/gym/athlet";
-    static final String Name = "/name";
+    static final String ATHLETE = "/gym/athlete";
+    static final String NAME = "/name";
 
-    private final AthleteService athletService;
+    private final AthleteService athleteService;
 
     @Autowired
-    public AthleteResource(AthleteService athletService) {
-        this.athletService = athletService;
+    public AthleteResource(AthleteService athleteService) {
+        this.athleteService = athleteService;
     }
 
     @PostMapping
     public Athlete creat(@RequestBody Athlete athlete) {
-        return this.athletService.create(athlete);
+        return this.athleteService.create(athlete);
     }
 
 
-    @PatchMapping(Name)
-    public void updateAtheleName(@RequestBody AthleteNameUpdating athleteNameUpdating) {
+    @PatchMapping(NAME)
+    public void updateAthleteName(@RequestBody AthleteNameUpdating athleteNameUpdating) {
         if (athleteNameUpdating.getOldName() == null || athleteNameUpdating.getNewName() == null) {
-            throw new BadRequestException("");
+            throw new BadRequestException("Athlete Name :" + athleteNameUpdating);
         } else {
-            this.athletService.updateAtheleteName(athleteNameUpdating);
+            this.athleteService.updateAthleteName(athleteNameUpdating);
         }
     }
 }

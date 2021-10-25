@@ -1,13 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.rest.hospital;
 
-import es.upm.miw.apaw_practice.domain.models.hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.models.hospital.Patient;
-import es.upm.miw.apaw_practice.domain.services.hospital.DoctorService;
 import es.upm.miw.apaw_practice.domain.services.hospital.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(PatientResource.PATIENTS)
@@ -20,7 +16,7 @@ public class PatientResource {
     private final PatientService patientService;
 
     @Autowired
-    public PatientResource(PatientService patientService){
+    public PatientResource(PatientService patientService) {
         this.patientService = patientService;
     }
 
@@ -30,7 +26,7 @@ public class PatientResource {
     }
 
     @PutMapping(DNI_ID)
-    public Patient update(@PathVariable String dni, @RequestBody Patient patient){
-        return this.patientService.update(dni,patient);
+    public Patient update(@PathVariable String dni, @RequestBody Patient patient) {
+        return this.patientService.update(dni, patient);
     }
 }

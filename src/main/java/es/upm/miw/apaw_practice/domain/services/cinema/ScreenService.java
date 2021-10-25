@@ -22,4 +22,8 @@ public class ScreenService {
         return this.screenPersistence.update(screen, spectatorList);
 
     }
+
+    public List<String> getActorsNameByScreenNumber(Integer number) {
+        return this.screenPersistence.getActorsNameByScreenNumber(number);
+    }
 }

@@ -18,7 +18,6 @@ public class VetRepositoryIT {
         VetEntity vet = this.vetRepository.findVetByVetNumber(111).get();
         assertEquals("vet1", vet.getName());
         assertEquals("surname1", vet.getSurname());
-        assertEquals(1, vet.getAppointmentEntities().size());
     }
 
 }

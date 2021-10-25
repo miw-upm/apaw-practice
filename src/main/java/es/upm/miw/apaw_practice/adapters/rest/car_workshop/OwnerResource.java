@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.stream.Stream;
+
 @RestController
-@RequestMapping()
+@RequestMapping(OwnerResource.OWNERS)
 public class OwnerResource {
     static final String OWNERS = "/car-workshop/owners";
     static final String DNI = "/{dni}";
+    static final String SEARCH = "/search/{diameter}";
 
     private final OwnerService ownerService;
 
@@ -21,8 +24,13 @@ public class OwnerResource {
         this.ownerService = ownerService;
     }
 
-    @GetMapping(OwnerResource.OWNERS + OwnerResource.DNI)
+    @GetMapping(OwnerResource.DNI)
     public Owner readByDni(@PathVariable String dni) {
         return this.ownerService.readByDni(dni);
+    }
+
+    @GetMapping(OwnerResource.SEARCH)
+    public Stream<String> findByTyreSpecificationDiameterGreaterThan(@PathVariable String diameter) {
+        return this.ownerService.findByTyreSpecificationDiameterGreaterThan(Integer.parseInt(diameter));
     }
 }

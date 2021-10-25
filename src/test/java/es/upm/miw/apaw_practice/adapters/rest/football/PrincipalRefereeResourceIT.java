@@ -17,7 +17,7 @@ class PrincipalRefereeResourceIT {
     @Test
     void testCreate() {
         PrincipalReferee principalReferee =
-                new PrincipalReferee("Jose María", "León", 38);
+                PrincipalReferee.builder().name("Jose María").cityBorn("León").age(38).build();
         this.webTestClient
                 .post()
                 .uri(PrincipalRefereeResource.PRINCIPALREFEREES)

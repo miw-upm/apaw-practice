@@ -1,9 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.tv_series.entities;
 
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import es.upm.miw.apaw_practice.domain.models.tv_series.Player;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -83,26 +81,27 @@ public class PlayerSeriesEntity {
         player.setName(this.name);
         player.setNationality(this.nationality);
         List<TvSeries> tvSeries = new ArrayList<>();
-        if(this.tvSeriesEntities.size() > 0)
-            if(this.tvSeriesEntities.get(0) == null)
+        if(!this.tvSeriesEntities.isEmpty()) {
+            if (this.tvSeriesEntities.get(0) == null) {
                 tvSeries = new ArrayList<>();
-            else {
+            } else {
                 tvSeries = this.tvSeriesEntities.stream()
                         .map(TvSeriesEntity::toTvSeries)
                         .collect(Collectors.toList());
             }
+        }
         player.setTvSeries(tvSeries);
         return player;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj || obj != null && getClass() == obj.getClass()) return true;
-        assert obj != null;
-        return (name.equals(((PlayerSeriesEntity) obj).name))
-        && (birth.equals(((PlayerSeriesEntity) obj).birth))
-        && (nationality.equals(((PlayerSeriesEntity) obj).nationality))
-        && (tvSeriesEntities.equals(((PlayerSeriesEntity) obj).tvSeriesEntities));
+        return (this == obj) ||
+                (obj != null && getClass() == obj.getClass() &&
+                        (name.equals(((PlayerSeriesEntity) obj).name))
+                        && (birth.equals(((PlayerSeriesEntity) obj).birth))
+                        && (nationality.equals(((PlayerSeriesEntity) obj).nationality))
+                        && (tvSeriesEntities.equals(((PlayerSeriesEntity) obj).tvSeriesEntities)));
     }
 
     @Override

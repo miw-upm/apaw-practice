@@ -9,10 +9,8 @@ public class PrincipalReferee {
         //empty for framework
     }
 
-    public PrincipalReferee(String name, String cityBorn, Integer age) {
-        this.name = name;
-        this.cityBorn = cityBorn;
-        this.age = age;
+    public static PrincipalRefereeBuilders.Name builder() {
+        return new Builder();
     }
 
     public String getName() {
@@ -46,5 +44,37 @@ public class PrincipalReferee {
                 ", cityBorn=" + cityBorn +
                 ", age=" + age +
                 '}';
+    }
+
+    public static class Builder implements PrincipalRefereeBuilders.Name, PrincipalRefereeBuilders.CityBorn, PrincipalRefereeBuilders.Age, PrincipalRefereeBuilders.PrincipalRefereeBuild {
+
+        private final PrincipalReferee principalReferee;
+
+        public Builder() {
+            this.principalReferee = new PrincipalReferee();
+        }
+
+        @Override
+        public PrincipalRefereeBuilders.CityBorn name(String name) {
+            this.principalReferee.name = name;
+            return this;
+        }
+
+        @Override
+        public PrincipalRefereeBuilders.Age cityBorn(String cityBorn) {
+            this.principalReferee.cityBorn = cityBorn;
+            return this;
+        }
+
+        @Override
+        public PrincipalRefereeBuilders.PrincipalRefereeBuild age(Integer age) {
+            this.principalReferee.age = age;
+            return this;
+        }
+
+        @Override
+        public PrincipalReferee build() {
+            return this.principalReferee;
+        }
     }
 }

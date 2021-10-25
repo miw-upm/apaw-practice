@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.tv_series.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.daos.ProducerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.daos.TvSeriesRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.entities.EpisodeEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.entities.TvSeriesEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.tv_series.TvSeries;
@@ -9,6 +10,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.tv_series.TvSeriesPersi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Repository("tvSeriesPersistence")
@@ -51,10 +53,22 @@ public class TvSeriesPersistenceMongodb implements TvSeriesPersistence {
         String id = tvSeriesEntity.getId();
         tvSeriesEntity.fromTvSeries(tvSeries);
         tvSeriesEntity.setId(id);
-        if(this.producerRepository.findByBusinessName(tvSeries.getProducer().getBusinessName()).isPresent())
-            tvSeriesEntity.setProducerEntity(this.producerRepository.findByBusinessName(tvSeries.getProducer().getBusinessName()).get());
+        this.producerRepository.findByBusinessName(tvSeries.getProducer().getBusinessName())
+                .ifPresent(tvSeriesEntity::setProducerEntity);
         return this.tvSeriesRepository
                 .save(tvSeriesEntity)
                 .toTvSeries();
+    }
+
+    @Override
+    public Optional<Integer> getTotalTvSeriesDurationByBusinessName(String businessName) {
+        return this.tvSeriesRepository.findAll().stream()
+                .filter(tvSeriesEntity ->
+                        tvSeriesEntity.getProducerEntity()
+                                .getBusinessName().equals(businessName))
+                .flatMap(tvSeriesEntity -> tvSeriesEntity.getEpisodeEntities()
+                        .stream())
+                .map(EpisodeEntity::getDuration)
+                .reduce((integer, integer2) -> integer+=integer2);
     }
 }

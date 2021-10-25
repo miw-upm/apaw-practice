@@ -4,8 +4,8 @@ import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.junit.jupiter.api.Assertions.*;
-
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
 public class ActorPersistenceMongodbIT {
@@ -39,4 +39,9 @@ public class ActorPersistenceMongodbIT {
         assertEquals(actor.getFamilyName(), actorDB.getFamilyName());
     }
 
+    @Test
+    void testGetSpectatorsNamesByAge() {
+        List<String> nameList = this.actorPersistence.getSpectatorsNamesByAge(30);
+        assertEquals(1, nameList.size());
+    }
 }

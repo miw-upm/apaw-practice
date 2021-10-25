@@ -16,10 +16,20 @@ class OwnerResourceIT {
     void testReadByDni() {
         this.webTestClient
                 .get()
-                .uri(OwnerResource.OWNERS + OwnerResource.DNI,"99999999A")
+                .uri(OwnerResource.OWNERS + OwnerResource.DNI, "99999999A")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Owner.class);
 
+    }
+
+    @Test
+    void testFindByTyreSpecificationDiameterGreaterThan() {
+        this.webTestClient
+                .get()
+                .uri(OwnerResource.OWNERS + OwnerResource.SEARCH, "16")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class);
     }
 }

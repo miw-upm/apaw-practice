@@ -10,7 +10,7 @@ import static es.upm.miw.apaw_practice.adapters.rest.tv_series.PlayerSeriesResou
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class PlayerSeriesResourceIT {
+class PlayerSeriesResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -25,5 +25,19 @@ public class PlayerSeriesResourceIT {
                 .expectBodyList(Player.class)
                 .value(players -> assertEquals(4,players.size()))
                 .value(players -> assertEquals("Brittney Karbowski",players.get(3).getName()));
+    }
+
+    @Test
+    void testGetTotalTvSeriesDurationByBusinessName() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(TvSeriesResource.TV_SERIES + TvSeriesResource.SEARCH)
+                                .queryParam("q","businessName:Kodansha, Ltd.")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Integer.class)
+                .value(duration -> assertEquals(1537,duration));
     }
 }

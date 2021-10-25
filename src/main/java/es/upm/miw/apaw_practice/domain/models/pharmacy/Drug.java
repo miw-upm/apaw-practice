@@ -14,6 +14,10 @@ public class Drug {
         //empty for framework
     }
 
+    public static DrugBuilders.Barcode builder() {
+        return new Builder();
+    }
+
     public Drug(String barcode, String name, Boolean commercialized, BigDecimal price) {
         this.barcode = barcode;
         this.name = name;
@@ -51,6 +55,46 @@ public class Drug {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public static class Builder implements DrugBuilders.Barcode, DrugBuilders.Name, DrugBuilders.Commercialized, DrugBuilders.Price, DrugBuilders.Optionals {
+
+        private final Drug drug;
+
+        public Builder() {
+            this.drug = new Drug();
+        }
+
+        @Override
+        public DrugBuilders.Name barcode(String barcode) {
+            this.drug.barcode = barcode;
+            return this;
+        }
+
+        @Override
+        public DrugBuilders.Commercialized name(String name) {
+            this.drug.name = name;
+            return this;
+        }
+
+        @Override
+        public DrugBuilders.Price commercialized(Boolean commercialized) {
+            this.drug.commercialized = commercialized;
+            return this;
+        }
+
+        @Override
+        public DrugBuilders.Optionals price(BigDecimal price) {
+            this.drug.price = price;
+            return this;
+        }
+
+
+        @Override
+        public Drug build() {
+            return this.drug;
+        }
+
     }
 
     @Override

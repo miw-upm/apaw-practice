@@ -16,12 +16,12 @@ public class VetResource {
     private final VetService vetService;
 
     @Autowired
-    public VetResource (VetService vetService){
+    public VetResource(VetService vetService) {
         this.vetService = vetService;
     }
 
     @PostMapping
-    public void create (@RequestBody Vet vet){
+    public void create(@RequestBody Vet vet) {
         this.vetService.create(vet);
     }
 

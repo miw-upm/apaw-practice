@@ -12,4 +12,6 @@ public interface ScreenPersistence {
     Screen readByNumber(Integer number);
 
     Screen update(Screen screen, List<Spectator> spectatorList);
+
+    List<String> getActorsNameByScreenNumber(Integer number);
 }

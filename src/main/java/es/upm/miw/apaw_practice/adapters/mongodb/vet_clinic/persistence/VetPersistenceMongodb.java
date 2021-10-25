@@ -8,6 +8,7 @@ import es.upm.miw.apaw_practice.domain.models.vet_clinic.Vet;
 import es.upm.miw.apaw_practice.domain.persistence_ports.vet_clinic.VetPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 
 @Repository("vetPersistence")
@@ -16,7 +17,7 @@ public class VetPersistenceMongodb implements VetPersistence {
     private final VetRepository vetRepository;
 
     @Autowired
-    public VetPersistenceMongodb (VetRepository vetRepository) {
+    public VetPersistenceMongodb(VetRepository vetRepository) {
         this.vetRepository = vetRepository;
     }
 
@@ -28,17 +29,19 @@ public class VetPersistenceMongodb implements VetPersistence {
     }
 
     @Override
-    public boolean existVetNumber(Integer vetNumber){
+    public boolean existVetNumber(Integer vetNumber) {
         return this.vetRepository
                 .findVetByVetNumber(vetNumber)
                 .isPresent();
     }
 
     @Override
-    public Vet readByVetNumber(Integer vetNumber){
+    public Vet readByVetNumber(Integer vetNumber) {
         return this.vetRepository
                 .findVetByVetNumber(vetNumber)
                 .orElseThrow(() -> new NotFoundException("Vet number: " + vetNumber))
                 .toVet();
     }
+
+
 }

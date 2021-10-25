@@ -88,10 +88,18 @@ public class VideoGameEntity {
     }
 
     public VideoGame toVideoGame() {
+        Critic critic = this.criticEntity.toCritic();
         List<Platform> platforms = this.platformEntities.stream()
                 .map(PlatformEntity::toPlatform)
                 .collect(Collectors.toList());
-        return new VideoGame(title, releaseDate, rating, new Critic(), platforms);
+
+        return VideoGame.builder()
+                .title(title)
+                .platforms(platforms)
+                .rating(rating)
+                .releaseDate(releaseDate)
+                .critic(critic)
+                .build();
     }
 
     @Override

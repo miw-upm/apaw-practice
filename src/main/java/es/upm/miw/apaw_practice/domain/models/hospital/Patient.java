@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.hospital;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Patient {
 
@@ -10,7 +11,7 @@ public class Patient {
     private List<Disease> diseases;
     private Doctor doctor;
 
-    public Patient(){
+    public Patient() {
         //empty for framework
     }
 
@@ -20,6 +21,19 @@ public class Patient {
         this.age = age;
         this.diseases = diseases;
         this.doctor = doctor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Patient patient = (Patient) o;
+        return Objects.equals(dni, patient.dni) && Objects.equals(gender, patient.gender) && Objects.equals(age, patient.age) && Objects.equals(diseases, patient.diseases) && Objects.equals(doctor, patient.doctor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dni, gender, age, diseases, doctor);
     }
 
     public String getDni() {
@@ -62,12 +76,4 @@ public class Patient {
         this.doctor = doctor;
     }
 
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "dni=" + this.dni +
-                ", gender='" + this.gender + '\'' +
-                ", age=" + this.age +
-                '}';
-    }
 }

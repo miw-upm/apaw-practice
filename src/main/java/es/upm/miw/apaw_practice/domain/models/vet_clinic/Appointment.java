@@ -11,11 +11,11 @@ public class Appointment {
     private Pet pet;
     private List<Vet> vets;
 
-    public Appointment(){
+    public Appointment() {
         //empty for framework
     }
 
-    public Appointment(LocalDate date, LocalTime hour, Boolean consumed, Pet pet, List<Vet> vets){
+    public Appointment(LocalDate date, LocalTime hour, Boolean consumed, Pet pet, List<Vet> vets) {
         this.date = date;
         this.hour = hour;
         this.consumed = consumed;

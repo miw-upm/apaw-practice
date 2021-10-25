@@ -4,10 +4,14 @@ import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.models.tv_series.Producer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class ProducerPersistenceMongodbIT {
+class ProducerPersistenceMongodbIT {
 
     @Autowired
     private ProducerPersistenceMongodb producerPersistence;
@@ -29,4 +33,14 @@ public class ProducerPersistenceMongodbIT {
         assertEquals(333222111L,producerBD.getPhone());
     }
 
+    @Test
+    void testFindProducerPhonesByTvSeriesYearAndPlayerNationality() {
+        assertEquals(List.of(111222333L),
+                this.producerPersistence.findProducerPhonesByTvSeriesYearAndPlayerNationality(2013,"Japan")
+                        .collect(Collectors.toList()));
+
+        assertEquals(List.of(327468273L),
+                this.producerPersistence.findProducerPhonesByTvSeriesYearAndPlayerNationality(2009,"United States")
+                        .collect(Collectors.toList()));
+    }
 }

@@ -11,13 +11,13 @@ import org.springframework.web.reactive.function.BodyInserters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class HospitalResourceIT {
+class HospitalResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
 
     @Test
-    void testCreate(){
+    void testCreate() {
         Hospital hospital = new Hospital("Test hospital", "Test St.", 1234, null);
         this.webTestClient
                 .post()
@@ -27,8 +27,8 @@ public class HospitalResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Hospital.class)
                 .value(Assertions::assertNotNull)
-                .value(createdHospital -> assertEquals("Test hospital",createdHospital.getName()))
+                .value(createdHospital -> assertEquals("Test hospital", createdHospital.getName()))
                 .value(createdHospital -> assertEquals("Test St.", createdHospital.getAddress()))
-                .value(createdHospital -> assertEquals(1234,createdHospital.getAvailableRooms()));
+                .value(createdHospital -> assertEquals(1234, createdHospital.getAvailableRooms()));
     }
 }

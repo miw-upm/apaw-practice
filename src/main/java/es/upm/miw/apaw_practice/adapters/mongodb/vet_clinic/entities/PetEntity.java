@@ -82,6 +82,11 @@ public class PetEntity {
         this.diagnosisEntities = diagnosisEntities;
     }
 
+    public boolean hasCriticalDiagnosis() {
+        return this.getDiagnosisEntities().stream()
+                .anyMatch(DiagnosisEntity::isCritical);
+    }
+
     @Override
     public int hashCode() {
         return chip.hashCode();

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RestTestConfig
-public class ProducerResourceIT {
+class ProducerResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -30,5 +32,19 @@ public class ProducerResourceIT {
                 .body(BodyInserters.fromValue(producer))
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    @Test
+    void testFindProducerPhonesByTvSeriesYearAndPlayerNationality() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder.path(ProducerResource.PRODUCERS + ProducerResource.SEARCH)
+                        .queryParam("q","year:2013;nationality:Japan")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Long.class)
+                .value(values -> assertEquals(1,values.size()))
+                .value(values -> assertEquals(111222333L,values.get(0)));
     }
 }

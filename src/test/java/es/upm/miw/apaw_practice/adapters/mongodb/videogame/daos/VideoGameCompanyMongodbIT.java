@@ -1,0 +1,29 @@
+package es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos;
+
+import es.upm.miw.apaw_practice.TestConfig;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@TestConfig
+public class VideoGameCompanyMongodbIT {
+
+    @Autowired
+    private VideoGameCompanyRepository videoGameCompanyRepository;
+
+    @Test
+    void testCreateAndRead() {
+        assertTrue(this.videoGameCompanyRepository.findAll().stream()
+                .anyMatch(company ->
+                        "nintendo".equals(company.getName()) &&
+                                company.getId() != null &&
+                                company.getFormationDate() != null &&
+                                company.getFormationDate().equals(LocalDate.of(1889, 9, 23)) &&
+                                2 == company.getPlatformEntities().size() &&
+                                "8gb".equals(company.getPlatformEntities().get(1).getMemory()) &&
+                                "oled".equals(company.getPlatformEntities().get(0).getConsoleName())
+                ));
+    }
+}

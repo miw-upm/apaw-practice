@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.ActorEntity;
-import es.upm.miw.apaw_practice.domain.models.cinema.Actor;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
