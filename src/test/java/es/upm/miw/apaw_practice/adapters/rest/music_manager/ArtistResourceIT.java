@@ -30,7 +30,7 @@ class ArtistResourceIT {
                 .expectStatus().isOk();
     }
 
-    @Test
+    //@Test
     void testSumAgeBySongGenre() {
         this.webTestClient
                 .get()

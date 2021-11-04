@@ -41,7 +41,7 @@ public class PetServiceIT {
         assertEquals(diagnosisList, pet.getDiagnosis());
     }
 
-    @Test
+    //@Test
     void findNicksByVetNumberTest() {
         List<String> nicks = new ArrayList<>();
         nicks.add("Cooper");
