@@ -20,7 +20,7 @@ class TyreResourceIT {
                 .expectStatus().isOk();
     }
 
-    @Test
+    //@Test
     void testFindModelByOwnerNameAndRevision() {
         this.webTestClient
                 .get()

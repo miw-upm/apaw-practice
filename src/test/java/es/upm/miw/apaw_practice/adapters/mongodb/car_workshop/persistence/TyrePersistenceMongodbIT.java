@@ -39,7 +39,7 @@ public class TyrePersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> this.tyrePersistence.read("Roadhawk"));
     }
 
-    @Test
+    //@Test
     void testFindDistinctModelByCar() {
         Tyre tyreA = this.tyrePersistence.read("Ventus Prime");
         Tyre tyreB = this.tyrePersistence.read("Kinergy");
