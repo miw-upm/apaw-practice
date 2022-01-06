@@ -17,6 +17,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.music_manager.MusicManagerSeede
 import es.upm.miw.apaw_practice.adapters.mongodb.pharmacy.PharmacySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tennis_courts.Tennis_CourtsSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.training.TrainingSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.tv_series.TvSeriesSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.UniversitySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.vet_clinic.VetClinicSeederService;
@@ -51,11 +52,12 @@ public class DatabaseSeederService {
     private final LibrarySeederService librarySeederService;
     private final VideoGameSeederService videoGameSeederService;
     private final DepartmentSeederService departmentSeederService;
+    private final TrainingSeederService trainingSeederService;
 
     @Autowired
     public DatabaseSeederService(ShopSeederService shopSeederService, ZooSeederService zooSeederService,
                                  CinemaSeederService cinemaSeederService,
-                                  CarWorkshopSeederService carWorkshopSeederService,
+                                 CarWorkshopSeederService carWorkshopSeederService,
                                  TvSeriesSeederService tvSeriesSeederService, UniversitySeederService universitySeederService,
                                  HotelSeederService hotelSeederService, Tennis_CourtsSeederService tennis_courtsSeederService,
                                  GymSeederService gymSeederService, VetClinicSeederService vetClinicSeederService,
@@ -64,7 +66,7 @@ public class DatabaseSeederService {
                                  EmarketerSeederService emarketerSeederService, GameWowSeederService gameWowSeederService,
                                  HospitalSeederService hospitalSeederService, LibrarySeederService librarySeederService,
                                  DepartmentSeederService departmentSeederService, VideoGameSeederService videoGameSeederService,
-                                 PharmacySeederService pharmacySeederService ) {
+                                 PharmacySeederService pharmacySeederService, TrainingSeederService trainingSeederService) {
 
 
         this.shopSeederService = shopSeederService;
@@ -89,6 +91,7 @@ public class DatabaseSeederService {
         this.departmentSeederService = departmentSeederService;
         this.videoGameSeederService = videoGameSeederService;
         this.gameWowSeederService = gameWowSeederService;
+        this.trainingSeederService = trainingSeederService;
 
         this.seedDatabase();
     }
@@ -116,6 +119,7 @@ public class DatabaseSeederService {
         this.librarySeederService.seedDatabase();
         this.departmentSeederService.seedDatabase();
         this.videoGameSeederService.seedDatabase();
+        this.trainingSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -142,6 +146,7 @@ public class DatabaseSeederService {
         this.librarySeederService.deleteAll();
         this.departmentSeederService.deleteAll();
         this.videoGameSeederService.deleteAll();
+        this.trainingSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
