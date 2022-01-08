@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.training.entities;
 
+import es.upm.miw.apaw_practice.domain.models.training.Participant;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -69,6 +71,12 @@ public class ParticipantEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Participant toParticipant() {
+        Participant participant = new Participant();
+        BeanUtils.copyProperties(this, participant);
+        return participant;
     }
 
     @Override
