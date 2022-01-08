@@ -10,6 +10,12 @@ public class Lecturer {
         //empty from framework
     }
 
+    public Lecturer(String name, String dni, String phone) {
+        this.name = name;
+        this.dni = dni;
+        this.phone = phone;
+    }
+
     public String getId() {
         return id;
     }
