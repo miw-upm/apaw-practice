@@ -1,8 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.training.entities;
 
-
+import es.upm.miw.apaw_practice.domain.models.training.Lecturer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.UUID;
 
 @Document
 public class LecturerEntity {
@@ -20,6 +23,11 @@ public class LecturerEntity {
         this.name = name;
         this.dni = dni;
         this.phone = phone;
+    }
+
+    public LecturerEntity(Lecturer lecturer) {
+        BeanUtils.copyProperties(lecturer, this);
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
@@ -52,6 +60,12 @@ public class LecturerEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Lecturer toLecturer() {
+        Lecturer lecturer = new Lecturer();
+        BeanUtils.copyProperties(this, lecturer);
+        return lecturer;
     }
 
     @Override
