@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.training.entities;
 
+import es.upm.miw.apaw_practice.domain.models.training.TrainingItem;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -53,6 +55,12 @@ public class TrainingItemEntity {
 
     public void setKnowledgeField(String knowledgeField) {
         this.knowledgeField = knowledgeField;
+    }
+
+    public TrainingItem toTrainingItem() {
+        TrainingItem trainingItem = new TrainingItem();
+        BeanUtils.copyProperties(this, trainingItem);
+        return trainingItem;
     }
 
     @Override
