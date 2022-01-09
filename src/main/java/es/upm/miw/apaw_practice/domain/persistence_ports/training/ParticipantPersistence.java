@@ -8,4 +8,6 @@ import java.util.stream.Stream;
 @Repository
 public interface ParticipantPersistence {
     Stream<Participant> readAll();
+    Participant update(Participant participant);
+    Participant readByDni(String dni);
 }
