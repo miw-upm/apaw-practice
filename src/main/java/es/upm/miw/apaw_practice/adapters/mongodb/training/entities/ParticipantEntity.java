@@ -79,6 +79,10 @@ public class ParticipantEntity {
         return participant;
     }
 
+    public void fromParticipant(Participant participant) {
+        BeanUtils.copyProperties(participant,this);
+    }
+
     @Override
     public int hashCode() {
         return dni.hashCode();
