@@ -12,6 +12,15 @@ public class Participant {
         //empty from framework
     }
 
+    public Participant(String id, String name, Boolean graduate, String dni, String phone, String email) {
+        this.id = id;
+        this.name = name;
+        this.graduate = graduate;
+        this.dni = dni;
+        this.phone = phone;
+        this.email = email;
+    }
+
     public String getId() {
         return id;
     }
