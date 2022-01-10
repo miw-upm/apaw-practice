@@ -9,6 +9,12 @@ public class TrainingItem {
         //empty from framework
     }
 
+    public TrainingItem(String id, String name, String knowledgeField) {
+        this.id = id;
+        this.name = name;
+        this.knowledgeField = knowledgeField;
+    }
+
     public String getId() {
         return id;
     }

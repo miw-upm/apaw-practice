@@ -16,6 +16,16 @@ public class Course {
         //empty from framework
     }
 
+    public Course(List<Participant> participants, List<TrainingItem> trainingItems, String id, Integer courseYear, String courseLevel, LocalDate startDate, LocalDate finishDate) {
+        this.participants = participants;
+        this.trainingItems = trainingItems;
+        this.id = id;
+        this.courseYear = courseYear;
+        this.courseLevel = courseLevel;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+    }
+
     public List<Participant> getParticipants() {
         return participants;
     }

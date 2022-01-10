@@ -10,7 +10,8 @@ public class Lecturer {
         //empty from framework
     }
 
-    public Lecturer(String name, String dni, String phone) {
+    public Lecturer(String id, String name, String dni, String phone) {
+        this.id = id;
         this.name = name;
         this.dni = dni;
         this.phone = phone;
