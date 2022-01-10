@@ -1,21 +1,12 @@
 package es.upm.miw.apaw_practice.domain.models.training;
 
 public class TrainingItem {
-    private Lecturer lecturer;
     private String id;
     private String name;
     private String knowledgeField;
 
     public TrainingItem() {
         //empty from framework
-    }
-
-    public Lecturer getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(Lecturer lecturer) {
-        this.lecturer = lecturer;
     }
 
     public String getId() {
@@ -45,7 +36,6 @@ public class TrainingItem {
     @Override
     public String toString() {
         return "TrainingItem{" +
-                "lecturer=" + lecturer +
                 ", id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", knowledgeField='" + knowledgeField + '\'' +
