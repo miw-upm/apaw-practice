@@ -1,26 +1,20 @@
 package es.upm.miw.apaw_practice.domain.models.training;
 
+import java.util.List;
+
 public class TrainingItem {
-    private String id;
     private String name;
     private String knowledgeField;
+    private List<Lecturer> lecturers;
 
     public TrainingItem() {
         //empty from framework
     }
 
-    public TrainingItem(String id, String name, String knowledgeField) {
-        this.id = id;
+    public TrainingItem(String name, String knowledgeField, List<Lecturer> lecturers) {
         this.name = name;
         this.knowledgeField = knowledgeField;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.lecturers = lecturers;
     }
 
     public String getName() {
@@ -39,12 +33,20 @@ public class TrainingItem {
         this.knowledgeField = knowledgeField;
     }
 
+    public List<Lecturer> getLecturers() {
+        return lecturers;
+    }
+
+    public void setLecturers(List<Lecturer> lecturers) {
+        this.lecturers = lecturers;
+    }
+
     @Override
     public String toString() {
         return "TrainingItem{" +
-                ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", knowledgeField='" + knowledgeField + '\'' +
+                ", lecturers=" + lecturers +
                 '}';
     }
 }

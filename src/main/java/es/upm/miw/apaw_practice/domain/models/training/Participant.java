@@ -1,32 +1,24 @@
 package es.upm.miw.apaw_practice.domain.models.training;
 
+import java.util.List;
+
 public class Participant {
-    private String id;
     private String name;
     private Boolean graduate;
-    private String dni;
-    private String phone;
+    private Integer phone;
     private String email;
+    private List<Course> courses;
 
     public Participant() {
         //empty from framework
     }
 
-    public Participant(String id, String name, Boolean graduate, String dni, String phone, String email) {
-        this.id = id;
+    public Participant(String name, Boolean graduate, Integer phone, String email, List<Course> courses) {
         this.name = name;
         this.graduate = graduate;
-        this.dni = dni;
         this.phone = phone;
         this.email = email;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.courses = courses;
     }
 
     public String getName() {
@@ -45,19 +37,11 @@ public class Participant {
         this.graduate = graduate;
     }
 
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -69,15 +53,22 @@ public class Participant {
         this.email = email;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     @Override
     public String toString() {
         return "Participant{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", graduate=" + graduate +
-                ", dni='" + dni + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
+                ", courses=" + courses +
                 '}';
     }
 }
