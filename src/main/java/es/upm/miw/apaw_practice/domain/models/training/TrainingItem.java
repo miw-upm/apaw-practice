@@ -5,15 +5,17 @@ import java.util.List;
 public class TrainingItem {
     private String name;
     private String knowledgeField;
+    private Course course;
     private List<Lecturer> lecturers;
 
     public TrainingItem() {
         //empty from framework
     }
 
-    public TrainingItem(String name, String knowledgeField, List<Lecturer> lecturers) {
+    public TrainingItem(String name, String knowledgeField, Course course, List<Lecturer> lecturers) {
         this.name = name;
         this.knowledgeField = knowledgeField;
+        this.course = course;
         this.lecturers = lecturers;
     }
 
@@ -33,6 +35,14 @@ public class TrainingItem {
         this.knowledgeField = knowledgeField;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
     public List<Lecturer> getLecturers() {
         return lecturers;
     }
@@ -46,6 +56,7 @@ public class TrainingItem {
         return "TrainingItem{" +
                 "name='" + name + '\'' +
                 ", knowledgeField='" + knowledgeField + '\'' +
+                ", course=" + course +
                 ", lecturers=" + lecturers +
                 '}';
     }
