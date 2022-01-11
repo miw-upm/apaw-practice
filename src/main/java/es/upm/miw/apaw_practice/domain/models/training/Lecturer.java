@@ -1,36 +1,20 @@
 package es.upm.miw.apaw_practice.domain.models.training;
 
+import java.time.LocalDate;
+
 public class Lecturer {
-    private String id;
-    private String name;
     private String dni;
-    private String phone;
+    private LocalDate startDate;
+    private Integer experience;
 
     public Lecturer() {
         //empty from framework
     }
 
-    public Lecturer(String id, String name, String dni, String phone) {
-        this.id = id;
-        this.name = name;
+    public Lecturer(String dni, LocalDate startDate, Integer experience) {
         this.dni = dni;
-        this.phone = phone;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        this.startDate = startDate;
+        this.experience = experience;
     }
 
     public String getDni() {
@@ -41,21 +25,28 @@ public class Lecturer {
         this.dni = dni;
     }
 
-    public String getPhone() {
-        return phone;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
     }
 
     @Override
     public String toString() {
         return "Lecturer{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", dni='" + dni + '\'' +
-                ", phone='" + phone + '\'' +
+                "dni='" + dni + '\'' +
+                ", startDate=" + startDate +
+                ", experience=" + experience +
                 '}';
     }
 }

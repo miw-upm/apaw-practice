@@ -1,97 +1,52 @@
 package es.upm.miw.apaw_practice.domain.models.training;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.math.BigDecimal;
 
 public class Course {
-    private List<Participant> participants;
-    private List<TrainingItem> trainingItems;
-    private String id;
-    private Integer courseYear;
-    private String courseLevel;
-    private LocalDate startDate;
-    private LocalDate finishDate;
+    private String identity;
+    private Integer level;
+    private BigDecimal price;
 
     public Course() {
         //empty from framework
     }
 
-    public Course(List<Participant> participants, List<TrainingItem> trainingItems, String id, Integer courseYear, String courseLevel, LocalDate startDate, LocalDate finishDate) {
-        this.participants = participants;
-        this.trainingItems = trainingItems;
-        this.id = id;
-        this.courseYear = courseYear;
-        this.courseLevel = courseLevel;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
+    public Course(String identity, Integer level, BigDecimal price) {
+        this.identity = identity;
+        this.level = level;
+        this.price = price;
     }
 
-    public List<Participant> getParticipants() {
-        return participants;
+    public String getIdentity() {
+        return identity;
     }
 
-    public void setParticipants(List<Participant> participants) {
-        this.participants = participants;
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
-    public List<TrainingItem> getTrainingItems() {
-        return trainingItems;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setTrainingItems(List<TrainingItem> trainingItems) {
-        this.trainingItems = trainingItems;
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
-    public String getId() {
-        return id;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Integer getCourseYear() {
-        return courseYear;
-    }
-
-    public void setCourseYear(Integer courseYear) {
-        this.courseYear = courseYear;
-    }
-
-    public String getCourseLevel() {
-        return courseLevel;
-    }
-
-    public void setCourseLevel(String courseLevel) {
-        this.courseLevel = courseLevel;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getFinishDate() {
-        return finishDate;
-    }
-
-    public void setFinishDate(LocalDate finishDate) {
-        this.finishDate = finishDate;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override
     public String toString() {
         return "Course{" +
-                "participants=" + participants +
-                ", trainingItems=" + trainingItems +
-                ", id='" + id + '\'' +
-                ", courseYear=" + courseYear +
-                ", courseLevel='" + courseLevel + '\'' +
-                ", startDate=" + startDate +
-                ", finishDate=" + finishDate +
+                "identity='" + identity + '\'' +
+                ", level=" + level +
+                ", price=" + price +
                 '}';
     }
 }
