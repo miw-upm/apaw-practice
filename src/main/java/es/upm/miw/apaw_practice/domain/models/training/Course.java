@@ -41,6 +41,12 @@ public class Course {
         this.price = price;
     }
 
+    public static Course ofIdentity(Course course) {
+        Course courseDto = new Course();
+        courseDto.setIdentity(course.getIdentity());
+        return courseDto;
+    }
+
     @Override
     public String toString() {
         return "Course{" +

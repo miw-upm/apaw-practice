@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.training;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participant {
     private String name;
@@ -19,6 +20,15 @@ public class Participant {
         this.phone = phone;
         this.email = email;
         this.courses = courses;
+    }
+
+    public static Participant ofCourseIdentity(Participant participant) {
+        participant.setCourses(
+                participant.courses.stream()
+                        .map(Course::ofIdentity)
+                        .collect(Collectors.toList())
+        );
+        return participant;
     }
 
     public String getName() {
