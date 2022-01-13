@@ -42,10 +42,10 @@ public class TrainingSeederService {
         this.courseRepository.saveAll(Arrays.asList(courses));
 
         LecturerEntity[] lecturers = {
-                new LecturerEntity("001", "3386275R", LocalDate.of(1998,4,6),24),
-                new LecturerEntity("002", "1468048B", LocalDate.of(2005,10,13),17),
-                new LecturerEntity("003", "7732893D", LocalDate.of(2016,5,18),6),
-                new LecturerEntity("004", "7114831L", LocalDate.of(2008,9,11),20)
+                new LecturerEntity("3386275R", LocalDate.of(1998,4,6),24),
+                new LecturerEntity("1468048B", LocalDate.of(2005,10,13),17),
+                new LecturerEntity("7732893D", LocalDate.of(2016,5,18),6),
+                new LecturerEntity("7114831L", LocalDate.of(2008,9,11),20)
         };
         this.lecturerRepository.saveAll(Arrays.asList(lecturers));
 
