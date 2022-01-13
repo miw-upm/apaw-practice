@@ -1,12 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.rest.training;
 
 import es.upm.miw.apaw_practice.domain.models.training.Course;
+import es.upm.miw.apaw_practice.domain.models.training.CoursePriceUpdating;
 import es.upm.miw.apaw_practice.domain.services.training.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(CourseResource.COURSES)
@@ -23,5 +23,10 @@ public class CourseResource {
     @PostMapping
     public Course create(@RequestBody Course course) {
         return this.courseService.create(course);
+    }
+
+    @PatchMapping
+    public void updatePrices(@RequestBody List<CoursePriceUpdating> coursePriceUpdatingList) {
+        this.courseService.updatePrices(coursePriceUpdatingList.stream());
     }
 }

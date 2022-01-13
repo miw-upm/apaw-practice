@@ -75,6 +75,10 @@ public class CourseEntity {
         return course;
     }
 
+    public void fromCourse(Course course) {
+        BeanUtils.copyProperties(course, this);
+    }
+
     @Override
     public String toString() {
         return "CourseEntity{" +
