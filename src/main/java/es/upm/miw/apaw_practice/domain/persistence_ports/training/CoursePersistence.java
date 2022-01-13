@@ -15,4 +15,6 @@ public interface CoursePersistence {
     Stream<Course> readAll();
 
     Course create(Course course);
+
+    Course update(String identity, Course course);
 }

@@ -47,4 +47,15 @@ public class CoursePersistenceMongodb implements CoursePersistence {
                 .save(new CourseEntity(course))
                 .toCourse();
     }
+
+    @Override
+    public Course update(String identity, Course course) {
+        CourseEntity courseEntity = this.courseRepository
+                .findByIdentity(course.getIdentity())
+                .orElseThrow(() -> new NotFoundException("Course identity: " + course.getIdentity()));
+        courseEntity.fromCourse(course);
+        return this.courseRepository
+                .save(courseEntity)
+                .toCourse();
+    }
 }
