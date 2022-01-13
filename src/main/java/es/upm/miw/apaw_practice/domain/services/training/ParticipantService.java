@@ -18,4 +18,8 @@ public class ParticipantService {
     public Participant read(String email) {
         return this.participantPersistence.readByEmail(email);
     }
+
+    public void delete(String email) {
+        this.participantPersistence.delete(email);
+    }
 }

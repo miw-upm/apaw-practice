@@ -31,4 +31,16 @@ public class ParticipantPersistenceMongodb implements ParticipantPersistence {
                 .orElseThrow(()-> new NotFoundException("Participant email: " + email))
                 .toParticipant();
     }
+
+    @Override
+    public Participant readByPhone(Integer phone) {
+        return this.participantRepository.findByPhone(phone)
+                .orElseThrow(() -> new NotFoundException("Participant phone: " + phone))
+                .toParticipant();
+    }
+
+    @Override
+    public void delete(String email) {
+        this.participantRepository.deleteByEmail(email);
+    }
 }
