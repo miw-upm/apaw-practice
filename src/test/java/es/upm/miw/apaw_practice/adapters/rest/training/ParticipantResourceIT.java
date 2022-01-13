@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static es.upm.miw.apaw_practice.adapters.rest.training.ParticipantResource.EMAIL;
-import static es.upm.miw.apaw_practice.adapters.rest.training.ParticipantResource.PARTICIPANTS;
+import static es.upm.miw.apaw_practice.adapters.rest.training.ParticipantResource.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -44,5 +43,14 @@ public class ParticipantResourceIT {
                 .uri(PARTICIPANTS + EMAIL, "kk")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDelete() {
+        this.webTestClient
+                .delete()
+                .uri(PARTICIPANTS + EMAIL, "kk")
+                .exchange()
+                .expectStatus().isOk();
     }
 }

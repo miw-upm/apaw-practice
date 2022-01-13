@@ -7,4 +7,8 @@ import java.util.Optional;
 
 public interface ParticipantRepository extends MongoRepository<ParticipantEntity, String> {
     Optional<ParticipantEntity> findByEmail(String email);
+
+    Optional<ParticipantEntity> findByPhone(Integer phone);
+
+    void deleteByEmail(String email);
 }

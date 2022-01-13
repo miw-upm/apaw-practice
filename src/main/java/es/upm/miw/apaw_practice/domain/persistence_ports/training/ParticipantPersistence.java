@@ -10,4 +10,8 @@ public interface ParticipantPersistence {
     Stream<Participant> readAll();
 
     Participant readByEmail(String email);
+
+    Participant readByPhone(Integer phone);
+
+    void delete(String email);
 }
