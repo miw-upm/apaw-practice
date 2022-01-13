@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.training.entities;
 
+import es.upm.miw.apaw_practice.domain.models.training.Lecturer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,8 +19,7 @@ public class LecturerEntity {
         //empty from framework
     }
 
-    public LecturerEntity(String id, String dni, LocalDate startDate, Integer experience) {
-        this.id = id;
+    public LecturerEntity(String dni, LocalDate startDate, Integer experience) {
         this.dni = dni;
         this.startDate = startDate;
         this.experience = experience;
@@ -64,6 +65,12 @@ public class LecturerEntity {
     @Override
     public boolean equals(Object obj) {
         return this == obj || obj != null && getClass() == obj.getClass() && (dni.equals(((es.upm.miw.apaw_practice.adapters.mongodb.training.entities.LecturerEntity) obj).dni));
+    }
+
+    public Lecturer toLecturer() {
+        Lecturer lecturer = new Lecturer();
+        BeanUtils.copyProperties(this, lecturer);
+        return lecturer;
     }
 
     @Override
