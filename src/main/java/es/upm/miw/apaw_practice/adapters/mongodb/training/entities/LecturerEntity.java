@@ -67,6 +67,10 @@ public class LecturerEntity {
         return this == obj || obj != null && getClass() == obj.getClass() && (dni.equals(((es.upm.miw.apaw_practice.adapters.mongodb.training.entities.LecturerEntity) obj).dni));
     }
 
+    public void fromLecturer(Lecturer lecturer) {
+        BeanUtils.copyProperties(lecturer, this);
+    }
+
     public Lecturer toLecturer() {
         Lecturer lecturer = new Lecturer();
         BeanUtils.copyProperties(this, lecturer);

@@ -14,8 +14,9 @@ public class LecturerService {
         this.lecturerPersistence = lecturerPersistence;
     }
 
-    public void updateExperience(String dni, Lecturer lecturer) {
+    public void update(String dni, Lecturer lecturer) {
         Lecturer lecturerDto = this.lecturerPersistence.readByDni(dni);
+        lecturerDto.setStartDate(lecturer.getStartDate());
         lecturerDto.setExperience(lecturer.getExperience());
         this.lecturerPersistence.update(lecturerDto);
     }

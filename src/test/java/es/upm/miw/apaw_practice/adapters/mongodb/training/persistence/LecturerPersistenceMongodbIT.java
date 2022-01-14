@@ -34,10 +34,13 @@ public class LecturerPersistenceMongodbIT {
     @Test
     void testUpdate() {
         Lecturer lecturer = this.lecturerPersistenceMongodb.readByDni("3386275R");
+        assertEquals(LocalDate.of(1998,4,6),lecturer.getStartDate());
         assertEquals(24, lecturer.getExperience());
+        lecturer.setStartDate(LocalDate.of(2002,9,18));
         lecturer.setExperience(20);
         this.lecturerPersistenceMongodb.update(lecturer);
         Lecturer lecturerUpdated = this.lecturerPersistenceMongodb.readByDni("3386275R");
+        assertEquals(LocalDate.of(2002,9,18), lecturer.getStartDate());
         assertEquals(20, lecturerUpdated.getExperience());
         trainingSeederService.deleteAll();
         trainingSeederService.seedDatabase();

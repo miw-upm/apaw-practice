@@ -11,5 +11,5 @@ public interface LecturerPersistence {
 
     Stream<Lecturer> readAll();
 
-    void update(Lecturer lecturer);
+    Lecturer update(Lecturer lecturer);
 }

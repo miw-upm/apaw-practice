@@ -17,12 +17,12 @@ public class LecturerResourceIT {
 
     @Test
     void testUpdate() {
-        Lecturer lecturer = new Lecturer("1468048B", LocalDate.of(2005,10,13),17);
+        Lecturer lecturer = new Lecturer("1468048B", LocalDate.of(2009,10,13),13);
         this.webTestClient
                 .put()
-                .uri(LecturerResource.LECTURERS + LecturerResource.DNI, "kk")
+                .uri(LecturerResource.LECTURERS + LecturerResource.DNI, "1468048B")
                 .body(BodyInserters.fromValue(lecturer))
                 .exchange()
-                .expectStatus().isNotFound();
+                .expectStatus().isOk();
     }
 }

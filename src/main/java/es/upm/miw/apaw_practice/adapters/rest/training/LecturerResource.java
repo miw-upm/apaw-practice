@@ -20,7 +20,7 @@ public class LecturerResource {
     }
 
     @PutMapping(DNI)
-    public void updateExperience(@PathVariable String dni, @RequestBody Lecturer lecturer) {
-        this.lecturerService.updateExperience(dni, lecturer);
+    public void update(@PathVariable String dni, @RequestBody Lecturer lecturer) {
+        this.lecturerService.update(dni, lecturer);
     }
 }
