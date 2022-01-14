@@ -13,4 +13,9 @@ public class TrainingItemPersistenceMongodb implements TrainingItemPersistence {
     public TrainingItemPersistenceMongodb(TrainingItemRepository trainingItemRepository) {
         this.trainingItemRepository = trainingItemRepository;
     }
+
+    @Override
+    public void delete(String name) {
+        this.trainingItemRepository.deleteByName(name);
+    }
 }

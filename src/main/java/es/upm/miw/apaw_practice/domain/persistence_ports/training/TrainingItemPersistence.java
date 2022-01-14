@@ -4,4 +4,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrainingItemPersistence {
+    void delete(String name);
 }
