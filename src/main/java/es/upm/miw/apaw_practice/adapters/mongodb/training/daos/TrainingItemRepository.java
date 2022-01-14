@@ -4,4 +4,5 @@ import es.upm.miw.apaw_practice.adapters.mongodb.training.entities.TrainingItemE
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface TrainingItemRepository extends MongoRepository<TrainingItemEntity, String> {
+    int deleteByName(String name);
 }
