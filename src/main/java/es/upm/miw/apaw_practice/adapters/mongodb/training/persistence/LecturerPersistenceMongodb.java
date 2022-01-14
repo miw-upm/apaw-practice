@@ -5,7 +5,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.training.entities.LecturerEntit
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.training.Lecturer;
 import es.upm.miw.apaw_practice.domain.persistence_ports.training.LecturerPersistence;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,12 +33,11 @@ public class LecturerPersistenceMongodb implements LecturerPersistence {
     }
 
     @Override
-    public void update(Lecturer lecturer) {
+    public Lecturer update(Lecturer lecturer) {
         LecturerEntity lecturerEntity = this.lecturerRepository
                 .findByDni(lecturer.getDni())
                 .orElseThrow(() -> new NotFoundException("Lecturer dni: " + lecturer.getDni()));
-        lecturerEntity.setExperience(lecturerEntity.getExperience());
-        BeanUtils.copyProperties(lecturer, lecturerEntity, "id", "dni");
-        this.lecturerRepository.save(lecturerEntity).toLecturer();
+        lecturerEntity.fromLecturer(lecturer);
+        return lecturerRepository.save(lecturerEntity).toLecturer();
     }
 }
