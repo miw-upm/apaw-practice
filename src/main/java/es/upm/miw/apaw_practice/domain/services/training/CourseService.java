@@ -7,7 +7,11 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.training.CoursePersiste
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.stream.Stream;
+
+import static java.math.RoundingMode.HALF_EVEN;
 
 @Service
 public class CourseService {
@@ -36,5 +40,10 @@ public class CourseService {
             return course;
         })
                 .forEach(course -> this.coursePersistence.update(course.getIdentity(), course));
+    }
+
+    public double findCoursePriceSumByLecturerStartDate(LocalDate date) {
+        BigDecimal result = this.coursePersistence.findCoursePriceSumByLecturerStartDate(date);
+        return result.setScale(2, HALF_EVEN).doubleValue();
     }
 }

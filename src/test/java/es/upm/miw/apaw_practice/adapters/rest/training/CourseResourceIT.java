@@ -14,6 +14,9 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.math.RoundingMode.HALF_EVEN;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RestTestConfig
 public class CourseResourceIT {
 
@@ -72,5 +75,17 @@ public class CourseResourceIT {
                 .body(BodyInserters.fromValue(coursePriceUpdatingList))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testGetCoursePriceSumByLecturerStartDate() {
+        WebTestClient.BodySpec<BigDecimal, ?> totalPrice = this.webTestClient
+                .get()
+                .uri(CourseResource.COURSES + CourseResource.STARTDATE + "?date=2005-12-06")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(BigDecimal.class);
+        assertEquals(new BigDecimal("965.59").setScale(2, HALF_EVEN), totalPrice.returnResult().getResponseBody());
     }
 }
