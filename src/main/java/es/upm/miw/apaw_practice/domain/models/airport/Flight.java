@@ -15,7 +15,7 @@ public class Flight {
         // empty for framework
     }
 
-    public Flight(String number, LocalDateTime date, String surname, Boolean cancelled, Airplane airplane, List<Pilot> pilots, List<Passenger> passengers) {
+    public Flight(String number, LocalDateTime date, Boolean cancelled, Airplane airplane, List<Pilot> pilots, List<Passenger> passengers) {
         this.number = number;
         this.date = date;
         this.cancelled = cancelled;
