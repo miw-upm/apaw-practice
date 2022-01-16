@@ -4,17 +4,17 @@ public class Pilot {
     private String idNumber;
     private String pilotName;
     private String pilotSurname;
-    private Boolean isMainPilot;
+    private Boolean mainPilot;
 
     public Pilot() {
         // empty for framework
     }
 
-    public Pilot(String idNumber, String pilotName, String pilotSurname, Boolean isMainPilot) {
+    public Pilot(String idNumber, String pilotName, String pilotSurname, Boolean mainPilot) {
         this.idNumber = idNumber;
         this.pilotName = pilotName;
         this.pilotSurname = pilotSurname;
-        this.isMainPilot = isMainPilot;
+        this.mainPilot = mainPilot;
     }
 
     public String getIdNumber() {
@@ -42,11 +42,11 @@ public class Pilot {
     }
 
     public Boolean getMainPilot() {
-        return isMainPilot;
+        return mainPilot;
     }
 
     public void setMainPilot(Boolean mainPilot) {
-        isMainPilot = mainPilot;
+        this.mainPilot = mainPilot;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Pilot {
                 "idNumber='" + this.idNumber + '\'' +
                 ", pilotName='" + this.pilotName + '\'' +
                 ", pilotSurname='" + this.pilotSurname + '\'' +
-                ", isMainPilot=" + this.isMainPilot +
+                ", mainPilot=" + this.mainPilot +
                 '}';
     }
 }
