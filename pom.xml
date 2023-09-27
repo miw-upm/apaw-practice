@@ -96,8 +96,8 @@
         <!-- Mongodb embedded -->
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
-            <version>3.5.3</version>
+            <artifactId>de.flapdoodle.embed.mongo.spring30x</artifactId>
+            <version>4.9.3</version>
         </dependency>
         <!-- Spring Test -->
         <dependency>
