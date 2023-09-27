@@ -27,8 +27,8 @@ public class ArticleResource {
 
     @PostMapping
     public Article create(@RequestBody Article article) {
-       article.doDefault();
-       return this.articleService.create(article);
+        article.doDefault();
+        return this.articleService.create(article);
     }
 
     @PatchMapping
