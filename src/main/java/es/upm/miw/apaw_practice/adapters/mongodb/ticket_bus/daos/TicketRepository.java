@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Repository("TicketTRepository")
+@Repository("ticketTRepository")
 
 public interface TicketRepository extends MongoRepository<TicketEntity,String> {
     void deleteByArrive(String arrive);
