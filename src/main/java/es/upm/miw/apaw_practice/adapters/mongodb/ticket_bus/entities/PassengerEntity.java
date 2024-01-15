@@ -1,6 +1,4 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.ticket_bus.entities;
-
-import es.upm.miw.apaw_practice.domain.models.ticket_bus.Passenger;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,8 +14,6 @@ public class PassengerEntity {
     private String fullName;
     private Integer number;
     private Boolean accessibility;
-
-
 
 
     public PassengerEntity(String nie, String fullName, Integer number, Boolean accessibility) {
