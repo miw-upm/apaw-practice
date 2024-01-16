@@ -48,4 +48,13 @@ public class SubjectService {
                 .map(Subject::getDescription)
                 .toList();
     }
+
+    public List<String> searchUniqueDescriptionByEmail(String email) {
+        return this.studentPersistence.readAll()
+                .filter(student -> student.getEmail().equals(email))
+                .flatMap(student -> student.getSubjects().stream())
+                .distinct()
+                .map(Subject::getDescription)
+                .toList();
+    }
 }
