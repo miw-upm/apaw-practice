@@ -20,11 +20,4 @@ public class BookPersistenceMongodb implements BookPersistence {
     public void deleteByIsbn(String isbn){
         this.bookRepository.deleteByIsbn(isbn);
     }
-
-    @Override
-    public Book findByIsbn(String isbn) {
-        return this.bookRepository.findByIsbn(isbn)
-                .orElseThrow(() -> new NotFoundException("Book with isbn: " + isbn))
-                .toBook();
-    }
 }

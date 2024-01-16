@@ -39,7 +39,8 @@ public class LibrarySeederService {
                 new BookWriterEntity(new BookWriter("Stephen King", "Stephen", 20)),
                 new BookWriterEntity(new BookWriter("Echo Chen", "San Mao", 23)),
                 new BookWriterEntity(new BookWriter("Cixin Liu", "Cixin", 18)),
-                new BookWriterEntity(new BookWriter("Autor","Menos tres libros",2))
+                new BookWriterEntity(new BookWriter("Autor","Menos tres libros",2)),
+                new BookWriterEntity(new BookWriter("Autor","Autor Duplicado Para Test",2))
         };
         this.bookWriterRepository.saveAll(Arrays.asList(bookWriters));
 
@@ -48,7 +49,7 @@ public class LibrarySeederService {
                 new BookEntity("El bosque oscuro", "9788413146454", LocalDate.of(2023, 4, 13), List.of(bookWriters[3])),
                 new BookEntity("Diarios de las canarias", "9788416738090", LocalDate.of(2017, 10, 4), List.of(bookWriters[2])),
                 new BookEntity("El problema de los tres cuerpos", "9788466659734", LocalDate.of(2016, 9, 28), List.of(bookWriters[3])),
-                new BookEntity("Libro con autor menos de tres libros", "9788888888888", LocalDate.of(2000, 10, 1), List.of(bookWriters[4]))
+                new BookEntity("Libro con autor menos de tres libros", "9788888888888", LocalDate.of(2000, 10, 1), Arrays.asList(bookWriters[4], bookWriters[5]))
         };
         this.bookRepository.saveAll(Arrays.asList(books));
 

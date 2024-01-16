@@ -5,6 +5,14 @@ import java.util.List;
 public class BookWriterCollectionDto {
     private List<String> namesOfBookWriter;
 
+    public BookWriterCollectionDto(){
+        //empty for framework
+    }
+
+    public BookWriterCollectionDto(List<String> namesOfBookWriter) {
+        this.namesOfBookWriter = namesOfBookWriter;
+    }
+
     public List<String> getNamesOfBookWriter() {
         return namesOfBookWriter;
     }

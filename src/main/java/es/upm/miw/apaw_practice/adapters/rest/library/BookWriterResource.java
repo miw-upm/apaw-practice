@@ -16,6 +16,8 @@ public class BookWriterResource {
     static final String NICKNAME_ID = "/{nickname}";
     static final String NUMBER_OF_BOOK = "/number-of-book";
     static final String SEARCH = "/search-by-name";
+
+    static final String SEARCH2= "/search-by-isbn";
     private final BookWriterService bookWriterService;
 
     @Autowired
@@ -39,10 +41,9 @@ public class BookWriterResource {
         return this.bookWriterService.findAverageOfNumberOfBookByLibraryName(name);
     }
 
-
-    @GetMapping(SEARCH)
+    @GetMapping(SEARCH2)
     public BookWriterCollectionDto findNamesOfBookWriterByIsbn(@RequestParam String q){
         String isbn = new LexicalAnalyzer().extractWithAssure(q,"isbn");
-        return this.bookWriterService.findNamesOfBookWriterByIsbn(isbn);
+        return new BookWriterCollectionDto(this.bookWriterService.findNamesOfBookWriterByIsbn(isbn));
     }
 }

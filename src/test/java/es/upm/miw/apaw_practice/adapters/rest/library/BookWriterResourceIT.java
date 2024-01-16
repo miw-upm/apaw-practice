@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.library;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
+import es.upm.miw.apaw_practice.adapters.rest.library.dto.BookWriterCollectionDto;
 import es.upm.miw.apaw_practice.domain.models.library.BookWriter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RestTestConfig
 class BookWriterResourceIT {
@@ -76,5 +78,24 @@ class BookWriterResourceIT {
                 .value(Assertions::assertNotNull)
                 .value(averageOfNumberOfBook ->
                         assertEquals(BigDecimal.valueOf(2).setScale(2,RoundingMode.HALF_UP), BigDecimal.valueOf(averageOfNumberOfBook).setScale(2, RoundingMode.HALF_UP)));
+    }
+
+    @Test
+    void testFindNamesOfBookWritersByIsbn(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(BookWriterResource.BOOKWRITER + BookWriterResource.SEARCH2)
+                                .queryParam("q","isbn:9788888888888")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BookWriterCollectionDto.class)
+                .value(Assertions::assertNotNull)
+                .value(bookWriterName -> {
+                    assertEquals(1, bookWriterName.getNamesOfBookWriter().size());
+                    assertNotNull(bookWriterName.getNamesOfBookWriter().get(0));
+                    assertEquals("Autor", bookWriterName.getNamesOfBookWriter().get(0));
+                });
     }
 }

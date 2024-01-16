@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookPersistence {
     void deleteByIsbn(String isbn);
-    Book findByIsbn(String isbn);
 }

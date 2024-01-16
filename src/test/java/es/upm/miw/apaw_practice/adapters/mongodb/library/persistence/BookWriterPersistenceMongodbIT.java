@@ -3,11 +3,14 @@ package es.upm.miw.apaw_practice.adapters.mongodb.library.persistence;
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.library.LibrarySeederService;
 import es.upm.miw.apaw_practice.domain.models.library.BookWriter;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 public class BookWriterPersistenceMongodbIT {
@@ -39,5 +42,20 @@ public class BookWriterPersistenceMongodbIT {
         this.bookWriterPersistenceMongodb.updateNumberOfBook(bookWriter);
         bookWriter = this.bookWriterPersistenceMongodb.readByNickname("Cixin");
         assertEquals(28, bookWriter.getNumberOfBook());
+    }
+
+    @Test
+    void testFindNamesOfBookWritersByIsbn(){
+        List<String> bookWriterName = this.bookWriterPersistenceMongodb.findNameOfBookWriterByBookIsbn("9788888888888");
+        assertNotNull(bookWriterName);
+        assertEquals(1, bookWriterName.size());
+        assertNotNull(bookWriterName.get(0));
+        assertEquals("Autor", bookWriterName.get(0));
+    }
+
+    @Test
+    void testFindNamesOfBookWritersByIsbn_NotFound(){
+        List<String> bookWriterName = this.bookWriterPersistenceMongodb.findNameOfBookWriterByBookIsbn("notExist");
+        assertNull(bookWriterName);
     }
 }

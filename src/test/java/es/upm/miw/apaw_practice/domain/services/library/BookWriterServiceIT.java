@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -58,5 +59,13 @@ public class BookWriterServiceIT {
         assertEquals(BigDecimal.valueOf(2).setScale(2, RoundingMode.HALF_UP), average.setScale(2, RoundingMode.HALF_UP));
         BigDecimal average2 = this.bookWriterService.findAverageOfNumberOfBookByLibraryName("Biblioteca universitaria");
         assertEquals(BigDecimal.valueOf(19.67).setScale(2, RoundingMode.HALF_UP), average2.setScale(2, RoundingMode.HALF_UP));
+    }
+
+    @Test
+    void testFindNamesOfBookWritersByIsbn(){
+        List<String> bookWritersName = this.bookWriterService.findNamesOfBookWriterByIsbn("9788888888888");
+        assertNotNull(bookWritersName);
+        assertEquals(1, bookWritersName.size());
+        assertEquals("Autor", bookWritersName.get(0));
     }
 }

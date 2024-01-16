@@ -62,15 +62,6 @@ public class BookWriterService {
     }
 
     public List<String> findNamesOfBookWriterByIsbn(String isbn) {
-
-//        Book book = this.bookPersistence.findByIsbn(isbn);
-//        if(book != null){
-//            throw  new NotFoundException("Book was not founded with isbn: " + isbn);
-//        }
-//
-//        return book.getBookWriters().stream()
-//                .distinct()
-//                .map(BookWriter::getName)
-//                .collect(Collectors.toList());
+        return this.bookWriterPersistence.findNameOfBookWriterByBookIsbn(isbn);
     }
 }
