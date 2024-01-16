@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface DiningPersistence {
     boolean existDiningNumber(String dining);
     Dining create(Dining dining);
+    String getLocationsByClientName(String clientName);
 }

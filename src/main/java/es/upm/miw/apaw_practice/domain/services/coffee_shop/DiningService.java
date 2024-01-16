@@ -23,4 +23,8 @@ public class DiningService {
             throw new ConflictException("Dining number already exists: " + dining);
         }
     }
+    public String getLocationsByClientName(String clientName) {
+        return this.diningPersistence.getLocationsByClientName(clientName);
+    }
+
 }
