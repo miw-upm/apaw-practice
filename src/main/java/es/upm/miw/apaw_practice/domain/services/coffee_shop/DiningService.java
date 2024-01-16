@@ -6,6 +6,9 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.coffee_shop.DiningPersi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 @Service
 public class DiningService {
     private final DiningPersistence diningPersistence;
@@ -23,8 +26,8 @@ public class DiningService {
             throw new ConflictException("Dining number already exists: " + dining);
         }
     }
-    public String getLocationsByClientName(String clientName) {
-        return this.diningPersistence.getLocationsByClientName(clientName);
+    public List<String> getLocationsByClientName(String name) {
+        return this.diningPersistence.getLocationsByClientName(name);
     }
 
 }

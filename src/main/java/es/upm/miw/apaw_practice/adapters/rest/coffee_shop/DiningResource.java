@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(DiningResource.DINING)
@@ -25,9 +27,8 @@ public class DiningResource {
     }
 
     @GetMapping(NAME)
-    public String getLocationByClientName(@RequestParam String q) {
-        String clientName = new LexicalAnalyzer().extractWithAssure(q, "name");
-        return this.diningService.getLocationsByClientName(clientName);
+    public List<String> getLocationByClientName(@PathVariable String name) {
+        return this.diningService.getLocationsByClientName(name);
     }
 
 }

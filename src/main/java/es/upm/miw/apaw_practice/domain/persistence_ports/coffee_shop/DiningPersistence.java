@@ -3,9 +3,12 @@ package es.upm.miw.apaw_practice.domain.persistence_ports.coffee_shop;
 import es.upm.miw.apaw_practice.domain.models.coffee_shop.Dining;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 @Repository
 public interface DiningPersistence {
     boolean existDiningNumber(String dining);
     Dining create(Dining dining);
-    String getLocationsByClientName(String clientName);
+    List<String> getLocationsByClientName(String name);
 }

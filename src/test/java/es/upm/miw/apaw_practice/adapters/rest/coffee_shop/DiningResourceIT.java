@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.coffee_shop;
 
+import com.sun.jna.platform.win32.COM.IStream;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.coffee_shop.Dining;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,10 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.junit.jupiter.api.Assertions;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -43,5 +48,18 @@ public class DiningResourceIT {
                 .body(BodyInserters.fromValue(dining))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void testGetLocationByClientName() {
+        this.webTestClient
+                .get()
+                .uri(DiningResource.DINING + DiningResource.NAME, "client2")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(location -> {
+                    assertEquals(List.of("location2"), location);
+                });
     }
 }

@@ -8,6 +8,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.coffee_shop.DiningPersi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository("diningPersistence")
@@ -34,14 +36,15 @@ public class DiningPersistenceMongodb implements DiningPersistence {
                 .toDining();
     }
 
-    public String getLocationsByClientName(String clientName) {
+    public List<String> getLocationsByClientName(String name) {
         return this.coffeeClientRepository.findAll()
                 .stream()
-                .filter(clientEntity -> clientEntity.getName().equals(clientName))
-                .flatMap(client -> client.getDiningList().stream())
-                .map(Dining::getLocation)
+                .filter(clientEntity -> clientEntity.getName().equals(name))
+                .map(client -> client.getDiningEntity().getLocation())
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
     }
+
+
 
 }
