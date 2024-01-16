@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.basketball;
 
-import es.upm.miw.apaw_practice.domain.models.basketball.Player;
 import es.upm.miw.apaw_practice.domain.services.basketball.PlayerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class PlayerResource {
     }
 
     @GetMapping(BASKET_ID)
-    public Player read(@PathVariable String basket_id) {
+    public String readByBasketId(@PathVariable String basket_id) {
         return this.playerService.read(basket_id);
     }
 

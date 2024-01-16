@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayerPersistence {
     Player readByEmail(String email);
-    Player readBy
+    String readByBasketId(String basket_id);
     void delete(String email);
 }
