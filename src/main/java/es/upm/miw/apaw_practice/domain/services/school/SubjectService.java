@@ -40,7 +40,7 @@ public class SubjectService {
         this.subjectPersistence.delete(title);
     }
 
-    public List<String> searchUniqueDescriptionBySmartBoard(Boolean smartBoard) {
+    public List<String> findUniqueDescriptionBySmartBoard(Boolean smartBoard) {
         return this.studentPersistence.readAll()
                 .filter(student -> student.hasClassroomSmartBoard().equals(smartBoard))
                 .flatMap(student -> student.getSubjects().stream())
@@ -49,7 +49,7 @@ public class SubjectService {
                 .toList();
     }
 
-    public List<String> searchUniqueDescriptionByEmail(String email) {
+    public List<String> findUniqueDescriptionByEmail(String email) {
         return this.studentPersistence.readAll()
                 .filter(student -> student.getEmail().equals(email))
                 .flatMap(student -> student.getSubjects().stream())

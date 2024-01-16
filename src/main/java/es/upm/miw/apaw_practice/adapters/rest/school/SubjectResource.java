@@ -14,8 +14,8 @@ public class SubjectResource {
     static final String SUBJECTS = "/school/subjects";
 
     static final String TITLE_ID = "/{title}";
-    static final String SEARCH_DESCRIPTION_BY_SMARTBOARD = "/search-desc-smartboard";
-    static final String SEARCH_DESCRIPTION_BY_EMAIL = "/search-desc-email";
+    static final String FIND_DESCRIPTION_BY_SMARTBOARD = "/search-desc-smartboard";
+    static final String FIND_DESCRIPTION_BY_EMAIL = "/search-desc-email";
 
     private final SubjectService subjectService;
 
@@ -39,15 +39,15 @@ public class SubjectResource {
         this.subjectService.delete(title);
     }
 
-    @GetMapping(SEARCH_DESCRIPTION_BY_SMARTBOARD)
-    public List<String> searchUniqueDescriptionBySmartBoard(@RequestParam String q) {
+    @GetMapping(FIND_DESCRIPTION_BY_SMARTBOARD)
+    public List<String> findUniqueDescriptionBySmartBoard(@RequestParam String q) {
         Boolean smartBoard = new LexicalAnalyzer().extractWithAssure(q, "smartboard", Boolean::parseBoolean);
-        return this.subjectService.searchUniqueDescriptionBySmartBoard(smartBoard);
+        return this.subjectService.findUniqueDescriptionBySmartBoard(smartBoard);
     }
 
-    @GetMapping(SEARCH_DESCRIPTION_BY_EMAIL)
-    public List<String> searchUniqueDescriptionByEmail(@RequestParam String q) {
+    @GetMapping(FIND_DESCRIPTION_BY_EMAIL)
+    public List<String> findUniqueDescriptionByEmail(@RequestParam String q) {
         String email = new LexicalAnalyzer().extractWithAssure(q, "email");
-        return this.subjectService.searchUniqueDescriptionByEmail(email);
+        return this.subjectService.findUniqueDescriptionByEmail(email);
     }
 }

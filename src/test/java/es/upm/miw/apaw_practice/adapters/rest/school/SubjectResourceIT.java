@@ -86,7 +86,7 @@ public class SubjectResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.SEARCH_DESCRIPTION_BY_SMARTBOARD)
+                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.FIND_DESCRIPTION_BY_SMARTBOARD)
                                 .queryParam("q", "smartboard:true")
                                 .build())
                 .exchange()
@@ -98,7 +98,7 @@ public class SubjectResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.SEARCH_DESCRIPTION_BY_SMARTBOARD)
+                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.FIND_DESCRIPTION_BY_SMARTBOARD)
                                 .queryParam("q", "smartboard:false")
                                 .build())
                 .exchange()
@@ -113,7 +113,7 @@ public class SubjectResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.SEARCH_DESCRIPTION_BY_SMARTBOARD)
+                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.FIND_DESCRIPTION_BY_SMARTBOARD)
                                 .queryParam("q", "foo")
                                 .build())
                 .exchange()
@@ -125,7 +125,7 @@ public class SubjectResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.SEARCH_DESCRIPTION_BY_EMAIL)
+                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.FIND_DESCRIPTION_BY_EMAIL)
                                 .queryParam("q", "email:student6@mail.test")
                                 .build())
                 .exchange()
@@ -137,7 +137,7 @@ public class SubjectResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.SEARCH_DESCRIPTION_BY_EMAIL)
+                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.FIND_DESCRIPTION_BY_EMAIL)
                                 .queryParam("q", "email:student2@mail.test")
                                 .build())
                 .exchange()
@@ -151,7 +151,7 @@ public class SubjectResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.SEARCH_DESCRIPTION_BY_EMAIL)
+                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.FIND_DESCRIPTION_BY_EMAIL)
                                 .queryParam("q", "foo")
                                 .build())
                 .exchange()

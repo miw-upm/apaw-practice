@@ -54,10 +54,10 @@ class SubjectServiceIT {
 
 
     @Test
-    void testSearchUniqueDescriptionBySmartBoard() {
+    void testFindUniqueDescriptionBySmartBoard() {
         assertEquals(List.of("desc1", "desc2", "desc3", "desc4", "desc5", "descSearch2", "descSearch3"),
-            this.subjectService.searchUniqueDescriptionBySmartBoard(true));
+            this.subjectService.findUniqueDescriptionBySmartBoard(true));
         assertEquals(List.of("desc2", "descSearch1", "descSearch3"),
-            this.subjectService.searchUniqueDescriptionBySmartBoard(false));
+            this.subjectService.findUniqueDescriptionBySmartBoard(false));
     }
 }
