@@ -1,20 +1,24 @@
 package es.upm.miw.apaw_practice.adapters.rest.basketball;
 
+import es.upm.miw.apaw_practice.domain.models.basketball.Player;
 import es.upm.miw.apaw_practice.domain.services.basketball.PlayerService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(PlayerResource.PLAYER)
 public class PlayerResource {
     static final String PLAYER = "/basketball/player";
-    static final String EMAIL_ID = "/{email}";
     private final PlayerService playerService;
+    static final String EMAIL_ID = "/{email}";
+    static final String BASKET_ID = "/{id}";
 
     public PlayerResource(PlayerService playerService) {
         this.playerService = playerService;
+    }
+
+    @GetMapping(BASKET_ID)
+    public Player read(@PathVariable String basket_id) {
+        return this.playerService.read(basket_id);
     }
 
     @DeleteMapping(EMAIL_ID)

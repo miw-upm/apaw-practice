@@ -1,4 +1,5 @@
 package es.upm.miw.apaw_practice.domain.services.basketball;
+import es.upm.miw.apaw_practice.domain.models.basketball.Player;
 import es.upm.miw.apaw_practice.domain.persistence_ports.basketball.PlayerPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,4 +15,7 @@ public class PlayerService {
         this.playerPersistence.delete(email);
     }
 
+    public Player read(String basket_id){
+        return this.playerPersistence.readByBasketId(basket_id);
+    }
 }

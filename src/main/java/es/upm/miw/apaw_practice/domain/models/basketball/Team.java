@@ -13,6 +13,7 @@ public class Team {
 
     public Team() {
         this.players = new ArrayList<>();
+
         this.pavilions = new ArrayList<>();
     }
 
