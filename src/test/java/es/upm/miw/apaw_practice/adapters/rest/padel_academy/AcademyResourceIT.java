@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 public class AcademyResourceIT {
@@ -73,6 +73,25 @@ public class AcademyResourceIT {
                     assertEquals("Nueva calle. Nos mudamos", academy.getAddress());
                     assertEquals("Madrid", academy.getCity());
                     assertEquals("Ocio y Deporte Canal", academy.getName());
+                });
+    }
+
+    @Test
+    void testFindAcademyAddressByInstructorName() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(AcademyResource.ACADEMIES + AcademyResource.SEARCH)
+                                .queryParam("q", "name:Ana")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(academies -> {
+                    assertFalse(academies.isEmpty());
+                    academies.forEach(academy -> {
+                        assertTrue(academy.contains("Avda. Filipinas, esq. Pablo Iglesias, 28003"));
+                    });
                 });
     }
 }
