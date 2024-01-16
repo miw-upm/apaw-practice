@@ -1,7 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.library.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.library.daos.BookRepository;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.library.Book;
 import es.upm.miw.apaw_practice.domain.persistence_ports.library.BookPersistence;
+import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +19,12 @@ public class BookPersistenceMongodb implements BookPersistence {
     @Override
     public void deleteByIsbn(String isbn){
         this.bookRepository.deleteByIsbn(isbn);
+    }
+
+    @Override
+    public Book findByIsbn(String isbn) {
+        return this.bookRepository.findByIsbn(isbn)
+                .orElseThrow(() -> new NotFoundException("Book with isbn: " + isbn))
+                .toBook();
     }
 }

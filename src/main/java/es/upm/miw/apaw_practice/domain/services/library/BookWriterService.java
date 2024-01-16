@@ -1,9 +1,11 @@
 package es.upm.miw.apaw_practice.domain.services.library;
 
+import es.upm.miw.apaw_practice.adapters.rest.library.dto.BookWriterCollectionDto;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.library.Book;
 import es.upm.miw.apaw_practice.domain.models.library.BookWriter;
+import es.upm.miw.apaw_practice.domain.persistence_ports.library.BookPersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.library.BookWriterPersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.library.LibraryPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +13,19 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookWriterService {
     private final BookWriterPersistence bookWriterPersistence;
     private final LibraryPersistence libraryPersistence;
+    private final BookPersistence bookPersistence;
+
     @Autowired
-    public BookWriterService(BookWriterPersistence bookWriterPersistence, LibraryPersistence libraryPersistence){
+    public BookWriterService(BookWriterPersistence bookWriterPersistence, LibraryPersistence libraryPersistence, BookPersistence bookPersistence){
         this.bookWriterPersistence = bookWriterPersistence;
         this.libraryPersistence = libraryPersistence;
+        this.bookPersistence = bookPersistence;
     }
 
     public BookWriter create(BookWriter bookWriter){
@@ -53,5 +59,18 @@ public class BookWriterService {
                .mapToDouble(BookWriter::getNumberOfBook)
                .average()
                .orElse(0.0));
+    }
+
+    public List<String> findNamesOfBookWriterByIsbn(String isbn) {
+
+//        Book book = this.bookPersistence.findByIsbn(isbn);
+//        if(book != null){
+//            throw  new NotFoundException("Book was not founded with isbn: " + isbn);
+//        }
+//
+//        return book.getBookWriters().stream()
+//                .distinct()
+//                .map(BookWriter::getName)
+//                .collect(Collectors.toList());
     }
 }

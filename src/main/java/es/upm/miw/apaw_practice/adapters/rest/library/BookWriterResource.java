@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.library;
 
 import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
+import es.upm.miw.apaw_practice.adapters.rest.library.dto.BookWriterCollectionDto;
 import es.upm.miw.apaw_practice.domain.models.library.BookWriter;
 import es.upm.miw.apaw_practice.domain.services.library.BookWriterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,12 @@ public class BookWriterResource {
     public BigDecimal findAverageOfNumberOfBookByLibraryName(@RequestParam String q){
         String name = new LexicalAnalyzer().extractWithAssure(q, "name");
         return this.bookWriterService.findAverageOfNumberOfBookByLibraryName(name);
+    }
+
+
+    @GetMapping(SEARCH)
+    public BookWriterCollectionDto findNamesOfBookWriterByIsbn(@RequestParam String q){
+        String isbn = new LexicalAnalyzer().extractWithAssure(q,"isbn");
+        return this.bookWriterService.findNamesOfBookWriterByIsbn(isbn);
     }
 }
