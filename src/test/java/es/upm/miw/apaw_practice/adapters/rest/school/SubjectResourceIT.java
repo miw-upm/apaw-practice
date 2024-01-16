@@ -131,18 +131,30 @@ public class SubjectResourceIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(List.class)
-                .value(descriptions -> assertEquals(List.of("desc1", "desc2", "desc3", "desc4", "desc5", "descSearch2", "descSearch3"),
+                .value(descriptions -> assertEquals(List.of("desc2", "desc4", "descSearch3"),
                         descriptions));
 
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
                         uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.SEARCH_DESCRIPTION_BY_EMAIL)
-                                .queryParam("q", "email:student1@mail.test")
+                                .queryParam("q", "email:student2@mail.test")
                                 .build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(List.class)
                 .value(descriptions -> assertEquals(List.of(), descriptions));
+    }
+
+    @Test
+    void testFindUniqueDescriptionByEmailBadRequest() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(SubjectResource.SUBJECTS + SubjectResource.SEARCH_DESCRIPTION_BY_EMAIL)
+                                .queryParam("q", "foo")
+                                .build())
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 }
