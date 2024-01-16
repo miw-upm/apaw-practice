@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface InstructorRepository extends MongoRepository<InstructorEntity, String> {
     Optional<InstructorEntity> findByDni(String dni);
+
+    Optional<InstructorEntity> findByName(String name);
 }

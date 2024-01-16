@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface InstructorPersistence {
     Instructor read(String dni);
     Instructor update(Instructor instructor);
+
+    Instructor readByName(String name);
 }

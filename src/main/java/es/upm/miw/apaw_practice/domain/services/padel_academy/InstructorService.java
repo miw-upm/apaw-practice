@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.padel_academy;
 
+import es.upm.miw.apaw_practice.domain.models.padel_academy.Academy;
 import es.upm.miw.apaw_practice.domain.models.padel_academy.Instructor;
 import es.upm.miw.apaw_practice.domain.persistence_ports.padel_academy.AcademyPersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.padel_academy.InstructorPersistence;
@@ -33,5 +34,9 @@ public class InstructorService {
                 .distinct()
                 .map(Instructor::getName)
                 .toList();
+    }
+
+    public Instructor read(String name) {
+        return this.instructorPersistence.readByName(name);
     }
 }

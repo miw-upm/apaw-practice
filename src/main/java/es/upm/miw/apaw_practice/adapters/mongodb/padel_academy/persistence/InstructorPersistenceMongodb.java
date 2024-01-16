@@ -33,4 +33,11 @@ public class InstructorPersistenceMongodb implements InstructorPersistence {
                 .save(instructorEntity)
                 .toInstructor();
     }
+
+    @Override
+    public Instructor readByName(String name) {
+        return this.instructorRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Instructor with name " + name + " not found."))
+                .toInstructor();
+    }
 }

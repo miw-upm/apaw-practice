@@ -39,4 +39,12 @@ public class InstructorServiceIT {
         assertTrue(names.contains("Ana"));
     }
 
+    @Test
+    void testReadByName() {
+        Instructor instructor = instructorService.read("Ana");
+        assertNotNull(instructor);
+        assertEquals("12345678A", instructor.getDni());
+        assertEquals("Ana", instructor.getName());
+        assertEquals(654456545, instructor.getPhoneNumber());
+    }
 }
