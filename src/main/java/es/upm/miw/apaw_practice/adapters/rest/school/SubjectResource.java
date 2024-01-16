@@ -15,6 +15,7 @@ public class SubjectResource {
 
     static final String TITLE_ID = "/{title}";
     static final String SEARCH_DESCRIPTION_BY_SMARTBOARD = "/search-desc-smartboard";
+    static final String SEARCH_DESCRIPTION_BY_EMAIL = "/search-desc-email";
 
     private final SubjectService subjectService;
 
@@ -42,5 +43,11 @@ public class SubjectResource {
     public List<String> searchUniqueDescriptionBySmartBoard(@RequestParam String q) {
         Boolean smartBoard = new LexicalAnalyzer().extractWithAssure(q, "smartboard", Boolean::parseBoolean);
         return this.subjectService.searchUniqueDescriptionBySmartBoard(smartBoard);
+    }
+
+    @GetMapping(SEARCH_DESCRIPTION_BY_EMAIL)
+    public List<String> searchUniqueDescriptionByEmail(@RequestParam String q) {
+        String email = new LexicalAnalyzer().extractWithAssure(q, "email");
+        return this.subjectService.searchUniqueDescriptionByEmail(email);
     }
 }
