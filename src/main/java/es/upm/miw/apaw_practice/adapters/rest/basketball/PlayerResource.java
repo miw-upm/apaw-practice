@@ -9,7 +9,7 @@ public class PlayerResource {
     static final String PLAYER = "/basketball/player";
     private final PlayerService playerService;
     static final String EMAIL_ID = "/{email}";
-    static final String BASKET_ID = "/{id}";
+    static final String BASKET_ID = "/{basket_id}";
 
     public PlayerResource(PlayerService playerService) {
         this.playerService = playerService;
