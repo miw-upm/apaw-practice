@@ -7,7 +7,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=es.upm.miw%3Aapaw-practice&metric=alert_status)](https://sonarcloud.io/dashboard?id=es.upm.miw%3Aapaw-practice)
 
 ### Tecnologías necesarias
-`Java` `Maven` `GitHub` `Travis-ci` `Sonarcloud` `Better Code Hub` `Slack` `Spring-boot` `OpenAPI`
+`Java` `Maven` `GitHub` `Sonarcloud` `Slack` `Spring-boot` `OpenAPI`
 
 ### :gear: Instalación del proyecto
 1. Clonar el repositorio en tu equipo, **mediante consola**:
