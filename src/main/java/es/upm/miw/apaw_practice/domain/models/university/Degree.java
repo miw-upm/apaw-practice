@@ -1,8 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.university;
 
 public class Degree {
-    private int code;
-    private int capacity;
+    private Integer code;
+    private Integer capacity;
     private String knowledgeArea;
     private String description;
 
@@ -17,19 +17,19 @@ public class Degree {
         this.description = description;
     }
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 

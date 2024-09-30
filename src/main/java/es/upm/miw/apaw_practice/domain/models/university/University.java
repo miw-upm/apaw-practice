@@ -5,8 +5,8 @@ import java.util.List;
 public class University {
     private String topDomain;
     private String name;
-    private boolean allowsInternationalStudents;
-    private int numberOfFaculties;
+    private Boolean allowsInternationalStudents;
+    private Integer numberOfFaculties;
     private List<Degree> degreesOffered;
 
     public University() {
@@ -37,19 +37,19 @@ public class University {
         this.name = name;
     }
 
-    public boolean isAllowsInternationalStudents() {
+    public Boolean isAllowsInternationalStudents() {
         return allowsInternationalStudents;
     }
 
-    public void setAllowsInternationalStudents(boolean allowsInternationalStudents) {
+    public void setAllowsInternationalStudents(Boolean allowsInternationalStudents) {
         this.allowsInternationalStudents = allowsInternationalStudents;
     }
 
-    public int getNumberOfFaculties() {
+    public Integer getNumberOfFaculties() {
         return numberOfFaculties;
     }
 
-    public void setNumberOfFaculties(int numberOfFaculties) {
+    public void setNumberOfFaculties(Integer numberOfFaculties) {
         this.numberOfFaculties = numberOfFaculties;
     }
 
