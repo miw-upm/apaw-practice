@@ -1,7 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.university;
 
 public class Degree {
-    private int maxStudents;
+    private int code;
+    private int capacity;
     private String knowledgeArea;
     private String description;
 
@@ -9,18 +10,27 @@ public class Degree {
         //empty for framework
     }
 
-    public Degree(int maxStudents, String knowledgeArea, String description) {
-        this.maxStudents = maxStudents;
+    public Degree(int code, int capacity, String knowledgeArea, String description) {
+        this.code = code;
+        this.capacity = capacity;
         this.knowledgeArea = knowledgeArea;
         this.description = description;
     }
 
-    public int getMaxStudents() {
-        return maxStudents;
+    public int getCode() {
+        return code;
     }
 
-    public void setMaxStudents(int maxStudents) {
-        this.maxStudents = maxStudents;
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public String getKnowledgeArea() {
@@ -42,7 +52,8 @@ public class Degree {
     @Override
     public String toString() {
         return "Degree{" +
-                "maxStudents=" + maxStudents +
+                "code=" + code +
+                ", capacity=" + capacity +
                 ", knowledgeArea='" + knowledgeArea + '\'' +
                 ", description='" + description + '\'' +
                 '}';
