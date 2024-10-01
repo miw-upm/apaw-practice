@@ -3,13 +3,13 @@ package es.upm.miw.apaw_practice.domain.models.art_museum;
 public class Artwork {
     private String id;
     private String titleName;
-    private int year;
+    private Integer year;
 
     public Artwork() {
         // empty for framework
     }
 
-    public Artwork(String id, String titleName, int year) {
+    public Artwork(String id, String titleName, Integer year) {
         this.id = id;
         this.titleName = titleName;
         this.year = year;
@@ -31,11 +31,11 @@ public class Artwork {
         this.titleName = titleName;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
