@@ -7,7 +7,7 @@ public class Game {
     private int numberOfCopies;
 
     public Game() {
-        // Default constructor
+        //empty for framework
     }
 
     public Game(String name, int numPlayers, String genre, int numberOfCopies) {

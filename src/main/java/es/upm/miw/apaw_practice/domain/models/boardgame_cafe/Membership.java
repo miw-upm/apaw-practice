@@ -8,7 +8,7 @@ public class Membership {
     private LocalDate endDate;
 
     public Membership() {
-        // Default constructor
+        //empty for framework
     }
 
     public Membership(String type, LocalDate startDate, LocalDate endDate) {

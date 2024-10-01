@@ -10,7 +10,7 @@ public class PlayService {
     private List<Game> selectedGames;
 
     public PlayService() {
-        // Default constructor
+        //empty for framework
     }
 
     public PlayService(BigDecimal coverFee, LocalDateTime sessionDate, List<Game> selectedGames) {
