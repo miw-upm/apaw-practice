@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 
 public class BasketBall {
 
-    int id;
-    String brand;
-    BigDecimal price;
-    BasketMatch match;
+    private int id;
+    private String brand;
+    private BigDecimal price;
+    private BasketMatch match;
 
     public BasketBall(int id, String brand, BigDecimal price, BasketMatch match) {
         this.id = id;
