@@ -8,7 +8,7 @@ public class Customer {
     private boolean isMember;
 
     public Customer() {
-        // Default constructor
+        //empty for framework
     }
 
     public Customer(String name, LocalDate birthDate, boolean isMember) {
