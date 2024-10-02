@@ -1,18 +1,17 @@
 package es.upm.miw.apaw_practice.domain.models.basketball;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class BasketMatch {
 
-    int id;
-    LocalDateTime date;
-    String address;
-    BasketScoreBoard scoreBoard;
+    private int id;
+    private LocalDateTime date;
+    private String address;
 
     public BasketMatch(int id) {
         this.id = id;
         this.date = LocalDateTime.now();
-        scoreBoard = new BasketScoreBoard();
     }
 
     public int getId() {
@@ -33,13 +32,5 @@ public class BasketMatch {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public BasketScoreBoard getScoreBoard() {
-        return scoreBoard;
-    }
-
-    public void setScoreBoard(BasketScoreBoard scoreBoard) {
-        this.scoreBoard = scoreBoard;
     }
 }

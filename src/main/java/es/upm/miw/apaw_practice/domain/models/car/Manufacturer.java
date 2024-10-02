@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.car;
 
 public class Manufacturer {
-
     private String name;
     private String country;
     private int numberOfEmployees;
@@ -38,7 +37,6 @@ public class Manufacturer {
     public void setNumberOfEmployees(int numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
     }
-
     @Override
     public String toString() {
         return "Manufacturer{" +

@@ -1,10 +1,10 @@
 package es.upm.miw.apaw_practice.domain.models.basketball;
 
 public class BasketPlayer {
-    String dni;
-    String name;
-    int dorsal;
-    int points;
+    private String dni;
+    private String name;
+    private int dorsal;
+    private int points;
 
     public BasketPlayer(String dni, String name, int dorsal, int points) {
         this.dni = dni;
