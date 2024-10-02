@@ -9,6 +9,10 @@ public class Reservation {
     public BigDecimal price;
     public int numberOfPeople;
 
+    public Reservation(){
+        //empty for framework
+    }
+
     public Reservation(LocalDate date, BigDecimal price, int numberOfPeople) {
         this.date = date;
         this.price = price;
