@@ -38,7 +38,6 @@ public class Manufacturer {
     public void setNumberOfEmployees(int numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
     }
-
     @Override
     public String toString() {
         return "Manufacturer{" +
