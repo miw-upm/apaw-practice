@@ -12,6 +12,10 @@ public class Movie {
     private List<Actor> actorsFeaturing;
     private Studio studio;
 
+    public Movie() {
+        //empty for framework
+    }
+
     public Movie(String id, String title, boolean wonAnOscar, BigDecimal boxOffice, List<Actor> actorsFeaturing, Studio studio) {
         this.id = id;
         this.title = title;
