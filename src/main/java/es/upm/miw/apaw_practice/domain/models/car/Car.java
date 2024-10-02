@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.domain.models.car;
 import java.math.BigDecimal;
 
 public class Car {
-
     private String name;
     private boolean isElectric;
     private BigDecimal price;

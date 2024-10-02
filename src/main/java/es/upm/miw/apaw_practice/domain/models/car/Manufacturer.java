@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.car;
 
 public class Manufacturer {
-
     private String name;
     private String country;
     private int numberOfEmployees;
