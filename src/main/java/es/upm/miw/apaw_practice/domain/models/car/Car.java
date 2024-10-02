@@ -6,7 +6,6 @@ public class Car {
 
     private String name;
     private boolean isElectric;
-
     private BigDecimal price;
 
     public Car() {

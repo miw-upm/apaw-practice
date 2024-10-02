@@ -40,7 +40,6 @@ public class Piece {
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
-
     @Override
     public String toString() {
         return "Piece{" +
