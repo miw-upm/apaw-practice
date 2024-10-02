@@ -4,15 +4,17 @@ public class Club {
     public String name;
     public int capacity;
     public boolean isOpen;
+    private Owner owner;
 
     public Club() {
         //empty for framework
     }
 
-    public Club(String name, int capacity, boolean isOpen) {
+    public Club(String name, int capacity, boolean isOpen, Owner owner) {
         this.name = name;
         this.capacity = capacity;
         this.isOpen = isOpen;
+        this.owner = owner;
     }
 
     public String getName() {
@@ -37,6 +39,12 @@ public class Club {
 
     public void setOpen(boolean open) {
         isOpen = open;
+    }
+    public Owner getOwner() {
+        return owner;
+    }
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     @Override
