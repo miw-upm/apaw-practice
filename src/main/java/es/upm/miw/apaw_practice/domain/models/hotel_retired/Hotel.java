@@ -1,27 +1,21 @@
 package es.upm.miw.apaw_practice.domain.models.hotel_retired;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 public class Hotel {
 
     private String cif;
-    private String name;
+    private String hotelName;
     private String address;
-    private LocalDateTime dateOfConstruction;
-    private List<Room> rooms;
 
     public Hotel() {
         // empty for framework
     }
 
-    public Hotel(String cif, String name, String address, LocalDateTime dateOfConstruction, List<Room> rooms) {
+    public Hotel(String cif, String hotelName, String address) {
         this.cif = cif;
-        this.name = name;
+        this.hotelName = hotelName;
         this.address = address;
-        this.dateOfConstruction = dateOfConstruction;
-        this.rooms = rooms;
     }
 
     public String getCif() {
@@ -32,12 +26,12 @@ public class Hotel {
         this.cif = cif;
     }
 
-    public String getName() {
-        return name;
+    public String getHotelName() {
+        return hotelName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 
     public String getAddress() {
@@ -48,43 +42,25 @@ public class Hotel {
         this.address = address;
     }
 
-    public LocalDateTime getDateOfConstruction() {
-        return dateOfConstruction;
-    }
-
-    public void setDateOfConstruction(LocalDateTime dateOfConstruction) {
-        this.dateOfConstruction = dateOfConstruction;
-    }
-
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Hotel hotel = (Hotel) o;
-        return Objects.equals(cif, hotel.cif) && Objects.equals(name, hotel.name) && Objects.equals(address, hotel.address) && Objects.equals(dateOfConstruction, hotel.dateOfConstruction) && Objects.equals(rooms, hotel.rooms);
+        return Objects.equals(cif, hotel.cif) && Objects.equals(hotelName, hotel.hotelName) && Objects.equals(address, hotel.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cif, name, address, dateOfConstruction, rooms);
+        return Objects.hash(cif, hotelName, address);
     }
 
     @Override
     public String toString() {
         return "Hotel{" +
                 "cif='" + cif + '\'' +
-                ", name='" + name + '\'' +
+                ", hotelName='" + hotelName + '\'' +
                 ", address='" + address + '\'' +
-                ", dateOfConstruction=" + dateOfConstruction +
-                ", rooms=" + rooms +
                 '}';
     }
 }
