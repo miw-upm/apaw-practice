@@ -4,16 +4,14 @@ import java.math.BigDecimal;
 
 public class BasketBall {
 
-    int id;
-    String brand;
-    BigDecimal price;
-    BasketMatch match;
+    private int id;
+    private String brand;
+    private BigDecimal price;
 
-    public BasketBall(int id, String brand, BigDecimal price, BasketMatch match) {
+    public BasketBall(int id, String brand, BigDecimal price) {
         this.id = id;
         this.brand = brand;
         this.price = price;
-        this.match = match;
     }
 
     public int getId() {
@@ -38,13 +36,5 @@ public class BasketBall {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public BasketMatch getMatch() {
-        return match;
-    }
-
-    public void setMatch(BasketMatch match) {
-        this.match = match;
     }
 }

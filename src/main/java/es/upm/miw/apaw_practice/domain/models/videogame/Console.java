@@ -44,7 +44,7 @@ public class Console {
         return "Console{" +
                 "name='" + name + '\'' +
                 ", releaseDate=" + releaseDate +
-                ", videoGame=" + videoGames +
+                ", videoGames=" + videoGames +
                 '}';
     }
 }
