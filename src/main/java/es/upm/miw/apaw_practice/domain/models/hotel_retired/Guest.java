@@ -6,18 +6,16 @@ import java.util.Objects;
 public class Guest {
 
     private String nif;
-    private String name;
-    private String surname;
+    private String fullName;
     private LocalDateTime birthDay;
 
     public Guest() {
         // empty for framework
     }
 
-    public Guest(String nif, String name, String surname, LocalDateTime birthDay) {
+    public Guest(String nif, String fullName, LocalDateTime birthDay) {
         this.nif = nif;
-        this.name = name;
-        this.surname = surname;
+        this.fullName = fullName;
         this.birthDay = birthDay;
     }
 
@@ -29,20 +27,12 @@ public class Guest {
         this.nif = nif;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public LocalDateTime getBirthDay() {
@@ -58,20 +48,19 @@ public class Guest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Guest guest = (Guest) o;
-        return Objects.equals(nif, guest.nif) && Objects.equals(name, guest.name) && Objects.equals(surname, guest.surname) && Objects.equals(birthDay, guest.birthDay);
+        return Objects.equals(nif, guest.nif) && Objects.equals(fullName, guest.fullName) && Objects.equals(birthDay, guest.birthDay);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nif, name, surname, birthDay);
+        return Objects.hash(nif, fullName, birthDay);
     }
 
     @Override
     public String toString() {
         return "Guest{" +
                 "nif='" + nif + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", birthDay=" + birthDay +
                 '}';
     }
