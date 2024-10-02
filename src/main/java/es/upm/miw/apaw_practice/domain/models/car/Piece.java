@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.domain.models.car;
 import java.math.BigDecimal;
 
 public class Piece {
-
     private String partNumber;
     private String description;
     private BigDecimal cost;

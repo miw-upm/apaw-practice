@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.domain.models.car;
 import java.time.LocalDate;
 
 public class Owner {
-
     private String name;
     private String driverLicense;
     private LocalDate birthDate;
