@@ -1,7 +1,8 @@
-package es.upm.miw.apaw_practice.domain.models.shop;
+package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.time.LocalDateTime;
 
 public class Consulta {
     private  Long id;
