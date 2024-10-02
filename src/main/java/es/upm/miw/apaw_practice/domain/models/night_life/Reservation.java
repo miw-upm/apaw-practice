@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.domain.models.night_life;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class Reservation {
     public LocalDate date;
