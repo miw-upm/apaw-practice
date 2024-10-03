@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 import java.time.LocalDate;
 
 public class Customer {
-    private int customerId;
+    private String email;
     private String name;
     private LocalDate birthDate;
     private boolean isMember;
@@ -12,19 +12,19 @@ public class Customer {
         //empty for framework
     }
 
-    public Customer(int customerId, String name, LocalDate birthDate, boolean isMember) {
-        this.customerId = customerId;
+    public Customer(String email, String name, LocalDate birthDate, boolean isMember) {
+        this.email = email;
         this.name = name;
         this.birthDate = birthDate;
         this.isMember = isMember;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -54,7 +54,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerId=" + customerId +
+                "email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
                 ", isMember=" + isMember +
