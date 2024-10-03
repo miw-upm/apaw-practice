@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.theme_park;
 
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,14 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.theme_park;
 
-import es.upm.miw.apaw_practice.domain.models.shop.ArticleItem;
-import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
-import org.springframework.cglib.core.Local;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 public class ThemePark {
     private String id;
