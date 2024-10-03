@@ -5,7 +5,6 @@ public class Manufacturer {
     private String country;
     private Integer numberOfEmployees;
 
-
     public Manufacturer() {
         //empty for framework
     }
