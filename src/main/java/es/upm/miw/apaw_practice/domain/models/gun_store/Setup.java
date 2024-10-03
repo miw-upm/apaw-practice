@@ -2,11 +2,13 @@ package es.upm.miw.apaw_practice.domain.models.gun_store;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Setup {
     private int setupId;
     private BigDecimal totalPrice;
     private LocalDate orderDate;
+    private List<Gun> guns;
 
     public Setup() {
         //Empty for framework
