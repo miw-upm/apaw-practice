@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class PlayService {
-    private int playServiceId;
+    private Integer playServiceId;
     private BigDecimal coverFee;
     private LocalDateTime sessionDate;
     private List<Game> selectedGames;
@@ -14,18 +14,18 @@ public class PlayService {
         //empty for framework
     }
 
-    public PlayService(int playServiceId, BigDecimal coverFee, LocalDateTime sessionDate, List<Game> selectedGames) {
+    public PlayService(Integer playServiceId, BigDecimal coverFee, LocalDateTime sessionDate, List<Game> selectedGames) {
         this.playServiceId = playServiceId;
         this.coverFee = coverFee;
         this.sessionDate = sessionDate;
         this.selectedGames = selectedGames;
     }
 
-    public int getPlayServiceId() {
+    public Integer getPlayServiceId() {
         return playServiceId;
     }
 
-    public void setPlayServiceId(int playServiceId) {
+    public void setPlayServiceId(Integer playServiceId) {
         this.playServiceId = playServiceId;
     }
 
