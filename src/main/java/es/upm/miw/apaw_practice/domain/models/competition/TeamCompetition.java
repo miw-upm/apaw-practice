@@ -7,18 +7,16 @@ public class TeamCompetition {
     private String nameTeamCompetition;
     private Integer numberCompetitionWon;
     private String coachName;
-    private List<Competition> competitions;
     private List<PlayerTeam> playerTeams;
 
     public TeamCompetition() {
         // empty for framework
     }
 
-    public TeamCompetition(String nameTeamCompetition, Integer numberCompetitionWon, String coachName, List<Competition> competitions, List<PlayerTeam> playerTeams) {
+    public TeamCompetition(String nameTeamCompetition, Integer numberCompetitionWon, String coachName, List<PlayerTeam> playerTeams) {
         this.nameTeamCompetition = nameTeamCompetition;
         this.numberCompetitionWon = numberCompetitionWon;
         this.coachName = coachName;
-        this.competitions = competitions;
         this.playerTeams = playerTeams;
     }
 
@@ -46,14 +44,6 @@ public class TeamCompetition {
         this.coachName = coachName;
     }
 
-    public List<Competition> getCompetitions() {
-        return competitions;
-    }
-
-    public void setCompetitions(List<Competition> competitions) {
-        this.competitions = competitions;
-    }
-
     public List<PlayerTeam> getPlayerTeams() {
         return playerTeams;
     }
@@ -68,7 +58,6 @@ public class TeamCompetition {
                 "nameTeamCompetition='" + nameTeamCompetition + '\'' +
                 ", numberCompetitionWon=" + numberCompetitionWon +
                 ", coachName='" + coachName + '\'' +
-                ", competitions=" + competitions +
                 ", playerTeams=" + playerTeams +
                 '}';
     }

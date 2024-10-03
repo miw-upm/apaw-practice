@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 public class MatchCompetition {
 
     private String id;
-    private Competition competition;
     private LocalDateTime dayMatch;
     private String cityMatch;
 
@@ -13,9 +12,8 @@ public class MatchCompetition {
         // empty for framework
     }
 
-    public MatchCompetition(String id, Competition competition, LocalDateTime dayMatch, String cityMatch) {
+    public MatchCompetition(String id, LocalDateTime dayMatch, String cityMatch) {
         this.id = id;
-        this.competition = competition;
         this.dayMatch = dayMatch;
         this.cityMatch = cityMatch;
     }
@@ -26,14 +24,6 @@ public class MatchCompetition {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Competition getCompetition() {
-        return competition;
-    }
-
-    public void setCompetition(Competition competition) {
-        this.competition = competition;
     }
 
     public LocalDateTime getDayMatch() {
@@ -56,7 +46,6 @@ public class MatchCompetition {
     public String toString() {
         return "MatchCompetition{" +
                 "id='" + id + '\'' +
-                ", competition=" + competition +
                 ", dayMatch=" + dayMatch +
                 ", cityMatch='" + cityMatch + '\'' +
                 '}';
