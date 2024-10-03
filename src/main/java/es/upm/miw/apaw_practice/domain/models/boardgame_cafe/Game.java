@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
 public class Game {
-    private String name;
+    private String gameName;
     private int numPlayers;
     private String genre;
     private int numberOfCopies;
@@ -10,19 +10,19 @@ public class Game {
         //empty for framework
     }
 
-    public Game(String name, int numPlayers, String genre, int numberOfCopies) {
-        this.name = name;
+    public Game(String gameName, int numPlayers, String genre, int numberOfCopies) {
+        this.gameName = gameName;
         this.numPlayers = numPlayers;
         this.genre = genre;
         this.numberOfCopies = numberOfCopies;
     }
 
-    public String getName() {
-        return name;
+    public String getGameName() {
+        return gameName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     public int getNumPlayers() {
@@ -52,7 +52,7 @@ public class Game {
     @Override
     public String toString() {
         return "Game{" +
-                "name='" + name + '\'' +
+                "gameName='" + gameName + '\'' +
                 ", numPlayers=" + numPlayers +
                 ", genre='" + genre + '\'' +
                 ", numberOfCopies=" + numberOfCopies +

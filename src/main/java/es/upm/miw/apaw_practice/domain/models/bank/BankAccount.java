@@ -8,14 +8,14 @@ public class BankAccount {
     private String iban;
     private BigDecimal balance;
     private LocalDate openingDate;
-    private boolean hasInterest;
+    private Boolean hasInterest;
     private Client client;
 
     public BankAccount() {
         //Empty for framework
     }
 
-    public BankAccount(String iban, BigDecimal balance, LocalDate openingDate, boolean hasInterest, Client client) {
+    public BankAccount(String iban, BigDecimal balance, LocalDate openingDate, Boolean hasInterest, Client client) {
         this.iban = iban;
         this.balance = balance;
         this.openingDate = openingDate;
@@ -51,7 +51,7 @@ public class BankAccount {
         return hasInterest;
     }
 
-    public void setHasInterest(boolean hasInterest) {
+    public void setHasInterest(Boolean hasInterest) {
         this.hasInterest = hasInterest;
     }
 

@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class BasketScoreBoard {
 
-    LocalTime time;
-    Map<Integer,Integer> pointsByTeam;
-    Map<BasketPlayer,Integer> foultsByPlayer;
+    private LocalTime time;
+    private Map<Integer,Integer> pointsByTeam;
+    private Map<Integer,Integer> foultsByPlayer;
 
     public BasketScoreBoard() {
         this.time = LocalTime.of(0,40);
@@ -25,10 +25,10 @@ public class BasketScoreBoard {
     public void setPointsByTeam(Map<Integer,Integer> pointsByTeam) {
         this.pointsByTeam = pointsByTeam;
     }
-    public Map<BasketPlayer,Integer> getFoultsByPlayer() {
+    public Map<Integer,Integer> getFoultsByPlayer() {
         return foultsByPlayer;
     }
-    public void setFoultsByPlayer(Map<BasketPlayer,Integer> foultsByPlayer) {
+    public void setFoultsByPlayer(Map<Integer,Integer> foultsByPlayer) {
         this.foultsByPlayer = foultsByPlayer;
     }
 }
