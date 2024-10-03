@@ -3,13 +3,12 @@ package es.upm.miw.apaw_practice.domain.models.car;
 public class Manufacturer {
     private String name;
     private String country;
-    private int numberOfEmployees;
-
+    private Integer numberOfEmployees;
 
     public Manufacturer() {
         //empty for framework
     }
-    public Manufacturer(String name, String country, int numberOfEmployees) {
+    public Manufacturer(String name, String country, Integer numberOfEmployees) {
         this.name = name;
         this.country = country;
         this.numberOfEmployees = numberOfEmployees;
@@ -31,11 +30,11 @@ public class Manufacturer {
         this.country = country;
     }
 
-    public int getNumberOfEmployees() {
+    public Integer getNumberOfEmployees() {
         return numberOfEmployees;
     }
 
-    public void setNumberOfEmployees(int numberOfEmployees) {
+    public void setNumberOfEmployees(Integer numberOfEmployees) {
         this.numberOfEmployees = numberOfEmployees;
     }
     @Override
