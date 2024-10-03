@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.course;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Student {
@@ -10,6 +11,7 @@ public class Student {
     private String lastName;
     private String email;
     private Map<String, Course> listCourses;
+    private List<TutoringSession> listTutoringSession;
 
     public Student() {
         //empty for framework
@@ -20,6 +22,7 @@ public class Student {
         this.lastName = lastName;
         this.email = email;
         this.listCourses = new HashMap<>();
+        this.listTutoringSession = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -58,6 +61,18 @@ public class Student {
         return this.listCourses.size();
     }
 
+    public void setTutoringSession(TutoringSession tutoringSession){
+        this.listTutoringSession.add(tutoringSession);
+    }
+
+    public TutoringSession getTutoringSession(int id){
+        return this.listTutoringSession.get(id);
+    }
+
+    public int getSizeTutoringSession(){
+        return this.listTutoringSession.size();
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -65,6 +80,7 @@ public class Student {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", listCourses=" + listCourses +
+                ", listTutoringSession=" + listTutoringSession +
                 '}';
     }
 }

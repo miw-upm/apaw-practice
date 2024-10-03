@@ -8,18 +8,16 @@ public class TutoringSession {
     private LocalDateTime dateTime;
     private BigDecimal cost;
     private String idCourse;
-    private Student tutor;
 
     public TutoringSession() {
         //empty for framework
     }
 
-    public TutoringSession(String title, LocalDateTime dateTime, BigDecimal cost, String idCourse, Student tutor) {
+    public TutoringSession(String title, LocalDateTime dateTime, BigDecimal cost, String idCourse) {
         this.title = title;
         this.dateTime = dateTime;
         this.cost = cost;
         this.idCourse = idCourse;
-        this.tutor = tutor;
     }
 
     public String getTitle() {
@@ -54,14 +52,6 @@ public class TutoringSession {
         this.idCourse = idCourse;
     }
 
-    public Student getTutor() {
-        return tutor;
-    }
-
-    public void setTutor(Student tutor) {
-        this.tutor = tutor;
-    }
-
     @Override
     public String toString() {
         return "TutoringSession{" +
@@ -69,7 +59,6 @@ public class TutoringSession {
                 ", dateTime=" + dateTime +
                 ", cost=" + cost +
                 ", idCourse='" + idCourse + '\'' +
-                ", tutor=" + tutor +
                 '}';
     }
 }
