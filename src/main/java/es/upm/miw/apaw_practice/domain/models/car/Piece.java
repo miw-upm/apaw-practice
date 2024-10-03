@@ -42,6 +42,15 @@ public class Piece {
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
+
+    public List<Manufacturer> getManufacturerList() {
+        return manufacturerList;
+    }
+
+    public void setManufacturerList(List<Manufacturer> manufacturerList) {
+        this.manufacturerList = manufacturerList;
+    }
+
     @Override
     public String toString() {
         return "Piece{" +
