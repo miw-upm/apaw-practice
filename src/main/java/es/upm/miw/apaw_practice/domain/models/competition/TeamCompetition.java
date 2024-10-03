@@ -8,16 +8,18 @@ public class TeamCompetition {
     private Integer numberCompetitionWon;
     private String coachName;
     private List<Competition> competitions;
+    private List<PlayerTeam> playerTeams;
 
     public TeamCompetition() {
         // empty for framework
     }
 
-    public TeamCompetition(String nameTeamCompetition, Integer numberCompetitionWon, String coachName, List<Competition> competitions) {
+    public TeamCompetition(String nameTeamCompetition, Integer numberCompetitionWon, String coachName, List<Competition> competitions, List<PlayerTeam> playerTeams) {
         this.nameTeamCompetition = nameTeamCompetition;
         this.numberCompetitionWon = numberCompetitionWon;
         this.coachName = coachName;
         this.competitions = competitions;
+        this.playerTeams = playerTeams;
     }
 
     public String getNameTeamCompetition() {
@@ -52,6 +54,14 @@ public class TeamCompetition {
         this.competitions = competitions;
     }
 
+    public List<PlayerTeam> getPlayerTeams() {
+        return playerTeams;
+    }
+
+    public void setPlayerTeams(List<PlayerTeam> playerTeams) {
+        this.playerTeams = playerTeams;
+    }
+
     @Override
     public String toString() {
         return "TeamCompetition{" +
@@ -59,6 +69,7 @@ public class TeamCompetition {
                 ", numberCompetitionWon=" + numberCompetitionWon +
                 ", coachName='" + coachName + '\'' +
                 ", competitions=" + competitions +
+                ", playerTeams=" + playerTeams +
                 '}';
     }
 }
