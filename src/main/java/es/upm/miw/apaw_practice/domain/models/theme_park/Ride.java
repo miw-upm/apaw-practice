@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.theme_park;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Ride {

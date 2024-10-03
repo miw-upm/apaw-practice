@@ -1,11 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.theme_park;
 
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-
 public class Operator {
     private Ride ride;
     private String name;
