@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.competition;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Competition {
@@ -8,19 +9,19 @@ public class Competition {
     private String nameCompetition;
     private LocalDate startDate;
     private LocalDate endDate;
-    private boolean isInternational;
-    private List<MatchCompetition> matchCompetitions;
+    private List<TeamCompetition> teamCompetitions;
+    private Organization organization;
 
     public Competition() {
         // empty for framework
     }
 
-    public Competition(String nameCompetition, LocalDate startDate, LocalDate endDate, boolean isInternational, List<MatchCompetition> matchCompetitions) {
+    public Competition(String nameCompetition, LocalDate startDate, LocalDate endDate, List<TeamCompetition> teamCompetitions, Organization organization) {
         this.nameCompetition = nameCompetition;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.isInternational = isInternational;
-        this.matchCompetitions = matchCompetitions;
+        this.teamCompetitions = teamCompetitions;
+        this.organization = organization;
     }
 
     public String getNameCompetition() {
@@ -39,6 +40,14 @@ public class Competition {
         this.startDate = startDate;
     }
 
+    public List<TeamCompetition> getTeamCompetitions() {
+        return teamCompetitions;
+    }
+
+    public void setTeamCompetitions(List<TeamCompetition> teamCompetitions) {
+        this.teamCompetitions = teamCompetitions;
+    }
+
     public LocalDate getEndDate() {
         return endDate;
     }
@@ -47,19 +56,22 @@ public class Competition {
         this.endDate = endDate;
     }
 
-    public boolean isInternational() {
-        return isInternational;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setInternational(boolean international) {
-        isInternational = international;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
-    public List<MatchCompetition> getMatchCompetitions() {
-        return matchCompetitions;
-    }
-
-    public void setMatchCompetitions(List<MatchCompetition> matchCompetitions) {
-        this.matchCompetitions = matchCompetitions;
+    @Override
+    public String toString() {
+        return "Competition{" +
+                "nameCompetition='" + nameCompetition + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", teamCompetitions=" + teamCompetitions +
+                ", organization=" + organization +
+                '}';
     }
 }
