@@ -4,14 +4,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Company {
-    private String name;
+    private String name;// Primary Key
     private String location;
     private String industry;
     private LocalDate creationDate;
     private List<Department> departments;
-    private List<ExpenseBill> expenseBills;
 
-    // Constructor, getters, and setters
+    public Company() {
+        //empty for framework
+    }
+
     public Company(String name, String location, String industry, LocalDate creationDate) {
         this.name = name;
         this.location = location;
@@ -59,11 +61,7 @@ public class Company {
         this.departments = departments;
     }
 
-    public List<ExpenseBill> getExpenseBills() {
-        return expenseBills;
-    }
 
-    public void setExpenseBills(List<ExpenseBill> expenseBills) {
-        this.expenseBills = expenseBills;
-    }
+
+
 }

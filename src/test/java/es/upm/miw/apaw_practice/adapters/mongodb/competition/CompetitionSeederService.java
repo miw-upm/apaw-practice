@@ -12,6 +12,7 @@ import es.upm.miw.apaw_practice.domain.models.competition.Organization;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class CompetitionSeederService {
     private TeamCompetitionRepository teamCompetitionRepository;
 
     public void seedDatabase() {
-        LogManager.getLogger(this.getClass()).warn("------- Shop Initial Load -----------");
+        LogManager.getLogger(this.getClass()).warn("------- Competition Initial Load -----------");
         PlayerTeamEntity[] playerTeams = {
                 new PlayerTeamEntity(84.32, 180.79, new BigDecimal("1.23")),
                 new PlayerTeamEntity(76.34, 156.76, new BigDecimal("6.83")),
@@ -48,8 +49,8 @@ public class CompetitionSeederService {
         };
         this.teamCompetitionRepository.saveAll(Arrays.asList(teamCompetitions));
         OrganizationEntity[] organizations = {
-                new OrganizationEntity(new Organization("UEFA", LocalDateTime.of(1867,8,12,12,32), true)),
-                new OrganizationEntity(new Organization("FEMAFUSA", LocalDateTime.of(1935,4,10,22,45), true)),
+                new OrganizationEntity(new Organization("UEFA", LocalDateTime.of(1867, 8, 12, 12, 32), true)),
+                new OrganizationEntity(new Organization("FEMAFUSA", LocalDateTime.of(1935, 4, 10, 22, 45), true)),
         };
         this.organizationRepository.saveAll(Arrays.asList(organizations));
         CompetitionEntity[] competitions = {

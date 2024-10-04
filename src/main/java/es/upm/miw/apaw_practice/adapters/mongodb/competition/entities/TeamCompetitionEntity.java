@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.competition.entities;
 
-import es.upm.miw.apaw_practice.domain.models.competition.PlayerTeam;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
