@@ -3,12 +3,14 @@ package es.upm.miw.apaw_practice.domain.models.company;
 import java.util.List;
 
 public class Management {
-    private int managerId;
+    private int managerId;// Primary Key
     private String name;
     private boolean isActive;
     private List<Department> departments;
 
-    // Constructor, getters, and setters
+    public Management() {
+        //empty for framework
+    }
     public Management(int managerId, String name, boolean isActive) {
         this.managerId = managerId;
         this.name = name;
