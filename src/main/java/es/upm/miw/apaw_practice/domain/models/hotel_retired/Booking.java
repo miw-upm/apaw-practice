@@ -1,20 +1,20 @@
 package es.upm.miw.apaw_practice.domain.models.hotel_retired;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Booking {
 
     private int id;
     private Boolean confirmed;
-    private Date dateIn;
-    private Date dateOut;
+    private LocalDate dateIn;
+    private LocalDate dateOut;
 
     public Booking() {
         // empty for framework
     }
 
-    public Booking(int id, Boolean confirmed,  Date dateIn, Date dateOut) {
+    public Booking(int id, Boolean confirmed,  LocalDate dateIn, LocalDate dateOut) {
         this.id = id;
         this.confirmed = confirmed;
         this.dateIn = dateIn;
@@ -37,19 +37,19 @@ public class Booking {
         this.id = id;
     }
 
-    public Date getDateIn() {
+    public LocalDate getDateIn() {
         return dateIn;
     }
 
-    public void setDateIn(Date dateIn) {
+    public void setDateIn(LocalDate dateIn) {
         this.dateIn = dateIn;
     }
 
-    public Date getDateOut() {
+    public LocalDate getDateOut() {
         return dateOut;
     }
 
-    public void setDateOut(Date dateOut) {
+    public void setDateOut(LocalDate dateOut) {
         this.dateOut = dateOut;
     }
 
