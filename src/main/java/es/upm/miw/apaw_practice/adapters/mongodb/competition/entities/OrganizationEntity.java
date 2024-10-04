@@ -1,21 +1,37 @@
-package es.upm.miw.apaw_practice.domain.models.competition;
+package es.upm.miw.apaw_practice.adapters.mongodb.competition.entities;
 
+import es.upm.miw.apaw_practice.domain.models.competition.Organization;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-public class Organization {
-
+@Document
+public class OrganizationEntity {
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String nameOrganization;
     private LocalDateTime creationDateOrganization;
     private boolean international;
 
-    public Organization() {
+    public OrganizationEntity() {
         // empty for framework
     }
 
-    public Organization(String nameOrganization, LocalDateTime creationDateOrganization, boolean isInternational) {
-        this.nameOrganization = nameOrganization;
-        this.creationDateOrganization = creationDateOrganization;
-        this.international = isInternational;
+    public OrganizationEntity(Organization organization) {
+        BeanUtils.copyProperties(organization, this);
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNameOrganization() {
@@ -44,10 +60,11 @@ public class Organization {
 
     @Override
     public String toString() {
-        return "Organization{" +
-                "nameOrganization='" + nameOrganization + '\'' +
+        return "CompetitionEntity{" +
+                "id='" + id + '\'' +
+                ", nameOrganization='" + nameOrganization + '\'' +
                 ", creationDateOrganization=" + creationDateOrganization +
-                ", isInternational=" + international +
+                ", international=" + international +
                 '}';
     }
 }
