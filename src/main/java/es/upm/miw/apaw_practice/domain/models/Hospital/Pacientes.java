@@ -1,39 +1,36 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 
-public class Pacientes{
-    private Long id;
-    private String name;
+public class Patient {
+    private String dni;
+    private String fullname;
     private LocalDate dateOfBirth;
-    private Boolean hasInsurance;
+    private boolean hasInsurance;
+    private List<Appoinment> appointments; // Relación N:1 con Appointment
 
-    public Pacientes() {
-    }
 
-    public Pacientes(Long id, String name, LocalDate dateOfBirth, Boolean hasInsurance) {
-        this.id = id;
-        this.name = name;
+    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance) {
+        this.dni = dni;
+        this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
     }
 
-    public Long getId() {
-        return id;
+    public String getDni() {
+        return dni;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public LocalDate getDateOfBirth() {
@@ -44,21 +41,30 @@ public class Pacientes{
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Boolean getHasInsurance() {
+    public boolean isHasInsurance() {
         return hasInsurance;
     }
 
-    public void setHasInsurance(Boolean hasInsurance) {
+    public void setHasInsurance(boolean hasInsurance) {
         this.hasInsurance = hasInsurance;
+    }
+
+    public List<Appoinment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appoinment> appointments) {
+        this.appointments = appointments;
     }
 
     @java.lang.Override
     public java.lang.String toString() {
-        return "Pacientes{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "Patient{" +
+                "dni='" + dni + '\'' +
+                ", fullname='" + fullname + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", hasInsurance=" + hasInsurance +
+                ", appointments=" + appointments +
                 '}';
     }
 }
