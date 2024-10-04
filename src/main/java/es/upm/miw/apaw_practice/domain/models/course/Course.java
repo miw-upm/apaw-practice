@@ -1,31 +1,27 @@
 package es.upm.miw.apaw_practice.domain.models.course;
 
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Course {
 
-    private String id;
     private String title;
     private boolean requiresPayment;
-    Professor professor;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private List<TutoringSession> tutoringSessions;
 
     public Course() {
         //empty for framework
     }
 
-    public Course(String title, boolean requiresPayment, Professor professor) {
+    public Course(String title, boolean requiresPayment, LocalDate startDate, LocalDate endDate) {
         this.title = title;
         this.requiresPayment = requiresPayment;
-        this.professor = professor;
-        this.id = generateUniqueId(title != null ?title:"");
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.tutoringSessions = new ArrayList<>();
     }
 
     public String getTitle() {
@@ -44,27 +40,38 @@ public class Course {
         this.requiresPayment = requiresPayment;
     }
 
-    public Professor getProfessor() {
-        return professor;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    private String generateUniqueId(String title) {
-        long timestamp = System.currentTimeMillis();
-        String uniqueUuid = UUID.randomUUID().toString().substring(0, 8);
-        return title.replaceAll("\\s+", "") + "-" + timestamp + "-" + uniqueUuid;
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setTutoringSession(TutoringSession tutoringSession) {
+        this.tutoringSessions.add(tutoringSession);
+    }
+
+    public TutoringSession getTutoringSession(int idTutoringSession) {
+        return this.tutoringSessions.get(idTutoringSession);
     }
 
     @Override
     public String toString() {
         return "Course{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", requiresPayment=" + requiresPayment +
-                ", professor=" + professor +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", tutoringSessions=" + tutoringSessions +
                 '}';
     }
 }
