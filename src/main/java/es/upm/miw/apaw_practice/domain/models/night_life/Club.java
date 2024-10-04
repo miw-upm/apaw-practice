@@ -1,12 +1,11 @@
 package es.upm.miw.apaw_practice.domain.models.night_life;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Club {
-    public String name;
-    public int capacity;
-    public boolean isOpen;
+    private String name;
+    private int capacity;
+    private boolean opened;
     private Owner owner;
     private List<Reservation> reservations;
 
@@ -14,12 +13,12 @@ public class Club {
         //empty for framework
     }
 
-    public Club(String name, int capacity, boolean isOpen, Owner owner) {
+    public Club(String name, int capacity, boolean opened, Owner owner, List<Reservation> reservations) {
         this.name = name;
         this.capacity = capacity;
-        this.isOpen = isOpen;
+        this.opened = opened;
         this.owner = owner;
-        this.reservations = new ArrayList<>();
+        this.reservations = reservations;
     }
 
     public String getName() {
@@ -38,12 +37,11 @@ public class Club {
         this.capacity = capacity;
     }
 
-    public boolean isOpen() {
-        return isOpen;
+    public boolean isOpened() {
+        return opened;
     }
-
-    public void setOpen(boolean open) {
-        isOpen = open;
+    public void setOpened(boolean opened) {
+        this.opened = opened;
     }
 
     public Owner getOwner() {
@@ -67,7 +65,7 @@ public class Club {
         return "Club{" +
                 "name='" + name + '\'' +
                 ", capacity=" + capacity +
-                ", isOpen=" + isOpen +
+                ", isOpen=" + opened +
                 ", owner=" + (owner != null ? owner.getName() : "None") +
                 ", reservations=" + reservations.size() +
                 '}';
