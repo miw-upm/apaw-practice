@@ -1,26 +1,48 @@
-package es.upm.miw.apaw_practice.domain.models.competition;
+package es.upm.miw.apaw_practice.adapters.mongodb.competition.entities;
 
+import es.upm.miw.apaw_practice.domain.models.competition.Organization;
+import es.upm.miw.apaw_practice.domain.models.competition.TeamCompetition;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
-public class Competition {
+@Document
+public class CompetitionEntity {
 
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String nameCompetition;
     private LocalDate startDate;
     private LocalDate endDate;
+    @DBRef
     private List<TeamCompetition> teamCompetitions;
+    @DBRef
     private Organization organization;
 
-    public Competition() {
+    public CompetitionEntity() {
         // empty for framework
     }
 
-    public Competition(String nameCompetition, LocalDate startDate, LocalDate endDate, List<TeamCompetition> teamCompetitions, Organization organization) {
+    public CompetitionEntity(String id, String nameCompetition, LocalDate startDate, LocalDate endDate, List<TeamCompetition> teamCompetitions, Organization organization) {
+        this.id = UUID.randomUUID().toString();
         this.nameCompetition = nameCompetition;
         this.startDate = startDate;
         this.endDate = endDate;
         this.teamCompetitions = teamCompetitions;
         this.organization = organization;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNameCompetition() {
@@ -39,20 +61,20 @@ public class Competition {
         this.startDate = startDate;
     }
 
-    public List<TeamCompetition> getTeamCompetitions() {
-        return teamCompetitions;
-    }
-
-    public void setTeamCompetitions(List<TeamCompetition> teamCompetitions) {
-        this.teamCompetitions = teamCompetitions;
-    }
-
     public LocalDate getEndDate() {
         return endDate;
     }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public List<TeamCompetition> getTeamCompetitions() {
+        return teamCompetitions;
+    }
+
+    public void setTeamCompetitions(List<TeamCompetition> teamCompetitions) {
+        this.teamCompetitions = teamCompetitions;
     }
 
     public Organization getOrganization() {
@@ -65,8 +87,9 @@ public class Competition {
 
     @Override
     public String toString() {
-        return "Competition{" +
-                "nameCompetition='" + nameCompetition + '\'' +
+        return "CompetitionEntity{" +
+                "id='" + id + '\'' +
+                ", nameCompetition='" + nameCompetition + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", teamCompetitions=" + teamCompetitions +
