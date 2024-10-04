@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.martial_art;
 import java.time.LocalDate;
 
 public class Instructor {
-    private String id;
+    private String dni;
     private String fullName;
     private Integer phoneNumber;
     private LocalDate birthDate;
@@ -12,19 +12,19 @@ public class Instructor {
         // empty for framework
     }
 
-    public Instructor(String id, String fullName, Integer phoneNumber, LocalDate birthDate) {
-        this.id = id;
+    public Instructor(String dni, String fullName, Integer phoneNumber, LocalDate birthDate) {
+        this.dni = dni;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
     }
 
-    public String getId() {
-        return id;
+    public String getDni() {
+        return dni;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getFullName() {
@@ -54,7 +54,7 @@ public class Instructor {
     @Override
     public String toString() {
         return "Instructor{" +
-                "id='" + id + '\'' +
+                "dni='" + dni + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", birthDate=" + birthDate +
