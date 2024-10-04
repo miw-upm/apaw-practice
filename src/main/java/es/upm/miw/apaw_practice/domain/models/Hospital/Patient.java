@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Pacientes {
+public class Patient {
     private String dni;
     private String fullname;
     private LocalDate dateOfBirth;
