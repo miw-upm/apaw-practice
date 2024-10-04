@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.competition;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Competition {
