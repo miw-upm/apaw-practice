@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Artist {
     private String artistName;
-    private int age;
+    private Integer age;
     private String artStyle;
     private List<Artwork> artworks;
 
@@ -12,7 +12,7 @@ public class Artist {
         //empty for framework
     }
 
-    public Artist(String artistName, int age, String artStyle, List<Artwork> artworks) {
+    public Artist(String artistName, Integer age, String artStyle, List<Artwork> artworks) {
         this.artistName = artistName;
         this.age = age;
         this.artStyle = artStyle;
@@ -27,11 +27,11 @@ public class Artist {
         this.artistName = artistName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

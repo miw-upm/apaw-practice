@@ -5,15 +5,15 @@ import java.util.List;
 public class BranchOffice {
 
     private String buildingName;
-    private int employees;
-    private int atmNumber;
+    private Integer employees;
+    private Integer atmNumber;
     private List<Client> clients;
 
     public BranchOffice() {
         //Empty for framework
     }
 
-    public BranchOffice(String buildingName, int employees, int atmNumber, List<Client> clients) {
+    public BranchOffice(String buildingName, Integer employees, Integer atmNumber, List<Client> clients) {
         this.buildingName = buildingName;
         this.employees = employees;
         this.atmNumber = atmNumber;
@@ -32,7 +32,7 @@ public class BranchOffice {
         return employees;
     }
 
-    public void setEmployees(int employees) {
+    public void setEmployees(Integer employees) {
         this.employees = employees;
     }
 
@@ -40,7 +40,7 @@ public class BranchOffice {
         return atmNumber;
     }
 
-    public void setAtmNumber(int atmNumber) {
+    public void setAtmNumber(Integer atmNumber) {
         this.atmNumber = atmNumber;
     }
 
