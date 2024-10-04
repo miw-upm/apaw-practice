@@ -4,18 +4,23 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Department {
-    private String name;
+    private String name;// Primary Key
     private BigDecimal annualBudget;
     private int employeeCount;
     private Company company;
-    private List<Management> managementList;
+    private List<ExpenseBill> expenseBills;
+    private Management management;
 
-    // Constructor, getters, and setters
-    public Department(String name, BigDecimal annualBudget, int employeeCount, Company company) {
+    public Department() {
+        //empty for framework
+    }
+
+    public Department(String name, BigDecimal annualBudget, int employeeCount, Company company, Management management) {
         this.name = name;
         this.annualBudget = annualBudget;
         this.employeeCount = employeeCount;
         this.company = company;
+        this.management = management;
     }
 
     public String getName() {
@@ -50,12 +55,20 @@ public class Department {
         this.company = company;
     }
 
-    public List<Management> getManagementList() {
-        return managementList;
+    public List<ExpenseBill> getExpenseBills() {
+        return expenseBills;
     }
 
-    public void setManagementList(List<Management> managementList) {
-        this.managementList = managementList;
+    public void setExpenseBills(List<ExpenseBill> expenseBills) {
+        this.expenseBills = expenseBills;
+    }
+
+    public Management getManagement() {
+        return management;
+    }
+
+    public void setManagement(Management management) {
+        this.management = management;
     }
 }
 
