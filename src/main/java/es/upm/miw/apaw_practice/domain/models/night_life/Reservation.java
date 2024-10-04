@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Reservation {
-    public LocalDate date;
-    public BigDecimal price;
-    public int numberOfPeople;
+    private LocalDate date;
+    private BigDecimal price;
+    private int numberOfPeople;
 
     public Reservation() {
         //empty for framework
