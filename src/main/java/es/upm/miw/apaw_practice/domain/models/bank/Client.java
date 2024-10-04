@@ -1,25 +1,27 @@
 package es.upm.miw.apaw_practice.domain.models.bank;
 
+import java.util.List;
+
 public class Client {
 
     private String dni;
     private String name;
     private String surname;
-    private int phoneNumber;
+    private Integer phoneNumber;
     private String email;
-    private Address address;
+    private List<InvestmentFund> investmentFunds;
 
     public Client() {
         // Empty for framework
     }
 
-    public Client(String dni, String name, String surname, int phoneNumber, String email, Address address) {
+    public Client(String dni, String name, String surname, Integer phoneNumber, String email, List<InvestmentFund> investmentFunds) {
         this.dni = dni;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.address = address;
+        this.investmentFunds = investmentFunds;
     }
 
     public String getDni() {
@@ -46,19 +48,11 @@ public class Client {
         this.surname = surname;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public int getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -70,6 +64,14 @@ public class Client {
         this.email = email;
     }
 
+    public List<InvestmentFund> getInvestmentFunds() {
+        return investmentFunds;
+    }
+
+    public void setInvestmentFunds(List<InvestmentFund> investmentFunds) {
+        this.investmentFunds = investmentFunds;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
@@ -78,7 +80,7 @@ public class Client {
                 ", surname=" + surname + '\'' +
                 ", phone=" + phoneNumber + '\'' +
                 ", email=" + email + '\'' +
-                ", address=" + address +
+                ", investmentFunds=" + investmentFunds.stream().map(InvestmentFund::getName).toList() +
                 '}';
     }
 }

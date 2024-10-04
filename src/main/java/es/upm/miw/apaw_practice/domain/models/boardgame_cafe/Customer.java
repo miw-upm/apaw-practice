@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 import java.time.LocalDate;
 
 public class Customer {
+    private String email;
     private String name;
     private LocalDate birthDate;
     private boolean isMember;
@@ -11,10 +12,19 @@ public class Customer {
         //empty for framework
     }
 
-    public Customer(String name, LocalDate birthDate, boolean isMember) {
+    public Customer(String email, String name, LocalDate birthDate, boolean isMember) {
+        this.email = email;
         this.name = name;
         this.birthDate = birthDate;
         this.isMember = isMember;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -44,7 +54,8 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "name='" + name + '\'' +
+                "email='" + email + '\'' +
+                ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
                 ", isMember=" + isMember +
                 '}';
