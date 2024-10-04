@@ -69,6 +69,7 @@ public class Car {
                 "name='" + name + '\'' +
                 ", isElectric=" + isElectric +
                 ", price=" + price +
+                ", pieces=" + pieces +
                 '}';
     }
 }
