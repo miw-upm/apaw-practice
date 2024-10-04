@@ -8,7 +8,7 @@ public class Reservation {
     public BigDecimal price;
     public int numberOfPeople;
 
-    public Reservation(){
+    public Reservation() {
         //empty for framework
     }
 
@@ -17,21 +17,27 @@ public class Reservation {
         this.price = price;
         this.numberOfPeople = numberOfPeople;
     }
+
     public LocalDate getDate() {
         return date;
     }
+
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
     public BigDecimal getPrice() {
         return price;
     }
+
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
     public int getNumberOfPeople() {
         return numberOfPeople;
     }
+
     public void setNumberOfPeople(int numberOfPeople) {
         this.numberOfPeople = numberOfPeople;
     }
