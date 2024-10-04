@@ -7,17 +7,15 @@ public class TutoringSession {
     private String title;
     private LocalDateTime dateTime;
     private BigDecimal cost;
-    private String idCourse;
 
     public TutoringSession() {
         //empty for framework
     }
 
-    public TutoringSession(String title, LocalDateTime dateTime, BigDecimal cost, String idCourse) {
+    public TutoringSession(String title, LocalDateTime dateTime, BigDecimal cost) {
         this.title = title;
         this.dateTime = dateTime;
         this.cost = cost;
-        this.idCourse = idCourse;
     }
 
     public String getTitle() {
@@ -44,21 +42,12 @@ public class TutoringSession {
         this.cost = cost;
     }
 
-    public String getIdCourse() {
-        return idCourse;
-    }
-
-    public void setIdCourse(String idCourse) {
-        this.idCourse = idCourse;
-    }
-
     @Override
     public String toString() {
         return "TutoringSession{" +
                 "title='" + title + '\'' +
                 ", dateTime=" + dateTime +
                 ", cost=" + cost +
-                ", idCourse='" + idCourse + '\'' +
                 '}';
     }
 }
