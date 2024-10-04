@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class PlayerTeam {
 
-    private TeamCompetition teamCompetition;
+    private String id;
     private Double weight;
     private Double height;
     private BigDecimal salary;
@@ -13,19 +13,19 @@ public class PlayerTeam {
         // empty for framework
     }
 
-    public PlayerTeam(TeamCompetition teamCompetition, Double weight, Double height, BigDecimal salary) {
-        this.teamCompetition = teamCompetition;
+    public PlayerTeam(String id, Double weight, Double height, BigDecimal salary) {
+        this.id = id;
         this.weight = weight;
         this.height = height;
         this.salary = salary;
     }
 
-    public TeamCompetition getTeamCompetition() {
-        return teamCompetition;
+    public String getId() {
+        return id;
     }
 
-    public void setTeamCompetition(TeamCompetition teamCompetition) {
-        this.teamCompetition = teamCompetition;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Double getWeight() {
@@ -55,7 +55,7 @@ public class PlayerTeam {
     @Override
     public String toString() {
         return "PlayerTeam{" +
-                "teamCompetition=" + teamCompetition +
+                "id='" + id + '\'' +
                 ", weight=" + weight +
                 ", height=" + height +
                 ", salary=" + salary +
