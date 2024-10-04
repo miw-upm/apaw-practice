@@ -7,16 +7,17 @@ import java.util.stream.Collectors;
 public class User {
     private String name;
     private String address;
-    private List<Ride> rides;
     private LocalDateTime entranceDate;
+    private List<Ride> rides;
 
     public User() {
         //empty for framework
     }
 
-    public User(String name, String address, List<Ride> rides) {
+    public User(String name, String address, LocalDateTime entranceDate, List<Ride> rides) {
         this.name = name;
         this.address = address;
+        this.entranceDate = entranceDate;
         this.rides = rides;
     }
 
