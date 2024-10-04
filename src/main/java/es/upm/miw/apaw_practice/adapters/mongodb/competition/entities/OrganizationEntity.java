@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.competition.entities;
 
+import es.upm.miw.apaw_practice.domain.models.competition.Organization;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -20,8 +21,8 @@ public class OrganizationEntity {
         // empty for framework
     }
 
-    public OrganizationEntity(OrganizationEntity organizationEntity) {
-        BeanUtils.copyProperties(organizationEntity, this);
+    public OrganizationEntity(Organization organization) {
+        BeanUtils.copyProperties(organization, this);
         this.id = UUID.randomUUID().toString();
     }
 

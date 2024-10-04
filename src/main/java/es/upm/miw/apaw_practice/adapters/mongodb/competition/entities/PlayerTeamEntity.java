@@ -19,9 +19,11 @@ public class PlayerTeamEntity {
         // empty for framework
     }
 
-    public PlayerTeamEntity(PlayerTeam playerTeam) {
-        BeanUtils.copyProperties(playerTeam, this);
+    public PlayerTeamEntity(Double weight, Double height, BigDecimal salary) {
         this.id = UUID.randomUUID().toString();
+        this.weight = weight;
+        this.height = height;
+        this.salary = salary;
     }
 
     public String getId() {

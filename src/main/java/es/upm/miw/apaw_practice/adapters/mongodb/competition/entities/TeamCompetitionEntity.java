@@ -18,18 +18,18 @@ public class TeamCompetitionEntity {
     private Integer numberCompetitionWon;
     private String coachName;
     @DBRef
-    private List<PlayerTeam> playerTeams;
+    private List<PlayerTeamEntity> playerTeamsEntity;
 
     public TeamCompetitionEntity() {
         // empty for framework
     }
 
-    public TeamCompetitionEntity(String name, Integer numberCompetitionWon, String coachName, List<PlayerTeam> playerTeams) {
+    public TeamCompetitionEntity(String name, Integer numberCompetitionWon, String coachName, List<PlayerTeamEntity> playerTeamsEntity) {
         this.id = UUID.randomUUID().toString();
         this.nameTeamCompetition = name;
         this.numberCompetitionWon = numberCompetitionWon;
         this.coachName = coachName;
-        this.playerTeams = playerTeams;
+        this.playerTeamsEntity = playerTeamsEntity;
     }
 
     public String getId() {
@@ -64,12 +64,12 @@ public class TeamCompetitionEntity {
         this.coachName = coachName;
     }
 
-    public List<PlayerTeam> getPlayerTeams() {
-        return playerTeams;
+    public List<PlayerTeamEntity> getPlayerTeamsEntity() {
+        return playerTeamsEntity;
     }
 
-    public void setPlayerTeams(List<PlayerTeam> playerTeams) {
-        this.playerTeams = playerTeams;
+    public void setPlayerTeamsEntity(List<PlayerTeamEntity> playerTeams) {
+        this.playerTeamsEntity = playerTeams;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class TeamCompetitionEntity {
                 ", nameTeamCompetition='" + nameTeamCompetition + '\'' +
                 ", numberCompetitionWon=" + numberCompetitionWon +
                 ", coachName='" + coachName + '\'' +
-                ", playerTeams=" + playerTeams +
+                ", playerTeams=" + playerTeamsEntity +
                 '}';
     }
 }

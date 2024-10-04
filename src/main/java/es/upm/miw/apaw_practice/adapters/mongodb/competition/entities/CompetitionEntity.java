@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.competition.entities;
 
 import es.upm.miw.apaw_practice.domain.models.competition.Organization;
-import es.upm.miw.apaw_practice.domain.models.competition.TeamCompetition;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -20,21 +19,21 @@ public class CompetitionEntity {
     private LocalDate startDate;
     private LocalDate endDate;
     @DBRef
-    private List<TeamCompetition> teamCompetitions;
+    private List<TeamCompetitionEntity> teamCompetitionsEntity;
     @DBRef
-    private Organization organization;
+    private OrganizationEntity organizationEntity;
 
     public CompetitionEntity() {
         // empty for framework
     }
 
-    public CompetitionEntity(String id, String nameCompetition, LocalDate startDate, LocalDate endDate, List<TeamCompetition> teamCompetitions, Organization organization) {
+    public CompetitionEntity(String nameCompetition, LocalDate startDate, LocalDate endDate, List<TeamCompetitionEntity> teamCompetitionsEntity, OrganizationEntity organizationEntity) {
         this.id = UUID.randomUUID().toString();
         this.nameCompetition = nameCompetition;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.teamCompetitions = teamCompetitions;
-        this.organization = organization;
+        this.teamCompetitionsEntity = teamCompetitionsEntity;
+        this.organizationEntity = organizationEntity;
     }
 
     public String getId() {
@@ -69,20 +68,20 @@ public class CompetitionEntity {
         this.endDate = endDate;
     }
 
-    public List<TeamCompetition> getTeamCompetitions() {
-        return teamCompetitions;
+    public List<TeamCompetitionEntity> getTeamCompetitionsEntity() {
+        return teamCompetitionsEntity;
     }
 
-    public void setTeamCompetitions(List<TeamCompetition> teamCompetitions) {
-        this.teamCompetitions = teamCompetitions;
+    public void setTeamCompetitionsEntity(List<TeamCompetitionEntity> teamCompetitionsEntity) {
+        this.teamCompetitionsEntity = teamCompetitionsEntity;
     }
 
-    public Organization getOrganization() {
-        return organization;
+    public OrganizationEntity getOrganizationEntity() {
+        return organizationEntity;
     }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
+    public void setOrganizationEntity(OrganizationEntity organizationEntity) {
+        this.organizationEntity = organizationEntity;
     }
 
     @Override
@@ -92,8 +91,8 @@ public class CompetitionEntity {
                 ", nameCompetition='" + nameCompetition + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", teamCompetitions=" + teamCompetitions +
-                ", organization=" + organization +
+                ", teamCompetitions=" + teamCompetitionsEntity +
+                ", organization=" + organizationEntity +
                 '}';
     }
 }
