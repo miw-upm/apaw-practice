@@ -2,22 +2,23 @@ package es.upm.miw.apaw_practice.domain.models.theme_park;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class User {
     private String name;
     private String address;
     private LocalDateTime entranceDate;
+    private Boolean oneYearMembership;
     private List<Ride> rides;
 
     public User() {
         //empty for framework
     }
 
-    public User(String name, String address, LocalDateTime entranceDate, List<Ride> rides) {
+    public User(String name, String address, LocalDateTime entranceDate, Boolean oneYearMembership, List<Ride> rides) {
         this.name = name;
         this.address = address;
         this.entranceDate = entranceDate;
+        this.oneYearMembership = oneYearMembership;
         this.rides = rides;
     }
 
@@ -45,6 +46,14 @@ public class User {
         this.entranceDate = entranceDate;
     }
 
+    public Boolean getOneYearMembership() {
+        return oneYearMembership;
+    }
+
+    public void setOneYearMembership(Boolean oneYearMembership) {
+        this.oneYearMembership = oneYearMembership;
+    }
+
     public List<Ride> getRides() {
         return this.rides;
     }
@@ -59,7 +68,8 @@ public class User {
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", entranceDate='" + entranceDate + '\'' +
-                ", ridesName=" + rides.stream().map(Ride::getName).collect(Collectors.toList()) +
+                ", oneYearMembership='" + oneYearMembership + '\'' +
+                ", ridesName=" + rides.stream().map(Ride::getName).toList() +
                 '}';
     }
 }
