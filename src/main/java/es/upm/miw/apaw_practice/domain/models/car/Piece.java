@@ -57,6 +57,7 @@ public class Piece {
                 "partNumber='" + partNumber + '\'' +
                 ", description='" + description + '\'' +
                 ", cost=" + cost +
+                ", manufacturer=" + manufacturerList +
                 '}';
     }
 }
