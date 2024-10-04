@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Gun {
-    private int gunId;
+    private Integer gunId;
     private BigDecimal price;
     private String name;
     private String manufacturer;

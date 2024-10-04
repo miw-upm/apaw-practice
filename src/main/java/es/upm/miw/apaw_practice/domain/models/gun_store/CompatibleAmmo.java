@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.gun_store;
 import java.math.BigDecimal;
 
 public class CompatibleAmmo {
-    private int ammoId;
+    private Integer ammoId;
     private BigDecimal price;
     private String caliber;
 

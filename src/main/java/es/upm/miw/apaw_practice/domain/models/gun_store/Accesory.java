@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.gun_store;
 import java.math.BigDecimal;
 
 public class Accesory {
-    private int accesoryId;
+    private Integer accesoryId;
     private String category;
     private BigDecimal price;
 
