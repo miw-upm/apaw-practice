@@ -6,13 +6,20 @@ import java.util.List;
 
 public class ThemePark {
     private String id;
-    private String name;
     private LocalDateTime creationDate;
     private Boolean isOpen;
     private BigDecimal price;
     private List<Ride> rides;
     public ThemePark() {
         //empty for framework
+    }
+
+    public ThemePark(String id, LocalDateTime creationDate, Boolean isOpen, BigDecimal price, List<Ride> rides) {
+        this.id = id;
+        this.creationDate = creationDate;
+        this.isOpen = isOpen;
+        this.price = price;
+        this.rides = rides;
     }
 
     public String getId() {
@@ -37,14 +44,6 @@ public class ThemePark {
 
     public void setRides(List<Ride> rides) {
         this.rides = rides;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Boolean getIsOpen() {
@@ -79,7 +78,6 @@ public class ThemePark {
                 "id='" + id + '\'' +
                 ", creationDate=" + creationDate +
                 ", rides=" + rides +
-                ", name='" + name + '\'' +
                 ", isOpen='" + isOpen + '\'' +
                 ", price='" + price + '\'' +
                 '}';
