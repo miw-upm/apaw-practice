@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.math.BigDecimal;
 
-public class Doctor {
+public class Doctores {
     private String dni;
     private String fullname;
     private String specialization;
