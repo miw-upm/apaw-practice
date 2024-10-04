@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.night_life;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {

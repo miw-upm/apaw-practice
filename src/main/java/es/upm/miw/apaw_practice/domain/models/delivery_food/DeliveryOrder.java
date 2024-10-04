@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.delivery_food;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +8,6 @@ public class DeliveryOrder {
 
     private String id;
     private String deliveryAddress;
-    private BigDecimal totalPrice;
     private String customerName;
     private LocalDateTime orderDate;
     private Boolean delivered;
@@ -18,10 +16,9 @@ public class DeliveryOrder {
     public DeliveryOrder() {
     }
 
-    public DeliveryOrder(String id, String deliveryAddress, BigDecimal totalPrice, String customerName, LocalDateTime orderDate, Boolean delivered, List<DeliveryOrderItem> deliveryOrderItems) {
+    public DeliveryOrder(String id, String deliveryAddress, String customerName, LocalDateTime orderDate, Boolean delivered, List<DeliveryOrderItem> deliveryOrderItems) {
         this.id = id;
         this.deliveryAddress = deliveryAddress;
-        this.totalPrice = totalPrice;
         this.customerName = customerName;
         this.orderDate = orderDate;
         this.delivered = delivered;
@@ -42,14 +39,6 @@ public class DeliveryOrder {
 
     public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public String getCustomerName() {
@@ -102,7 +91,6 @@ public class DeliveryOrder {
         return "DeliveryOrder{" +
                 "id='" + id + '\'' +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
-                ", totalPrice=" + totalPrice +
                 ", customerName='" + customerName + '\'' +
                 ", orderDate=" + orderDate +
                 ", delivered=" + delivered +

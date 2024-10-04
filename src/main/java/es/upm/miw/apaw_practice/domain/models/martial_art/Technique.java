@@ -1,20 +1,27 @@
 package es.upm.miw.apaw_practice.domain.models.martial_art;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Technique {
     private String name;
     private Integer duration;
-    private Boolean isAdvanced;
+    private Boolean advanced;
     private Double difficulty;
+    private List<Instructor> instructors;
+    private Style style;
 
     public Technique() {
         // empty for framework
     }
 
-    public Technique(String name, Integer duration, Boolean isAdvanced, Double difficulty) {
+    public Technique(String name, Integer duration, Boolean advanced, Double difficulty, Style style) {
         this.name = name;
         this.duration = duration;
-        this.isAdvanced = isAdvanced;
+        this.advanced = advanced;
         this.difficulty = difficulty;
+        this.style = style;
+        this.instructors = new ArrayList<>();
     }
 
     public String getName() {
@@ -34,11 +41,11 @@ public class Technique {
     }
 
     public Boolean getIsAdvanced() {
-        return isAdvanced;
+        return advanced;
     }
 
-    public void setIsAdvanced(Boolean isAdvanced) {
-        this.isAdvanced = isAdvanced;
+    public void setAdvanced(Boolean advanced) {
+        this.advanced = advanced;
     }
 
     public Double getDifficulty() {
@@ -49,12 +56,19 @@ public class Technique {
         this.difficulty = difficulty;
     }
 
+
+    public List<Instructor> getInstructors() { return instructors; }
+    public void setInstructors(Instructor instructor) { this.instructors.add(instructor); }
+
+    public Style getStyle() { return style; }
+    public void setStyle(Style style) { this.style = style; }
+
     @Override
     public String toString() {
         return "Technique{" +
                 "name='" + name + '\'' +
                 ", duration=" + duration +
-                ", isAdvanced=" + isAdvanced +
+                ", advanced=" + advanced +
                 ", difficulty=" + difficulty +
                 '}';
     }

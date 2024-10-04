@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 import java.time.LocalDate;
 
 public class Membership {
-    private int membershipId;
+    private Integer membershipId;
     private String type;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -12,18 +12,18 @@ public class Membership {
         //empty for framework
     }
 
-    public Membership(int membershipId, String type, LocalDate startDate, LocalDate endDate) {
+    public Membership(Integer membershipId, String type, LocalDate startDate, LocalDate endDate) {
         this.membershipId = membershipId;
         this.type = type;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public int getMembershipId() {
+    public Integer getMembershipId() {
         return membershipId;
     }
 
-    public void setMembershipId(int membershipId) {
+    public void setMembershipId(Integer membershipId) {
         this.membershipId = membershipId;
     }
 

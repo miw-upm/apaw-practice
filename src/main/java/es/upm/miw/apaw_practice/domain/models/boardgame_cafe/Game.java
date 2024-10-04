@@ -2,15 +2,15 @@ package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
 public class Game {
     private String gameName;
-    private int numPlayers;
+    private Integer numPlayers;
     private String genre;
-    private int numberOfCopies;
+    private Integer numberOfCopies;
 
     public Game() {
         //empty for framework
     }
 
-    public Game(String gameName, int numPlayers, String genre, int numberOfCopies) {
+    public Game(String gameName, Integer numPlayers, String genre, Integer numberOfCopies) {
         this.gameName = gameName;
         this.numPlayers = numPlayers;
         this.genre = genre;
@@ -25,11 +25,11 @@ public class Game {
         this.gameName = gameName;
     }
 
-    public int getNumPlayers() {
+    public Integer getNumPlayers() {
         return numPlayers;
     }
 
-    public void setNumPlayers(int numPlayers) {
+    public void setNumPlayers(Integer numPlayers) {
         this.numPlayers = numPlayers;
     }
 
@@ -41,11 +41,11 @@ public class Game {
         this.genre = genre;
     }
 
-    public int getNumberOfCopies() {
+    public Integer getNumberOfCopies() {
         return numberOfCopies;
     }
 
-    public void setNumberOfCopies(int numberOfCopies) {
+    public void setNumberOfCopies(Integer numberOfCopies) {
         this.numberOfCopies = numberOfCopies;
     }
 
