@@ -4,19 +4,27 @@ import java.math.BigDecimal;
 
 public class DeliveryOrderItem {
 
+    private String id;
     private BigDecimal price;
     private Integer quantity;
-    private BigDecimal totalPrice;
     private Menu menu;
 
     public DeliveryOrderItem() {
     }
 
-    public DeliveryOrderItem(BigDecimal price, Integer quantity, BigDecimal totalPrice, Menu menu) {
+    public DeliveryOrderItem(String id, BigDecimal price, Integer quantity, Menu menu) {
+        this.id = id;
         this.price = price;
         this.quantity = quantity;
-        this.totalPrice = totalPrice;
         this.menu = menu;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public BigDecimal getPrice() {
@@ -35,14 +43,6 @@ public class DeliveryOrderItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public Menu getMenu() {
         return menu;
     }
@@ -54,9 +54,9 @@ public class DeliveryOrderItem {
     @Override
     public String toString() {
         return "DeliveryOrderItem{" +
-                "price=" + price +
+                "id='" + id + '\'' +
+                ", price=" + price +
                 ", quantity=" + quantity +
-                ", totalPrice=" + totalPrice +
                 ", menu=" + menu +
                 '}';
     }

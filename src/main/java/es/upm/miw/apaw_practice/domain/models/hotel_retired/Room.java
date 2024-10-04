@@ -1,28 +1,35 @@
 package es.upm.miw.apaw_practice.domain.models.hotel_retired;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 public class Room {
 
+    private int num;
     private Boolean occupied;
-    private int numBeds;
     private Boolean single;
     private BigDecimal price;
+    private List<Booking> bookings;
 
     public Room() {
         // empty for framework
     }
 
-    public Room(Boolean occupied, int numBeds, Boolean single, BigDecimal price) {
+    public Room(int num, Boolean occupied, Boolean single, BigDecimal price, List<Booking> bookings) {
+        this.num = num;
         this.occupied = occupied;
-        this.numBeds = numBeds;
         this.single = single;
         this.price = price;
+        this.bookings = bookings;
     }
 
-    public Boolean getSingle() {
-        return single;
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public Boolean getOccupied() {
@@ -33,12 +40,8 @@ public class Room {
         this.occupied = occupied;
     }
 
-    public int getNumBeds() {
-        return numBeds;
-    }
-
-    public void setNumBeds(int numBeds) {
-        this.numBeds = numBeds;
+    public Boolean getSingle() {
+        return single;
     }
 
     public void setSingle(Boolean single) {
@@ -53,26 +56,35 @@ public class Room {
         this.price = price;
     }
 
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return numBeds == room.numBeds && Objects.equals(occupied, room.occupied) && Objects.equals(single, room.single) && Objects.equals(price, room.price);
+        return num == room.num && Objects.equals(occupied, room.occupied) && Objects.equals(single, room.single) && Objects.equals(price, room.price) && Objects.equals(bookings, room.bookings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(occupied, numBeds, single, price);
+        return Objects.hash(num, occupied, single, price, bookings);
     }
 
     @Override
     public String toString() {
         return "Room{" +
-                "occupied=" + occupied +
-                ", numBeds=" + numBeds +
+                "num=" + num +
+                ", occupied=" + occupied +
                 ", single=" + single +
                 ", price=" + price +
+                ", bookings=" + bookings +
                 '}';
     }
 }
