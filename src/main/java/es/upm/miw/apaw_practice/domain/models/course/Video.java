@@ -1,25 +1,23 @@
 package es.upm.miw.apaw_practice.domain.models.course;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Video {
 
     private String name;
     private String duration;
     private LocalDateTime dateCreation;
-    private List<Course> courses;
+    private Course course;
 
     public Video() {
         //empty for framework
     }
 
-    public Video(String name, String duration, LocalDateTime dateCreation) {
+    public Video(String name, String duration, LocalDateTime dateCreation, Course course) {
         this.name = name;
         this.duration = duration;
         this.dateCreation = dateCreation;
-        this.courses = new ArrayList<>();
+        this.course = course;
     }
 
     public String getName() {
@@ -46,12 +44,12 @@ public class Video {
         this.dateCreation = dateCreation;
     }
 
-    public void setCourse(Course course) {
-        this.courses.add(course);
+    public Course getCourse() {
+        return course;
     }
 
-    public Course getCourse(int idCourse) {
-        return this.courses.get(idCourse);
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override
@@ -60,7 +58,7 @@ public class Video {
                 "name='" + name + '\'' +
                 ", duration='" + duration + '\'' +
                 ", dateCreation=" + dateCreation +
-                ", courses=" + courses +
+                ", course=" + course +
                 '}';
     }
 }

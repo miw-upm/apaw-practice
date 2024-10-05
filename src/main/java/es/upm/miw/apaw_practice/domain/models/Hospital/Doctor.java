@@ -1,40 +1,34 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
-
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Objects;
 
-public class Doctores {
-    private Long id;
-    private String name;
+public class Doctor {
+    private String dni;
+    private String fullname;
     private String specialization;
     private BigDecimal salary;
 
-    public Doctores() {
-    }
-
-    public Doctores(Long id, String name, String specialization, BigDecimal salary) {
-        this.id = id;
-        this.name = name;
+    // Constructor, getters, setters
+    public Doctor(String dni, String fullname, String specialization, BigDecimal salary) {
+        this.dni = dni;
+        this.fullname = fullname;
         this.specialization = specialization;
         this.salary = salary;
     }
 
-    public Long getId() {
-        return id;
+    public String getDni() {
+        return dni;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getSpecialization() {
@@ -55,9 +49,9 @@ public class Doctores {
 
     @java.lang.Override
     public java.lang.String toString() {
-        return "Doctores{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "Doctor{" +
+                "dni='" + dni + '\'' +
+                ", fullname='" + fullname + '\'' +
                 ", specialization='" + specialization + '\'' +
                 ", salary=" + salary +
                 '}';
