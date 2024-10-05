@@ -1,13 +1,14 @@
 package es.upm.miw.apaw_practice.domain.models.basketball;
 
 import java.time.LocalTime;
-import java.util.Map;
+import java.util.List;
 
 public class BasketScoreBoard {
 
+    private int id;
     private LocalTime time;
-    private Map<Integer,Integer> pointsByTeam;
-    private Map<Integer,Integer> foultsByPlayer;
+    private int quarterNum;
+    private List<BasketMatch> basketMatches;
 
     public BasketScoreBoard() {
         this.time = LocalTime.of(0,40);
@@ -19,16 +20,28 @@ public class BasketScoreBoard {
     public void setTime(LocalTime time) {
         this.time = time;
     }
-    public Map<Integer,Integer> getPointsByTeam() {
-        return pointsByTeam;
+
+    public int getId() {
+        return id;
     }
-    public void setPointsByTeam(Map<Integer,Integer> pointsByTeam) {
-        this.pointsByTeam = pointsByTeam;
+
+    public void setId(int id) {
+        this.id = id;
     }
-    public Map<Integer,Integer> getFoultsByPlayer() {
-        return foultsByPlayer;
+
+    public int getQuarterNum() {
+        return quarterNum;
     }
-    public void setFoultsByPlayer(Map<Integer,Integer> foultsByPlayer) {
-        this.foultsByPlayer = foultsByPlayer;
+
+    public void setQuarterNum(int quarterNum) {
+        this.quarterNum = quarterNum;
+    }
+
+    public List<BasketMatch> getBasketMatches() {
+        return basketMatches;
+    }
+
+    public void setBasketMatches(List<BasketMatch> basketMatches) {
+        this.basketMatches = basketMatches;
     }
 }

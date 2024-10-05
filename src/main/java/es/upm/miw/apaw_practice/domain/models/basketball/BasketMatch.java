@@ -8,6 +8,7 @@ public class BasketMatch {
     private int id;
     private LocalDateTime date;
     private String address;
+    private List<BasketPlayer> players;
 
     public BasketMatch(int id) {
         this.id = id;
@@ -32,5 +33,17 @@ public class BasketMatch {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<BasketPlayer> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<BasketPlayer> players) {
+        this.players = players;
     }
 }
