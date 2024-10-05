@@ -26,6 +26,15 @@ public class UniversityEntity {
         //empty for framework
     }
 
+    public UniversityEntity(String topDomain, String name, Boolean allowsInternationalStudents, Integer numberOfFaculties, List<DegreeEntity> degrees) {
+        this.id = UUID.randomUUID().toString();
+        this.topDomain = topDomain;
+        this.name = name;
+        this.allowsInternationalStudents = allowsInternationalStudents;
+        this.numberOfFaculties = numberOfFaculties;
+        this.degrees = degrees;
+    }
+
     public UniversityEntity(University university) {
         this.fromUniversity(university);
         this.id = UUID.randomUUID().toString();
@@ -33,11 +42,13 @@ public class UniversityEntity {
 
     public void fromUniversity(University university) {
         BeanUtils.copyProperties(university, this);
+        this.setDegrees(university.getDegreesOffered().stream().map(DegreeEntity::new).toList());
     }
 
     public University toUniversity() {
         University university = new University();
         BeanUtils.copyProperties(this, university);
+        university.setDegreesOffered(this.degrees.stream().map(DegreeEntity::toDegree).toList());
         return university;
     }
 

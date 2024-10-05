@@ -9,9 +9,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.StudentEnti
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.TeacherEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.UniversityEntity;
 import es.upm.miw.apaw_practice.domain.models.university.Degree;
-import es.upm.miw.apaw_practice.domain.models.university.Student;
-import es.upm.miw.apaw_practice.domain.models.university.Teacher;
-import es.upm.miw.apaw_practice.domain.models.university.University;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,37 +41,38 @@ public class UniversitySeederService {
         };
         degreeRepository.saveAll(Arrays.asList(degrees));
         StudentEntity[] students = {
-                new StudentEntity(new Student("emily.johnson@example.org", "Emily", "London", LocalDate.of(2004, 4, 12),
-                        new ArrayList<>())),
-                new StudentEntity(new Student("james.miller@example.org", "James", "Manchester", LocalDate.of(1997, 4, 17),
-                        List.of(degrees[1].toDegree()))),
-                new StudentEntity(new Student("sophia.davis@example.org", "Sophia", "Birmingham", LocalDate.of(2002, 6, 3),
-                        List.of(degrees[0].toDegree(), degrees[2].toDegree(), degrees[4].toDegree()))),
-                new StudentEntity(new Student("michael.brown@example.org", "Michael", "Liverpool", LocalDate.of(1989, 1, 29),
-                        List.of(degrees[1].toDegree(), degrees[2].toDegree()))),
-                new StudentEntity(new Student("olivia.wilson@example.org", "Olivia", "Liverpool", LocalDate.of(1999, 9, 12),
-                        List.of(degrees[0].toDegree())))
+                new StudentEntity("emily.johnson@example.org", "Emily", "London", LocalDate.of(2004, 4, 12),
+                        new ArrayList<>()),
+                new StudentEntity("james.miller@example.org", "James", "Manchester", LocalDate.of(1997, 4, 17),
+                        List.of(degrees[1])),
+                new StudentEntity("sophia.davis@example.org", "Sophia", "Birmingham", LocalDate.of(2002, 6, 3),
+                        List.of(degrees[0], degrees[2], degrees[4])),
+                new StudentEntity("michael.brown@example.org", "Michael", "Liverpool", LocalDate.of(1989, 1, 29),
+                        List.of(degrees[1], degrees[2])),
+                new StudentEntity("olivia.wilson@example.org", "Olivia", "Liverpool", LocalDate.of(1999, 9, 12),
+                        List.of(degrees[0]))
         };
         studentRepository.saveAll(Arrays.asList(students));
         UniversityEntity[] universities = {
-                new UniversityEntity(new University("ox.ac.uk", "University of Oxford", true, 1,
-                        new ArrayList<>())),
-                new UniversityEntity(new University("cam.ac.uk", "University of Cambridge", false, 3,
-                        List.of(degrees[1].toDegree(), degrees[2].toDegree(), degrees[3].toDegree()))),
-                new UniversityEntity(new University("imperial.ac.uk", "Imperial College London", false, 7,
-                        List.of(degrees[0].toDegree(), degrees[2].toDegree()))),
-                new UniversityEntity(new University("manchester.ac.uk", "University of Manchester", true, 2,
-                        List.of(degrees[3].toDegree()))),
-                new UniversityEntity(new University("lse.ac.uk", "London School of Economics and Political Science", true, 3,
-                        List.of(degrees[0].toDegree(), degrees[1].toDegree())))
+                new UniversityEntity("ox.ac.uk", "University of Oxford", true, 1,
+                        new ArrayList<>()),
+                new UniversityEntity("cam.ac.uk", "University of Cambridge", false, 3,
+                        List.of(degrees[1], degrees[2], degrees[3])),
+                new UniversityEntity("imperial.ac.uk", "Imperial College London", false, 7,
+                        List.of(degrees[0], degrees[2])),
+                new UniversityEntity("manchester.ac.uk", "University of Manchester", true, 2,
+                        List.of(degrees[3])),
+                new UniversityEntity("lse.ac.uk", "London School of Economics and Political Science", true, 3,
+                        List.of(degrees[0], degrees[1]))
         };
         universityRepository.saveAll(Arrays.asList(universities));
+        universityRepository.findByTopDomain("cam.ac.uk");
         TeacherEntity[] teachers = {
-                new TeacherEntity(new Teacher(null, "Carter", LocalDate.of(1980, 6, 12), "QQ123456A")),
-                new TeacherEntity(new Teacher(universities[0].toUniversity(), "Anderson", LocalDate.of(1976, 1, 2), "AB987654C")),
-                new TeacherEntity(new Teacher(universities[2].toUniversity(), "Matthews", LocalDate.of(1976, 6, 26), "CD876543B")),
-                new TeacherEntity(new Teacher(universities[3].toUniversity(), "Thompson", LocalDate.of(1991, 3, 23), "EF654321D")),
-                new TeacherEntity(new Teacher(universities[4].toUniversity(), "Roberts", LocalDate.of(1984, 9, 2), "GH345678E"))
+                new TeacherEntity("QQ123456A", LocalDate.of(1980, 6, 12), "Carter", null),
+                new TeacherEntity("AB987654C", LocalDate.of(1976, 1, 2), "Anderson", universities[0]),
+                new TeacherEntity("CD876543B", LocalDate.of(1976, 6, 26), "Matthews", universities[2]),
+                new TeacherEntity("EF654321D", LocalDate.of(1991, 3, 23), "Thompson", universities[3]),
+                new TeacherEntity("GH345678E", LocalDate.of(1984, 9, 2), "Roberts", universities[4])
         };
         teacherRepository.saveAll(Arrays.asList(teachers));
     }

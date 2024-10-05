@@ -62,6 +62,16 @@ public class University {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (topDomain.equals(((University) obj).topDomain));
+    }
+
+    @Override
+    public int hashCode() {
+        return topDomain.hashCode();
+    }
+
+    @Override
     public String toString() {
         return "University{" +
                 "topDomain='" + topDomain + '\'' +

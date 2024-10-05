@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
 import es.upm.miw.apaw_practice.domain.models.university.Teacher;
+import es.upm.miw.apaw_practice.domain.models.university.University;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -19,10 +20,18 @@ public class TeacherEntity {
     private LocalDate birthDate;
     private String lastName;
     @DBRef
-    private UniversityEntity universityEntity;
+    private UniversityEntity university;
 
     public TeacherEntity() {
         //empty for framework
+    }
+
+    public TeacherEntity(String nationalId, LocalDate birthDate, String lastName, UniversityEntity university) {
+        this.id = UUID.randomUUID().toString();
+        this.nationalId = nationalId;
+        this.birthDate = birthDate;
+        this.lastName = lastName;
+        this.university = university;
     }
 
     public TeacherEntity(Teacher teacher) {
@@ -32,11 +41,18 @@ public class TeacherEntity {
 
     public void fromTeacher(Teacher teacher) {
         BeanUtils.copyProperties(teacher, this);
+        University university = teacher.getUniversity();
+        if (university != null) {
+            this.university = new UniversityEntity(university);
+        }
     }
 
     public Teacher toTeacher() {
         Teacher teacher = new Teacher();
         BeanUtils.copyProperties(this, teacher);
+        if (university != null) {
+            teacher.setUniversity(university.toUniversity());
+        }
         return teacher;
     }
 
@@ -72,12 +88,12 @@ public class TeacherEntity {
         this.lastName = lastName;
     }
 
-    public UniversityEntity getUniversityEntity() {
-        return universityEntity;
+    public UniversityEntity getUniversity() {
+        return university;
     }
 
-    public void setUniversityEntity(UniversityEntity universityEntity) {
-        this.universityEntity = universityEntity;
+    public void setUniversity(UniversityEntity university) {
+        this.university = university;
     }
 
     @Override
@@ -87,7 +103,7 @@ public class TeacherEntity {
                 ", nationalId='" + nationalId + '\'' +
                 ", birthDate=" + birthDate +
                 ", lastName='" + lastName + '\'' +
-                ", universityEntity=" + universityEntity +
+                ", university=" + university +
                 '}';
     }
 }
