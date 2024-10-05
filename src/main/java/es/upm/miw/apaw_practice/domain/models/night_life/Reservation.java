@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class Reservation {
     private LocalDate date;
     private BigDecimal price;
-    private int numberOfPeople;
+    private Integer numberOfPeople;
 
     public Reservation() {
         //empty for framework

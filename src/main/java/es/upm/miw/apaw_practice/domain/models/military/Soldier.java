@@ -1,9 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.military;
 
-import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
-
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class Soldier {
     private String identityDocument;
@@ -16,10 +13,10 @@ public class Soldier {
     }
 
     public Soldier(String identityDocument, String fullName, String rank, LocalDate birthDate) {
-       this.identityDocument = identityDocument;
-       this.fullName = fullName;
-       this.rank = rank;
-       this.birthDate = birthDate;
+        this.identityDocument = identityDocument;
+        this.fullName = fullName;
+        this.rank = rank;
+        this.birthDate = birthDate;
     }
 
     public String getIdentityDocument() {

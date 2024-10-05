@@ -54,9 +54,9 @@ public class CompetitionSeederService {
         };
         this.organizationRepository.saveAll(Arrays.asList(organizations));
         CompetitionEntity[] competitions = {
-                new CompetitionEntity("Champions League", LocalDate.of(2024, 9, 15), LocalDate.of(2025, 6, 23), List.of(teamCompetitions[0]), organizations[1]),
-                new CompetitionEntity("Europa League", LocalDate.of(2024, 9, 19), LocalDate.of(2025, 6, 12), List.of(teamCompetitions[1], teamCompetitions[2]), organizations[0]),
-                new CompetitionEntity("El chirincirco", LocalDate.of(2024, 1, 9), LocalDate.of(2025, 1, 24), List.of(teamCompetitions[1], teamCompetitions[0]), organizations[0]),
+                new CompetitionEntity("Champions League", LocalDate.of(2024, 9, 15), LocalDate.of(2025, 6, 23), List.of(teamCompetitions[0]), organizations[0]),
+                new CompetitionEntity("Europa League", LocalDate.of(2024, 9, 19), LocalDate.of(2025, 6, 12), List.of(teamCompetitions[1], teamCompetitions[2]), organizations[1]),
+                new CompetitionEntity("El chirincirco", LocalDate.of(2024, 1, 9), LocalDate.of(2025, 1, 24), List.of(teamCompetitions[1], teamCompetitions[0]), organizations[1]),
         };
         this.competitionRepository.saveAll(Arrays.asList(competitions));
     }
