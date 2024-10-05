@@ -1,33 +1,30 @@
 package es.upm.miw.apaw_practice.domain.models.theme_park;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class User {
-    private String name;
+    private String idMembership;
     private String address;
     private LocalDateTime entranceDate;
     private Boolean oneYearMembership;
-    private List<Ride> rides;
 
     public User() {
         //empty for framework
     }
 
-    public User(String name, String address, LocalDateTime entranceDate, Boolean oneYearMembership, List<Ride> rides) {
-        this.name = name;
+    public User(String idMembership, String address, LocalDateTime entranceDate, Boolean oneYearMembership) {
+        this.idMembership = idMembership;
         this.address = address;
         this.entranceDate = entranceDate;
         this.oneYearMembership = oneYearMembership;
-        this.rides = rides;
     }
 
-    public String getName() {
-        return name;
+    public String getIdMembership() {
+        return idMembership;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdMembership(String idMembership) {
+        this.idMembership = idMembership;
     }
 
     public String getAddress() {
@@ -54,22 +51,13 @@ public class User {
         this.oneYearMembership = oneYearMembership;
     }
 
-    public List<Ride> getRides() {
-        return this.rides;
-    }
-
-    public void setRides(List<Ride> rides) {
-        this.rides = rides;
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "idMembership='" + idMembership + '\'' +
                 ", address='" + address + '\'' +
                 ", entranceDate='" + entranceDate + '\'' +
                 ", oneYearMembership='" + oneYearMembership + '\'' +
-                ", ridesName=" + rides.stream().map(Ride::getName).toList() +
                 '}';
     }
 }
