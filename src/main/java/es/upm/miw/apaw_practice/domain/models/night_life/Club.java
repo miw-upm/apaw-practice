@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Club {
     private String name;
-    private int capacity;
+    private Integer capacity;
     private boolean opened;
     private Owner owner;
     private List<Reservation> reservations;
