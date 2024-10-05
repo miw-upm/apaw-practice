@@ -7,14 +7,14 @@ public class Patient {
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    private List<Appoinment> appointments; // Relación N:1 con Appointment
+    private  List<Appoinment> appointments;
 
-
-    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance) {
+    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, List<Appoinment> appointments) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
+        this.appointments = appointments;
     }
 
     public String getDni() {
