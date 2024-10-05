@@ -50,6 +50,16 @@ public class Degree {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (code.equals(((Degree) obj).code));
+    }
+
+    @Override
+    public int hashCode() {
+        return code.hashCode();
+    }
+
+    @Override
     public String toString() {
         return "Degree{" +
                 "code=" + code +

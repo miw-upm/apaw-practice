@@ -6,17 +6,17 @@ public class Teacher {
     private String nationalId;
     private LocalDate birthDate;
     private String lastName;
-    private University workPlace;
+    private University university;
 
     public Teacher() {
         //empty for framework
     }
 
-    public Teacher(University workPlace, String lastName, LocalDate birthDate, String nationalId) {
-        this.workPlace = workPlace;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
+    public Teacher(String nationalId, LocalDate birthDate, String lastName, University university) {
         this.nationalId = nationalId;
+        this.birthDate = birthDate;
+        this.lastName = lastName;
+        this.university = university;
     }
 
     public String getNationalId() {
@@ -43,12 +43,22 @@ public class Teacher {
         this.lastName = lastName;
     }
 
-    public University getWorkPlace() {
-        return workPlace;
+    public University getUniversity() {
+        return university;
     }
 
-    public void setWorkPlace(University workPlace) {
-        this.workPlace = workPlace;
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (nationalId.equals(((Teacher) obj).nationalId));
+    }
+
+    @Override
+    public int hashCode() {
+        return nationalId.hashCode();
     }
 
     @Override
@@ -57,7 +67,7 @@ public class Teacher {
                 "nationalId='" + nationalId + '\'' +
                 ", birthDate=" + birthDate +
                 ", lastName='" + lastName + '\'' +
-                ", workPlace=" + workPlace +
+                ", workPlace=" + university +
                 '}';
     }
 }
