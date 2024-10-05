@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.art_museum;
 
 public class Artwork {
-    private String id;
+    private String inventoryNumber;
     private String titleName;
     private Integer year;
 
@@ -9,18 +9,18 @@ public class Artwork {
         // empty for framework
     }
 
-    public Artwork(String id, String titleName, Integer year) {
-        this.id = id;
+    public Artwork(String inventoryNumber, String titleName, Integer year) {
+        this.inventoryNumber = inventoryNumber;
         this.titleName = titleName;
         this.year = year;
     }
 
-    public String getId() {
-        return id;
+    public String getInventoryNumber() {
+        return inventoryNumber;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setInventoryNumber(String inventoryNumber) {
+        this.inventoryNumber = inventoryNumber;
     }
 
     public String getTitleName() {
@@ -42,7 +42,7 @@ public class Artwork {
     @Override
     public String toString() {
         return "Artwork{" +
-                "id='" + id + '\'' +
+                "inventoryNumber='" + inventoryNumber + '\'' +
                 ", titleName='" + titleName + '\'' +
                 ", year=" + year +
                 '}';
