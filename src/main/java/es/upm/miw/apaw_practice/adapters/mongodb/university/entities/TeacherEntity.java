@@ -43,7 +43,7 @@ public class TeacherEntity {
         BeanUtils.copyProperties(teacher, this);
         University techerUniversity = teacher.getUniversity();
         if (university != null) {
-            this.university = new UniversityEntity(university);
+            this.university = new UniversityEntity(techerUniversity);
         }
     }
 
