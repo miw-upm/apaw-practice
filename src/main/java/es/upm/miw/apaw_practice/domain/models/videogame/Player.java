@@ -1,27 +1,33 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
+
 public class Player {
-    private String name;
+    private String player;
     private int age;
-    private String country;
+    private boolean experiencePlayer;
+    private LocalDate birthday;
     private Console console;
 
     private  Player(){
         //empty for framework
     }
 
-    public Player(String name, int age, String country, Console console){
-        this.name = name;
+    public Player(String player, int age, boolean experiencePlayer, LocalDate birthday, Console console){
+        this.player = player;
         this.age = age;
-        this.country = country;
+        this.experiencePlayer = experiencePlayer;
+        this.birthday = birthday;
         this.console = console;
     }
 
-    public String getName() {
-        return name;
+    public String getPlayer() {
+        return player;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setPlayer(String player) {
+        this.player = player;
     }
     public int getAge() {
         return age;
@@ -29,11 +35,17 @@ public class Player {
     public void setAge(int age) {
         this.age = age;
     }
-    public String getCountry() {
-        return country;
+    public boolean getExperiencePlayer() {
+        return experiencePlayer;
     }
-    public void setCountry(String country) {
-        this.country = country;
+    public void setExperiencePlayer(boolean experiencePlayer) {
+        this.experiencePlayer = experiencePlayer;
+    }
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
     public Console getConsole() {
         return console;
@@ -45,9 +57,10 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "name='" + name + '\'' +
+                "player='" + player + '\'' +
                 ", age=" + age +
-                ", country=" + country +
+                ", experiencePlayer=" + experiencePlayer +
+                ", birthday=" + birthday +
                 ", console=" + console +
                 '}';
     }
