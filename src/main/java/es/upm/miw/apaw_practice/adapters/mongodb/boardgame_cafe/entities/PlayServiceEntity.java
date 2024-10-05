@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities;
 
-import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Game;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -14,17 +14,18 @@ public class PlayServiceEntity {
     private Integer playServiceId;
     private BigDecimal coverFee;
     private LocalDateTime sessionDate;
-    private List<Game> selectedGames;
+    @DBRef
+    private List<GameEntity> selectedGamesEntities;
 
     public PlayServiceEntity() {
         //empty for framework
     }
 
-    public PlayServiceEntity(Integer playServiceId, BigDecimal coverFee, LocalDateTime sessionDate, List<Game> selectedGames) {
+    public PlayServiceEntity(Integer playServiceId, BigDecimal coverFee, LocalDateTime sessionDate, List<GameEntity> selectedGamesEntities) {
         this.playServiceId = playServiceId;
         this.coverFee = coverFee;
         this.sessionDate = sessionDate;
-        this.selectedGames = selectedGames;
+        this.selectedGamesEntities = selectedGamesEntities;
     }
 
     public Integer getPlayServiceId() {
@@ -51,12 +52,12 @@ public class PlayServiceEntity {
         this.sessionDate = sessionDate;
     }
 
-    public List<Game> getSelectedGames() {
-        return selectedGames;
+    public List<GameEntity> getSelectedGamesEntities() {
+        return selectedGamesEntities;
     }
 
-    public void setSelectedGames(List<Game> selectedGames) {
-        this.selectedGames = selectedGames;
+    public void setSelectedGames(List<GameEntity> selectedGamesEntities) {
+        this.selectedGamesEntities = selectedGamesEntities;
     }
 
     @Override
@@ -75,7 +76,7 @@ public class PlayServiceEntity {
                 "playServiceId=" + playServiceId +
                 ", coverFee=" + coverFee +
                 ", sessionDate=" + sessionDate +
-                ", selectedGames=" + selectedGames +
+                ", selectedGamesEntities=" + selectedGamesEntities +
                 '}';
     }
 }
