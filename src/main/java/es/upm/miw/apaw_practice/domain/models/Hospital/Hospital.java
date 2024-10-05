@@ -5,13 +5,15 @@ public class Hospital {
     private String name;
     private String location;
     private int capacity;
-    private List<Doctor> doctors;   // Relación N:N con Doctor
+    private Doctor doctors;
     private List<Patient> patients; // Relación 1:N con Patient
 
-    public Hospital(String name, String location, int capacity) {
+    public Hospital(String name, String location, int capacity, Doctor doctors, List<Patient> patients) {
         this.name = name;
         this.location = location;
         this.capacity = capacity;
+        this.doctors = doctors;
+        this.patients = patients;
     }
 
     public String getName() {
@@ -38,11 +40,11 @@ public class Hospital {
         this.capacity = capacity;
     }
 
-    public List<Doctor> getDoctors() {
+    public Doctor getDoctors() {
         return doctors;
     }
 
-    public void setDoctors(List<Doctor> doctors) {
+    public void setDoctors(Doctor doctors) {
         this.doctors = doctors;
     }
 
