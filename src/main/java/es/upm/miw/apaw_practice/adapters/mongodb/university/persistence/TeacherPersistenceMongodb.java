@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository("TeacherPersistance")
+@Repository("teacherPersistance")
 public class TeacherPersistenceMongodb implements TeacherPersistence {
 
     private final TeacherRepository teacherRepository;

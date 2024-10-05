@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository("StudentPersistance")
+@Repository("studentPersistance")
 public class StudentPersistenceMongodb implements StudentPersistence {
 
     private final StudentRepository studentRepository;

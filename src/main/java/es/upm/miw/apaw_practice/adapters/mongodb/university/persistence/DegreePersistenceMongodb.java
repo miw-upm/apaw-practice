@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository("DegreePersistance")
+@Repository("degreePersistance")
 public class DegreePersistenceMongodb implements DegreePersistence {
 
     private final DegreeRepository degreeRepository;

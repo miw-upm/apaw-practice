@@ -41,7 +41,7 @@ public class TeacherEntity {
 
     public void fromTeacher(Teacher teacher) {
         BeanUtils.copyProperties(teacher, this);
-        University university = teacher.getUniversity();
+        University techerUniversity = teacher.getUniversity();
         if (university != null) {
             this.university = new UniversityEntity(university);
         }
