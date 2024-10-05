@@ -20,8 +20,8 @@ public class PlayerTeamServiceIT {
     @Test
     void delete(){
         List<PlayerTeam> playerTeams = playerTeamPersistence.readAll().toList();
-        assertEquals(6, playerTeams.size());
+        assertEquals(5, playerTeams.size());
         this.playerTeamService.delete(playerTeams.get(0).getId());
-        assertEquals(5, playerTeamPersistence.readAll().toList().size());
+        assertEquals(4, playerTeamPersistence.readAll().toList().size());
     }
 }
