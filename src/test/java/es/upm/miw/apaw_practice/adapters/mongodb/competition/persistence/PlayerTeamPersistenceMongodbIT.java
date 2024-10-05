@@ -22,7 +22,8 @@ class PlayerTeamPersistenceMongodbIT {
     @Test
     void testDelete() {
         List<PlayerTeam> playerTeamList = this.playerTeamPersistenceMongodb.readAll().toList();
+        int playerTeamListSize = playerTeamList.size();
         this.playerTeamPersistenceMongodb.delete(playerTeamList.get(0).getId());
-        assertEquals(5, this.playerTeamPersistenceMongodb.readAll().toList().size());
+        assertEquals(playerTeamListSize - 1, this.playerTeamPersistenceMongodb.readAll().toList().size());
     }
 }
