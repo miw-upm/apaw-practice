@@ -1,18 +1,18 @@
 package es.upm.miw.apaw_practice.domain.models.course;
 
-public class Professor {
+public class User {
     private String firstName;
     private String lastName;
-    private String email;
+    private TypeUser role;
 
-    public Professor() {
+    public User() {
         //empty for framework
     }
 
-    public Professor(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, TypeUser role) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.role = role;
     }
 
     public String getFirstName() {
@@ -31,20 +31,25 @@ public class Professor {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public TypeUser getRole() {
+        return role;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRole(TypeUser role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
-        return "Professor{" +
+        return "User{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
+                ", role=" + role +
                 '}';
+    }
+
+    public enum TypeUser {
+        STUDENT,
+        STUDENT_TUTOR
     }
 }

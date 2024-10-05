@@ -6,18 +6,16 @@ import java.time.LocalDateTime;
 public class TutoringSession {
     private String title;
     private LocalDateTime dateTime;
-    private BigDecimal cost;
-    private String idCourse;
+    private BigDecimal price;
 
     public TutoringSession() {
         //empty for framework
     }
 
-    public TutoringSession(String title, LocalDateTime dateTime, BigDecimal cost, String idCourse) {
+    public TutoringSession(String title, LocalDateTime dateTime, BigDecimal price) {
         this.title = title;
         this.dateTime = dateTime;
-        this.cost = cost;
-        this.idCourse = idCourse;
+        this.price = price;
     }
 
     public String getTitle() {
@@ -36,20 +34,12 @@ public class TutoringSession {
         this.dateTime = dateTime;
     }
 
-    public BigDecimal getCost() {
-        return cost;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
-    }
-
-    public String getIdCourse() {
-        return idCourse;
-    }
-
-    public void setIdCourse(String idCourse) {
-        this.idCourse = idCourse;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override
@@ -57,8 +47,7 @@ public class TutoringSession {
         return "TutoringSession{" +
                 "title='" + title + '\'' +
                 ", dateTime=" + dateTime +
-                ", cost=" + cost +
-                ", idCourse='" + idCourse + '\'' +
+                ", price=" + price +
                 '}';
     }
 }
