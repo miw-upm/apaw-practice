@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.theme_park;
 import java.time.LocalDateTime;
 
 public class Operator {
-    private String name;
+    private String idEmployee;
     private String address;
     private LocalDateTime registrationDate;
     private Ride ride;
@@ -11,19 +11,19 @@ public class Operator {
         //empty from framework
     }
 
-    public Operator(String name, String address, LocalDateTime registrationDate, Ride ride) {
-        this.name = name;
+    public Operator(String idEmployee, String address, LocalDateTime registrationDate, Ride ride) {
+        this.idEmployee = idEmployee;
         this.address = address;
         this.registrationDate = registrationDate;
         this.ride = ride;
     }
 
-    public String getName() {
-        return name;
+    public String getIdEmployee() {
+        return idEmployee;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdEmployee(String idEmployee) {
+        this.idEmployee = this.idEmployee;
     }
 
     public String getAddress() {
@@ -51,7 +51,7 @@ public class Operator {
     @Override
     public String toString() {
         return "Operator{" +
-                "name=" + name +
+                "idEmployee=" + idEmployee +
                 ", address=" + address +
                 ", registrationDate=" + registrationDate +
                 ", Ride=" + ride +
