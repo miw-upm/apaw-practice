@@ -18,7 +18,7 @@ public class UniversityRepositoryIT {
 
     @Test
     void testFindByTopDomainNonExisting() {
-        assertTrue(universityRepository.findByTopDomain("upm.es").isEmpty());
+        assertTrue(universityRepository.findByTopDomain("urjc.es").isEmpty());
     }
 
     @Test
@@ -27,7 +27,7 @@ public class UniversityRepositoryIT {
         assertFalse(universityEntity.isEmpty());
         University university = universityEntity.get().toUniversity();
         assertEquals("University of Cambridge", university.getName());
-        assertFalse(university.isAllowsInternationalStudents());
+        assertFalse(university.getAllowsInternationalStudents());
         assertEquals(3, university.getNumberOfFaculties());
         assertEquals(3, university.getDegreesOffered().size());
     }

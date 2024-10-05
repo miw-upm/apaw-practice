@@ -37,7 +37,7 @@ public class University {
         this.name = name;
     }
 
-    public Boolean isAllowsInternationalStudents() {
+    public Boolean getAllowsInternationalStudents() {
         return allowsInternationalStudents;
     }
 
