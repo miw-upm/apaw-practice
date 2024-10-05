@@ -1,22 +1,39 @@
-package es.upm.miw.apaw_practice.domain.models.hotel_retired;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired;
+
+import es.upm.miw.apaw_practice.domain.models.hotel_retired.Guest;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
-public class Guest {
-
+public class GuestEntity {
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String nif;
     private String fullName;
     private LocalDateTime birthDay;
 
-    public Guest() {
+    public GuestEntity() {
         // empty for framework
     }
 
-    public Guest(String nif, String fullName, LocalDateTime birthDay) {
+    public GuestEntity(String nif, String fullName, LocalDateTime birthDay) {
+        this.id = UUID.randomUUID().toString();
         this.nif = nif;
         this.fullName = fullName;
         this.birthDay = birthDay;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNif() {
@@ -43,12 +60,22 @@ public class Guest {
         this.birthDay = birthDay;
     }
 
+    public void fromGuest(Guest guest) {
+        BeanUtils.copyProperties(guest, this);
+    }
+
+    public Guest toGuest() {
+        Guest guest = new Guest();
+        BeanUtils.copyProperties(this, guest);
+        return guest;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Guest guest = (Guest) o;
-        return Objects.equals(nif, guest.nif);
+        GuestEntity that = (GuestEntity) o;
+        return Objects.equals(nif, that.nif);
     }
 
     @Override
@@ -58,8 +85,9 @@ public class Guest {
 
     @Override
     public String toString() {
-        return "Guest{" +
-                "nif='" + nif + '\'' +
+        return "GuestEntity{" +
+                "id='" + id + '\'' +
+                ", nif='" + nif + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", birthDay=" + birthDay +
                 '}';
