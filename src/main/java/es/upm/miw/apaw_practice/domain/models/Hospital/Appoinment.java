@@ -4,24 +4,24 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appoinment {
-    private Id String;
+    private String Id;
     private LocalDate date;
     private LocalTime time;
     private String location;
 
-    public Appoinment(Id string, LocalDate date, LocalTime time, String location) {
-        String = string;
+    public Appoinment(String id, LocalDate date, LocalTime time, String location) {
+        this.Id = id;
         this.date = date;
         this.time = time;
         this.location = location;
     }
 
-    public Id getString() {
-        return String;
+    public String getId() {
+        return Id;
     }
 
-    public void setString(Id string) {
-        String = string;
+    public void setId(String id) {
+        Id = id;
     }
 
     public LocalDate getDate() {
@@ -51,7 +51,7 @@ public class Appoinment {
     @java.lang.Override
     public java.lang.String toString() {
         return "Appoinment{" +
-                "String=" + String +
+                "Id='" + Id + '\'' +
                 ", date=" + date +
                 ", time=" + time +
                 ", location='" + location + '\'' +
