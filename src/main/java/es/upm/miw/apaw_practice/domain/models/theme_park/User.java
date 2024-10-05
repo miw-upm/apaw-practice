@@ -1,32 +1,30 @@
 package es.upm.miw.apaw_practice.domain.models.theme_park;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class User {
-    private String name;
+    private String idMembership;
     private String address;
     private LocalDateTime entranceDate;
-    private List<Ride> rides;
+    private Boolean oneYearMembership;
 
     public User() {
         //empty for framework
     }
 
-    public User(String name, String address, LocalDateTime entranceDate, List<Ride> rides) {
-        this.name = name;
+    public User(String idMembership, String address, LocalDateTime entranceDate, Boolean oneYearMembership) {
+        this.idMembership = idMembership;
         this.address = address;
         this.entranceDate = entranceDate;
-        this.rides = rides;
+        this.oneYearMembership = oneYearMembership;
     }
 
-    public String getName() {
-        return name;
+    public String getIdMembership() {
+        return idMembership;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setIdMembership(String idMembership) {
+        this.idMembership = idMembership;
     }
 
     public String getAddress() {
@@ -45,21 +43,21 @@ public class User {
         this.entranceDate = entranceDate;
     }
 
-    public List<Ride> getRides() {
-        return this.rides;
+    public Boolean getOneYearMembership() {
+        return oneYearMembership;
     }
 
-    public void setRides(List<Ride> rides) {
-        this.rides = rides;
+    public void setOneYearMembership(Boolean oneYearMembership) {
+        this.oneYearMembership = oneYearMembership;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "idMembership='" + idMembership + '\'' +
                 ", address='" + address + '\'' +
                 ", entranceDate='" + entranceDate + '\'' +
-                ", ridesName=" + rides.stream().map(Ride::getName).collect(Collectors.toList()) +
+                ", oneYearMembership='" + oneYearMembership + '\'' +
                 '}';
     }
 }
