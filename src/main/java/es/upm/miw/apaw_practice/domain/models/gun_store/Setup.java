@@ -43,6 +43,14 @@ public class Setup {
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
+
+    public List<Gun> getGuns() {
+        return guns;
+    }
+
+    public void setGuns(List<Gun> guns) {
+        this.guns = guns;
+    }
 }
 
 
