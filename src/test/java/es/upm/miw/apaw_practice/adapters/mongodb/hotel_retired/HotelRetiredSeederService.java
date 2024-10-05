@@ -78,4 +78,11 @@ public class HotelRetiredSeederService {
         };
         this.hotelRepository.saveAll(Arrays.asList(hotels));
     }
+
+    public void deleteAll() {
+        this.hotelRepository.deleteAll();
+        this.roomRepository.deleteAll();
+        this.bookingRepository.deleteAll();
+        this.guestRepository.deleteAll();
+    }
 }
