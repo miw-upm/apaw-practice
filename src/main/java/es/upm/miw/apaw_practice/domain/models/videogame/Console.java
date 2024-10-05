@@ -1,33 +1,51 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
+import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Game;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class Console {
-    private String name;
-    private LocalDate releaseDate;
+    private String console;
+    private long serialNumber;
+    private boolean portable;
+    private LocalDate creationDate;
     private List<VideoGame> videoGames;
 
     private  Console() {
         //empty for framework
     }
 
-    public Console(String name, LocalDate releaseDate, List<VideoGame> videoGames) {
-        this.name = name;
-        this.releaseDate = releaseDate;
+    public Console(String console, long serialNumber, boolean portable, LocalDate creationDate, List<VideoGame> videoGames) {
+        this.console = console;
+        this.serialNumber = serialNumber;
+        this.portable = portable;
+        this.creationDate = creationDate;
         this.videoGames = videoGames;
     }
-    public String getName() {
-        return name;
+    public String getConsole() {
+        return console;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setConsole(String console) {
+        this.console = console;
     }
-    public LocalDate getReleaseDate() {
-        return releaseDate;
+    public long getSerialNumber() {
+        return serialNumber;
     }
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setSerialNumber(long serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+    public boolean isPortable() {
+        return portable;
+    }
+    public void setPortable(boolean portable) {
+        this.portable = portable;
+    }
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
     public List<VideoGame> getVideoGames() {
         return videoGames;
@@ -42,8 +60,10 @@ public class Console {
     @Override
     public String toString() {
         return "Console{" +
-                "name='" + name + '\'' +
-                ", releaseDate=" + releaseDate +
+                "console='" + console + '\'' +
+                ", serialNumber=" + serialNumber +
+                ", portable=" + portable +
+                ", creationDate=" + creationDate +
                 ", videoGames=" + videoGames +
                 '}';
     }
