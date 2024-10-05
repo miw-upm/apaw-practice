@@ -3,16 +3,18 @@ package es.upm.miw.apaw_practice.domain.models.company;
 import java.util.List;
 
 public class Management {
-    private int managerId;
+    private int managerId;// Primary Key
     private String name;
-    private boolean isActive;
-    private List<Department> departments;
+    private boolean Activated;
+    
 
-    // Constructor, getters, and setters
-    public Management(int managerId, String name, boolean isActive) {
+    public Management() {
+        //empty for framework
+    }
+    public Management(int managerId, String name, boolean Activated) {
         this.managerId = managerId;
         this.name = name;
-        this.isActive = isActive;
+        this.Activated = Activated;
     }
 
     public int getManagerId() {
@@ -31,20 +33,14 @@ public class Management {
         this.name = name;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isActivated() {
+        return Activated;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setActivated(boolean activated) {
+        Activated = activated;
     }
 
-    public List<Department> getDepartments() {
-        return departments;
-    }
 
-    public void setDepartments(List<Department> departments) {
-        this.departments = departments;
-    }
 }
 

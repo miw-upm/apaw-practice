@@ -3,9 +3,9 @@ package es.upm.miw.apaw_practice.domain.models.night_life;
 import java.util.List;
 
 public class Club {
-    public String name;
-    public int capacity;
-    public boolean opened;
+    private String name;
+    private Integer capacity;
+    private boolean opened;
     private Owner owner;
     private List<Reservation> reservations;
 

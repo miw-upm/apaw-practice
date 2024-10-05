@@ -8,18 +8,16 @@ public class Clinic {
     private String id;
     private String name;
     private String address;
-    private List<Animal> animals;
     private Employee employee;
 
     public Clinic() {
         //empty from framework
     }
 
-    public Clinic(String id, String name, String address, List<Animal> animals, Employee employee) {
+    public Clinic(String id, String name, String address, Employee employee) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.animals = animals;
         this.employee = employee;
     }
 
@@ -53,14 +51,6 @@ public class Clinic {
         this.address = address;
     }
 
-    public List<Animal> getAnimals() {
-        return animals;
-    }
-
-    public void setAnimals(List<Animal> animals) {
-        this.animals = animals;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
@@ -75,7 +65,6 @@ public class Clinic {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", animals=" + animals +
                 ", employee=" + employee +
                 '}';
     }

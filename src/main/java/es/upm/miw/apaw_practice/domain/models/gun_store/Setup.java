@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Setup {
-    private int setupId;
+    private Integer setupId;
     private BigDecimal totalPrice;
     private LocalDate orderDate;
     private List<Gun> guns;
@@ -42,6 +42,14 @@ public class Setup {
 
     public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public List<Gun> getGuns() {
+        return guns;
+    }
+
+    public void setGuns(List<Gun> guns) {
+        this.guns = guns;
     }
 }
 

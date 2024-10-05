@@ -4,27 +4,29 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class ExpenseBill {
-    private int id;
+    private int expenseBill_id;// Primary Key
     private String description;
     private BigDecimal amount;
     private LocalDateTime date;
-    private Company company;
 
-    // Constructor, getters, and setters
-    public ExpenseBill(int id, String description, BigDecimal amount, LocalDateTime date, Company company) {
-        this.id = id;
+
+    public ExpenseBill() {
+        //empty for framework
+    }
+    public ExpenseBill(int expenseBill_id, String description, BigDecimal amount, LocalDateTime date) {
+        this.expenseBill_id = expenseBill_id;
         this.description = description;
         this.amount = amount;
         this.date = date;
-        this.company = company;
+
     }
 
-    public int getId() {
-        return id;
+    public int getExpenseBill_id() {
+        return expenseBill_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setExpenseBill_id(int expenseBill_id) {
+        this.expenseBill_id = expenseBill_id;
     }
 
     public String getDescription() {
@@ -51,12 +53,7 @@ public class ExpenseBill {
         this.date = date;
     }
 
-    public Company getCompany() {
-        return company;
-    }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+
 }
 

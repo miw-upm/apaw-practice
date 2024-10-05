@@ -6,7 +6,7 @@ public class Organization {
 
     private String nameOrganization;
     private LocalDateTime creationDateOrganization;
-    private boolean isInternational;
+    private boolean international;
 
     public Organization() {
         // empty for framework
@@ -15,7 +15,7 @@ public class Organization {
     public Organization(String nameOrganization, LocalDateTime creationDateOrganization, boolean isInternational) {
         this.nameOrganization = nameOrganization;
         this.creationDateOrganization = creationDateOrganization;
-        this.isInternational = isInternational;
+        this.international = isInternational;
     }
 
     public String getNameOrganization() {
@@ -35,11 +35,11 @@ public class Organization {
     }
 
     public boolean isInternational() {
-        return isInternational;
+        return international;
     }
 
     public void setInternational(boolean international) {
-        isInternational = international;
+        this.international = international;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Organization {
         return "Organization{" +
                 "nameOrganization='" + nameOrganization + '\'' +
                 ", creationDateOrganization=" + creationDateOrganization +
-                ", isInternational=" + isInternational +
+                ", isInternational=" + international +
                 '}';
     }
 }
