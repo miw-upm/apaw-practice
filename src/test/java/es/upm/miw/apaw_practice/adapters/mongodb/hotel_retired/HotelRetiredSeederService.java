@@ -6,6 +6,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.HotelReposit
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.RoomRepository;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class HotelRetiredSeederService {
 
     @Autowired
@@ -34,7 +36,7 @@ public class HotelRetiredSeederService {
                 new GuestEntity("38087519W", "Iñaki Jauregui", LocalDateTime.of(1976, 2, 21,  23, 2, 2 )),
                 new GuestEntity("84133147K", "Basilio Chamartín", LocalDateTime.of(1945, 2, 21,  23, 2, 2 )),
                 new GuestEntity("03948142P", "Carla Sempere", LocalDateTime.of(2021, 4, 12,  23, 2, 2 )),
-                new GuestEntity("70526971R", "Antonia Ndonga", LocalDateTime.of(2004, 13, 21,  23, 2, 2 )),
+                new GuestEntity("70526971R", "Antonia Ndonga", LocalDateTime.of(2004, 12, 21,  23, 2, 2 )),
                 new GuestEntity("02465328G", "Sisinio Riubal", LocalDateTime.of(1936, 1, 2,  23, 2, 2 )),
         };
         this.guestRepository.saveAll(Arrays.asList(guests));
