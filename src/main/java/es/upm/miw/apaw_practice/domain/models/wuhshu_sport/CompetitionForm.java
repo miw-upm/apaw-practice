@@ -4,9 +4,9 @@ import java.time.Duration;
 
 public class CompetitionForm {
 
-    Double score;
-    Duration duration;
-    String category;
+    private Double score;
+    private Duration duration;
+    private String category;
 
     public CompetitionForm() {
         //empty for framework

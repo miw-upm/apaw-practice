@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 public class WushuGrade {
 
-    LocalDate dateAwarded;
-    String gradeTitle;
-    Integer gradeLevel;
+    private LocalDate dateAwarded;
+    private String gradeTitle;
+    private Integer gradeLevel;
 
     public WushuGrade() {
         //empty for framework
