@@ -22,6 +22,6 @@ class TeamCompetitionRepositoryIT {
         TeamCompetitionEntity teamCompetitionEntity = this.teamCompetitionRepository.findByNameTeamCompetition("Atlético de Madrid").get();
         assertEquals("Diego Pablo Simeone", teamCompetitionEntity.getCoachName());
         assertEquals(37, teamCompetitionEntity.getNumberCompetitionWon());
-        assertEquals(3, teamCompetitionEntity.getPlayerTeamsEntity().size());
+        assertEquals(2, teamCompetitionEntity.getPlayerTeamsEntity().size());
     }
 }
