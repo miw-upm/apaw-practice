@@ -43,7 +43,6 @@ public class Doctor {
         return "Doctor{" +
                 "dni='" + dni + '\'' +
                 ", fullname='" + fullname + '\'' +
-                ", specialization='" + specialization + '\'' +
                 ", salary=" + salary +
                 '}';
     }
