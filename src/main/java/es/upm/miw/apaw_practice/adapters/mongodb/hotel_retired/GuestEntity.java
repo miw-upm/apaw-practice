@@ -21,9 +21,11 @@ public class GuestEntity {
         // empty for framework
     }
 
-    public GuestEntity(Guest guest) {
+    public GuestEntity(String nif, String fullName, LocalDateTime birthDay) {
         this.id = UUID.randomUUID().toString();
-        BeanUtils.copyProperties(guest, this);
+        this.nif = nif;
+        this.fullName = fullName;
+        this.birthDay = birthDay;
     }
 
     public String getId() {
