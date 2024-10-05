@@ -4,14 +4,12 @@ import java.math.BigDecimal;
 public class Doctor {
     private String dni;
     private String fullname;
-    private String specialization;
     private BigDecimal salary;
 
     // Constructor, getters, setters
-    public Doctor(String dni, String fullname, String specialization, BigDecimal salary) {
+    public Doctor(String dni, String fullname, BigDecimal salary) {
         this.dni = dni;
         this.fullname = fullname;
-        this.specialization = specialization;
         this.salary = salary;
     }
 
@@ -31,13 +29,6 @@ public class Doctor {
         this.fullname = fullname;
     }
 
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
 
     public BigDecimal getSalary() {
         return salary;
