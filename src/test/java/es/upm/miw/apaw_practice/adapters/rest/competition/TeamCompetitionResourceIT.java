@@ -15,8 +15,7 @@ class TeamCompetitionResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
-    @Autowired
-    private TeamCompetitionResource teamCompetitionResource;
+
 
     @Test
     void testUpdatePlayersTeam() {
