@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.art_museum.ArtMuseumSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
@@ -18,6 +19,7 @@ public class DatabaseSeederService {
     private final ArtMuseumSeederService artMuseumSeederService;
     private final HotelRetiredSeederService hotelRetiredSeederService;
     private final UniversitySeederService universitySeederService;
+    private final BoardgameCafeSeederService boardgameCafeSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -26,7 +28,8 @@ public class DatabaseSeederService {
             MilitarySeederService militarySeederService,
             ArtMuseumSeederService artMuseumSeederService,
             HotelRetiredSeederService hotelRetiredSeederService,
-            UniversitySeederService universitySeederService
+            UniversitySeederService universitySeederService,
+            BoardgameCafeSeederService boardgameCafeSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.universitySeederService = universitySeederService;
@@ -34,6 +37,7 @@ public class DatabaseSeederService {
         this.militarySeederService = militarySeederService;
         this.artMuseumSeederService = artMuseumSeederService;
         this.hotelRetiredSeederService = hotelRetiredSeederService;
+        this.boardgameCafeSeederService = boardgameCafeSeederService;
         this.seedDatabase();
     }
 
@@ -44,6 +48,7 @@ public class DatabaseSeederService {
         this.militarySeederService.seedDatabase();
         this.artMuseumSeederService.seedDatabase();
         this.hotelRetiredSeederService.seedDatabase();
+        this.boardgameCafeSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -53,6 +58,7 @@ public class DatabaseSeederService {
         this.militarySeederService.deleteAll();
         this.artMuseumSeederService.deleteAll();
         this.hotelRetiredSeederService.deleteAll();
+        this.boardgameCafeSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
