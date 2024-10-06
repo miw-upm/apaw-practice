@@ -1,18 +1,23 @@
-package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
+package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
-public class Membership {
+@Document
+public class MembershipEntity {
+    @Id
     private Integer membershipId;
     private String type;
     private Integer duration;
     private BigDecimal discount;
 
-    public Membership() {
+    public MembershipEntity() {
         //empty for framework
     }
 
-    public Membership(Integer membershipId, String type, Integer duration, BigDecimal discount) {
+    public MembershipEntity(Integer membershipId, String type, Integer duration, BigDecimal discount) {
         this.membershipId = membershipId;
         this.type = type;
         this.duration = duration;
@@ -52,8 +57,18 @@ public class Membership {
     }
 
     @Override
+    public int hashCode() {
+        return membershipId.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (membershipId.equals(((MembershipEntity) obj).membershipId));
+    }
+
+    @Override
     public String toString() {
-        return "Membership{" +
+        return "MembershipEntity{" +
                 "membershipId=" + membershipId +
                 ", type='" + type + '\'' +
                 ", duration=" + duration +
