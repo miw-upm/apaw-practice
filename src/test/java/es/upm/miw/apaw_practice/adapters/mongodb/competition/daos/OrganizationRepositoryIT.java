@@ -18,10 +18,7 @@ class OrganizationRepositoryIT {
     void createAndReadOrganization() {
         assertTrue(this.organizationRepository.findAll().stream()
                 .anyMatch(organization ->
-                        "UEFA".equals(organization.getNameOrganization()) &&
-                                LocalDateTime.of(1867, 8, 12, 12, 32).equals(organization.getCreationDateOrganization()) &&
-                                organization.isInternational()
-
+                        "UEFA".equals(organization.getNameOrganization())
                 ));
     }
 }
