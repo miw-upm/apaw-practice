@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities;
 
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Owner;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,11 +22,9 @@ public class OwnerEntity {
         //empty from framework
     }
 
-    public OwnerEntity(String name, String address, String phone) {
+    public OwnerEntity(Owner owner) {
+        BeanUtils.copyProperties(owner, this);
         this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
     }
 
     public String getId() {
