@@ -21,15 +21,10 @@ public class MissionResourceIT {
 
     @Test
     void testUpdate() {
-        Soldier soldier1 =
-                new Soldier("99887766X", "Asela Martín Calvo", "Private", LocalDate.of(1986, 7, 22));
-        Soldier soldier2 =
-                new Soldier("55443322Y", "Manuel Rodríguez Belda", "Private", LocalDate.of(1999, 11, 4));
-        List<Soldier> soldiers = Arrays.asList(soldier1, soldier2);
         Unit unit =
-                new Unit("Engineers Command", "Army", "Salamanca", soldiers);
+                new Unit("15th Wing", "Air Force", "Zaragoza", Collections.emptyList());
         Mission mission =
-                new Mission("Atalanta", true, LocalDate.now(), unit, Collections.emptyList());
+                new Mission("Inherent Resolve", true, LocalDate.now(), unit, Collections.emptyList());
 
         this.webTestClient
                 .put()
@@ -38,4 +33,7 @@ public class MissionResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    // TODO: Test Update codeName not found
+    // TODO: Test Update unit not found
 }
