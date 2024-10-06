@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class Clinic {
 
-    private String id;
     private String name;
     private String address;
     private List<Employee> employees;
@@ -15,8 +14,7 @@ public class Clinic {
         //empty from framework
     }
 
-    public Clinic(String id, String name, String address, List<Employee> employees) {
-        this.id = id;
+    public Clinic(String name, String address, List<Employee> employees) {
         this.name = name;
         this.address = address;
         this.employees = employees;
@@ -26,14 +24,6 @@ public class Clinic {
         if(Objects.isNull(name)) {
             this.name = "clinic";
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -63,7 +53,6 @@ public class Clinic {
     @Override
     public String toString() {
         return "Clinic{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", employees=" + employees.stream().map(Employee::getName).collect(Collectors.toList()) +
