@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities;
 
-import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.Competitor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -17,12 +16,12 @@ public class WushuSchoolEntity {
     private String location;
     private Boolean affiliated;
     @DBRef
-    private List<Competitor> competitorsEntities;
+    private List<CompetitorEntity> competitorsEntities;
 
     public WushuSchoolEntity() {
         //empty for framework
     }
-    public WushuSchoolEntity(String name, String location, Boolean affiliated, List<Competitor> competitorsEntities) {
+    public WushuSchoolEntity(String name, String location, Boolean affiliated, List<CompetitorEntity> competitorsEntities) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.location = location;
@@ -62,11 +61,11 @@ public class WushuSchoolEntity {
         this.affiliated = affiliated;
     }
 
-    public List<Competitor> getCompetitorsEntities() {
+    public List<CompetitorEntity> getCompetitorsEntities() {
         return competitorsEntities;
     }
 
-    public void setCompetitorsEntities(List<Competitor> competitorsEntities) {
+    public void setCompetitorsEntities(List<CompetitorEntity> competitorsEntities) {
         this.competitorsEntities = competitorsEntities;
     }
 
