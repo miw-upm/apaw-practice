@@ -59,6 +59,12 @@ public class WeaponEntity {
         this.cost = cost;
     }
 
+    public Weapon toWeapon() {
+        Weapon weapon = new Weapon();
+        BeanUtils.copyProperties(this, weapon);
+        return weapon;
+    }
+
     @Override
     public int hashCode() {
         return serialCode.hashCode();
