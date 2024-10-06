@@ -6,7 +6,7 @@ public class WushuSchool {
 
     private String name;
     private String location;
-    private Boolean isAffiliated;
+    private Boolean affiliated;
     private List<Competitor> competitors;
 
     public WushuSchool() {
@@ -16,7 +16,7 @@ public class WushuSchool {
     public WushuSchool(String name, String location, Boolean isAffiliated, List<Competitor> competitors) {
         this.name = name;
         this.location = location;
-        this.isAffiliated = isAffiliated;
+        this.affiliated = isAffiliated;
         this.competitors = competitors;
     }
 
@@ -36,12 +36,12 @@ public class WushuSchool {
         this.location = location;
     }
 
-    public Boolean getAffiliated() {
-        return isAffiliated;
+    public Boolean isAffiliated() {
+        return affiliated;
     }
 
     public void setAffiliated(Boolean affiliated) {
-        isAffiliated = affiliated;
+        this.affiliated = affiliated;
     }
 
     public List<Competitor> getCompetitors() {
@@ -57,7 +57,7 @@ public class WushuSchool {
         return "WushuSchool{" +
                 "name='" + name + '\'' +
                 ", location='" + location + '\'' +
-                ", isAffiliated=" + isAffiliated +
+                ", affiliated=" + affiliated +
                 ", competitors=" + competitors +
                 '}';
     }
