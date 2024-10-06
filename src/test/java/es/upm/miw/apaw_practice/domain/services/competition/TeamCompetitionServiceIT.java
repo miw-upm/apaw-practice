@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class TeamCompetitionServiceIT {
+class TeamCompetitionServiceIT {
 
     @Autowired
     private TeamCompetitionService teamCompetitionService;
