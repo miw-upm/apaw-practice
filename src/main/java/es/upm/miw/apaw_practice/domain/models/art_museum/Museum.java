@@ -1,6 +1,10 @@
 package es.upm.miw.apaw_practice.domain.models.art_museum;
 
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
+import es.upm.miw.apaw_practice.domain.models.shop.Tag;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Museum {
     private String name;
@@ -19,6 +23,15 @@ public class Museum {
         this.isOpen = isOpen;
         this.artworks = artworks;
         this.exhibitions = exhibitions;
+    }
+
+    public static Museum ofArtworkInventoryNumber(Museum museum) {
+        museum.setArtworks(
+                museum.artworks.stream()
+                        .map(Artwork::ofInventoryNumber)
+                        .toList()
+        );
+        return museum;
     }
 
     public String getName() {

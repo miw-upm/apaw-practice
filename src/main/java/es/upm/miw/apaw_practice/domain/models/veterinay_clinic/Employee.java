@@ -4,7 +4,6 @@ import java.util.List;
 
 public class Employee {
 
-    private String id;
     private String name;
     private boolean isDoctor;
     private List<Animal> animals;
@@ -13,19 +12,10 @@ public class Employee {
         //empty from framework
     }
 
-    public Employee(String id, String name, boolean isDoctor, List<Animal> animals) {
-        this.id = id;
+    public Employee(String name, boolean isDoctor, List<Animal> animals) {
         this.name = name;
         this.isDoctor = isDoctor;
         this.animals = animals;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -55,7 +45,6 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", isDoctor=" + isDoctor +
                 ", animals=" + animals +

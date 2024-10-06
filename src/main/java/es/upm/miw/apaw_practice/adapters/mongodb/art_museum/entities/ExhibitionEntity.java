@@ -1,5 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities;
 
+import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
+import es.upm.miw.apaw_practice.domain.models.art_museum.Exhibition;
+import org.springframework.beans.BeanUtils;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -16,6 +20,12 @@ public class ExhibitionEntity {
         this.name = name;
         this.dateOfExhibition = dateOfExhibition;
         this.price = price;
+    }
+
+    public Exhibition toExhibition() {
+        Exhibition exhibition = new Exhibition();
+        BeanUtils.copyProperties(this, exhibition);
+        return exhibition;
     }
 
     public String getName() {
