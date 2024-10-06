@@ -19,10 +19,10 @@ public class Actor {
         //empty for framework
     }
 
-    public Actor(String artisticName, String realName, boolean avaliable, LocalDate birthDate, Set<Movie> moviesList, Set<Award> awardsWon){
+    public Actor(String artisticName, String realName, boolean available, LocalDate birthDate, Set<Movie> moviesList, Set<Award> awardsWon){
         this.artisticName = artisticName;
         this.realName = realName;
-        this.available = avaliable;
+        this.available = available;
         this.birthDate = birthDate;
         this.appearsIn = new HashSet<>(moviesList);
         this.awardsWon = new HashSet<>(awardsWon);
