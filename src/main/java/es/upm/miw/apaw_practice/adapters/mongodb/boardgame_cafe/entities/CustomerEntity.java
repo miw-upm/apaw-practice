@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities;
 
+import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Customer;
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,11 +20,18 @@ public class CustomerEntity {
         //empty for framework
     }
 
-    public CustomerEntity(String email, String name, LocalDate birthDate, boolean isMember) {
-        this.email = email;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.isMember = isMember;
+    public CustomerEntity(Customer customer) {
+        this.fromCustomer(customer);
+    }
+
+    public void fromCustomer(Customer customer) {
+        BeanUtils.copyProperties(customer, this);
+    }
+
+    public Customer toCustomer() {
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(this, customer);
+        return customer;
     }
 
     public String getEmail() {

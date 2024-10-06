@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities;
 
+import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Game;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,11 +17,18 @@ public class GameEntity {
         //empty for framework
     }
 
-    public GameEntity(String gameName, Integer numPlayers, String genre, Integer numberOfCopies) {
-        this.gameName = gameName;
-        this.numPlayers = numPlayers;
-        this.genre = genre;
-        this.numberOfCopies = numberOfCopies;
+    public GameEntity(Game game) {
+        this.fromGame(game);
+    }
+
+    public void fromGame (Game game) {
+        BeanUtils.copyProperties(game, this);
+    }
+
+    public Game toGame() {
+        Game game = new Game();
+        BeanUtils.copyProperties(this, game);
+        return game;
     }
 
     public String getGameName() {
