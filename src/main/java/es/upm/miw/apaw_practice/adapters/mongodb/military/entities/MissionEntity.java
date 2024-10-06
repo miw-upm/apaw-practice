@@ -1,5 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.military.entities;
 
+import es.upm.miw.apaw_practice.domain.models.military.Mission;
+import es.upm.miw.apaw_practice.domain.models.military.Unit;
+import es.upm.miw.apaw_practice.domain.models.military.Weapon;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -83,6 +87,25 @@ public class MissionEntity {
         this.weaponEntities = weaponEntities;
     }
 
+    public void fromMission(String codeName, Boolean international, LocalDate startDate, UnitEntity unitEntity, List<WeaponEntity> weaponEntities) {
+        this.codeName = codeName;
+        this.international = international;
+        this.startDate = startDate;
+        this.unitEntity = unitEntity;
+        this.weaponEntities = weaponEntities;
+    }
+
+    public Mission toMission() {
+        Mission mission = new Mission();
+        BeanUtils.copyProperties(this, mission, "unitEntity, weaponEntities");
+        Unit unit = this.unitEntity.toUnit();
+        List<Weapon> weapons = this.weaponEntities.stream()
+                .map(WeaponEntity::toWeapon)
+                .toList();
+        mission.setUnit(unit);
+        mission.setWeapons(weapons);
+        return mission;
+    }
     @Override
     public int hashCode() {
         return codeName.hashCode();
