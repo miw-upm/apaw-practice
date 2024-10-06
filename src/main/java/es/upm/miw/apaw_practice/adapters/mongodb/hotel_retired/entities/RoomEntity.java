@@ -84,6 +84,10 @@ public class RoomEntity {
         this.bookingEntities = bookingEntities;
     }
 
+    public void fromRoom(Room room) {
+        BeanUtils.copyProperties(room, this);
+    }
+
     public Room toRoom() {
         Room room = new Room();
         BeanUtils.copyProperties(this, room, "bookingEntities");
@@ -93,6 +97,4 @@ public class RoomEntity {
         room.setBookings(bookings);
         return room;
     }
-
-
 }

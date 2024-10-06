@@ -72,6 +72,10 @@ public class HotelEntity {
         this.roomEntities = roomEntities;
     }
 
+    public void fromHotel(Hotel hotel) {
+        BeanUtils.copyProperties(hotel, this);
+    }
+
     public Hotel toHotel() {
         Hotel hotel = new Hotel();
         BeanUtils.copyProperties(this, hotel, "roomEntities");
