@@ -1,8 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.theme_park.entities;
 
-import es.upm.miw.apaw_practice.domain.models.theme_park.ThemePark;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
