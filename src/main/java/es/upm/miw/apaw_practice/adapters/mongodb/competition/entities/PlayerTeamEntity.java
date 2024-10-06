@@ -1,7 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.competition.entities;
 
+import es.upm.miw.apaw_practice.domain.models.competition.PlayerTeam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -54,6 +57,12 @@ public class PlayerTeamEntity {
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    public PlayerTeam toPlayerTeam() {
+        PlayerTeam playerTeam = new PlayerTeam();
+        BeanUtils.copyProperties(this, playerTeam);
+        return playerTeam;
     }
 
     @Override
