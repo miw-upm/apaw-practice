@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.military;
 
 import es.upm.miw.apaw_practice.domain.models.military.Unit;
+import es.upm.miw.apaw_practice.domain.services.military.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class UnitResource {
     static final String UNITS = "/military/units";
 
+    private final UnitService unitService;
+
     @Autowired
-    public UnitResource() {
-        // empty for now
-    }
+    public UnitResource(UnitService unitService) { this.unitService = unitService; }
 
     @PostMapping
     public Unit create(@RequestBody Unit unit) {
-        return new Unit(unit.getName(), unit.getBranch(), unit.getLocation(), unit.getSoldiers());
+        return this.unitService.create(unit);
     }
 }
