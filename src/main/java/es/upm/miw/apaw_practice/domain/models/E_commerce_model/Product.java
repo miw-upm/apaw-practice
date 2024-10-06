@@ -1,31 +1,26 @@
 package es.upm.miw.apaw_practice.domain.models.E_commerce_model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public class Product {
-    private Long id;
+    private String idProduct;
     private String name;
-    private BigDecimal price;
-    private LocalDateTime createdAt;
-    private Boolean isAvailable;
+    private int numberProduct;
+    private BigDecimal unitPrice;
 
-    // Constructor
-    public Product(Long id, String name, BigDecimal price, LocalDateTime createdAt, Boolean isAvailable) {
-        this.id = id;
+    public Product(String idProduct, String name, int numberProduct, BigDecimal unitPrice) {
+        this.idProduct = idProduct;
         this.name = name;
-        this.price = price;
-        this.createdAt = createdAt;
-        this.isAvailable = isAvailable;
+        this.numberProduct = numberProduct;
+        this.unitPrice = unitPrice;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    public String getIdProduct() {
+        return idProduct;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdProduct(String idProduct) {
+        this.idProduct = idProduct;
     }
 
     public String getName() {
@@ -36,39 +31,29 @@ public class Product {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public int getNumberProduct() {
+        return numberProduct;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setNumberProduct(int numberProduct) {
+        this.numberProduct = numberProduct;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
-    public Boolean getIsAvailable() {
-        return isAvailable;
-    }
-
-    public void setIsAvailable(Boolean isAvailable) {
-        this.isAvailable = isAvailable;
-    }
-
-    // Overriding toString method
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "idProduct='" + idProduct + '\'' +
                 ", name='" + name + '\'' +
-                ", price=" + price +
-                ", createdAt=" + createdAt +
-                ", isAvailable=" + isAvailable +
+                ", numberProduct=" + numberProduct +
+                ", unitPrice=" + unitPrice +
                 '}';
     }
 }

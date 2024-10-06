@@ -9,16 +9,18 @@ public class Booking {
     private Boolean confirmed;
     private LocalDate dateIn;
     private LocalDate dateOut;
+    private Guest guest;
 
     public Booking() {
         // empty for framework
     }
 
-    public Booking(int id, Boolean confirmed,  LocalDate dateIn, LocalDate dateOut) {
+    public Booking(int id, Boolean confirmed,  LocalDate dateIn, LocalDate dateOut, Guest guest) {
         this.id = id;
         this.confirmed = confirmed;
         this.dateIn = dateIn;
         this.dateOut = dateOut;
+        this.guest = guest;
     }
 
     public Boolean getConfirmed() {
@@ -53,17 +55,25 @@ public class Booking {
         this.dateOut = dateOut;
     }
 
+    public Guest getGuest() {
+        return guest;
+    }
+
+    public void setGuest(Guest guest) {
+        this.guest = guest;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return id == booking.id && Objects.equals(confirmed, booking.confirmed) && Objects.equals(dateIn, booking.dateIn) && Objects.equals(dateOut, booking.dateOut);
+        return id == booking.id && Objects.equals(confirmed, booking.confirmed) && Objects.equals(dateIn, booking.dateIn) && Objects.equals(dateOut, booking.dateOut) && Objects.equals(guest, booking.guest);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, confirmed, dateIn, dateOut);
+        return Objects.hash(id, confirmed, dateIn, dateOut, guest);
     }
 
     @Override
@@ -73,6 +83,7 @@ public class Booking {
                 ", confirmed=" + confirmed +
                 ", dateIn=" + dateIn +
                 ", dateOut=" + dateOut +
+                ", guest=" + guest +
                 '}';
     }
 }

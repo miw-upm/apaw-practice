@@ -37,7 +37,7 @@ public class University {
         this.name = name;
     }
 
-    public Boolean isAllowsInternationalStudents() {
+    public Boolean getAllowsInternationalStudents() {
         return allowsInternationalStudents;
     }
 
@@ -59,6 +59,16 @@ public class University {
 
     public void setDegreesOffered(List<Degree> degreesOffered) {
         this.degreesOffered = degreesOffered;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (topDomain.equals(((University) obj).topDomain));
+    }
+
+    @Override
+    public int hashCode() {
+        return topDomain.hashCode();
     }
 
     @Override

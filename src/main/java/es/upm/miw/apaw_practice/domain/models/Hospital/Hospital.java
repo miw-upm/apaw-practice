@@ -1,32 +1,19 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
+import java.util.List;
 
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Objects;
-
-public class Hospital{
-    private Long id;
-    private  String name;
-    private Integer Capacity;
+public class Hospital {
+    private String name;
     private String location;
+    private int capacity;
+    private List<Doctor> Doctores;
+    private List<Patient> patients;
 
-    public Hospital() {
-    }
-
-    public Hospital(Long id, String name, Integer capacity, String location) {
-        this.id = id;
+    public Hospital(String name, String location, int capacity, List<Doctor> doctores, List<Patient> patients) {
         this.name = name;
-        Capacity = capacity;
         this.location = location;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.capacity = capacity;
+        this.Doctores = doctores;
+        this.patients = patients;
     }
 
     public String getName() {
@@ -37,14 +24,6 @@ public class Hospital{
         this.name = name;
     }
 
-    public Integer getCapacity() {
-        return Capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        Capacity = capacity;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -53,13 +32,38 @@ public class Hospital{
         this.location = location;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public List<Doctor> getDoctores() {
+        return Doctores;
+    }
+
+    public void setDoctores(List<Doctor> doctores) {
+        Doctores = doctores;
+    }
+
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+
     @java.lang.Override
     public java.lang.String toString() {
         return "Hospital{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", Capacity=" + Capacity +
+                "name='" + name + '\'' +
                 ", location='" + location + '\'' +
+                ", capacity=" + capacity +
+                ", Doctores=" + Doctores +
+                ", patients=" + patients +
                 '}';
     }
 }
