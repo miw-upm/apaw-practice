@@ -16,7 +16,9 @@ public class UnitResource {
     private final UnitService unitService;
 
     @Autowired
-    public UnitResource(UnitService unitService) { this.unitService = unitService; }
+    public UnitResource(UnitService unitService) {
+        this.unitService = unitService;
+    }
 
     @PostMapping
     public Unit create(@RequestBody Unit unit) {
