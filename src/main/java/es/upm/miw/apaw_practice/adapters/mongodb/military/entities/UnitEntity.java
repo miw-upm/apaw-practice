@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.military.entities;
 
+import es.upm.miw.apaw_practice.domain.models.military.Soldier;
+import es.upm.miw.apaw_practice.domain.models.military.Unit;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -69,6 +72,16 @@ public class UnitEntity {
 
     public void setSoldierEntities(List<SoldierEntity> soldierEntities) {
         this.soldierEntities = soldierEntities;
+    }
+
+    public Unit toUnit() {
+        Unit unit = new Unit();
+        BeanUtils.copyProperties(this, unit, "soldierEntities");
+        List<Soldier> soldiers = this.soldierEntities.stream()
+                .map(SoldierEntity::toSoldier)
+                .toList();
+        unit.setSoldiers(soldiers);
+        return unit;
     }
 
     @Override

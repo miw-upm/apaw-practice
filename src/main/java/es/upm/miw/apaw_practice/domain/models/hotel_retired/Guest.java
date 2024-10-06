@@ -17,7 +17,6 @@ public class Guest {
         this.nif = nif;
         this.fullName = fullName;
         this.birthDay = birthDay;
-
     }
 
     public String getNif() {
@@ -49,12 +48,12 @@ public class Guest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Guest guest = (Guest) o;
-        return Objects.equals(nif, guest.nif) && Objects.equals(fullName, guest.fullName) && Objects.equals(birthDay, guest.birthDay);
+        return Objects.equals(nif, guest.nif);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nif, fullName, birthDay);
+        return Objects.hashCode(nif);
     }
 
     @Override
