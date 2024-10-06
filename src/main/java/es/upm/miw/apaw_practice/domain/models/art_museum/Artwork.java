@@ -4,15 +4,17 @@ public class Artwork {
     private String inventoryNumber;
     private String titleName;
     private Integer year;
+    private Artist artist;
 
     public Artwork() {
         // empty for framework
     }
 
-    public Artwork(String inventoryNumber, String titleName, Integer year) {
+    public Artwork(String inventoryNumber, String titleName, Integer year, Artist artist) {
         this.inventoryNumber = inventoryNumber;
         this.titleName = titleName;
         this.year = year;
+        this.artist = artist;
     }
 
     public String getInventoryNumber() {
@@ -39,12 +41,21 @@ public class Artwork {
         this.year = year;
     }
 
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
     @Override
     public String toString() {
         return "Artwork{" +
                 "inventoryNumber='" + inventoryNumber + '\'' +
                 ", titleName='" + titleName + '\'' +
                 ", year=" + year +
+                ", artist=" + artist +
                 '}';
     }
 }
