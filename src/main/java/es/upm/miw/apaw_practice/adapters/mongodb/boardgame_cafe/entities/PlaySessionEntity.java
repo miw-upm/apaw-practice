@@ -8,31 +8,31 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Document
-public class PlayServiceEntity {
+public class PlaySessionEntity {
     @Id
-    private Integer playServiceId;
+    private Integer playSessionId;
     private Integer groupSize;
     private LocalDateTime sessionDate;
     @DBRef
     private List<GameEntity> selectedGamesEntities;
 
-    public PlayServiceEntity() {
+    public PlaySessionEntity() {
         //empty for framework
     }
 
-    public PlayServiceEntity(Integer playServiceId, Integer groupSize, LocalDateTime sessionDate, List<GameEntity> selectedGamesEntities) {
-        this.playServiceId = playServiceId;
+    public PlaySessionEntity(Integer playSessionId, Integer groupSize, LocalDateTime sessionDate, List<GameEntity> selectedGamesEntities) {
+        this.playSessionId = playSessionId;
         this.groupSize = groupSize;
         this.sessionDate = sessionDate;
         this.selectedGamesEntities = selectedGamesEntities;
     }
 
-    public Integer getPlayServiceId() {
-        return playServiceId;
+    public Integer getPlaySessionId() {
+        return playSessionId;
     }
 
-    public void setPlayServiceId(Integer playServiceId) {
-        this.playServiceId = playServiceId;
+    public void setPlaySessionId(Integer playSessionId) {
+        this.playSessionId = playSessionId;
     }
 
     public Integer getGroupSize() {
@@ -61,18 +61,18 @@ public class PlayServiceEntity {
 
     @Override
     public int hashCode() {
-        return playServiceId.hashCode();
+        return playSessionId.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (playServiceId.equals(((PlayServiceEntity) obj).playServiceId));
+        return this == obj || obj != null && getClass() == obj.getClass() && (playSessionId.equals(((PlaySessionEntity) obj).playSessionId));
     }
 
     @Override
     public String toString() {
-        return "PlayServiceEntity{" +
-                "playServiceId=" + playServiceId +
+        return "PlaySessionEntity{" +
+                "playSessionId=" + playSessionId +
                 ", groupSize=" + groupSize +
                 ", sessionDate=" + sessionDate +
                 ", selectedGamesEntities=" + selectedGamesEntities +

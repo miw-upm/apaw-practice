@@ -3,12 +3,12 @@ package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe;
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.daos.CustomerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.daos.GameRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.daos.MembershipRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.daos.PlayServiceRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.daos.PlaySessionRepository;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities.CustomerEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities.GameEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities.MembershipEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities.PlayServiceEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities.PlaySessionEntity;
 
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class BoardgameCafeSeederService {
     @Autowired
     private MembershipRepository membershipRepository;
     @Autowired
-    private PlayServiceRepository playServiceRepository;
+    private PlaySessionRepository playSessionRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Boardgame Cafe Initial Load -----------");
@@ -61,20 +61,20 @@ public class BoardgameCafeSeederService {
         };
         this.membershipRepository.saveAll(Arrays.asList(memberships));
 
-        PlayServiceEntity[] playServices = {
-                new PlayServiceEntity(0, 5, LocalDateTime.of(2024, 9, 15, 13, 10), List.of(games[0], games[1])),
-                new PlayServiceEntity(1, 2, LocalDateTime.of(2024, 9, 18, 19, 15), List.of(games[2])),
-                new PlayServiceEntity(2, 4, LocalDateTime.of(2024, 9, 25, 15, 52), List.of(games[4])),
-                new PlayServiceEntity(3, 8, LocalDateTime.of(2024, 10, 5, 21, 2), List.of(games[1], games[2])),
-                new PlayServiceEntity(4, 4, LocalDateTime.of(2024, 10, 5, 22, 0), List.of(games[1], games[3], games[4]))
+        PlaySessionEntity[] playSessions = {
+                new PlaySessionEntity(0, 5, LocalDateTime.of(2024, 9, 15, 13, 10), List.of(games[0], games[1])),
+                new PlaySessionEntity(1, 2, LocalDateTime.of(2024, 9, 18, 19, 15), List.of(games[2])),
+                new PlaySessionEntity(2, 4, LocalDateTime.of(2024, 9, 25, 15, 52), List.of(games[4])),
+                new PlaySessionEntity(3, 8, LocalDateTime.of(2024, 10, 5, 21, 2), List.of(games[1], games[2])),
+                new PlaySessionEntity(4, 4, LocalDateTime.of(2024, 10, 5, 22, 0), List.of(games[1], games[3], games[4]))
         };
-        this.playServiceRepository.saveAll(Arrays.asList(playServices));
+        this.playSessionRepository.saveAll(Arrays.asList(playSessions));
     }
 
     public void deleteAll() {
         this.customerRepository.deleteAll();
         this.gameRepository.deleteAll();
         this.membershipRepository.deleteAll();
-        this.playServiceRepository.deleteAll();
+        this.playSessionRepository.deleteAll();
     }
 }
