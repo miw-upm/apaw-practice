@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class PlaySession {
     private Integer playSessionId;
@@ -50,6 +51,22 @@ public class PlaySession {
 
     public void setSelectedGames(List<Game> selectedGames) {
         this.selectedGames = selectedGames;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlaySession that = (PlaySession) o;
+        return Objects.equals(playSessionId, that.playSessionId) &&
+                Objects.equals(groupSize, that.groupSize) &&
+                Objects.equals(sessionDate, that.sessionDate) &&
+                Objects.equals(selectedGames, that.selectedGames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playSessionId, groupSize, sessionDate, selectedGames);
     }
 
     @Override
