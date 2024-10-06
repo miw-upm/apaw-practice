@@ -15,5 +15,7 @@ public interface GamePersistence {
 
     Game read(String gameName);
 
+    void delete(String gameName);
+
     boolean existGameName(String gameName);
 }

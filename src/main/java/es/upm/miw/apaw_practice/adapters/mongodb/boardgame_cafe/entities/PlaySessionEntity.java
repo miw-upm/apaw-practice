@@ -1,10 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities;
 
+import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Game;
+import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.PlaySession;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document
@@ -17,14 +21,30 @@ public class PlaySessionEntity {
     private List<GameEntity> selectedGamesEntities;
 
     public PlaySessionEntity() {
-        //empty for framework
+        this.selectedGamesEntities = new ArrayList<>();
     }
 
-    public PlaySessionEntity(Integer playSessionId, Integer groupSize, LocalDateTime sessionDate, List<GameEntity> selectedGamesEntities) {
-        this.playSessionId = playSessionId;
-        this.groupSize = groupSize;
-        this.sessionDate = sessionDate;
-        this.selectedGamesEntities = selectedGamesEntities;
+    public PlaySessionEntity(PlaySession playSession) {
+        this();
+        this.playSessionId = playSession.getPlaySessionId();
+        this.groupSize = playSession.getGroupSize();
+        this.sessionDate = playSession.getSessionDate();
+        playSession.getSelectedGames().forEach(game -> this.selectedGamesEntities.add(new GameEntity(game)));
+    }
+
+    public void fromPlaySession(PlaySession playSession) {
+        BeanUtils.copyProperties(playSession, this);
+        this.selectedGamesEntities = new ArrayList<>();
+        playSession.getSelectedGames().forEach(game -> this.selectedGamesEntities.add(new GameEntity(game)));
+    }
+
+    public PlaySession toPlaySession() {
+        PlaySession playSession = new PlaySession();
+        BeanUtils.copyProperties(this, playSession);
+        List<Game> games = new ArrayList<>();
+        this.selectedGamesEntities.forEach(gameEntity -> games.add(gameEntity.toGame()));
+        playSession.setSelectedGames(games);
+        return playSession;
     }
 
     public Integer getPlaySessionId() {
@@ -55,7 +75,7 @@ public class PlaySessionEntity {
         return selectedGamesEntities;
     }
 
-    public void setSelectedGames(List<GameEntity> selectedGamesEntities) {
+    public void setSelectedGamesEntities(List<GameEntity> selectedGamesEntities) {
         this.selectedGamesEntities = selectedGamesEntities;
     }
 
