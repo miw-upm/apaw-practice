@@ -2,8 +2,10 @@ package es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.UUID;
 
 @Document
@@ -14,18 +16,21 @@ public class MuseumEntity {
     private String name;
     private Integer capacity;
     private Boolean isOpen;
-    private ExhibitionEntity exhibition;
+    @DBRef
+    private List<ArtworkEntity> artworks;
+    private List<ExhibitionEntity> exhibitions;
 
     public MuseumEntity() {
         //empty for framework
     }
 
-    public MuseumEntity(String name, Integer capacity, Boolean isOpen, ExhibitionEntity exhibition) {
+    public MuseumEntity(String name, Integer capacity, Boolean isOpen, List<ArtworkEntity> artworks, List<ExhibitionEntity> exhibitions) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.capacity = capacity;
         this.isOpen = isOpen;
-        this.exhibition = exhibition;
+        this.artworks = artworks;
+        this.exhibitions = exhibitions;
     }
 
     public String getId() {
@@ -60,12 +65,20 @@ public class MuseumEntity {
         isOpen = open;
     }
 
-    public ExhibitionEntity getExhibition() {
-        return exhibition;
+    public List<ArtworkEntity> getArtworks() {
+        return artworks;
     }
 
-    public void setExhibition(ExhibitionEntity exhibition) {
-        this.exhibition = exhibition;
+    public void setArtworks(List<ArtworkEntity> artworks) {
+        this.artworks = artworks;
+    }
+
+    public List<ExhibitionEntity> getExhibitions() {
+        return exhibitions;
+    }
+
+    public void setExhibitions(List<ExhibitionEntity> exhibitions) {
+        this.exhibitions = exhibitions;
     }
 
     @Override
@@ -85,7 +98,8 @@ public class MuseumEntity {
                 ", name='" + name + '\'' +
                 ", capacity=" + capacity +
                 ", isOpen=" + isOpen +
-                ", exhibition=" + exhibition +
+                ", artworks=" + artworks +
+                ", exhibitions=" + exhibitions +
                 '}';
     }
 }

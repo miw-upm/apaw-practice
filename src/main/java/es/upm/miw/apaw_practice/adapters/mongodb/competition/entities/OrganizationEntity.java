@@ -58,6 +58,12 @@ public class OrganizationEntity {
         this.international = international;
     }
 
+    public Organization toOrganization() {
+        Organization organization = new Organization();
+        BeanUtils.copyProperties(this, organization);
+        return organization;
+    }
+
     @Override
     public String toString() {
         return "CompetitionEntity{" +

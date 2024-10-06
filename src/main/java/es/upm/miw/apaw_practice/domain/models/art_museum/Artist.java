@@ -1,22 +1,18 @@
 package es.upm.miw.apaw_practice.domain.models.art_museum;
 
-import java.util.List;
-
 public class Artist {
     private String artistName;
     private Integer age;
     private String artStyle;
-    private List<Artwork> artworks;
 
     public Artist() {
         //empty for framework
     }
 
-    public Artist(String artistName, Integer age, String artStyle, List<Artwork> artworks) {
+    public Artist(String artistName, Integer age, String artStyle) {
         this.artistName = artistName;
         this.age = age;
         this.artStyle = artStyle;
-        this.artworks = artworks;
     }
 
     public String getArtistName() {
@@ -43,21 +39,12 @@ public class Artist {
         this.artStyle = artStyle;
     }
 
-    public List<Artwork> getArtworks() {
-        return artworks;
-    }
-
-    public void setArtworks(List<Artwork> artworks) {
-        this.artworks = artworks;
-    }
-
     @Override
     public String toString() {
         return "Artist{" +
                 "artistName='" + artistName + '\'' +
                 ", age=" + age +
-                ", artStyle='" + artStyle + '\'' +
-                ", artworks=" + artworks +
+                ", artStyle='" + artStyle +
                 '}';
     }
 }
