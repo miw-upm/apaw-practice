@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.art_museum;
 
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
+
 public class Artwork {
     private String inventoryNumber;
     private String titleName;
@@ -15,6 +17,12 @@ public class Artwork {
         this.titleName = titleName;
         this.year = year;
         this.artist = artist;
+    }
+
+    public static Artwork ofInventoryNumber(Artwork artwork) {
+        Artwork artworkDto = new Artwork();
+        artworkDto.setInventoryNumber(artwork.getInventoryNumber());
+        return artworkDto;
     }
 
     public String getInventoryNumber() {
