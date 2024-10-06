@@ -11,14 +11,14 @@ import java.util.UUID;
 @Document
 public class AnimalEntity {
 
-    @DBRef
-    private OwnerEntity ownerEntity;
     @Id
     private String id;
     @Indexed(unique = true)
     private String name;
     private int age;
     private LocalDateTime dateOfService;
+    @DBRef
+    private OwnerEntity ownerEntity;
 
     public AnimalEntity() {
         //empty from framework

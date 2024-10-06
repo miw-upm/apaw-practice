@@ -31,10 +31,10 @@ public class VeterinaryClinicSeederService {
         LogManager.getLogger(this.getClass()).warn("-------- Veterinary Clinic Initial Load --------");
 
         OwnerEntity[] owners = {
-                new OwnerEntity(new Owner("Marcos", "Calle Toledo", "980453215")),
-                new OwnerEntity(new Owner("Juan", "Calle Segundo", "841256798")),
-                new OwnerEntity(new Owner("María", "Calle Principal", "852693147")),
-                new OwnerEntity(new Owner("Aitana", "Calle San Juan", "651234879"))
+                new OwnerEntity(new Owner("Marcos", "Street Toledo", "980453215")),
+                new OwnerEntity(new Owner("Juan", "Street Segundo", "841256798")),
+                new OwnerEntity(new Owner("Mary", "Street Principal", "852693147")),
+                new OwnerEntity(new Owner("Aitana", "Street San Juan", "651234879"))
         };
         this.ownerRepository.saveAll(Arrays.asList(owners));
 
@@ -59,13 +59,13 @@ public class VeterinaryClinicSeederService {
         this.employeeRepository.saveAll(Arrays.asList(employees));
 
         ClinicEntity[] clinics = {
-                new ClinicEntity("Clínica Veterinaria Vida Animal", "Calle San Francisco",
+                new ClinicEntity("Veterinary Clinic Happy Life", "Street San Francisco",
                         List.of(employees[0])),
-                new ClinicEntity("Clínica Veterinaria Mascotas Felices", "Calle Gran Via",
+                new ClinicEntity("Veterinary Clinic Pets", "Street New York",
                         List.of(employees[1])),
-                new ClinicEntity("Clínica Veterinaria Tu Cura", "Calle Tercera",
+                new ClinicEntity("Veterinary Clinic Heal", "Street Michgan",
                         List.of(employees)),
-                new ClinicEntity("Clínica Veterinaria Vida Animal", "Calle Segovia",
+                new ClinicEntity("Veterinary Clinic Animal", "Street Orlando",
                         List.of(employees))
         };
         this.clinicRepository.saveAll(Arrays.asList(clinics));
