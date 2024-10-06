@@ -8,6 +8,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.UniversitySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.WushuSportSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.VeterinaryClinicSeederService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class DatabaseSeederService {
     private final UniversitySeederService universitySeederService;
     private final BoardgameCafeSeederService boardgameCafeSeederService;
     private final WushuSportSeederService wushuSportSeederService;
+    private final VeterinaryClinicSeederService veterinaryClinicSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -32,7 +34,8 @@ public class DatabaseSeederService {
             HotelRetiredSeederService hotelRetiredSeederService,
             UniversitySeederService universitySeederService,
             BoardgameCafeSeederService boardgameCafeSeederService,
-            WushuSportSeederService wushuSportSeederService
+            WushuSportSeederService wushuSportSeederService,
+            VeterinaryClinicSeederService veterinaryClinicSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.universitySeederService = universitySeederService;
@@ -42,6 +45,7 @@ public class DatabaseSeederService {
         this.hotelRetiredSeederService = hotelRetiredSeederService;
         this.boardgameCafeSeederService = boardgameCafeSeederService;
         this.wushuSportSeederService = wushuSportSeederService;
+        this.veterinaryClinicSeederService = veterinaryClinicSeederService;
         this.seedDatabase();
     }
 
@@ -54,6 +58,7 @@ public class DatabaseSeederService {
         this.hotelRetiredSeederService.seedDatabase();
         this.boardgameCafeSeederService.seedDatabase();
         this.wushuSportSeederService.seedDatabase();
+        this.veterinaryClinicSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -65,6 +70,7 @@ public class DatabaseSeederService {
         this.hotelRetiredSeederService.deleteAll();
         this.boardgameCafeSeederService.deleteAll();
         this.wushuSportSeederService.deleteAll();
+        this.veterinaryClinicSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
