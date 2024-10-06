@@ -1,22 +1,22 @@
 package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 
 public class Membership {
     private Integer membershipId;
     private String type;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Integer duration;
+    private BigDecimal discount;
 
     public Membership() {
         //empty for framework
     }
 
-    public Membership(Integer membershipId, String type, LocalDate startDate, LocalDate endDate) {
+    public Membership(Integer membershipId, String type, Integer duration, BigDecimal discount) {
         this.membershipId = membershipId;
         this.type = type;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.duration = duration;
+        this.discount = discount;
     }
 
     public Integer getMembershipId() {
@@ -35,20 +35,20 @@ public class Membership {
         this.type = type;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public BigDecimal getDiscount() {
+        return discount;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
 
     @Override
@@ -56,8 +56,8 @@ public class Membership {
         return "Membership{" +
                 "membershipId=" + membershipId +
                 ", type='" + type + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
+                ", duration=" + duration +
+                ", discount=" + discount +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities;
 
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Booking;
 import org.springframework.beans.BeanUtils;
@@ -77,6 +77,7 @@ public class BookingEntity {
     public Booking toBooking() {
         Booking booking = new Booking();
         BeanUtils.copyProperties(this, booking);
+        booking.setGuest(this.guestEntity.toGuest());
         return booking;
     }
 
