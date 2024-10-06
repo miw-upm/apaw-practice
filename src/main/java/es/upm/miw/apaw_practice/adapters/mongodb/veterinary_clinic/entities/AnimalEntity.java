@@ -24,12 +24,12 @@ public class AnimalEntity {
         //empty from framework
     }
 
-    public AnimalEntity(OwnerEntity ownerEntity, String name, int age, LocalDateTime dateOfService) {
-        this.ownerEntity = ownerEntity;
+    public AnimalEntity(String name, int age, LocalDateTime dateOfService, OwnerEntity ownerEntity) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.age = age;
         this.dateOfService = dateOfService;
+        this.ownerEntity = ownerEntity;
     }
 
     public OwnerEntity getOwnerEntity() {
@@ -75,11 +75,11 @@ public class AnimalEntity {
     @Override
     public String toString() {
         return "AnimalEntity{" +
-                "ownerEntity=" + ownerEntity +
-                ", id='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", dateOfService=" + dateOfService +
+                ", ownerEntity=" + ownerEntity +
                 '}';
     }
 }

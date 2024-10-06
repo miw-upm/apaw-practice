@@ -11,11 +11,13 @@ import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.Owne
 import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Owner;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class VeterinaryClinicSeederService {
 
     @Autowired
@@ -39,14 +41,14 @@ public class VeterinaryClinicSeederService {
         this.ownerRepository.saveAll(Arrays.asList(owners));
 
         AnimalEntity[] animals = {
-                new AnimalEntity(owners[0], "Lara", 10,
-                        LocalDateTime.of(2014, 8, 10, 15, 10)),
-                new AnimalEntity(owners[1], "Pingo", 8,
-                        LocalDateTime.of(2016, 5, 2, 10, 11)),
-                new AnimalEntity(owners[2], "Toy", 5,
-                        LocalDateTime.of(2017, 7, 4, 2, 58)),
-                new AnimalEntity(owners[3], "Mel", 2,
-                        LocalDateTime.of(2022, 10, 11, 5, 41))
+                new AnimalEntity("Lara", 10,
+                        LocalDateTime.of(2014, 8, 10, 15, 10), owners[0]),
+                new AnimalEntity("Pingo", 8,
+                        LocalDateTime.of(2016, 5, 2, 10, 11), owners[1]),
+                new AnimalEntity("Toy", 5,
+                        LocalDateTime.of(2017, 7, 4, 2, 58), owners[2]),
+                new AnimalEntity("Mel", 2,
+                        LocalDateTime.of(2022, 10, 11, 5, 41), owners[3])
         };
         this.animalRepository.saveAll(Arrays.asList(animals));
 
