@@ -7,14 +7,12 @@ public class BasketPlayer {
     private String name;
     private int dorsal;
     private int points;
-    private List<BasketMatch> basketMatches;
 
-    public BasketPlayer(String dni, String name, int dorsal, int points, List<BasketMatch> basketMatches) {
+    public BasketPlayer(String dni, String name, int dorsal, int points) {
         this.dni = dni;
         this.name = name;
         this.dorsal = dorsal;
         this.points = 0;
-        this.basketMatches = basketMatches;
     }
 
     public String getDni() {
@@ -43,13 +41,5 @@ public class BasketPlayer {
 
     public void setPoints(int points) {
         this.points = points;
-    }
-
-    public List<BasketMatch> getBasketMatches() {
-        return basketMatches;
-    }
-
-    public void setBasketMatches(List<BasketMatch> basketMatches) {
-        this.basketMatches = basketMatches;
     }
 }
