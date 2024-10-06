@@ -3,25 +3,25 @@ package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 
 @Document
 public class MembershipEntity {
     @Id
     private Integer membershipId;
     private String type;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Integer duration;
+    private BigDecimal discount;
 
     public MembershipEntity() {
         //empty for framework
     }
 
-    public MembershipEntity(Integer membershipId, String type, LocalDate startDate, LocalDate endDate) {
+    public MembershipEntity(Integer membershipId, String type, Integer duration, BigDecimal discount) {
         this.membershipId = membershipId;
         this.type = type;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.duration = duration;
+        this.discount = discount;
     }
 
     public Integer getMembershipId() {
@@ -40,16 +40,20 @@ public class MembershipEntity {
         this.type = type;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
 
     @Override
@@ -64,11 +68,11 @@ public class MembershipEntity {
 
     @Override
     public String toString() {
-       return "MembershipEntity{" +
-               "membershipId=" + membershipId +
-               ", type='" + type + '\'' +
-               ", startDate=" + startDate +
-               ", endDate=" + endDate +
-               '}';
+        return "MembershipEntity{" +
+                "membershipId=" + membershipId +
+                ", type='" + type + '\'' +
+                ", duration=" + duration +
+                ", discount=" + discount +
+                '}';
     }
 }

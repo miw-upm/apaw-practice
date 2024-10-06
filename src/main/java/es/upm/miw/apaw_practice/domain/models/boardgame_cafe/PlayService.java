@@ -1,12 +1,11 @@
 package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class PlayService {
     private Integer playServiceId;
-    private BigDecimal coverFee;
+    private Integer groupSize;
     private LocalDateTime sessionDate;
     private List<Game> selectedGames;
 
@@ -14,9 +13,9 @@ public class PlayService {
         //empty for framework
     }
 
-    public PlayService(Integer playServiceId, BigDecimal coverFee, LocalDateTime sessionDate, List<Game> selectedGames) {
+    public PlayService(Integer playServiceId, Integer groupSize, LocalDateTime sessionDate, List<Game> selectedGames) {
         this.playServiceId = playServiceId;
-        this.coverFee = coverFee;
+        this.groupSize = groupSize;
         this.sessionDate = sessionDate;
         this.selectedGames = selectedGames;
     }
@@ -29,12 +28,12 @@ public class PlayService {
         this.playServiceId = playServiceId;
     }
 
-    public BigDecimal getCoverFee() {
-        return coverFee;
+    public Integer getGroupSize() {
+        return groupSize;
     }
 
-    public void setCoverFee(BigDecimal coverFee) {
-        this.coverFee = coverFee;
+    public void setGroupSize(Integer groupSize) {
+        this.groupSize = groupSize;
     }
 
     public LocalDateTime getSessionDate() {
@@ -57,7 +56,7 @@ public class PlayService {
     public String toString() {
         return "PlayService{" +
                 "playServiceId=" + playServiceId +
-                ", coverFee=" + coverFee +
+                ", groupSize=" + groupSize +
                 ", sessionDate=" + sessionDate +
                 ", selectedGames=" + selectedGames +
                 '}';

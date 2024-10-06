@@ -4,7 +4,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public class PlayServiceEntity {
     @Id
     private Integer playServiceId;
-    private BigDecimal coverFee;
+    private Integer groupSize;
     private LocalDateTime sessionDate;
     @DBRef
     private List<GameEntity> selectedGamesEntities;
@@ -21,9 +20,9 @@ public class PlayServiceEntity {
         //empty for framework
     }
 
-    public PlayServiceEntity(Integer playServiceId, BigDecimal coverFee, LocalDateTime sessionDate, List<GameEntity> selectedGamesEntities) {
+    public PlayServiceEntity(Integer playServiceId, Integer groupSize, LocalDateTime sessionDate, List<GameEntity> selectedGamesEntities) {
         this.playServiceId = playServiceId;
-        this.coverFee = coverFee;
+        this.groupSize = groupSize;
         this.sessionDate = sessionDate;
         this.selectedGamesEntities = selectedGamesEntities;
     }
@@ -36,12 +35,12 @@ public class PlayServiceEntity {
         this.playServiceId = playServiceId;
     }
 
-    public BigDecimal getCoverFee() {
-        return coverFee;
+    public Integer getGroupSize() {
+        return groupSize;
     }
 
-    public void setCoverFee(BigDecimal coverFee) {
-        this.coverFee = coverFee;
+    public void setGroupSize(Integer groupSize) {
+        this.groupSize = groupSize;
     }
 
     public LocalDateTime getSessionDate() {
@@ -74,7 +73,7 @@ public class PlayServiceEntity {
     public String toString() {
         return "PlayServiceEntity{" +
                 "playServiceId=" + playServiceId +
-                ", coverFee=" + coverFee +
+                ", groupSize=" + groupSize +
                 ", sessionDate=" + sessionDate +
                 ", selectedGamesEntities=" + selectedGamesEntities +
                 '}';

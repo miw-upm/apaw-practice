@@ -45,25 +45,26 @@ public class BoardgameCafeSeederService {
                 new GameEntity("CATAN", 4, "Strategy", 4),
                 new GameEntity("Gloomhaven", 4, "Strategy", 1),
                 new GameEntity("Exploding Kittens", 5, "Party", 6),
-                new GameEntity("Zombicide", 6, "Thematic", 2),
+                new GameEntity("Zombicide", 6, "Co-op", 2),
                 new GameEntity("Azul", 4, "Family", 3),
                 new GameEntity("Warewolf", 24, "Party", 2),
         };
         this.gameRepository.saveAll(Arrays.asList(games));
 
         MembershipEntity[] memberships = {
-                new MembershipEntity(1, "Gold", LocalDate.of(2024, 1, 1), LocalDate.of(2023, 1, 1)),
-                new MembershipEntity(2, "Silver", LocalDate.of(2024, 1, 1), LocalDate.of(2023, 1, 1)),
-                new MembershipEntity(3, "Bronze", LocalDate.of(2024, 1, 1), LocalDate.of(2023, 1, 1)),
+                new MembershipEntity(1, "Gold", 1, new BigDecimal("2.0")),
+                new MembershipEntity(2, "Silver", 3, new BigDecimal("2.5")),
+                new MembershipEntity(3, "Bronze", 6, new BigDecimal("3.0")),
+                new MembershipEntity(4, "Platinum", 12, new BigDecimal("3.5")),
         };
         this.membershipRepository.saveAll(Arrays.asList(memberships));
 
         PlayServiceEntity[] playServices = {
-                new PlayServiceEntity(1, new BigDecimal("10.00"), LocalDateTime.of(2024, 9, 15, 18, 0), List.of(games[0], games[1])),
-                new PlayServiceEntity(2, new BigDecimal("15.00"), LocalDateTime.of(2024, 9, 18, 19, 0), List.of(games[2])),
-                new PlayServiceEntity(3, new BigDecimal("20.00"), LocalDateTime.of(2024, 9, 25, 20, 0), List.of(games[4])),
-                new PlayServiceEntity(4, new BigDecimal("25.00"), LocalDateTime.of(2024, 10, 2, 21, 0), List.of(games[0], games[2])),
-                new PlayServiceEntity(5, new BigDecimal("30.00"), LocalDateTime.of(2024, 10, 5, 22, 0), List.of(games[1], games[3], games[4]))
+                new PlayServiceEntity(1, 5, LocalDateTime.of(2024, 9, 15, 13, 10), List.of(games[0], games[1])),
+                new PlayServiceEntity(2, 2, LocalDateTime.of(2024, 9, 18, 19, 15), List.of(games[2])),
+                new PlayServiceEntity(3, 4, LocalDateTime.of(2024, 9, 25, 15, 52), List.of(games[4])),
+                new PlayServiceEntity(4, 8, LocalDateTime.of(2024, 10, 5, 21, 2), List.of(games[0], games[2])),
+                new PlayServiceEntity(5, 4, LocalDateTime.of(2024, 10, 5, 22, 0), List.of(games[1], games[3], games[4]))
         };
         this.playServiceRepository.saveAll(Arrays.asList(playServices));
     }
