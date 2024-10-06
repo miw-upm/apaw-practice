@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities;
 
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Guest;
 import org.springframework.beans.BeanUtils;

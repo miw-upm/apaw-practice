@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities;
 
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Hotel;
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Room;
@@ -70,6 +70,10 @@ public class HotelEntity {
 
     public void setRoomEntities(List<RoomEntity> roomEntities) {
         this.roomEntities = roomEntities;
+    }
+
+    public void fromHotel(Hotel hotel) {
+        BeanUtils.copyProperties(hotel, this);
     }
 
     public Hotel toHotel() {
