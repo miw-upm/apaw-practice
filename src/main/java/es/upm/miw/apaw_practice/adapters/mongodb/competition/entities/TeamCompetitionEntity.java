@@ -1,12 +1,15 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.competition.entities;
 
 import es.upm.miw.apaw_practice.domain.models.competition.PlayerTeam;
+import es.upm.miw.apaw_practice.domain.models.competition.TeamCompetition;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class TeamCompetitionEntity {
@@ -70,6 +73,16 @@ public class TeamCompetitionEntity {
 
     public void setPlayerTeamsEntity(List<PlayerTeamEntity> playerTeams) {
         this.playerTeamsEntity = playerTeams;
+    }
+
+    public TeamCompetition toTeamCompetition() {
+        TeamCompetition teamCompetition = new TeamCompetition();
+        BeanUtils.copyProperties(this, teamCompetition, "playerTeamsEntity");
+        List<PlayerTeam> playersTeam = this.playerTeamsEntity.stream()
+                .map(PlayerTeamEntity::toPlayerTeam)
+                .collect(Collectors.toList());
+        teamCompetition.setPlayerTeams(playersTeam);
+        return teamCompetition;
     }
 
     @Override

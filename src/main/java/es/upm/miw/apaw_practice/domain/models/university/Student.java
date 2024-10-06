@@ -4,22 +4,22 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Student {
-    String email;
-    String firstName;
-    String placeOfBirth;
-    LocalDate enrollmentDate;
-    List<Degree> degreesStudied;
+    private String email;
+    private String firstName;
+    private String placeOfBirth;
+    private LocalDate enrollmentDate;
+    private List<Degree> degrees;
 
     public Student() {
         //empty for framework
     }
 
-    public Student(String email, String firstName, String placeOfBirth, LocalDate enrollmentDate, List<Degree> degreesStudied) {
+    public Student(String email, String firstName, String placeOfBirth, LocalDate enrollmentDate, List<Degree> degrees) {
         this.email = email;
         this.firstName = firstName;
         this.placeOfBirth = placeOfBirth;
         this.enrollmentDate = enrollmentDate;
-        this.degreesStudied = degreesStudied;
+        this.degrees = degrees;
     }
 
     public String getEmail() {
@@ -54,12 +54,22 @@ public class Student {
         this.enrollmentDate = enrollmentDate;
     }
 
-    public List<Degree> getDegreesStudied() {
-        return degreesStudied;
+    public List<Degree> getDegrees() {
+        return degrees;
     }
 
-    public void setDegreesStudied(List<Degree> degreesStudied) {
-        this.degreesStudied = degreesStudied;
+    public void setDegrees(List<Degree> degrees) {
+        this.degrees = degrees;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (email.equals(((Student) obj).email));
+    }
+
+    @Override
+    public int hashCode() {
+        return email.hashCode();
     }
 
     @Override
@@ -69,7 +79,7 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", placeOfBirth='" + placeOfBirth + '\'' +
                 ", enrollmentDate=" + enrollmentDate +
-                ", degreesStudied=" + degreesStudied +
+                ", degreesStudied=" + degrees +
                 '}';
     }
 }

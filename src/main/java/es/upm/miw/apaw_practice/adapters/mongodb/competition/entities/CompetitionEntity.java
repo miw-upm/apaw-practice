@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.competition.entities;
 
-import es.upm.miw.apaw_practice.domain.models.competition.Organization;
+import es.upm.miw.apaw_practice.domain.models.competition.Competition;
+import es.upm.miw.apaw_practice.domain.models.competition.TeamCompetition;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -8,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class CompetitionEntity {
@@ -82,6 +85,16 @@ public class CompetitionEntity {
 
     public void setOrganizationEntity(OrganizationEntity organizationEntity) {
         this.organizationEntity = organizationEntity;
+    }
+
+    public Competition toCompetition() {
+        Competition competition = new Competition();
+        BeanUtils.copyProperties(this, competition, "teamCompetitionsEntity");
+        List<TeamCompetition> teamCompetitionsList = this.teamCompetitionsEntity.stream()
+                .map(TeamCompetitionEntity::toTeamCompetition)
+                .collect(Collectors.toList());
+        competition.setTeamCompetitions(teamCompetitionsList);
+        return competition;
     }
 
     @Override

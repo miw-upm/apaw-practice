@@ -1,23 +1,18 @@
 package es.upm.miw.apaw_practice.domain.models.course;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class User {
     private String firstName;
-    private String lastName;
+    private String email;
     private TypeUser role;
-    private List<Course> courses;
 
     public User() {
         //empty for framework
     }
 
-    public User(String firstName, String lastName, TypeUser role) {
+    public User(String firstName, String email, TypeUser role) {
         this.firstName = firstName;
-        this.lastName = lastName;
+        this.email = email;
         this.role = role;
-        this.courses = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -28,12 +23,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public TypeUser getRole() {
@@ -44,26 +39,17 @@ public class User {
         this.role = role;
     }
 
-    public void setCourse(Course course) {
-        this.courses.add(course);
-    }
-
-    public Course getCourse(int idCourse) {
-        return this.courses.get(idCourse);
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
                 ", role=" + role +
-                ", courses=" + courses +
                 '}';
     }
 
     public enum TypeUser {
         STUDENT,
-        STUDENTUTOR
+        STUDENT_TUTOR
     }
 }

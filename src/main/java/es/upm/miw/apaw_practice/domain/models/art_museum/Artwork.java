@@ -1,26 +1,36 @@
 package es.upm.miw.apaw_practice.domain.models.art_museum;
 
+import es.upm.miw.apaw_practice.domain.models.shop.Article;
+
 public class Artwork {
-    private String id;
+    private String inventoryNumber;
     private String titleName;
     private Integer year;
+    private Artist artist;
 
     public Artwork() {
         // empty for framework
     }
 
-    public Artwork(String id, String titleName, Integer year) {
-        this.id = id;
+    public Artwork(String inventoryNumber, String titleName, Integer year, Artist artist) {
+        this.inventoryNumber = inventoryNumber;
         this.titleName = titleName;
         this.year = year;
+        this.artist = artist;
     }
 
-    public String getId() {
-        return id;
+    public static Artwork ofInventoryNumber(Artwork artwork) {
+        Artwork artworkDto = new Artwork();
+        artworkDto.setInventoryNumber(artwork.getInventoryNumber());
+        return artworkDto;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getInventoryNumber() {
+        return inventoryNumber;
+    }
+
+    public void setInventoryNumber(String inventoryNumber) {
+        this.inventoryNumber = inventoryNumber;
     }
 
     public String getTitleName() {
@@ -39,12 +49,21 @@ public class Artwork {
         this.year = year;
     }
 
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
     @Override
     public String toString() {
         return "Artwork{" +
-                "id='" + id + '\'' +
+                "inventoryNumber='" + inventoryNumber + '\'' +
                 ", titleName='" + titleName + '\'' +
                 ", year=" + year +
+                ", artist=" + artist +
                 '}';
     }
 }
