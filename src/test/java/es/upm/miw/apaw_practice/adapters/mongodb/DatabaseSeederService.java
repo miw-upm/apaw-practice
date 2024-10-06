@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederSe
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.art_museum.ArtMuseumSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.VeterinaryClinicSeederService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,15 @@ public class DatabaseSeederService {
     private final CompetitionSeederService competitionSeederService;
     private final MilitarySeederService militarySeederService;
     private final ArtMuseumSeederService artMuseumSeederService;
+    private final VeterinaryClinicSeederService veterinaryClinicSeederService;
 
     @Autowired
-    public DatabaseSeederService(ShopSeederService shopSeederService, CompetitionSeederService competitionSeederService, MilitarySeederService militarySeederService, ArtMuseumSeederService artMuseumSeederService) {
+    public DatabaseSeederService(ShopSeederService shopSeederService, CompetitionSeederService competitionSeederService, MilitarySeederService militarySeederService, ArtMuseumSeederService artMuseumSeederService, VeterinaryClinicSeederService veterinaryClinicSeederService) {
         this.shopSeederService = shopSeederService;
         this.competitionSeederService = competitionSeederService;
         this.militarySeederService = militarySeederService;
         this.artMuseumSeederService = artMuseumSeederService;
+        this.veterinaryClinicSeederService = veterinaryClinicSeederService;
         this.seedDatabase();
     }
 
@@ -29,6 +32,7 @@ public class DatabaseSeederService {
         this.competitionSeederService.seedDatabase();
         this.militarySeederService.seedDatabase();
         this.artMuseumSeederService.seedDatabase();
+        this.veterinaryClinicSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -36,6 +40,7 @@ public class DatabaseSeederService {
         this.competitionSeederService.deleteAll();
         this.militarySeederService.deleteAll();
         this.artMuseumSeederService.deleteAll();
+        this.veterinaryClinicSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
