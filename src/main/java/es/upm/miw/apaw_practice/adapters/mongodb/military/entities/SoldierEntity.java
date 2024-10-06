@@ -68,6 +68,12 @@ public class SoldierEntity {
         this.birthDate = birthDate;
     }
 
+    public Soldier toSoldier() {
+        Soldier soldier = new Soldier();
+        BeanUtils.copyProperties(this, soldier);
+        return soldier;
+    }
+
     @Override
     public int hashCode() {
         return identityDocument.hashCode();
