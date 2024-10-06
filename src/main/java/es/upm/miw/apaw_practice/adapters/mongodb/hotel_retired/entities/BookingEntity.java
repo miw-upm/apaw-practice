@@ -77,6 +77,7 @@ public class BookingEntity {
     public Booking toBooking() {
         Booking booking = new Booking();
         BeanUtils.copyProperties(this, booking);
+        booking.setGuest(this.guestEntity.toGuest());
         return booking;
     }
 

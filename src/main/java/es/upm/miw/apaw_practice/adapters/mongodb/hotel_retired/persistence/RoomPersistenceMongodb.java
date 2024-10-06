@@ -44,7 +44,7 @@ public class RoomPersistenceMongodb implements RoomPersistence {
     @Override
     public Room update(String num, Room room) {
         RoomEntity roomEntity = this.roomRepository
-                .findById(num)
+                .findByNum(num)
                 .orElseThrow(() -> new NotFoundException("Room num: " + num));
         roomEntity.fromRoom(room);
         return this.roomRepository
@@ -55,7 +55,7 @@ public class RoomPersistenceMongodb implements RoomPersistence {
     @Override
     public Room read(String num) {
         return this.roomRepository
-                .findById(num)
+                .findByNum(num)
                 .orElseThrow(() -> new NotFoundException("Room num: " + num))
                 .toRoom();
     }

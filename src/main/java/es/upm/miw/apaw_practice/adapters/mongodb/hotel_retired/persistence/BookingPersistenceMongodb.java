@@ -39,12 +39,14 @@ public class BookingPersistenceMongodb implements BookingPersistence {
         GuestEntity guestEntity = this.guestRepository
                 .findByNif(booking.getGuest().getNif())
                 .orElseThrow(() -> new NotFoundException("Guest nif: " + booking.getGuest().getNif()));
-        BookingEntity bookingEntity = this.bookingRepository
-                .findById(booking.getId())
-                .orElseThrow(() -> new NotFoundException("Booking id: " + booking.getId()));
-        bookingEntity.setGuestEntity(guestEntity);
         return this.bookingRepository
-                .save(bookingEntity)
+                .save(
+                        new BookingEntity(
+                                booking.getConfirmed(),
+                                booking.getDateIn(),
+                                booking.getDateOut(),
+                                guestEntity)
+                )
                 .toBooking();
     }
 

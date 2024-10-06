@@ -15,8 +15,7 @@ public class Booking {
         // empty for framework
     }
 
-    public Booking(String id, Boolean confirmed,  LocalDate dateIn, LocalDate dateOut, Guest guest) {
-        this.id = id;
+    public Booking(Boolean confirmed,  LocalDate dateIn, LocalDate dateOut, Guest guest) {
         this.confirmed = confirmed;
         this.dateIn = dateIn;
         this.dateOut = dateOut;
