@@ -15,20 +15,18 @@ public class Movie {
     private LocalDate releaseDate;
     private Set<Actor> actorsFeaturing;
     private Set<Award> awardsWon;
-    private Studio ownerStudio;
 
     public Movie() {
         //empty for framework
     }
 
-    public Movie(String imdbId, String title, BigDecimal boxOffice, LocalDate releaseDate, Set<Actor> actorsFeaturing, Set<Award> awardsWon, Studio ownerStudio) {
+    public Movie(String imdbId, String title, BigDecimal boxOffice, LocalDate releaseDate, Set<Actor> actorsFeaturing, Set<Award> awardsWon) {
         this.imdbId = imdbId;
         this.title = title;
         this.boxOffice = boxOffice;
         this.releaseDate = releaseDate;
         this.actorsFeaturing = new HashSet<>(actorsFeaturing);
         this.awardsWon = new HashSet<>(awardsWon);
-        this.ownerStudio = ownerStudio;
     }
 
     public String getImdbId() { return imdbId; }
@@ -63,10 +61,6 @@ public class Movie {
 
     public void removeAward(Award award) { awardsWon.remove(award); }
 
-    public Studio getStudio() { return ownerStudio; }
-
-    public void setStudio(Studio ownerStudio) { this.ownerStudio = ownerStudio; }
-
     @Override
     public String toString() {
         return "Movie {\n" +
@@ -75,8 +69,7 @@ public class Movie {
                 "  boxOffice: " + boxOffice + NEWLINE_WITH_COMMA +
                 "  releaseDate: " + releaseDate + NEWLINE_WITH_COMMA +
                 "  actorsFeaturing: " + actorsFeaturing + NEWLINE_WITH_COMMA +
-                "  awardsWon: " + awardsWon + NEWLINE_WITH_COMMA +
-                "  ownerStudio: " + ownerStudio + '\n' +
+                "  awardsWon: " + awardsWon + '\n' +
                 "}";
     }
 }
