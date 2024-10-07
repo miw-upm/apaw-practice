@@ -21,12 +21,10 @@ public class DoctorEntity {
     private String fullname;
     private Double salary;
 
-
     public DoctorEntity(String dni, String fullname, Double salary) {
         this.id = UUID.randomUUID().toString();
         this.dni = dni;
         this.fullname = fullname;
-
         this.salary = salary;
     }
 
@@ -54,8 +52,6 @@ public class DoctorEntity {
         this.fullname = fullname;
     }
 
-
-
     public Double getSalary() {
         return salary;
     }
@@ -63,8 +59,6 @@ public class DoctorEntity {
     public void setSalary(Double salary) {
         this.salary = salary;
     }
-
-
 
     @Override
     public int hashCode() {
@@ -82,7 +76,7 @@ public class DoctorEntity {
                 "id='" + id + '\'' +
                 ", dni='" + dni + '\'' +
                 ", fullname='" + fullname + '\'' +
-                ", salary=" + salary
-                '}';
+                ", salary=" + salary +
+                '}'; 
     }
 }
