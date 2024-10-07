@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.movies;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Movie {
@@ -47,7 +48,18 @@ public class Movie {
 
     public Set<Actor> getActorsFeaturing() { return actorsFeaturing; }
 
-    public void setActorsFeaturing(Actor actor) { this.actorsFeaturing.add(actor); }
+    public void setActorsFeaturing(Set<Actor> actorsFeaturing) {
+        this.actorsFeaturing = actorsFeaturing;
+    }
+
+    public Actor getActorByArtisticName(String artisticName) {
+        for (Actor actor : actorsFeaturing) {
+            if (actor.getArtisticName().equals(artisticName)) {
+                return actor;
+            }
+        }
+        return null;
+    }
 
     public void addActor(Actor actor) { actorsFeaturing.add(actor); }
 
@@ -56,6 +68,15 @@ public class Movie {
     public Set<Award> getAwardsWon() { return awardsWon; }
 
     public void setAwardsWon(Set<Award> awardsWon) { this.awardsWon = awardsWon; }
+
+    public Award getAwardByNameCategoryAndYear(String nameCategoryAndYear) {
+        for (Award award : awardsWon) {
+            if (award.getNameCategoryAndYear().equals(nameCategoryAndYear)) {
+                return award;
+            }
+        }
+        return null;
+    }
 
     public void addAward(Award award) { awardsWon.add(award); }
 
@@ -72,4 +93,18 @@ public class Movie {
                 "  awardsWon: " + awardsWon + '\n' +
                 "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return imdbId.equals(movie.imdbId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(imdbId);
+    }
+
 }

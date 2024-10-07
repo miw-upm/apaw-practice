@@ -1,8 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.movies;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 public class Actor {
 
@@ -10,31 +9,31 @@ public class Actor {
 
     private String artisticName;
     private String realName;
-    private boolean available;
+    private boolean isAvailable;
     private LocalDate birthDate;
 
     public Actor(){
         //empty for framework
     }
 
-    public Actor(String artisticName, String realName, boolean available, LocalDate birthDate){
+    public Actor(String artisticName, String realName, boolean isAvailable, LocalDate birthDate){
         this.artisticName = artisticName;
         this.realName = realName;
-        this.available = available;
+        this.isAvailable = isAvailable;
         this.birthDate = birthDate;
     }
 
-    public String getName() { return artisticName; }
+    public String getArtisticName() { return artisticName; }
 
-    public void setName(String artisticName) { this.artisticName = artisticName; }
+    public void setArtisticName(String artisticName) { this.artisticName = artisticName; }
 
     public String getRealName() { return realName; }
 
     public void setRealName(String realName) { this.realName = realName; }
 
-    public boolean isAvailable() { return available; }
+    public boolean isAvailable() { return isAvailable; }
 
-    public void setAvailable(boolean available) { this.available = available; }
+    public void setIsAvailable(boolean available) { this.isAvailable = available; }
 
     public LocalDate getBirthDate(){ return birthDate; }
 
@@ -46,8 +45,22 @@ public class Actor {
         return "Actor {\n" +
                 "  artisticName: \"" + artisticName + "\"" + NEWLINE_WITH_COMMA +
                 "  realName: \"" + realName + "\"" + NEWLINE_WITH_COMMA +
-                "  available: " + available + NEWLINE_WITH_COMMA +
+                "  isAvailable: " + isAvailable + NEWLINE_WITH_COMMA +
                 "  birthDate: \"" + birthDate +  "\n" +
                 "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return artisticName.equals(actor.artisticName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artisticName);
+    }
+
 }

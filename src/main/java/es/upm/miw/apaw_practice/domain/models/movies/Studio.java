@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.movies;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Studio {
@@ -53,7 +54,11 @@ public class Studio {
         return new HashSet<>(producedMovies);
     }
 
-    public Movie getMovie(String imdbId) {
+    public void setMovies(Set<Movie> producedMovies) {
+        this.producedMovies = producedMovies;
+    }
+
+    public Movie getMovieByImdbId(String imdbId) {
         for (Movie movie : producedMovies) {
             if (movie.getImdbId().equals(imdbId)) {
                 return movie;
@@ -66,6 +71,10 @@ public class Studio {
         producedMovies.add(movie);
     }
 
+    public void removeMovie(Movie movie) {
+        producedMovies.remove(movie);
+    }
+
     @Override
     public String toString() {
         return "Studio {\n" +
@@ -75,4 +84,18 @@ public class Studio {
                 "  producedMovies: " + producedMovies + "\n" +
                 "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Studio studio = (Studio) o;
+        return name.equals(studio.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
 }
