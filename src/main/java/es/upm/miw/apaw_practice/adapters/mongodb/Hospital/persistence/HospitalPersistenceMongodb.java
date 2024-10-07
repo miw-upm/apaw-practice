@@ -1,10 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.hospital.daos.HospitalRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hospital.entities.HospitalEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.HospitalRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hospital.Hospital;
-import es.upm.miw.apaw_practice.domain.persistence_ports.hospital.HospitalPersistence;
+import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.HospitalPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
