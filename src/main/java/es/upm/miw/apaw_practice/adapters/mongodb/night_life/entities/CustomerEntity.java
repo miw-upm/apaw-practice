@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 @Document
@@ -18,8 +17,6 @@ public class CustomerEntity {
     private String name;
     private String phone;
     private String email;
-    @DBRef
-    private List<ReservationEntity> reservationEntities;
 
     public CustomerEntity() {
         //empty for framework
@@ -28,12 +25,11 @@ public class CustomerEntity {
         BeanUtils.copyProperties(customer,this);
         this.id = UUID.randomUUID().toString();
     }
-    public CustomerEntity(String name, String phone, String email, List<ReservationEntity> reservationEntities) {
+    public CustomerEntity(String name, String phone, String email) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.reservationEntities = reservationEntities;
     }
     public String getId() {
         return id;
@@ -59,17 +55,9 @@ public class CustomerEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-    public List<ReservationEntity> getReservationEntities() {
-        return reservationEntities;
-    }
-    public void setReservationEntities(List<ReservationEntity> reservationEntities) {
-        this.reservationEntities = reservationEntities;
-    }
+
     public Customer toCustomer() {
-        List<Reservation> reservations = this.reservationEntities.stream()
-                .map(ReservationEntity::toReservation)
-                .toList();
-        return new Customer(this.name, this.phone, this.email, reservations);
+        return new Customer(this.name, this.phone, this.email);
     }
 
     @Override
@@ -88,7 +76,6 @@ public class CustomerEntity {
                 "name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", reservationEntities=" + reservationEntities.size() +
                 '}';
     }
 
