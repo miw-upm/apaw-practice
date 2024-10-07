@@ -44,7 +44,7 @@ public class ThemeParkSeederService {
 
         RideEntity[] rides = {
                 new RideEntity("Tarántula", "Halloween", LocalDate.of(2018,10,31), 48,  List.of(users[0], users[1]), false),
-                new RideEntity("Shambala", "Halloween", LocalDate.of(2020,8,14), 65,List.of(users[0], users[3]), true),
+                new RideEntity("Shambala", "Halloween", LocalDate.of(2020,8,14), 65, List.of(users[0], users[3]), true),
                 new RideEntity("Dragon Khan", "Disney", LocalDate.of(2021,7,5), 30, List.of(users[2]), false),
                 new RideEntity("El Abismo", "Navidad", LocalDate.of(2022,3,10), 25, List.of(users[2], users[3]), false)
         };
@@ -59,8 +59,8 @@ public class ThemeParkSeederService {
         this.operatorRepository.saveAll(Arrays.asList(operators));
 
         ThemeParkEntity[] themeParks = {
-                new ThemeParkEntity(true, BigDecimal.valueOf(60.00), Arrays.asList(rides[0],rides[1])),
-                new ThemeParkEntity(true, BigDecimal.valueOf(40.00), Arrays.asList(rides[1],rides[2])),
+                new ThemeParkEntity(true, BigDecimal.valueOf(60.00), Arrays.asList(rides[0], rides[1])),
+                new ThemeParkEntity(false, BigDecimal.valueOf(40.00), Arrays.asList(rides[1], rides[2], rides[3])),
         };
 
         this.themeParkRepository.saveAll(Arrays.asList(themeParks));
