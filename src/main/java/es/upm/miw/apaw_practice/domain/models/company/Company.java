@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Company {
-    private String company_name;// Primary Key
+    private String companyname;// Primary Key
     private String location;
     private String industry;
     private LocalDate creationDate;
@@ -14,19 +14,19 @@ public class Company {
         //empty for framework
     }
 
-    public Company(String company_name, String location, String industry, LocalDate creationDate) {
-        this.company_name = company_name;
+    public Company(String companyname, String location, String industry, LocalDate creationDate) {
+        this.companyname = companyname;
         this.location = location;
         this.industry = industry;
         this.creationDate = creationDate;
     }
 
-    public String getCompany_name() {
-        return company_name;
+    public String getCompanyname() {
+        return companyname;
     }
 
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
     }
 
     public String getLocation() {
