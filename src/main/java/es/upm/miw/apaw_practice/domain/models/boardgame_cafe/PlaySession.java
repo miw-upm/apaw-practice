@@ -2,30 +2,31 @@ package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
-public class PlayService {
-    private Integer playServiceId;
+public class PlaySession {
+    private Integer playSessionId;
     private Integer groupSize;
     private LocalDateTime sessionDate;
     private List<Game> selectedGames;
 
-    public PlayService() {
+    public PlaySession() {
         //empty for framework
     }
 
-    public PlayService(Integer playServiceId, Integer groupSize, LocalDateTime sessionDate, List<Game> selectedGames) {
-        this.playServiceId = playServiceId;
+    public PlaySession(Integer playSessionId, Integer groupSize, LocalDateTime sessionDate, List<Game> selectedGames) {
+        this.playSessionId = playSessionId;
         this.groupSize = groupSize;
         this.sessionDate = sessionDate;
         this.selectedGames = selectedGames;
     }
 
-    public Integer getPlayServiceId() {
-        return playServiceId;
+    public Integer getPlaySessionId() {
+        return playSessionId;
     }
 
-    public void setPlayServiceId(Integer playServiceId) {
-        this.playServiceId = playServiceId;
+    public void setPlaySessionId(Integer playSessionId) {
+        this.playSessionId = playSessionId;
     }
 
     public Integer getGroupSize() {
@@ -53,9 +54,25 @@ public class PlayService {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlaySession that = (PlaySession) o;
+        return Objects.equals(playSessionId, that.playSessionId) &&
+                Objects.equals(groupSize, that.groupSize) &&
+                Objects.equals(sessionDate, that.sessionDate) &&
+                Objects.equals(selectedGames, that.selectedGames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playSessionId, groupSize, sessionDate, selectedGames);
+    }
+
+    @Override
     public String toString() {
-        return "PlayService{" +
-                "playServiceId=" + playServiceId +
+        return "PlaySession{" +
+                "playSessionId=" + playSessionId +
                 ", groupSize=" + groupSize +
                 ", sessionDate=" + sessionDate +
                 ", selectedGames=" + selectedGames +

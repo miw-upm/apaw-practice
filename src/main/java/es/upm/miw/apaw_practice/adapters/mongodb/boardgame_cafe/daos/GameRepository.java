@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface GameRepository extends MongoRepository<GameEntity, String> {
     Optional<GameEntity> findByGameName(String gameName);
+
+    void deleteByGameName(String gameName);
 }

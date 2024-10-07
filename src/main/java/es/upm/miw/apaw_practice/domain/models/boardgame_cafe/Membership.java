@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Membership {
     private Integer membershipId;
@@ -49,6 +50,22 @@ public class Membership {
 
     public void setDiscount(BigDecimal discount) {
         this.discount = discount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Membership that = (Membership) o;
+        return Objects.equals(membershipId, that.membershipId) &&
+                Objects.equals(type, that.type) &&
+                Objects.equals(duration, that.duration) &&
+                Objects.equals(discount, that.discount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(membershipId, type, duration, discount);
     }
 
     @Override

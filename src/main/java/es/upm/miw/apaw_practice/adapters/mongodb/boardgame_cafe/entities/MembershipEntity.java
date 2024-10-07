@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities;
 
+import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Membership;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,11 +19,18 @@ public class MembershipEntity {
         //empty for framework
     }
 
-    public MembershipEntity(Integer membershipId, String type, Integer duration, BigDecimal discount) {
-        this.membershipId = membershipId;
-        this.type = type;
-        this.duration = duration;
-        this.discount = discount;
+    public MembershipEntity( Membership membership) {
+        this.fromMembership(membership);
+    }
+
+    public void fromMembership(Membership membership){
+        BeanUtils.copyProperties(membership, this);
+    }
+
+    public Membership toMembership(){
+        Membership membership = new Membership();
+        BeanUtils.copyProperties(this, membership);
+        return membership;
     }
 
     public Integer getMembershipId() {
