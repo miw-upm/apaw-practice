@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities;
 
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Clinic;
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Employee;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -7,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class ClinicEntity {
@@ -60,6 +63,13 @@ public class ClinicEntity {
 
     public void setEmployeeEntities(List<EmployeeEntity> employeeEntities) {
         this.employeeEntities = employeeEntities;
+    }
+
+    public Clinic toClinic() {
+        List<Employee> employees = this.employeeEntities.stream()
+                .map(EmployeeEntity::toEmployee)
+                .collect(Collectors.toList());
+        return new Clinic(name, address, employees);
     }
 
     @Override

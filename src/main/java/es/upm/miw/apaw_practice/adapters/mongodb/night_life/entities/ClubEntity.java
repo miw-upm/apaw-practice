@@ -30,7 +30,7 @@ public class ClubEntity {
         this.ownerEntity = new OwnerEntity(club.getOwner());
     }
 
-    public ClubEntity(String id, String name, Integer capacity, boolean opened, OwnerEntity ownerEntity) {
+    public ClubEntity(String name, Integer capacity, boolean opened, OwnerEntity ownerEntity) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.capacity = capacity;

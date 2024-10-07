@@ -50,6 +50,14 @@ public class Clinic {
         this.employees = employees;
     }
 
+    public static Clinic ofEmployeeName(Clinic clinic) {
+        clinic.setEmployees(
+                clinic.employees.stream().map(Employee::ofName)
+                        .collect(Collectors.toList())
+        );
+        return clinic;
+    }
+
     @Override
     public String toString() {
         return "Clinic{" +
