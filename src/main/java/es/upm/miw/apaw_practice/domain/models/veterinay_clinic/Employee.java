@@ -42,6 +42,12 @@ public class Employee {
         this.animals = animals;
     }
 
+    public static Employee ofName(Employee employee) {
+        Employee employeeDto = new Employee();
+        employeeDto.setName(employee.getName());
+        return employeeDto;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +

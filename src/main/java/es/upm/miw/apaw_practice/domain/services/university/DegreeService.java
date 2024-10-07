@@ -23,6 +23,7 @@ public class DegreeService {
     public Stream<Degree> findByCapacityBetween(int minCapacity, int maxCapacity) {
         return degreePersistence
                 .readAll()
-                .filter(degree -> (minCapacity <= degree.getCapacity()) && (degree.getCapacity() <= maxCapacity));
+                .filter(degree -> (minCapacity <= degree.getCapacity()))
+                .filter(degree -> (degree.getCapacity() <= maxCapacity));
     }
 }
