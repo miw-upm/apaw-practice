@@ -1,8 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car.entities;
 
-import es.upm.miw.apaw_practice.domain.models.car.Manufacturer;
-import es.upm.miw.apaw_practice.domain.models.car.Piece;
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -30,9 +28,14 @@ public class PieceEntity {
     public PieceEntity() {
         //empty for framework
     }
-    public PieceEntity(Piece piece) {
-        BeanUtils.copyProperties(piece, this);
+
+
+    public PieceEntity(String partNumber, String description, BigDecimal cost, List<ManufacturerEntity> manufacturerListEntity){
         this.id = UUID.randomUUID().toString();
+        this.partNumber = partNumber;
+        this.description = description;
+        this.cost = cost;
+        this.manufacturerListEntity = manufacturerListEntity;
     }
 
     public String getId() {
