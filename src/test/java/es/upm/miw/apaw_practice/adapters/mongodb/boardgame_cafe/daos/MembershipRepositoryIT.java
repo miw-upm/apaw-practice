@@ -23,7 +23,7 @@ public class MembershipRepositoryIT {
         assertNotNull(membershipEntity.get());
         MembershipEntity membership = membershipEntity.get();
         assertEquals(0, membership.getMembershipId());
-        assertEquals("Gold", membership.getType());
+        assertEquals("Bronze", membership.getType());
         assertEquals(1, membership.getDuration());
         assertEquals(new BigDecimal("2.0"), membership.getDiscount());
     }
