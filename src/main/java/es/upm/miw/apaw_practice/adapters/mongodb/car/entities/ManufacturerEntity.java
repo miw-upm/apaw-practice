@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car.entities;
 
+
 import es.upm.miw.apaw_practice.domain.models.car.Manufacturer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;

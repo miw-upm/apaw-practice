@@ -33,9 +33,15 @@ public class CarEntity {
     public CarEntity() {
         //empty for framework
     }
-    public CarEntity(Car car) {
-        BeanUtils.copyProperties(car, this);
+
+
+    public CarEntity(String model, boolean isElectric, BigDecimal price, OwnerEntity ownerEntity, List<PieceEntity> piecesEntity){
         this.id = UUID.randomUUID().toString();
+        this.model = model;
+        this.isElectric = isElectric;
+        this.price = price;
+        this.ownerEntity = ownerEntity;
+        this.piecesEntity = piecesEntity;
     }
 
     public String getId() {
