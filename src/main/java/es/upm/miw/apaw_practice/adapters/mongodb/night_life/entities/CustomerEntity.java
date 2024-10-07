@@ -68,7 +68,7 @@ public class CustomerEntity {
     public Customer toCustomer() {
         List<Reservation> reservations = this.reservationEntities.stream()
                 .map(ReservationEntity::toReservation)
-                .collect(Collectors.toList());
+                .toList();
         return new Customer(this.name, this.phone, this.email, reservations);
     }
 
