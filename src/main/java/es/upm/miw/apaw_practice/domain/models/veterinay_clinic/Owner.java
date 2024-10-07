@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.domain.models.veterinay_clinic;
 
 public class Owner {
 
-    private String id;
     private String name;
     private String address;
     private String phone;
@@ -11,19 +10,10 @@ public class Owner {
         //empty from framework
     }
 
-    public Owner(String id, String name, String address, String phone) {
-        this.id = id;
+    public Owner(String name, String address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -53,7 +43,6 @@ public class Owner {
     @Override
     public String toString() {
         return "Owner{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +

@@ -4,16 +4,24 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appoinment {
+    private String Id;
     private LocalDate date;
     private LocalTime time;
     private String location;
-    private String clientName;
 
-    public Appoinment(LocalDate date, LocalTime time, String location, String clientName) {
+    public Appoinment(String id, LocalDate date, LocalTime time, String location) {
+        this.Id = id;
         this.date = date;
         this.time = time;
         this.location = location;
-        this.clientName = clientName;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 
     public LocalDate getDate() {
@@ -40,21 +48,13 @@ public class Appoinment {
         this.location = location;
     }
 
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
     @java.lang.Override
     public java.lang.String toString() {
         return "Appoinment{" +
-                "date=" + date +
+                "Id='" + Id + '\'' +
+                ", date=" + date +
                 ", time=" + time +
                 ", location='" + location + '\'' +
-                ", clientName='" + clientName + '\'' +
                 '}';
     }
 }

@@ -2,52 +2,52 @@ package es.upm.miw.apaw_practice.domain.models.music_lesson;
 
 public class MusicalInstrument {
 
-  private Integer id;
-
-  private String name;
+  private String model;
 
   private String difficultyLevel;
+
+  private String type;
 
   public MusicalInstrument() {
     //Empty for framework
   }
 
-  public MusicalInstrument(Integer id, String name, String difficultyLevel) {
-    this.id = id;
-    this.name = name;
+  public MusicalInstrument(String model, String difficultyLevel, String type) {
+    this.model = model;
     this.difficultyLevel = difficultyLevel;
+    this.type = type;
   }
 
-  public Integer getId() {
-    return this.id;
+  public String getModel() {
+    return model;
   }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  public void setModel(String model) {
+    this.model = model;
   }
 
   public String getDifficultyLevel() {
-    return this.difficultyLevel;
+    return difficultyLevel;
   }
 
   public void setDifficultyLevel(String difficultyLevel) {
     this.difficultyLevel = difficultyLevel;
   }
 
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
   @Override
   public String toString() {
     return "MusicalInstrument{" +
-        "id=" + this.id +
-        ", name='" + this.name + '\'' +
-        ", difficultyLevel='" + this.difficultyLevel + '\'' +
+        "model='" + model + '\'' +
+        ", difficultyLevel='" + difficultyLevel + '\'' +
+        ", type='" + type + '\'' +
         '}';
   }
 }

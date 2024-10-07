@@ -3,31 +3,32 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Department {
-    private String name;// Primary Key
+    private String department_name;// Primary Key
     private BigDecimal annualBudget;
     private int employeeCount;
     private Company company;
     private List<ExpenseBill> expenseBills;
-    private Management management;
+    private List<Management> management;
 
     public Department() {
         //empty for framework
     }
 
-    public Department(String name, BigDecimal annualBudget, int employeeCount, Company company, Management management) {
-        this.name = name;
+    public Department(String department_name, BigDecimal annualBudget, int employeeCount, Company company) {
+        this.department_name = department_name;
         this.annualBudget = annualBudget;
         this.employeeCount = employeeCount;
         this.company = company;
-        this.management = management;
+
+
     }
 
-    public String getName() {
-        return name;
+    public String getDepartment_name() {
+        return department_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
     }
 
     public BigDecimal getAnnualBudget() {
@@ -54,6 +55,15 @@ public class Department {
         this.company = company;
     }
 
+
+    public List<Management> getManagement() {
+        return management;
+    }
+
+    public void setManagement(List<Management> management) {
+        this.management = management;
+    }
+
     public List<ExpenseBill> getExpenseBills() {
         return expenseBills;
     }
@@ -62,12 +72,6 @@ public class Department {
         this.expenseBills = expenseBills;
     }
 
-    public Management getManagement() {
-        return management;
-    }
 
-    public void setManagement(Management management) {
-        this.management = management;
-    }
 }
 

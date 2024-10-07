@@ -7,11 +7,16 @@ public class BasketBall {
     private int id;
     private String brand;
     private BigDecimal price;
+    private BasketMatch basketMatch;
 
-    public BasketBall(int id, String brand, BigDecimal price) {
+    public BasketBall() {
+    }
+
+    public BasketBall(int id, String brand, BigDecimal price, BasketMatch basketMatch) {
         this.id = id;
         this.brand = brand;
         this.price = price;
+        this.basketMatch = basketMatch;
     }
 
     public int getId() {
@@ -36,5 +41,13 @@ public class BasketBall {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BasketMatch getBasketMatch() {
+        return basketMatch;
+    }
+
+    public void setBasketMatch(BasketMatch basketMatch) {
+        this.basketMatch = basketMatch;
     }
 }

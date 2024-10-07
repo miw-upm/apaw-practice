@@ -1,41 +1,30 @@
 package es.upm.miw.apaw_practice.domain.models.E_commerce_model;
+import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
+import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Customer {
-    private Long id;
-    private String name;
+    private String userName;
     private String email;
-    private LocalDateTime registeredAt;
-    private List<Order> orders;  // Customer can have multiple orders
-    private List<Payment> payments;  // Customer can have multiple payments
+    private int postalCode;
+    private ShoppingCart shoppingCart;
+    private List<ShippingAddress> shippingAddresses;
 
-    // Constructor
-    public Customer(Long id, String name, String email, LocalDateTime registeredAt, List<Order> orders, List<Payment> payments) {
-        this.id = id;
-        this.name = name;
+    public Customer(String userName, String email, int postalCode, ShoppingCart shoppingCart) {
+        this.userName = userName;
         this.email = email;
-        this.registeredAt = registeredAt;
-        this.orders = orders;
-        this.payments = payments;
+        this.postalCode = postalCode;
+        this.shoppingCart = shoppingCart;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    // Getter 和 Setter 方法
+    public String getUserName() {
+        return userName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -46,40 +35,37 @@ public class Customer {
         this.email = email;
     }
 
-    public LocalDateTime getRegisteredAt() {
-        return registeredAt;
+    public int getPostalCode() {
+        return postalCode;
     }
 
-    public void setRegisteredAt(LocalDateTime registeredAt) {
-        this.registeredAt = registeredAt;
+    public void setPostalCode(int postalCode) {
+        this.postalCode = postalCode;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
-    public List<Payment> getPayments() {
-        return payments;
+    public List<ShippingAddress> getShippingAddresses() {
+        return shippingAddresses;
     }
 
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
+    public void setShippingAddresses (List<ShippingAddress> shippingAddresses) {
+        this.shippingAddresses = shippingAddresses;
     }
 
-    // Overriding toString method
     @Override
     public String toString() {
         return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
-                ", registeredAt=" + registeredAt +
-                ", orders=" + orders +
-                ", payments=" + payments +
+                ", postalCode=" + postalCode +
+                ", shoppingCart=" + shoppingCart +
                 '}';
     }
 }
