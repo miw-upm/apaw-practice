@@ -1,64 +1,47 @@
 package es.upm.miw.apaw_practice.domain.models.music_lesson;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Lesson {
 
-  private Integer id;
+  private String id;
 
   private LocalDate date;
 
-  private Tutor tutor;
-
-  private Learner learner;
-
   private Integer durationInHours;
 
-  private MusicalInstrument musicalInstrument;
+  private BigDecimal fee;
+
+  private List<MusicalInstrument> musicalInstrument;
 
   public Lesson() {
     //Empty for framework
   }
 
-  public Lesson(Integer id, LocalDate date, Tutor tutor, Learner learner, Integer durationInHours, MusicalInstrument musicalInstrument) {
+  public Lesson(String id, LocalDate date, Integer durationInHours, BigDecimal fee, List<MusicalInstrument> musicalInstrument) {
     this.id = id;
     this.date = date;
-    this.tutor = tutor;
-    this.learner = learner;
     this.durationInHours = durationInHours;
+    this.fee = fee;
     this.musicalInstrument = musicalInstrument;
   }
 
-  public Integer getId() {
-    return this.id;
+  public String getId() {
+    return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(String id) {
     this.id = id;
   }
 
   public LocalDate getDate() {
-    return this.date;
+    return date;
   }
 
   public void setDate(LocalDate date) {
     this.date = date;
-  }
-
-  public Tutor getTutor() {
-    return this.tutor;
-  }
-
-  public void setTutor(Tutor tutor) {
-    this.tutor = tutor;
-  }
-
-  public Learner getLearner() {
-    return this.learner;
-  }
-
-  public void setLearner(Learner learner) {
-    this.learner = learner;
   }
 
   public Integer getDurationInHours() {
@@ -69,23 +52,30 @@ public class Lesson {
     this.durationInHours = durationInHours;
   }
 
-  public MusicalInstrument getMusicalInstrument() {
-    return this.musicalInstrument;
+  public List<MusicalInstrument> getMusicalInstrument() {
+    return musicalInstrument;
   }
 
-  public void setMusicalInstrument(MusicalInstrument musicalInstrument) {
+  public void setMusicalInstrument(List<MusicalInstrument> musicalInstrument) {
     this.musicalInstrument = musicalInstrument;
+  }
+
+  public BigDecimal getFee() {
+    return fee;
+  }
+
+  public void setFee(BigDecimal fee) {
+    this.fee = fee;
   }
 
   @Override
   public String toString() {
     return "Lesson{" +
-        "id=" + this.id +
-        ", date=" + this.date +
-        ", tutor=" + this.tutor +
-        ", learner=" + this.learner +
-        ", durationInHours=" + this.durationInHours +
-        ", musicalInstrument=" + this.musicalInstrument +
+        "id='" + id + '\'' +
+        ", date=" + date +
+        ", durationInHours=" + durationInHours +
+        ", musicalInstrument=" + musicalInstrument +
+        ", fee=" + fee +
         '}';
   }
 }

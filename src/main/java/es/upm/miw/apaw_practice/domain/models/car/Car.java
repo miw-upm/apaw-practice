@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Car {
-    private String name;
+    private String model;
     private boolean isElectric;
     private BigDecimal price;
 
@@ -15,20 +15,20 @@ public class Car {
     public Car() {
         //empty for framework
     }
-    public Car(String name, boolean isElectric, BigDecimal price, Owner owner, List<Piece> pieces) {
-        this.name = name;
+    public Car(String model, boolean isElectric, BigDecimal price, Owner owner, List<Piece> pieces) {
+        this.model = model;
         this.isElectric = isElectric;
         this.price = price;
         this.owner = owner;
         this.pieces = pieces;
     }
 
-    public String getName() {
-        return name;
+    public String getModel() {
+        return model;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public boolean isElectric() {
@@ -66,9 +66,10 @@ public class Car {
     @Override
     public String toString() {
         return "Car{" +
-                "name='" + name + '\'' +
+                "model='" + model + '\'' +
                 ", isElectric=" + isElectric +
                 ", price=" + price +
+                ", owner=" + (owner != null ? owner.getName() : "None") +
                 ", pieces=" + pieces +
                 '}';
     }

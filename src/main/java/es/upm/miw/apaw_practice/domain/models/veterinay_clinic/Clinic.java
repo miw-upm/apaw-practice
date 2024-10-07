@@ -2,37 +2,28 @@ package es.upm.miw.apaw_practice.domain.models.veterinay_clinic;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Clinic {
 
-    private String id;
     private String name;
     private String address;
-    private Employee employee;
+    private List<Employee> employees;
 
     public Clinic() {
         //empty from framework
     }
 
-    public Clinic(String id, String name, String address, Employee employee) {
-        this.id = id;
+    public Clinic(String name, String address, List<Employee> employees) {
         this.name = name;
         this.address = address;
-        this.employee = employee;
+        this.employees = employees;
     }
 
     public void doDefault() {
         if(Objects.isNull(name)) {
             this.name = "clinic";
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -51,21 +42,20 @@ public class Clinic {
         this.address = address;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
     @Override
     public String toString() {
         return "Clinic{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", employee=" + employee +
+                ", employees=" + employees.stream().map(Employee::getName).collect(Collectors.toList()) +
                 '}';
     }
 }
