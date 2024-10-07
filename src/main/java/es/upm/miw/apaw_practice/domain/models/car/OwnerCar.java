@@ -2,15 +2,15 @@ package es.upm.miw.apaw_practice.domain.models.car;
 
 import java.time.LocalDate;
 
-public class Owner {
+public class OwnerCar {
     private String name;
     private String driverLicense;
     private LocalDate birthDate;
 
-    public Owner() {
+    public OwnerCar() {
         //empty for framework
     }
-    public Owner(String name, String driverLicense, LocalDate birthDate) {
+    public OwnerCar(String name, String driverLicense, LocalDate birthDate) {
         this.name = name;
         this.driverLicense = driverLicense;
         this.birthDate = birthDate;
