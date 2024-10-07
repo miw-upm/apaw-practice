@@ -19,6 +19,6 @@ public class CustomerResource {
 
     @PostMapping
     public Customer create(@RequestBody Customer customer) {
-        return this.customerService.create(customer);
+        return this.customerService.createCustomer(customer);
     }
 }

@@ -15,8 +15,7 @@ public class CustomerService {
         this.customerPersistence = customerPersistence;
     }
 
-    @Autowired
-    public Customer create(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         return this.customerPersistence.create(customer);
     }
 
