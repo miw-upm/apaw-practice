@@ -46,21 +46,15 @@ public class DoctorEntity {
         this.dni = dni;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
-    public String getSpecialty() {
-        return specialty;
-    }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
-    }
 
     public Double getSalary() {
         return salary;
@@ -87,8 +81,7 @@ public class DoctorEntity {
         return "DoctorEntity{" +
                 "id='" + id + '\'' +
                 ", dni='" + dni + '\'' +
-                ", name='" + name + '\'' +
-                ", specialty='" + specialty + '\'' +
+                ", fullname='" + fullname + '\'' +
                 ", salary=" + salary
                 '}';
     }
