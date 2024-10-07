@@ -16,6 +16,8 @@ public interface TeacherPersistence {
 
     Teacher read(String nationalId);
 
+    void delete(String nationalId);
+
     boolean existNationalId(String nationalId);
 
 }

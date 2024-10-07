@@ -1,55 +1,66 @@
 package es.upm.miw.apaw_practice.domain.models.movies;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Objects;
 
 public class Actor {
-    private String id;
-    private String name;
-    private boolean wonAnOscar;
+
+    public static final String NEWLINE_WITH_COMMA = ",\n";
+
+    private String artisticName;
+    private String realName;
+    private boolean isAvailable;
     private LocalDate birthDate;
-    private List<Movie> appearsIn;
 
     public Actor(){
         //empty for framework
     }
 
-    public Actor(String id, String name, boolean wonAnOscar, LocalDate birthDate, List<Movie> appearsIn){
-        this.id = id;
-        this.name = name;
-        this.wonAnOscar = wonAnOscar;
+    public Actor(String artisticName, String realName, boolean isAvailable, LocalDate birthDate){
+        this.artisticName = artisticName;
+        this.realName = realName;
+        this.isAvailable = isAvailable;
         this.birthDate = birthDate;
-        this.appearsIn = appearsIn;
     }
 
-    public String getId() { return id; }
+    public String getArtisticName() { return artisticName; }
 
-    public void setId(String id) { this.id = id;}
+    public void setArtisticName(String artisticName) { this.artisticName = artisticName; }
 
-    public String getName() { return name; }
+    public String getRealName() { return realName; }
 
-    public void setName(String name) { this.name = name; }
+    public void setRealName(String realName) { this.realName = realName; }
 
-    public boolean hasWonAnOscar() { return wonAnOscar; }
+    public boolean isAvailable() { return isAvailable; }
 
-    public void setHasWonAnOscar(boolean wonAnOscar) { this.wonAnOscar = wonAnOscar; }
+    public void setIsAvailable(boolean available) { this.isAvailable = available; }
 
     public LocalDate getBirthDate(){ return birthDate; }
 
     public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate; }
 
-    public List<Movie> getAppearsIn(){ return appearsIn; }
-
-    public void setAppearsIn(List<Movie> appearsIn) { this.appearsIn = appearsIn; }
 
     @Override
     public String toString(){
         return "Actor {\n" +
-                "  id: " + id + '\n' +
-                "  name: \"" + name + "\",\n" +
-                "  wonAnOscar: " + wonAnOscar + '\n' +
-                "  birthDate: \"" + birthDate + "\",\n" +
-                "  appearsIn: " + appearsIn + '\n' +
+                "  artisticName: \"" + artisticName + "\"" + NEWLINE_WITH_COMMA +
+                "  realName: \"" + realName + "\"" + NEWLINE_WITH_COMMA +
+                "  isAvailable: " + isAvailable + NEWLINE_WITH_COMMA +
+                "  birthDate: \"" + birthDate +  "\n" +
                 "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return artisticName.equals(actor.artisticName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artisticName);
+    }
+
 }

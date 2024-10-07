@@ -2,30 +2,28 @@ package es.upm.miw.apaw_practice.domain.models.movies;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class Studio {
-    private String id;
+
+    public static final String NEWLINE_WITH_COMMA = ",\n";
+
     private String name;
-    private LocalDate foundedOn;
+    private LocalDate foundedDate;
     private BigDecimal marketCapitalization;
+    private Set<Movie> producedMovies;
 
     public Studio() {
         //empty for framework
     }
 
-    public Studio(String id, String name, LocalDate foundedOn, BigDecimal marketCapitalization) {
-        this.id = id;
+    public Studio(String name, LocalDate foundedDate, BigDecimal marketCapitalization, Set<Movie> producedMovies) {
         this.name = name;
-        this.foundedOn = foundedOn;
+        this.foundedDate = foundedDate;
         this.marketCapitalization = marketCapitalization;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        this.producedMovies = new HashSet<>(producedMovies);
     }
 
     public String getName() {
@@ -36,12 +34,12 @@ public class Studio {
         this.name = name;
     }
 
-    public LocalDate getFoundedOn() {
-        return foundedOn;
+    public LocalDate getFoundedDate() {
+        return foundedDate;
     }
 
-    public void setFoundedOn(LocalDate foundedOn) {
-        this.foundedOn = foundedOn;
+    public void setFoundedDate(LocalDate foundedDate) {
+        this.foundedDate = foundedDate;
     }
 
     public BigDecimal getMarketCapitalization() {
@@ -52,13 +50,52 @@ public class Studio {
         this.marketCapitalization = marketCapitalization;
     }
 
+    public Set<Movie> getMovies() {
+        return new HashSet<>(producedMovies);
+    }
+
+    public void setMovies(Set<Movie> producedMovies) {
+        this.producedMovies = producedMovies;
+    }
+
+    public Movie getMovieByImdbId(String imdbId) {
+        for (Movie movie : producedMovies) {
+            if (movie.getImdbId().equals(imdbId)) {
+                return movie;
+            }
+        }
+        return null;
+    }
+
+    public void addMovie(Movie movie) {
+        producedMovies.add(movie);
+    }
+
+    public void removeMovie(Movie movie) {
+        producedMovies.remove(movie);
+    }
+
     @Override
     public String toString() {
         return "Studio {\n" +
-                "  id: " + id + '\n' +
-                "  name: \"" + name + "\",\n"  +
-                "  foundedOn: \"" + foundedOn + "\",\n" +
-                "  marketCapitalization: " + marketCapitalization + '\n' +
+                "  name: \"" + name + NEWLINE_WITH_COMMA +
+                "  foundedDate: \"" + foundedDate + NEWLINE_WITH_COMMA +
+                "  marketCapitalization: " + marketCapitalization + NEWLINE_WITH_COMMA +
+                "  producedMovies: " + producedMovies + "\n" +
                 "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Studio studio = (Studio) o;
+        return name.equals(studio.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
 }

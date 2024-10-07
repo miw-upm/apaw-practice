@@ -2,12 +2,14 @@ package es.upm.miw.apaw_practice.domain.models.company;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ExpenseBill {
     private int expenseBill_id;// Primary Key
     private String description;
     private BigDecimal amount;
     private LocalDateTime date;
+    private List<Department> departments;
 
 
     public ExpenseBill() {
@@ -51,6 +53,14 @@ public class ExpenseBill {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
     }
 
 
