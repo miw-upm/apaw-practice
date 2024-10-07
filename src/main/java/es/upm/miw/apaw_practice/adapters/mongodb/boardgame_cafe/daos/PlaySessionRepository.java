@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-
 public interface PlaySessionRepository extends MongoRepository<PlaySessionEntity, String> {
     Optional<PlaySessionEntity> findByPlaySessionId(Integer playSessionId);
 }
