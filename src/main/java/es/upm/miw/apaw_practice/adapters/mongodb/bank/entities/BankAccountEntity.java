@@ -23,15 +23,19 @@ public class BankAccountEntity {
     private LocalDate openingDate;
     private Boolean hasInterest;
     @DBRef
-    private Client client;
+    private ClientEntity clientEntity;
 
     public BankAccountEntity() {
         //Empty for framework
     }
 
-    public BankAccountEntity(BankAccount bankAccount) {
-        BeanUtils.copyProperties(bankAccount, this);
+    public BankAccountEntity(String iban, BigDecimal balance, LocalDate openingDate, Boolean hasInterest, ClientEntity clientEntity) {
         this.id = UUID.randomUUID().toString();
+        this.iban = iban;
+        this.balance = balance;
+        this.openingDate = openingDate;
+        this.hasInterest = hasInterest;
+        this.clientEntity = clientEntity;
     }
 
     public String getId() {
@@ -74,12 +78,12 @@ public class BankAccountEntity {
         this.hasInterest = hasInterest;
     }
 
-    public Client getClient() {
-        return client;
+    public ClientEntity getClient() {
+        return clientEntity;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(ClientEntity clientEntity) {
+        this.clientEntity = clientEntity;
     }
 
     @Override
@@ -99,7 +103,7 @@ public class BankAccountEntity {
                 ", balance='" + balance + '\'' +
                 ", openingDate=" + openingDate + '\'' +
                 ", hasInterest=" + hasInterest + '\'' +
-                ", client=" + client.getDni() +
+                ", client=" + clientEntity.getDni() +
                 '}';
     }
 }

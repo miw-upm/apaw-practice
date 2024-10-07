@@ -23,15 +23,20 @@ public class ClientEntity {
     private Integer phoneNumber;
     private String email;
     @DBRef
-    private List<InvestmentFund> investmentFunds;
+    private List<InvestmentFundEntity> investmentFundsEntities;
 
     public ClientEntity() {
         // Empty for framework
     }
 
-    public ClientEntity(Client client) {
-        BeanUtils.copyProperties(client, this);
+    public ClientEntity(String dni, String name, String surname, Integer phoneNumber, String email, List<InvestmentFundEntity> investmentFundsEntities) {
         this.id = UUID.randomUUID().toString();
+        this.dni = dni;
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.investmentFundsEntities = investmentFundsEntities;
     }
 
     public String getId() {
@@ -82,12 +87,12 @@ public class ClientEntity {
         this.email = email;
     }
 
-    public List<InvestmentFund> getInvestmentFunds() {
-        return investmentFunds;
+    public List<InvestmentFundEntity> getInvestmentFunds() {
+        return investmentFundsEntities;
     }
 
-    public void setInvestmentFunds(List<InvestmentFund> investmentFunds) {
-        this.investmentFunds = investmentFunds;
+    public void setInvestmentFunds(List<InvestmentFundEntity> investmentFundsEntities) {
+        this.investmentFundsEntities = investmentFundsEntities;
     }
 
     @Override
@@ -108,7 +113,7 @@ public class ClientEntity {
                 ", surname=" + surname + '\'' +
                 ", phone=" + phoneNumber + '\'' +
                 ", email=" + email + '\'' +
-                ", investmentFunds=" + investmentFunds.stream().map(InvestmentFund::getName).toList() +
+                ", investmentFunds=" + investmentFundsEntities.stream().map(InvestmentFundEntity::getName).toList() +
                 '}';
     }
 

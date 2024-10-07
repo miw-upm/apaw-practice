@@ -19,15 +19,18 @@ public class BranchOfficeEntity {
     private Integer employees;
     private Integer atmNumber;
     @DBRef
-    private List<Client> clients;
+    private List<ClientEntity> clientsEntities;
 
     public BranchOfficeEntity() {
         //Empty for framework
     }
 
-    public BranchOfficeEntity(BranchOffice branchOffice) {
-        BeanUtils.copyProperties(branchOffice, this);
+    public BranchOfficeEntity(String buildingName, Integer employees, Integer atmNumber, List<ClientEntity> clientsEntities) {
         this.id = UUID.randomUUID().toString();
+        this.buildingName = buildingName;
+        this.employees = employees;
+        this.atmNumber = atmNumber;
+        this.clientsEntities = clientsEntities;
     }
 
     public String getId() {
@@ -62,12 +65,12 @@ public class BranchOfficeEntity {
         this.atmNumber = atmNumber;
     }
 
-    public List<Client> getClients() {
-        return clients;
+    public List<ClientEntity> getClients() {
+        return clientsEntities;
     }
 
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
+    public void setClients(List<ClientEntity> clientsEntities) {
+        this.clientsEntities = clientsEntities;
     }
 
     @Override
@@ -86,7 +89,7 @@ public class BranchOfficeEntity {
                 "BuildingName='" + buildingName + '\'' +
                 ", employees='" + employees + '\'' +
                 ", ATMs=" + atmNumber + '\'' +
-                ", clients=" + clients.stream().map(Client::getDni).toList() +
+                ", clients=" + clientsEntities.stream().map(ClientEntity::getDni).toList() +
                 '}';
     }
 
