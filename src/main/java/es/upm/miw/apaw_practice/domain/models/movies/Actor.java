@@ -12,20 +12,16 @@ public class Actor {
     private String realName;
     private boolean available;
     private LocalDate birthDate;
-    private Set<Movie> appearsIn;
-    private Set<Award> awardsWon;
 
     public Actor(){
         //empty for framework
     }
 
-    public Actor(String artisticName, String realName, boolean available, LocalDate birthDate, Set<Movie> moviesList, Set<Award> awardsWon){
+    public Actor(String artisticName, String realName, boolean available, LocalDate birthDate){
         this.artisticName = artisticName;
         this.realName = realName;
         this.available = available;
         this.birthDate = birthDate;
-        this.appearsIn = new HashSet<>(moviesList);
-        this.awardsWon = new HashSet<>(awardsWon);
     }
 
     public String getName() { return artisticName; }
@@ -44,21 +40,6 @@ public class Actor {
 
     public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate; }
 
-    public Set<Movie> getAppearsIn() { return appearsIn; }
-
-    public void setAppearsIn(Set<Movie> appearsIn) { this.appearsIn = appearsIn; }
-
-    public void addMovie(Movie movie) { appearsIn.add(movie); }
-
-    public void removeMovie(Movie movie) { appearsIn.remove(movie); }
-
-    public Set<Award> getAwardsWon() { return awardsWon; }
-
-    public void setAwardsWon(Set<Award> awardsWon) { this.awardsWon = awardsWon; }
-
-    public void addAward(Award award) { awardsWon.add(award); }
-
-    public void removeAward(Award award) { awardsWon.remove(award); }
 
     @Override
     public String toString(){
@@ -66,9 +47,7 @@ public class Actor {
                 "  artisticName: \"" + artisticName + "\"" + NEWLINE_WITH_COMMA +
                 "  realName: \"" + realName + "\"" + NEWLINE_WITH_COMMA +
                 "  available: " + available + NEWLINE_WITH_COMMA +
-                "  birthDate: \"" + birthDate + "\"" + NEWLINE_WITH_COMMA +
-                "  appearsIn: " + appearsIn + NEWLINE_WITH_COMMA +
-                "  awardsWon: " + awardsWon + "\n" +
+                "  birthDate: \"" + birthDate +  "\n" +
                 "}";
     }
 }
