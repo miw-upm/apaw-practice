@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.veterinay_clinic;
 
+import java.util.Objects;
+
 public class Owner {
 
     private String name;
@@ -38,6 +40,12 @@ public class Owner {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void doDefault() {
+        if(Objects.isNull(name)){
+            this.name = "name";
+        }
     }
 
     @Override

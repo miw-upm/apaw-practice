@@ -4,16 +4,16 @@ import java.time.LocalDateTime;
 
 public class Operator {
     private String idEmployee;
-    private String address;
+    private String nick;
     private LocalDateTime registrationDate;
     private Ride ride;
     public Operator() {
         //empty from framework
     }
 
-    public Operator(String idEmployee, String address, LocalDateTime registrationDate, Ride ride) {
+    public Operator(String idEmployee, String nick, LocalDateTime registrationDate, Ride ride) {
         this.idEmployee = idEmployee;
-        this.address = address;
+        this.nick = nick;
         this.registrationDate = registrationDate;
         this.ride = ride;
     }
@@ -26,12 +26,12 @@ public class Operator {
         this.idEmployee = this.idEmployee;
     }
 
-    public String getAddress() {
-        return address;
+    public String getNick() {
+        return nick;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
     public LocalDateTime getRegistrationDate() {
@@ -52,7 +52,7 @@ public class Operator {
     public String toString() {
         return "Operator{" +
                 "idEmployee=" + idEmployee +
-                ", address=" + address +
+                ", nick=" + nick +
                 ", registrationDate=" + registrationDate +
                 ", Ride=" + ride +
                 '}';

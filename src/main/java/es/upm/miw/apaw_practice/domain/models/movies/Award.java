@@ -1,8 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.movies;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 public class Award {
 
@@ -17,7 +16,7 @@ public class Award {
         //empty for framework
     }
 
-    public Award(String nameCategoryAndYear, String name, String category, LocalDate year, Set<Movie> awardedMovies, Set<Actor> awardedActors) {
+    public Award(String nameCategoryAndYear, String name, String category, LocalDate year) {
         this.nameCategoryAndYear = nameCategoryAndYear;
         this.name = name;
         this.category = category;
@@ -48,6 +47,19 @@ public class Award {
                 "  category: \"" + category + NEWLINE_WITH_COMMA +
                 "  year: " + year +  "\n" +
                 "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Award award = (Award) o;
+        return nameCategoryAndYear.equals(award.nameCategoryAndYear);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nameCategoryAndYear);
     }
 
 }
