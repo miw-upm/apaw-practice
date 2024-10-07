@@ -28,7 +28,7 @@ public class MembershipResourceIT {
                 .value(Assertions::assertNotNull)
                 .value(membership -> {
                     assertEquals(0, membership.getMembershipId());
-                    assertEquals("Gold", membership.getType());
+                    assertEquals("Bronze", membership.getType());
                     assertEquals(1, membership.getDuration());
                     assertEquals(new BigDecimal("2.0"), membership.getDiscount());
                 });

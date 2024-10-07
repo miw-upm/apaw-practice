@@ -1,8 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.movies;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 public class Actor {
 
@@ -10,65 +9,58 @@ public class Actor {
 
     private String artisticName;
     private String realName;
-    private boolean available;
+    private boolean isAvailable;
     private LocalDate birthDate;
-    private Set<Movie> appearsIn;
-    private Set<Award> awardsWon;
 
     public Actor(){
         //empty for framework
     }
 
-    public Actor(String artisticName, String realName, boolean available, LocalDate birthDate, Set<Movie> moviesList, Set<Award> awardsWon){
+    public Actor(String artisticName, String realName, boolean isAvailable, LocalDate birthDate){
         this.artisticName = artisticName;
         this.realName = realName;
-        this.available = available;
+        this.isAvailable = isAvailable;
         this.birthDate = birthDate;
-        this.appearsIn = new HashSet<>(moviesList);
-        this.awardsWon = new HashSet<>(awardsWon);
     }
 
-    public String getName() { return artisticName; }
+    public String getArtisticName() { return artisticName; }
 
-    public void setName(String artisticName) { this.artisticName = artisticName; }
+    public void setArtisticName(String artisticName) { this.artisticName = artisticName; }
 
     public String getRealName() { return realName; }
 
     public void setRealName(String realName) { this.realName = realName; }
 
-    public boolean isAvailable() { return available; }
+    public boolean isAvailable() { return isAvailable; }
 
-    public void setAvailable(boolean available) { this.available = available; }
+    public void setIsAvailable(boolean available) { this.isAvailable = available; }
 
     public LocalDate getBirthDate(){ return birthDate; }
 
     public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate; }
 
-    public Set<Movie> getAppearsIn() { return appearsIn; }
-
-    public void setAppearsIn(Set<Movie> appearsIn) { this.appearsIn = appearsIn; }
-
-    public void addMovie(Movie movie) { appearsIn.add(movie); }
-
-    public void removeMovie(Movie movie) { appearsIn.remove(movie); }
-
-    public Set<Award> getAwardsWon() { return awardsWon; }
-
-    public void setAwardsWon(Set<Award> awardsWon) { this.awardsWon = awardsWon; }
-
-    public void addAward(Award award) { awardsWon.add(award); }
-
-    public void removeAward(Award award) { awardsWon.remove(award); }
 
     @Override
     public String toString(){
         return "Actor {\n" +
                 "  artisticName: \"" + artisticName + "\"" + NEWLINE_WITH_COMMA +
                 "  realName: \"" + realName + "\"" + NEWLINE_WITH_COMMA +
-                "  available: " + available + NEWLINE_WITH_COMMA +
-                "  birthDate: \"" + birthDate + "\"" + NEWLINE_WITH_COMMA +
-                "  appearsIn: " + appearsIn + NEWLINE_WITH_COMMA +
-                "  awardsWon: " + awardsWon + "\n" +
+                "  isAvailable: " + isAvailable + NEWLINE_WITH_COMMA +
+                "  birthDate: \"" + birthDate +  "\n" +
                 "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Actor actor = (Actor) o;
+        return artisticName.equals(actor.artisticName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artisticName);
+    }
+
 }
