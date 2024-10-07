@@ -57,5 +57,4 @@ public class MembershipPersistenceMongodbIT {
         assertEquals("Glass", membershipBD.getType());
         assertEquals(new BigDecimal("5.0"), membershipBD.getDiscount());
     }
-
 }

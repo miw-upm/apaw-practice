@@ -61,6 +61,4 @@ public class CustomerPersistenceMongodbIT {
         assertEquals(LocalDate.of(2001, 2, 2), customerBD.getBirthDate());
         assertFalse(customerBD.isMember());
     }
-
-
 }
