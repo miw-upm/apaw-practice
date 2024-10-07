@@ -6,18 +6,16 @@ public class Department {
     private String departmentname;// Primary Key
     private BigDecimal annualBudget;
     private int employeeCount;
-    private Company company;
     private Management management;
 
     public Department() {
         //empty for framework
     }
 
-    public Department(String departmentname, BigDecimal annualBudget, int employeeCount, Company company,Management management) {
+    public Department(String departmentname, BigDecimal annualBudget, int employeeCount,Management management) {
         this.departmentname = departmentname;
         this.annualBudget = annualBudget;
         this.employeeCount = employeeCount;
-        this.company = company;
         this.management = management;
     }
 
@@ -44,15 +42,6 @@ public class Department {
     public void setEmployeeCount(int employeeCount) {
         this.employeeCount = employeeCount;
     }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
 
     public Management getManagement() {
         return management;
