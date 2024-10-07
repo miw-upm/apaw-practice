@@ -1,19 +1,22 @@
 package es.upm.miw.apaw_practice.domain.models.basketball;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class BasketBall {
 
     private int id;
     private String brand;
     private BigDecimal price;
-    private List<BasketMatch> basketMatchList;
+    private BasketMatch basketMatch;
 
-    public BasketBall(int id, String brand, BigDecimal price) {
+    public BasketBall() {
+    }
+
+    public BasketBall(int id, String brand, BigDecimal price, BasketMatch basketMatch) {
         this.id = id;
         this.brand = brand;
         this.price = price;
+        this.basketMatch = basketMatch;
     }
 
     public int getId() {
@@ -40,11 +43,11 @@ public class BasketBall {
         this.price = price;
     }
 
-    public List<BasketMatch> getBasketMatchList() {
-        return basketMatchList;
+    public BasketMatch getBasketMatch() {
+        return basketMatch;
     }
 
-    public void setBasketMatchList(List<BasketMatch> basketMatchList) {
-        this.basketMatchList = basketMatchList;
+    public void setBasketMatch(BasketMatch basketMatch) {
+        this.basketMatch = basketMatch;
     }
 }

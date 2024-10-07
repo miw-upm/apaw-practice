@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class Animal {
 
-    private String id;
     private String name;
     private int age;
     private LocalDateTime dateOfService;
@@ -15,8 +14,7 @@ public class Animal {
         //empty from framework
     }
 
-    public Animal(String id, String name, int age, LocalDateTime dateOfService, Owner owner) {
-        this.id = id;
+    public Animal(String name, int age, LocalDateTime dateOfService, Owner owner) {
         this.name = name;
         this.age = age;
         this.dateOfService = dateOfService;
@@ -25,7 +23,6 @@ public class Animal {
 
     public static Animal ofIdAnimal(Animal animal){
         Animal animalDto = new Animal();
-        animalDto.setId(animal.getId());
         animalDto.setName(animal.getName());
         return animalDto;
     }
@@ -34,14 +31,6 @@ public class Animal {
         if(Objects.isNull(name)){
             this.name = "animalName";
         }
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -77,19 +66,8 @@ public class Animal {
     }
 
     @Override
-    public int hashCode() {
-        return this.id.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        return this == object || object != null && getClass() == object.getClass() && (id.equals(((Animal) object).id));
-    }
-
-    @Override
     public String toString() {
         return "Animal{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", dateOfService=" + dateOfService +
