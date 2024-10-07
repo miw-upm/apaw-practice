@@ -58,6 +58,12 @@ public class InvestmentFundEntity {
         this.assets = assets;
     }
 
+    public InvestmentFund toInvestmentFund() {
+        InvestmentFund investmentFund = new InvestmentFund();
+        BeanUtils.copyProperties(this, investmentFund);
+        return investmentFund;
+    }
+
     @Override
     public int hashCode() {
         return id.hashCode();

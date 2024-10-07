@@ -1,8 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.bank.entities;
 
-import es.upm.miw.apaw_practice.domain.models.bank.BankAccount;
-import es.upm.miw.apaw_practice.domain.models.bank.Client;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
