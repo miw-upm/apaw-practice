@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.bank.entities;
 
 import es.upm.miw.apaw_practice.domain.models.bank.Client;
 import es.upm.miw.apaw_practice.domain.models.bank.InvestmentFund;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -10,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class ClientEntity {
@@ -93,6 +93,13 @@ public class ClientEntity {
 
     public void setInvestmentFunds(List<InvestmentFundEntity> investmentFundsEntities) {
         this.investmentFundsEntities = investmentFundsEntities;
+    }
+
+    public Client toClient() {
+        List<InvestmentFund> investmentFunds = this.investmentFundsEntities.stream()
+                .map(InvestmentFundEntity::toInvestmentFund)
+                .collect(Collectors.toList());
+        return new Client(dni, name, surname, phoneNumber, email, investmentFunds );
     }
 
     @Override
