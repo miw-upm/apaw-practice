@@ -52,4 +52,13 @@ class MuseumResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testDeleteByName() {
+        this.webTestClient
+                .delete()
+                .uri(MUSEUMS + NAME_MUSEUM, "Reina Sofia")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

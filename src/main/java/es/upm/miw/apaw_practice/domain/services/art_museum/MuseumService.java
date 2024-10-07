@@ -17,4 +17,8 @@ public class MuseumService {
     public Museum read(String name) {
         return this.museumPersistence.readByName(name);
     }
+
+    public void delete(String name) {
+        this.museumPersistence.deleteByName(name);
+    }
 }
