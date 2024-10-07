@@ -8,23 +8,26 @@ public class Learner {
 
   private String name;
 
-  private boolean isBeginner;
+  private Boolean isBeginner;
 
-  private List<MusicalInstrument> musicalInstruments;
+  private List<Lesson> lessons;
+
+  private Branch branch;
 
   public Learner() {
     //Empty for framework
   }
 
-  public Learner(String identityDocument, String name, boolean isBeginner, List<MusicalInstrument> musicalInstruments) {
+  public Learner(String identityDocument, String name, Boolean isBeginner, List<Lesson> lessons, Branch branch) {
     this.identityDocument = identityDocument;
     this.name = name;
     this.isBeginner = isBeginner;
-    this.musicalInstruments = musicalInstruments;
+    this.lessons = lessons;
+    this.branch = branch;
   }
 
   public String getIdentityDocument() {
-    return this.identityDocument;
+    return identityDocument;
   }
 
   public void setIdentityDocument(String identityDocument) {
@@ -39,29 +42,38 @@ public class Learner {
     this.name = name;
   }
 
-  public boolean isBeginner() {
-    return this.isBeginner;
+  public Boolean getBeginner() {
+    return isBeginner;
   }
 
-  public void setBeginner(boolean beginner) {
-    this.isBeginner = beginner;
+  public void setBeginner(Boolean beginner) {
+    isBeginner = beginner;
   }
 
-  public List<MusicalInstrument> getMusicalInstruments() {
-    return this.musicalInstruments;
+  public List<Lesson> getLessons() {
+    return lessons;
   }
 
-  public void setMusicalInstruments(List<MusicalInstrument> musicalInstruments) {
-    this.musicalInstruments = musicalInstruments;
+  public void setLessons(List<Lesson> lessons) {
+    this.lessons = lessons;
+  }
+
+  public Branch getBranch() {
+    return branch;
+  }
+
+  public void setBranch(Branch branch) {
+    this.branch = branch;
   }
 
   @Override
   public String toString() {
     return "Learner{" +
-        "identityDocument='" + this.identityDocument + '\'' +
-        ", name='" + this.name + '\'' +
-        ", isBeginner=" + this.isBeginner +
-        ", musicalInstruments=" + this.musicalInstruments +
+        "identityDocument='" + identityDocument + '\'' +
+        ", name='" + name + '\'' +
+        ", isBeginner=" + isBeginner +
+        ", lessons=" + lessons +
+        ", branch=" + branch +
         '}';
   }
 }
