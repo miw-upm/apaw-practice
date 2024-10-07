@@ -1,9 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities;
 
+import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
+import es.upm.miw.apaw_practice.domain.models.art_museum.Exhibition;
+import es.upm.miw.apaw_practice.domain.models.art_museum.Museum;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.UUID;
 
 @Document
@@ -14,18 +19,31 @@ public class MuseumEntity {
     private String name;
     private Integer capacity;
     private Boolean isOpen;
-    private ExhibitionEntity exhibition;
+    @DBRef
+    private List<ArtworkEntity> artworkEntities;
+    private List<ExhibitionEntity> exhibitionEntities;
 
     public MuseumEntity() {
         //empty for framework
     }
 
-    public MuseumEntity(String name, Integer capacity, Boolean isOpen, ExhibitionEntity exhibition) {
+    public MuseumEntity(String name, Integer capacity, Boolean isOpen, List<ArtworkEntity> artworkEntities, List<ExhibitionEntity> exhibitionEntities) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.capacity = capacity;
         this.isOpen = isOpen;
-        this.exhibition = exhibition;
+        this.artworkEntities = artworkEntities;
+        this.exhibitionEntities = exhibitionEntities;
+    }
+
+    public Museum toMuseum() {
+        List<Artwork> artworks = this.artworkEntities.stream()
+                .map(ArtworkEntity::toArtwork)
+                .toList();
+        List<Exhibition> exhibitions = this.exhibitionEntities.stream()
+                .map(ExhibitionEntity::toExhibition)
+                .toList();
+        return new Museum(name, capacity, isOpen, artworks, exhibitions);
     }
 
     public String getId() {
@@ -60,12 +78,20 @@ public class MuseumEntity {
         isOpen = open;
     }
 
-    public ExhibitionEntity getExhibition() {
-        return exhibition;
+    public List<ArtworkEntity> getArtworkEntities() {
+        return artworkEntities;
     }
 
-    public void setExhibition(ExhibitionEntity exhibition) {
-        this.exhibition = exhibition;
+    public void setArtworkEntities(List<ArtworkEntity> artworkEntities) {
+        this.artworkEntities = artworkEntities;
+    }
+
+    public List<ExhibitionEntity> getExhibitionEntities() {
+        return exhibitionEntities;
+    }
+
+    public void setExhibitionEntities(List<ExhibitionEntity> exhibitionEntities) {
+        this.exhibitionEntities = exhibitionEntities;
     }
 
     @Override
@@ -85,7 +111,8 @@ public class MuseumEntity {
                 ", name='" + name + '\'' +
                 ", capacity=" + capacity +
                 ", isOpen=" + isOpen +
-                ", exhibition=" + exhibition +
+                ", artworks=" + artworkEntities +
+                ", exhibitions=" + exhibitionEntities +
                 '}';
     }
 }

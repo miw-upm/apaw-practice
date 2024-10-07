@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
+import java.util.Objects;
+
 public class Game {
     private String gameName;
     private Integer numPlayers;
@@ -47,6 +49,22 @@ public class Game {
 
     public void setNumberOfCopies(Integer numberOfCopies) {
         this.numberOfCopies = numberOfCopies;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return Objects.equals(gameName, game.gameName) &&
+                Objects.equals(numPlayers, game.numPlayers) &&
+                Objects.equals(genre, game.genre) &&
+                Objects.equals(numberOfCopies, game.numberOfCopies);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gameName, numPlayers, genre, numberOfCopies);
     }
 
     @Override

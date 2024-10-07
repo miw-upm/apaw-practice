@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Booking {
 
-    private int id;
+    private String id;
     private Boolean confirmed;
     private LocalDate dateIn;
     private LocalDate dateOut;
@@ -15,8 +15,7 @@ public class Booking {
         // empty for framework
     }
 
-    public Booking(int id, Boolean confirmed,  LocalDate dateIn, LocalDate dateOut, Guest guest) {
-        this.id = id;
+    public Booking(Boolean confirmed,  LocalDate dateIn, LocalDate dateOut, Guest guest) {
         this.confirmed = confirmed;
         this.dateIn = dateIn;
         this.dateOut = dateOut;
@@ -31,11 +30,11 @@ public class Booking {
         this.confirmed = confirmed;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -68,7 +67,7 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return id == booking.id && Objects.equals(confirmed, booking.confirmed) && Objects.equals(dateIn, booking.dateIn) && Objects.equals(dateOut, booking.dateOut) && Objects.equals(guest, booking.guest);
+        return Objects.equals(id, booking.id) && Objects.equals(confirmed, booking.confirmed) && Objects.equals(dateIn, booking.dateIn) && Objects.equals(dateOut, booking.dateOut) && Objects.equals(guest, booking.guest);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class Booking {
     @Override
     public String toString() {
         return "Booking{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", confirmed=" + confirmed +
                 ", dateIn=" + dateIn +
                 ", dateOut=" + dateOut +

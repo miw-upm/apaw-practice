@@ -1,27 +1,31 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities;
 
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
+import es.upm.miw.apaw_practice.domain.models.art_museum.Exhibition;
+import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class ExhibitionEntity {
     private String name;
     private LocalDateTime dateOfExhibition;
     private BigDecimal price;
-    @DBRef
-    private List<ArtworkEntity> artworks;
 
     public ExhibitionEntity() {
         //empty for framework
     }
 
-    public ExhibitionEntity(String name, LocalDateTime dateOfExhibition, BigDecimal price, List<ArtworkEntity> artworks) {
+    public ExhibitionEntity(String name, LocalDateTime dateOfExhibition, BigDecimal price) {
         this.name = name;
         this.dateOfExhibition = dateOfExhibition;
         this.price = price;
-        this.artworks = artworks;
+    }
+
+    public Exhibition toExhibition() {
+        Exhibition exhibition = new Exhibition();
+        BeanUtils.copyProperties(this, exhibition);
+        return exhibition;
     }
 
     public String getName() {
@@ -48,21 +52,12 @@ public class ExhibitionEntity {
         this.price = price;
     }
 
-    public List<ArtworkEntity> getArtworks() {
-        return artworks;
-    }
-
-    public void setArtworks(List<ArtworkEntity> artworks) {
-        this.artworks = artworks;
-    }
-
     @Override
     public String toString() {
         return "ExhibitionEntity{" +
                 "name='" + name + '\'' +
                 ", dateOfExhibition=" + dateOfExhibition +
                 ", price=" + price +
-                ", artworks=" + artworks +
                 '}';
     }
 }

@@ -4,6 +4,10 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.BookingRepos
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.GuestRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.HotelRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.RoomRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.BookingEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.GuestEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.HotelEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.RoomEntity;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

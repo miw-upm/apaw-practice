@@ -9,6 +9,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.university.TeacherPersi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Repository("teacherPersistance")
@@ -53,6 +54,12 @@ public class TeacherPersistenceMongodb implements TeacherPersistence {
                 .findByNationalId(nationalId)
                 .orElseThrow(() -> new NotFoundException("Teacher nationalId: " + nationalId))
                 .toTeacher();
+    }
+
+    @Override
+    public void delete(String nationalId) {
+        Optional<TeacherEntity> teacherToDelete = teacherRepository.findByNationalId(nationalId);
+        teacherToDelete.ifPresent(teacherRepository::delete);
     }
 
     @Override

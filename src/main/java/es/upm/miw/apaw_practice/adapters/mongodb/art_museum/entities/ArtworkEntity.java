@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
@@ -16,14 +17,25 @@ public class ArtworkEntity {
     private String inventoryNumber;
     private String titleName;
     private Integer year;
+    @DBRef
+    private ArtistEntity artist;
 
     public ArtworkEntity() {
         //empty from framework
     }
 
-    public ArtworkEntity(Artwork artwork) {
-        BeanUtils.copyProperties(artwork, this);
+    public ArtworkEntity(String inventoryNumber, String titleName, Integer year, ArtistEntity artist) {
         this.id = UUID.randomUUID().toString();
+        this.inventoryNumber = inventoryNumber;
+        this.titleName = titleName;
+        this.year = year;
+        this.artist = artist;
+    }
+
+    public Artwork toArtwork() {
+        Artwork artwork = new Artwork();
+        BeanUtils.copyProperties(this, artwork);
+        return artwork;
     }
 
     public String getId() {
@@ -58,6 +70,14 @@ public class ArtworkEntity {
         this.year = year;
     }
 
+    public ArtistEntity getArtist() {
+        return artist;
+    }
+
+    public void setArtist(ArtistEntity artist) {
+        this.artist = artist;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return this == obj || obj != null && getClass() == obj.getClass() && (inventoryNumber.equals(((ArtworkEntity) obj).inventoryNumber));
@@ -75,6 +95,7 @@ public class ArtworkEntity {
                 ", inventoryNumber='" + inventoryNumber + '\'' +
                 ", titleName='" + titleName + '\'' +
                 ", year=" + year +
+                ", artist=" + artist +
                 '}';
     }
 }

@@ -4,31 +4,31 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Car {
-    private String name;
+    private String model;
     private boolean isElectric;
     private BigDecimal price;
 
-    private Owner owner;
+    private OwnerCar ownerCar;
 
     private List<Piece> pieces;
 
     public Car() {
         //empty for framework
     }
-    public Car(String name, boolean isElectric, BigDecimal price, Owner owner, List<Piece> pieces) {
-        this.name = name;
+    public Car(String model, boolean isElectric, BigDecimal price, OwnerCar ownerCar, List<Piece> pieces) {
+        this.model = model;
         this.isElectric = isElectric;
         this.price = price;
-        this.owner = owner;
+        this.ownerCar = ownerCar;
         this.pieces = pieces;
     }
 
-    public String getName() {
-        return name;
+    public String getModel() {
+        return model;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public boolean isElectric() {
@@ -47,12 +47,12 @@ public class Car {
         this.price = price;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public OwnerCar getOwner() {
+        return ownerCar;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setOwner(OwnerCar ownerCar) {
+        this.ownerCar = ownerCar;
     }
 
     public List<Piece> getPieces() {
@@ -66,9 +66,10 @@ public class Car {
     @Override
     public String toString() {
         return "Car{" +
-                "name='" + name + '\'' +
+                "model='" + model + '\'' +
                 ", isElectric=" + isElectric +
                 ", price=" + price +
+                ", owner=" + (ownerCar != null ? ownerCar.getName() : "None") +
                 ", pieces=" + pieces +
                 '}';
     }
