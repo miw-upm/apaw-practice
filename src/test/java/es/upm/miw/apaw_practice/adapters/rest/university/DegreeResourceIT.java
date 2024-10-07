@@ -50,6 +50,16 @@ public class DegreeResourceIT {
     }
 
     @Test
+    void testCapacityBetweenSmallRange() {
+        WebTestClient.ResponseSpec response = webTestClient
+                .get()
+                .uri(DegreeResource.DEGREES + DegreeResource.SEARCH + "?q=minCapacity:32;maxCapacity:33")
+                .exchange();
+        response.expectStatus().isOk();
+        response.expectBodyList(Degree.class);
+    }
+
+    @Test
     void testCapacityBetweenBadRequest() {
         webTestClient
                 .get()
