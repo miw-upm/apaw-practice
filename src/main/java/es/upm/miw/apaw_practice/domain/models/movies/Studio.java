@@ -45,19 +45,26 @@ public class Studio {
         return marketCapitalization;
     }
 
-    public void setMarketCapitalization(BigDecimal marketCapitalization) { this.marketCapitalization = marketCapitalization; }
+    public void setMarketCapitalization(BigDecimal marketCapitalization) {
+        this.marketCapitalization = marketCapitalization;
+    }
 
-    public Set<Movie> getMovies() { return new HashSet<>(producedMovies); }
+    public Set<Movie> getMovies() {
+        return new HashSet<>(producedMovies);
+    }
 
     public Movie getMovie(String imdbId) {
         for (Movie movie : producedMovies) {
             if (movie.getImdbId().equals(imdbId)) {
                 return movie;
             }
-        }  return null;
+        }
+        return null;
     }
 
-    public void addMovie(Movie movie) { producedMovies.add(movie); }
+    public void addMovie(Movie movie) {
+        producedMovies.add(movie);
+    }
 
     @Override
     public String toString() {
