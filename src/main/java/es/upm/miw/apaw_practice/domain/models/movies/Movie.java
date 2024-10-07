@@ -1,63 +1,82 @@
 package es.upm.miw.apaw_practice.domain.models.movies;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Movie {
 
-    private String id;
+    public static final String NEWLINE_WITH_COMMA = ",\n";
+
+    private String imdbId;
     private String title;
-    private boolean wonAnOscar;
     private BigDecimal boxOffice;
-    private List<Actor> actorsFeaturing;
-    private Studio studio;
+    private LocalDate releaseDate;
+    private Set<Actor> actorsFeaturing;
+    private Set<Award> awardsWon;
+    private Studio ownerStudio;
 
     public Movie() {
         //empty for framework
     }
 
-    public Movie(String id, String title, boolean wonAnOscar, BigDecimal boxOffice, List<Actor> actorsFeaturing, Studio studio) {
-        this.id = id;
+    public Movie(String imdbId, String title, BigDecimal boxOffice, LocalDate releaseDate, Set<Actor> actorsFeaturing, Set<Award> awardsWon, Studio ownerStudio) {
+        this.imdbId = imdbId;
         this.title = title;
-        this.wonAnOscar = wonAnOscar;
         this.boxOffice = boxOffice;
-        this.actorsFeaturing = actorsFeaturing;
-        this.studio = studio;
+        this.releaseDate = releaseDate;
+        this.actorsFeaturing = new HashSet<>(actorsFeaturing);
+        this.awardsWon = new HashSet<>(awardsWon);
+        this.ownerStudio = ownerStudio;
     }
 
-    public String getId() { return id; }
+    public String getImdbId() { return imdbId; }
 
-    public void setId(String id) { this.id = id; }
+    public void setImdbId(String imdbId) { this.imdbId = imdbId; }
 
     public String getTitle() { return title; }
 
     public void setTitle(String title) { this.title = title; }
 
-    public boolean hasWonAnOscar() { return wonAnOscar; }
-
-    public void setHasWonAnOscar(boolean wonAnOscar) { this.wonAnOscar = wonAnOscar; }
-
     public BigDecimal getBoxOffice() { return boxOffice; }
 
     public void setBoxOffice(BigDecimal boxOffice) { this.boxOffice = boxOffice; }
 
-    public List<Actor> getActorsFeaturing() { return actorsFeaturing; }
+    public LocalDate getReleaseDate() { return releaseDate; }
 
-    public void setActorsFeaturing(List<Actor> actorsFeaturing) { this.actorsFeaturing = actorsFeaturing; }
+    public void setReleaseDate(LocalDate releaseDate) { this.releaseDate = releaseDate; }
 
-    public Studio getStudio() { return studio; }
+    public Set<Actor> getActorsFeaturing() { return actorsFeaturing; }
 
-    public void setStudio(Studio studio) { this.studio = studio; }
+    public void setActorsFeaturing(Actor actor) { this.actorsFeaturing.add(actor); }
+
+    public void addActor(Actor actor) { actorsFeaturing.add(actor); }
+
+    public void removeActor(Actor actor) { actorsFeaturing.remove(actor); }
+
+    public Set<Award> getAwardsWon() { return awardsWon; }
+
+    public void setAwardsWon(Set<Award> awardsWon) { this.awardsWon = awardsWon; }
+
+    public void addAward(Award award) { awardsWon.add(award); }
+
+    public void removeAward(Award award) { awardsWon.remove(award); }
+
+    public Studio getStudio() { return ownerStudio; }
+
+    public void setStudio(Studio ownerStudio) { this.ownerStudio = ownerStudio; }
 
     @Override
     public String toString() {
         return "Movie {\n" +
-                "  id: " + id + '\n' +
-                "  title: \"" + title + "\",\n" +
-                "  wonAnOscar: " + wonAnOscar + '\n' +
-                "  boxOffice: " + boxOffice + "\n" +
-                "  actorsFeaturing: " + actorsFeaturing + '\n' +
-                "  studio: " + studio + '\n' +
+                "  imdbId: " + imdbId + NEWLINE_WITH_COMMA +
+                "  title: \"" + title + NEWLINE_WITH_COMMA +
+                "  boxOffice: " + boxOffice + NEWLINE_WITH_COMMA +
+                "  releaseDate: " + releaseDate + NEWLINE_WITH_COMMA +
+                "  actorsFeaturing: " + actorsFeaturing + NEWLINE_WITH_COMMA +
+                "  awardsWon: " + awardsWon + NEWLINE_WITH_COMMA +
+                "  ownerStudio: " + ownerStudio + '\n' +
                 "}";
     }
 }

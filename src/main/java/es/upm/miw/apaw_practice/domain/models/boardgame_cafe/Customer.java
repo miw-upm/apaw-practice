@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.boardgame_cafe;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Customer {
     private String email;
@@ -49,6 +50,22 @@ public class Customer {
 
     public void setMember(boolean isMember) {
         this.isMember = isMember;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return isMember == customer.isMember &&
+                Objects.equals(email, customer.email) &&
+                Objects.equals(name, customer.name) &&
+                Objects.equals(birthDate, customer.birthDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, name, birthDate, isMember);
     }
 
     @Override

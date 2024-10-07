@@ -1,55 +1,74 @@
 package es.upm.miw.apaw_practice.domain.models.movies;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Actor {
-    private String id;
-    private String name;
-    private boolean wonAnOscar;
+
+    public static final String NEWLINE_WITH_COMMA = ",\n";
+
+    private String artisticName;
+    private String realName;
+    private boolean available;
     private LocalDate birthDate;
-    private List<Movie> appearsIn;
+    private Set<Movie> appearsIn;
+    private Set<Award> awardsWon;
 
     public Actor(){
         //empty for framework
     }
 
-    public Actor(String id, String name, boolean wonAnOscar, LocalDate birthDate, List<Movie> appearsIn){
-        this.id = id;
-        this.name = name;
-        this.wonAnOscar = wonAnOscar;
+    public Actor(String artisticName, String realName, boolean available, LocalDate birthDate, Set<Movie> moviesList, Set<Award> awardsWon){
+        this.artisticName = artisticName;
+        this.realName = realName;
+        this.available = available;
         this.birthDate = birthDate;
-        this.appearsIn = appearsIn;
+        this.appearsIn = new HashSet<>(moviesList);
+        this.awardsWon = new HashSet<>(awardsWon);
     }
 
-    public String getId() { return id; }
+    public String getName() { return artisticName; }
 
-    public void setId(String id) { this.id = id;}
+    public void setName(String artisticName) { this.artisticName = artisticName; }
 
-    public String getName() { return name; }
+    public String getRealName() { return realName; }
 
-    public void setName(String name) { this.name = name; }
+    public void setRealName(String realName) { this.realName = realName; }
 
-    public boolean hasWonAnOscar() { return wonAnOscar; }
+    public boolean isAvailable() { return available; }
 
-    public void setHasWonAnOscar(boolean wonAnOscar) { this.wonAnOscar = wonAnOscar; }
+    public void setAvailable(boolean available) { this.available = available; }
 
     public LocalDate getBirthDate(){ return birthDate; }
 
     public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate; }
 
-    public List<Movie> getAppearsIn(){ return appearsIn; }
+    public Set<Movie> getAppearsIn() { return appearsIn; }
 
-    public void setAppearsIn(List<Movie> appearsIn) { this.appearsIn = appearsIn; }
+    public void setAppearsIn(Set<Movie> appearsIn) { this.appearsIn = appearsIn; }
+
+    public void addMovie(Movie movie) { appearsIn.add(movie); }
+
+    public void removeMovie(Movie movie) { appearsIn.remove(movie); }
+
+    public Set<Award> getAwardsWon() { return awardsWon; }
+
+    public void setAwardsWon(Set<Award> awardsWon) { this.awardsWon = awardsWon; }
+
+    public void addAward(Award award) { awardsWon.add(award); }
+
+    public void removeAward(Award award) { awardsWon.remove(award); }
 
     @Override
     public String toString(){
         return "Actor {\n" +
-                "  id: " + id + '\n' +
-                "  name: \"" + name + "\",\n" +
-                "  wonAnOscar: " + wonAnOscar + '\n' +
-                "  birthDate: \"" + birthDate + "\",\n" +
-                "  appearsIn: " + appearsIn + '\n' +
+                "  artisticName: \"" + artisticName + "\"" + NEWLINE_WITH_COMMA +
+                "  realName: \"" + realName + "\"" + NEWLINE_WITH_COMMA +
+                "  available: " + available + NEWLINE_WITH_COMMA +
+                "  birthDate: \"" + birthDate + "\"" + NEWLINE_WITH_COMMA +
+                "  appearsIn: " + appearsIn + NEWLINE_WITH_COMMA +
+                "  awardsWon: " + awardsWon + "\n" +
                 "}";
     }
 }
