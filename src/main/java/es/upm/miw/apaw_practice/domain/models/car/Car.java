@@ -8,18 +8,18 @@ public class Car {
     private boolean isElectric;
     private BigDecimal price;
 
-    private Owner owner;
+    private OwnerCar ownerCar;
 
     private List<Piece> pieces;
 
     public Car() {
         //empty for framework
     }
-    public Car(String model, boolean isElectric, BigDecimal price, Owner owner, List<Piece> pieces) {
+    public Car(String model, boolean isElectric, BigDecimal price, OwnerCar ownerCar, List<Piece> pieces) {
         this.model = model;
         this.isElectric = isElectric;
         this.price = price;
-        this.owner = owner;
+        this.ownerCar = ownerCar;
         this.pieces = pieces;
     }
 
@@ -47,12 +47,12 @@ public class Car {
         this.price = price;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public OwnerCar getOwner() {
+        return ownerCar;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setOwner(OwnerCar ownerCar) {
+        this.ownerCar = ownerCar;
     }
 
     public List<Piece> getPieces() {
@@ -69,7 +69,7 @@ public class Car {
                 "model='" + model + '\'' +
                 ", isElectric=" + isElectric +
                 ", price=" + price +
-                ", owner=" + (owner != null ? owner.getName() : "None") +
+                ", owner=" + (ownerCar != null ? ownerCar.getName() : "None") +
                 ", pieces=" + pieces +
                 '}';
     }
