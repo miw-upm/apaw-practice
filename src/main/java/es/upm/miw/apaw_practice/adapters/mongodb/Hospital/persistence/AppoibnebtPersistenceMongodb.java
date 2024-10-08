@@ -12,4 +12,4 @@ import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 @Repository("appoinmentPersistence")
-public class AppoibnebtPersistenceMongodb implements AppoinmentRepository {}
+public class AppoibnebtPersistenceMongodb implements AppoinmentPersistence {}
