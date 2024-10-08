@@ -72,5 +72,9 @@ public class OwnerEntity {
         return "Owner{" + "name=" + name + ", phone=" + phone + ", email=" + email + '}';
     }
 
-
+    public Owner toOwner() {
+        Owner owner = new Owner();
+        BeanUtils.copyProperties(this, owner);
+        return owner;
+    }
 }
