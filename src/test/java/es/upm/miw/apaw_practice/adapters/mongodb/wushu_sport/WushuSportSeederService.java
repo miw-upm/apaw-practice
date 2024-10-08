@@ -1,8 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.daos.CompetitionFormRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.daos.CompetitorRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.daos.WushuGradeRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.daos.WushuSchoolRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.daos.WushuGradeRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.CompetitionFormEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.CompetitorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.WuhsuGradeEntity;

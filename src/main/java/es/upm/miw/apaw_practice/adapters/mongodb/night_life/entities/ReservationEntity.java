@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities;
 
-import es.upm.miw.apaw_practice.domain.models.night_life.Customer;
-import es.upm.miw.apaw_practice.domain.models.night_life.Reservation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

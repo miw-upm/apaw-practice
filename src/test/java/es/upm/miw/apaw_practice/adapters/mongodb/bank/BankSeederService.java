@@ -50,10 +50,10 @@ public class BankSeederService {
         };
         this.clientRepository.saveAll(Arrays.asList(clients));
         BankAccountEntity[] bankAccounts = {
-                new BankAccountEntity("IBAN1", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), true, clients[0]),
+                new BankAccountEntity("IBAN1", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, clients[0]),
                 new BankAccountEntity("IBAN2", new BigDecimal("40000.0"), LocalDate.of(2002, 4, 6), true, clients[1]),
                 new BankAccountEntity("IBAN3", new BigDecimal("3.5"), LocalDate.of(1990, 1, 3), true, clients[2]),
-                new BankAccountEntity("IBAN4", new BigDecimal("10.0"), LocalDate.of(2000, 7, 25), true, clients[3]),
+                new BankAccountEntity("IBAN4", new BigDecimal("10.0"), LocalDate.of(2000, 7, 25), false, clients[3]),
                 new BankAccountEntity("IBAN5", new BigDecimal("-100.0"), LocalDate.of(2024, 3, 12), true, clients[4])
         };
         this.bankAccountRepository.saveAll(Arrays.asList(bankAccounts));
