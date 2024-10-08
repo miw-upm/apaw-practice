@@ -19,9 +19,8 @@ public class SoldierPersistenceMongodb implements SoldierPersistence {
     }
 
     @Override
-    public Stream<Soldier> findAll() {
-        return this.soldierRepository
-                .findAll().stream()
+    public Stream<Soldier> readAll() {
+        return this.soldierRepository.findAll().stream()
                 .map(SoldierEntity::toSoldier);
     }
 }

@@ -14,7 +14,5 @@ public class SoldierService {
         this.soldierPersistence = soldierPersistence;
     }
 
-    public Stream<Soldier> findAll() {
-        return this.soldierPersistence.findAll();
-    }
+    public Stream<Soldier> readAll() { return this.soldierPersistence.readAll(); }
 }

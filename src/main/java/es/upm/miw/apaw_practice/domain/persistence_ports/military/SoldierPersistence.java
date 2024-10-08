@@ -7,5 +7,5 @@ import java.util.stream.Stream;
 
 @Repository
 public interface SoldierPersistence {
-    Stream<Soldier> findAll();
+    Stream<Soldier> readAll();
 }
