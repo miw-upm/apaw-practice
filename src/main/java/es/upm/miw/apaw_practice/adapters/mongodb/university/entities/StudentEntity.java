@@ -21,19 +21,19 @@ public class StudentEntity {
     private String placeOfBirth;
     private LocalDate enrollmentDate;
     @DBRef
-    private List<DegreeEntity> degrees;
+    private List<DegreeEntity> enrolledDegrees;
 
     public StudentEntity() {
         //empty for framework
     }
 
-    public StudentEntity(String email, String firstName, String placeOfBirth, LocalDate enrollmentDate, List<DegreeEntity> degrees) {
+    public StudentEntity(String email, String firstName, String placeOfBirth, LocalDate enrollmentDate, List<DegreeEntity> enrolledDegrees) {
         this.id = UUID.randomUUID().toString();
         this.email = email;
         this.firstName = firstName;
         this.placeOfBirth = placeOfBirth;
         this.enrollmentDate = enrollmentDate;
-        this.degrees = degrees;
+        this.enrolledDegrees = enrolledDegrees;
     }
 
     public StudentEntity(Student student) {
@@ -43,13 +43,13 @@ public class StudentEntity {
 
     public void fromStudent(Student student) {
         BeanUtils.copyProperties(student, this);
-        this.degrees = student.getDegrees().stream().map(DegreeEntity::new).toList();
+        this.enrolledDegrees = student.getEnrolledDegrees().stream().map(DegreeEntity::new).toList();
     }
 
     public Student toStudent() {
         Student student = new Student();
         BeanUtils.copyProperties(this, student);
-        student.setDegrees(this.degrees.stream().map(DegreeEntity::toDegree).toList());
+        student.setEnrolledDegrees(this.enrolledDegrees.stream().map(DegreeEntity::toDegree).toList());
         return student;
     }
 
@@ -93,12 +93,12 @@ public class StudentEntity {
         this.enrollmentDate = enrollmentDate;
     }
 
-    public List<DegreeEntity> getDegrees() {
-        return degrees;
+    public List<DegreeEntity> getEnrolledDegrees() {
+        return enrolledDegrees;
     }
 
-    public void setDegrees(List<DegreeEntity> degrees) {
-        this.degrees = degrees;
+    public void setEnrolledDegrees(List<DegreeEntity> enrolledDegrees) {
+        this.enrolledDegrees = enrolledDegrees;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class StudentEntity {
                 ", firstName='" + firstName + '\'' +
                 ", placeOfBirth='" + placeOfBirth + '\'' +
                 ", enrollmentDate=" + enrollmentDate +
-                ", degreesEnrolled=" + degrees +
+                ", degreesEnrolled=" + enrolledDegrees +
                 '}';
     }
 }

@@ -31,6 +31,6 @@ public class StudentRepositoryIT {
         assertEquals("Sophia", student.getFirstName());
         assertEquals("Birmingham", student.getPlaceOfBirth());
         assertEquals(LocalDate.of(2002, 6, 3), student.getEnrollmentDate());
-        assertEquals(3, student.getDegrees().size());
+        assertEquals(3, student.getEnrolledDegrees().size());
     }
 }
