@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(BankAccountResource.ACCOUNTS)
 public class BankAccountResource {
 
-    static final String ID_ID = "/{id}";
+    static final String IBAN = "/{iban}";
     static final String ACCOUNTS = "/bank/accounts";
     static final String INTEREST = "/interest";
 
@@ -20,8 +20,8 @@ public class BankAccountResource {
         this.bankAccountService = bankAccountService;
     }
 
-    @PutMapping(ACCOUNTS + ID_ID + INTEREST)
-    public BankAccount updateHasInterest(@PathVariable String id, @RequestBody Boolean hasInterest) {
-        return this.bankAccountService.updateHasInterest(id, hasInterest);
+    @PutMapping(ACCOUNTS + IBAN + INTEREST)
+    public BankAccount updateHasInterest(@PathVariable String iban, @RequestBody Boolean hasInterest) {
+        return this.bankAccountService.updateHasInterest(iban, hasInterest);
     }
 }

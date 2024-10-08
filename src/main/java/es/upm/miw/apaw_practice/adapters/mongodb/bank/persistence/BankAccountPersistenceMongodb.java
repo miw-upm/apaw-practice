@@ -19,9 +19,9 @@ public class BankAccountPersistenceMongodb implements BankAccountPersistence {
     }
 
     @Override
-    public BankAccount updateHasInterest(String id, Boolean hasInterest) {
-        BankAccountEntity bankAccountEntity = this.bankAccountRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Bank Account id:" + id));
+    public BankAccount updateHasInterest(String iban, Boolean hasInterest) {
+        BankAccountEntity bankAccountEntity = this.bankAccountRepository.findByIban(iban)
+                .orElseThrow(() -> new NotFoundException("Bank Account IBAN:" + iban));
         bankAccountEntity.setHasInterest(hasInterest);
         return bankAccountEntity.toBankAccount();
     }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BankAccountPersistence {
 
-    BankAccount updateHasInterest(String id, Boolean hasInterest);
+    BankAccount updateHasInterest(String iban, Boolean hasInterest);
 }
