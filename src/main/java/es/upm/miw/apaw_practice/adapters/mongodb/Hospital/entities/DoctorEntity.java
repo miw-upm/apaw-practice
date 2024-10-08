@@ -1,15 +1,15 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import es.upm.miw.apaw_practice.domain.models.Hospital;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Document
+
 public class DoctorEntity {
     @Id
     private String id;

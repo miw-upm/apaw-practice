@@ -1,14 +1,14 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
+package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.*;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
-@Document
+
 public class AppointmentEntity {
 
     @Id
