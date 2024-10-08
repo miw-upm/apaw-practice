@@ -18,11 +18,6 @@ public class OwnerEntity {
         //empty for framework
     }
 
-    public OwnerEntity(Owner owner) {
-        BeanUtils.copyProperties(owner, this);
-        this.id = UUID.randomUUID().toString();
-    }
-
     public OwnerEntity(String name, String phone, String email) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
@@ -60,12 +55,6 @@ public class OwnerEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Owner toOwner() {
-        Owner owner = new Owner();
-        BeanUtils.copyProperties(this, owner);
-        return owner;
     }
 
     @Override

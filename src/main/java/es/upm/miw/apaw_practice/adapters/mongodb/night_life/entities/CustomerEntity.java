@@ -1,12 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities;
 
 import es.upm.miw.apaw_practice.domain.models.night_life.*;
-import es.upm.miw.apaw_practice.domain.models.night_life.Reservation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.List;
 import java.util.UUID;
 
 
@@ -21,10 +17,7 @@ public class CustomerEntity {
     public CustomerEntity() {
         //empty for framework
     }
-    public CustomerEntity(Customer customer) {
-        BeanUtils.copyProperties(customer,this);
-        this.id = UUID.randomUUID().toString();
-    }
+
     public CustomerEntity(String name, String phone, String email) {
         this.id = UUID.randomUUID().toString();
         this.name = name;

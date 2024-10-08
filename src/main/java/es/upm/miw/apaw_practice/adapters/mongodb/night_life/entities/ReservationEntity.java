@@ -1,11 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.ArticleItemEntity;
 import es.upm.miw.apaw_practice.domain.models.night_life.Customer;
 import es.upm.miw.apaw_practice.domain.models.night_life.Reservation;
-import es.upm.miw.apaw_practice.domain.models.shop.ArticleItem;
-import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Document
 public class ReservationEntity {
@@ -29,12 +24,6 @@ public class ReservationEntity {
 
     public ReservationEntity() {
         //empty for framework
-    }
-
-    public ReservationEntity(Reservation reservation, ClubEntity clubEntity) {
-        BeanUtils.copyProperties(reservation, this);
-        this.id = UUID.randomUUID().toString();
-        this.clubEntity = clubEntity;
     }
 
     public ReservationEntity(LocalDate date, BigDecimal price, Integer numberOfPeople, ClubEntity clubEntity, List<CustomerEntity> customerEntities) {
@@ -91,12 +80,6 @@ public class ReservationEntity {
     }
     public void setCustomerEntities(List<CustomerEntity> customerEntities) {
         this.customerEntities = customerEntities;
-    }
-    public Reservation toReservation() {
-        List<Customer> customers = this.customerEntities.stream()
-                .map(CustomerEntity::toCustomer)
-                .toList();
-        return new Reservation(this.date,this.price,this.numberOfPeople, customers);
     }
 
     @Override
