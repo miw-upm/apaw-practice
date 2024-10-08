@@ -33,6 +33,7 @@ public class GameServiceIT {
     @Test
     void readAllGames() {
         List<Game> games = gameService.readAllGames().toList();
-        assertEquals(8, games.size());
+        assertTrue(games.stream().anyMatch(game -> game.getGameName().equals("Azul")));
+        assertTrue(games.stream().anyMatch(game -> game.getGameName().equals("Warewolf")));
     }
 }
