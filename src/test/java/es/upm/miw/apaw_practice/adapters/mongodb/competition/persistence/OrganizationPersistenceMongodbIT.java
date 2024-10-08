@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -51,5 +52,12 @@ class OrganizationPersistenceMongodbIT {
                 .filter(comp -> comp.getNameOrganization().equals("F.S. Barcelona"))
                 .findFirst();
         assertTrue(newOrganizationEntity.isPresent());
+    }
+
+    @Test
+    void testSumSalaryPlayerTeamsByNameOrganization() {
+        String nameOrganization = "FEMAFUSA";
+        BigDecimal sumSalary = this.organizationPersistenceMongodb.sumSalaryPlayerTeamsByNameOrganization(nameOrganization);
+        assertEquals(new BigDecimal("40.59"), sumSalary);
     }
 }

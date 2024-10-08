@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RestTestConfig
@@ -42,5 +44,21 @@ class OrganizationResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Organization.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testSumSalaryPlayerTeamsByNameOrganization() {
+        String nameOrganization = "FEMAFUSA";
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(OrganizationResource.ORGANIZATION + OrganizationResource.NAME_ORGANIZATION)
+                        .build(nameOrganization))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(sum -> {
+                    assertEquals(sum, new BigDecimal("40.59"));
+                });
     }
 }

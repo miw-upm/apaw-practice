@@ -7,6 +7,7 @@ import es.upm.miw.apaw_practice.domain.models.competition.Organization;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -36,9 +37,16 @@ class OrganizationServiceIT {
 
     @Test
     void testCreateOrganization() {
-         this.organizationService.createOrganization(new Organization("F.S. Barcelona", LocalDateTime.now(), false));
+        this.organizationService.createOrganization(new Organization("F.S. Barcelona", LocalDateTime.now(), false));
 
         Optional<OrganizationEntity> newOrganizationEntity = this.organizationRepository.findByNameOrganization("F.S. Barcelona");
         assertTrue(newOrganizationEntity.isPresent());
+    }
+
+    @Test
+    void testSumSalaryPlayerTeamsByNameOrganization() {
+        String nameOrganization = "FEMAFUSA";
+        BigDecimal sumSalary = this.organizationService.getSumSalaryPlayerTeamsByNameOrganization(nameOrganization);
+        assertEquals(new BigDecimal("40.59"), sumSalary);
     }
 }
