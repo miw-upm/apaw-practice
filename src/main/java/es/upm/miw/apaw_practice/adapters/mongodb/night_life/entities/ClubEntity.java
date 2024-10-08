@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities;
 
-import es.upm.miw.apaw_practice.domain.models.night_life.Club;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -20,14 +19,6 @@ public class ClubEntity {
 
     public ClubEntity() {
         //empty for framework
-    }
-
-    public ClubEntity(Club club) {
-        this.id = UUID.randomUUID().toString();
-        this.name = club.getName();
-        this.capacity = club.getCapacity();
-        this.opened = club.isOpened();
-        this.ownerEntity = new OwnerEntity(club.getOwner());
     }
 
     public ClubEntity(String name, Integer capacity, boolean opened, OwnerEntity ownerEntity) {
