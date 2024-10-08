@@ -19,18 +19,18 @@ public class TeacherEntity {
     private LocalDate birthDate;
     private String lastName;
     @DBRef
-    private UniversityEntity university;
+    private UniversityEntity workplace;
 
     public TeacherEntity() {
         //empty for framework
     }
 
-    public TeacherEntity(String nationalId, LocalDate birthDate, String lastName, UniversityEntity university) {
+    public TeacherEntity(String nationalId, LocalDate birthDate, String lastName, UniversityEntity workplace) {
         this.id = UUID.randomUUID().toString();
         this.nationalId = nationalId;
         this.birthDate = birthDate;
         this.lastName = lastName;
-        this.university = university;
+        this.workplace = workplace;
     }
 
     public TeacherEntity(Teacher teacher) {
@@ -40,14 +40,14 @@ public class TeacherEntity {
 
     public void fromTeacher(Teacher teacher) {
         BeanUtils.copyProperties(teacher, this);
-        this.university = new UniversityEntity(teacher.getUniversity());
+        this.workplace = new UniversityEntity(teacher.getWorkplace());
     }
 
     public Teacher toTeacher() {
         Teacher teacher = new Teacher();
         BeanUtils.copyProperties(this, teacher);
-        if (university != null) {
-            teacher.setUniversity(university.toUniversity());
+        if (workplace != null) {
+            teacher.setWorkplace(workplace.toUniversity());
         }
         return teacher;
     }
@@ -84,12 +84,12 @@ public class TeacherEntity {
         this.lastName = lastName;
     }
 
-    public UniversityEntity getUniversity() {
-        return university;
+    public UniversityEntity getWorkplace() {
+        return workplace;
     }
 
-    public void setUniversity(UniversityEntity university) {
-        this.university = university;
+    public void setWorkplace(UniversityEntity workplace) {
+        this.workplace = workplace;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class TeacherEntity {
                 ", nationalId='" + nationalId + '\'' +
                 ", birthDate=" + birthDate +
                 ", lastName='" + lastName + '\'' +
-                ", university=" + university +
+                ", workplace=" + workplace +
                 '}';
     }
 }

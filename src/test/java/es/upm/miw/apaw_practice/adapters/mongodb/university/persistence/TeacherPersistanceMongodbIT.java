@@ -44,7 +44,7 @@ public class TeacherPersistanceMongodbIT {
         Teacher teacher = studentOptional.get();
         assertEquals("Thompson", teacher.getLastName());
         assertEquals(LocalDate.of(1991, 3, 23), teacher.getBirthDate());
-        assertEquals("manchester.ac.uk", teacher.getUniversity().getTopDomain());
+        assertEquals("manchester.ac.uk", teacher.getWorkplace().getTopDomain());
     }
 
     @Test
@@ -57,16 +57,16 @@ public class TeacherPersistanceMongodbIT {
         assertEquals("UK1234", readedTeacher.getNationalId());
         assertEquals(birthDate, readedTeacher.getBirthDate());
         assertEquals("Sanchez", readedTeacher.getLastName());
-        assertEquals("imperial.ac.uk", readedTeacher.getUniversity().getTopDomain());
+        assertEquals("imperial.ac.uk", readedTeacher.getWorkplace().getTopDomain());
         LocalDate newBirthDate = LocalDate.of(1980, 2, 2);
         teacher.setLastName("Smith");
         teacher.setBirthDate(newBirthDate);
-        teacher.setUniversity(universityPersistence.read("ox.ac.uk"));
+        teacher.setWorkplace(universityPersistence.read("ox.ac.uk"));
         teacherPersistence.update(teacher.getNationalId(), teacher);
         readedTeacher = teacherPersistence.read(teacher.getNationalId());
         assertEquals(teacher, readedTeacher);
         assertEquals("Smith", readedTeacher.getLastName());
         assertEquals(newBirthDate, readedTeacher.getBirthDate());
-        assertEquals("ox.ac.uk", readedTeacher.getUniversity().getTopDomain());
+        assertEquals("ox.ac.uk", readedTeacher.getWorkplace().getTopDomain());
     }
 }

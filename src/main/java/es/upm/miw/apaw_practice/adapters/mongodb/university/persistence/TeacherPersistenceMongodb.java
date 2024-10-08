@@ -75,8 +75,8 @@ public class TeacherPersistenceMongodb implements TeacherPersistence {
     }
 
     private TeacherEntity fixUniversityRelationship(TeacherEntity teacherEntity) {
-        UniversityEntity universityEntity = teacherEntity.getUniversity();
-        teacherEntity.setUniversity(universityRepository.findByTopDomain(universityEntity.getTopDomain()).orElse(universityEntity));
+        UniversityEntity universityEntity = teacherEntity.getWorkplace();
+        teacherEntity.setWorkplace(universityRepository.findByTopDomain(universityEntity.getTopDomain()).orElse(universityEntity));
         return teacherEntity;
     }
 }

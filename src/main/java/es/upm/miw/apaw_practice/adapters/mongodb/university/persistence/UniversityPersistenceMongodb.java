@@ -66,8 +66,8 @@ public class UniversityPersistenceMongodb implements UniversityPersistence {
     }
 
     private UniversityEntity fixDegreeRelationship(UniversityEntity universityEntity) {
-        universityEntity.setDegrees(universityEntity
-                .getDegrees()
+        universityEntity.setDegreesOffered(universityEntity
+                .getDegreesOffered()
                 .stream()
                 .map(degree -> degreeRepository
                         .findByCode(degree.getCode())

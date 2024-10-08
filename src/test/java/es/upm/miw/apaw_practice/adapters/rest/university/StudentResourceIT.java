@@ -38,17 +38,17 @@ public class StudentResourceIT {
         assertEquals("Olivia", student.getFirstName());
         assertEquals("Liverpool", student.getPlaceOfBirth());
         assertEquals(LocalDate.of(1999, 9, 12), student.getEnrollmentDate());
-        assertEquals(List.of(degreePersistence.read(2000)), student.getDegrees());
+        assertEquals(List.of(degreePersistence.read(2000)), student.getEnrolledDegrees());
         student.setFirstName("Martha");
         student.setPlaceOfBirth("Birmingham");
         student.setEnrollmentDate(LocalDate.of(2002, 12, 12));
-        student.setDegrees(List.of(degreePersistence.read(2003)));
+        student.setEnrolledDegrees(List.of(degreePersistence.read(2003)));
         updateStudent(student).expectStatus().isOk();
         Student updatedStudent = studentPersistence.read(student.getEmail());
         assertEquals(student.getFirstName(), updatedStudent.getFirstName());
         assertEquals(student.getPlaceOfBirth(), updatedStudent.getPlaceOfBirth());
         assertEquals(student.getEnrollmentDate(), updatedStudent.getEnrollmentDate());
-        assertEquals(student.getDegrees(), updatedStudent.getDegrees());
+        assertEquals(student.getEnrolledDegrees(), updatedStudent.getEnrolledDegrees());
     }
 
     private WebTestClient.ResponseSpec updateStudent(Student student) {
