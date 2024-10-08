@@ -44,6 +44,16 @@ public class CarEntity {
         this.piecesEntity = piecesEntity;
     }
 
+    public Car toCar(){
+        Car car = new Car();
+        BeanUtils.copyProperties(this, car);
+        car.setPieces(this.piecesEntity.stream().map(PieceEntity::toPiece).toList());
+        if (ownerCarEntity != null) {
+            car.setOwner(ownerCarEntity.toOwnerCar());
+        }
+        return car;
+    }
+
     public String getId() {
         return id;
     }
@@ -92,11 +102,7 @@ public class CarEntity {
         this.piecesEntity = piecesEntity;
     }
 
-    public Car toCar(){
-        Car car = new Car();
-        BeanUtils.copyProperties(this, car);
-        return car;
-    }
+
 
     @Override
     public boolean equals(Object o) {

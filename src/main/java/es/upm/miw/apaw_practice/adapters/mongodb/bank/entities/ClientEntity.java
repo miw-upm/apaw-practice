@@ -98,7 +98,7 @@ public class ClientEntity {
     public Client toClient() {
         List<InvestmentFund> investmentFunds = this.investmentFundsEntities.stream()
                 .map(InvestmentFundEntity::toInvestmentFund)
-                .collect(Collectors.toList());
+                .toList();
         return new Client(dni, name, surname, phoneNumber, email, investmentFunds );
     }
 
