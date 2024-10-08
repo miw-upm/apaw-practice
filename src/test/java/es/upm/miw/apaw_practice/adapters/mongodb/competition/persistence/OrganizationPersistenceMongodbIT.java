@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.competition.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.adapters.mongodb.competition.entities.OrganizationEntity;
 import es.upm.miw.apaw_practice.domain.models.competition.Organization;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,16 @@ class OrganizationPersistenceMongodbIT {
                 .findFirst();
         assertTrue(newOrganization.isPresent());
         assertEquals(newLocalDateTime, newOrganization.get().getCreationDateOrganization());
+    }
+
+    @Test
+    void testCreateOrganization() {
+        this.organizationPersistenceMongodb.createOrganization(new Organization("F.S. Barcelona", LocalDateTime.now(), false));
+
+        Optional<Organization> newOrganizationEntity = this.organizationPersistenceMongodb
+                .readAll()
+                .filter(comp -> comp.getNameOrganization().equals("F.S. Barcelona"))
+                .findFirst();
+        assertTrue(newOrganizationEntity.isPresent());
     }
 }
