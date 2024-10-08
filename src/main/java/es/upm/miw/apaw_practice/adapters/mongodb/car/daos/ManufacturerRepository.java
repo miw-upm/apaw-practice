@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 public interface ManufacturerRepository extends MongoRepository<ManufacturerEntity, String>{
 
-    Optional<ManufacturerEntity> findByNumberOfEmployees(Integer numberOfEmployees);
+    Optional<ManufacturerEntity> findByName(String name);
 }
