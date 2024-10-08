@@ -8,7 +8,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
-public class ClubResourceIT {
+class ClubResourceIT {
     @Autowired
     private WebTestClient webTestClient;
     @Test
