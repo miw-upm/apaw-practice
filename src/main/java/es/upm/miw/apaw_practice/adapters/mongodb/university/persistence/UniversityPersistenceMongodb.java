@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.DegreeRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.UniversityRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.UniversityEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -15,9 +16,12 @@ public class UniversityPersistenceMongodb implements UniversityPersistence {
 
     private final UniversityRepository universityRepository;
 
+    private final DegreeRepository degreeRepository;
+
     @Autowired
-    public UniversityPersistenceMongodb(UniversityRepository universityRepository) {
+    public UniversityPersistenceMongodb(UniversityRepository universityRepository, DegreeRepository degreeRepository) {
         this.universityRepository = universityRepository;
+        this.degreeRepository = degreeRepository;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class UniversityPersistenceMongodb implements UniversityPersistence {
     @Override
     public University create(University university) {
         return universityRepository
-                .save(new UniversityEntity(university))
+                .save(fixDegreeRelationship(new UniversityEntity(university)))
                 .toUniversity();
     }
 
@@ -42,7 +46,7 @@ public class UniversityPersistenceMongodb implements UniversityPersistence {
                 .orElseThrow(() -> new NotFoundException("University topDomain: " + topDomain));
         universityEntity.fromUniversity(university);
         return universityRepository
-                .save(universityEntity)
+                .save(fixDegreeRelationship(universityEntity))
                 .toUniversity();
     }
 
@@ -59,5 +63,16 @@ public class UniversityPersistenceMongodb implements UniversityPersistence {
         return universityRepository
                 .findByTopDomain(topDomain)
                 .isPresent();
+    }
+
+    private UniversityEntity fixDegreeRelationship(UniversityEntity universityEntity) {
+        universityEntity.setDegrees(universityEntity
+                .getDegrees()
+                .stream()
+                .map(degree -> degreeRepository
+                        .findByCode(degree.getCode())
+                        .orElse(degree))
+                .toList());
+        return universityEntity;
     }
 }

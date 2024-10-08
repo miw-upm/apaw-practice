@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.entities;
 
 import es.upm.miw.apaw_practice.domain.models.university.Teacher;
-import es.upm.miw.apaw_practice.domain.models.university.University;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -41,10 +40,7 @@ public class TeacherEntity {
 
     public void fromTeacher(Teacher teacher) {
         BeanUtils.copyProperties(teacher, this);
-        University techerUniversity = teacher.getUniversity();
-        if (university != null) {
-            this.university = new UniversityEntity(techerUniversity);
-        }
+        this.university = new UniversityEntity(teacher.getUniversity());
     }
 
     public Teacher toTeacher() {
