@@ -3,10 +3,7 @@ package es.upm.miw.apaw_practice.adapters.rest.bank;
 import es.upm.miw.apaw_practice.domain.models.bank.BranchOffice;
 import es.upm.miw.apaw_practice.domain.services.bank.BranchOfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(BranchOfficeResource.OFFICES)
@@ -23,7 +20,7 @@ public class BranchOfficeResource {
     }
 
     @PostMapping
-    public BranchOffice create(@RequestParam BranchOffice branchOffice) {
+    public BranchOffice create(@RequestBody BranchOffice branchOffice) {
         branchOffice.doDefault();
         return this.branchOfficeService.create(branchOffice);
     }

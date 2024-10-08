@@ -26,7 +26,7 @@ public class ClientRepositoryIT {
     }
 
     @Test
-    void testFindByDniList() {
+    void testFindByDniIn() {
         assertNotNull(this.clientRepository.findByDniIn(List.of("11111111A", "22222222B")));
         List<ClientEntity> clients = this.clientRepository.findByDniIn(List.of("11111111A", "22222222B"));
         assertEquals("Client1", clients.get(0).getName());
