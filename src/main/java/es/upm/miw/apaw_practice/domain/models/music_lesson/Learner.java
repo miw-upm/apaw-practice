@@ -8,7 +8,7 @@ public class Learner {
 
   private String name;
 
-  private Boolean isBeginner;
+  private Boolean beginner;
 
   private List<Lesson> lessons;
 
@@ -18,10 +18,10 @@ public class Learner {
     //Empty for framework
   }
 
-  public Learner(String identityDocument, String name, Boolean isBeginner, List<Lesson> lessons, Branch branch) {
+  public Learner(String identityDocument, String name, Boolean beginner, List<Lesson> lessons, Branch branch) {
     this.identityDocument = identityDocument;
     this.name = name;
-    this.isBeginner = isBeginner;
+    this.beginner = beginner;
     this.lessons = lessons;
     this.branch = branch;
   }
@@ -42,12 +42,12 @@ public class Learner {
     this.name = name;
   }
 
-  public Boolean getBeginner() {
-    return isBeginner;
+  public Boolean isBeginner() {
+    return beginner;
   }
 
   public void setBeginner(Boolean beginner) {
-    isBeginner = beginner;
+    this.beginner = beginner;
   }
 
   public List<Lesson> getLessons() {
@@ -71,7 +71,7 @@ public class Learner {
     return "Learner{" +
         "identityDocument='" + identityDocument + '\'' +
         ", name='" + name + '\'' +
-        ", isBeginner=" + isBeginner +
+        ", isBeginner=" + beginner +
         ", lessons=" + lessons +
         ", branch=" + branch +
         '}';
