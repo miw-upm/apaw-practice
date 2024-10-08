@@ -3,15 +3,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.bank.persistence;
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.bank.BankAccount;
-import es.upm.miw.apaw_practice.domain.models.bank.BranchOffice;
-import es.upm.miw.apaw_practice.domain.models.bank.Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
