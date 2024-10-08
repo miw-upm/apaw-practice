@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class ClubRepositoryIT {
+class ClubRepositoryIT {
 
     @Autowired
     private ClubRepository clubRepository;
