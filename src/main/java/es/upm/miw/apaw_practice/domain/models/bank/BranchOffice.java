@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.bank;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class BranchOffice {
 
@@ -50,6 +52,12 @@ public class BranchOffice {
 
     public void setClients(List<Client> clients) {
         this.clients = clients;
+    }
+
+    public void doDefault() {
+        if (Objects.isNull(clients)) {
+            this.clients = Collections.emptyList();
+        }
     }
 
     @Override
