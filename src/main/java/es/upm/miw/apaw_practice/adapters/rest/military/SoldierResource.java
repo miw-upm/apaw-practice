@@ -22,7 +22,7 @@ public class SoldierResource {
     }
 
     @GetMapping
-    public Stream<Soldier> findAll() {
-        return this.soldierService.findAll();
+    public Stream<Soldier> readAll() {
+        return this.soldierService.readAll();
     }
 }
