@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.movies;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Movie {
@@ -14,19 +15,19 @@ public class Movie {
     private BigDecimal boxOffice;
     private LocalDate releaseDate;
     private Set<Actor> actorsFeaturing;
-    private Set<Award> awardsWon;
+    private Award awardWon;
 
     public Movie() {
         //empty for framework
     }
 
-    public Movie(String imdbId, String title, BigDecimal boxOffice, LocalDate releaseDate, Set<Actor> actorsFeaturing, Set<Award> awardsWon) {
+    public Movie(String imdbId, String title, BigDecimal boxOffice, LocalDate releaseDate, Set<Actor> actorsFeaturing, Award awardWon) {
         this.imdbId = imdbId;
         this.title = title;
         this.boxOffice = boxOffice;
         this.releaseDate = releaseDate;
         this.actorsFeaturing = new HashSet<>(actorsFeaturing);
-        this.awardsWon = new HashSet<>(awardsWon);
+        this.awardWon = awardWon;
     }
 
     public String getImdbId() { return imdbId; }
@@ -47,19 +48,26 @@ public class Movie {
 
     public Set<Actor> getActorsFeaturing() { return actorsFeaturing; }
 
-    public void setActorsFeaturing(Actor actor) { this.actorsFeaturing.add(actor); }
+    public void setActorsFeaturing(Set<Actor> actorsFeaturing) {
+        this.actorsFeaturing = actorsFeaturing;
+    }
+
+    public Actor getActorByArtisticName(String artisticName) {
+        for (Actor actor : actorsFeaturing) {
+            if (actor.getArtisticName().equals(artisticName)) {
+                return actor;
+            }
+        }
+        return null;
+    }
 
     public void addActor(Actor actor) { actorsFeaturing.add(actor); }
 
     public void removeActor(Actor actor) { actorsFeaturing.remove(actor); }
 
-    public Set<Award> getAwardsWon() { return awardsWon; }
+    public Award getAwardWon() { return awardWon; }
 
-    public void setAwardsWon(Set<Award> awardsWon) { this.awardsWon = awardsWon; }
-
-    public void addAward(Award award) { awardsWon.add(award); }
-
-    public void removeAward(Award award) { awardsWon.remove(award); }
+    public void setAwardWon(Award awardWon) { this.awardWon = awardWon; }
 
     @Override
     public String toString() {
@@ -69,7 +77,21 @@ public class Movie {
                 "  boxOffice: " + boxOffice + NEWLINE_WITH_COMMA +
                 "  releaseDate: " + releaseDate + NEWLINE_WITH_COMMA +
                 "  actorsFeaturing: " + actorsFeaturing + NEWLINE_WITH_COMMA +
-                "  awardsWon: " + awardsWon + '\n' +
+                "  awardWon: " + awardWon + '\n' +
                 "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return imdbId.equals(movie.imdbId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(imdbId);
+    }
+
 }

@@ -1,20 +1,20 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
+
 import java.time.LocalDate;
-import java.util.List;
 
 public class Patient {
     private String dni;
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    private  Appoinment Appoinment;
+    private Appoinment appoinment; // Cambié el nombre a 'appoinment' para que sea coherente.
 
     public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appoinment appoinment) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
-        this.Appoinment = appoinment;
+        this.appoinment = appoinment;
     }
 
     public String getDni() {
@@ -50,21 +50,21 @@ public class Patient {
     }
 
     public Appoinment getAppoinment() {
-        return Appoinment;
+        return appoinment;
     }
 
     public void setAppoinment(Appoinment appoinment) {
-        Appoinment = appoinment;
+        this.appoinment = appoinment;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "Patient{" +
                 "dni='" + dni + '\'' +
                 ", fullname='" + fullname + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", hasInsurance=" + hasInsurance +
-                ", Appoinment=" + Appoinment +
+                ", appoinment=" + appoinment +
                 '}';
     }
 }

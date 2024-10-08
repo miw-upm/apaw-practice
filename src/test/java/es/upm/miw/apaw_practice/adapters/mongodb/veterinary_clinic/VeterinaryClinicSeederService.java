@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.daos.AnimalRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.daos.ClinicRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.daos.EmployeeRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.daos.OwnerRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.daos.OwnerClinicRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.AnimalEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.ClinicEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.EmployeeEntity;
@@ -27,7 +27,7 @@ public class VeterinaryClinicSeederService {
     @Autowired
     private AnimalRepository animalRepository;
     @Autowired
-    private OwnerRepository ownerRepository;
+    private OwnerClinicRepository ownerClinicRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("-------- Veterinary Clinic Initial Load --------");
@@ -38,7 +38,7 @@ public class VeterinaryClinicSeederService {
                 new OwnerEntity(new Owner("Mary", "Street Principal", "852693147")),
                 new OwnerEntity(new Owner("Aitana", "Street San Juan", "651234879"))
         };
-        this.ownerRepository.saveAll(Arrays.asList(owners));
+        this.ownerClinicRepository.saveAll(Arrays.asList(owners));
 
         AnimalEntity[] animals = {
                 new AnimalEntity("Lara", 10,
@@ -74,7 +74,7 @@ public class VeterinaryClinicSeederService {
     }
 
     public void deleteAll() {
-        this.ownerRepository.deleteAll();
+        this.ownerClinicRepository.deleteAll();
         this.animalRepository.deleteAll();
         this.employeeRepository.deleteAll();
         this.clinicRepository.deleteAll();

@@ -7,7 +7,7 @@ public class Ride {
     private String name;
     private String theme;
     private Integer maxCapacity;
-    private LocalDate creationDate;
+    private LocalDate openingDate;
     private Boolean favourite;
     private List<User> users;
 
@@ -15,11 +15,11 @@ public class Ride {
         //empty for framework
     }
 
-    public Ride(String name, String theme, Integer maxCapacity, LocalDate creationDate, Boolean favourite, List<User> users) {
+    public Ride(String name, String theme, Integer maxCapacity, LocalDate openingDate, Boolean favourite, List<User> users) {
         this.name = name;
         this.theme = theme;
         this.maxCapacity = maxCapacity;
-        this.creationDate = creationDate;
+        this.openingDate = openingDate;
         this.favourite = favourite;
         this.users = users;
     }
@@ -44,12 +44,12 @@ public class Ride {
 
     public void setMaxCapacity(Integer maxCapacity) { this.maxCapacity = maxCapacity; }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
+    public LocalDate getOpeningDate() {
+        return openingDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
+    public void setOpeningDate(LocalDate openingDate) {
+        this.openingDate = openingDate;
     }
 
     public Boolean getFavourite() {
@@ -74,7 +74,7 @@ public class Ride {
                 "name=" + name +
                 ", theme='" + theme + '\'' +
                 ", maxCapacity=" + maxCapacity +
-                ", creationDate=" + creationDate +
+                ", openingDate=" + openingDate +
                 ", favourite='" + favourite + '\'' +
                 ", usersAddress='" + users.stream().map(User::getAddress).toList() +
                 '}';
