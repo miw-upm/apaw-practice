@@ -3,25 +3,35 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+public class Appoinment package es.upm.miw.apaw_practice.domain.models.Hospital;
+
+        import java.time.LocalDate;
+        import java.time.LocalTime;
+
 public class Appoinment {
-    private String Id;
+    private String id;
     private LocalDate date;
     private LocalTime time;
     private String location;
 
+    // Constructor por defecto
+    public Appoinment() {
+    }
+
+    // Constructor que requiere todos los parámetros
     public Appoinment(String id, LocalDate date, LocalTime time, String location) {
-        this.Id = id;
+        this.id = id;
         this.date = date;
         this.time = time;
         this.location = location;
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public LocalDate getDate() {
@@ -48,13 +58,14 @@ public class Appoinment {
         this.location = location;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "Appoinment{" +
-                "Id='" + Id + '\'' +
+                "id='" + id + '\'' +
                 ", date=" + date +
                 ", time=" + time +
                 ", location='" + location + '\'' +
                 '}';
     }
 }
+

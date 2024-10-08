@@ -62,8 +62,6 @@ public class AppoinmentEntity {
     }
 
     public Appoinment toAppoinment() {
-        Appoinment appoinment = new Appoinment();
-        BeanUtils.copyProperties(this, appoinment);
-        return appoinment;
+        return new Appoinment(this.id, this.date, this.time, this.location);
     }
 }

@@ -1,40 +1,53 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
-import org.springframework.beans.BeanUtils;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appoinment;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-public class HospitalEntity {
+
+public class AppoinmentEntity {
     @Id
-    private String name;
+    private String id;
+    private LocalDate date;
+    private LocalTime time;
     private String location;
-    private int capacity;
-    @DBRef
-    private List<DoctorEntity> doctores;
-    @DBRef
-    private List<PatientEntity> patients;
 
-    public HospitalEntity() {
-        // empty for framework
+    public AppoinmentEntity() {
+        // Constructor vacío para el framework
     }
 
-    public HospitalEntity(String name, String location, int capacity, List<DoctorEntity> doctores, List<PatientEntity> patients) {
-        this.name = name;
+    public AppoinmentEntity(String id, LocalDate date, LocalTime time, String location) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
         this.location = location;
-        this.capacity = capacity;
-        this.doctores = doctores;
-        this.patients = patients;
     }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     public String getLocation() {
@@ -45,37 +58,7 @@ public class HospitalEntity {
         this.location = location;
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public List<DoctorEntity> getDoctores() {
-        return doctores;
-    }
-
-    public void setDoctores(List<DoctorEntity> doctores) {
-        this.doctores = doctores;
-    }
-
-    public List<PatientEntity> getPatients() {
-        return patients;
-    }
-
-    public void setPatients(List<PatientEntity> patients) {
-        this.patients = patients;
-    }
-
-    public void fromHospital(Hospital hospital) {
-        BeanUtils.copyProperties(hospital, this);
-    }
-
-    public Hospital toHospital() {
-        Hospital hospital = new Hospital();
-        BeanUtils.copyProperties(this, hospital, "doctores", "patients");
-        return hospital;
+    public Appoinment toAppoinment() {
+        return new Appoinment(this.id, this.date, this.time, this.location);
     }
 }

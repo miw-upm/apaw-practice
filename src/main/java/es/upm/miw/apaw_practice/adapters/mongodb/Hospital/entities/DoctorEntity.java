@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+
 import java.math.BigDecimal;
 
 public class DoctorEntity {
