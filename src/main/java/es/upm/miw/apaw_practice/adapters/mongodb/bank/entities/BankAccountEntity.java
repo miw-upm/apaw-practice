@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.bank.entities;
 
+import es.upm.miw.apaw_practice.domain.models.bank.BankAccount;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -81,6 +82,10 @@ public class BankAccountEntity {
 
     public void setClient(ClientEntity clientEntity) {
         this.clientEntity = clientEntity;
+    }
+
+    public BankAccount toBankAccount() {
+        return new BankAccount(iban, balance, openingDate, hasInterest, clientEntity.toClient());
     }
 
     @Override
