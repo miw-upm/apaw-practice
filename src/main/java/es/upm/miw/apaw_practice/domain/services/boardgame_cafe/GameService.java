@@ -13,4 +13,8 @@ public class GameService {
     public GameService(GamePersistence gamePersistence) {
         this.gamePersistence = gamePersistence;
     }
+
+    public void deleteGame(String gameName) {
+        this.gamePersistence.delete(gameName);
+    }
 }
