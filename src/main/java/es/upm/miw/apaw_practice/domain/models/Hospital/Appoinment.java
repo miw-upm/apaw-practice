@@ -3,11 +3,6 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Appoinment package es.upm.miw.apaw_practice.domain.models.Hospital;
-
-        import java.time.LocalDate;
-        import java.time.LocalTime;
-
 public class Appoinment {
     private String id;
     private LocalDate date;
@@ -68,4 +63,3 @@ public class Appoinment {
                 '}';
     }
 }
-
