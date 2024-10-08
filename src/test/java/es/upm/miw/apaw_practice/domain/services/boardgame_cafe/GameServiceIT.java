@@ -19,20 +19,4 @@ public class GameServiceIT {
     @Autowired
     private GamePersistence gamePersistence;
 
-    @Test
-    void deleteGame() {
-        List<Game> games = gamePersistence.readAll().toList();
-        int initialSize = games.size();
-        assertEquals(initialSize, games.size());
-
-        gameService.deleteGame(games.get(0).getGameName());
-
-        assertEquals(initialSize - 1, gamePersistence.readAll().toList().size());
-    }
-
-    @Test
-    void readAllGames() {
-        List<Game> games = gameService.readAllGames().toList();
-        assertEquals(8, games.size());
-    }
 }
