@@ -78,7 +78,7 @@ public class ThemePark {
                 "id='" + id + '\'' +
                 ", creationDate=" + creationDate +
                 ", rides=" + rides +
-                ", isOpen='" + opened + '\'' +
+                ", opened='" + opened + '\'' +
                 ", price='" + price + '\'' +
                 '}';
     }

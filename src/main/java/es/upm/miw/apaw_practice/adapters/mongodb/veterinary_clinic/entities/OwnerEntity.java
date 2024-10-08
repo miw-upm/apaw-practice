@@ -59,6 +59,12 @@ public class OwnerEntity {
         this.phone = phone;
     }
 
+    public Owner toOwner() {
+        Owner owner = new Owner();
+        BeanUtils.copyProperties(this, owner);
+        return owner;
+    }
+
     @Override
     public boolean equals(Object object) {
         return this == object || object != null && getClass() == object.getClass() &&
