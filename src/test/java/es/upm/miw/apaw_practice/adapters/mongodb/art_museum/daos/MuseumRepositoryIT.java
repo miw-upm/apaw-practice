@@ -32,4 +32,15 @@ class MuseumRepositoryIT {
                 .toList()
                 .contains("Spanish authors"));
     }
+
+    @Test
+    void testDeleteByName() {
+        MuseumEntity museumEntity = new MuseumEntity("Museum", 100, true, List.of(), List.of());
+        this.museumRepository.save(museumEntity);
+        assertTrue(this.museumRepository.findByName("Museum").isPresent());
+
+        int deletedCount = this.museumRepository.deleteByName("Museum");
+        assertEquals(1, deletedCount);
+        assertFalse(this.museumRepository.findByName("Museum").isPresent());
+    }
 }
