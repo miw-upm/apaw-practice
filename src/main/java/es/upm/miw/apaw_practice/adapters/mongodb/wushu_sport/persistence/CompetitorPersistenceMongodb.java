@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.persistence;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.competition.entities.CompetitionEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.daos.CompetitorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.CompetitorEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -30,7 +29,7 @@ public class CompetitorPersistenceMongodb implements CompetitorPersistence {
     @Override
     public Competitor readByLicence(String licence) {
         return this.competitorRepository.findByLicence(licence)
-                .orElseThrow(() -> new NotFoundException("Competitor with licence " + licence + " not found"))
+                .orElseThrow(() -> new NotFoundException("Competitor with licence " + licence))
                 .toCompetitor();
     }
 }

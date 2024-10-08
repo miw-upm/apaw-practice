@@ -3,14 +3,12 @@ package es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.CompetitionForm;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.Competitor;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -92,15 +90,11 @@ public class CompetitorEntity {
     }
 
     public Competitor toCompetitor(){
-        Competitor competitor = new Competitor();
-        BeanUtils.copyProperties(this, competitor, "competitionFormsEntities", "wuhsuGradeEntity");
         List<CompetitionForm> competitionForms = this.competitionFormsEntities.stream()
                 .map(CompetitionFormEntity::toCompetitionForm)
                 .collect(Collectors.toList());
         WushuGrade wushuGrade = this.wuhsuGradeEntity.toWushuGrade();
-        competitor.setCompetitionForms(competitionForms);
-        competitor.setWushuGrade(wushuGrade);
-        return competitor;
+        return new Competitor( licence,federatedYears,lastFederationDate,wushuGrade,competitionForms);
     }
 
     @Override
