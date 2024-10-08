@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
-@Repository("UserPersistence")
+@Repository("userPersistence")
 public class UserPersistenceMongodb implements UserPersistence {
 
     private final UserRepository userRepository;
@@ -36,9 +36,9 @@ public class UserPersistenceMongodb implements UserPersistence {
     }
 
     @Override
-    public User create(User User) {
+    public User create(User user) {
         return this.userRepository
-                .save(new UserEntity(User))
+                .save(new UserEntity(user))
                 .toUser();
     }
 
