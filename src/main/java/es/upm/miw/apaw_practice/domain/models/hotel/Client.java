@@ -5,15 +5,16 @@ public class Client {
     private String name;
     private String phone;
     private String email;
+    private Reservation reservation;
 
     public Client(){
 
     }
-    public Client(String identityDocument, String name, String phone, String email){
+    public Client(String identityDocument, String name, String phone, String email, Reservation reservation){
         this.identityDocument = identityDocument;
         this.name = name;
         this.phone = phone;
-        this.email = email;
+        this.reservation = reservation;
     }
 
     public String getIdentityDocument() {
@@ -47,6 +48,10 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Reservation getReservation() { return this.reservation; }
+
+    public void setReservation(final Reservation reservation) { this.reservation = reservation; }
 
     @Override
     public String toString() {

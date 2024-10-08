@@ -20,4 +20,8 @@ public class OrganizationService {
         organization.setInternational(!organization.isInternational());
         return this.organizationPersistence.updateOrganization(organization);
     }
+
+    public Organization createOrganization(Organization organization) {
+        return this.organizationPersistence.createOrganization(organization);
+    }
 }

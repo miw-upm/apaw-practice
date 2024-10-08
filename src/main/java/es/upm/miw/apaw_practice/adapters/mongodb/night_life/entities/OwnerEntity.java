@@ -18,6 +18,11 @@ public class OwnerEntity {
         //empty for framework
     }
 
+    public OwnerEntity(Owner owner) {
+        BeanUtils.copyProperties(owner, this);
+        this.id = UUID.randomUUID().toString();
+    }
+
     public OwnerEntity(String name, String phone, String email) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
