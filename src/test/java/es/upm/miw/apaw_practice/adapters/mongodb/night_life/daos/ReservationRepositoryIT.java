@@ -2,21 +2,17 @@ package es.upm.miw.apaw_practice.adapters.mongodb.night_life.daos;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import es.upm.miw.apaw_practice.TestConfig;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 
 @TestConfig
-public class ReservationRepositoryIT {
+class ReservationRepositoryIT {
     @Autowired
     private ReservationRepository reservationRepository;
-    @Test
 
+    @Test
     void testCreateAndRead() {
         assertTrue(this.reservationRepository.findAll().stream()
                 .anyMatch(reservation ->

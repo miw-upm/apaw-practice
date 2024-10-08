@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import es.upm.miw.apaw_practice.TestConfig;
 
 @TestConfig
-public class CustomerNightLifeRepositoryIT {
+class CustomerNightLifeRepositoryIT {
 
     @Autowired
     private CustomerNightLifeRepository customerNightLifeRepository;
