@@ -6,7 +6,6 @@ import es.upm.miw.apaw_practice.domain.models.university.DegreeUpdate;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.DegreePersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.endpoint.web.PathMappedEndpoints;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
@@ -22,8 +21,6 @@ public class DegreeResourceIT {
 
     @Autowired
     private DegreePersistence degreePersistence;
-    @Autowired
-    private PathMappedEndpoints pathMappedEndpoints;
 
     @Test
     void testRead() {
