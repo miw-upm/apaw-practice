@@ -29,6 +29,12 @@ public class OwnerCarEntity {
         this.id = UUID.randomUUID().toString();
     }
 
+    public OwnerCar toOwnerCar(){
+        OwnerCar ownerCar = new OwnerCar();
+        BeanUtils.copyProperties(this, ownerCar);
+        return ownerCar;
+    }
+
     public String getId() {
         return id;
     }

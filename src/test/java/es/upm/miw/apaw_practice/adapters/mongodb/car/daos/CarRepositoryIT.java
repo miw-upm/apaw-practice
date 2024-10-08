@@ -33,6 +33,10 @@ public class CarRepositoryIT {
         assertTrue(car.getPiecesEntity().stream()
                 .map(PieceEntity::getPartNumber)
                 .collect(Collectors.toList())
-                .containsAll(Arrays.asList("SFGE"))); // El código de la pieza asociada al Mustang
+                .containsAll(Arrays.asList("SFGE")));
+    }
+
+    void testFindModelNotExisting(){
+        assertTrue(this.carRepository.findByModel("QQQ").isEmpty());
     }
 }

@@ -1,7 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.car.Car;
 import org.springframework.data.annotation.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -88,6 +90,12 @@ public class CarEntity {
 
     public void setPiecesEntity(List<PieceEntity> piecesEntity) {
         this.piecesEntity = piecesEntity;
+    }
+
+    public Car toCar(){
+        Car car = new Car();
+        BeanUtils.copyProperties(this, car);
+        return car;
     }
 
     @Override

@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.beans.BeanUtils;
+import es.upm.miw.apaw_practice.domain.models.car.Piece;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,7 +38,11 @@ public class PieceEntity {
         this.cost = cost;
         this.manufacturerListEntity = manufacturerListEntity;
     }
-
+    public Piece toPiece(){
+        Piece piece = new Piece();
+        BeanUtils.copyProperties(this, piece);
+        return piece;
+    }
     public String getId() {
         return id;
     }
