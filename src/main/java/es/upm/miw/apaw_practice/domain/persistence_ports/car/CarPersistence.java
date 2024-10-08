@@ -8,5 +8,5 @@ import java.util.stream.Stream;
 @Repository
 public interface CarPersistence {
 
-
+    Car readByModel(String model);
 }
