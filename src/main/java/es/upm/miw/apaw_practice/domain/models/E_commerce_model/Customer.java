@@ -1,24 +1,38 @@
 package es.upm.miw.apaw_practice.domain.models.E_commerce_model;
-import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
+
 import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
 
 import java.util.List;
 
 public class Customer {
+
+    private String customerId;
     private String userName;
     private String email;
-    private int postalCode;
+    private Integer postalCode;
     private ShoppingCart shoppingCart;
     private List<ShippingAddress> shippingAddresses;
 
-    public Customer(String userName, String email, int postalCode, ShoppingCart shoppingCart) {
+    public Customer() {
+        // Empty for framework
+    }
+
+    public Customer(String customerId, String userName, String email, Integer postalCode, ShoppingCart shoppingCart) {
+        this.customerId = customerId;
         this.userName = userName;
         this.email = email;
         this.postalCode = postalCode;
         this.shoppingCart = shoppingCart;
     }
 
-    // Getter 和 Setter 方法
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -35,11 +49,11 @@ public class Customer {
         this.email = email;
     }
 
-    public int getPostalCode() {
+    public Integer getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(int postalCode) {
+    public void setPostalCode(Integer postalCode) {
         this.postalCode = postalCode;
     }
 
@@ -55,17 +69,19 @@ public class Customer {
         return shippingAddresses;
     }
 
-    public void setShippingAddresses (List<ShippingAddress> shippingAddresses) {
+    public void setShippingAddresses(List<ShippingAddress> shippingAddresses) {
         this.shippingAddresses = shippingAddresses;
     }
 
     @Override
     public String toString() {
         return "Customer{" +
-                "userName='" + userName + '\'' +
+                "customerId='" + customerId + '\'' +
+                ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", postalCode=" + postalCode +
                 ", shoppingCart=" + shoppingCart +
+                ", shippingAddresses=" + shippingAddresses +
                 '}';
     }
 }
