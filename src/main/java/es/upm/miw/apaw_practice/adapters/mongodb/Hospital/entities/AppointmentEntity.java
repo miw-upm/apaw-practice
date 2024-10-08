@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
+package es.upm.miw.apaw_practice.adapters.mongodb.hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -19,14 +19,18 @@ public class AppointmentEntity {
     private String location;
 
     @DBRef
-    private PatientEntity patient;
+    private PatientEntity patientEntity;
 
-    public AppointmentEntity(LocalDate date, LocalTime time, String location, PatientEntity patient) {
+    public AppointmentEntity() {
+        // Empty constructor for framework
+    }
+
+    public AppointmentEntity(LocalDate date, LocalTime time, String location, PatientEntity patientEntity) {
         this.id = UUID.randomUUID().toString();
         this.date = date;
         this.time = time;
         this.location = location;
-        this.patient = patient;
+        this.patientEntity = patientEntity;
     }
 
     public String getId() {
@@ -61,14 +65,17 @@ public class AppointmentEntity {
         this.location = location;
     }
 
-
-
-    public PatientEntity getPatient() {
-        return patient;
+    public PatientEntity getPatientEntity() {
+        return patientEntity;
     }
 
-    public void setPatient(PatientEntity patient) {
-        this.patient = patient;
+    public void setPatientEntity(PatientEntity patientEntity) {
+        this.patientEntity = patientEntity;
+    }
+
+    // Method to convert this entity to a domain model (similar to toArticleItem)
+    public Appointment toAppointment() {
+        return new Appointment(this.date, this.time, this.location, this.patientEntity.toPatient());
     }
 
     @Override
@@ -78,7 +85,7 @@ public class AppointmentEntity {
                 ", date=" + date +
                 ", time=" + time +
                 ", location='" + location + '\'' +
-                ", patient=" + patient +
+                ", patientEntity=" + patientEntity +
                 '}';
     }
 }
