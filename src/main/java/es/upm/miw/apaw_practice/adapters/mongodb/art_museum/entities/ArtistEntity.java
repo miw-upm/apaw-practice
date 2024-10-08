@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities;
 
 import es.upm.miw.apaw_practice.domain.models.art_museum.Artist;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,6 +25,12 @@ public class ArtistEntity {
     public ArtistEntity(Artist artist) {
         BeanUtils.copyProperties(artist, this);
         this.id = UUID.randomUUID().toString();
+    }
+
+    public Artist toArtist() {
+        Artist artist = new Artist();
+        BeanUtils.copyProperties(this, artist);
+        return artist;
     }
 
     public String getId() {
