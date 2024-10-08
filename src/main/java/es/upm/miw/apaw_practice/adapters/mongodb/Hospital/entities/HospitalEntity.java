@@ -1,29 +1,30 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appoinment;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.List;
 
-
-public class AppoinmentEntity {
+public class HospitalEntity {
     @Id
     private String id;
-    private LocalDate date;
-    private LocalTime time;
+    private String name;
     private String location;
+    private int capacity;
+    private List<DoctorEntity> doctors;
+    private List<PatientEntity> patients;
 
-    public AppoinmentEntity() {
-        // Constructor vacío para el framework
-    }
 
-    public AppoinmentEntity(String id, LocalDate date, LocalTime time, String location) {
+    public HospitalEntity() {}
+
+    public HospitalEntity(String id, String name, String location, int capacity, List<DoctorEntity> doctors, List<PatientEntity> patients) {
         this.id = id;
-        this.date = date;
-        this.time = time;
+        this.name = name;
         this.location = location;
+        this.capacity = capacity;
+        this.doctors = doctors;
+        this.patients = patients;
     }
 
     public String getId() {
@@ -34,20 +35,12 @@ public class AppoinmentEntity {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getName() {
+        return name;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLocation() {
@@ -58,7 +51,44 @@ public class AppoinmentEntity {
         this.location = location;
     }
 
-    public Appoinment toAppoinment() {
-        return new Appoinment(this.id, this.date, this.time, this.location);
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public List<DoctorEntity> getDoctors() {
+        return doctors;
+    }
+
+    public void setDoctors(List<DoctorEntity> doctors) {
+        this.doctors = doctors;
+    }
+
+    public List<PatientEntity> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<PatientEntity> patients) {
+        this.patients = patients;
+    }
+
+    @Override
+    public String toString() {
+        return "HospitalEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", capacity=" + capacity +
+                ", doctors=" + doctors +
+                ", patients=" + patients +
+                '}';
+    }
+
+    // Método para convertir HospitalEntity a Hospital
+    public Hospital toHospital() {
+        return new Hospital(this.name, this.location, this.capacity, this.doctors, this.patients);
     }
 }
