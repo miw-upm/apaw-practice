@@ -2,6 +2,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import es.upm.miw.apaw_practice.domain.models.Hospital.entities.PatientEntity;
+import es.upm.miw.apaw_practice.domain.models.Hospital.entities.DoctorEntity;
 
 
 import java.util.List;
