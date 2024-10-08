@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 @RestTestConfig
-public class MissionResourceIT {
+class MissionResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 

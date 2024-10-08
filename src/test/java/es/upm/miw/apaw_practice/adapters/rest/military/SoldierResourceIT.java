@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @RestTestConfig
-public class SoldierResourceIT {
+class SoldierResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
