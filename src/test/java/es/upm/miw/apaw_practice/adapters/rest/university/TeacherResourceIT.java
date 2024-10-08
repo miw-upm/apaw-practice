@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.rest.university;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.university.Teacher;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.TeacherPersistence;
+import es.upm.miw.apaw_practice.domain.persistence_ports.university.UniversityPersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -21,6 +22,9 @@ public class TeacherResourceIT {
     @Autowired
     private TeacherPersistence teacherPersistence;
 
+    @Autowired
+    private UniversityPersistence universityPersistence;
+
     @Test
     void testDeleteNonExisting() {
         deleteTeacher("ABC123").expectStatus().isOk();
@@ -28,7 +32,7 @@ public class TeacherResourceIT {
 
     @Test
     void testDeleteExisting() {
-        teacherPersistence.create(new Teacher("0001", LocalDate.of(1990, 1, 2), "Taylor", null));
+        teacherPersistence.create(new Teacher("0001", LocalDate.of(1990, 1, 2), "Taylor", universityPersistence.read("ox.ac.uk")));
         assertTrue(teacherPersistence.existNationalId("0001"));
         deleteTeacher("0001").expectStatus().isOk();
         assertFalse(teacherPersistence.existNationalId("0001"));
@@ -36,7 +40,7 @@ public class TeacherResourceIT {
 
     @Test
     void testDeleteIsIdempotent() {
-        teacherPersistence.create(new Teacher("0002", LocalDate.of(1984, 2, 15), "Simpson", null));
+        teacherPersistence.create(new Teacher("0002", LocalDate.of(1984, 2, 15), "Simpson", universityPersistence.read("cam.ac.uk")));
         deleteTeacher("0002").expectStatus().isOk();
         deleteTeacher("0002").expectStatus().isOk();
     }
