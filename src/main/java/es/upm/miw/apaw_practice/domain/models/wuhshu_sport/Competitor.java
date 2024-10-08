@@ -8,7 +8,7 @@ public class Competitor {
     private String licence;
     private Integer federatedYears;
     private LocalDate lastFederationDate;
-    private WushuGrade competitorGrade;
+    private WushuGrade wushuGrade;
     private List<CompetitionForm> competitionForms;
 
     public Competitor() {
@@ -39,20 +39,20 @@ public class Competitor {
         this.federatedYears = federatedYears;
     }
 
-    public LocalDate getLastFederatedDate() {
+    public LocalDate getLastFederationDate() {
         return lastFederationDate;
     }
 
-    public void setLastFederatedDate(LocalDate lastFederatedDate) {
-        this.lastFederationDate = lastFederatedDate;
+    public void setLastFederationDate(LocalDate lastFederationDate) {
+        this.lastFederationDate = lastFederationDate;
     }
 
-    public WushuGrade getCompetitorGrade() {
-        return competitorGrade;
+    public WushuGrade getWushuGrade() {
+        return wushuGrade;
     }
 
-    public void setCompetitorGrade(WushuGrade competitorGrade) {
-        this.competitorGrade = competitorGrade;
+    public void setWushuGrade(WushuGrade wushuGrade) {
+        this.wushuGrade = wushuGrade;
     }
 
     public List<CompetitionForm> getCompetitionForms() {
@@ -74,8 +74,10 @@ public class Competitor {
                 "licence='" + licence + '\'' +
                 ", federatedYears=" + federatedYears +
                 ", lastFederationDate=" + lastFederationDate +
-                ", competitorGrade=" + competitorGrade +
+                ", wushuGrade=" + wushuGrade +
                 ", competitionForms=" + competitionForms +
                 '}';
     }
+
+
 }
