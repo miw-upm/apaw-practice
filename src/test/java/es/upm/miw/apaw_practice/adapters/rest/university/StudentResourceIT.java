@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.rest.university;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.university.Student;
+import es.upm.miw.apaw_practice.domain.persistence_ports.university.DegreePersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.university.StudentPersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class StudentResourceIT {
     @Autowired
     private StudentPersistence studentPersistence;
 
+    @Autowired
+    private DegreePersistence degreePersistence;
+
     @Test
     void testUpdateNonExisting() {
         Student student = new Student("example@alumnos.upm.es", "Marco", "Valencia", LocalDate.of(1992, 12, 12), List.of());
@@ -34,15 +38,17 @@ public class StudentResourceIT {
         assertEquals("Olivia", student.getFirstName());
         assertEquals("Liverpool", student.getPlaceOfBirth());
         assertEquals(LocalDate.of(1999, 9, 12), student.getEnrollmentDate());
+        assertEquals(List.of(degreePersistence.read(2000)), student.getEnrolledDegrees());
         student.setFirstName("Martha");
         student.setPlaceOfBirth("Birmingham");
         student.setEnrollmentDate(LocalDate.of(2002, 12, 12));
-        student.setDegrees(List.of());
+        student.setEnrolledDegrees(List.of(degreePersistence.read(2003)));
         updateStudent(student).expectStatus().isOk();
         Student updatedStudent = studentPersistence.read(student.getEmail());
         assertEquals(student.getFirstName(), updatedStudent.getFirstName());
         assertEquals(student.getPlaceOfBirth(), updatedStudent.getPlaceOfBirth());
         assertEquals(student.getEnrollmentDate(), updatedStudent.getEnrollmentDate());
+        assertEquals(student.getEnrolledDegrees(), updatedStudent.getEnrolledDegrees());
     }
 
     private WebTestClient.ResponseSpec updateStudent(Student student) {

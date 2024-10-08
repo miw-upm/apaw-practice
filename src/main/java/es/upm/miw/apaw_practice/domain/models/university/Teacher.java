@@ -6,17 +6,17 @@ public class Teacher {
     private String nationalId;
     private LocalDate birthDate;
     private String lastName;
-    private University university;
+    private University workplace;
 
     public Teacher() {
         //empty for framework
     }
 
-    public Teacher(String nationalId, LocalDate birthDate, String lastName, University university) {
+    public Teacher(String nationalId, LocalDate birthDate, String lastName, University workplace) {
         this.nationalId = nationalId;
         this.birthDate = birthDate;
         this.lastName = lastName;
-        this.university = university;
+        this.workplace = workplace;
     }
 
     public String getNationalId() {
@@ -43,12 +43,12 @@ public class Teacher {
         this.lastName = lastName;
     }
 
-    public University getUniversity() {
-        return university;
+    public University getWorkplace() {
+        return workplace;
     }
 
-    public void setUniversity(University university) {
-        this.university = university;
+    public void setWorkplace(University workplace) {
+        this.workplace = workplace;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Teacher {
                 "nationalId='" + nationalId + '\'' +
                 ", birthDate=" + birthDate +
                 ", lastName='" + lastName + '\'' +
-                ", workPlace=" + university +
+                ", workplace=" + workplace +
                 '}';
     }
 }

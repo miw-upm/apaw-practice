@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.university.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.DegreeRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.daos.StudentRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.StudentEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -15,9 +16,12 @@ public class StudentPersistenceMongodb implements StudentPersistence {
 
     private final StudentRepository studentRepository;
 
+    private final DegreeRepository degreeRepository;
+
     @Autowired
-    public StudentPersistenceMongodb(StudentRepository studentRepository) {
+    public StudentPersistenceMongodb(StudentRepository studentRepository, DegreeRepository degreeRepository) {
         this.studentRepository = studentRepository;
+        this.degreeRepository = degreeRepository;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class StudentPersistenceMongodb implements StudentPersistence {
     @Override
     public Student create(Student student) {
         return studentRepository
-                .save(new StudentEntity(student))
+                .save(fixDegreeRelationship(new StudentEntity(student)))
                 .toStudent();
     }
 
@@ -42,7 +46,7 @@ public class StudentPersistenceMongodb implements StudentPersistence {
                 .orElseThrow(() -> new NotFoundException("Student email: " + email));
         studentEntity.fromStudent(student);
         return studentRepository
-                .save(studentEntity)
+                .save(fixDegreeRelationship(studentEntity))
                 .toStudent();
     }
 
@@ -59,5 +63,16 @@ public class StudentPersistenceMongodb implements StudentPersistence {
         return studentRepository
                 .findByEmail(email)
                 .isPresent();
+    }
+
+    private StudentEntity fixDegreeRelationship(StudentEntity studentEntity) {
+        studentEntity.setEnrolledDegrees(studentEntity
+                .getEnrolledDegrees()
+                .stream()
+                .map(degree -> degreeRepository
+                        .findByCode(degree.getCode())
+                        .orElse(degree))
+                .toList());
+        return studentEntity;
     }
 }
