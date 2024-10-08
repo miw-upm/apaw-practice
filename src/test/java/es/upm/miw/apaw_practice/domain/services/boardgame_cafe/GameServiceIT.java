@@ -33,6 +33,6 @@ public class GameServiceIT {
     @Test
     void readAllGames() {
         List<Game> games = gameService.readAllGames().toList();
-        assertEquals(6, games.size());
+        assertEquals(8, games.size());
     }
 }
