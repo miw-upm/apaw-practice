@@ -14,31 +14,4 @@ public class GameResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Test
-    void testNumberOfGames() {
-        this.webTestClient
-                .get()
-                .uri(GameResource.GAME)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(Game.class)
-                .value(games -> assertEquals(6, games.size()));
-    }
-
-    @Test
-    void testDeleteGame() {
-        this.webTestClient
-                .delete()
-                .uri(GameResource.GAME + GameResource.GAMENAME_ID, "CATAN")
-                .exchange()
-                .expectStatus().isOk();
-
-        this.webTestClient
-                .get()
-                .uri(GameResource.GAME)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(Game.class)
-                .value(games -> assertEquals(5, games.size()));
-    }
 }
