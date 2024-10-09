@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.bank.entities;
 import es.upm.miw.apaw_practice.domain.models.bank.InvestmentFund;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ public class InvestmentFundEntity {
 
     @Id
     private String id;
+    @Indexed(unique = true)
     private String name;
     private BigDecimal totalCapital;
     private Integer assets;

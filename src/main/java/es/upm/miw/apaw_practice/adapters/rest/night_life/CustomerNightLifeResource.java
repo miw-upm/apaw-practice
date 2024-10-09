@@ -1,4 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.night_life;
+import es.upm.miw.apaw_practice.domain.models.night_life.Customer;
 import es.upm.miw.apaw_practice.domain.services.night_life.CustomerNightLifeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,4 +20,8 @@ public class CustomerNightLifeResource {
         this.customerNightLifeService.delete(name);
     }
 
+    @PutMapping(NAME_ID)
+    public Customer update(@PathVariable String name, @RequestBody Customer customer){
+        return this.customerNightLifeService.update(name, customer);
+    }
 }
