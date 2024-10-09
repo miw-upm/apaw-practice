@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.night_life.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.daos.CustomerNightLifeRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities.CustomerEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities.ReservationEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.night_life.Customer;
 import es.upm.miw.apaw_practice.domain.persistence_ports.night_life.CustomerNightLifePersistence;
