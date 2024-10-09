@@ -15,7 +15,9 @@ public class UnitService {
     private final UnitPersistence unitPersistence;
 
     @Autowired
-    public UnitService(UnitPersistence unitPersistence) { this.unitPersistence = unitPersistence; }
+    public UnitService(UnitPersistence unitPersistence) {
+        this.unitPersistence = unitPersistence;
+    }
 
     public Unit create(Unit unit) {
         this.assertNameNotExist(unit.getName());
@@ -35,7 +37,7 @@ public class UnitService {
         }
     }
 
-    public Stream<Unit> findBySoldiers (List<Soldier> soldiers) {
+    public Stream<Unit> findBySoldiers(List<Soldier> soldiers) {
         List<String> identityDocuments = soldiers.stream()
                 .map(Soldier::getIdentityDocument)
                 .toList();

@@ -22,7 +22,6 @@ public class ArtistResource {
 
     @PostMapping
     public Artist create(@RequestBody Artist artist) {
-//        artist.doDefault();
         return this.artistService.create(artist);
     }
 }

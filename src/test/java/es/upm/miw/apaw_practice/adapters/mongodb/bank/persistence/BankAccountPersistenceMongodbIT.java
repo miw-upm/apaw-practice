@@ -22,12 +22,12 @@ public class BankAccountPersistenceMongodbIT {
     }
 
     @Test
-    void testFindByDni() {
-        BankAccount bankAccount = this.bankAccountPersistenceMongodb.updateHasInterest("IBAN1", true);
+    void testUpdateHasInterest() {
+        BankAccount bankAccount = this.bankAccountPersistenceMongodb.updateHasInterest("IBAN2", false);
         assertNotNull(bankAccount);
-        assertEquals("IBAN1", bankAccount.getIban());
-        assertEquals(new BigDecimal("100.0"), bankAccount.getBalance());
-        assertTrue(bankAccount.hasInterest());
+        assertEquals("IBAN2", bankAccount.getIban());
+        assertEquals(new BigDecimal("40000.0"), bankAccount.getBalance());
+        assertFalse(bankAccount.hasInterest());
 
     }
 

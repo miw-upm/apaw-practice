@@ -14,7 +14,9 @@ public class MissionResource {
     private final MissionService missionService;
 
     @Autowired
-    public MissionResource(MissionService missionService) { this.missionService = missionService; }
+    public MissionResource(MissionService missionService) {
+        this.missionService = missionService;
+    }
 
     @PutMapping(CODENAME_ID)
     public Mission update(@PathVariable String codeName, @RequestBody Mission mission) {

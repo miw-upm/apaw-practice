@@ -12,4 +12,6 @@ public interface OrganizationPersistence {
     Organization updateOrganization(Organization organization);
 
     Stream<Organization> readAll();
+
+    Organization createOrganization(Organization organization);
 }

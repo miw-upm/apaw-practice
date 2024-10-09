@@ -23,7 +23,7 @@ public class Operator {
     }
 
     public void setIdEmployee(String idEmployee) {
-        this.idEmployee = this.idEmployee;
+        this.idEmployee = idEmployee;
     }
 
     public String getNick() {
