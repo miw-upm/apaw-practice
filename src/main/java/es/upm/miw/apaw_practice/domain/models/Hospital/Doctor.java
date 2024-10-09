@@ -7,7 +7,7 @@ public class Doctor {
     private String fullname;
     private BigDecimal salary;
 
-=
+
     public Doctor() {
     }
 
