@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.shopping_center;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.EmployeeRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.EmployeeShoppingCenterRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.ProviderRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.ShopRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.TicketRepository;
@@ -26,7 +26,7 @@ public class ShoppingCenterSeederService {
     @Autowired
     private ProviderRepository providerRepository;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeShoppingCenterRepository employeeShoppingCenterRepositoryRepository;
     @Autowired
     private TicketRepository ticketRepository;
 
@@ -45,7 +45,7 @@ public class ShoppingCenterSeederService {
                 new EmployeeEntity(new Employee("11122233D", "Juan", "600000004")),
                 new EmployeeEntity(new Employee("11122233E", "Maria", "600000005"))
         };
-        this.employeeRepository.saveAll(Arrays.asList(employees));
+        this.employeeShoppingCenterRepositoryRepository.saveAll(Arrays.asList(employees));
         ShopEntity[] shops = {
                 new ShopEntity("shop1", "dir1", List.of(employees[0], employees[1]), List.of(providers[1])),
                 new ShopEntity("shop2", "dir2", List.of(employees[2], employees[3]), List.of(providers[0], providers[1], providers[2])),
@@ -67,7 +67,7 @@ public class ShoppingCenterSeederService {
     public void deleteAll() {
         this.shopRepository.deleteAll();
         this.providerRepository.deleteAll();
-        this.employeeRepository.deleteAll();
+        this.employeeShoppingCenterRepositoryRepository.deleteAll();
         this.ticketRepository.deleteAll();
     }
 }
