@@ -18,7 +18,7 @@ public class Competitor {
         this.licence = licence;
         this.federatedYears = federatedYears;
         this.lastFederationDate = lastFederationDate;
-
+        this.wushuGrade = grade;
         this.competitionForms = competitionForms;
     }
 
