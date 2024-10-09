@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PieceService {
-
     private final PiecePersistence piecePersistence;
-
     @Autowired
     public PieceService(PiecePersistence piecePersistence) {
         this.piecePersistence = piecePersistence;
