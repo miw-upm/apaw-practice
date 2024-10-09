@@ -15,8 +15,8 @@ public class BankAccountService {
         this.bankAccountPersistence = bankAccountPersistence;
     }
 
-    public BankAccount updateHasInterest(String iban, Boolean hasInterest) {
-        return this.bankAccountPersistence.updateHasInterest(iban,hasInterest);
+    public BankAccount update(String iban, BankAccount bankAccount) {
+        return this.bankAccountPersistence.update(iban,bankAccount);
     }
 
 }

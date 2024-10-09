@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface ClientPersistence {
 
     Client findByDni(String dni);
+
+    Client updateName(String dni, String name);
 }
