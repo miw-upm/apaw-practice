@@ -9,7 +9,9 @@ public class Patient {
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
     private Appointment appointment;
-
+    public Patient() {
+        //empty for framework
+    }
     public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) { // Updated parameter type
         this.dni = dni;
         this.fullname = fullname;
