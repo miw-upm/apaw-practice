@@ -19,4 +19,10 @@ public class GameServiceIT {
     @Autowired
     private GamePersistence gamePersistence;
 
+    @Test
+    void readAllGames() {
+        List<Game> games = gameService.readAllGames().toList();
+        assertEquals(6, games.size());
+    }
+
 }
