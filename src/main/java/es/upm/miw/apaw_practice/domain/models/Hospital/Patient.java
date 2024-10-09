@@ -7,7 +7,7 @@ public class Patient {
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    private Appoinment appoinment; // Cambié el nombre a 'appoinment' para que sea coherente.
+    private Appoinment appoinment;
 
     public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appoinment appoinment) {
         this.dni = dni;
