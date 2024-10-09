@@ -27,8 +27,7 @@ public class GuestService {
         }
     }
 
-    public Guest read(Guest guest) {
-        return this.guestPersistence.read(guest.getNif());
+    public Guest read(String nif) {
+        return this.guestPersistence.read(nif);
     }
-
 }

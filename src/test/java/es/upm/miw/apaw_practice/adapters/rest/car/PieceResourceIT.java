@@ -44,4 +44,12 @@ public class PieceResourceIT {
                 .body(BodyInserters.fromValue(piece))
                 .exchange();
     }
+
+    @Test
+    void testCreate(){
+        Optional<Manufacturer> manuFacturer = manufacturerPersistence.readAll().filter(manufacturer -> "Tesla".equals(manufacturer.getName())).findFirst();
+        Piece piece = new Piece("HIMY","Tire", new BigDecimal(150), List.of(manuFacturer.get()));
+        createPiece(piece).expectStatus().isCreated();
+        assertTrue(piecePersistence.existPartNumber(piece.getPartNumber()));
+    }
 }

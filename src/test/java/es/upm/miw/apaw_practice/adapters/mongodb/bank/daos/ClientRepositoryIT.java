@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class ClientRepositoryIT {
+class ClientRepositoryIT {
 
     @Autowired
     private ClientRepository clientRepository;

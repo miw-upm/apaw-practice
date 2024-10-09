@@ -10,6 +10,10 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 import java.time.LocalDateTime;
 
+import static es.upm.miw.apaw_practice.adapters.rest.hotel_retired.GuestResource.GUESTS;
+import static es.upm.miw.apaw_practice.adapters.rest.hotel_retired.GuestResource.NIF_ID;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RestTestConfig
 public class GuestResourceIT {
 
@@ -25,11 +29,36 @@ public class GuestResourceIT {
         );
         this.webTestClient
                 .post()
-                .uri(GuestResource.GUESTS)
+                .uri(GUESTS)
                 .body(BodyInserters.fromValue(guest))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Guest.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testRead() {
+        this.webTestClient
+                .get()
+                .uri(GUESTS + NIF_ID, "99527370E")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Guest.class)
+                .value(Assertions::assertNotNull)
+                .value(guest -> {
+                    assertEquals("99527370E", guest.getNif());
+                    assertEquals("Emilio Pedrajas", guest.getFullName());
+                    assertEquals(LocalDateTime.of(1990, 10, 27,  23, 2, 2 ), guest.getBirthDay());
+                });
+    }
+
+    @Test
+    void testReadNotFound() {
+        this.webTestClient
+                .get()
+                .uri(GUESTS + NIF_ID, "FOO")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

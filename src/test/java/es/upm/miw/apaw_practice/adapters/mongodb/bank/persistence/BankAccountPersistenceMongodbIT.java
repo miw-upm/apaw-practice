@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.bank.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.bank.entities.InvestmentFundEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.bank.BankAccount;
 import es.upm.miw.apaw_practice.domain.models.bank.Client;
@@ -17,7 +16,7 @@ import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class BankAccountPersistenceMongodbIT {
+class BankAccountPersistenceMongodbIT {
 
     @Autowired
     private BankAccountPersistenceMongodb bankAccountPersistenceMongodb;

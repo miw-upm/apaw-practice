@@ -10,8 +10,6 @@ class CompetitionResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
-    @Autowired
-    private CompetitionResource competitionResource;
 
     @Test
     void testGetCompetition() {
@@ -20,5 +18,15 @@ class CompetitionResourceIT {
                 .uri(CompetitionResource.COMPETITION + CompetitionResource.ID_ID, "kk")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testGetNameCompetitionByPlayerId() {
+        this.webTestClient
+                .get()
+                .uri(CompetitionResource.COMPETITION + CompetitionResource.TEAM_COMPETITION + CompetitionResource.PLAYER_TEAM + CompetitionResource.ID_ID, "kk")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class);
     }
 }

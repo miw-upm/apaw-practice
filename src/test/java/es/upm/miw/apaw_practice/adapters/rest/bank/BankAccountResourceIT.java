@@ -17,7 +17,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 
 @RestTestConfig
-public class BankAccountResourceIT {
+class BankAccountResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

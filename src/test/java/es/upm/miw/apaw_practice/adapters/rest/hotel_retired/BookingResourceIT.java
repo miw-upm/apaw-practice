@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import java.awt.print.Book;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static es.upm.miw.apaw_practice.adapters.rest.hotel_retired.BookingResource.BOOKINGS;
 
 @RestTestConfig
 public class BookingResourceIT {
@@ -29,7 +30,7 @@ public class BookingResourceIT {
         Booking booking = new Booking(false, LocalDate.now(), LocalDate.now().plusWeeks(1), guest);
         this.webTestClient
                 .post()
-                .uri(BookingResource.BOOKINGS)
+                .uri(BOOKINGS)
                 .body(BodyInserters.fromValue(booking))
                 .exchange()
                 .expectStatus().isOk()
