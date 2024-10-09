@@ -5,7 +5,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.daos.WushuSchoolRep
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.daos.WushuGradeRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.CompetitionFormEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.CompetitorEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.WuhsuGradeEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.WushuGradeEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.WushuSchoolEntity;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.CompetitionForm;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
@@ -41,12 +41,12 @@ public class WushuSportSeederService {
         };
         this.competitionFormRepository.saveAll(Arrays.asList(competitionForms));
 
-        WuhsuGradeEntity[] wushuGrades = {
-                new WuhsuGradeEntity(new WushuGrade(LocalDate.now().minusYears(5), "Jin Shi", 1)),
-                new WuhsuGradeEntity(new WushuGrade(LocalDate.now().minusYears(4), "Yin Shi", 2)),
-                new WuhsuGradeEntity(new WushuGrade(LocalDate.now().minusYears(3), "Jade Shi", 3)),
-                new WuhsuGradeEntity(new WushuGrade(LocalDate.now().minusYears(2), "Gold Shi", 4)),
-                new WuhsuGradeEntity(new WushuGrade(LocalDate.now().minusYears(1), "Diamond Shi", 5))
+        WushuGradeEntity[] wushuGrades = {
+                new WushuGradeEntity(new WushuGrade(LocalDate.now().minusYears(5), "Jin Shi", 1)),
+                new WushuGradeEntity(new WushuGrade(LocalDate.now().minusYears(4), "Yin Shi", 2)),
+                new WushuGradeEntity(new WushuGrade(LocalDate.now().minusYears(3), "Jade Shi", 3)),
+                new WushuGradeEntity(new WushuGrade(LocalDate.now().minusYears(2), "Gold Shi", 4)),
+                new WushuGradeEntity(new WushuGrade(LocalDate.now().minusYears(1), "Diamond Shi", 5))
         };
         this.wushuGradeRepository.saveAll(Arrays.asList(wushuGrades));
 
@@ -59,9 +59,9 @@ public class WushuSportSeederService {
         this.competitorRepository.saveAll(Arrays.asList(competitors));
 
         WushuSchoolEntity[] wushuSchools = {
-                new WushuSchoolEntity("Fuenlabrada", "Wushu Fuenlabrada", true, List.of(competitors[0], competitors[1])),
-                new WushuSchoolEntity("Albacete", "Wushu Daxue", true, List.of(competitors[2])),
-                new WushuSchoolEntity("Madrid", "Jingwu", false, List.of(competitors[3])),
+                new WushuSchoolEntity("Wushu Fuenlabrada", "Fuenlabrada", true, List.of(competitors[0], competitors[1])),
+                new WushuSchoolEntity("Wushu Daxue", "Albacete", true, List.of(competitors[2])),
+                new WushuSchoolEntity("Jingwu", "Madrid", false, List.of(competitors[3])),
         };
         this.wushuSchoolRepository.saveAll(Arrays.asList(wushuSchools));
     }

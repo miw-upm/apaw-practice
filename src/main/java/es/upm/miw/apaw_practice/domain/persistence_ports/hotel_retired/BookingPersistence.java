@@ -14,7 +14,5 @@ public interface BookingPersistence {
 
     Booking update(String id, Booking booking);
 
-    Booking read(String id);
-
     boolean existsBooking(String id);
 }
