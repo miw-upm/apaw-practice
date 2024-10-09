@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.competition;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.daos.OrganizationRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.entities.OrganizationEntity;
 import es.upm.miw.apaw_practice.domain.models.competition.Organization;
@@ -21,6 +22,9 @@ class OrganizationServiceIT {
 
     @Autowired
     private OrganizationRepository organizationRepository;
+
+    @Autowired
+    private CompetitionSeederService competitionSeederService;
 
     @Test
     void testUpdateInternational() {
@@ -45,8 +49,10 @@ class OrganizationServiceIT {
 
     @Test
     void testSumSalaryPlayerTeamsByNameOrganization() {
+        this.competitionSeederService.deleteAll();
+        this.competitionSeederService.seedDatabase();
         String nameOrganization = "FEMAFUSA";
         BigDecimal sumSalary = this.organizationService.getSumSalaryPlayerTeamsByNameOrganization(nameOrganization);
-        assertEquals(new BigDecimal("40.59"), sumSalary);
+        assertEquals(new BigDecimal("28.41"), sumSalary);
     }
 }

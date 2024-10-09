@@ -58,6 +58,6 @@ class OrganizationPersistenceMongodbIT {
     void testSumSalaryPlayerTeamsByNameOrganization() {
         String nameOrganization = "FEMAFUSA";
         BigDecimal sumSalary = this.organizationPersistenceMongodb.sumSalaryPlayerTeamsByNameOrganization(nameOrganization);
-        assertEquals(new BigDecimal("40.59"), sumSalary);
+        assertEquals(new BigDecimal("28.41"), sumSalary);
     }
 }

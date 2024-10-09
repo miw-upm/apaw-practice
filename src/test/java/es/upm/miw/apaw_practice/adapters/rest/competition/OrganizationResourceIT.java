@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.competition;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.competition.entities.OrganizationEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.competition.Organization;
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +21,9 @@ class OrganizationResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Autowired
+    private CompetitionSeederService competitionSeederService;
 
     @Test
     void testUpdateInternational() {
@@ -58,7 +61,7 @@ class OrganizationResourceIT {
                 .expectStatus().isOk()
                 .expectBody(BigDecimal.class)
                 .value(sum -> {
-                    assertEquals(sum, new BigDecimal("40.59"));
+                    assertEquals(sum, new BigDecimal("28.41"));
                 });
     }
 }

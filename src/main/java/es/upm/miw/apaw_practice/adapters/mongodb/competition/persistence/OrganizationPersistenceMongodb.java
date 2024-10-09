@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Repository("organizationPersistence")
@@ -68,8 +70,11 @@ public class OrganizationPersistenceMongodb implements OrganizationPersistence {
                 .filter(comp -> comp.getOrganizationEntity().getId().equals(organizationEntity.getId()))
                 .toList();
 
+        Set<String> seenTeamCompetitionIds = new HashSet<>();
+
         return competitions.stream()
                 .flatMap(comp -> comp.getTeamCompetitionsEntity().stream())
+                .filter(team -> seenTeamCompetitionIds.add(team.getId()))
                 .flatMap(team -> team.getPlayerTeamsEntity().stream())
                 .map(player -> Optional.ofNullable(player.getSalary()).orElse(BigDecimal.ZERO))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
