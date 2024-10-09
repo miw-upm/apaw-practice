@@ -24,4 +24,10 @@ public class GameService {
     public void deleteGame(String gameName) {
         this.gamePersistence.delete(gameName);
     }
+
+    public Game updateGameNumberOfCopies (String gameName, Integer numberOfCopies) {
+        Game game = this.gamePersistence.read(gameName);
+        game.setNumberOfCopies(numberOfCopies);
+        return this.gamePersistence.updateNumberOfCopies(gameName, numberOfCopies);
+    }
 }
