@@ -59,6 +59,10 @@ public class OwnerEntity {
         this.phone = phone;
     }
 
+    public void fromOwner(Owner owner) {
+        BeanUtils.copyProperties(owner, this);
+    }
+
     public Owner toOwner() {
         Owner owner = new Owner();
         BeanUtils.copyProperties(this, owner);
