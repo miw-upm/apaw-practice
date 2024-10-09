@@ -27,6 +27,17 @@ public class OwnerClinicPersistenceMongodb implements OwnerClinicPersistence {
     }
 
     @Override
+    public Owner update(String address, String phone, Owner owner) {
+        OwnerEntity ownerEntity = this.ownerClinicRepository
+                .findByName(owner.getName())
+                .orElseThrow(() -> new NotFoundException("Owner name: " + owner.getName()));
+        ownerEntity.fromOwner(owner);
+        return this.ownerClinicRepository
+                .save(ownerEntity)
+                .toOwner();
+    }
+
+    @Override
     public Owner create(Owner owner) {
         return this.ownerClinicRepository
                 .save(new OwnerEntity(owner))
