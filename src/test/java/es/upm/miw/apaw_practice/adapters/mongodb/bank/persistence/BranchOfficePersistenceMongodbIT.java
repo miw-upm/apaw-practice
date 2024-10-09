@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.bank.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.bank.BankSeederService;
-import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.domain.models.bank.BranchOffice;
 import es.upm.miw.apaw_practice.domain.models.bank.Client;
 import org.junit.jupiter.api.Test;
