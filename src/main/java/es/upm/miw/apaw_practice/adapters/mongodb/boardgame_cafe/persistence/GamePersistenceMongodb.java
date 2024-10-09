@@ -59,6 +59,17 @@ public class GamePersistenceMongodb implements GamePersistence {
     }
 
     @Override
+    public Game updateNumberOfCopies(String gameName, Integer numberOfCopies) {
+        GameEntity gameEntity = gameRepository
+                .findByGameName(gameName)
+                .orElseThrow(() -> new NotFoundException("Game Name: " + gameName));
+        gameEntity.setNumberOfCopies(numberOfCopies);
+        return gameRepository
+                .save(gameEntity)
+                .toGame();
+    }
+
+    @Override
     public boolean existGameName(String gameName) {
         return gameRepository
                 .findByGameName(gameName)

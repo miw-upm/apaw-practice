@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Reservation {
+    private String id;
     private LocalDate date;
     private BigDecimal price;
     private Integer numberOfPeople;
@@ -14,11 +15,24 @@ public class Reservation {
         //empty for framework
     }
 
-    public Reservation(LocalDate date, BigDecimal price, int numberOfPeople, List<Customer> customers) {
+    public Reservation(String id, LocalDate date, BigDecimal price, int numberOfPeople, List<Customer> customers) {
+        this.id = id;
         this.date = date;
         this.price = price;
         this.numberOfPeople = numberOfPeople;
         this.customers = customers;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNumberOfPeople(Integer numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
     }
 
     public LocalDate getDate() {
@@ -55,7 +69,8 @@ public class Reservation {
     @Override
     public String toString() {
         return "Reservation{" +
-                "date=" + date +
+                "id='" + id + '\'' +
+                ", date=" + date +
                 ", price=" + price +
                 ", numberOfPeople=" + numberOfPeople +
                 ", customers=" + customers +

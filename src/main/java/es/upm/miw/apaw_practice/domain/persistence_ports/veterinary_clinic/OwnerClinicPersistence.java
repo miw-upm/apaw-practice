@@ -11,4 +11,6 @@ public interface OwnerClinicPersistence {
     boolean existName(String name);
 
     Owner read(String name);
+
+    Owner update(String address, String phone, Owner owner);
 }
