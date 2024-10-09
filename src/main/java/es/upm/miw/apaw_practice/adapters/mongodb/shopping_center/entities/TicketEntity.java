@@ -22,12 +22,12 @@ public class TicketEntity {
         //empty from framework
     }
 
-    public TicketEntity(BigDecimal totalPrice, boolean isPaidByCreditCard, LocalDateTime date, EmployeeEntity employee) {
+    public TicketEntity(BigDecimal totalPrice, boolean isPaidByCreditCard, EmployeeEntity employee) {
         this.id = UUID.randomUUID().toString();
         this.totalPrice = totalPrice;
         this.isPaidByCreditCard = isPaidByCreditCard;
-        this.date = date;
         this.employee = employee;
+        this.date = LocalDateTime.now();
     }
 
     public String getId() {
