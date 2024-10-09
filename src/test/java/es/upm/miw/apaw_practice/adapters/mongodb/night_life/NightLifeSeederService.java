@@ -11,10 +11,8 @@ import es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities.Reservation
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Service

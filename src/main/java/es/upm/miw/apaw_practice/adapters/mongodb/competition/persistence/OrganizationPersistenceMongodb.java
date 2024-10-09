@@ -45,4 +45,9 @@ public class OrganizationPersistenceMongodb implements OrganizationPersistence {
         return this.organizationRepository.findAll().stream()
                 .map(OrganizationEntity::toOrganization);
     }
+
+    @Override
+    public Organization createOrganization(Organization organization) {
+        return this.organizationRepository.save(new OrganizationEntity(organization)).toOrganization();
+    }
 }

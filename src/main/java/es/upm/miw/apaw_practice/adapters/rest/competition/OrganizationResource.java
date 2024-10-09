@@ -23,4 +23,9 @@ public class OrganizationResource {
     public Organization updateInternational(@PathVariable String id) {
         return this.organizationService.updateInternational(id);
     }
+
+    @PostMapping()
+    public Organization createOrganization(@RequestBody Organization organization) {
+        return this.organizationService.createOrganization(organization);
+    }
 }
