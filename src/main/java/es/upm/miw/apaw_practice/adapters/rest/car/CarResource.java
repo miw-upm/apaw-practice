@@ -1,11 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.rest.car;
 
+import es.upm.miw.apaw_practice.domain.models.car.Car;
 import es.upm.miw.apaw_practice.domain.services.car.CarService;
-import es.upm.miw.apaw_practice.domain.services.car.ManufacturerService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(CarResource.CARS)
@@ -19,6 +18,13 @@ public class CarResource {
 
     public CarResource(CarService carService) {
         this.carService = carService;
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> post(@RequestBody Car car) {
+
+        carService.create(car);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping(MODEL)
