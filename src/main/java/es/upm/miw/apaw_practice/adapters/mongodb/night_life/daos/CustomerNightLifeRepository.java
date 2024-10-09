@@ -4,4 +4,5 @@ import es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities.CustomerEnt
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CustomerNightLifeRepository extends MongoRepository<CustomerEntity, String> {
+    int deleteByName(String name);
 }

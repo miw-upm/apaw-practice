@@ -1,6 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.AppoinmentEntity;
+
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.AppoinmentEntities;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface AppoinmentRepository extends MongoRepository<AppoinmentEntity, String> {
+import java.util.Optional;
+public interface AppoinmentRepository extends MongoRepository<AppoinmentEntities, String> {
+
 }
