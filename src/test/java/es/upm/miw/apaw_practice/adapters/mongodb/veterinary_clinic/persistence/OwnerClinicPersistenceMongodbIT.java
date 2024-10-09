@@ -38,4 +38,17 @@ class OwnerClinicPersistenceMongodbIT {
         assertEquals("Street California", ownerBD.getAddress());
         assertEquals("584794235", ownerBD.getPhone());
     }
+
+    @Test
+    void testCreateAndUpdate() {
+        Owner ownerCreation =
+                new Owner("Lion", "Street Principal", "333444555");
+        Owner ownerBD = this.ownerPersistenceMongodb.create(ownerCreation);
+        ownerBD.setAddress("Street Oviedo");
+        ownerBD.setPhone("444555222");
+        this.ownerPersistenceMongodb.update("Street Oviedo", "444555222", ownerBD);
+        ownerBD = this.ownerPersistenceMongodb.read("Lion");
+        assertEquals("Street Oviedo", ownerBD.getAddress());
+        assertEquals("444555222", ownerBD.getPhone());
+    }
 }

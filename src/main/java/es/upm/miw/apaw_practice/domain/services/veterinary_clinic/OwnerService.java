@@ -6,6 +6,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.veterinary_clinic.Owner
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class OwnerService {
 
@@ -25,5 +27,14 @@ public class OwnerService {
         if(this.ownerClinicPersistence.existName(name)) {
             throw new ConflictException("Name exist: " + name);
         }
+    }
+
+    public void updateOwner(Stream<Owner> ownerUpdatingList) {
+        ownerUpdatingList.map(ownerNewName -> {
+            Owner owner = this.ownerClinicPersistence.read(ownerNewName.getName());
+            owner.setName(ownerNewName.getName());
+            return owner;
+        })
+                .forEach(owner -> this.ownerClinicPersistence.update(owner.getAddress(), owner.getPhone(), owner));
     }
 }
