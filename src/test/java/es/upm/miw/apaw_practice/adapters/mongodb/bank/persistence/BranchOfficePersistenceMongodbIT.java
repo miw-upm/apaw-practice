@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @TestConfig
-public class BranchOfficePersistenceMongodbIT {
+class BranchOfficePersistenceMongodbIT {
 
     @Autowired
     private BranchOfficePersistenceMongodb branchOfficePersistenceMongodb;

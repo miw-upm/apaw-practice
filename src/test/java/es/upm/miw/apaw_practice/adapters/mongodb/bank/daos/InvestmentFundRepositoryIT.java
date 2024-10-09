@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class InvestmentFundRepositoryIT {
+class InvestmentFundRepositoryIT {
 
     @Autowired
     private InvestmentFundRepository investmentFundRepository;
