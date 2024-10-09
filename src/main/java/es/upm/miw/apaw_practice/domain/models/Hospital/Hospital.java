@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.util.List;
+import  es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import  es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 
 public class Hospital {
     private String name;
