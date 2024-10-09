@@ -106,6 +106,7 @@ public class MissionEntity {
         mission.setWeapons(weapons);
         return mission;
     }
+
     @Override
     public int hashCode() {
         return codeName.hashCode();

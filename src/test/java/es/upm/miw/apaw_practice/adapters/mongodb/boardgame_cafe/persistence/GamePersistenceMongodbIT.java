@@ -57,15 +57,33 @@ public class GamePersistenceMongodbIT {
 
     @Test
     void testDelete() {
-        Game game = new Game("Uno", 8, "Party", 10);
+        Game game1 = new Game("Sushi GO", 8, "Party", 8);
+        Game game2 = new Game("Survive", 4, "Strategy", 2);
+        this.gamePersistence.create(game1);
+        this.gamePersistence.create(game2);
+
+        Game gameBD1 = this.gamePersistence.read(game1.getGameName());
+        Game gameBD2 = this.gamePersistence.read(game2.getGameName());
+
+        assertEquals(game1, gameBD1);
+        assertEquals(game2, gameBD2);
+
+        this.gamePersistence.delete(game1.getGameName());
+        this.gamePersistence.delete(game2.getGameName());
+
+        assertThrows(NotFoundException.class, () -> this.gamePersistence.read(game1.getGameName()));
+        assertThrows(NotFoundException.class, () -> this.gamePersistence.read(game2.getGameName()));
+    }
+
+    @Test
+    void testUpdateNumberOfCopies() {
+        Game game = new Game("Pandemic", 4, "Cooperative", 5);
         this.gamePersistence.create(game);
         Game gameBD = this.gamePersistence.read(game.getGameName());
-        assertEquals(game, gameBD);
-        assertEquals("Uno", gameBD.getGameName());
-        assertEquals(8, gameBD.getNumPlayers());
-        assertEquals("Party", gameBD.getGenre());
-        assertEquals(10, gameBD.getNumberOfCopies());
-        this.gamePersistence.delete(game.getGameName());
-        assertThrows(NotFoundException.class, () -> this.gamePersistence.read(game.getGameName()));
+        assertEquals(5, gameBD.getNumberOfCopies());
+
+        this.gamePersistence.updateNumberOfCopies(game.getGameName(), 3);
+        gameBD = this.gamePersistence.read(game.getGameName());
+        assertEquals(3, gameBD.getNumberOfCopies());
     }
 }
