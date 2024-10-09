@@ -40,4 +40,18 @@ public class GameResourceIT {
                 .expectBodyList(Game.class)
                 .value(games -> assertEquals(5, games.size()));
     }
+
+    @Test
+    void testUpdateGameNumberOfCopies() {
+        this.webTestClient
+                .patch()
+                .uri(uriBuilder -> uriBuilder
+                        .path(GameResource.GAME + GameResource.GAMENAME_ID)
+                        .queryParam("numberOfCopies", 10)
+                        .build("Exploding Kittens"))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Game.class)
+                .value(game -> assertEquals(10, game.getNumberOfCopies()));
+    }
 }

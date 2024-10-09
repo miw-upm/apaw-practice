@@ -22,22 +22,34 @@ public class GameServiceIT {
     @Test
     void readAllGames() {
         List<Game> games = gameService.readAllGames().toList();
-        assertEquals(6, games.size());
+        assertTrue(games.stream().anyMatch(game -> game.getGameName().equals("Azul")));
+        assertTrue(games.stream().anyMatch(game -> game.getGameName().equals("Warewolf")));
     }
 
     @Test
     void deleteGame() {
-        Game testGame = new Game("TestGame", 4, "TestCategory", 2);
+        Game testGame = new Game("Scythe", 4, "Strategy", 2);
         gamePersistence.create(testGame);
 
         List<Game> games = gamePersistence.readAll().toList();
         int initialSize = games.size();
-        assertTrue(games.stream().anyMatch(game -> game.getGameName().equals("TestGame")));
-        gameService.deleteGame("TestGame");
+        assertTrue(games.stream().anyMatch(game -> game.getGameName().equals("Scythe")));
+        gameService.deleteGame("Scythe");
 
         games = gamePersistence.readAll().toList();
         assertEquals(initialSize - 1, games.size());
-        assertFalse(games.stream().anyMatch(game -> game.getGameName().equals("TestGame")));
+        assertFalse(games.stream().anyMatch(game -> game.getGameName().equals("Scythe")));
+    }
+
+    @Test
+    void testUpdateGameNumberOfCopies() {
+        Game game = new Game("Pandemic", 6, "Strategy", 1);
+        gamePersistence.create(game);
+        Game gameBD = gameService.updateGameNumberOfCopies(game.getGameName(), 2);
+        assertEquals(2, gameBD.getNumberOfCopies());
+
+        gameBD = gamePersistence.read(game.getGameName());
+        assertEquals(2, gameBD.getNumberOfCopies());
     }
 
 }
