@@ -1,8 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.car;
 
-import es.upm.miw.apaw_practice.adapters.rest.university.DegreeResource;
 import es.upm.miw.apaw_practice.domain.models.car.OwnerCar;
-import es.upm.miw.apaw_practice.domain.models.university.Degree;
 import es.upm.miw.apaw_practice.domain.services.car.OwnerCarService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
