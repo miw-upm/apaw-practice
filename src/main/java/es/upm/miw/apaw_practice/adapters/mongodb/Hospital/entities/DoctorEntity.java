@@ -1,9 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +9,8 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Document
-public class DoctorEntities{
+public class DoctorEntity {
+
     @Id
     private String id;
 

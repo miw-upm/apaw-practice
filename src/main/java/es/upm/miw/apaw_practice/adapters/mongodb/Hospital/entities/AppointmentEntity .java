@@ -1,18 +1,16 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appoinment;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import java.math.BigDecimal;
-import java.util.List;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
 @Document
-public class AppoinmentEntities {
+public class AppointmentEntity  {
 
     @Id
     private String id;
@@ -20,7 +18,7 @@ public class AppoinmentEntities {
     private LocalDate date;
     private LocalTime time;
     private String location;
-    private String patientId; // Reference to PatientEntity
+    private String patientId;
 
     public AppointmentEntity() {
         // Empty constructor for framework
@@ -28,10 +26,11 @@ public class AppoinmentEntities {
 
     public AppointmentEntity(Appointment appointment) {
         BeanUtils.copyProperties(appointment, this);
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString(); // Ensure a new ID is generated
     }
 
-    // Getters and Setters
+    // Getters and Setters with proper return types
+
     public String getId() {
         return id;
     }
@@ -73,6 +72,7 @@ public class AppoinmentEntities {
     }
 
     // Conversion methods
+
     public void fromAppointment(Appointment appointment) {
         BeanUtils.copyProperties(appointment, this);
     }
@@ -94,5 +94,3 @@ public class AppoinmentEntities {
                 '}';
     }
 }
-
-

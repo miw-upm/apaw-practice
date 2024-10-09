@@ -1,9 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
-import java.math.BigDecimal;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -11,8 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
+
 @Document
-public class HospitalEntities{
+public class HospitalEntity {
 
     @Id
     private String id;
@@ -33,7 +31,6 @@ public class HospitalEntities{
         this.id = UUID.randomUUID().toString();
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -74,7 +71,7 @@ public class HospitalEntities{
         this.doctors = doctors;
     }
 
-    // Conversion methods
+    // Métodos de conversión
     public void fromHospital(Hospital hospital) {
         BeanUtils.copyProperties(hospital, this);
     }
