@@ -20,7 +20,7 @@ public class BankAccountResource {
         this.bankAccountService = bankAccountService;
     }
 
-    @PutMapping(ACCOUNTS + IBAN + INTEREST)
+    @PutMapping(IBAN + INTEREST)
     public BankAccount updateHasInterest(@PathVariable String iban, @RequestBody Boolean hasInterest) {
         return this.bankAccountService.updateHasInterest(iban, hasInterest);
     }
