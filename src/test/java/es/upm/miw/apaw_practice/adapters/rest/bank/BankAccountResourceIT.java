@@ -30,7 +30,7 @@ public class BankAccountResourceIT {
                 new BankAccount("IBAN1", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, client);
         this.webTestClient
                 .put()
-                .uri(BankAccountResource.ACCOUNTS + BankAccountResource.IBAN + BankAccountResource.INTEREST, "kk")
+                .uri(BankAccountResource.ACCOUNTS + BankAccountResource.IBAN, "kk")
                 .body(BodyInserters.fromValue(bankAccount))
                 .exchange()
                 .expectStatus().isNotFound();
@@ -45,7 +45,7 @@ public class BankAccountResourceIT {
                 new BankAccount("IBAN4", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, client);
         this.webTestClient
                 .put()
-                .uri(BankAccountResource.ACCOUNTS + BankAccountResource.IBAN + BankAccountResource.INTEREST, "IBAN4")
+                .uri(BankAccountResource.ACCOUNTS + BankAccountResource.IBAN, "IBAN4")
                 .body(BodyInserters.fromValue(bankAccount))
                 .exchange()
                 .expectStatus().isOk()

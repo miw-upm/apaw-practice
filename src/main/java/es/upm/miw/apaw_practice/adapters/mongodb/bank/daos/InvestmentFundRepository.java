@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface InvestmentFundRepository extends MongoRepository<InvestmentFundEntity, String> {
 
     Optional<InvestmentFundEntity> deleteByName(String name);
+
     Optional<InvestmentFundEntity> findByName(String name);
 }
