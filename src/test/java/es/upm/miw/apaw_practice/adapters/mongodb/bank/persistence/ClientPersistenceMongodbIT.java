@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-public class ClientPersistenceMongodbIT {
+class ClientPersistenceMongodbIT {
 
     @Autowired
     private ClientPersistenceMongodb clientPersistenceMongodb;

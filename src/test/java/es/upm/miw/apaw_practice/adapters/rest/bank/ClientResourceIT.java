@@ -12,7 +12,7 @@ import static es.upm.miw.apaw_practice.adapters.rest.bank.ClientResource.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
-public class ClientResourceIT {
+class ClientResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

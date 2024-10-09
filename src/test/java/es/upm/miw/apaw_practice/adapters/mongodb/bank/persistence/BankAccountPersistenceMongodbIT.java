@@ -17,7 +17,7 @@ import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class BankAccountPersistenceMongodbIT {
+class BankAccountPersistenceMongodbIT {
 
     @Autowired
     private BankAccountPersistenceMongodb bankAccountPersistenceMongodb;
