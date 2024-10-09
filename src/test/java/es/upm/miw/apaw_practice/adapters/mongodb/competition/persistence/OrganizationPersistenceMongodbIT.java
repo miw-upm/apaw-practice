@@ -44,11 +44,11 @@ class OrganizationPersistenceMongodbIT {
 
     @Test
     void testCreateOrganization() {
-        this.organizationPersistenceMongodb.createOrganization(new Organization("F.S. Barcelona", LocalDateTime.now(), false));
+        this.organizationPersistenceMongodb.createOrganization(new Organization("F.S. Valencia", LocalDateTime.now(), false));
 
         Optional<Organization> newOrganizationEntity = this.organizationPersistenceMongodb
                 .readAll()
-                .filter(comp -> comp.getNameOrganization().equals("F.S. Barcelona"))
+                .filter(comp -> comp.getNameOrganization().equals("F.S. Valencia"))
                 .findFirst();
         assertTrue(newOrganizationEntity.isPresent());
     }
