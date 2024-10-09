@@ -11,4 +11,8 @@ public interface ManufacturerPersistence {
     Stream<Manufacturer> readAll();
 
     Manufacturer readByName(String name);
+
+    Manufacturer update(String name, Manufacturer manufacturer);
+
+    boolean existName(String name);
 }

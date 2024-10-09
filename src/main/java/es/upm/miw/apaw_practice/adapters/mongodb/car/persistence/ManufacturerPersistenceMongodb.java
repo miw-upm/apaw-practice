@@ -35,4 +35,21 @@ public class ManufacturerPersistenceMongodb implements ManufacturerPersistence {
                 .orElseThrow(() -> new NotFoundException("Manufacturer name: " + name))
                 .toManufacturer();
     }
+
+    @Override
+    public Manufacturer update(String name, Manufacturer manufacturer) {
+        ManufacturerEntity manufacturerEntity = manufacturerRepository
+                .findByName(name)
+                .orElseThrow(() -> new NotFoundException("Customer name:" + name));
+        manufacturerEntity.fromManufacturer(manufacturer);
+        return manufacturerRepository
+                .save(manufacturerEntity)
+                .toManufacturer();
+    }
+
+    @Override
+    public boolean existName(String name) {
+        return manufacturerRepository.findByName(name).isPresent();
+
+    }
 }
