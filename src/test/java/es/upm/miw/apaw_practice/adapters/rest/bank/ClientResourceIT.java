@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
 
-import static es.upm.miw.apaw_practice.adapters.rest.bank.ClientResource.CLIENTS;
-import static es.upm.miw.apaw_practice.adapters.rest.bank.ClientResource.SEARCH;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static es.upm.miw.apaw_practice.adapters.rest.bank.ClientResource.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 public class ClientResourceIT {
@@ -48,5 +47,28 @@ public class ClientResourceIT {
                                 .build())
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdateNameNotFound() {
+        this.webTestClient
+                .patch()
+                .uri(CLIENTS + DNI, "kk")
+                .body(BodyInserters.fromValue("NewName"))
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdate() {
+        this.webTestClient
+                .patch()
+                .uri(CLIENTS + DNI, "33333333C")
+                .body(BodyInserters.fromValue("NewName"))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Client.class)
+                .value(Assertions::assertNotNull)
+                .value(client -> assertEquals("NewName", client.getName()));
     }
 }
