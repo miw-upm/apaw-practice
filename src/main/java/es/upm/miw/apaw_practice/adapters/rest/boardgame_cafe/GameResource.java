@@ -25,6 +25,11 @@ public class GameResource {
         return this.gameService.readAllGames();
     }
 
+    @PatchMapping(GAMENAME_ID)
+    public Game updateGameNumberOfCopies(@PathVariable String gameName, @RequestParam Integer numberOfCopies) {
+        return this.gameService.updateGameNumberOfCopies(gameName, numberOfCopies);
+    }
+
     @DeleteMapping(GAMENAME_ID)
     public void deleteGame(@PathVariable String gameName) {
         this.gameService.deleteGame(gameName);

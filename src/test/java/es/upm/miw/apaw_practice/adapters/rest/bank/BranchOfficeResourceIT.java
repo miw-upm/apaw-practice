@@ -15,7 +15,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 
 @RestTestConfig
-public class BranchOfficeResourceIT {
+class BranchOfficeResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

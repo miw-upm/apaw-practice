@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car.entities;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.DegreeEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -38,6 +37,16 @@ public class PieceEntity {
         this.description = description;
         this.cost = cost;
         this.manufacturerListEntity = manufacturerListEntity;
+    }
+
+    public PieceEntity(Piece piece) {
+        this.fromPiece(piece);
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public void fromPiece(Piece piece) {
+        BeanUtils.copyProperties(piece, this);
+        this.setManufacturerListEntity(piece.getManufacturerList().stream().map(ManufacturerEntity::new).toList());
     }
     public Piece toPiece(){
         Piece piece = new Piece();

@@ -74,4 +74,16 @@ public class GamePersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> this.gamePersistence.read(game1.getGameName()));
         assertThrows(NotFoundException.class, () -> this.gamePersistence.read(game2.getGameName()));
     }
+
+    @Test
+    void testUpdateNumberOfCopies() {
+        Game game = new Game("Pandemic", 4, "Cooperative", 5);
+        this.gamePersistence.create(game);
+        Game gameBD = this.gamePersistence.read(game.getGameName());
+        assertEquals(5, gameBD.getNumberOfCopies());
+
+        this.gamePersistence.updateNumberOfCopies(game.getGameName(), 3);
+        gameBD = this.gamePersistence.read(game.getGameName());
+        assertEquals(3, gameBD.getNumberOfCopies());
+    }
 }
