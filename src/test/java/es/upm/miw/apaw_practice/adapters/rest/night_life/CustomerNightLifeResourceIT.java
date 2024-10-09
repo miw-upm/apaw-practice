@@ -18,5 +18,15 @@ class CustomerNightLifeResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+    @Test
+    void TestUpdate(){
+        Customer updatedCustomer = new Customer("Conchi", "987654321", "conchi_updated@example.com");
+        this.webTestClient
+                .put()
+                .uri(CustomerNightLifeResource.CUSTOMERS + CustomerNightLifeResource.NAME_ID, "Raul")
+                .body(BodyInserters.fromValue(updatedCustomer))
+                .exchange()
+                .expectStatus().isOk();
+    }
 
 }
