@@ -20,4 +20,7 @@ public class ClientService {
         return this.clientPersistence.findByDni(dni);
     }
 
+    public Client updateName(String dni, String name){
+        return this.clientPersistence.updateName(dni,name);
+    }
 }
