@@ -14,7 +14,7 @@ public class ArtworkService {
         this.artworkPersistence = artworkPersistence;
     }
 
-    public Artwork updateArtwork(String inventoryNumber, Artwork artwork) {
+    public Artwork update(String inventoryNumber, Artwork artwork) {
         Artwork existingArtwork = this.artworkPersistence.readByInventoryNumber(inventoryNumber);
 
         existingArtwork.setTitleName(artwork.getTitleName());
