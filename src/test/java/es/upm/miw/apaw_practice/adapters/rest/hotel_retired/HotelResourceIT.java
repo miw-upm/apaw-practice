@@ -13,6 +13,11 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
+import static es.upm.miw.apaw_practice.adapters.rest.hotel_retired.HotelResource.CIF_ID;
+import static es.upm.miw.apaw_practice.adapters.rest.hotel_retired.HotelResource.HOTELS;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RestTestConfig
 public class HotelResourceIT {
 
@@ -29,11 +34,37 @@ public class HotelResourceIT {
 
         this.webTestClient
                 .post()
-                .uri(HotelResource.HOTELS)
+                .uri(HOTELS)
                 .body(BodyInserters.fromValue(hotel))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Hotel.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testRead() {
+        this.webTestClient
+                .get()
+                .uri(HOTELS + CIF_ID, "F91635847")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Hotel.class)
+                .value(Assertions::assertNotNull)
+                .value(hotel -> {
+                    assertEquals("F91635847", hotel.getCif());
+                    assertEquals("LaMaria", hotel.getHotelName());
+                    assertEquals("C/ Mandrágora 32, Retuerta (Burgos)", hotel.getAddress());
+                    assertEquals(19, hotel.getRooms().size());
+                });
+    }
+
+    @Test
+    void testReadNotFound() {
+        this.webTestClient
+                .get()
+                .uri(HOTELS + CIF_ID, "FOO")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

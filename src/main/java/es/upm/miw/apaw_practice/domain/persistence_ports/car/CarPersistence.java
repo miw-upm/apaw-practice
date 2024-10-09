@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface CarPersistence {
 
     Car readByModel(String model);
+
+    Car create(Car car);
+
+    void delete(String model);
 }
