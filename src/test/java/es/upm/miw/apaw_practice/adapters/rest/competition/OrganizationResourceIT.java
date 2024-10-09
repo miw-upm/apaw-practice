@@ -32,7 +32,7 @@ class OrganizationResourceIT {
 
     @Test
     void testCreateOrganization() {
-        Organization organization = new Organization("F.S. Barcelona", LocalDateTime.now(), false);
+        Organization organization = new Organization("F.S. Madrid", LocalDateTime.now(), false);
 
         this.webTestClient
                 .post()
