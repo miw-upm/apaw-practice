@@ -7,7 +7,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 import java.util.UUID;
