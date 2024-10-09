@@ -1,23 +1,22 @@
-package es.upm.miw.apaw_practice.adapters.rest.bank;
-
+package es.upm.miw.apaw_practice.adapters.rest.night_life;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import java.math.BigDecimal;
 
 @RestTestConfig
-class InvestmentFundResourceIT {
-
+class ReservationResourceIT {
     @Autowired
     private WebTestClient webTestClient;
-
     @Test
-    void testDelete() {
+    void testUpdate() {
+        BigDecimal newPrice = new BigDecimal("99.99");
         this.webTestClient
-                .delete()
-                .uri(InvestmentFundResource.FUNDS + InvestmentFundResource.NAME, "Fund1")
+                .patch()
+                .uri(ReservationResource.RESERVATIONS)
+                .bodyValue(newPrice)
                 .exchange()
                 .expectStatus().isOk();
     }
-
 }

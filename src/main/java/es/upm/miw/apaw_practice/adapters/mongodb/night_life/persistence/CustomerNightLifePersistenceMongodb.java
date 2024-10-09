@@ -18,14 +18,6 @@ public class CustomerNightLifePersistenceMongodb implements CustomerNightLifePer
     }
 
     @Override
-    public Customer readByName(String name) {
-        return this.customerNightLifeRepository
-                .findByName(name)
-                .orElseThrow(() -> new NotFoundException("Customer name:" + name))
-                .toCustomer();
-    }
-
-    @Override
     public void delete(String name) {
         this.customerNightLifeRepository.deleteByName(name);
     }

@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.bank;
 
-import es.upm.miw.apaw_practice.domain.models.bank.BankAccount;
 import es.upm.miw.apaw_practice.domain.models.bank.Client;
 import es.upm.miw.apaw_practice.domain.services.bank.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
