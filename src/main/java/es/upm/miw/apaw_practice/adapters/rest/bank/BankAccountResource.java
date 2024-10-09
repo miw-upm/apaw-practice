@@ -21,7 +21,7 @@ public class BankAccountResource {
     }
 
     @PutMapping(IBAN + INTEREST)
-    public BankAccount updateHasInterest(@PathVariable String iban, @RequestBody Boolean hasInterest) {
-        return this.bankAccountService.updateHasInterest(iban, hasInterest);
+    public BankAccount update(@PathVariable String iban, @RequestBody BankAccount bankAccount) {
+        return this.bankAccountService.update(iban, bankAccount);
     }
 }
