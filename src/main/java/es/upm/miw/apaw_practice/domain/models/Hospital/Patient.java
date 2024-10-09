@@ -1,20 +1,21 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 import java.time.LocalDate;
-import  es.upm.miw.apaw_practice.domain.models.Hospital.Appoinment;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment; // Corrected spelling
+
 public class Patient {
     private String dni;
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    private Appoinment appoinment;
+    private Appointment appointment;
 
-    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appoinment appoinment) {
+    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) { // Updated parameter type
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
-        this.appoinment = appoinment;
+        this.appointment = appointment;
     }
 
     public String getDni() {
@@ -49,12 +50,12 @@ public class Patient {
         this.hasInsurance = hasInsurance;
     }
 
-    public Appoinment getAppoinment() {
-        return appoinment;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setAppoinment(Appoinment appoinment) {
-        this.appoinment = appoinment;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 
     @Override
@@ -64,7 +65,7 @@ public class Patient {
                 ", fullname='" + fullname + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", hasInsurance=" + hasInsurance +
-                ", appoinment=" + appoinment +
+                ", appointment=" + appointment +
                 '}';
     }
 }

@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appoinment;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment; // Corrected spelling
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,11 +10,10 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 @Document
-public class AppointmentEntity  {
+public class AppointmentEntity {
 
     @Id
     private String id;
-
     private LocalDate date;
     private LocalTime time;
     private String location;
@@ -28,8 +27,6 @@ public class AppointmentEntity  {
         BeanUtils.copyProperties(appointment, this);
         this.id = UUID.randomUUID().toString(); // Ensure a new ID is generated
     }
-
-    // Getters and Setters with proper return types
 
     public String getId() {
         return id;
@@ -71,16 +68,8 @@ public class AppointmentEntity  {
         this.patientId = patientId;
     }
 
-    // Conversion methods
-
-    public void fromAppointment(Appointment appointment) {
-        BeanUtils.copyProperties(appointment, this);
-    }
-
     public Appointment toAppointment() {
-        Appointment appointment = new Appointment();
-        BeanUtils.copyProperties(this, appointment);
-        return appointment;
+        return new Appointment(this.date, this.time, this.location, this.patientId); // Update as needed
     }
 
     @Override
