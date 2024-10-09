@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment; // Corrected spelling
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -69,7 +69,7 @@ public class AppointmentEntity {
     }
 
     public Appointment toAppointment() {
-        return new Appointment(this.date, this.time, this.location, this.patientId); // Update as needed
+        return new Appointment(this.id, this.date, this.time, this.location);
     }
 
     @Override
