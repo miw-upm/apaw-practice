@@ -17,5 +17,7 @@ public interface GamePersistence {
 
     void delete(String gameName);
 
+    Game updateNumberOfCopies(String gameName, Integer numberOfCopies);
+
     boolean existGameName(String gameName);
 }

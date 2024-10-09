@@ -2,12 +2,13 @@ package es.upm.miw.apaw_practice.adapters.mongodb.car.entities;
 
 
 
+import es.upm.miw.apaw_practice.adapters.mongodb.university.entities.UniversityEntity;
 import es.upm.miw.apaw_practice.domain.models.car.Manufacturer;
+import es.upm.miw.apaw_practice.domain.models.university.Teacher;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.beans.BeanUtils;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -29,6 +30,10 @@ public class ManufacturerEntity {
     public ManufacturerEntity(Manufacturer manufacturer){
         BeanUtils.copyProperties(manufacturer, this);
         this.id = UUID.randomUUID().toString();
+    }
+    public void fromManufacturer(Manufacturer manufacturer) {
+        BeanUtils.copyProperties(manufacturer, this);
+
     }
 
     public Manufacturer toManufacturer(){
