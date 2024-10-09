@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car.persistence;
 
+
 import es.upm.miw.apaw_practice.adapters.mongodb.car.daos.OwnerCarRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.car.entities.OwnerCarEntity;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.OwnerCarPersistence;
 import es.upm.miw.apaw_practice.domain.models.car.OwnerCar;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,14 @@ public class OwnerCarPersistenceMongodb implements OwnerCarPersistence {
                 .findByDriverLicense(driverLicense)
                 .orElseThrow(() -> new NotFoundException("Owner Car driverLicense: " + driverLicense))
                 .toOwnerCar();
+    }
+
+    @Override
+    public OwnerCar updateName(String driverLicense, String name) {
+        OwnerCarEntity ownerCarEntity = this.ownerCarRepository.findByDriverLicense(driverLicense)
+                .orElseThrow(() -> new NotFoundException(" Owner Car driverLicense: " + driverLicense));
+        ownerCarEntity.setName(name);
+        return this.ownerCarRepository.save(ownerCarEntity).toOwnerCar();
     }
 
 
