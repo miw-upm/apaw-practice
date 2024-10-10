@@ -14,7 +14,7 @@ class RidePersistenceMongodbIT {
 
     @Test
     void testFindByThemeAndMaxCapacityLessThan(){
-        assertEquals(this.ridePersistence.findByThemeAndMaxCapacityLessThan("Halloween", 80).toList().size(), 2);
+        assertEquals(2, this.ridePersistence.findByThemeAndMaxCapacityLessThan("Halloween", 80).toList().size());
     }
     
 }
