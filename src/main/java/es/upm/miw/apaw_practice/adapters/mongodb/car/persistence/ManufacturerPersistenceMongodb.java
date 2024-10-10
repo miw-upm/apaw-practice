@@ -1,13 +1,18 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.car.daos.CarRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.car.daos.ManufacturerRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.car.entities.CarEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.car.entities.ManufacturerEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.car.entities.OwnerCarEntity;
 import es.upm.miw.apaw_practice.domain.models.car.Manufacturer;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.ManufacturerPersistence;
 import org.springframework.stereotype.Repository;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @Repository("manufacturerPersistence")
@@ -15,9 +20,12 @@ public class ManufacturerPersistenceMongodb implements ManufacturerPersistence {
 
     private ManufacturerRepository manufacturerRepository;
 
+    private CarRepository carRepository;
+
     @Autowired
-    public ManufacturerPersistenceMongodb(ManufacturerRepository manufacturerRepository){
+    public ManufacturerPersistenceMongodb(ManufacturerRepository manufacturerRepository, CarRepository carRepository){
         this.manufacturerRepository = manufacturerRepository;
+        this.carRepository = carRepository;
     }
 
     @Override
@@ -51,5 +59,18 @@ public class ManufacturerPersistenceMongodb implements ManufacturerPersistence {
     public boolean existName(String name) {
         return manufacturerRepository.findByName(name).isPresent();
 
+    }
+
+    @Override
+    public List<String> findOwnerNamesByManufacturerCountry(String country) {
+        return this.carRepository.findAll().stream()
+                .filter(car -> car.getPiecesEntity().stream()
+                        .anyMatch(piece -> piece.getManufacturerListEntity().stream()
+                                .anyMatch(manufacturer -> manufacturer.getCountry().equals(country))))
+                .map(CarEntity::getOwnerEntity)
+                .filter(Objects::nonNull)
+                .map(OwnerCarEntity::getName)
+                .distinct()
+                .toList();
     }
 }
