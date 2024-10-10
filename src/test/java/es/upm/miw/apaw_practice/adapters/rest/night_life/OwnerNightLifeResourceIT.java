@@ -54,8 +54,7 @@ class OwnerNightLifeResourceIT {
                 .expectStatus().isOk()
                 .expectBody(BigDecimal.class)
                 .value(totalPrice ->
-                        Assertions.assertTrue(totalPrice.compareTo(BigDecimal.valueOf(150.00)) == 0 ||
-                                totalPrice.compareTo(BigDecimal.valueOf(199.98)) == 0)
+                        assertEquals(0, totalPrice.compareTo(BigDecimal.valueOf(100.00)))
                 );
     }
 }

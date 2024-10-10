@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.bank;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.bank.BankSeederService;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.bank.BranchOffice;
 import es.upm.miw.apaw_practice.domain.models.bank.Client;
@@ -22,6 +23,8 @@ class BranchOfficeResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
+    @Autowired
+    private BankSeederService bankSeederService;
 
     @Test
     void testCreate() {
@@ -50,6 +53,8 @@ class BranchOfficeResourceIT {
 
     @Test
     void testGetAssociatedBalance() {
+        bankSeederService.deleteAll();
+        bankSeederService.seedDatabase();
         this.webTestClient
                 .get()
                 .uri(OFFICES + BUILDING_NAME + BALANCE, "Building1")
@@ -58,7 +63,6 @@ class BranchOfficeResourceIT {
                 .expectBody(BigDecimal.class)
                 .value(value -> {
                     assertEquals(new BigDecimal("40100.0"), value);
-
                 });
     }
 
