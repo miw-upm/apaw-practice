@@ -59,4 +59,9 @@ public class RoomPersistenceMongodb implements RoomPersistence {
                 .orElseThrow(() -> new NotFoundException("Room num: " + num))
                 .toRoom();
     }
+
+    @Override
+    public void delete(String num) {
+        this.roomRepository.deleteByNum(num);
+    }
 }
