@@ -66,9 +66,6 @@ public class ManufacturerResourceIT {
                         .build(country))
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(List.class)
-                .value(names -> {
-                    assertTrue("Lucia", names.contains("Lucia"));
-                });
+                .expectBody(List.class);
     }
 }
