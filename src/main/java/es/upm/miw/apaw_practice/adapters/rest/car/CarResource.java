@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping(CarResource.CARS)
 public class CarResource {
@@ -13,6 +15,8 @@ public class CarResource {
     static final String CARS = "/cars";
 
     static final String MODEL = "/{model}";
+
+    static final String DRIVERLICENSE = "/owner/{driverLicense}";
 
     private CarService carService;
 
@@ -30,5 +34,10 @@ public class CarResource {
     @DeleteMapping(MODEL)
     public void delete(@PathVariable String model){
         this.carService.delete(model);
+    }
+
+    @GetMapping(CarResource.DRIVERLICENSE)
+    public BigDecimal getTotalCostByDriverLicense(@PathVariable String driverLicense){
+        return this.carService.getTotalCostByDriverLicense(driverLicense);
     }
 }

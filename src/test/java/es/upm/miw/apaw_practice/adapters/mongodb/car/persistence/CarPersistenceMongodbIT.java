@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @TestConfig
 public class CarPersistenceMongodbIT {
@@ -26,6 +26,13 @@ public class CarPersistenceMongodbIT {
 
     @Autowired
     private PiecePersistenceMongodb piecePersistence;
+
+    @Test
+    void testReadAll() {
+        List<Car> cars = this.carPersistence.readAll().toList();
+        assertNotNull(cars);
+        assertFalse(cars.isEmpty());
+    }
 
     @Test
     public void testReadByModel(){
@@ -58,5 +65,12 @@ public class CarPersistenceMongodbIT {
         assertEquals(new BigDecimal(35000), car.getPrice());
         this.carPersistence.delete("Supra");
 
+    }
+
+    @Test
+    void testGetTotalCostByDriverLicense() {
+        String driverLicense = "UCD253";
+        BigDecimal sumCost = this.carPersistence.getTotalCostByDriverLicense(driverLicense);
+        assertEquals(new BigDecimal("400"), sumCost);
     }
 }
