@@ -1,5 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities;
 
+import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.CompetitionForm;
+import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.Competitor;
+import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -8,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class CompetitorEntity {
@@ -19,7 +24,7 @@ public class CompetitorEntity {
     private Integer federatedYears;
     private LocalDate lastFederationDate;
     @DBRef
-    private WuhsuGradeEntity wuhsuGradeEntity;
+    private WushuGradeEntity wushuGradeEntity;
     @DBRef
     private List<CompetitionFormEntity> competitionFormsEntities;
 
@@ -27,13 +32,18 @@ public class CompetitorEntity {
         //Empty for framework
     }
 
-    public CompetitorEntity( String licence, Integer federatedYears, LocalDate lastFederationDate, WuhsuGradeEntity wuhsuGradeEntity , List<CompetitionFormEntity> competitionFormsEntities) {
+    public CompetitorEntity(String licence, Integer federatedYears, LocalDate lastFederationDate, WushuGradeEntity wushuGradeEntity, List<CompetitionFormEntity> competitionFormsEntities) {
         this.id = UUID.randomUUID().toString();
         this.licence = licence;
         this.federatedYears = federatedYears;
         this.lastFederationDate = lastFederationDate;
-        this.wuhsuGradeEntity = wuhsuGradeEntity;
+        this.wushuGradeEntity = wushuGradeEntity;
         this.competitionFormsEntities = competitionFormsEntities;
+    }
+
+    public CompetitorEntity(Competitor competitor) {
+            BeanUtils.copyProperties(competitor, this);
+            this.id = UUID.randomUUID().toString();
     }
 
 
@@ -69,12 +79,12 @@ public class CompetitorEntity {
         this.lastFederationDate = lastFederationDate;
     }
 
-    public WuhsuGradeEntity getWuhsuGradeEntity() {
-        return wuhsuGradeEntity;
+    public WushuGradeEntity getWuhsuGradeEntity() {
+        return wushuGradeEntity;
     }
 
-    public void setWuhsuGradeEntity(WuhsuGradeEntity wuhsuGradeEntity) {
-        this.wuhsuGradeEntity = wuhsuGradeEntity;
+    public void setWuhsuGradeEntity(WushuGradeEntity wushuGradeEntity) {
+        this.wushuGradeEntity = wushuGradeEntity;
     }
 
     public List<CompetitionFormEntity> getCompetitionFormsEntities() {
@@ -83,6 +93,14 @@ public class CompetitorEntity {
 
     public void setCompetitionFormsEntities(List<CompetitionFormEntity> competitionFormsEntities) {
         this.competitionFormsEntities = competitionFormsEntities;
+    }
+
+    public Competitor toCompetitor(){
+        List<CompetitionForm> competitionForms = this.competitionFormsEntities.stream()
+                .map(CompetitionFormEntity::toCompetitionForm)
+                .collect(Collectors.toList());
+        WushuGrade wushuGrade = this.wushuGradeEntity.toWushuGrade();
+        return new Competitor( licence,federatedYears,lastFederationDate,wushuGrade,competitionForms);
     }
 
     @Override
@@ -97,7 +115,7 @@ public class CompetitorEntity {
                 ", licence='" + licence + '\'' +
                 ", federatedYears=" + federatedYears +
                 ", lastFederationDate=" + lastFederationDate +
-                ", wuhsuGradeEntity=" + wuhsuGradeEntity +
+                ", wuhsuGradeEntity=" + wushuGradeEntity +
                 ", competitionFormsEntities=" + competitionFormsEntities +
                 '}';
     }

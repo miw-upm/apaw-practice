@@ -8,18 +8,18 @@ public class Student {
     private String firstName;
     private String placeOfBirth;
     private LocalDate enrollmentDate;
-    private List<Degree> degrees;
+    private List<Degree> enrolledDegrees;
 
     public Student() {
         //empty for framework
     }
 
-    public Student(String email, String firstName, String placeOfBirth, LocalDate enrollmentDate, List<Degree> degrees) {
+    public Student(String email, String firstName, String placeOfBirth, LocalDate enrollmentDate, List<Degree> enrolledDegrees) {
         this.email = email;
         this.firstName = firstName;
         this.placeOfBirth = placeOfBirth;
         this.enrollmentDate = enrollmentDate;
-        this.degrees = degrees;
+        this.enrolledDegrees = enrolledDegrees;
     }
 
     public String getEmail() {
@@ -54,12 +54,12 @@ public class Student {
         this.enrollmentDate = enrollmentDate;
     }
 
-    public List<Degree> getDegrees() {
-        return degrees;
+    public List<Degree> getEnrolledDegrees() {
+        return enrolledDegrees;
     }
 
-    public void setDegrees(List<Degree> degrees) {
-        this.degrees = degrees;
+    public void setEnrolledDegrees(List<Degree> enrolledDegrees) {
+        this.enrolledDegrees = enrolledDegrees;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", placeOfBirth='" + placeOfBirth + '\'' +
                 ", enrollmentDate=" + enrollmentDate +
-                ", degreesStudied=" + degrees +
+                ", enrolledDegrees=" + enrolledDegrees +
                 '}';
     }
 }

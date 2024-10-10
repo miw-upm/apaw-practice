@@ -30,20 +30,41 @@ public class MissionPersistenceMongodb implements MissionPersistence {
 
     @Override
     public Mission update(String codeName, Mission mission) {
-        MissionEntity missionEntity = this.missionRepository
-                .findByCodeName(codeName)
-                .orElseThrow(() -> new NotFoundException("Mission codeName: " + mission.getCodeName()));
-        UnitEntity unitEntity = this.unitRepository
-                        .findByName(mission.getUnit().getName())
-                                .orElseThrow(() -> new NotFoundException("Unit name: " + mission.getUnit().getName()));
-        List<String> serialCodes = mission.getWeapons().stream()
-                .map(Weapon::getSerialCode)
-                .toList();
-        List<WeaponEntity> weaponEntities = this.weaponRepository.
-                findBySerialCodeIn(serialCodes);
+        MissionEntity missionEntity = this.findMissionEntity(codeName);
+        UnitEntity unitEntity = this.findUnitEntity(mission.getUnit().getName());
+        List<WeaponEntity> weaponEntities = this.findWeaponEntities(mission.getWeapons());
         missionEntity.fromMission(mission.getCodeName(), mission.getInternational(), mission.getStartDate(), unitEntity, weaponEntities);
         return this.missionRepository
                 .save(missionEntity)
                 .toMission();
+    }
+
+    private MissionEntity findMissionEntity(String codeName) {
+        return this.missionRepository
+                .findByCodeName(codeName)
+                .orElseThrow(() -> new NotFoundException("Mission codeName: " + codeName));
+    }
+
+    private UnitEntity findUnitEntity(String name) {
+        return this.unitRepository
+                .findByName(name)
+                .orElseThrow(() -> new NotFoundException("Unit name: " + name));
+    }
+
+    private List<WeaponEntity> findWeaponEntities(List<Weapon> weapons) {
+        List<String> serialCodes = weapons.stream()
+                .map(Weapon::getSerialCode)
+                .toList();
+        List<WeaponEntity> weaponEntities = this.weaponRepository.
+                findBySerialCodeIn(serialCodes);
+
+        if (weaponEntities.size() != serialCodes.size()) {
+            List<String> missingWeapons = serialCodes.stream()
+                    .filter(serialCode -> weaponEntities.stream()
+                            .noneMatch(weaponEntity -> weaponEntity.getSerialCode().equals(serialCode)))
+                    .toList();
+            throw new NotFoundException("Weapons with serial codes not found: " + String.join(", ", missingWeapons));
+        }
+        return weaponEntities;
     }
 }

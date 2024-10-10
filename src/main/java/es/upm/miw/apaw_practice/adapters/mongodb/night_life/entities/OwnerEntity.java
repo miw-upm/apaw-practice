@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities;
 import es.upm.miw.apaw_practice.domain.models.night_life.Owner;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 public class OwnerEntity {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String name;
     private String phone;
     private String email;
@@ -62,20 +64,14 @@ public class OwnerEntity {
         this.email = email;
     }
 
-    public Owner toOwner() {
-        Owner owner = new Owner();
-        BeanUtils.copyProperties(this, owner);
-        return owner;
-    }
-
     @Override
     public int hashCode() {
-        return this.id.hashCode();
+        return this.name.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((OwnerEntity) obj).id));
+        return this == obj || obj != null && getClass() == obj.getClass() && (name.equals(((OwnerEntity) obj).name));
     }
 
     @Override
@@ -83,5 +79,9 @@ public class OwnerEntity {
         return "Owner{" + "name=" + name + ", phone=" + phone + ", email=" + email + '}';
     }
 
-
+    public Owner toOwner() {
+        Owner owner = new Owner();
+        BeanUtils.copyProperties(this, owner);
+        return owner;
+    }
 }

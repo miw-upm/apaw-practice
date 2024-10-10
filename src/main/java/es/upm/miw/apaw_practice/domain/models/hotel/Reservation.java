@@ -30,10 +30,10 @@ public class Reservation {
     @Override
     public String toString() {
         return "Reservation{" +
-                "reservationNumber: " + reservationNumber + '\'' +
-                ", roomNumber: " + roomNumber + '\'' +
-                ", reservationDate:" + reservationDate + '\'' +
-                "}";
+                "reservationNumber='" + reservationNumber + '\'' +
+                ", roomNumber='" + roomNumber + '\'' +
+                ", reservationDate=" + reservationDate +
+                '}';
     }
 
 }

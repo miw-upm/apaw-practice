@@ -1,7 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.car.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.car.Car;
+import es.upm.miw.apaw_practice.domain.models.car.Piece;
 import org.springframework.data.annotation.Id;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -40,6 +43,26 @@ public class CarEntity {
         this.price = price;
         this.ownerCarEntity = ownerCarEntity;
         this.piecesEntity = piecesEntity;
+    }
+
+    public CarEntity(Car car) {
+        this.fromCar(car);
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public void fromCar(Car car) {
+        BeanUtils.copyProperties(car, this);
+        this.setPiecesEntity(car.getPieces().stream().map(PieceEntity::new).toList());
+    }
+
+    public Car toCar(){
+        Car car = new Car();
+        BeanUtils.copyProperties(this, car);
+        car.setPieces(this.piecesEntity.stream().map(PieceEntity::toPiece).toList());
+        if (ownerCarEntity != null) {
+            car.setOwner(ownerCarEntity.toOwnerCar());
+        }
+        return car;
     }
 
     public String getId() {
@@ -89,6 +112,8 @@ public class CarEntity {
     public void setPiecesEntity(List<PieceEntity> piecesEntity) {
         this.piecesEntity = piecesEntity;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

@@ -8,7 +8,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities.ArtworkEnti
 import es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities.ExhibitionEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities.MuseumEntity;
 import es.upm.miw.apaw_practice.domain.models.art_museum.Artist;
-import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

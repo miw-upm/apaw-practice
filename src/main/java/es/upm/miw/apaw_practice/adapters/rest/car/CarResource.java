@@ -1,0 +1,45 @@
+package es.upm.miw.apaw_practice.adapters.rest.car;
+
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
+import es.upm.miw.apaw_practice.domain.models.car.Car;
+import es.upm.miw.apaw_practice.domain.services.car.CarService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+
+@RestController
+@RequestMapping(CarResource.CARS)
+public class CarResource {
+
+    static final String CARS = "/cars";
+
+    static final String MODEL = "/{model}";
+
+    static final String SEARCH = "/search";
+
+    private CarService carService;
+
+    public CarResource(CarService carService) {
+        this.carService = carService;
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> post(@RequestBody Car car) {
+
+        carService.create(car);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(MODEL)
+    public void delete(@PathVariable String model){
+        this.carService.delete(model);
+    }
+
+    @GetMapping(SEARCH)
+    public BigDecimal getTotalCostByDriverLicense(@RequestParam String q){
+        String driverLicense = new LexicalAnalyzer().extractWithAssure(q, "driverLicense");
+        return this.carService.getTotalCostByDriverLicense(driverLicense);
+    }
+}

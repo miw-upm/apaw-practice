@@ -7,11 +7,10 @@ public class Doctor {
     private String fullname;
     private BigDecimal salary;
 
-    // Constructor por defecto
+
     public Doctor() {
     }
 
-    // Constructor que requiere todos los parámetros
     public Doctor(String dni, String fullname, BigDecimal salary) {
         this.dni = dni;
         this.fullname = fullname;

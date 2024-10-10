@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Document
-public class WuhsuGradeEntity {
+public class WushuGradeEntity {
 
     @Id
     private String id;
@@ -17,11 +17,11 @@ public class WuhsuGradeEntity {
     private String gradeTitle;
     private Integer gradeLevel;
 
-    public WuhsuGradeEntity() {
+    public WushuGradeEntity() {
         //empty from framework
     }
 
-    public WuhsuGradeEntity(WushuGrade wushuGrade) {
+    public WushuGradeEntity(WushuGrade wushuGrade) {
         BeanUtils.copyProperties(wushuGrade, this);
         this.id = UUID.randomUUID().toString();
     }
@@ -56,6 +56,12 @@ public class WuhsuGradeEntity {
 
     public void setGradeLevel(Integer gradeLevel) {
         this.gradeLevel = gradeLevel;
+    }
+
+    public WushuGrade toWushuGrade() {
+        WushuGrade wushuGrade = new WushuGrade();
+        BeanUtils.copyProperties(this, wushuGrade);
+        return wushuGrade;
     }
 
     @Override
