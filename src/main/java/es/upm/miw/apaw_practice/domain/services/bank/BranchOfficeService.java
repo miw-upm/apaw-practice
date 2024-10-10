@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.bank.BranchOfficePersis
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class BranchOfficeService {
 
@@ -17,6 +19,10 @@ public class BranchOfficeService {
 
     public BranchOffice create(BranchOffice branchOffice) {
         return this.branchOfficePersistence.create(branchOffice);
+    }
+
+    public BigDecimal getAssociatedBalance(String buildingName){
+        return this.branchOfficePersistence.getAssociatedBalance(buildingName);
     }
 
 }
