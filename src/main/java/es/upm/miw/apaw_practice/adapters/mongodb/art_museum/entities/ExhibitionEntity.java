@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities;
 
-import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
 import es.upm.miw.apaw_practice.domain.models.art_museum.Exhibition;
 import org.springframework.beans.BeanUtils;
 

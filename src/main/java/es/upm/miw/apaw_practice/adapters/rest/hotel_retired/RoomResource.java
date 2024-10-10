@@ -30,4 +30,9 @@ public class RoomResource {
     public Room read(@PathVariable String num) {
         return this.roomService.read(num);
     }
+
+    @DeleteMapping(NUM_ID)
+    public void delete(@PathVariable String num) {
+        this.roomService.delete(num);
+    }
 }

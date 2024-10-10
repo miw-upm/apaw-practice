@@ -28,4 +28,8 @@ public class RoomService {
     public List<Room> search() {
         return this.roomPersistence.readAll().toList();
     }
+
+    public void delete(String num) {
+        this.roomPersistence.delete(num);
+    }
 }

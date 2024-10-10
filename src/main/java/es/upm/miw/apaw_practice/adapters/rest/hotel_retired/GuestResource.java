@@ -30,4 +30,9 @@ public class GuestResource {
     public Guest read(@PathVariable String nif) {
         return this.guestService.read(nif);
     }
+
+    @DeleteMapping(NIF_ID)
+    public void delete(@PathVariable String nif) {
+        this.guestService.delete(nif);
+    }
 }
