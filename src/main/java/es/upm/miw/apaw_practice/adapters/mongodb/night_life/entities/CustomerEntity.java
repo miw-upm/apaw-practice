@@ -14,6 +14,7 @@ public class CustomerEntity {
     @Indexed(unique = true)
     private String name;
     private String phone;
+    @Indexed(unique = true)
     private String email;
 
     public CustomerEntity() {
