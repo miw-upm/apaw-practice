@@ -3,39 +3,34 @@ package es.upm.miw.apaw_practice.domain.models.E_commerce_model;
 import java.math.BigDecimal;
 
 public class Product {
-    private String idProduct;
-    private String name;
-    private int numberProduct;
+
+    private String productName;
+    private Integer numberProduct;
     private BigDecimal unitPrice;
 
-    public Product(String idProduct, String name, int numberProduct, BigDecimal unitPrice) {
-        this.idProduct = idProduct;
-        this.name = name;
+    public Product() {
+        // Empty for framework
+    }
+
+    public Product(String productName, Integer numberProduct, BigDecimal unitPrice) {
+        this.productName = productName;
         this.numberProduct = numberProduct;
         this.unitPrice = unitPrice;
     }
 
-    public String getIdProduct() {
-        return idProduct;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setIdProduct(String idProduct) {
-        this.idProduct = idProduct;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getNumberProduct() {
+    public Integer getNumberProduct() {
         return numberProduct;
     }
 
-    public void setNumberProduct(int numberProduct) {
+    public void setNumberProduct(Integer numberProduct) {
         this.numberProduct = numberProduct;
     }
 
@@ -50,8 +45,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "idProduct='" + idProduct + '\'' +
-                ", name='" + name + '\'' +
+                "productName='" + productName + '\'' +
                 ", numberProduct=" + numberProduct +
                 ", unitPrice=" + unitPrice +
                 '}';
