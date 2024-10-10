@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class BranchOfficeResource {
 
     static final String OFFICES = "/bank/offices";
-    static final String BUILDING_NAME = "/{buildingName}}";
+    static final String BUILDING_NAME = "/{buildingName}";
     static final String BALANCE = "/balance";
 
 

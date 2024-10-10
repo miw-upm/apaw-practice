@@ -15,11 +15,11 @@ class BranchOfficeRepositoryIT {
 
     @Test
     void testFindByBuildingName() {
-        assertTrue(this.branchOfficeRepository.findByBuildingName("Building1").isPresent());
-        BranchOfficeEntity branchOffice = this.branchOfficeRepository.findByBuildingName("Building1").get();
-        assertEquals("Building1", branchOffice.getBuildingName());
-        assertEquals(200, branchOffice.getEmployees());
-        assertEquals(5, branchOffice.getAtmNumber());
+        assertTrue(this.branchOfficeRepository.findByBuildingName("Building4").isPresent());
+        BranchOfficeEntity branchOffice = this.branchOfficeRepository.findByBuildingName("Building4").get();
+        assertEquals("Building4", branchOffice.getBuildingName());
+        assertEquals(20, branchOffice.getEmployees());
+        assertEquals(1, branchOffice.getAtmNumber());
         assertNotNull(branchOffice.getClients());
     }
 
