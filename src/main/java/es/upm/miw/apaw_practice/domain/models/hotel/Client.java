@@ -56,11 +56,11 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "identityDocument: " + identityDocument + '\'' +
-                ", name: " + name + '\'' +
-                ", phone:" + phone + '\'' +
-                ", email" + email + '\'' +
-                "}";
+                "identityDocument='" + identityDocument + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", reservation=" + reservation +
+                '}';
     }
-
 }

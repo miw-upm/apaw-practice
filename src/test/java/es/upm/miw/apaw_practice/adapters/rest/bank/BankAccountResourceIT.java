@@ -14,7 +14,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static es.upm.miw.apaw_practice.adapters.rest.bank.BankAccountResource.ACCOUNTS;
+import static es.upm.miw.apaw_practice.adapters.rest.bank.BankAccountResource.IBAN;
 import static java.util.Collections.emptyList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
 class BankAccountResourceIT {
@@ -30,7 +33,7 @@ class BankAccountResourceIT {
                 new BankAccount("IBAN1", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, client);
         this.webTestClient
                 .put()
-                .uri(BankAccountResource.ACCOUNTS + BankAccountResource.IBAN, "kk")
+                .uri(ACCOUNTS + IBAN, "kk")
                 .body(BodyInserters.fromValue(bankAccount))
                 .exchange()
                 .expectStatus().isNotFound();
@@ -45,11 +48,33 @@ class BankAccountResourceIT {
                 new BankAccount("IBAN4", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, client);
         this.webTestClient
                 .put()
-                .uri(BankAccountResource.ACCOUNTS + BankAccountResource.IBAN, "IBAN4")
+                .uri(ACCOUNTS + IBAN, "IBAN4")
                 .body(BodyInserters.fromValue(bankAccount))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BankAccount.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testGetInvestmentFundNamesNoAccount() {
+        this.webTestClient
+                .get()
+                .uri(ACCOUNTS + IBAN, "kk")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testGetInvestmentFundNames() {
+        this.webTestClient
+                .get()
+                .uri(ACCOUNTS + IBAN, "IBAN5")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(value -> {
+                    assertEquals(List.of("FundE","FundF"), value);
+                });
     }
 }
