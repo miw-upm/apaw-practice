@@ -15,4 +15,6 @@ public interface RoomPersistence {
     Room update(String num, Room room);
 
     Room read(String num);
+
+    void delete(String num);
 }

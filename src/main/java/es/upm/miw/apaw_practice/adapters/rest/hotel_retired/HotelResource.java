@@ -30,4 +30,9 @@ public class HotelResource {
     public Hotel read(@PathVariable String cif) {
         return this.hotelService.read(cif);
     }
+
+    @DeleteMapping(CIF_ID)
+    public void delete(@PathVariable String cif) {
+        this.hotelService.delete(cif);
+    }
 }
