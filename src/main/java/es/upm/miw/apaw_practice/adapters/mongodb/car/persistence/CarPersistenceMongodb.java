@@ -28,13 +28,6 @@ public class CarPersistenceMongodb implements CarPersistence {
         this.ownerCarRepository = ownerCarRepository;
     }
 
-    @Override
-    public Stream<Car> readAll() {
-        return carRepository
-                .findAll()
-                .stream()
-                .map(CarEntity::toCar);
-    }
 
     @Override
     public Car readByModel(String model){
