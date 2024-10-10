@@ -9,4 +9,6 @@ public interface MuseumPersistence {
     Museum readByName(String name);
 
     void deleteByName(String name);
+
+    Museum updateExhibitionPrice(Museum museum, String exhibitionName);
 }
