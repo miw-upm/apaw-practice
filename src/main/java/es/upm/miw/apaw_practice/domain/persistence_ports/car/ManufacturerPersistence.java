@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.persistence_ports.car;
 import org.springframework.stereotype.Repository;
 import es.upm.miw.apaw_practice.domain.models.car.Manufacturer;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Repository
@@ -15,4 +16,6 @@ public interface ManufacturerPersistence {
     Manufacturer update(String name, Manufacturer manufacturer);
 
     boolean existName(String name);
+
+    List<String> findOwnerNamesByManufacturerCountry(String country);
 }

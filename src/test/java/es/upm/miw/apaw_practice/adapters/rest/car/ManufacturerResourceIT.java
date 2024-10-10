@@ -9,7 +9,10 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @RestTestConfig
 public class ManufacturerResourceIT {
@@ -50,5 +53,19 @@ public class ManufacturerResourceIT {
                 .uri(ManufacturerResource.MANUFACTURER + ManufacturerResource.NAME_ID, manufacturer.getName())
                 .body(BodyInserters.fromValue(manufacturer))
                 .exchange();
+    }
+
+    @Test
+    void testFindOwnerNamesByManufacturerCountry() {
+        String country = "France";
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ManufacturerResource.MANUFACTURER + ManufacturerResource.SEARCH)
+                        .queryParam("q", "country:"+country)
+                        .build(country))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class);
     }
 }
