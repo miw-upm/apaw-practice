@@ -34,10 +34,12 @@ class TeamCompetitionPersistenceMongodbIT {
         assertTrue(teamCompetition.isPresent());
         List<PlayerTeam> playerTeams = teamCompetition.get().getPlayerTeams();
         playerTeams.clear();
-        PlayerTeam playerTeam = new PlayerTeam();
-        playerTeam.setHeight(182.74);
-        playerTeam.setWeight(80.51);
-        playerTeam.setSalary(new BigDecimal("12.28"));
+        PlayerTeam playerTeam = PlayerTeam.builder()
+                .id("1245")
+                .weight(80.51)
+                .height(182.74)
+                .salary(new BigDecimal("12.28"))
+                .build();
         playerTeams.add(playerTeam);
         this.teamCompetitionPersistenceMongodb.update(teamCompetition.get());
 
