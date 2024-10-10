@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ShoppingCart {
 
-    private Integer shoppingNum;
     private LocalDateTime shoppingTime;
     private Boolean isPaid;
     private BigDecimal totalPrice;
@@ -16,20 +15,11 @@ public class ShoppingCart {
         // Empty for framework
     }
 
-    public ShoppingCart(Integer shoppingNum, LocalDateTime shoppingTime, Boolean isPaid, BigDecimal totalPrice, List<Product> products) {
-        this.shoppingNum = shoppingNum;
+    public ShoppingCart(LocalDateTime shoppingTime, Boolean isPaid, BigDecimal totalPrice, List<Product> products) {
         this.shoppingTime = shoppingTime;
         this.isPaid = isPaid;
         this.totalPrice = totalPrice;
         this.products = products;
-    }
-
-    public Integer getShoppingNum() {
-        return shoppingNum;
-    }
-
-    public void setShoppingNum(Integer shoppingNum) {
-        this.shoppingNum = shoppingNum;
     }
 
     public LocalDateTime getShoppingTime() {
@@ -67,7 +57,6 @@ public class ShoppingCart {
     @Override
     public String toString() {
         return "ShoppingCart{" +
-                "shoppingNum=" + shoppingNum +
                 ", shoppingTime=" + shoppingTime +
                 ", isPaid=" + isPaid +
                 ", totalPrice=" + totalPrice +

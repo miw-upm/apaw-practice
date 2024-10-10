@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Customer {
 
-    private String customerId;
     private String userName;
     private String email;
     private Integer postalCode;
@@ -17,20 +16,11 @@ public class Customer {
         // Empty for framework
     }
 
-    public Customer(String customerId, String userName, String email, Integer postalCode, ShoppingCart shoppingCart) {
-        this.customerId = customerId;
+    public Customer(String userName, String email, Integer postalCode, ShoppingCart shoppingCart) {
         this.userName = userName;
         this.email = email;
         this.postalCode = postalCode;
         this.shoppingCart = shoppingCart;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
     }
 
     public String getUserName() {
@@ -76,7 +66,6 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerId='" + customerId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", postalCode=" + postalCode +
