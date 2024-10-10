@@ -73,7 +73,8 @@ public class CarResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(CarResource.CARS + CarResource.DRIVERLICENSE)
+                        .path(CarResource.CARS + CarResource.SEARCH)
+                        .queryParam("q", "driverLicense:"+driverLicense)
                         .build(driverLicense))
                 .exchange()
                 .expectStatus().isOk()
