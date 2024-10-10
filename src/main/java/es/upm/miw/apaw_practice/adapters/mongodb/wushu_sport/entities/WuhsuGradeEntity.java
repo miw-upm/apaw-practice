@@ -58,6 +58,12 @@ public class WuhsuGradeEntity {
         this.gradeLevel = gradeLevel;
     }
 
+    public WushuGrade toWushuGrade() {
+        WushuGrade wushuGrade = new WushuGrade();
+        BeanUtils.copyProperties(this, wushuGrade);
+        return wushuGrade;
+    }
+
     @Override
     public String toString() {
         return "WuhsuGradeEntity{" +

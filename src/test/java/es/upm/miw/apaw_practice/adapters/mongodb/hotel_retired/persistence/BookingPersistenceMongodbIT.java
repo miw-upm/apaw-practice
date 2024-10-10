@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Booking;
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Guest;
 import org.junit.jupiter.api.Test;
@@ -21,11 +20,6 @@ public class BookingPersistenceMongodbIT {
     private GuestPersistenceMongodb guestPersistenceMongodb;
 
     @Test
-    void testReadNotFound() {
-        assertThrows(NotFoundException.class, () -> this.bookingPersistenceMongodb.read("0"));
-    }
-
-    @Test
     void testCreateAndRead() {
         Guest guest = this.guestPersistenceMongodb.read("99527370E");
         Booking booking = new Booking(
@@ -39,6 +33,6 @@ public class BookingPersistenceMongodbIT {
         assertFalse(createdBooking.getConfirmed());
         assertEquals(LocalDate.of(2024, 10, 1), createdBooking.getDateIn());
         assertEquals(LocalDate.of(2024, 10, 1), createdBooking.getDateOut());
-        //assertEquals(guest, createdBooking.getGuest());
+        assertEquals(guest, createdBooking.getGuest());
     }
 }

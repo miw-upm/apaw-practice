@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.theme_park.entities;
 
-import com.sun.jna.platform.win32.Netapi32Util;
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import es.upm.miw.apaw_practice.domain.models.theme_park.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;

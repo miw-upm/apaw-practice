@@ -58,6 +58,12 @@ public class CompetitionFormEntity {
         this.category = category;
     }
 
+    public CompetitionForm toCompetitionForm() {
+        CompetitionForm competitionForm = new CompetitionForm();
+        BeanUtils.copyProperties(this, competitionForm);
+        return competitionForm;
+    }
+
     @Override
     public String toString() {
         return "CompetitionFormEntity{" +

@@ -20,19 +20,19 @@ public class UniversityEntity {
     private Boolean allowsInternationalStudents;
     private Integer numberOfFaculties;
     @DBRef
-    private List<DegreeEntity> degrees;
+    private List<DegreeEntity> degreesOffered;
 
     public UniversityEntity() {
         //empty for framework
     }
 
-    public UniversityEntity(String topDomain, String name, Boolean allowsInternationalStudents, Integer numberOfFaculties, List<DegreeEntity> degrees) {
+    public UniversityEntity(String topDomain, String name, Boolean allowsInternationalStudents, Integer numberOfFaculties, List<DegreeEntity> degreesOffered) {
         this.id = UUID.randomUUID().toString();
         this.topDomain = topDomain;
         this.name = name;
         this.allowsInternationalStudents = allowsInternationalStudents;
         this.numberOfFaculties = numberOfFaculties;
-        this.degrees = degrees;
+        this.degreesOffered = degreesOffered;
     }
 
     public UniversityEntity(University university) {
@@ -42,13 +42,13 @@ public class UniversityEntity {
 
     public void fromUniversity(University university) {
         BeanUtils.copyProperties(university, this);
-        this.setDegrees(university.getDegreesOffered().stream().map(DegreeEntity::new).toList());
+        this.setDegreesOffered(university.getDegreesOffered().stream().map(DegreeEntity::new).toList());
     }
 
     public University toUniversity() {
         University university = new University();
         BeanUtils.copyProperties(this, university);
-        university.setDegreesOffered(this.degrees.stream().map(DegreeEntity::toDegree).toList());
+        university.setDegreesOffered(this.degreesOffered.stream().map(DegreeEntity::toDegree).toList());
         return university;
     }
 
@@ -92,12 +92,12 @@ public class UniversityEntity {
         this.numberOfFaculties = numberOfFaculties;
     }
 
-    public List<DegreeEntity> getDegrees() {
-        return degrees;
+    public List<DegreeEntity> getDegreesOffered() {
+        return degreesOffered;
     }
 
-    public void setDegrees(List<DegreeEntity> degrees) {
-        this.degrees = degrees;
+    public void setDegreesOffered(List<DegreeEntity> degreesOffered) {
+        this.degreesOffered = degreesOffered;
     }
 
     @Override
@@ -118,7 +118,7 @@ public class UniversityEntity {
                 ", name='" + name + '\'' +
                 ", allowsInternationalStudents=" + allowsInternationalStudents +
                 ", numberOfFaculties=" + numberOfFaculties +
-                ", degrees=" + degrees +
+                ", degreesOffered=" + degreesOffered +
                 '}';
     }
 }

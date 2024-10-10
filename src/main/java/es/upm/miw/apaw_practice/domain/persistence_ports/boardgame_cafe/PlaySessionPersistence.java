@@ -14,5 +14,6 @@ public interface PlaySessionPersistence {
     PlaySession update(Integer playSessionId, PlaySession playSession);
 
     PlaySession read(Integer playSessionId);
+
     boolean existPlaySessionId(Integer playSessionId);
 }

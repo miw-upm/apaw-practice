@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Document
 public class ClientEntity {
@@ -98,7 +97,7 @@ public class ClientEntity {
     public Client toClient() {
         List<InvestmentFund> investmentFunds = this.investmentFundsEntities.stream()
                 .map(InvestmentFundEntity::toInvestmentFund)
-                .collect(Collectors.toList());
+                .toList();
         return new Client(dni, name, surname, phoneNumber, email, investmentFunds );
     }
 

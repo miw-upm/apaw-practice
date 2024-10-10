@@ -30,6 +30,6 @@ public class TeacherRepositoryIT {
         Teacher teacher = teacherEntity.get().toTeacher();
         assertEquals("Anderson", teacher.getLastName());
         assertEquals(LocalDate.of(1976, 1, 2), teacher.getBirthDate());
-        assertEquals("ox.ac.uk", teacher.getUniversity().getTopDomain());
+        assertEquals("ox.ac.uk", teacher.getWorkplace().getTopDomain());
     }
 }

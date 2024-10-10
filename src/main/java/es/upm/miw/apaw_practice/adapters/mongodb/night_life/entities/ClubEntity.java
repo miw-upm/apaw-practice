@@ -1,10 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities;
 
 import es.upm.miw.apaw_practice.domain.models.night_life.Club;
+import es.upm.miw.apaw_practice.domain.models.night_life.Reservation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Document
@@ -20,14 +24,6 @@ public class ClubEntity {
 
     public ClubEntity() {
         //empty for framework
-    }
-
-    public ClubEntity(Club club) {
-        this.id = UUID.randomUUID().toString();
-        this.name = club.getName();
-        this.capacity = club.getCapacity();
-        this.opened = club.isOpened();
-        this.ownerEntity = new OwnerEntity(club.getOwner());
     }
 
     public ClubEntity(String name, Integer capacity, boolean opened, OwnerEntity ownerEntity) {
@@ -76,6 +72,11 @@ public class ClubEntity {
 
     public void setOwnerEntity(OwnerEntity ownerEntity) {
         this.ownerEntity = ownerEntity;
+    }
+
+    public Club toClub() {
+        List<Reservation> reservations = new ArrayList<>();
+        return new Club(this.name, this.capacity, this.opened, this.ownerEntity.toOwner(), reservations);
     }
 
     @Override
