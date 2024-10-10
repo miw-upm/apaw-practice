@@ -1,11 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.entities;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Document
@@ -39,12 +39,11 @@ public class CustomerEntity {
     }
 
     // Getters and Setters
-    public String getCustomerId() {
-        return customerId;
+    public String getId() {
+        return id;
     }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -88,9 +87,22 @@ public class CustomerEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomerEntity that = (CustomerEntity) o;
+        return Objects.equals(userName, that.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName);
+    }
+
+    @Override
     public String toString() {
         return "CustomerEntity{" +
-                "customerId='" + customerId + '\'' +
+                "id='" + id + '\'' +
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", postalCode=" + postalCode +
