@@ -4,7 +4,26 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 public class StudentLeaf extends StudentComponent {
-    private Student student;
+    private final Student student;
+
+    public StudentLeaf(Student student) {
+        this.student = student;
+    }
+
+    @Override
+    public void add(StudentComponent component) {
+        throw new UnsupportedOperationException("This component is not composite.");
+    }
+
+    @Override
+    public void remove(StudentComponent component) {
+        throw new UnsupportedOperationException("This component is not composite.");
+    }
+
+    @Override
+    public boolean isComposite() {
+        return false;
+    }
 
     @Override
     public Stream<String> getEmails() {
@@ -29,5 +48,9 @@ public class StudentLeaf extends StudentComponent {
     @Override
     public Stream<Degree> getEnrolledDegrees() {
         return student.getEnrolledDegrees().stream();
+    }
+
+    public Student getStudent() {
+        return student;
     }
 }
