@@ -37,8 +37,8 @@ public class BankSeederService {
                 new InvestmentFundEntity(new InvestmentFund("FundB", new BigDecimal("2000.0"), 2)),
                 new InvestmentFundEntity(new InvestmentFund("FundC", new BigDecimal("3000.0"), 10)),
                 new InvestmentFundEntity(new InvestmentFund("FundD", new BigDecimal("1500.0"), 300)),
-                new InvestmentFundEntity(new InvestmentFund("FundE", new BigDecimal("0.0"), 3))
-
+                new InvestmentFundEntity(new InvestmentFund("FundE", new BigDecimal("0.0"), 3)),
+                new InvestmentFundEntity(new InvestmentFund("FundF", new BigDecimal("10000.0"), 1000))
         };
         this.investmentFundRepository.saveAll(Arrays.asList(investmentFunds));
         ClientEntity[] clients = {
@@ -46,7 +46,7 @@ public class BankSeederService {
                 new ClientEntity("22222222B", "Client2", "Client2", 222222222, "email2@example.com", List.of(investmentFunds[1])),
                 new ClientEntity("33333333C", "Client3", "Client3", 333333333, "email3@example.com", List.of(investmentFunds[2], investmentFunds[3])),
                 new ClientEntity("44444444D", "Client4", "Client4", 444444444, "email4@example.com", null),
-                new ClientEntity("55555555E", "Client5", "Client5", 555555555, "email5@example.com", List.of(investmentFunds[4]))
+                new ClientEntity("55555555E", "Client5", "Client5", 555555555, "email5@example.com", List.of(investmentFunds[4],investmentFunds[5]))
         };
         this.clientRepository.saveAll(Arrays.asList(clients));
         BankAccountEntity[] bankAccounts = {

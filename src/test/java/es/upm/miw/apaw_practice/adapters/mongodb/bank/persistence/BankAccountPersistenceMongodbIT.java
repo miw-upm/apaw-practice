@@ -52,7 +52,16 @@ class BankAccountPersistenceMongodbIT {
         assertEquals("IBAN4", bankAccountUpdated.getIban());
         assertEquals(new BigDecimal("100.0"), bankAccountUpdated.getBalance());
         assertFalse(bankAccountUpdated.hasInterest());
+    }
 
+    @Test
+    void testGetInvestmentFundNamesNoAccount() {
+        assertThrows(NotFoundException.class, () -> this.bankAccountPersistenceMongodb.getInvestmentFundNames("00000"));
+    }
+
+    @Test
+    void testGetInvestmentFundNames() {
+        assertEquals(List.of("FundE","FundF"), this.bankAccountPersistenceMongodb.getInvestmentFundNames("IBAN5"));
     }
 
 }
