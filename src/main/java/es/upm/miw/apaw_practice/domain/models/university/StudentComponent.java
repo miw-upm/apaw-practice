@@ -4,6 +4,12 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 public abstract class StudentComponent {
+    public abstract void add(StudentComponent component);
+
+    public abstract void remove(StudentComponent component);
+
+    public abstract boolean isComposite();
+
     public abstract Stream<String> getEmails();
 
     public abstract Stream<String> getFirstNames();
