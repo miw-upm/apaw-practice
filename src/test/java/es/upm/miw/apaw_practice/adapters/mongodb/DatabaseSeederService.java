@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.bank.BankSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.HospitalSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
