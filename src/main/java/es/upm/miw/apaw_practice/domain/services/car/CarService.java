@@ -16,9 +16,6 @@ public class CarService {
         this.carPersistence = carPersistence;
     }
 
-    public Stream<Car> readAll(){
-        return this.carPersistence.readAll();
-    }
 
     public void create(Car car) {
         carPersistence.create(car);

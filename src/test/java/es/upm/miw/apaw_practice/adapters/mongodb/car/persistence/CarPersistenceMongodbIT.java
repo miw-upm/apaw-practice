@@ -27,12 +27,6 @@ public class CarPersistenceMongodbIT {
     @Autowired
     private PiecePersistenceMongodb piecePersistence;
 
-    @Test
-    void testReadAll() {
-        List<Car> cars = this.carPersistence.readAll().toList();
-        assertNotNull(cars);
-        assertFalse(cars.isEmpty());
-    }
 
     @Test
     public void testReadByModel(){
