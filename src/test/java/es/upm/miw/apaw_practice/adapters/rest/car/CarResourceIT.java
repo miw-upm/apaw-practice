@@ -16,6 +16,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @RestTestConfig
 public class CarResourceIT {
@@ -63,6 +65,22 @@ public class CarResourceIT {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(Car.class);
+    }
+
+    @Test
+    void testGetTotalCostByDriverLicense() {
+        String driverLicense = "UCD253";
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(CarResource.CARS + CarResource.DRIVERLICENSE)
+                        .build(driverLicense))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(sum -> {
+                    assertEquals(sum, new BigDecimal("400"));
+                });
     }
 
 
