@@ -1,16 +1,23 @@
-package es.upm.miw.apaw_practice.domain.models.hotel;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel;
 
-public class Client {
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+
+public class HotelClientEntity {
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String identityDocument;
     private String name;
     private String phone;
     private String email;
-    private Reservation reservation;
+    private HotelReservationEntity reservation;
 
-    public Client(){
+    public HotelClientEntity(){
 
     }
-    public Client(String identityDocument, String name, String phone, String email, Reservation reservation){
+    public HotelClientEntity(String identityDocument, String name, String phone, String email, HotelReservationEntity reservation){
         this.identityDocument = identityDocument;
         this.name = name;
         this.phone = phone;
@@ -49,13 +56,13 @@ public class Client {
         this.email = email;
     }
 
-    public Reservation getReservation() { return this.reservation; }
+    public HotelReservationEntity getReservation() { return this.reservation; }
 
-    public void setReservation(final Reservation reservation) { this.reservation = reservation; }
+    public void setReservation(final HotelReservationEntity reservation) { this.reservation = reservation; }
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "HotelClient{" +
                 "identityDocument='" + identityDocument + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +

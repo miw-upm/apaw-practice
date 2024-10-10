@@ -1,26 +1,24 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
-import es.upm.miw.apaw_practice.domain.models.hotel.Room;
-
 import java.util.List;
 
 public class Hotel {
     private String name;
     private String address;
     private String phone;
-    private List<Room> rooms;
-    private List<Client> clients;
+    private List<HotelRoom> hotelRooms;
+    private List<HotelClient> HotelClients;
 
     public Hotel() {
 
     }
 
-    public Hotel(String name, String address, String phone, List<Room> rooms, List<Client> clients) {
+    public Hotel(String name, String address, String phone, List<HotelRoom> hotelRooms, List<HotelClient> HotelClients) {
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.rooms = rooms;
-        this.clients = clients;
+        this.hotelRooms = hotelRooms;
+        this.HotelClients = HotelClients;
     }
 
     public String getAddress() {
@@ -47,17 +45,17 @@ public class Hotel {
         this.phone = phone;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
+    public List<HotelRoom> getRooms() {
+        return hotelRooms;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRooms(List<HotelRoom> hotelRooms) {
+        this.hotelRooms = hotelRooms;
     }
 
-    public List<Client> getClients() { return this.clients; }
+    public List<HotelClient> getClients() { return this.HotelClients; }
 
-    public void setClients(final List<Client> clients) { this.clients = clients; }
+    public void setClients(final List<HotelClient> HotelClients) { this.HotelClients = HotelClients; }
 
     @Override
     public String toString() {
@@ -65,8 +63,8 @@ public class Hotel {
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
-                ", rooms=" + rooms +
-                ", clients=" + clients +
+                ", hotelRooms=" + hotelRooms +
+                ", HotelClients=" + HotelClients +
                 '}';
     }
 
