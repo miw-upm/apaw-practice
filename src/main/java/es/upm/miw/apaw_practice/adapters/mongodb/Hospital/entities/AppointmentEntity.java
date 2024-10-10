@@ -23,6 +23,8 @@ public class AppointmentEntity {
         // Empty constructor for framework
     }
 
+
+
     public AppointmentEntity(Appointment appointment) {
         BeanUtils.copyProperties(appointment, this);
         this.id = UUID.randomUUID().toString(); // Ensure a new ID is generated
