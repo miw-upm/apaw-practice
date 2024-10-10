@@ -31,9 +31,4 @@ public class OwnerNightLifePersistenceMongodb implements OwnerNightLifePersisten
         return this.ownerNightLifeRepository.findByName(name)
                 .map(OwnerEntity::toOwner);
     }
-
-    @Override
-    public BigDecimal calculateTotalPriceByOwner(Owner owner) {
-        return null;
-    }
 }

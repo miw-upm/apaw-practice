@@ -6,5 +6,4 @@ import java.util.Optional;
 
 public interface ClubRepository extends MongoRepository<ClubEntity, String> {
     Optional<ClubEntity> findByName(String name);
-    Optional<ClubEntity> findByOwnerEntity_Name(String ownerName);
 }

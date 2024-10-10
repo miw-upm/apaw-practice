@@ -5,7 +5,6 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.night_life.ClubPersiste
 import es.upm.miw.apaw_practice.domain.persistence_ports.night_life.OwnerNightLifePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 
 @Service
@@ -28,10 +27,10 @@ public class OwnerNightLifeService {
 
     public BigDecimal calculateTotalPriceByOwner(String name) {
         Owner owner = this.readByName(name);
-        return this.clubPersistence.findByOwnerEntity_Name(owner.getName())
+        return this.clubPersistence.readAll()
+                .filter(club -> club.getOwner().getName().equals(owner.getName()))
                 .flatMap(club -> club.getReservations().stream()
-                        .map(Reservation::getPrice)
-                        .reduce(BigDecimal::add))
-                .orElse(BigDecimal.ZERO);
+                        .map(Reservation::getPrice))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

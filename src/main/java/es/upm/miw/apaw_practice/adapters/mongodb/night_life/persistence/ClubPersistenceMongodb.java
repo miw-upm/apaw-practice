@@ -7,10 +7,8 @@ import es.upm.miw.apaw_practice.domain.models.night_life.Reservation;
 import es.upm.miw.apaw_practice.domain.persistence_ports.night_life.ClubPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities.ClubEntity;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @Repository("clubPersistence")
@@ -37,11 +35,5 @@ public class ClubPersistenceMongodb implements ClubPersistence {
                     club.setReservations(reservationsForClub);
                     return club;
                 });
-    }
-
-    @Override
-    public Optional<Club> findByOwnerEntity_Name(String ownerName) {
-        return this.clubRepository.findByOwnerEntity_Name(ownerName)
-                .map(ClubEntity::toClub);
     }
 }
