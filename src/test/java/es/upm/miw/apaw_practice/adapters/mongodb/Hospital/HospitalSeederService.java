@@ -7,7 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.AppoinmentReposit
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.ospital.entities.AppointmentEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.AppointmentEntity;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
