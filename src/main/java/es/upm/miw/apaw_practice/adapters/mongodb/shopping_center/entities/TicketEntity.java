@@ -1,32 +1,37 @@
-package es.upm.miw.apaw_practice.domain.models.shopping_center;
+package es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
-public class Ticket {
+@Document
+public class TicketEntity {
+    @Id
     private String id;
     private BigDecimal totalPrice;
     private boolean isPaidByCreditCard;
     private LocalDateTime date;
-    private Employee employee;
+    @DBRef
+    private EmployeeEntity employee;
 
-    public Ticket() {
-        //empty for framework
+    public TicketEntity() {
+        //empty from framework
     }
 
-    public Ticket(String id, BigDecimal totalPrice, boolean isPaidByCreditCard, Employee employee) {
-        this.id = id;
+    public TicketEntity(BigDecimal totalPrice, boolean isPaidByCreditCard, EmployeeEntity employee) {
+        this.id = UUID.randomUUID().toString();
         this.totalPrice = totalPrice;
         this.isPaidByCreditCard = isPaidByCreditCard;
         this.employee = employee;
+        this.date = LocalDateTime.now();
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public BigDecimal getTotalPrice() {
@@ -53,17 +58,17 @@ public class Ticket {
         this.date = date;
     }
 
-    public Employee getEmployee() {
+    public EmployeeEntity getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(EmployeeEntity employee) {
         this.employee = employee;
     }
 
     @Override
     public String toString() {
-        return "Ticket{" +
+        return "TicketEntity{" +
                 "id='" + id + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", isPaidByCreditCard=" + isPaidByCreditCard +
