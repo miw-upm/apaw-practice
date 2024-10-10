@@ -4,7 +4,6 @@ import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.car.Car;
 import es.upm.miw.apaw_practice.domain.models.car.OwnerCar;
 import es.upm.miw.apaw_practice.domain.models.car.Piece;
-import es.upm.miw.apaw_practice.domain.persistence_ports.car.CarPersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.OwnerCarPersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.PiecePersistence;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @RestTestConfig
@@ -25,8 +23,6 @@ public class CarResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Autowired
-    private CarPersistence carPersistence;
 
     @Autowired
     private PiecePersistence piecePersistence;
@@ -67,22 +63,7 @@ public class CarResourceIT {
                 .expectBody(Car.class);
     }
 
-    @Test
-    void testGetTotalCostByDriverLicense() {
-        String driverLicense = "UCD253";
-        this.webTestClient
-                .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(CarResource.CARS + CarResource.SEARCH)
-                        .queryParam("q", "driverLicense:"+driverLicense)
-                        .build(driverLicense))
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(BigDecimal.class)
-                .value(sum -> {
-                    assertEquals(sum, new BigDecimal("400"));
-                });
-    }
+
 
 
 

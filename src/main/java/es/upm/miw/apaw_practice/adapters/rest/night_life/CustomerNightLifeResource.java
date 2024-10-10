@@ -4,11 +4,14 @@ import es.upm.miw.apaw_practice.domain.services.night_life.CustomerNightLifeServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(CustomerNightLifeResource.CUSTOMERS)
 public class CustomerNightLifeResource {
     static final String CUSTOMERS = "/night-life/customers";
     static final String NAME_ID = "/{name}";
+    static final String EMAIL_ID = "/{email}/phones";
     private final CustomerNightLifeService customerNightLifeService;
 
     @Autowired
@@ -23,5 +26,9 @@ public class CustomerNightLifeResource {
     @PutMapping(NAME_ID)
     public Customer update(@PathVariable String name, @RequestBody Customer customer){
         return this.customerNightLifeService.update(name, customer);
+    }
+    @GetMapping(EMAIL_ID)
+    public List<String> getOwnerPhonesByCustomerEmail(@PathVariable String email){
+        return this.customerNightLifeService.getOwnerPhonesByCustomerEmail(email);
     }
 }
