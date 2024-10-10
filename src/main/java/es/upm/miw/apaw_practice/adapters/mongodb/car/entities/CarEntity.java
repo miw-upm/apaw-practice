@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.car.entities;
 
 
 import es.upm.miw.apaw_practice.domain.models.car.Car;
+import es.upm.miw.apaw_practice.domain.models.car.Piece;
 import org.springframework.data.annotation.Id;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -42,6 +43,16 @@ public class CarEntity {
         this.price = price;
         this.ownerCarEntity = ownerCarEntity;
         this.piecesEntity = piecesEntity;
+    }
+
+    public CarEntity(Car car) {
+        this.fromCar(car);
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public void fromCar(Car car) {
+        BeanUtils.copyProperties(car, this);
+        this.setPiecesEntity(car.getPieces().stream().map(PieceEntity::new).toList());
     }
 
     public Car toCar(){

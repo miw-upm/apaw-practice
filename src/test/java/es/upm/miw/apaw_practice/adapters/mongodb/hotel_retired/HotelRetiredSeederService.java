@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -58,24 +58,24 @@ public class HotelRetiredSeederService {
 
         RoomEntity[] rooms = {
                 new RoomEntity("101", false, 1, BigDecimal.valueOf(59.99), List.of(bookings)),
-                new RoomEntity("102", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
-                new RoomEntity("103", false, 2, BigDecimal.valueOf(79.99), new ArrayList<>()),
+                new RoomEntity("102", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new RoomEntity("103", false, 2, BigDecimal.valueOf(79.99), Collections.emptyList()),
                 new RoomEntity("104", false, 1, BigDecimal.valueOf(59.99), List.of(bookings)),
-                new RoomEntity("105", false, 2, BigDecimal.valueOf(79.99), new ArrayList<>()),
-                new RoomEntity("106", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
-                new RoomEntity("107", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
-                new RoomEntity("108", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
+                new RoomEntity("105", false, 2, BigDecimal.valueOf(79.99), Collections.emptyList()),
+                new RoomEntity("106", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new RoomEntity("107", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new RoomEntity("108", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
                 new RoomEntity("109", false, 1, BigDecimal.valueOf(59.99), List.of(bookings)),
-                new RoomEntity("201", false, 4, BigDecimal.valueOf(99.99), new ArrayList<>()),
-                new RoomEntity("201", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
-                new RoomEntity("202", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
-                new RoomEntity("203", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
-                new RoomEntity("204", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
-                new RoomEntity("205", false, 4, BigDecimal.valueOf(99.99), new ArrayList<>()),
+                new RoomEntity("201", false, 4, BigDecimal.valueOf(99.99), Collections.emptyList()),
+                new RoomEntity("201", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new RoomEntity("202", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new RoomEntity("203", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new RoomEntity("204", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new RoomEntity("205", false, 4, BigDecimal.valueOf(99.99), Collections.emptyList()),
                 new RoomEntity("206", false, 1, BigDecimal.valueOf(59.99), List.of(bookings)),
-                new RoomEntity("207", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
-                new RoomEntity("208", false, 2, BigDecimal.valueOf(79.99), new ArrayList<>()),
-                new RoomEntity("209", false, 1, BigDecimal.valueOf(59.99), new ArrayList<>()),
+                new RoomEntity("207", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new RoomEntity("208", false, 2, BigDecimal.valueOf(79.99), Collections.emptyList()),
+                new RoomEntity("209", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
         };
         this.roomRepository.saveAll(Arrays.asList(rooms));
 

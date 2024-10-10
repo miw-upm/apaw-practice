@@ -70,4 +70,9 @@ public class HotelPersistenceMongodb implements HotelPersistence {
                 .findByCif(cif)
                 .isPresent();
     }
+
+    @Override
+    public void delete(String cif) {
+        this.hotelRepository.deleteByCif(cif);
+    }
 }

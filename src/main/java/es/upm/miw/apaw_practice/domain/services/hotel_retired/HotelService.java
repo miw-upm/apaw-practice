@@ -34,4 +34,8 @@ public class HotelService {
     public Hotel update(String cif, Hotel hotel) {
         return this.hotelPersistence.update(cif, hotel);
     }
+
+    public void delete(String cif) {
+        this.hotelPersistence.delete(cif);
+    }
 }

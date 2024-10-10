@@ -27,7 +27,7 @@ public class HospitalEntity {
         // Empty constructor for framework
     }
 
- 
+
     public HospitalEntity(Hospital hospital) {
         BeanUtils.copyProperties(hospital, this);
         this.id = UUID.randomUUID().toString();

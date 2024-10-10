@@ -12,11 +12,10 @@ public class Employee {
         //empty for framework
     }
 
-    public Employee(String dni, String name, String phone, LocalDate hiringDay) {
+    public Employee(String dni, String name, String phone) {
         this.dni = dni;
         this.name = name;
         this.phone = phone;
-        this.hiringDay = hiringDay;
     }
 
     public String getDni() {

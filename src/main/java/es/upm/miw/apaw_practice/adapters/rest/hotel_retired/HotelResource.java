@@ -3,10 +3,7 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel_retired;
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Hotel;
 import es.upm.miw.apaw_practice.domain.services.hotel_retired.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(HotelResource.HOTELS)
@@ -14,6 +11,7 @@ public class HotelResource {
 
     static final String HOTELS = "/hotel-retired/hotels";
 
+    static final String CIF_ID = "/{cif}";
     static final String SEARCH = "/search";
 
     private final HotelService hotelService;
@@ -26,5 +24,15 @@ public class HotelResource {
     @PostMapping
     public Hotel create(@RequestBody Hotel hotel) {
         return this.hotelService.create(hotel);
+    }
+
+    @GetMapping(CIF_ID)
+    public Hotel read(@PathVariable String cif) {
+        return this.hotelService.read(cif);
+    }
+
+    @DeleteMapping(CIF_ID)
+    public void delete(@PathVariable String cif) {
+        this.hotelService.delete(cif);
     }
 }

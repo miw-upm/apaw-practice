@@ -21,11 +21,15 @@ public class RoomService {
         return this.roomPersistence.create(room);
     }
 
-    public Room read(Room room) {
-        return this.roomPersistence.read(room.getNum());
+    public Room read(String num) {
+        return this.roomPersistence.read(num);
     }
 
     public List<Room> search() {
         return this.roomPersistence.readAll().toList();
+    }
+
+    public void delete(String num) {
+        this.roomPersistence.delete(num);
     }
 }

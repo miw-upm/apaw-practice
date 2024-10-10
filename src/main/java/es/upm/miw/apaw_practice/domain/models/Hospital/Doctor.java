@@ -7,8 +7,8 @@ public class Doctor {
     private String fullname;
     private BigDecimal salary;
 
-
     public Doctor() {
+        // Empty constructor for framework
     }
 
     public Doctor(String dni, String fullname, BigDecimal salary) {

@@ -62,14 +62,6 @@ public class BookingPersistenceMongodb implements BookingPersistence {
     }
 
     @Override
-    public Booking read(String id) {
-        return this.bookingRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Booking id: " + id))
-                .toBooking();
-    }
-
-    @Override
     public boolean existsBooking(String id) {
         return this.bookingRepository
                 .findById(id)

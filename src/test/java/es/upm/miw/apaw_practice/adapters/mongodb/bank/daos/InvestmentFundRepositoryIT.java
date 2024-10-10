@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class InvestmentFundRepositoryIT {
+class InvestmentFundRepositoryIT {
 
     @Autowired
     private InvestmentFundRepository investmentFundRepository;
@@ -28,8 +28,8 @@ public class InvestmentFundRepositoryIT {
 
     @Test
     void testDeleteByName() {
-        assertTrue(this.investmentFundRepository.deleteByName("FundA").isPresent());
-        assertFalse(this.investmentFundRepository.deleteByName("FundA").isPresent());
+        assertTrue(this.investmentFundRepository.deleteByName("FundD").isPresent());
+        assertFalse(this.investmentFundRepository.deleteByName("FundD").isPresent());
     }
 
 }

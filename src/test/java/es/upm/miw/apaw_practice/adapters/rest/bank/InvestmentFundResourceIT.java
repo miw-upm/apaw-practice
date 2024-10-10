@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-
-
 @RestTestConfig
-public class InvestmentFundResourceIT {
+class InvestmentFundResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

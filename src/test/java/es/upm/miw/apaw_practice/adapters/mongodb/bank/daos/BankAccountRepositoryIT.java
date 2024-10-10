@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class BankAccountRepositoryIT {
+class BankAccountRepositoryIT {
 
     @Autowired
     private BankAccountRepository bankAccountRepository;

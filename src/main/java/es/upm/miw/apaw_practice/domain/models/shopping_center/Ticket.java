@@ -14,11 +14,10 @@ public class Ticket {
         //empty for framework
     }
 
-    public Ticket(String id, BigDecimal totalPrice, boolean isPaidByCreditCard, LocalDateTime date, Employee employee) {
+    public Ticket(String id, BigDecimal totalPrice, boolean isPaidByCreditCard, Employee employee) {
         this.id = id;
         this.totalPrice = totalPrice;
         this.isPaidByCreditCard = isPaidByCreditCard;
-        this.date = date;
         this.employee = employee;
     }
 
