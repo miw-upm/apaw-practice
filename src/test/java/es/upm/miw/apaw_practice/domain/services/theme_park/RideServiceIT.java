@@ -21,7 +21,7 @@ class RideServiceIT {
     void testFindByThemeAndMaxCapacityLessThan() {
         assertTrue(this.rideService.findByThemeAndMaxCapacityLessThan("asdas", 10).toList().isEmpty());
         assertFalse(this.rideService.findByThemeAndMaxCapacityLessThan("Halloween", 55).toList().isEmpty());
-        assertEquals(this.rideService.findByThemeAndMaxCapacityLessThan("Halloween", 55).toList().size(), 1 );
+        assertEquals(1, this.rideService.findByThemeAndMaxCapacityLessThan("Halloween", 55).toList().size());
     }
 
 }
