@@ -22,8 +22,6 @@ import java.util.List;
 
 @Service
 public class HospitalSeederService {
-    @Service
-    public class HospitalSeederService {
 
         private static final Logger logger = LogManager.getLogger(HospitalSeederService.class);
 
@@ -86,4 +84,4 @@ public class HospitalSeederService {
         }
     }
 
-}
+
