@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.models.car.Manufacturer;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.ManufacturerPersistence;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ManufacturerService {
 
@@ -19,5 +21,9 @@ public class ManufacturerService {
 
     public boolean existsName(String name) {
         return manufacturerPersistence.existName(name);
+    }
+
+    public List<String> findOwnerNamesByManufacturerCountry(String country){
+        return this.manufacturerPersistence.findOwnerNamesByManufacturerCountry(country);
     }
 }
