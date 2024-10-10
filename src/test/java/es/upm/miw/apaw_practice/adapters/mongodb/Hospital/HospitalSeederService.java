@@ -32,7 +32,7 @@ public class HospitalSeederService {
     @Autowired
     private HospitalRepository hospitalRepository;
     @Autowired
-    private AppointmentRepository appointmentRepository;
+    private AppoinmentRepository appointmentRepository;
 
     public void seedDatabase() {
         logger.warn("------- Hospital Initial Load -----------");
