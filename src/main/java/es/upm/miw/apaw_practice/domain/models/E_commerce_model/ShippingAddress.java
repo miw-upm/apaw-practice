@@ -5,6 +5,10 @@ public class ShippingAddress {
     private String telefono;
     private String recipientName;
 
+    public ShippingAddress() {
+        //Empty for framework
+    }
+
     public ShippingAddress(String location, String telefono, String recipientName) {
         this.location = location;
         this.telefono = telefono;
