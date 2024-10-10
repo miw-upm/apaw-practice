@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class DatabaseSeederService {
 
     private final ShopSeederService shopSeederService;
+    private final HospitalSeederService hospitalSeederService;
     private final CompetitionSeederService competitionSeederService;
     private final MilitarySeederService militarySeederService;
     private final ArtMuseumSeederService artMuseumSeederService;
@@ -36,6 +37,7 @@ public class DatabaseSeederService {
     @Autowired
     public DatabaseSeederService(
             ShopSeederService shopSeederService,
+            HospitalSeederService hospitalSeederService,
             CompetitionSeederService competitionSeederService,
             MilitarySeederService militarySeederService,
             ArtMuseumSeederService artMuseumSeederService,
@@ -49,6 +51,7 @@ public class DatabaseSeederService {
             ThemeParkSeederService themeParkSeederService, NightLifeSeederService nightLifeSeederService
     ) {
         this.shopSeederService = shopSeederService;
+        this.hospitalSeederService=hospitalSeederService;
         this.universitySeederService = universitySeederService;
         this.competitionSeederService = competitionSeederService;
         this.militarySeederService = militarySeederService;
@@ -66,6 +69,7 @@ public class DatabaseSeederService {
 
     public void seedDatabase() {
         this.shopSeederService.seedDatabase();
+        this.hospitalSeederService.seedDatabase();
         this.universitySeederService.seedDatabase();
         this.competitionSeederService.seedDatabase();
         this.militarySeederService.seedDatabase();
@@ -74,7 +78,7 @@ public class DatabaseSeederService {
         this.boardgameCafeSeederService.seedDatabase();
         this.wushuSportSeederService.seedDatabase();
         this.veterinaryClinicSeederService.seedDatabase();
-        this.bankSeederService.seedDatabase();
+         this.bankSeederService.seedDatabase();
         this.carSeederService.seedDatabase();
         this.themeParkSeederService.seedDatabase();
         this.nightLifeSeederService.seedDatabase();
@@ -82,6 +86,7 @@ public class DatabaseSeederService {
 
     public void deleteAll() {
         this.shopSeederService.deleteAll();
+        this.hospitalSeederService.deleteAll();
         this.universitySeederService.deleteAll();
         this.competitionSeederService.deleteAll();
         this.militarySeederService.deleteAll();
