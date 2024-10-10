@@ -60,10 +60,5 @@ public class CarPersistenceMongodbIT {
 
     }
 
-    @Test
-    void testGetTotalCostByDriverLicense() {
-        String driverLicense = "UCD253";
-        BigDecimal sumCost = this.carPersistence.getTotalCostByDriverLicense(driverLicense);
-        assertEquals(new BigDecimal("400"), sumCost);
-    }
+
 }

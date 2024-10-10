@@ -4,7 +4,7 @@ import es.upm.miw.apaw_practice.domain.models.car.Car;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.CarPersistence;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+
 
 @Service
 public class CarService {
@@ -24,7 +24,5 @@ public class CarService {
         carPersistence.delete(model);
     }
 
-    public BigDecimal getTotalCostByDriverLicense(String driverLicense){
-        return carPersistence.getTotalCostByDriverLicense(driverLicense);
-    }
+
 }

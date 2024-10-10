@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.bank.BankAccountPersist
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BankAccountService {
 
@@ -19,4 +21,7 @@ public class BankAccountService {
         return this.bankAccountPersistence.update(iban,bankAccount);
     }
 
+    public List<String> getInvestmentFundNames(String iban) {
+        return this.bankAccountPersistence.getInvestmentFundNames(iban);
+    }
 }
