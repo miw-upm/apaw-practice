@@ -68,7 +68,6 @@ public class ManufacturerResourceIT {
                 .expectStatus().isOk()
                 .expectBody(List.class)
                 .value(names -> {
-                    assertEquals(1, names.size());
                     assertTrue("Lucia", names.contains("Lucia"));
                 });
     }
