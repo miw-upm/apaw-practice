@@ -5,7 +5,6 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.car.CarPersistence;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.stream.Stream;
 
 @Service
 public class CarService {

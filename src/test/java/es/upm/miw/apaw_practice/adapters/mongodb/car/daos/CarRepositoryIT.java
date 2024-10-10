@@ -4,12 +4,9 @@ import es.upm.miw.apaw_practice.TestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import es.upm.miw.apaw_practice.adapters.mongodb.car.entities.CarEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.car.entities.PieceEntity;
 import es.upm.miw.apaw_practice.domain.models.car.Car;
 
 import java.math.BigDecimal;
-import java.util.stream.Collectors;
-import java.util.Arrays;
 import java.util.Optional;
 
 
