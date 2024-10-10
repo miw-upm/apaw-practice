@@ -7,9 +7,10 @@ import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.AppointmentReposi
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.AppointmentEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.ospital.entities.AppointmentEntity;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ import java.util.List;
 @Service
 public class HospitalSeederService {
 
+    private static final Logger logger = LogManager.getLogger(HospitalSeederService.class);
+
     @Autowired
     private PatientRepository patientRepository;
     @Autowired
@@ -32,9 +35,9 @@ public class HospitalSeederService {
     private AppointmentRepository appointmentRepository;
 
     public void seedDatabase() {
-        LogManager.getLogger(this.getClass()).warn("------- Hospital Initial Load -----------");
+        logger.warn("------- Hospital Initial Load -----------");
 
-        // Crear entidades de pacientes
+        // Create patient entities
         PatientEntity[] patients = {
                 new PatientEntity(new Patient("John Doe", LocalDate.of(1985, 2, 10), true, "H001")),
                 new PatientEntity(new Patient("Jane Smith", LocalDate.of(1990, 5, 25), false, "H002")),
@@ -42,7 +45,7 @@ public class HospitalSeederService {
         };
         this.patientRepository.saveAll(Arrays.asList(patients));
 
-        // Crear entidades de doctores
+        // Create doctor entities
         DoctorEntity[] doctors = {
                 new DoctorEntity("Dr. Alice Johnson", new BigDecimal("5000.00"), "H001"),
                 new DoctorEntity("Dr. Mike Williams", new BigDecimal("4500.00"), "H002"),
@@ -50,7 +53,7 @@ public class HospitalSeederService {
         };
         this.doctorRepository.saveAll(Arrays.asList(doctors));
 
-        // Crear entidades de hospitales
+        // Create hospital entities
         HospitalEntity[] hospitals = {
                 new HospitalEntity("General Hospital", "123 Main St", 200, List.of(doctors[0])),
                 new HospitalEntity("City Clinic", "456 Elm St", 150, List.of(doctors[1])),
@@ -58,7 +61,7 @@ public class HospitalSeederService {
         };
         this.hospitalRepository.saveAll(Arrays.asList(hospitals));
 
-        // Crear entidades de citas médicas
+        // Create appointment entities
         AppointmentEntity[] appointments = {
                 new AppointmentEntity(patients[0].getId(), LocalDate.of(2024, 10, 20), LocalTime.of(10, 0), "Room 101"),
                 new AppointmentEntity(patients[1].getId(), LocalDate.of(2024, 11, 15), LocalTime.of(9, 30), "Room 102"),
