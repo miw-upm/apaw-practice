@@ -8,6 +8,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import java.math.BigDecimal;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RestTestConfig
 class OwnerNightLifeResourceIT {
     @Autowired
@@ -25,6 +27,23 @@ class OwnerNightLifeResourceIT {
                 .expectBody(Owner.class)
                 .value(Assertions::assertNotNull);
     }
+
+    @Test
+    void testReadOwnerByName() {
+        String ownerName = "Owner1";
+        this.webTestClient
+                .get()
+                .uri(OwnerNightLifeResource.OWNERS + OwnerNightLifeResource.NAME_ID, ownerName)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Owner.class)
+                .value(owner -> {
+                    assertEquals(ownerName, owner.getName());
+                    assertEquals("123456789", owner.getPhone());
+                    assertEquals("owner1@example.com", owner.getEmail());
+                });
+    }
+
     @Test
     void testCalculateTotalPriceByOwner() {
 
