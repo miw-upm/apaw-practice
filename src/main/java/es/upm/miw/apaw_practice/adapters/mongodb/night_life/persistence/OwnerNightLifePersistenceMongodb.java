@@ -7,6 +7,9 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.night_life.OwnerNightLi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 @Repository("ownerNightLifePersistence")
 public class OwnerNightLifePersistenceMongodb implements OwnerNightLifePersistence {
     private final OwnerNightLifeRepository ownerNightLifeRepository;
@@ -21,5 +24,11 @@ public class OwnerNightLifePersistenceMongodb implements OwnerNightLifePersisten
         return this.ownerNightLifeRepository
                 .save(new OwnerEntity(owner))
                 .toOwner();
+    }
+
+    @Override
+    public Optional<Owner> readByName(String name) {
+        return this.ownerNightLifeRepository.findByName(name)
+                .map(OwnerEntity::toOwner);
     }
 }
