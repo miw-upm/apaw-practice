@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.PatientRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.DoctorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.HospitalRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.AppointmentRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.AppoinmentRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntity;
