@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.car;
 
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.car.Car;
 import es.upm.miw.apaw_practice.domain.services.car.CarService;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class CarResource {
 
     static final String MODEL = "/{model}";
 
-    static final String DRIVERLICENSE = "/owner/{driverLicense}";
+    static final String SEARCH = "/search";
 
     private CarService carService;
 
@@ -36,8 +37,9 @@ public class CarResource {
         this.carService.delete(model);
     }
 
-    @GetMapping(CarResource.DRIVERLICENSE)
-    public BigDecimal getTotalCostByDriverLicense(@PathVariable String driverLicense){
+    @GetMapping(SEARCH)
+    public BigDecimal getTotalCostByDriverLicense(@RequestParam String q){
+        String driverLicense = new LexicalAnalyzer().extractWithAssure(q, "driverLicense");
         return this.carService.getTotalCostByDriverLicense(driverLicense);
     }
 }
