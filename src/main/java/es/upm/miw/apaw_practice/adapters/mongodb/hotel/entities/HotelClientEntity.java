@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.hotel;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 
 import org.springframework.data.annotation.Id;
@@ -62,7 +62,7 @@ public class HotelClientEntity {
 
     @Override
     public String toString() {
-        return "HotelClient{" +
+        return "HotelClientRepository{" +
                 "identityDocument='" + identityDocument + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +

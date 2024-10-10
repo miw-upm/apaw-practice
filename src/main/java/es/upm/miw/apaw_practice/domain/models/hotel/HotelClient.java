@@ -55,7 +55,7 @@ public class HotelClient {
 
     @Override
     public String toString() {
-        return "HotelClient{" +
+        return "HotelClientRepository{" +
                 "identityDocument='" + identityDocument + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
