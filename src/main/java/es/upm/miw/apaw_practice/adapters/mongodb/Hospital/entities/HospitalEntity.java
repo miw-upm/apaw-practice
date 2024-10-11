@@ -114,3 +114,5 @@ public class HospitalEntity {
         // Conversión personalizada de doctores
         this.doctors = hospital.getDoctors().stream()
                 .
+    }
+}
