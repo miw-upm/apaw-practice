@@ -3,13 +3,13 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.PatientRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.DoctorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.HospitalRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.AppointmentRepository; // Corrected spelling here
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.AppoinmentRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.AppointmentEntity;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment; // Import the Appointment model
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
