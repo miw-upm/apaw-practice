@@ -113,6 +113,21 @@ public class HospitalEntity {
         this.capacity = hospital.getCapacity();
         // Conversión personalizada de doctores
         this.doctors = hospital.getDoctors().stream()
-                .
+                .map(Doctor::toDoctorEntity)
+                .collect(Collectors.toList());
+        // Conversión personalizada de pacientes
+        this.patients = hospital.getPatients().stream()
+                .map(Patient::toPatientEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return "HospitalEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", capacity=" + capacity +
+                '}';
     }
 }
