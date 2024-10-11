@@ -38,7 +38,6 @@ public class CustomerEntity {
         this.shippingAddresses = shippingAddresses;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
