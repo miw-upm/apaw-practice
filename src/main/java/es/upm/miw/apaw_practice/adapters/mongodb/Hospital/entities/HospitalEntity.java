@@ -122,6 +122,9 @@ public class HospitalEntity {
                 .map(Patient::toPatientEntity)
                 .collect(Collectors.toList());
     }
+    public PatientEntity convertToPatientEntity(Patient patient) {
+        return patient.toPatientEntity(); 
+    }
 
     @Override
     public String toString() {

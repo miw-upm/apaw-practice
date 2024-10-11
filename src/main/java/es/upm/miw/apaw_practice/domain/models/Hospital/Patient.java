@@ -56,7 +56,9 @@ public class Patient {
     public void setAppointment(Appointment appointment) {
         this.appointment = appointment;
     }
-
+    public PatientEntity toPatientEntity() {
+        return new PatientEntity(this.dni, this.fullname, this.dateOfBirth, this.hasInsurance, this.appointment);
+    }
     @java.lang.Override
     public java.lang.String toString() {
         return "Patient{" +
