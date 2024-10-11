@@ -1,13 +1,13 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.E_commerce;
+package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.daos.CustomerRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.daos.ProductRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.daos.ShippingAddressRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.daos.ShoppingCartRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.entities.CustomerEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.entities.ProductEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.entities.ShippingAddressEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.entities.ShoppingCartEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.CustomerRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ProductRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ShippingAddressRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ShoppingCartRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ProductEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShippingAddressEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShoppingCartEntity;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.daos;
+package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.entities.ProductEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ProductEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
