@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.E_commerce.entities;
+package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -38,7 +38,6 @@ public class CustomerEntity {
         this.shippingAddresses = shippingAddresses;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
