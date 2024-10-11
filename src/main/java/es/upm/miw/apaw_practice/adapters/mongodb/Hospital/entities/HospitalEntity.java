@@ -123,7 +123,7 @@ public class HospitalEntity {
                 .collect(Collectors.toList());
     }
     public PatientEntity convertToPatientEntity(Patient patient) {
-        return patient.toPatientEntity(); 
+        return patient.toPatientEntity();
     }
 
     @Override
