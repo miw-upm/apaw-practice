@@ -1,14 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class HospitalEntity {
@@ -22,15 +21,25 @@ public class HospitalEntity {
     private String location;
     private Integer capacity;
     private List<DoctorEntity> doctors;
+    private List<PatientEntity> patients;
 
     public HospitalEntity() {
         // Empty constructor for framework
     }
 
-
     public HospitalEntity(Hospital hospital) {
-        BeanUtils.copyProperties(hospital, this);
         this.id = UUID.randomUUID().toString();
+        this.name = hospital.getName();
+        this.location = hospital.getLocation();
+        this.capacity = hospital.getCapacity();
+        // Conversión personalizada de doctores
+        this.doctors = hospital.getDoctors().stream()
+                .map(Doctor::toDoctorEntity)
+                .collect(Collectors.toList());
+        // Conversión personalizada de pacientes
+        this.patients = hospital.getPatients().stream()
+                .map(Patient::toPatientEntity)
+                .collect(Collectors.toList());
     }
 
     public String getId() {
@@ -73,24 +82,35 @@ public class HospitalEntity {
         this.doctors = doctors;
     }
 
-    // Métodos de conversión
-    public void fromHospital(Hospital hospital) {
-        BeanUtils.copyProperties(hospital, this);
+    public List<PatientEntity> getPatients() {
+        return patients;
     }
 
+    public void setPatients(List<PatientEntity> patients) {
+        this.patients = patients;
+    }
+
+    // Conversión de entidad a modelo de dominio
     public Hospital toHospital() {
         Hospital hospital = new Hospital();
-        BeanUtils.copyProperties(this, hospital);
+        hospital.setName(this.name);
+        hospital.setLocation(this.location);
+        hospital.setCapacity(this.capacity);
+        // Conversión personalizada de doctores
+        hospital.setDoctors(this.doctors.stream()
+                .map(DoctorEntity::toDoctor)
+                .collect(Collectors.toList()));
+        // Conversión personalizada de pacientes
+        hospital.setPatients(this.patients.stream()
+                .map(PatientEntity::toPatient)
+                .collect(Collectors.toList()));
         return hospital;
     }
 
-    @Override
-    public String toString() {
-        return "HospitalEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                ", capacity=" + capacity +
-                '}';
-    }
-}
+    public void fromHospital(Hospital hospital) {
+        this.name = hospital.getName();
+        this.location = hospital.getLocation();
+        this.capacity = hospital.getCapacity();
+        // Conversión personalizada de doctores
+        this.doctors = hospital.getDoctors().stream()
+                .

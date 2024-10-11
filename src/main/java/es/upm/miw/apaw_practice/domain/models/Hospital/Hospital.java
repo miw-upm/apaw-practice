@@ -10,7 +10,7 @@ public class Hospital {
     private List<Patient> patients;
 
     public Hospital() {
-        //empty for framework
+        // Empty constructor for framework
     }
 
     public Hospital(String name, String location, int capacity, List<Doctor> doctors, List<Patient> patients) {
