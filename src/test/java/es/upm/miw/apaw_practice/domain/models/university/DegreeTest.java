@@ -1,11 +1,9 @@
 package es.upm.miw.apaw_practice.domain.models.university;
 
-import es.upm.miw.apaw_practice.TestConfig;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestConfig
 public class DegreeTest {
 
     @Test
