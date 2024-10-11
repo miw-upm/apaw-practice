@@ -1,8 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import java.time.LocalDate;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment; // Ensure Appointment is imported
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
+
 
 public class PatientEntity {
     private String dni;
