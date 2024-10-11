@@ -2,18 +2,18 @@ package es.upm.miw.apaw_practice.domain.models.hotel;
 
 import java.util.List;
 
-public class Hotel {
+public class HotelMain {
     private String name;
     private String address;
     private String phone;
     private List<HotelRoom> hotelRooms;
     private List<HotelClient> HotelClients;
 
-    public Hotel() {
+    public HotelMain() {
 
     }
 
-    public Hotel(String name, String address, String phone, List<HotelRoom> hotelRooms, List<HotelClient> HotelClients) {
+    public HotelMain(String name, String address, String phone, List<HotelRoom> hotelRooms, List<HotelClient> HotelClients) {
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -59,7 +59,7 @@ public class Hotel {
 
     @Override
     public String toString() {
-        return "Hotel{" +
+        return "HotelMain{" +
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +

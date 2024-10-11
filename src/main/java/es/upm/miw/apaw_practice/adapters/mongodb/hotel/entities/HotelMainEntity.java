@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document
-public class HotelEntity {
+public class HotelMainEntity {
     @Id
     private String id;
     private String name;
@@ -18,11 +18,11 @@ public class HotelEntity {
     @DBRef
     private List<HotelClientEntity> clients;
 
-    public HotelEntity() {
+    public HotelMainEntity() {
 
     }
 
-    public HotelEntity(String name, String address, String phone, List<HotelRoomEntity> rooms, List<HotelClientEntity> clients) {
+    public HotelMainEntity(String name, String address, String phone, List<HotelRoomEntity> rooms, List<HotelClientEntity> clients) {
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -68,7 +68,7 @@ public class HotelEntity {
 
     @Override
     public String toString() {
-        return "Hotel{" +
+        return "HotelMain{" +
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
