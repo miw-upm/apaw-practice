@@ -21,6 +21,7 @@ public class Appointment {
         this.location = location;
     }
 
+    // Getters and Setters
     public String getId() {
         return id;
     }

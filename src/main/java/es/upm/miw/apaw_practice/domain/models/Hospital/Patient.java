@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 import java.time.LocalDate;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 
 public class Patient {
     private String dni;
@@ -9,11 +8,7 @@ public class Patient {
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
     private Appointment appointment;
-
-    public Patient() {
-        // Empty constructor for framework
-    }
-
+    // Constructor
     public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) {
         this.dni = dni;
         this.fullname = fullname;
@@ -62,12 +57,8 @@ public class Patient {
         this.appointment = appointment;
     }
 
-    public PatientEntity toPatientEntity() {
-        return new PatientEntity(this.dni, this.fullname, this.dateOfBirth, this.hasInsurance, this.appointment);
-    }
-
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Patient{" +
                 "dni='" + dni + '\'' +
                 ", fullname='" + fullname + '\'' +
@@ -77,3 +68,4 @@ public class Patient {
                 '}';
     }
 }
+
