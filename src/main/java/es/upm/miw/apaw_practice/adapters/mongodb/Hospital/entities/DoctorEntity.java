@@ -18,32 +18,18 @@ public class DoctorEntity {
         this.salary = salary;
     }
 
+    // Getters and Setters...
+
     public Doctor toDoctor() {
         return new Doctor(this.dni, this.fullname, this.salary);
     }
 
-    // Getters and Setters
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
-    public BigDecimal getSalary() {
-        return salary;
-    }
-
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
+    @Override
+    public String toString() {
+        return "DoctorEntity{" +
+                "dni='" + dni + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }

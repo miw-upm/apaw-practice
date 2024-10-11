@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 import java.math.BigDecimal;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 
 public class Doctor {
     private String dni;
@@ -39,6 +40,10 @@ public class Doctor {
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    public DoctorEntity toDoctorEntity() {
+        return new DoctorEntity(this.dni, this.fullname, this.salary);
     }
 
     @Override
