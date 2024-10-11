@@ -1,10 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.art_museum;
 
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
-import es.upm.miw.apaw_practice.domain.models.shop.Tag;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Museum {
     private String name;

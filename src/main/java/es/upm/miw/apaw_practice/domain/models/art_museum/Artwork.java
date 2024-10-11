@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.art_museum;
 
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
-
 public class Artwork {
     private String inventoryNumber;
     private String titleName;

@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.models.car.OwnerCar;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.OwnerCarPersistence;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class OwnerCarService {
 
@@ -20,5 +22,9 @@ public class OwnerCarService {
 
     public OwnerCar updateName(String driverLicense, String name){
         return this.ownerPersistence.updateName(driverLicense,name);
+    }
+
+    public BigDecimal getTotalCostByDriverLicense(String driverLicense){
+        return ownerPersistence.getTotalCostByDriverLicense(driverLicense);
     }
 }
