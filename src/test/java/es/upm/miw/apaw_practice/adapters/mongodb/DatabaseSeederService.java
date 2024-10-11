@@ -6,11 +6,10 @@ import es.upm.miw.apaw_practice.adapters.mongodb.basketball.BasketballSeederServ
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
-<<<<<<< HEAD
+
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.HospitalSeederService;
-=======
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
->>>>>>> 2eaec7be7ff232d89410acc0faae86bf2c11631a
+
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
