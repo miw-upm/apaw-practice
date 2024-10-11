@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import java.time.LocalDate;
 
 public class Patient {
@@ -71,10 +70,5 @@ public class Patient {
                 ", hasInsurance=" + hasInsurance +
                 ", appointment=" + appointment +
                 '}';
-    }
-
-    // Conversion to PatientEntity
-    public PatientEntity toPatientEntity() {
-        return new PatientEntity(this.dni, this.fullname, this.dateOfBirth, this.hasInsurance, this.appointment);
     }
 }

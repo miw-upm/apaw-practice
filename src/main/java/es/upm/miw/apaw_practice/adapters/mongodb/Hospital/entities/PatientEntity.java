@@ -1,23 +1,30 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import java.time.LocalDate;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 
 public class PatientEntity {
     private String dni;
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    // If appointment is part of PatientEntity, include it here
-    // private Appointment appointment;
+    private Appointment appointment;
 
-    // Constructor that accepts parameters
-    public PatientEntity(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance /*, Appointment appointment */) {
+    public PatientEntity() {
+        // Empty constructor for framework
+    }
+
+    public PatientEntity(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
-        // Initialize appointment if necessary
-        // this.appointment = appointment;
+        this.appointment = appointment;
+    }
+
+    public Patient toPatient() {
+        return new Patient(this.dni, this.fullname, this.dateOfBirth, this.hasInsurance, this.appointment);
     }
 
     // Getters and Setters
@@ -53,6 +60,11 @@ public class PatientEntity {
         this.hasInsurance = hasInsurance;
     }
 
-    // Include getter and setter for appointment if needed
-}
+    public Appointment getAppointment() {
+        return appointment;
+    }
 
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+}
