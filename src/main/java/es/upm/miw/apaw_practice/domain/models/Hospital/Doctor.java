@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
+
 import java.math.BigDecimal;
 
 public class Doctor {
@@ -48,5 +50,10 @@ public class Doctor {
                 ", fullname='" + fullname + '\'' +
                 ", salary=" + salary +
                 '}';
+    }
+
+    // Conversion to DoctorEntity
+    public DoctorEntity toDoctorEntity() {
+        return new DoctorEntity(this.dni, this.fullname, this.salary);
     }
 }
