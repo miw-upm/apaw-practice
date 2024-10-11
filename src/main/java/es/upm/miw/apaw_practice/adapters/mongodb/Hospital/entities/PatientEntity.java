@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import java.time.LocalDate;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
+
 
 
 
@@ -11,7 +11,7 @@ public class PatientEntity {
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    private Appointment appointment; // Reference to Appointment
+    private Appointment appointment;
 
     public PatientEntity() {
         // Empty constructor for framework
