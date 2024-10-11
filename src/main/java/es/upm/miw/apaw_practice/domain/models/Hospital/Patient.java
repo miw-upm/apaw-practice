@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 import java.time.LocalDate;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;  
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 
 
 public class Patient {
