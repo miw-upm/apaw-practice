@@ -17,16 +17,16 @@ public class WushuGradePersistenceMongodbIT {
 
     @Test
     void readByGradeTitle() {
-        WushuGrade wushuGrade = this.wushuGradePersistenceMongodb.readByGradeTitle("Jin Shi");
-        assertEquals("Jin Shi", wushuGrade.getGradeTitle());
-        assertEquals(1, wushuGrade.getGradeLevel());
-        assertEquals(LocalDate.now().minusYears(5), wushuGrade.getDateAwarded());
+        WushuGrade wushuGrade = this.wushuGradePersistenceMongodb.readByGradeTitle("Diamond Shi");
+        assertEquals("Diamond Shi", wushuGrade.getGradeTitle());
+        assertEquals(5, wushuGrade.getGradeLevel());
+        assertEquals(LocalDate.now().minusYears(1), wushuGrade.getDateAwarded());
     }
     @Test
     void testUpdate() {
-        WushuGrade wushuGrade= new WushuGrade(LocalDate.now().minusYears(5), "Jin Shi", 3);
-        this.wushuGradePersistenceMongodb.update("Jin Shi", wushuGrade);
-        WushuGrade wushuGradeBD = this.wushuGradePersistenceMongodb.readByGradeTitle("Jin Shi");
+        WushuGrade wushuGrade= new WushuGrade(LocalDate.now().minusYears(1), "Diamond Shi", 3);
+        this.wushuGradePersistenceMongodb.update("Diamond Shi", wushuGrade);
+        WushuGrade wushuGradeBD = this.wushuGradePersistenceMongodb.readByGradeTitle("Diamond Shi");
         assertEquals(3, wushuGradeBD.getGradeLevel());
     }
 }

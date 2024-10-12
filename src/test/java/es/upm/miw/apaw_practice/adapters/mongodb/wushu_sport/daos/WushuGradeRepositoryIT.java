@@ -18,11 +18,11 @@ public class WushuGradeRepositoryIT {
 
     @Test
     void testCreateAndRead() {
-        assertTrue(this.wushuGradeRepository.findByGradeTitle("Jin Shi").isPresent());
-        WushuGradeEntity wushuGrade = this.wushuGradeRepository.findByGradeTitle("Jin Shi").get();
-        assertEquals("Jin Shi", wushuGrade.getGradeTitle());
-        assertEquals(1, wushuGrade.getGradeLevel());
-        assertEquals(LocalDate.now().minusYears(5), wushuGrade.getDateAwarded());
+        assertTrue(this.wushuGradeRepository.findByGradeTitle("Diamond Shi").isPresent());
+        WushuGradeEntity wushuGrade = this.wushuGradeRepository.findByGradeTitle("Diamond Shi").get();
+        assertEquals("Diamond Shi", wushuGrade.getGradeTitle());
+        assertEquals(5, wushuGrade.getGradeLevel());
+        assertEquals(LocalDate.now().minusYears(1), wushuGrade.getDateAwarded());
 
     }
 }

@@ -28,10 +28,10 @@ public class WushuGradeResourceIT {
     }
     @Test
     void testUpdate() {
-        WushuGrade wushuGrade= new WushuGrade(LocalDate.now().minusYears(5), "Jin Shi", 3);
+        WushuGrade wushuGrade= new WushuGrade(LocalDate.now().minusYears(1), "Diamond Shi", 3);
         this.webTestClient
                 .patch()
-                .uri(WUSHU_GRADES + GRADE_TITLE_ID, "Jin Shi")
+                .uri(WUSHU_GRADES + GRADE_TITLE_ID, "Diamond Shi")
                 .body(BodyInserters.fromValue(wushuGrade.getGradeLevel()))
                 .exchange()
                 .expectStatus().isOk();
