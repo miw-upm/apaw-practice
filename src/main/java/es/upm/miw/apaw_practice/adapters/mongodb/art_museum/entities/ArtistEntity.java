@@ -26,6 +26,12 @@ public class ArtistEntity {
         this.id = UUID.randomUUID().toString();
     }
 
+    public Artist toArtist() {
+        Artist artist = new Artist();
+        BeanUtils.copyProperties(this, artist);
+        return artist;
+    }
+
     public String getId() {
         return id;
     }

@@ -1,16 +1,18 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import java.math.BigDecimal;
+
 public class Room {
     private String number;
     private String type;
-    private double price;
-    private boolean reserved;
+    private BigDecimal price;
+    private Boolean reserved;
 
     public Room(){
 
     }
 
-    public Room(String number, String type, double price, boolean reserved){
+    public Room(String number, String type, BigDecimal price, Boolean reserved){
     this.number = number;
     this.type = type;
     this.price = price;
@@ -33,11 +35,11 @@ public class Room {
         this.type = type;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -52,11 +54,10 @@ public class Room {
     @Override
     public String toString() {
         return "Room{" +
-                "number: " + number + '\'' +
-                ", type: " + type + '\'' +
-                ", price:" + price + '\'' +
-                ", reserved" + reserved + '\'' +
-                "}";
+                "number='" + number + '\'' +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", reserved=" + reserved +
+                '}';
     }
-
 }

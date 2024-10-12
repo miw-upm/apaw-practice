@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.bank.entities;
 import es.upm.miw.apaw_practice.domain.models.bank.BranchOffice;
 import es.upm.miw.apaw_practice.domain.models.bank.Client;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +15,7 @@ public class BranchOfficeEntity {
 
     @Id
     private String id;
+    @Indexed(unique = true)
     private String buildingName;
     private Integer employees;
     private Integer atmNumber;

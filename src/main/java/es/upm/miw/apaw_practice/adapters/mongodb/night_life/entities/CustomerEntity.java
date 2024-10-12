@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.night_life.entities;
 
 import es.upm.miw.apaw_practice.domain.models.night_life.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;
 
@@ -10,8 +11,10 @@ import java.util.UUID;
 public class CustomerEntity {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String name;
     private String phone;
+    @Indexed(unique = true)
     private String email;
 
     public CustomerEntity() {
@@ -55,12 +58,12 @@ public class CustomerEntity {
 
     @Override
     public int hashCode() {
-        return this.id.hashCode();
+        return this.name.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((CustomerEntity) obj).id));
+        return this == obj || obj != null && getClass() == obj.getClass() && (name.equals(((CustomerEntity) obj).name));
     }
 
     @Override

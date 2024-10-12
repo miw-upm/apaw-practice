@@ -1,11 +1,15 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities;
 
+import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.Competitor;
+import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuSchool;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class WushuSchoolEntity {
 
@@ -67,6 +71,16 @@ public class WushuSchoolEntity {
 
     public void setCompetitorsEntities(List<CompetitorEntity> competitorsEntities) {
         this.competitorsEntities = competitorsEntities;
+    }
+
+    public WushuSchool toWushuSchool() {
+        WushuSchool wushuSchool = new WushuSchool();
+        BeanUtils.copyProperties(this, wushuSchool, "competitorsEntities");
+        List<Competitor> competitors = this.competitorsEntities.stream()
+                .map(CompetitorEntity::toCompetitor)
+                .toList();
+        wushuSchool.setCompetitors(competitors);
+        return wushuSchool;
     }
 
     @Override

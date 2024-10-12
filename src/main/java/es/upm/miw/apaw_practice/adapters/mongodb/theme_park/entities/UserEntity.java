@@ -75,6 +75,10 @@ public class UserEntity {
         return user;
     }
 
+    public void fromUser(User user) {
+        BeanUtils.copyProperties(user, this);
+    }
+
     @Override
     public int hashCode() {
         return idMembership.hashCode();

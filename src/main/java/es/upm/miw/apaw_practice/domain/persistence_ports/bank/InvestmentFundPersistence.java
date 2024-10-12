@@ -4,4 +4,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InvestmentFundPersistence {
+
+    void delete(String name);
 }

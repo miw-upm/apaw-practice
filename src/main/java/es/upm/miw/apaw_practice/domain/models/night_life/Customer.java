@@ -40,5 +40,39 @@ public class Customer {
                 ", email='" + email + '\'' +
                 '}';
     }
+    public static CustomerBuilders.Name builder() {
+        return new Builder();
+    }
+    private static class Builder implements CustomerBuilders.Name, CustomerBuilders.Phone, CustomerBuilders.Optionals {
+
+        private final Customer customer;
+
+        public Builder() {
+            this.customer = new Customer();
+        }
+
+        @Override
+        public CustomerBuilders.Phone name(String name) {
+            this.customer.name = name;
+            return this;
+        }
+
+        @Override
+        public CustomerBuilders.Optionals phone(String phone) {
+            this.customer.phone = phone;
+            return this;
+        }
+
+        @Override
+        public CustomerBuilders.Optionals email(String email) {
+            this.customer.email = email;
+            return this;
+        }
+
+        @Override
+        public Customer build() {
+            return this.customer;
+        }
+    }
 
 }

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestTestConfig
-public class UnitResourceIT {
+class UnitResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
