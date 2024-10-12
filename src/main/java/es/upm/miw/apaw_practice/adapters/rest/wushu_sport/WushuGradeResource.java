@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.wushu_sport;
 
-import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
 import es.upm.miw.apaw_practice.domain.services.wushu_sport.WushuGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

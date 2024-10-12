@@ -1,18 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.rest.wushu_sport;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
-import es.upm.miw.apaw_practice.adapters.rest.shop.ArticleResource;
-import es.upm.miw.apaw_practice.domain.models.shop.ArticlePriceUpdating;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 
 import static es.upm.miw.apaw_practice.adapters.rest.wushu_sport.WushuGradeResource.WUSHU_GRADES;
 import static es.upm.miw.apaw_practice.adapters.rest.wushu_sport.WushuGradeResource.GRADE_TITLE_ID;
