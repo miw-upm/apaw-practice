@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
     @Document
-    public class HospitalEntity {
+    public class Hospital{
 
         @Id
         private String id;
@@ -26,11 +26,11 @@ import java.util.stream.Collectors;
         private List<DoctorEntity> doctors;
         private List<PatientEntity> patients;
 
-        public HospitalEntity() {
+        public Hospital() {
             // Empty constructor for framework
         }
 
-        public HospitalEntity(String id, String name, String address, Integer capacity, List<DoctorEntity> doctors, List<PatientEntity> patients) {
+        public Hospital(String id, String name, String address, Integer capacity, List<DoctorEntity> doctors, List<PatientEntity> patients) {
             this.id = id;
             this.name = name;
             this.address = address;
