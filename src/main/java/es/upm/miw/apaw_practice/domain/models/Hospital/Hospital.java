@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Hospital {
     private String name;
-    private String location;
+    private String address;
     private int capacity;
     private List<Doctor> doctors;
     private List<Patient> patients;
