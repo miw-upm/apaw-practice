@@ -4,11 +4,13 @@ import es.upm.miw.apaw_practice.domain.models.hotel_retired.Booking;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
+@Document
 public class BookingEntity {
     @Id
     private String id;

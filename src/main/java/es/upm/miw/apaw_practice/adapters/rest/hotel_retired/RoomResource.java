@@ -35,4 +35,9 @@ public class RoomResource {
     public void delete(@PathVariable String num) {
         this.roomService.delete(num);
     }
+
+    @PutMapping(NUM_ID)
+    public Room update(@PathVariable String num, @RequestBody Room room) {
+        return this.roomService.update(num, room);
+    }
 }

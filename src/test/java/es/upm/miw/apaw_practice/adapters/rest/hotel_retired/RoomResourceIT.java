@@ -80,4 +80,32 @@ public class RoomResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void testUpdate() {
+        Room room = new Room("286", false, 4, BigDecimal.valueOf(99.99), Collections.emptyList());
+        this.webTestClient
+                .post()
+                .uri(ROOMS)
+                .body(BodyInserters.fromValue(room))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Room.class)
+                .value(Assertions::assertNotNull);
+
+        room.setNumBeds(2);
+        room.setPrice(BigDecimal.valueOf(59.99));
+
+        this.webTestClient
+                .put()
+                .uri(ROOMS + NUM_ID, "286")
+                .body(BodyInserters.fromValue(room))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Room.class)
+                .value(updatedRoom -> {
+                    assertEquals(2, updatedRoom.getNumBeds());
+                    assertEquals(BigDecimal.valueOf(59.99), updatedRoom.getPrice());
+                });
+    }
 }

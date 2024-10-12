@@ -6,12 +6,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Document
 public class RoomEntity {
     @Id
     private String id;
@@ -90,11 +92,13 @@ public class RoomEntity {
 
     public Room toRoom() {
         Room room = new Room();
+
         BeanUtils.copyProperties(this, room, "bookingEntities");
         List<Booking> bookings = this.bookingEntities.stream()
                 .map(BookingEntity::toBooking)
                 .collect(Collectors.toList());
         room.setBookings(bookings);
+
         return room;
     }
 }
