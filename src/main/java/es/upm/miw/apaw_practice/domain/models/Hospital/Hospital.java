@@ -29,8 +29,8 @@ import java.util.stream.Collectors;
             // Empty constructor for framework
         }
 
-        public Hospital(String name, String address, int capacity, List<Doctor> doctors, List<Patient> patients)
-        {
+        public HospitalEntity(String id, String name, String address, Integer capacity, List<DoctorEntity> doctors, List<PatientEntity> patients) {
+            this.id = id;
             this.name = name;
             this.address = address;
             this.capacity = capacity;
@@ -38,11 +38,10 @@ import java.util.stream.Collectors;
             this.patients = patients;
         }
 
-
         public HospitalEntity(Hospital hospital) {
             this.id = UUID.randomUUID().toString();
             this.name = hospital.getName();
-            this.address = hospital.getAddress(); 
+            this.address = hospital.getAddress();
             this.capacity = hospital.getCapacity();
             this.doctors = hospital.getDoctors().stream()
                     .map(Doctor::toDoctorEntity)
