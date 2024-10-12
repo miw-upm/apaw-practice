@@ -3,9 +3,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.persistence;
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Customer;
+import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Membership;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,18 +35,21 @@ public class CustomerPersistenceMongodbIT {
 
     @Test
     void testCreateAndRead() {
-        Customer customer = new Customer("omar123@gmail.com", "Omar", LocalDate.of(2000, 1, 1), true);
+        Membership membership = new Membership(2, "Gold", 6, new BigDecimal("3.0"));
+        Customer customer = new Customer("omar123@gmail.com", "Omar", LocalDate.of(2000, 1, 1), true, membership);
         this.customerPersistence.create(customer);
         Customer customerBD = this.customerPersistence.read(customer.getEmail());
         assertEquals("omar123@gmail.com", customerBD.getEmail());
         assertEquals("Omar", customerBD.getName());
         assertEquals(LocalDate.of(2000, 1, 1), customerBD.getBirthDate());
         assertTrue(customerBD.isMember());
+        assertEquals("Gold", customerBD.getMembership().getType());
     }
 
     @Test
     void testCreateAndUpdate() {
-        Customer customer = new Customer("pedro123@gmail.com", "Pedro", LocalDate.of(2000, 1, 1), true);
+        Membership membership = new Membership(2, "Gold", 6, new BigDecimal("3.0"));
+        Customer customer = new Customer("pedro123@gmail.com", "Pedro", LocalDate.of(2000, 1, 1), true, membership);
         this.customerPersistence.create(customer);
         Customer customerBD = this.customerPersistence.read(customer.getEmail());
         assertEquals(customer, customerBD);
@@ -52,6 +57,7 @@ public class CustomerPersistenceMongodbIT {
         assertEquals("Pedro", customerBD.getName());
         assertEquals(LocalDate.of(2000, 1, 1), customerBD.getBirthDate());
         assertTrue(customerBD.isMember());
+        assertEquals("Gold", customerBD.getMembership().getType());
         customer.setName("Nicolas");
         customer.setBirthDate(LocalDate.of(2001, 2, 2));
         customer.setMember(false);

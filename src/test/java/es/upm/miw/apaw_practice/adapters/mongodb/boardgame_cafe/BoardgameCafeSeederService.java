@@ -38,12 +38,20 @@ public class BoardgameCafeSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Boardgame Cafe Initial Load -----------");
 
+        MembershipEntity[] memberships = {
+                new MembershipEntity(new Membership(0, "Bronze", 1, new BigDecimal("2.0")) ),
+                new MembershipEntity(new Membership(1, "Silver", 3, new BigDecimal("2.5"))),
+                new MembershipEntity(new Membership(2, "Gold", 6, new BigDecimal("3.0"))),
+                new MembershipEntity(new Membership(3, "Platinum", 12, new BigDecimal("3.5"))),
+        };
+        this.membershipRepository.saveAll(Arrays.asList(memberships));
+
         CustomerEntity[] customers = {
-                new CustomerEntity(new Customer("joralvmel@gmail.com", "Jorge", LocalDate.of(1997, 9, 23), true)),
-                new CustomerEntity(new Customer("ander@gmail.com", "Ander", LocalDate.of(2004, 1, 24), false)),
-                new CustomerEntity(new Customer("giselle@hotmail.com", "Giselle", LocalDate.of(1997, 5, 16), true)),
-                new CustomerEntity(new Customer("cesar@yahoo.com", "Cesar", LocalDate.of(1998, 2, 6), true)),
-                new CustomerEntity(new Customer("munira@outlook.com", "Munira", LocalDate.of(1964, 1, 19), false))
+                new CustomerEntity(new Customer("joralvmel@gmail.com", "Jorge", LocalDate.of(1997, 9, 23), true, memberships[2].toMembership())),
+                new CustomerEntity(new Customer("ander@gmail.com", "Ander", LocalDate.of(2004, 1, 24), false, memberships[0].toMembership())),
+                new CustomerEntity(new Customer("giselle@hotmail.com", "Giselle", LocalDate.of(1997, 5, 16), true, memberships[1].toMembership())),
+                new CustomerEntity(new Customer("cesar@yahoo.com", "Cesar", LocalDate.of(1998, 2, 6), true, memberships[3].toMembership())),
+                new CustomerEntity(new Customer("munira@outlook.com", "Munira", LocalDate.of(1964, 1, 19), false, memberships[0].toMembership()))
         };
         this.customerRepository.saveAll(Arrays.asList(customers));
 
@@ -56,14 +64,6 @@ public class BoardgameCafeSeederService {
                 new GameEntity(new Game("Warewolf", 24, "Party", 2)),
         };
         this.gameRepository.saveAll(Arrays.asList(games));
-
-        MembershipEntity[] memberships = {
-                new MembershipEntity(new Membership(0, "Bronze", 1, new BigDecimal("2.0")) ),
-                new MembershipEntity(new Membership(1, "Silver", 3, new BigDecimal("2.5"))),
-                new MembershipEntity(new Membership(2, "Gold", 6, new BigDecimal("3.0"))),
-                new MembershipEntity(new Membership(3, "Platinum", 12, new BigDecimal("3.5"))),
-        };
-        this.membershipRepository.saveAll(Arrays.asList(memberships));
 
         PlaySessionEntity[] playSessions = {
                 new PlaySessionEntity(new PlaySession(0, 5, LocalDateTime.of(2024, 9, 15, 13, 10), List.of(games[0].toGame(), games[1].toGame()))),
