@@ -1,46 +1,29 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
-import org.springframework.beans.BeanUtils;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.UUID;
 
-@Document
 public class AppointmentEntity {
-
-    @Id
-    private String id;
+    private String patientDni;
     private LocalDate date;
     private LocalTime time;
+    private String room;
 
-    public AppointmentEntity() {
-        // Empty constructor for framework
-    }
-
-    // Constructor ajustado para recibir parámetros
-    public AppointmentEntity(String id, LocalDate date, LocalTime time) {
-        this.id = id != null ? id : UUID.randomUUID().toString();
+    // Constructor with four parameters
+    public AppointmentEntity(String patientDni, LocalDate date, LocalTime time, String room) {
+        this.patientDni = patientDni;
         this.date = date;
         this.time = time;
-
-
+        this.room = room;
     }
 
-    public AppointmentEntity(Appointment appointment) {
-        BeanUtils.copyProperties(appointment, this);
-        this.id = UUID.randomUUID().toString(); // Ensure a new ID is generated
+    // Getters and setters
+    public String getPatientDni() {
+        return patientDni;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setPatientDni(String patientDni) {
+        this.patientDni = patientDni;
     }
 
     public LocalDate getDate() {
@@ -59,20 +42,12 @@ public class AppointmentEntity {
         this.time = time;
     }
 
-
-
-
-    public Appointment toAppointment() {
-        return new Appointment(this.id, this.date, this.time);
+    public String getRoom() {
+        return room;
     }
 
-    @Override
-    public String toString() {
-        return "AppointmentEntity{" +
-                "id='" + id + '\'' +
-                ", date=" + date +
-                ", time=" + time +
-                '}';
+    public void setRoom(String room) {
+        this.room = room;
     }
 }
 
