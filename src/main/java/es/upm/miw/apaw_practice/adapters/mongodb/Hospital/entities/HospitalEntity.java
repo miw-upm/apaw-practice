@@ -39,6 +39,7 @@ public class HospitalEntity {
         this.patients = patients;
     }
 
+    // Constructor que convierte Hospital a HospitalEntity
     public HospitalEntity(Hospital hospital) {
         this.id = UUID.randomUUID().toString();
         this.name = hospital.getName();
@@ -52,6 +53,7 @@ public class HospitalEntity {
                 .collect(Collectors.toList());
     }
 
+    // Getters y Setters
     public String getId() {
         return id;
     }
@@ -99,6 +101,7 @@ public class HospitalEntity {
     public void setPatients(List<PatientEntity> patients) {
         this.patients = patients;
     }
+
 
     public Hospital toHospital() {
         Hospital hospital = new Hospital();

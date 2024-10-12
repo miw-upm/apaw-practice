@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 import java.math.BigDecimal;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 
 public class Doctor {
     private String name;
@@ -15,7 +16,6 @@ public class Doctor {
     }
 
     // Getters y setters
-
     public String getName() {
         return name;
     }
@@ -38,5 +38,10 @@ public class Doctor {
 
     public void setHospitalId(String hospitalId) {
         this.hospitalId = hospitalId;
+    }
+
+  
+    public DoctorEntity toDoctorEntity() {
+        return new DoctorEntity(this.name, this.salary, this.hospitalId);
     }
 }

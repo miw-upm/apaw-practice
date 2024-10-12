@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 import java.math.BigDecimal;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
+
 import java.time.LocalDate;
 
 public class Patient {
