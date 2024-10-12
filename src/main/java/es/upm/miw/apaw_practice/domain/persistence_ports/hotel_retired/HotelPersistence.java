@@ -17,4 +17,6 @@ public interface HotelPersistence {
     Hotel read(String cif);
 
     boolean existCIF(String cif);
+
+    void delete(String cif);
 }

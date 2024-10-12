@@ -59,4 +59,9 @@ public class GuestPersistenceMongodb implements GuestPersistence {
                 .findByNif(nif)
                 .isPresent();
     }
+
+    @Override
+    public void delete(String nif) {
+        this.guestRepository.deleteByNif(nif);
+    }
 }

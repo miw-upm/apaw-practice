@@ -28,4 +28,8 @@ public class UserService {
             throw new ConflictException("idMembership exist: " + idMembership);
         }
     }
+
+    public User update(String idMembership, User user) {
+        return this.userPersistence.update(idMembership, user);
+    }
 }

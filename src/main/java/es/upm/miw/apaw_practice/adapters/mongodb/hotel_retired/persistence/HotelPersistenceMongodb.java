@@ -2,6 +2,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.HotelRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.RoomRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.BookingEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.GuestEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.HotelEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.RoomEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -37,8 +39,23 @@ public class HotelPersistenceMongodb implements HotelPersistence {
 
     @Override
     public Hotel create(Hotel hotel) {
-        List<RoomEntity> roomEntities = this.roomRepository
-                .findAll().stream()
+        List<RoomEntity> roomEntities = hotel.getRooms().stream()
+                .map(room -> new RoomEntity(
+                        room.getNum(),
+                        room.getOccupied(),
+                        room.getNumBeds(),
+                        room.getPrice(),
+                        room.getBookings().stream()
+                                .map(booking -> new BookingEntity(
+                                        booking.getConfirmed(),
+                                        booking.getDateIn(),
+                                        booking.getDateOut(),
+                                        new GuestEntity(
+                                                booking.getGuest().getNif(),
+                                                booking.getGuest().getFullName(),
+                                                booking.getGuest().getBirthDay())))
+                                .toList()
+                ))
                 .toList();
         return this.hotelRepository
                 .save(new HotelEntity(hotel.getCif(), hotel.getHotelName(), hotel.getAddress(), roomEntities))
@@ -69,5 +86,10 @@ public class HotelPersistenceMongodb implements HotelPersistence {
         return this.hotelRepository
                 .findByCif(cif)
                 .isPresent();
+    }
+
+    @Override
+    public void delete(String cif) {
+        this.hotelRepository.deleteByCif(cif);
     }
 }

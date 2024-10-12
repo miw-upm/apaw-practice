@@ -6,6 +6,10 @@ public class Degree {
     private String knowledgeArea;
     private String description;
 
+    public static DegreeBuilders.Code builder() {
+        return new Builder();
+    }
+
     public Degree() {
         //empty for framework
     }
@@ -67,5 +71,43 @@ public class Degree {
                 ", knowledgeArea='" + knowledgeArea + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public static class Builder implements DegreeBuilders.Code, DegreeBuilders.Capacity, DegreeBuilders.KnowledgeArea, DegreeBuilders.Description, DegreeBuilders.Builder {
+
+        private final Degree instance;
+
+        private Builder() {
+            instance = new Degree();
+        }
+
+        @Override
+        public DegreeBuilders.Capacity code(int code) {
+            instance.code = code;
+            return this;
+        }
+
+        @Override
+        public DegreeBuilders.KnowledgeArea capacity(int capacity) {
+            instance.capacity = capacity;
+            return this;
+        }
+
+        @Override
+        public DegreeBuilders.Description knowledgeArea(String knowledgeArea) {
+            instance.knowledgeArea = knowledgeArea;
+            return this;
+        }
+
+        @Override
+        public DegreeBuilders.Builder description(String description) {
+            instance.description = description;
+            return this;
+        }
+
+        @Override
+        public Degree build() {
+            return instance;
+        }
     }
 }
