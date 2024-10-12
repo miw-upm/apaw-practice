@@ -11,7 +11,7 @@ public class DoctorEntity {
     @Id
     private String id;
     private String name;
-    private BigDecimal salary; // Manteniendo el campo salary
+    private BigDecimal salary;
 
     // Constructor vacío para el marco
     public DoctorEntity() {
@@ -20,15 +20,16 @@ public class DoctorEntity {
 
     // Constructor ajustado para recibir un objeto Doctor
     public DoctorEntity(Doctor doctor) {
-        this.id = doctor.getId();        // Asignar id desde el objeto Doctor
-        this.name = doctor.getName();    // Asignar nombre desde el objeto Doctor
-        this.salary = doctor.getSalary(); // Asignar salario desde el objeto Doctor
+        this.id = doctor.getId();
+        this.name = doctor.getName();
+        this.salary = doctor.getSalary();
     }
 
     // Método para convertir DoctorEntity a Doctor
     public Doctor toDoctor() {
-        return new Doctor(this.id, this.name, this.salary); // Crear un nuevo objeto Doctor
+        return new Doctor(this.id, this.name, this.salary, this.hospitalId);
     }
+
 
     // Getters y Setters
     public String getId() {

@@ -17,12 +17,12 @@ public class PatientEntity {
     }
 
     // Constructor ajustado para recibir un objeto Patient
-    public PatientEntity(Patient patient) {
-        this.dni = patient.getDni();
-        this.fullname = patient.getFullname();
-        this.dateOfBirth = patient.getDateOfBirth();
-        this.hasInsurance = patient.isHasInsurance();
-        this.appointment = patient.getAppointment(); // Asegúrate de que este método exista en Patient
+    public PatientEntity(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) {
+        this.dni = dni;
+        this.fullname = fullname;
+        this.dateOfBirth = dateOfBirth;
+        this.hasInsurance = hasInsurance;
+        this.appointment = appointment;
     }
 
     // Método para convertir PatientEntity a Patient

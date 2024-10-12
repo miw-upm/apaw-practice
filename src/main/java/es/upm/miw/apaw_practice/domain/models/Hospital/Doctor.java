@@ -6,12 +6,16 @@ public class Doctor {
     private String id;
     private String name;
     private BigDecimal salary;
+    private String hospitalId;
+
     // Constructor
-    public Doctor(String id, String name, BigDecimal salary) {
+
+
+    public Doctor(String id, String name, BigDecimal salary, String hospitalId) {
         this.id = id;
         this.name = name;
         this.salary = salary;
-
+        this.hospitalId = hospitalId;
     }
 
     // Getters y Setters
@@ -39,13 +43,21 @@ public class Doctor {
         this.name = name;
     }
 
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary;
+    }
 
-    @Override
-    public String toString() {
+    public void setHospitalId(String hospitalId) {
+        this.hospitalId = hospitalId;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Doctor{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
+                ", hospitalId='" + hospitalId + '\'' +
                 '}';
     }
 }
