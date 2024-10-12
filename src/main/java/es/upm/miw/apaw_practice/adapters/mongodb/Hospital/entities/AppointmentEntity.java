@@ -27,7 +27,7 @@ public class AppointmentEntity {
         this.date = date;
         this.time = time;
 
-    
+
     }
 
     public AppointmentEntity(Appointment appointment) {
