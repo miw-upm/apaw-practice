@@ -1,43 +1,30 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
+import es.upm.miw.apaw_practice.domain.models.Hospital;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Document
 public class HospitalEntity {
-
-    @Id
     private String id;
-
-    @Indexed(unique = true)
     private String name;
-    private String address;  // Ensure it is 'address' and not 'location'
-    private Integer capacity;
+    private String address; // Asegúrate de que este campo esté definido
+    private Integer capacity; // Asegúrate de que este campo esté definido
     private List<DoctorEntity> doctors;
-    private List<PatientEntity> patients;
+    private List<PatientEntity> patients; // Inicialízalo como una lista vacía si es necesario
 
-    public HospitalEntity() {
-        // Empty constructor for framework
-    }
-
+    // Constructor para crear HospitalEntity a partir de parámetros
     public HospitalEntity(String name, String address, Integer capacity, List<DoctorEntity> doctors) {
         this.name = name;
         this.address = address;
         this.capacity = capacity;
         this.doctors = doctors;
-        this.patients = List.of();;
+        this.patients = List.of(); // Inicializa como una lista vacía
     }
 
+    // Constructor para crear HospitalEntity a partir de un objeto Hospital
     public HospitalEntity(Hospital hospital) {
         this.id = hospital.getId();
         this.name = hospital.getName();
@@ -51,67 +38,12 @@ public class HospitalEntity {
                 .collect(Collectors.toList());
     }
 
+    // Método para convertir HospitalEntity a Hospital
     public Hospital toHospital() {
         return new Hospital(this.id, this.name, this.address, this.capacity,
                 this.doctors.stream().map(DoctorEntity::toDoctor).collect(Collectors.toList()),
                 this.patients.stream().map(PatientEntity::toPatient).collect(Collectors.toList()));
     }
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
-
-    public List<DoctorEntity> getDoctors() {
-        return doctors;
-    }
-
-    public void setDoctors(List<DoctorEntity> doctors) {
-        this.doctors = doctors;
-    }
-
-    public List<PatientEntity> getPatients() {
-        return patients;
-    }
-
-    public void setPatients(List<PatientEntity> patients) {
-        this.patients = patients;
-    }
-    @Override
-    public String toString() {
-        return "HospitalEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", doctors=" + doctors +
-                ", patients=" + patients +
-                '}';
-    }
+    // Getters y Setters
 }
