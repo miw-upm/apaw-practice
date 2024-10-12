@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.videogame;
 import java.time.LocalDate;
 
 public class VideoGame {
-    private String videoGame;
+    private String videoGameAlias;
     private int numberOfPlayer;
     private Boolean crossPlatform;
     private LocalDate releaseDate;
@@ -12,17 +12,17 @@ public class VideoGame {
         //empty for framework
     }
 
-    public VideoGame(String videoGame, int numberOfPlayer, Boolean crossPlatform, LocalDate releaseDate) {
-        this.videoGame = videoGame;
+    public VideoGame(String videoGameAlias, int numberOfPlayer, Boolean crossPlatform, LocalDate releaseDate) {
+        this.videoGameAlias = videoGameAlias;
         this.numberOfPlayer = numberOfPlayer;
         this.crossPlatform = crossPlatform;
         this.releaseDate = releaseDate;
     }
-    public String getVideoGame() {
-        return videoGame;
+    public String getVideoGameAlias() {
+        return videoGameAlias;
     }
-    public void setVideoGame(String videoGame) {
-        this.videoGame = videoGame;
+    public void setVideoGameAlias(String videoGameAlias) {
+        this.videoGameAlias = videoGameAlias;
     }
     public int getNumberOfPlayer() {
         return numberOfPlayer;
@@ -46,7 +46,7 @@ public class VideoGame {
     @Override
     public String toString() {
         return "VideoGame{" +
-                "videoGame='" + videoGame + '\'' +
+                "videoGameAlias='" + videoGameAlias + '\'' +
                 ", numberOfPlayer=" + numberOfPlayer +
                 ", crossPlatform=" + crossPlatform +
                 ", releaseDate=" + releaseDate +
