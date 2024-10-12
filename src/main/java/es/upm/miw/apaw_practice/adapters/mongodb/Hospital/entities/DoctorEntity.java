@@ -20,7 +20,9 @@ public class DoctorEntity {
         this.salary = salary.toString();
         this.hospitalId = hospitalId;
     }
-
+    public DoctorEntity toDoctorEntity() {
+        return new DoctorEntity(this.name, this.salary, this.hospitalId);
+    }
 
     public Doctor toDoctor() {
 
