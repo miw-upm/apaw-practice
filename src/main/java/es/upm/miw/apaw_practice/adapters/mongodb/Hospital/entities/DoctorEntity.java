@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import java.math.BigDecimal;
 
 
