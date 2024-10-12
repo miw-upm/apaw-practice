@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.domain.models.E_commerce_model;
+package es.upm.miw.apaw_practice.domain.models.e_commerce_model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
