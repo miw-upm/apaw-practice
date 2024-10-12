@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
+import es.upm.miw.apaw_practice.domain.models.Hospital; // Ensure the correct path
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
