@@ -35,6 +35,9 @@ public class ArtworkEntity {
     public Artwork toArtwork() {
         Artwork artwork = new Artwork();
         BeanUtils.copyProperties(this, artwork);
+        if (this.artist != null) {
+            artwork.setArtist(this.artist.toArtist());
+        }
         return artwork;
     }
 
