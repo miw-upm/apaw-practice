@@ -12,6 +12,7 @@ public class DoctorEntity {
     private String id;
     private String name;
     private BigDecimal salary;
+    private String hospitalId;
 
     // Constructor vacío para el marco
     public DoctorEntity() {
@@ -19,11 +20,13 @@ public class DoctorEntity {
     }
 
     // Constructor ajustado para recibir un objeto Doctor
-    public DoctorEntity(Doctor doctor) {
-        this.id = doctor.getId();
-        this.name = doctor.getName();
-        this.salary = doctor.getSalary();
+    public Doctor(String id, String name, BigDecimal salary, String hospitalId) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.hospitalId = hospitalId;
     }
+
 
     // Método para convertir DoctorEntity a Doctor
     public Doctor toDoctor() {
@@ -56,12 +59,21 @@ public class DoctorEntity {
         this.salary = salary; // Setter para salary
     }
 
-    @Override
-    public String toString() {
+    public String getHospitalId() {
+        return hospitalId;
+    }
+
+    public void setHospitalId(String hospitalId) {
+        this.hospitalId = hospitalId;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
         return "DoctorEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", salary=" + salary + // Incluir salary en el toString
+                ", salary=" + salary +
+                ", hospitalId='" + hospitalId + '\'' +
                 '}';
     }
 }
