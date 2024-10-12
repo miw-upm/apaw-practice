@@ -27,7 +27,7 @@ public class AppointmentEntity {
         this.date = date;
         this.time = time;
 
-        this.patientId = patientId;
+    
     }
 
     public AppointmentEntity(Appointment appointment) {
@@ -59,7 +59,7 @@ public class AppointmentEntity {
         this.time = time;
     }
 
- 
+
 
 
     public Appointment toAppointment() {
