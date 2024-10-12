@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Console {
-    private String console;
+    private String consoleReference;
     private long serialNumber;
     private boolean portable;
     private LocalDate creationDate;
@@ -16,18 +16,18 @@ public class Console {
         //empty for framework
     }
 
-    public Console(String console, long serialNumber, boolean portable, LocalDate creationDate, List<VideoGame> videoGames) {
-        this.console = console;
+    public Console(String consoleReference, long serialNumber, boolean portable, LocalDate creationDate, List<VideoGame> videoGames) {
+        this.consoleReference = consoleReference;
         this.serialNumber = serialNumber;
         this.portable = portable;
         this.creationDate = creationDate;
         this.videoGames = videoGames;
     }
-    public String getConsole() {
-        return console;
+    public String getConsoleReference() {
+        return consoleReference;
     }
-    public void setConsole(String console) {
-        this.console = console;
+    public void setConsoleReference(String consoleReference) {
+        this.consoleReference = consoleReference;
     }
     public long getSerialNumber() {
         return serialNumber;
@@ -60,7 +60,7 @@ public class Console {
     @Override
     public String toString() {
         return "Console{" +
-                "console='" + console + '\'' +
+                "consoleReference='" + consoleReference + '\'' +
                 ", serialNumber=" + serialNumber +
                 ", portable=" + portable +
                 ", creationDate=" + creationDate +
