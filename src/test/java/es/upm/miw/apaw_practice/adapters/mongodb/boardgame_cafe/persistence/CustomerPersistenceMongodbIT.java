@@ -35,7 +35,7 @@ public class CustomerPersistenceMongodbIT {
 
     @Test
     void testCreateAndRead() {
-        Membership membership = new Membership(2, "Gold", 6, new BigDecimal("3.0"));
+        Membership membership = new Membership("Gold", 6, new BigDecimal("3.0"));
         Customer customer = new Customer("omar123@gmail.com", "Omar", LocalDate.of(2000, 1, 1), true, membership);
         this.customerPersistence.create(customer);
         Customer customerBD = this.customerPersistence.read(customer.getEmail());
@@ -48,7 +48,7 @@ public class CustomerPersistenceMongodbIT {
 
     @Test
     void testCreateAndUpdate() {
-        Membership membership = new Membership(2, "Gold", 6, new BigDecimal("3.0"));
+        Membership membership = new Membership("Gold", 6, new BigDecimal("3.0"));
         Customer customer = new Customer("pedro123@gmail.com", "Pedro", LocalDate.of(2000, 1, 1), true, membership);
         this.customerPersistence.create(customer);
         Customer customerBD = this.customerPersistence.read(customer.getEmail());

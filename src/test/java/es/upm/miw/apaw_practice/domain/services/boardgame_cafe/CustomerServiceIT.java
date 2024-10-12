@@ -26,7 +26,7 @@ public class CustomerServiceIT {
 
     @Test
     void testCreateCustomer() {
-        Membership membership = new Membership(2, "Gold", 6, new BigDecimal("3.0"));
+        Membership membership = new Membership("Gold", 6, new BigDecimal("3.0"));
         Customer customer = new Customer("test@email.com", "Test", LocalDate.of(1999, 9, 9), true, membership);
         when(customerPersistence.create(any(Customer.class))).thenReturn(customer);
         Customer createdCustomer = this.customerService.createCustomer(customer);

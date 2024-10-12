@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Membership {
-    private Integer membershipId;
     private String type;
     private Integer duration;
     private BigDecimal discount;
@@ -13,19 +12,10 @@ public class Membership {
         //empty for framework
     }
 
-    public Membership(Integer membershipId, String type, Integer duration, BigDecimal discount) {
-        this.membershipId = membershipId;
+    public Membership(String type, Integer duration, BigDecimal discount) {
         this.type = type;
         this.duration = duration;
         this.discount = discount;
-    }
-
-    public Integer getMembershipId() {
-        return membershipId;
-    }
-
-    public void setMembershipId(Integer membershipId) {
-        this.membershipId = membershipId;
     }
 
     public String getType() {
@@ -57,21 +47,19 @@ public class Membership {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Membership that = (Membership) o;
-        return Objects.equals(membershipId, that.membershipId) &&
-                Objects.equals(type, that.type) &&
+        return  Objects.equals(type, that.type) &&
                 Objects.equals(duration, that.duration) &&
                 Objects.equals(discount, that.discount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(membershipId, type, duration, discount);
+        return Objects.hash(type, duration, discount);
     }
 
     @Override
     public String toString() {
         return "Membership{" +
-                "membershipId=" + membershipId +
                 ", type='" + type + '\'' +
                 ", duration=" + duration +
                 ", discount=" + discount +

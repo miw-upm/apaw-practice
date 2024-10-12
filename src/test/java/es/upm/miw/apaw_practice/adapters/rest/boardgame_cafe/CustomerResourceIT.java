@@ -21,7 +21,7 @@ public class CustomerResourceIT {
 
     @Test
     void testCreate() {
-        Membership membership = new Membership(2, "Gold", 6, new BigDecimal("3.0"));
+        Membership membership = new Membership("Gold", 6, new BigDecimal("3.0"));
         Customer customer = new Customer("mariano@gmail.com", "Mariano", LocalDate.of(1995, 5, 15), true, membership);
         this.webTestClient
                 .post()

@@ -18,43 +18,41 @@ public class MembershipPersistenceMongodbIT {
 
     @Test
     void testReadNotFound() {
-        assertThrows(NotFoundException.class, () -> this.membershipPersistence.read(9999));
+        assertThrows(NotFoundException.class, () -> this.membershipPersistence.read("Pearl"));
     }
 
     @Test
-    void testMembershipIdNotExist() {
-        assertFalse(this.membershipPersistence.existMembershipId(9999));
+    void testMembershipTypeNotExist() {
+        assertFalse(this.membershipPersistence.existType("Pearl"));
     }
 
     @Test
-    void testMembershipIdExist() {
-        assertTrue(this.membershipPersistence.existMembershipId(0));
+    void testMembershipTypeExist() {
+        assertTrue(this.membershipPersistence.existType("Gold"));
     }
 
     @Test
     void testCreateAndRead() {
-        Membership membership = new Membership(4, "Diamond",24,new BigDecimal("4.0") );
+        Membership membership = new Membership("Diamond",24,new BigDecimal("4.0") );
         this.membershipPersistence.create(membership);
-        Membership membershipBD = this.membershipPersistence.read(membership.getMembershipId());
-        assertEquals(4, membershipBD.getMembershipId());
+        Membership membershipBD = this.membershipPersistence.read(membership.getType());
         assertEquals("Diamond", membershipBD.getType());
         assertEquals(new BigDecimal("4.0"), membershipBD.getDiscount());
     }
 
     @Test
     void testCreateAndUpdate() {
-        Membership membership = new Membership(5, "Copper", 36, new BigDecimal("4.5"));
+        Membership membership = new Membership("Copper", 36, new BigDecimal("4.5"));
         this.membershipPersistence.create(membership);
-        Membership membershipBD = this.membershipPersistence.read(membership.getMembershipId());
+        Membership membershipBD = this.membershipPersistence.read(membership.getType());
         assertEquals(membership, membershipBD);
-        assertEquals(5, membershipBD.getMembershipId());
         assertEquals("Copper", membershipBD.getType());
         assertEquals(new BigDecimal("4.5"), membershipBD.getDiscount());
-        membership.setType("Glass");
-        membership.setDiscount(new BigDecimal("5.0"));
-        this.membershipPersistence.update(membership.getMembershipId(), membership);
-        membershipBD = this.membershipPersistence.read(membership.getMembershipId());
-        assertEquals("Glass", membershipBD.getType());
-        assertEquals(new BigDecimal("5.0"), membershipBD.getDiscount());
+        membership.setType("Gold");
+        membership.setDiscount(new BigDecimal("3.0"));
+        this.membershipPersistence.update(membership.getType(), membership);
+        membershipBD = this.membershipPersistence.read(membership.getType());
+        assertEquals("Gold", membershipBD.getType());
+        assertEquals(new BigDecimal("3.0"), membershipBD.getDiscount());
     }
 }

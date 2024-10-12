@@ -39,10 +39,10 @@ public class BoardgameCafeSeederService {
         LogManager.getLogger(this.getClass()).warn("------- Boardgame Cafe Initial Load -----------");
 
         MembershipEntity[] memberships = {
-                new MembershipEntity(new Membership(0, "Bronze", 1, new BigDecimal("2.0")) ),
-                new MembershipEntity(new Membership(1, "Silver", 3, new BigDecimal("2.5"))),
-                new MembershipEntity(new Membership(2, "Gold", 6, new BigDecimal("3.0"))),
-                new MembershipEntity(new Membership(3, "Platinum", 12, new BigDecimal("3.5"))),
+                new MembershipEntity(new Membership("Bronze", 1, new BigDecimal("2.0")) ),
+                new MembershipEntity(new Membership("Silver", 3, new BigDecimal("2.5"))),
+                new MembershipEntity(new Membership("Gold", 6, new BigDecimal("3.0"))),
+                new MembershipEntity(new Membership("Platinum", 12, new BigDecimal("3.5"))),
         };
         this.membershipRepository.saveAll(Arrays.asList(memberships));
 
