@@ -5,15 +5,13 @@ import java.math.BigDecimal;
 public class Doctor {
     private String id;
     private String name;
-    private BigDecimal salary; // Mantener el campo salary
-    private String hospitalId; // Mantener el campo hospitalId
-
+    private BigDecimal salary;
     // Constructor
-    public Doctor(String id, String name, BigDecimal salary, String hospitalId) {
+    public Doctor(String id, String name, BigDecimal salary) {
         this.id = id;
         this.name = name;
         this.salary = salary;
-        this.hospitalId = hospitalId; // Asignar hospitalId
+
     }
 
     // Getters y Setters
@@ -41,13 +39,6 @@ public class Doctor {
         this.name = name;
     }
 
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary; // Setter para salary
-    }
-
-    public void setHospitalId(String hospitalId) {
-        this.hospitalId = hospitalId; // Setter para hospitalId
-    }
 
     @Override
     public String toString() {
@@ -55,7 +46,6 @@ public class Doctor {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
-                ", hospitalId='" + hospitalId + '\'' +
                 '}';
     }
 }
