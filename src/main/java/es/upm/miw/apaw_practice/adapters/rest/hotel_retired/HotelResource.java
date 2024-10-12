@@ -44,4 +44,9 @@ public class HotelResource {
     public Hotel update(@PathVariable String cif, @RequestBody Hotel hotel) {
         return this.hotelService.update(cif, hotel);
     }
+
+    @PatchMapping(CIF_ID + ROOMS)
+    public Hotel updateRooms(@PathVariable String cif, @RequestBody List<Room> rooms) {
+        return this.hotelService.updateRooms(cif, rooms);
+    }
 }

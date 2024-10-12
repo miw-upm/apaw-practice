@@ -10,7 +10,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -109,7 +108,37 @@ public class HotelResourceIT {
                 .expectBody(Hotel.class)
                 .value(updatedHotel -> {
                     assertEquals("Guacamayo", updatedHotel.getHotelName());
-                    assertEquals(Arrays.asList(rooms), updatedHotel.getRooms());
+                    assertEquals(List.of(rooms), updatedHotel.getRooms());
+                });
+    }
+
+    @Test
+    void testUpdateRooms() {
+        Hotel hotel = new Hotel("E24206831", "Ventura", "C/ Pedralves 31 Barcelona", Collections.emptyList());
+
+        this.webTestClient
+                .post()
+                .uri(HOTELS)
+                .body(BodyInserters.fromValue(hotel))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Hotel.class)
+                .value(Assertions::assertNotNull);
+
+        List<Room> updatedRooms = List.of(
+                new Room("967600", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new Room("67678", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList())
+        );
+
+        this.webTestClient
+                .patch()
+                .uri(HOTELS + CIF_ID + ROOMS, "E24206831")
+                .body(BodyInserters.fromValue(updatedRooms))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Hotel.class)
+                .value(updatedHotel -> {
+                    assertEquals(updatedRooms, updatedHotel.getRooms());
                 });
     }
 }
