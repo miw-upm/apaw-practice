@@ -131,7 +131,7 @@ import java.util.stream.Collectors;
         public Hospital toHospital() {
             Hospital hospital = new Hospital();
             hospital.setName(this.name);
-            hospital.setAddress(this.address);  // Updated from 'setLocation()' to 'setAddress()'
+            hospital.setAddress(this.address);
             hospital.setCapacity(this.capacity);
             hospital.setDoctors(this.doctors.stream()
                     .map(DoctorEntity::toDoctor)
@@ -142,6 +142,52 @@ import java.util.stream.Collectors;
             return hospital;
         }
 
-        // Getters and setters...
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public Integer getCapacity() {
+            return capacity;
+        }
+
+        public void setCapacity(Integer capacity) {
+            this.capacity = capacity;
+        }
+
+        public List<DoctorEntity> getDoctors() {
+            return doctors;
+        }
+
+        public void setDoctors(List<DoctorEntity> doctors) {
+            this.doctors = doctors;
+        }
+
+        public List<PatientEntity> getPatients() {
+            return patients;
+        }
+
+        public void setPatients(List<PatientEntity> patients) {
+            this.patients = patients;
+        }
     }
 }
