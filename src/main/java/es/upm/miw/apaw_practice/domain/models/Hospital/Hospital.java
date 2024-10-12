@@ -112,4 +112,4 @@ import java.util.stream.Collectors;
             this.patients = patients;
         }
     }
-}
+
