@@ -1,25 +1,25 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import java.math.BigDecimal;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class DoctorEntity {
+
     @Id
     private String id;
     private String name;
     private String salary;
     private String hospitalId;
 
-    public DoctorEntity() {
-        // Empty constructor for framework
-    }
 
-    public DoctorEntity(String id, String name, String salary, String hospitalId) {
-        this.id = id;
+    public DoctorEntity(String name, BigDecimal salary, String hospitalId) {
         this.name = name;
-        this.salary =  salary.toString();
+        this.salary = salary.toString();
         this.hospitalId = hospitalId;
     }
+
+
 
     public String getId() {
         return id;
@@ -41,8 +41,8 @@ public class DoctorEntity {
         return salary;
     }
 
-    public void setSalary(String salary) {
-        this.salary = salary;
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary.toString();
     }
 
     public String getHospitalId() {
@@ -53,16 +53,13 @@ public class DoctorEntity {
         this.hospitalId = hospitalId;
     }
 
-    public Doctor toDoctor() {
-        return new Doctor(this.dni, this.fullname, this.salary);
-    }
-
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "DoctorEntity{" +
-                "dni='" + dni + '\'' +
-                ", fullname='" + fullname + '\'' +
-                ", salary=" + salary +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", salary='" + salary + '\'' +
+                ", hospitalId='" + hospitalId + '\'' +
                 '}';
     }
 }
