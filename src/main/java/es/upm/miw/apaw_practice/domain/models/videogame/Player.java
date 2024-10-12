@@ -5,7 +5,7 @@ import org.springframework.cglib.core.Local;
 import java.time.LocalDate;
 
 public class Player {
-    private String player;
+    private String playerName;
     private int age;
     private boolean experiencePlayer;
     private LocalDate birthday;
@@ -15,19 +15,19 @@ public class Player {
         //empty for framework
     }
 
-    public Player(String player, int age, boolean experiencePlayer, LocalDate birthday, Console console){
-        this.player = player;
+    public Player(String playerName, int age, boolean experiencePlayer, LocalDate birthday, Console console){
+        this.playerName = playerName;
         this.age = age;
         this.experiencePlayer = experiencePlayer;
         this.birthday = birthday;
         this.console = console;
     }
 
-    public String getPlayer() {
-        return player;
+    public String getPlayerName() {
+        return playerName;
     }
-    public void setPlayer(String player) {
-        this.player = player;
+    public void setPlayer(String playerName) {
+        this.playerName = playerName;
     }
     public int getAge() {
         return age;
@@ -57,7 +57,7 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "player='" + player + '\'' +
+                "playerName='" + playerName + '\'' +
                 ", age=" + age +
                 ", experiencePlayer=" + experiencePlayer +
                 ", birthday=" + birthday +
