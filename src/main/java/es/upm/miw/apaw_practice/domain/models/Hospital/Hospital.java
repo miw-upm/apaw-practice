@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
         @Indexed(unique = true)
         private String name;
-        private String address;  // Ensure it is 'address' and not 'location'
+        private String address;
         private Integer capacity;
         private List<DoctorEntity> doctors;
         private List<PatientEntity> patients;
@@ -29,7 +29,8 @@ import java.util.stream.Collectors;
             // Empty constructor for framework
         }
 
-        public Hospital(String name, String address, int capacity, List<Doctor> doctors, List<Patient> patients) {
+        public Hospital(String name, String address, int capacity, List<Doctor> doctors, List<Patient> patients)
+        {
             this.name = name;
             this.address = address;
             this.capacity = capacity;
@@ -41,7 +42,7 @@ import java.util.stream.Collectors;
         public HospitalEntity(Hospital hospital) {
             this.id = UUID.randomUUID().toString();
             this.name = hospital.getName();
-            this.address = hospital.getAddress();  // Updated from 'getLocation()' to 'getAddress()'
+            this.address = hospital.getAddress(); 
             this.capacity = hospital.getCapacity();
             this.doctors = hospital.getDoctors().stream()
                     .map(Doctor::toDoctorEntity)
