@@ -4,6 +4,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.AppointmentEn
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
-public interface AppoinmentRepository extends MongoRepository<AppointmentEntity, String> {
+public interface AppointmentRepository extends MongoRepository<AppointmentEntity, String> {
 
 }
