@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.stream.Stream;
+
 @RestController
 @RequestMapping(ShopResource.SHOPS)
 public class ShopResource {
@@ -22,8 +24,7 @@ public class ShopResource {
     }
 
     @GetMapping
-    public Shop findShopById(@RequestParam String q) {
-        String id = new LexicalAnalyzer().extractWithAssure(q, "id");
-        return this.shopService.findById(id);
+    public Stream<Shop> findAllShops() {
+        return this.shopService.findAllShops();
     }
 }

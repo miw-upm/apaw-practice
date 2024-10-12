@@ -24,12 +24,4 @@ public class ShopPersistenceMongodb implements ShopPersistence {
     public Stream<Shop> readAll() {
         return this.shopRepository.findAll().stream().map(ShopEntity::toShop);
     }
-
-    @Override
-    public Shop readById(String id) {
-        return this.shopRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Shop id:" + id))
-                .toShop();
-    }
 }

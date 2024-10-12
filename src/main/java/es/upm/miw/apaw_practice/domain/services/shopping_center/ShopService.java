@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.shopping_center.ShopPer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class ShopService {
 
@@ -15,7 +17,7 @@ public class ShopService {
         this.shopPersistence = shopPersistence;
     }
 
-    public Shop findById(String id) {
-        return this.shopPersistence.readById(id);
+    public Stream<Shop> findAllShops() {
+        return this.shopPersistence.readAll();
     }
 }

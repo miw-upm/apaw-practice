@@ -10,5 +10,4 @@ public interface ShopPersistence {
 
     Stream<Shop> readAll();
 
-    Shop readById(String id);
 }
