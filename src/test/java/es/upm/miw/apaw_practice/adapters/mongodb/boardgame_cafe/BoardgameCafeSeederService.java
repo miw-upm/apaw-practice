@@ -66,11 +66,11 @@ public class BoardgameCafeSeederService {
         this.gameRepository.saveAll(Arrays.asList(games));
 
         PlaySessionEntity[] playSessions = {
-                new PlaySessionEntity(new PlaySession(0, 5, LocalDateTime.of(2024, 9, 15, 13, 10), List.of(games[0].toGame(), games[1].toGame()))),
-                new PlaySessionEntity(new PlaySession(1, 2, LocalDateTime.of(2024, 9, 18, 19, 15), List.of(games[2].toGame()))),
-                new PlaySessionEntity(new PlaySession(2, 4, LocalDateTime.of(2024, 9, 25, 15, 52), List.of(games[4].toGame()))),
-                new PlaySessionEntity(new PlaySession(3, 8, LocalDateTime.of(2024, 10, 5, 21, 2), List.of(games[1].toGame(), games[2].toGame()))),
-                new PlaySessionEntity(new PlaySession(4, 4, LocalDateTime.of(2024, 10, 5, 22, 0), List.of(games[1].toGame(), games[3].toGame(), games[4].toGame())))
+                new PlaySessionEntity(new PlaySession(0, 5, LocalDateTime.of(2024, 9, 15, 13, 10), List.of(games[0].toGame(), games[1].toGame()), List.of(customers[0].toCustomer(), customers[1].toCustomer()))),
+                new PlaySessionEntity(new PlaySession(1, 2, LocalDateTime.of(2024, 9, 18, 19, 15), List.of(games[2].toGame()), List.of(customers[2].toCustomer()))),
+                new PlaySessionEntity(new PlaySession(2, 4, LocalDateTime.of(2024, 9, 25, 15, 52), List.of(games[4].toGame()), List.of(customers[3].toCustomer(), customers[4].toCustomer()))),
+                new PlaySessionEntity(new PlaySession(3, 8, LocalDateTime.of(2024, 10, 5, 21, 2), List.of(games[1].toGame(), games[2].toGame()), List.of(customers[0].toCustomer(), customers[2].toCustomer()))),
+                new PlaySessionEntity(new PlaySession(4, 4, LocalDateTime.of(2024, 10, 5, 22, 0), List.of(games[1].toGame(), games[3].toGame(), games[4].toGame()), List.of(customers[1].toCustomer(), customers[3].toCustomer())))
         };
         this.playSessionRepository.saveAll(Arrays.asList(playSessions));
     }
