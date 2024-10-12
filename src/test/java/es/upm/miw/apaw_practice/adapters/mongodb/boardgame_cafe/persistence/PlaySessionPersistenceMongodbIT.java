@@ -105,4 +105,11 @@ public class PlaySessionPersistenceMongodbIT {
         assertEquals(1, playSessionBD.getCustomers().size());
         assertEquals("joralvmel@gmail.com", playSessionBD.getCustomers().get(0).getEmail());
     }
+
+    @Test
+    void testFindTotalMembershipDurationByGameGenre() {
+        String genre = "Strategy";
+        Integer totalDuration = this.playSessionPersistence.findTotalMembershipDurationByGameGenre(genre);
+        assertEquals(36, totalDuration);
+    }
 }

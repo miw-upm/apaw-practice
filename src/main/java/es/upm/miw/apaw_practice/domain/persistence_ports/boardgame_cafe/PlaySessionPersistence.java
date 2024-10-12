@@ -16,4 +16,6 @@ public interface PlaySessionPersistence {
     PlaySession read(Integer playSessionId);
 
     boolean existPlaySessionId(Integer playSessionId);
+
+    Integer findTotalMembershipDurationByGameGenre(String genre);
 }
