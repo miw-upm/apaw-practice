@@ -38,32 +38,6 @@ import java.util.stream.Collectors;
             this.patients = patients;
         }
 
-        public HospitalEntity(Hospital hospital) {
-            this.id = UUID.randomUUID().toString();
-            this.name = hospital.getName();
-            this.address = hospital.getAddress();
-            this.capacity = hospital.getCapacity();
-            this.doctors = hospital.getDoctors().stream()
-                    .map(Doctor::toDoctorEntity)
-                    .collect(Collectors.toList());
-            this.patients = hospital.getPatients().stream()
-                    .map(Patient::toPatientEntity)
-                    .collect(Collectors.toList());
-        }
-
-        public Hospital toHospital() {
-            Hospital hospital = new Hospital();
-            hospital.setName(this.name);
-            hospital.setAddress(this.address);
-            hospital.setCapacity(this.capacity);
-            hospital.setDoctors(this.doctors.stream()
-                    .map(DoctorEntity::toDoctor)
-                    .collect(Collectors.toList()));
-            hospital.setPatients(this.patients.stream()
-                    .map(PatientEntity::toPatient)
-                    .collect(Collectors.toList()));
-            return hospital;
-        }
 
         public String getId() {
             return id;
@@ -111,6 +85,18 @@ import java.util.stream.Collectors;
 
         public void setPatients(List<PatientEntity> patients) {
             this.patients = patients;
+        }
+
+        @java.lang.Override
+        public java.lang.String toString() {
+            return "HospitalEntity{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", address='" + address + '\'' +
+                    ", capacity=" + capacity +
+                    ", doctors=" + doctors +
+                    ", patients=" + patients +
+                    '}';
         }
     }
 
