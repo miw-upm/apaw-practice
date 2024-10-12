@@ -35,17 +35,19 @@ public class HospitalEntity {
         this.address = address;
         this.capacity = capacity;
         this.doctors = doctors;
-        this.patients = null;
+        this.patients = List.of();;
     }
 
     public HospitalEntity(Hospital hospital) {
         this.id = hospital.getId();
         this.name = hospital.getName();
+        this.address = hospital.getAddress(); // Asegúrate de que esto esté definido en Hospital
+        this.capacity = hospital.getCapacity(); // Asegúrate de que esto esté definido en Hospital
         this.doctors = hospital.getDoctors().stream()
-                .map(DoctorEntity::new)  // Esto debería funcionar si DoctorEntity está correctamente definido
+                .map(DoctorEntity::new)
                 .collect(Collectors.toList());
         this.patients = hospital.getPatients().stream()
-                .map(PatientEntity::new)  // Esto también debería funcionar si PatientEntity está correctamente definido
+                .map(PatientEntity::new)
                 .collect(Collectors.toList());
     }
 
@@ -54,7 +56,6 @@ public class HospitalEntity {
                 this.doctors.stream().map(DoctorEntity::toDoctor).collect(Collectors.toList()),
                 this.patients.stream().map(PatientEntity::toPatient).collect(Collectors.toList()));
     }
-
 
 
     public String getId() {
