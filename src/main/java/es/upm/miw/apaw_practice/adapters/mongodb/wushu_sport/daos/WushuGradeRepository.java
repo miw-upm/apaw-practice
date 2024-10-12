@@ -5,4 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface WushuGradeRepository extends MongoRepository<WushuGradeEntity, String>  {
 
+    void deleteByGradeTitle(String name);
+
 }

@@ -32,4 +32,8 @@ public class RoomService {
     public void delete(String num) {
         this.roomPersistence.delete(num);
     }
+
+    public Room update(String num, Room room) {
+        return this.roomPersistence.update(num, room);
+    }
 }
