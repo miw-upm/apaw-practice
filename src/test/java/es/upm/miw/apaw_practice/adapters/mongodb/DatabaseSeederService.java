@@ -9,6 +9,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederSe
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.movies.MoviesSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.ShoppingCenterSeederService;
@@ -38,6 +39,7 @@ public class DatabaseSeederService {
     private final ShoppingCenterSeederService shoppingCenterSeederService;
     private final BasketballSeederService basketballSeederService;
     private final DeliveryFoodSeederService deliveryFoodSeederService;
+    private final MoviesSeederService moviesSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -55,7 +57,8 @@ public class DatabaseSeederService {
             ThemeParkSeederService themeParkSeederService, NightLifeSeederService nightLifeSeederService,
             ShoppingCenterSeederService shoppingCenterSeederService,
             BasketballSeederService basketballSeederService,
-            DeliveryFoodSeederService deliveryFoodSeederService
+            DeliveryFoodSeederService deliveryFoodSeederService,
+            MoviesSeederService moviesSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.universitySeederService = universitySeederService;
@@ -73,6 +76,7 @@ public class DatabaseSeederService {
         this.shoppingCenterSeederService = shoppingCenterSeederService;
         this.basketballSeederService = basketballSeederService;
         this.deliveryFoodSeederService = deliveryFoodSeederService;
+        this.moviesSeederService = moviesSeederService;
         this.seedDatabase();
     }
 
@@ -93,6 +97,7 @@ public class DatabaseSeederService {
         this.shoppingCenterSeederService.seedDatabase();
         this.basketballSeederService.seedDatabase();
         this.deliveryFoodSeederService.seedDatabase();
+        this.moviesSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -112,6 +117,7 @@ public class DatabaseSeederService {
         this.shoppingCenterSeederService.deleteAll();
         this.basketballSeederService.deleteAll();
         this.deliveryFoodSeederService.deleteAll();
+        this.moviesSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
