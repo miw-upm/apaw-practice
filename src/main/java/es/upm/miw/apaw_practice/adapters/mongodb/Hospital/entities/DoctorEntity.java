@@ -26,6 +26,13 @@ public class DoctorEntity {
         this.salary = salary;
         this.hospitalId = hospitalId;
     }
+    public DoctorEntity(Doctor doctor) {
+        this.id = doctor.getId();
+        this.name = doctor.getName();
+        this.salary = doctor.getSalary();
+        this.hospitalId = doctor.getHospitalId(); // Asegúrate de que esto sea correcto
+    }
+
 
 
     // Método para convertir DoctorEntity a Doctor

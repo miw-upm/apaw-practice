@@ -42,10 +42,10 @@ public class HospitalEntity {
         this.id = hospital.getId();
         this.name = hospital.getName();
         this.doctors = hospital.getDoctors().stream()
-                .map(DoctorEntity::new)
+                .map(DoctorEntity::new)  // Esto debería funcionar si DoctorEntity está correctamente definido
                 .collect(Collectors.toList());
         this.patients = hospital.getPatients().stream()
-                .map(PatientEntity::new)  // Convert Patient models to PatientEntities
+                .map(PatientEntity::new)  // Esto también debería funcionar si PatientEntity está correctamente definido
                 .collect(Collectors.toList());
     }
 
