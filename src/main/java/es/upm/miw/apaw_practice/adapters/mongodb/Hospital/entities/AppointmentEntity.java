@@ -16,7 +16,7 @@ public class AppointmentEntity {
     private String id;
     private LocalDate date;
     private LocalTime time;
-   
+
     public AppointmentEntity() {
         // Empty constructor for framework
     }
@@ -59,24 +59,11 @@ public class AppointmentEntity {
         this.time = time;
     }
 
-    public String getLocation() {
-        return location;
-    }
+ 
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
-    }
 
     public Appointment toAppointment() {
-        return new Appointment(this.id, this.date, this.time, this.location);
+        return new Appointment(this.id, this.date, this.time);
     }
 
     @Override
@@ -85,8 +72,6 @@ public class AppointmentEntity {
                 "id='" + id + '\'' +
                 ", date=" + date +
                 ", time=" + time +
-                ", location='" + location + '\'' +
-                ", patientId='" + patientId + '\'' +
                 '}';
     }
 }
