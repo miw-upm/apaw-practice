@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
+
+import java.time.LocalDate; // Importar LocalDate
+import es.upm.miw.apaw_practice.domain.models.Hospital.Patient; // Importar Patient
 
 public class PatientEntity {
     private String id;

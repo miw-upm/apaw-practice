@@ -1,11 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital;
+
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
-
+import es.upm.miw.apaw_practice.domain.models.Hospital; // Asegúrate de importar Hospital
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public class HospitalEntity {
     private String id;
