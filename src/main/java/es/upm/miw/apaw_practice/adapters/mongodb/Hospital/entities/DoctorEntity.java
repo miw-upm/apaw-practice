@@ -1,36 +1,36 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
+import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.math.BigDecimal;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 
 @Document
 public class DoctorEntity {
-
     @Id
     private String id;
     private String name;
-    private String salary;
+    private BigDecimal salary; // Asegúrate de que sea BigDecimal
     private String hospitalId;
 
-    // Constructor
+    public DoctorEntity() {
+        // Constructor vacío para el marco
+    }
+
+    // Constructor ajustado para recibir parámetros
     public DoctorEntity(String name, BigDecimal salary, String hospitalId) {
         this.name = name;
-        this.salary = salary.toString();
+        this.salary = salary;
         this.hospitalId = hospitalId;
     }
-    public DoctorEntity toDoctorEntity() {
-        return new DoctorEntity(this.name, this.salary, this.hospitalId);
-    }
 
+    // Método para convertir DoctorEntity a Doctor
     public Doctor toDoctor() {
-
-        return new Doctor(this.name, new BigDecimal(this.salary), this.hospitalId);
+        return new Doctor(this.name, this.salary, this.hospitalId);
     }
 
-
-
+    // Getters y Setters
     public String getId() {
         return id;
     }
@@ -47,12 +47,12 @@ public class DoctorEntity {
         this.name = name;
     }
 
-    public String getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
     public void setSalary(BigDecimal salary) {
-        this.salary = salary.toString();
+        this.salary = salary;
     }
 
     public String getHospitalId() {
@@ -63,4 +63,3 @@ public class DoctorEntity {
         this.hospitalId = hospitalId;
     }
 }
-

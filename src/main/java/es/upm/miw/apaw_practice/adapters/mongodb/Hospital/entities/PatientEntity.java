@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 
-
-
 public class PatientEntity {
     private String dni;
     private String fullname;
@@ -25,7 +23,15 @@ public class PatientEntity {
         this.appointment = appointment;
     }
 
-    // Getters and Setters
+    public PatientEntity(Patient patient) {
+        this.dni = patient.getDni();
+        this.fullname = patient.getFullname();
+        this.dateOfBirth = patient.getDateOfBirth();
+        this.hasInsurance = patient.isHasInsurance();
+        this.appointment = patient.getAppointment();
+    }
+
+    // Getters y Setters
     public String getDni() {
         return dni;
     }
@@ -81,4 +87,3 @@ public class PatientEntity {
                 '}';
     }
 }
-

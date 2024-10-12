@@ -45,10 +45,10 @@ public class HospitalEntity {
         this.location = hospital.getLocation();
         this.capacity = hospital.getCapacity();
         this.doctors = hospital.getDoctors().stream()
-                .map(Doctor::toDoctorEntity)
+                .map(Doctor::toDoctorEntity) // Asegúrate de que este método exista
                 .collect(Collectors.toList());
         this.patients = hospital.getPatients().stream()
-                .map(Patient::toPatientEntity)
+                .map(Patient::toPatientEntity) // Asegúrate de que este método exista
                 .collect(Collectors.toList());
     }
 

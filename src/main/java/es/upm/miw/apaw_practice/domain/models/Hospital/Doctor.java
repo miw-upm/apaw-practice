@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.math.BigDecimal;
 
 public class Doctor {
-    private String name;         
+    private String name;
     private BigDecimal salary;
     private String hospitalId;
 
