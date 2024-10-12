@@ -14,21 +14,20 @@ public class AppointmentEntity {
 
     @Id
     private String id;
-    private String patientDni;
     private LocalDate date;
     private LocalTime time;
-    private String room;
-
+   
     public AppointmentEntity() {
         // Empty constructor for framework
     }
 
     // Constructor ajustado para recibir parámetros
-    public AppointmentEntity(String patientDni, LocalDate date, LocalTime time, String room) {
-        this.patientDni = patientDni;
+    public AppointmentEntity(String id, LocalDate date, LocalTime time) {
+        this.id = id != null ? id : UUID.randomUUID().toString();
         this.date = date;
         this.time = time;
-        this.room = room;
+
+        this.patientId = patientId;
     }
 
     public AppointmentEntity(Appointment appointment) {
