@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ public class WushuGradeEntity {
     @Id
     private String id;
     private LocalDate dateAwarded;
+    @Indexed(unique = true)
     private String gradeTitle;
     private Integer gradeLevel;
 
