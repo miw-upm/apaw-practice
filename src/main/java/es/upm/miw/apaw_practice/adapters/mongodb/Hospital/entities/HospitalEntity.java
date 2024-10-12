@@ -69,12 +69,12 @@ public class HospitalEntity {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Integer getCapacity() {
@@ -105,7 +105,7 @@ public class HospitalEntity {
     public Hospital toHospital() {
         Hospital hospital = new Hospital();
         hospital.setName(this.name);
-        hospital.setLocation(this.location);
+        hospital.setAddress(this.address);
         hospital.setCapacity(this.capacity);
         hospital.setDoctors(this.doctors.stream()
                 .map(DoctorEntity::toDoctor)
@@ -116,13 +116,15 @@ public class HospitalEntity {
         return hospital;
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "HospitalEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
+                ", address='" + address + '\'' +
                 ", capacity=" + capacity +
+                ", doctors=" + doctors +
+                ", patients=" + patients +
                 '}';
     }
 }
