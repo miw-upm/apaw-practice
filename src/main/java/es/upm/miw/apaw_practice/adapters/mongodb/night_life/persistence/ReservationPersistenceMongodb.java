@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Repository("ReservationPersistence")
+@Repository("reservationPersistence")
 public class ReservationPersistenceMongodb implements ReservationPersistence {
     private final ReservationRepository reservationRepository;
 

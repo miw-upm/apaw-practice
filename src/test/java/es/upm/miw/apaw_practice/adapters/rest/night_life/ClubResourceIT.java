@@ -22,6 +22,7 @@ class ClubResourceIT {
                 .value(Assertions::assertNotNull)
                 .value(clubData -> {
                     assertEquals("Cuenca Club", clubData.get(0).getName());
+                    assertEquals(1, clubData.get(0).getReservations().size());
                     assertEquals("Kapital", clubData.get(1).getName());
                 });
     }

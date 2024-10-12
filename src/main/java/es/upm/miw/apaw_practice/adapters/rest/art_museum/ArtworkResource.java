@@ -20,6 +20,6 @@ public class ArtworkResource {
 
     @PutMapping(ID_INVENTORY_NUMBER)
     public Artwork update(@PathVariable String inventoryNumber, @RequestBody Artwork artwork) {
-        return this.artworkService.updateArtwork(inventoryNumber, artwork);
+        return this.artworkService.update(inventoryNumber, artwork);
     }
 }
