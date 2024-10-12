@@ -1,37 +1,27 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 import java.math.BigDecimal;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 
 public class Doctor {
-    private String dni;
-    private String fullname;
+    private String name;         
     private BigDecimal salary;
+    private String hospitalId;
 
-    public Doctor() {
-        // Empty constructor for framework
-    }
-
-    public Doctor(String dni, String fullname, BigDecimal salary) {
-        this.dni = dni;
-        this.fullname = fullname;
+    // Constructor
+    public Doctor(String name, BigDecimal salary, String hospitalId) {
+        this.name = name;
         this.salary = salary;
+        this.hospitalId = hospitalId;
     }
 
-    public String getDni() {
-        return dni;
+    // Getters y setters
+
+    public String getName() {
+        return name;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BigDecimal getSalary() {
@@ -42,16 +32,11 @@ public class Doctor {
         this.salary = salary;
     }
 
-    public DoctorEntity toDoctorEntity() {
-        return new DoctorEntity(this.dni, this.fullname, this.salary);
+    public String getHospitalId() {
+        return hospitalId;
     }
 
-    @Override
-    public String toString() {
-        return "Doctor{" +
-                "dni='" + dni + '\'' +
-                ", fullname='" + fullname + '\'' +
-                ", salary=" + salary +
-                '}';
+    public void setHospitalId(String hospitalId) {
+        this.hospitalId = hospitalId;
     }
 }

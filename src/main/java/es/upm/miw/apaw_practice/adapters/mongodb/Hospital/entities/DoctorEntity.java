@@ -2,9 +2,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import java.math.BigDecimal;
-
+import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 
 @Document
 public class DoctorEntity {
@@ -15,12 +14,17 @@ public class DoctorEntity {
     private String salary;
     private String hospitalId;
 
-
+    // Constructor
     public DoctorEntity(String name, BigDecimal salary, String hospitalId) {
         this.name = name;
         this.salary = salary.toString();
-
         this.hospitalId = hospitalId;
+    }
+
+
+    public Doctor toDoctor() {
+
+        return new Doctor(this.name, new BigDecimal(this.salary), this.hospitalId);
     }
 
 
@@ -56,17 +60,5 @@ public class DoctorEntity {
     public void setHospitalId(String hospitalId) {
         this.hospitalId = hospitalId;
     }
-    public Doctor toDoctor() {
-        return new Doctor(this.name, new BigDecimal(this.salary), this.hospitalId);
-    }
-
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "DoctorEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", salary='" + salary + '\'' +
-                ", hospitalId='" + hospitalId + '\'' +
-                '}';
-    }
 }
+
