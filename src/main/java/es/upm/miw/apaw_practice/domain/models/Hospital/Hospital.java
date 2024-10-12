@@ -1,5 +1,5 @@
+package es.upm.miw.apaw_practice.domain.models.Hospital;
 
-package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
@@ -29,13 +29,14 @@ import java.util.stream.Collectors;
             // Empty constructor for framework
         }
 
-        public HospitalEntity(String name, String address, Integer capacity, List<DoctorEntity> doctors) {
+        public Hospital(String name, String address, int capacity, List<Doctor> doctors, List<Patient> patients) {
             this.name = name;
             this.address = address;
             this.capacity = capacity;
             this.doctors = doctors;
-            this.patients = null;
+            this.patients = patients;
         }
+
 
         public HospitalEntity(Hospital hospital) {
             this.id = UUID.randomUUID().toString();
