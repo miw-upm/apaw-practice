@@ -65,6 +65,9 @@ public class WushuGradeEntity {
         BeanUtils.copyProperties(this, wushuGrade);
         return wushuGrade;
     }
+    public void fromWushuGrade(WushuGrade wushuGrade) {
+        BeanUtils.copyProperties(wushuGrade, this);
+    }
 
     @Override
     public String toString() {
