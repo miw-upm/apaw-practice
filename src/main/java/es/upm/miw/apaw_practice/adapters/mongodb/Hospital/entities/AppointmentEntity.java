@@ -23,7 +23,14 @@ public class AppointmentEntity {
         // Empty constructor for framework
     }
 
-
+    // Constructor ajustado para recibir parámetros
+    public AppointmentEntity(String id, LocalDate date, LocalTime time, String location, String patientId) {
+        this.id = id != null ? id : UUID.randomUUID().toString();
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.patientId = patientId;
+    }
 
     public AppointmentEntity(Appointment appointment) {
         BeanUtils.copyProperties(appointment, this);
@@ -85,3 +92,4 @@ public class AppointmentEntity {
                 '}';
     }
 }
+

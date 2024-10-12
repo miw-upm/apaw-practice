@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,16 +29,24 @@ public class HospitalEntity {
         // Empty constructor for framework
     }
 
+    // Constructor ajustado para recibir parámetros
+    public HospitalEntity(String name, String location, Integer capacity, List<DoctorEntity> doctors, List<PatientEntity> patients) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.location = location;
+        this.capacity = capacity;
+        this.doctors = doctors;
+        this.patients = patients;
+    }
+
     public HospitalEntity(Hospital hospital) {
         this.id = UUID.randomUUID().toString();
         this.name = hospital.getName();
         this.location = hospital.getLocation();
         this.capacity = hospital.getCapacity();
-        // Conversión personalizada de doctores
         this.doctors = hospital.getDoctors().stream()
                 .map(Doctor::toDoctorEntity)
                 .collect(Collectors.toList());
-        // Conversión personalizada de pacientes
         this.patients = hospital.getPatients().stream()
                 .map(Patient::toPatientEntity)
                 .collect(Collectors.toList());
@@ -93,38 +100,18 @@ public class HospitalEntity {
         this.patients = patients;
     }
 
-    // Conversión de entidad a modelo de dominio
     public Hospital toHospital() {
         Hospital hospital = new Hospital();
         hospital.setName(this.name);
         hospital.setLocation(this.location);
         hospital.setCapacity(this.capacity);
-        // Conversión personalizada de doctores
         hospital.setDoctors(this.doctors.stream()
                 .map(DoctorEntity::toDoctor)
                 .collect(Collectors.toList()));
-        // Conversión personalizada de pacientes
         hospital.setPatients(this.patients.stream()
                 .map(PatientEntity::toPatient)
                 .collect(Collectors.toList()));
         return hospital;
-    }
-
-    public void fromHospital(Hospital hospital) {
-        this.name = hospital.getName();
-        this.location = hospital.getLocation();
-        this.capacity = hospital.getCapacity();
-        // Conversión personalizada de doctores
-        this.doctors = hospital.getDoctors().stream()
-                .map(Doctor::toDoctorEntity)
-                .collect(Collectors.toList());
-        // Conversión personalizada de pacientes
-        this.patients = hospital.getPatients().stream()
-                .map(Patient::toPatientEntity)
-                .collect(Collectors.toList());
-    }
-    public PatientEntity convertToPatientEntity(Patient patient) {
-        return patient.toPatientEntity();
     }
 
     @Override
