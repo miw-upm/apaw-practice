@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
+import es.upm.miw.apaw_practice.domain.models.Hospital;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import org.springframework.data.annotation.Id;
