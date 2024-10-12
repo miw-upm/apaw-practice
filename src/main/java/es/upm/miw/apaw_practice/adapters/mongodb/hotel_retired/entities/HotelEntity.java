@@ -5,12 +5,14 @@ import es.upm.miw.apaw_practice.domain.models.hotel_retired.Room;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Document
 public class HotelEntity {
     @Id
     private String id;
@@ -74,6 +76,26 @@ public class HotelEntity {
 
     public void fromHotel(Hotel hotel) {
         BeanUtils.copyProperties(hotel, this);
+        this.setRoomEntities(
+                hotel.getRooms().stream()
+                        .map(room -> new RoomEntity(
+                                        room.getNum(),
+                                        room.getOccupied(),
+                                        room.getNumBeds(),
+                                        room.getPrice(),
+                                        room.getBookings().stream()
+                                                .map(booking -> new BookingEntity(
+                                                    booking.getConfirmed(),
+                                                    booking.getDateIn(),
+                                                    booking.getDateOut(),
+                                                    new GuestEntity(
+                                                            booking.getGuest().getNif(),
+                                                            booking.getGuest().getFullName(),
+                                                            booking.getGuest().getBirthDay())
+                                                )
+                                                ).toList()
+                                )
+                        ).toList());
     }
 
     public Hotel toHotel() {
