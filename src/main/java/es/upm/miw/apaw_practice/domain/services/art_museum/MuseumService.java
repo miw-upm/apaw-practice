@@ -37,4 +37,8 @@ public class MuseumService {
         exhibition.setPrice(price);
         this.museumPersistence.updateExhibitionPrice(museum, exhibitionName);
     }
+
+    public BigDecimal findByArtistNameSumPricesExhibitions(String artistName) {
+        return this.museumPersistence.findByArtistNameSumPricesExhibitions(artistName);
+    }
 }

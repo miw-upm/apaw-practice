@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.art_museum;
 
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.art_museum.Museum;
 import es.upm.miw.apaw_practice.domain.services.art_museum.MuseumService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ public class MuseumResource {
     static final String NAME_MUSEUM = "/{museumName}";
     static final String EXHIBITIONS = "/exhibitions";
     static final String NAME_EXHIBITION = "/{exhibitionName}";
+    static final String SEARCH = "/search";
 
     private final MuseumService museumService;
 
@@ -36,5 +38,11 @@ public class MuseumResource {
     public void updateExhibitionPrice(@PathVariable String museumName, @PathVariable String exhibitionName,
                                       @RequestBody BigDecimal price) {
         this.museumService.updateExhibitionPrice(museumName, exhibitionName, price);
+    }
+
+    @GetMapping(SEARCH)
+    public BigDecimal findByArtistNameSumPricesExhibitions(@RequestParam String q) {
+        String artistName = new LexicalAnalyzer().extractWithAssure(q, "artistName");
+        return this.museumService.findByArtistNameSumPricesExhibitions(artistName);
     }
 }
