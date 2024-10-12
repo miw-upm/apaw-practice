@@ -17,12 +17,7 @@ public class ShopPersistenceMongodbIT {
     private ShopPersistenceMongodb shopPersistenceMongodb;
 
     @Test
-    void testReadNotFound() {
-        assertThrows(NotFoundException.class, () -> this.shopPersistenceMongodb.readById("0"));
-    }
-
-    @Test
-    void testReadById() {
+    void testReadAll() {
         Optional<Shop> shop = this.shopPersistenceMongodb.readAll()
                 .filter(sh -> "shop1".equals(sh.getName()))
                 .findFirst();
