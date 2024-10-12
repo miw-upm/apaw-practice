@@ -20,7 +20,7 @@ public class DoctorEntity {
     }
 
     // Constructor ajustado para recibir un objeto Doctor
-    public Doctor(String id, String name, BigDecimal salary, String hospitalId) {
+    public DoctorEntity(String id, String name, BigDecimal salary, String hospitalId) {
         this.id = id;
         this.name = name;
         this.salary = salary;
