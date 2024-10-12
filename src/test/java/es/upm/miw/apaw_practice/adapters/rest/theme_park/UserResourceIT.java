@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.rest.theme_park;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 
 import es.upm.miw.apaw_practice.domain.models.theme_park.User;
+import es.upm.miw.apaw_practice.domain.persistence_ports.theme_park.UserPersistence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ class UserResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Autowired
+    private UserPersistence userPersistence;
 
     @Test
     void testCreate() {
@@ -42,5 +46,17 @@ class UserResourceIT {
                 .body(BodyInserters.fromValue(user))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void testUpdate() {
+        User user = new User("ABCDEF", "C/test", LocalDateTime.of(2005,12,12,3,3,4), true);
+
+        this.webTestClient
+                .put()
+                .uri(UserResource.USERS + UserResource.ID_MEMBERSHIP, "kk")
+                .body(BodyInserters.fromValue(user))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
