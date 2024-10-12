@@ -113,36 +113,36 @@ public class RoomResourceIT {
                 });
     }
 
-//    @Test
-//    void testUpdateBookings() {
-//        Room room = new Room("56578", false, 4, BigDecimal.valueOf(99.99), Collections.emptyList());
-//        this.webTestClient
-//                .post()
-//                .uri(ROOMS)
-//                .body(BodyInserters.fromValue(room))
-//                .exchange()
-//                .expectStatus().isOk()
-//                .expectBody(Room.class)
-//                .value(Assertions::assertNotNull);
-//
-//        Guest guest = new Guest(
-//                "03948142P",
-//                "Carla Sempere",
-//                LocalDateTime.of(2021, 4, 12, 23, 2, 2)
-//        );
-//        List<Booking> updatedBookings = List.of(
-//                new Booking(false, LocalDate.now(), LocalDate.now().plusWeeks(1), guest)
-//        );
-//
-//         this.webTestClient
-//                .patch()
-//                .uri(ROOMS + NUM_ID + BOOKINGS, "56578")
-//                .body(BodyInserters.fromValue(updatedBookings))
-//                .exchange()
-//                .expectStatus().isOk()
-//                .expectBody(Room.class)
-//                .value(updatedRoom -> {
-//                    assertEquals(1, updatedRoom.getBookings().size());
-//                });
-//    }
+    @Test
+    void testUpdateBookings() {
+        Room room = new Room("56578", false, 4, BigDecimal.valueOf(99.99), Collections.emptyList());
+        this.webTestClient
+                .post()
+                .uri(ROOMS)
+                .body(BodyInserters.fromValue(room))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Room.class)
+                .value(Assertions::assertNotNull);
+
+        Guest guest = new Guest(
+                "03948142P",
+                "Carla Sempere",
+                LocalDateTime.of(2021, 4, 12, 23, 2, 2)
+        );
+        List<Booking> updatedBookings = List.of(
+                new Booking(false, LocalDate.now(), LocalDate.now().plusWeeks(1), guest)
+        );
+
+         this.webTestClient
+                .patch()
+                .uri(ROOMS + NUM_ID + BOOKINGS, "56578")
+                .body(BodyInserters.fromValue(updatedBookings))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Room.class)
+                .value(updatedRoom -> {
+                    assertEquals(1, updatedRoom.getBookings().size());
+                });
+    }
 }
