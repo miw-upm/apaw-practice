@@ -48,14 +48,11 @@ public class HospitalEntity {
     }
 
     public Hospital toHospital() {
-        List<Doctor> doctorModels = this.doctors.stream()
-                .map(DoctorEntity::toDoctor)  // Convert DoctorEntities to Doctor models
-                .collect(Collectors.toList());
-        List<Patient> patientModels = this.patients.stream()
-                .map(PatientEntity::toPatient)  // Convert PatientEntities to Patient models
-                .collect(Collectors.toList());
-        return new Hospital(this.id, this.name, doctorModels, patientModels);
+        return new Hospital(this.id, this.name, this.address, this.capacity,
+                this.doctors.stream().map(DoctorEntity::toDoctor).collect(Collectors.toList()),
+                this.patients.stream().map(PatientEntity::toPatient).collect(Collectors.toList()));
     }
+
 
 
     public String getId() {

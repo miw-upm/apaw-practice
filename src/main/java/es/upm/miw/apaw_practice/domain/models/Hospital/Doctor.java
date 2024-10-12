@@ -1,47 +1,61 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 
 import java.math.BigDecimal;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 
 public class Doctor {
+    private String id;
     private String name;
-    private BigDecimal salary;
-    private String hospitalId;
+    private BigDecimal salary; // Mantener el campo salary
+    private String hospitalId; // Mantener el campo hospitalId
 
     // Constructor
-    public Doctor(String name, BigDecimal salary, String hospitalId) {
+    public Doctor(String id, String name, BigDecimal salary, String hospitalId) {
+        this.id = id;
         this.name = name;
         this.salary = salary;
-        this.hospitalId = hospitalId;
+        this.hospitalId = hospitalId; // Asignar hospitalId
     }
 
-    // Getters y setters
+    // Getters y Setters
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public BigDecimal getSalary() {
+        return salary; // Getter para salary
+    }
+
+    public String getHospitalId() {
+        return hospitalId; // Getter para hospitalId
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public BigDecimal getSalary() {
-        return salary;
-    }
-
     public void setSalary(BigDecimal salary) {
-        this.salary = salary;
-    }
-
-    public String getHospitalId() {
-        return hospitalId;
+        this.salary = salary; // Setter para salary
     }
 
     public void setHospitalId(String hospitalId) {
-        this.hospitalId = hospitalId;
+        this.hospitalId = hospitalId; // Setter para hospitalId
     }
 
-
-    public DoctorEntity toDoctorEntity() {
-        return new DoctorEntity(this.name, this.salary, this.hospitalId);
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                ", hospitalId='" + hospitalId + '\'' +
+                '}';
     }
 }

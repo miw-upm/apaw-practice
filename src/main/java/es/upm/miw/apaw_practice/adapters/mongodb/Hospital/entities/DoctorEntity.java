@@ -11,23 +11,23 @@ public class DoctorEntity {
     @Id
     private String id;
     private String name;
-    private BigDecimal salary;
-    private String hospitalId;
+    private BigDecimal salary; // Manteniendo el campo salary
 
+    // Constructor vacío para el marco
     public DoctorEntity() {
         // Constructor vacío para el marco
     }
 
-    // Constructor ajustado para recibir parámetros
-    public DoctorEntity(String name, BigDecimal salary, String hospitalId) {
-        this.name = name;
-        this.salary = salary;
-        this.hospitalId = hospitalId;
+    // Constructor ajustado para recibir un objeto Doctor
+    public DoctorEntity(Doctor doctor) {
+        this.id = doctor.getId();        // Asignar id desde el objeto Doctor
+        this.name = doctor.getName();    // Asignar nombre desde el objeto Doctor
+        this.salary = doctor.getSalary(); // Asignar salario desde el objeto Doctor
     }
 
     // Método para convertir DoctorEntity a Doctor
     public Doctor toDoctor() {
-        return new Doctor(this.name, this.salary, this.hospitalId);
+        return new Doctor(this.id, this.name, this.salary); // Crear un nuevo objeto Doctor
     }
 
     // Getters y Setters
@@ -48,28 +48,19 @@ public class DoctorEntity {
     }
 
     public BigDecimal getSalary() {
-        return salary;
+        return salary; // Getter para salary
     }
 
     public void setSalary(BigDecimal salary) {
-        this.salary = salary;
+        this.salary = salary; // Setter para salary
     }
 
-    public String getHospitalId() {
-        return hospitalId;
-    }
-
-    public void setHospitalId(String hospitalId) {
-        this.hospitalId = hospitalId;
-    }
-
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "DoctorEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", salary=" + salary +
-                ", hospitalId='" + hospitalId + '\'' +
+                ", salary=" + salary + // Incluir salary en el toString
                 '}';
     }
 }

@@ -11,19 +11,21 @@ public class PatientEntity {
     private boolean hasInsurance;
     private Appointment appointment;
 
+    // Constructor vacío para el marco
     public PatientEntity() {
         // Empty constructor for framework
     }
 
-
-
+    // Constructor ajustado para recibir un objeto Patient
     public PatientEntity(Patient patient) {
         this.dni = patient.getDni();
         this.fullname = patient.getFullname();
         this.dateOfBirth = patient.getDateOfBirth();
         this.hasInsurance = patient.isHasInsurance();
-        this.appointment = patient.getAppointment();
+        this.appointment = patient.getAppointment(); // Asegúrate de que este método exista en Patient
     }
+
+    // Método para convertir PatientEntity a Patient
     public Patient toPatient() {
         return new Patient(this.dni, this.fullname, this.dateOfBirth, this.hasInsurance, this.appointment);
     }
@@ -68,7 +70,6 @@ public class PatientEntity {
     public void setAppointment(Appointment appointment) {
         this.appointment = appointment;
     }
-
 
     @Override
     public String toString() {
