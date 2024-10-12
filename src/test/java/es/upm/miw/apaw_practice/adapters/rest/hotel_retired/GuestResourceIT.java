@@ -61,4 +61,27 @@ public class GuestResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testDelete() {
+        Guest guest = new Guest(
+                "26317099Q",
+                "Julio Carrasco",
+                LocalDateTime.of(1990, 10, 27, 23, 2, 2)
+        );
+        this.webTestClient
+                .post()
+                .uri(GUESTS)
+                .body(BodyInserters.fromValue(guest))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Guest.class)
+                .value(Assertions::assertNotNull);
+
+        this.webTestClient
+                .delete()
+                .uri(GUESTS + NIF_ID, "26317099Q")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

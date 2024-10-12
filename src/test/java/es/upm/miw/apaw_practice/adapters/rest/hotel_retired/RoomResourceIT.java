@@ -61,4 +61,23 @@ public class RoomResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testDelete() {
+        Room room = new Room("4677", false, 4, BigDecimal.valueOf(99.99), Collections.emptyList());
+        this.webTestClient
+                .post()
+                .uri(ROOMS)
+                .body(BodyInserters.fromValue(room))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Room.class)
+                .value(Assertions::assertNotNull);
+
+        this.webTestClient
+                .delete()
+                .uri(ROOMS + NUM_ID, "4677")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

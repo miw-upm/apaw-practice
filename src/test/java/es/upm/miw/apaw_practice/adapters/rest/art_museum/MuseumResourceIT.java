@@ -7,11 +7,12 @@ import es.upm.miw.apaw_practice.domain.models.art_museum.Museum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-import static es.upm.miw.apaw_practice.adapters.rest.art_museum.MuseumResource.MUSEUMS;
-import static es.upm.miw.apaw_practice.adapters.rest.art_museum.MuseumResource.NAME_MUSEUM;
+import static es.upm.miw.apaw_practice.adapters.rest.art_museum.MuseumResource.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -61,4 +62,25 @@ class MuseumResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void testUpdateExhibitionPrice() {
+        this.webTestClient
+                .patch()
+                .uri(MUSEUMS + NAME_MUSEUM + EXHIBITIONS + NAME_EXHIBITION, "Thyssen", "Century 15th")
+                .body(BodyInserters.fromValue(BigDecimal.valueOf(20.00)))
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void testUpdateExhibitionPriceNotFound() {
+        this.webTestClient
+                .patch()
+                .uri(MUSEUMS + NAME_MUSEUM + EXHIBITIONS + NAME_EXHIBITION, "Reina Sofia", "Century 15th")
+                .body(BodyInserters.fromValue(BigDecimal.valueOf(20.00)))
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
 }
