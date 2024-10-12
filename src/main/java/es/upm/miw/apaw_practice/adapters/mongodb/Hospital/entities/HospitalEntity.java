@@ -19,24 +19,23 @@ public class HospitalEntity {
 
     @Indexed(unique = true)
     private String name;
-
-    private String location;
+    private String address;
     private Integer capacity;
     private List<DoctorEntity> doctors;
     private List<PatientEntity> patients;
+
 
     public HospitalEntity() {
         // Empty constructor for framework
     }
 
     // Constructor ajustado para recibir parámetros
-    public HospitalEntity(String name, String location, Integer capacity, List<DoctorEntity> doctors, List<PatientEntity> patients) {
-        this.id = UUID.randomUUID().toString();
+    public HospitalEntity(String name, String address, Integer capacity, List<DoctorEntity> doctors) {
         this.name = name;
-        this.location = location;
+        this.address = address;
         this.capacity = capacity;
         this.doctors = doctors;
-        this.patients = patients;
+        this.patients = null;
     }
 
     // Constructor que convierte Hospital a HospitalEntity

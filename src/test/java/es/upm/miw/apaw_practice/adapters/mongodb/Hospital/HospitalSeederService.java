@@ -54,6 +54,7 @@ public class HospitalSeederService {
             this.doctorRepository.saveAll(Arrays.asList(doctors));
 
             // Create hospital entities
+            // Create hospital entities
             HospitalEntity[] hospitals = {
                     new HospitalEntity("General Hospital", "123 Main St", 200, List.of(doctors[0])),
                     new HospitalEntity("City Clinic", "456 Elm St", 150, List.of(doctors[1])),
@@ -61,7 +62,7 @@ public class HospitalSeederService {
             };
             this.hospitalRepository.saveAll(Arrays.asList(hospitals));
 
-            // Create appointment entities
+// Create appointment entities
             AppointmentEntity[] appointments = {
                     new AppointmentEntity(patients[0].getDni(), LocalDate.of(2024, 10, 20), LocalTime.of(10, 0), "Room 101"),
                     new AppointmentEntity(patients[1].getDni(), LocalDate.of(2024, 11, 15), LocalTime.of(9, 30), "Room 102"),

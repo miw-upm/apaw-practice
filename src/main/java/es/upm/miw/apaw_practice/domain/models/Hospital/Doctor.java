@@ -40,7 +40,7 @@ public class Doctor {
         this.hospitalId = hospitalId;
     }
 
-  
+
     public DoctorEntity toDoctorEntity() {
         return new DoctorEntity(this.name, this.salary, this.hospitalId);
     }
