@@ -19,17 +19,15 @@ public class HospitalEntity {
 
     @Indexed(unique = true)
     private String name;
-    private String address;
+    private String address;  // Ensure it is 'address' and not 'location'
     private Integer capacity;
     private List<DoctorEntity> doctors;
     private List<PatientEntity> patients;
-
 
     public HospitalEntity() {
         // Empty constructor for framework
     }
 
-    // Constructor ajustado para recibir parámetros
     public HospitalEntity(String name, String address, Integer capacity, List<DoctorEntity> doctors) {
         this.name = name;
         this.address = address;
@@ -38,21 +36,33 @@ public class HospitalEntity {
         this.patients = null;
     }
 
-    // Constructor que convierte Hospital a HospitalEntity
     public HospitalEntity(Hospital hospital) {
         this.id = UUID.randomUUID().toString();
         this.name = hospital.getName();
-        this.location = hospital.getLocation();
+        this.address = hospital.getAddress();  // Updated from 'getLocation()' to 'getAddress()'
         this.capacity = hospital.getCapacity();
         this.doctors = hospital.getDoctors().stream()
-                .map(Doctor::toDoctorEntity) // Asegúrate de que este método exista
+                .map(Doctor::toDoctorEntity)
                 .collect(Collectors.toList());
         this.patients = hospital.getPatients().stream()
-                .map(Patient::toPatientEntity) // Asegúrate de que este método exista
+                .map(Patient::toPatientEntity)
                 .collect(Collectors.toList());
     }
 
-    // Getters y Setters
+    public Hospital toHospital() {
+        Hospital hospital = new Hospital();
+        hospital.setName(this.name);
+        hospital.setAddress(this.address);  // Updated from 'setLocation()' to 'setAddress()'
+        hospital.setCapacity(this.capacity);
+        hospital.setDoctors(this.doctors.stream()
+                .map(DoctorEntity::toDoctor)
+                .collect(Collectors.toList()));
+        hospital.setPatients(this.patients.stream()
+                .map(PatientEntity::toPatient)
+                .collect(Collectors.toList()));
+        return hospital;
+    }
+
     public String getId() {
         return id;
     }
@@ -99,32 +109,5 @@ public class HospitalEntity {
 
     public void setPatients(List<PatientEntity> patients) {
         this.patients = patients;
-    }
-
-
-    public Hospital toHospital() {
-        Hospital hospital = new Hospital();
-        hospital.setName(this.name);
-        hospital.setAddress(this.address);
-        hospital.setCapacity(this.capacity);
-        hospital.setDoctors(this.doctors.stream()
-                .map(DoctorEntity::toDoctor)
-                .collect(Collectors.toList()));
-        hospital.setPatients(this.patients.stream()
-                .map(PatientEntity::toPatient)
-                .collect(Collectors.toList()));
-        return hospital;
-    }
-
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "HospitalEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", capacity=" + capacity +
-                ", doctors=" + doctors +
-                ", patients=" + patients +
-                '}';
     }
 }
