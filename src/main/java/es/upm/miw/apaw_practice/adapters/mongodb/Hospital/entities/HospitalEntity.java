@@ -37,31 +37,26 @@ public class HospitalEntity {
     }
 
     public HospitalEntity(Hospital hospital) {
-        this.id = UUID.randomUUID().toString();
+        this.id = hospital.getId();
         this.name = hospital.getName();
-        this.address = hospital.getAddress();  // Updated from 'getLocation()' to 'getAddress()'
-        this.capacity = hospital.getCapacity();
         this.doctors = hospital.getDoctors().stream()
-                .map(Doctor::toDoctorEntity)
+                .map(DoctorEntity::new)  // Convert Doctor models to DoctorEntities
                 .collect(Collectors.toList());
         this.patients = hospital.getPatients().stream()
-                .map(Patient::toPatientEntity)
+                .map(PatientEntity::new)  // Convert Patient models to PatientEntities
                 .collect(Collectors.toList());
     }
 
     public Hospital toHospital() {
-        Hospital hospital = new Hospital();
-        hospital.setName(this.name);
-        hospital.setAddress(this.address);  // Updated from 'setLocation()' to 'setAddress()'
-        hospital.setCapacity(this.capacity);
-        hospital.setDoctors(this.doctors.stream()
-                .map(DoctorEntity::toDoctor)
-                .collect(Collectors.toList()));
-        hospital.setPatients(this.patients.stream()
-                .map(PatientEntity::toPatient)
-                .collect(Collectors.toList()));
-        return hospital;
+        List<Doctor> doctorModels = this.doctors.stream()
+                .map(DoctorEntity::toDoctor)  // Convert DoctorEntities to Doctor models
+                .collect(Collectors.toList());
+        List<Patient> patientModels = this.patients.stream()
+                .map(PatientEntity::toPatient)  // Convert PatientEntities to Patient models
+                .collect(Collectors.toList());
+        return new Hospital(this.id, this.name, doctorModels, patientModels);
     }
+
 
     public String getId() {
         return id;
@@ -109,5 +104,14 @@ public class HospitalEntity {
 
     public void setPatients(List<PatientEntity> patients) {
         this.patients = patients;
+    }
+    @Override
+    public String toString() {
+        return "HospitalEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", doctors=" + doctors +
+                ", patients=" + patients +
+                '}';
     }
 }

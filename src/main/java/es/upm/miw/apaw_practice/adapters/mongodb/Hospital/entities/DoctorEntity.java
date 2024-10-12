@@ -11,7 +11,7 @@ public class DoctorEntity {
     @Id
     private String id;
     private String name;
-    private BigDecimal salary; // Asegúrate de que sea BigDecimal
+    private BigDecimal salary;
     private String hospitalId;
 
     public DoctorEntity() {
@@ -61,5 +61,15 @@ public class DoctorEntity {
 
     public void setHospitalId(String hospitalId) {
         this.hospitalId = hospitalId;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "DoctorEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                ", hospitalId='" + hospitalId + '\'' +
+                '}';
     }
 }

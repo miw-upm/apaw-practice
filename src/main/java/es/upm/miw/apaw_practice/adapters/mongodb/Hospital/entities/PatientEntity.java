@@ -15,13 +15,7 @@ public class PatientEntity {
         // Empty constructor for framework
     }
 
-    public PatientEntity(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) {
-        this.dni = dni;
-        this.fullname = fullname;
-        this.dateOfBirth = dateOfBirth;
-        this.hasInsurance = hasInsurance;
-        this.appointment = appointment;
-    }
+
 
     public PatientEntity(Patient patient) {
         this.dni = patient.getDni();
@@ -29,6 +23,9 @@ public class PatientEntity {
         this.dateOfBirth = patient.getDateOfBirth();
         this.hasInsurance = patient.isHasInsurance();
         this.appointment = patient.getAppointment();
+    }
+    public Patient toPatient() {
+        return new Patient(this.dni, this.fullname, this.dateOfBirth, this.hasInsurance, this.appointment);
     }
 
     // Getters y Setters
@@ -72,9 +69,6 @@ public class PatientEntity {
         this.appointment = appointment;
     }
 
-    public Patient toPatient() {
-        return new Patient(this.dni, this.fullname, this.dateOfBirth, this.hasInsurance, this.appointment);
-    }
 
     @Override
     public String toString() {
