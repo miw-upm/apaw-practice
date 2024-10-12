@@ -88,6 +88,19 @@ public class RoomEntity {
 
     public void fromRoom(Room room) {
         BeanUtils.copyProperties(room, this);
+        this.setBookingEntities(
+                room.getBookings().stream()
+                        .map(booking -> new BookingEntity(
+                                booking.getConfirmed(),
+                                booking.getDateIn(),
+                                booking.getDateOut(),
+                                new GuestEntity(
+                                        booking.getGuest().getNif(),
+                                        booking.getGuest().getFullName(),
+                                        booking.getGuest().getBirthDay()
+                                )
+                        )).toList()
+        );
     }
 
     public Room toRoom() {
