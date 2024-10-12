@@ -105,13 +105,11 @@ public class RoomEntity {
 
     public Room toRoom() {
         Room room = new Room();
-
         BeanUtils.copyProperties(this, room, "bookingEntities");
         List<Booking> bookings = this.bookingEntities.stream()
                 .map(BookingEntity::toBooking)
                 .collect(Collectors.toList());
         room.setBookings(bookings);
-
         return room;
     }
 }
