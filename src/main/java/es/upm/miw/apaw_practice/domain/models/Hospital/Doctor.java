@@ -61,9 +61,7 @@ public class Doctor {
         this.specialty = specialty;
     }
 
-    public void setHospitalId(String hospitalId) {
-        this.hospitalId = hospitalId;
-    }
+  
 
     @java.lang.Override
     public java.lang.String toString() {
