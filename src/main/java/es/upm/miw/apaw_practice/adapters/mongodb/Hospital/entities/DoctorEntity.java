@@ -1,28 +1,39 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import java.math.BigDecimal; // Importar BigDecimal
-import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor; // Importar Doctor
+import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import org.springframework.beans.BeanUtils;
+
+import java.math.BigDecimal;
+import java.util.UUID;
 
 public class DoctorEntity {
+
     private String id;
     private String name;
     private BigDecimal salary;
     private String hospitalId;
 
-    // Constructor que acepta un objeto Doctor
+
+    public DoctorEntity() {
+
+    }
+
+
     public DoctorEntity(Doctor doctor) {
-        this.id = doctor.getId();
-        this.name = doctor.getName();
-        this.salary = doctor.getSalary();
-        this.hospitalId = doctor.getHospitalId();
+        BeanUtils.copyProperties(doctor, this);
+        if (doctor.getId() == null) {
+            this.id = UUID.randomUUID().toString();
+        }
     }
 
-    // Método para convertir DoctorEntity a Doctor
-    public Doctor toDoctor() {
-        return new Doctor(this.id, this.name, this.salary, this.hospitalId);
+
+    public DoctorEntity(String id, String name, BigDecimal salary, String hospitalId) {
+        this.id = id == null ? UUID.randomUUID().toString() : id;
+        this.name = name;
+        this.salary = salary;
+        this.hospitalId = hospitalId;
     }
 
-    // Getters y Setters
 
     public String getId() {
         return id;
@@ -54,5 +65,35 @@ public class DoctorEntity {
 
     public void setHospitalId(String hospitalId) {
         this.hospitalId = hospitalId;
+    }
+
+    public Doctor toDoctor() {
+        Doctor doctor = new Doctor();
+        BeanUtils.copyProperties(this, doctor);
+        return doctor;
+    }
+
+    public void fromDoctor(Doctor doctor) {
+        BeanUtils.copyProperties(doctor, this);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || (obj != null && getClass() == obj.getClass() && id.equals(((DoctorEntity) obj).id));
+    }
+
+    @Override
+    public String toString() {
+        return "DoctorEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", salary=" + salary +
+                ", hospitalId='" + hospitalId + '\'' +
+                '}';
     }
 }

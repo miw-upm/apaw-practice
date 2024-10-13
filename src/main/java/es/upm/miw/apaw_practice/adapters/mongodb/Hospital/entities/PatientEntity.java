@@ -1,30 +1,45 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
+import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
+import org.springframework.beans.BeanUtils;
 
-import java.time.LocalDate; // Importar LocalDate
-import es.upm.miw.apaw_practice.domain.models.Hospital.Patient; // Importar Patient
+import java.time.LocalDate;
+import java.util.UUID;
 
 public class PatientEntity {
+
     private String id;
     private String name;
     private LocalDate dateOfBirth;
     private boolean insured;
 
-    // Constructor que acepta un objeto Patient
+
+    public PatientEntity() {
+
+    }
+
+
     public PatientEntity(Patient patient) {
-        this.id = patient.getId();
-        this.name = patient.getName();
-        this.dateOfBirth = patient.getDateOfBirth();
-        this.insured = patient.isInsured();
+        BeanUtils.copyProperties(patient, this);
+        this.id = patient.getId() == null ? UUID.randomUUID().toString() : patient.getId();
     }
 
-    // Método para convertir PatientEntity a Patient
+
     public Patient toPatient() {
-        return new Patient(this.id, this.name, this.dateOfBirth, this.insured);
+        return new Patient(
+                this.id,
+                this.name,
+                this.dateOfBirth,
+                this.insured
+        );
     }
 
-    // Getters y Setters
+    // Populate PatientEntity from domain model (Patient)
+    public void fromPatient(Patient patient) {
+        BeanUtils.copyProperties(patient, this);
+    }
 
+    // Getters and setters
     public String getId() {
         return id;
     }
@@ -55,6 +70,26 @@ public class PatientEntity {
 
     public void setInsured(boolean insured) {
         this.insured = insured;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || (obj != null && getClass() == obj.getClass() && id.equals(((PatientEntity) obj).id));
+    }
+
+    @Override
+    public String toString() {
+        return "PatientEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", insured=" + insured +
+                '}';
     }
 }
 

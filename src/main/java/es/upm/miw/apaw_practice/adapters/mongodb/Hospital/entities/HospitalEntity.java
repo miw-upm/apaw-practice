@@ -1,37 +1,42 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital; // Ensure the correct path
-
+import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
-import es.upm.miw.apaw_practice.domain.models.Hospital; // Asegúrate de importar Hospital
+import org.springframework.beans.BeanUtils;
+
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
-
 public class HospitalEntity {
+
     private String id;
     private String name;
-    private String address; // Asegúrate de que este campo esté definido
-    private Integer capacity; // Asegúrate de que este campo esté definido
+    private String address;
+    private Integer capacity;
     private List<DoctorEntity> doctors;
-    private List<PatientEntity> patients; // Inicialízalo como una lista vacía si es necesario
+    private List<PatientEntity> patients;
 
-    // Constructor para crear HospitalEntity a partir de parámetros
+
+    public HospitalEntity() {
+
+    }
+
+
     public HospitalEntity(String name, String address, Integer capacity, List<DoctorEntity> doctors) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.address = address;
         this.capacity = capacity;
         this.doctors = doctors;
-        this.patients = List.of(); // Inicializa como una lista vacía
+        this.patients = List.of();
     }
 
-    // Constructor para crear HospitalEntity a partir de un objeto Hospital
+
     public HospitalEntity(Hospital hospital) {
-        this.id = hospital.getId();
-        this.name = hospital.getName();
-        this.address = hospital.getAddress(); // Asegúrate de que esto esté definido en Hospital
-        this.capacity = hospital.getCapacity(); // Asegúrate de que esto esté definido en Hospital
+        BeanUtils.copyProperties(hospital, this);
+        this.id = hospital.getId() == null ? UUID.randomUUID().toString() : hospital.getId();
         this.doctors = hospital.getDoctors().stream()
                 .map(DoctorEntity::new)
                 .collect(Collectors.toList());
@@ -40,14 +45,28 @@ public class HospitalEntity {
                 .collect(Collectors.toList());
     }
 
-    // Método para convertir HospitalEntity a Hospital
+
     public Hospital toHospital() {
-        return new Hospital(this.id, this.name, this.address, this.capacity,
+        return new Hospital(
+                this.id,
+                this.name,
+                this.address,
+                this.capacity,
                 this.doctors.stream().map(DoctorEntity::toDoctor).collect(Collectors.toList()),
-                this.patients.stream().map(PatientEntity::toPatient).collect(Collectors.toList()));
+                this.patients.stream().map(PatientEntity::toPatient).collect(Collectors.toList())
+        );
     }
 
-    // Getters y Setters
+
+    public void fromHospital(Hospital hospital) {
+        BeanUtils.copyProperties(hospital, this);
+        this.doctors = hospital.getDoctors().stream()
+                .map(DoctorEntity::new)
+                .collect(Collectors.toList());
+        this.patients = hospital.getPatients().stream()
+                .map(PatientEntity::new)
+                .collect(Collectors.toList());
+    }
 
     public String getId() {
         return id;
@@ -95,5 +114,27 @@ public class HospitalEntity {
 
     public void setPatients(List<PatientEntity> patients) {
         this.patients = patients;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || (obj != null && getClass() == obj.getClass() && id.equals(((HospitalEntity) obj).id));
+    }
+
+    @Override
+    public String toString() {
+        return "HospitalEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", capacity=" + capacity +
+                ", doctors=" + doctors +
+                ", patients=" + patients +
+                '}';
     }
 }
