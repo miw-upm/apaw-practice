@@ -67,7 +67,7 @@ public class DoctorEntity {
         this.hospitalId = hospitalId;
     }
 
-  
+
 
     public void fromDoctor(Doctor doctor) {
         BeanUtils.copyProperties(doctor, this);
@@ -83,7 +83,7 @@ public class DoctorEntity {
         return this == obj || (obj != null && getClass() == obj.getClass() && id.equals(((DoctorEntity) obj).id));
     }
     public Doctor toDoctor() {
-        return new Doctor(this.id, this.name, this.salary, this.specialization);
+        return new Doctor(this.id, this.name, this.salary);
     }
 
     @Override
