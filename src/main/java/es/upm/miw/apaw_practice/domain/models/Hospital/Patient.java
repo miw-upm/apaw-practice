@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appoinment;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import java.util.List;
 
 public class Patient {
@@ -8,14 +8,14 @@ public class Patient {
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    private  Appoinment Appoinment;
+    private  Appointment Appoinment;
 
-    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appoinment appoinment) {
+    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appoinment) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
-        this.Appoinment = appoinment;
+        this.appoinment = appoinment;
     }
 
     public String getDni() {
@@ -50,11 +50,11 @@ public class Patient {
         this.hasInsurance = hasInsurance;
     }
 
-    public Appoinment getAppoinment() {
+    public Appointment getAppoinment() {
         return Appoinment;
     }
 
-    public void setAppoinment(Appoinment appoinment) {
+    public void setAppoinment(Appointment appoinment) {
         Appoinment = appoinment;
     }
 
