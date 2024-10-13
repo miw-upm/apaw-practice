@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class TreeClientTest {
+class TreeClientTest {
 
     private TreeClientLeaf treeClientLeaf1;
     private TreeClientLeaf treeClientLeaf2;
