@@ -13,17 +13,17 @@ public class SetupEntity {
     private Integer setupId;
     private BigDecimal totalPrice;
     private LocalDate orderDate;
-    private List<Gun> guns;
+    private List<GunEntity> gunEntities;
 
     public SetupEntity() {
         //Empty for framework
     }
 
-    public SetupEntity(BigDecimal totalPrice, List<Gun> guns) {
+    public SetupEntity(BigDecimal totalPrice, List<GunEntity> gunEntities) {
         this.setupId = UUID.randomUUID().hashCode();
         this.totalPrice = totalPrice;
         this.orderDate = LocalDate.now();
-        this.guns = guns;
+        this.gunEntities = gunEntities;
     }
 
     public Integer getSetupId() {
@@ -50,12 +50,12 @@ public class SetupEntity {
         this.orderDate = orderDate;
     }
 
-    public List<Gun> getGuns() {
-        return guns;
+    public List<GunEntity> getGunEntities() {
+        return gunEntities;
     }
 
-    public void setGuns(List<Gun> guns) {
-        this.guns = guns;
+    public void setGunEntities(List<GunEntity> gunEntities) {
+        this.gunEntities = gunEntities;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class SetupEntity {
                 "setupId=" + setupId +
                 ", totalPrice=" + totalPrice +
                 ", orderDate=" + orderDate +
-                ", guns=" + guns +
+                ", guns=" + gunEntities +
                 '}';
     }
 }

@@ -6,9 +6,12 @@ import es.upm.miw.apaw_practice.adapters.mongodb.basketball.BasketballSeederServ
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.course.CourseSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.GunStoreSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.movies.MoviesSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.ShoppingCenterSeederService;
@@ -38,6 +41,9 @@ public class DatabaseSeederService {
     private final ShoppingCenterSeederService shoppingCenterSeederService;
     private final BasketballSeederService basketballSeederService;
     private final DeliveryFoodSeederService deliveryFoodSeederService;
+    private final MoviesSeederService moviesSeederService;
+    private final CourseSeederService courseSeederService;
+    private final GunStoreSeederService gunStoreSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -55,7 +61,10 @@ public class DatabaseSeederService {
             ThemeParkSeederService themeParkSeederService, NightLifeSeederService nightLifeSeederService,
             ShoppingCenterSeederService shoppingCenterSeederService,
             BasketballSeederService basketballSeederService,
-            DeliveryFoodSeederService deliveryFoodSeederService
+            DeliveryFoodSeederService deliveryFoodSeederService,
+            MoviesSeederService moviesSeederService,
+            CourseSeederService courseSeederService,
+            GunStoreSeederService gunStoreSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.universitySeederService = universitySeederService;
@@ -73,6 +82,9 @@ public class DatabaseSeederService {
         this.shoppingCenterSeederService = shoppingCenterSeederService;
         this.basketballSeederService = basketballSeederService;
         this.deliveryFoodSeederService = deliveryFoodSeederService;
+        this.moviesSeederService = moviesSeederService;
+        this.courseSeederService = courseSeederService;
+        this.gunStoreSeederService = gunStoreSeederService;
         this.seedDatabase();
     }
 
@@ -93,6 +105,9 @@ public class DatabaseSeederService {
         this.shoppingCenterSeederService.seedDatabase();
         this.basketballSeederService.seedDatabase();
         this.deliveryFoodSeederService.seedDatabase();
+        this.moviesSeederService.seedDatabase();
+        this.courseSeederService.seedDatabase();
+        this.gunStoreSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -112,6 +127,9 @@ public class DatabaseSeederService {
         this.shoppingCenterSeederService.deleteAll();
         this.basketballSeederService.deleteAll();
         this.deliveryFoodSeederService.deleteAll();
+        this.moviesSeederService.deleteAll();
+        this.courseSeederService.deleteAll();
+        this.gunStoreSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {

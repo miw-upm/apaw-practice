@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @RestTestConfig
 class ArtistResourceIT {
     @Autowired
@@ -36,5 +39,25 @@ class ArtistResourceIT {
                 .body(BodyInserters.fromValue(artist))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void testSearchByExhibitionNameDistinctArtStyles() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(ArtistResource.ARTISTS + ArtistResource.SEARCH)
+                                .queryParam("q", "exhibitionName:Spanish authors")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .value(artStyles -> {
+                    assertTrue(artStyles.contains("Baroque"));
+                    assertTrue(artStyles.contains("Cubism"));
+
+                    String[] artStyleListJson = artStyles.replaceAll("[\\[\\]\"]", "").split(",");
+                    assertEquals(2, artStyleListJson.length);
+                });
     }
 }
