@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.domain.models.Hospital;
+package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,11 +17,11 @@ public class AppointmentEntity {
     private String patientDni; // Link to the Patient
     private String doctorDni; // Link to the Doctor
 
-    public Appointment() {
+    public AppointmentEntity() {
         // Empty constructor for the framework
     }
 
-    public Appointment(Integer id, LocalDate date, LocalTime time, String location, String patientDni, String doctorDni) {
+    public AppointmentEntity(Integer id, LocalDate date, LocalTime time, String location, String patientDni, String doctorDni) {
         this.id = id;
         this.date = date;
         this.time = time;

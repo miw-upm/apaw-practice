@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.domain.models.hospital;
+package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,11 +18,11 @@ public class PatientEntity {
     @DBRef // Reference to appointments
     private List<Appointment> appointments;
 
-    public Patient() {
+    public PatientEntity() {
         // Empty constructor for the framework
     }
 
-    public Patient(String dni, String fullname, LocalDate dateOfBirth, Boolean hasInsurance) {
+    public PatientEntity(String dni, String fullname, LocalDate dateOfBirth, Boolean hasInsurance) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;

@@ -21,11 +21,11 @@ public class HospitalEntity {
     @DBRef // Reference to patients
     private List<Patient> patients;
 
-    public Hospital() {
+    public HospitalEntity() {
         // Empty constructor for the framework
     }
 
-    public Hospital(String name, String location, Integer capacity) {
+    public HospitalEntity(String name, String location, Integer capacity) {
         this.name = name;
         this.location = location;
         this.capacity = capacity;

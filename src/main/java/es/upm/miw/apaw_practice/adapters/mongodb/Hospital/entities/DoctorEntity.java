@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.domain.models.Hospital;
+package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,11 +15,11 @@ public class DoctorEntity {
     private BigDecimal salary;
 
 
-    public Doctor() {
+    public DoctorEntity() {
         // Empty constructor for the framework
     }
 
-    public Doctor(String dni, String fullname, BigDecimal salary) {
+    public DoctorEntity(String dni, String fullname, BigDecimal salary) {
         this.dni = dni;
         this.fullname = fullname;
         this.salary = salary;
