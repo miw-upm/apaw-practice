@@ -14,13 +14,13 @@ public class UserEntity {
     @Indexed(unique = true)
     private String firstName;
     private String email;
-    private String role;
+    private TypeUser role;
 
     public UserEntity() {
         //Empty for framework
     }
 
-    public UserEntity(String firstName, String email, String role) {
+    public UserEntity(String firstName, String email, TypeUser role) {
         this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.email = email;
@@ -51,12 +51,17 @@ public class UserEntity {
         this.email = email;
     }
 
-    public String getRole() {
+    public TypeUser getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(TypeUser role) {
         this.role = role;
+    }
+
+    public enum TypeUser {
+        STUDENT,
+        STUDENT_TUTOR
     }
 
     @Override
