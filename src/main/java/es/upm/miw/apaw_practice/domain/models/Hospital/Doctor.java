@@ -16,29 +16,17 @@ public class Doctor {
         this.salary = salary;
     }
 
-    // Getters and Setters
+    // Getters
     public String getDni() {
         return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
     }
 
     public String getFullname() {
         return fullname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-
     public BigDecimal getSalary() {
         return salary;
-    }
-
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
     }
 
     @Override
@@ -50,3 +38,4 @@ public class Doctor {
                 '}';
     }
 }
+
