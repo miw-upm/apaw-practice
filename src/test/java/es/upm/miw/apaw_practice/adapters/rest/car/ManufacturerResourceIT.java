@@ -56,6 +56,16 @@ public class ManufacturerResourceIT {
     }
 
     @Test
+    void testFindOwnerNamesByManufacturerCountryNoParam() {
+        this.webTestClient
+                .get()
+                .uri(ManufacturerResource.MANUFACTURER + ManufacturerResource.SEARCH)
+                .exchange()
+                .expectStatus()
+                .isBadRequest();
+    }
+
+    @Test
     void testFindOwnerNamesByManufacturerCountry() {
         String country = "France";
         this.webTestClient

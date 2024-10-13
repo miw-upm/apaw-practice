@@ -1,37 +1,37 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
-
-import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import org.springframework.data.mongodb.core.mapping.Document;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
-import java.util.UUID;
 
 @Document
 public class HospitalEntity {
-
     @Id
     private String id;
-
-    @Indexed(unique = true)
     private String name;
-
     private String location;
     private Integer capacity;
-    private List<DoctorEntity> doctors;
+
+    @DBRef // Reference to doctors
+    private List<Doctor> doctors;
+
+    @DBRef // Reference to patients
+    private List<Patient> patients;
 
     public HospitalEntity() {
-        // Empty constructor for framework
+        // Empty constructor for the framework
     }
 
-    public HospitalEntity(Hospital hospital) {
-        BeanUtils.copyProperties(hospital, this);
-        this.id = UUID.randomUUID().toString();
+    public HospitalEntity(String name, String location, Integer capacity) {
+        this.name = name;
+        this.location = location;
+        this.capacity = capacity;
     }
 
+    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -64,32 +64,19 @@ public class HospitalEntity {
         this.capacity = capacity;
     }
 
-    public List<DoctorEntity> getDoctors() {
+    public List<Doctor> getDoctors() {
         return doctors;
     }
 
-    public void setDoctors(List<DoctorEntity> doctors) {
+    public void setDoctors(List<Doctor> doctors) {
         this.doctors = doctors;
     }
 
-    // Métodos de conversión
-    public void fromHospital(Hospital hospital) {
-        BeanUtils.copyProperties(hospital, this);
+    public List<Patient> getPatients() {
+        return patients;
     }
 
-    public Hospital toHospital() {
-        Hospital hospital = new Hospital();
-        BeanUtils.copyProperties(this, hospital);
-        return hospital;
-    }
-
-    @Override
-    public String toString() {
-        return "HospitalEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
-                ", capacity=" + capacity +
-                '}';
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
     }
 }

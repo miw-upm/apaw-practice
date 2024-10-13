@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface MembershipRepository extends MongoRepository<MembershipEntity, String> {
-    Optional<MembershipEntity> findByMembershipId(Integer membershipId);
+    Optional<MembershipEntity> findByType(String type);
 }
