@@ -37,9 +37,7 @@ public class Doctor {
         return salary; // Getter para salary
     }
 
-    public String getHospitalId() {
-        return hospitalId; // Getter para hospitalId
-    }
+
 
     public void setId(String id) {
         this.id = id;
@@ -61,7 +59,7 @@ public class Doctor {
         this.specialty = specialty;
     }
 
-  
+
 
     @java.lang.Override
     public java.lang.String toString() {
