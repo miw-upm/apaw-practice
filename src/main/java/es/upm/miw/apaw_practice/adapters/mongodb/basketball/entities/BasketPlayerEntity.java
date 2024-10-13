@@ -1,8 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.basketball.entities;
 
+import es.upm.miw.apaw_practice.domain.models.basketball.BasketPlayer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Document
 public class BasketPlayerEntity {
@@ -64,6 +68,12 @@ public class BasketPlayerEntity {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public BasketPlayer toBasketPlayer() {
+        BasketPlayer basketPlayer = new BasketPlayer();
+        BeanUtils.copyProperties(this, basketPlayer);
+        return basketPlayer;
     }
 
     @Override
