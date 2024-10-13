@@ -1,98 +1,37 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
-import org.springframework.beans.BeanUtils;
-
-import java.math.BigDecimal;
-import java.util.UUID;
 
 public class DoctorEntity {
-
     private String id;
     private String name;
     private BigDecimal salary;
-    private String hospitalId;
+    private String specialty;
 
-
-    public DoctorEntity() {
-
-    }
-
-
+    // Constructor to convert from Doctor to DoctorEntity
     public DoctorEntity(Doctor doctor) {
-        BeanUtils.copyProperties(doctor, this);
-        if (doctor.getId() == null) {
-            this.id = UUID.randomUUID().toString();
-        }
+        this.id = doctor.getId();
+        this.name = doctor.getName();
+        this.salary = doctor.getSalary();
+        this.specialty = doctor.getSpecialty();
     }
 
+    // Default constructor
+    public DoctorEntity() {}
 
-    public DoctorEntity(String id, String name, BigDecimal salary, String hospitalId) {
-        this.id = id == null ? UUID.randomUUID().toString() : id;
-        this.name = name;
-        this.salary = salary;
-        this.hospitalId = hospitalId;
-    }
+    // Getters and Setters
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public BigDecimal getSalary() { return salary; }
+    public String getSpecialty() { return specialty; }
 
+    public void setId(String id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setSalary(BigDecimal salary) { this.salary = salary; }
+    public void setSpecialty(String specialty) { this.specialty = specialty; }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getSalary() {
-        return salary;
-    }
-
-    public void setSalary(BigDecimal salary) {
-        this.salary = salary;
-    }
-
-    public String getHospitalId() {
-        return hospitalId;
-    }
-
-    public void setHospitalId(String hospitalId) {
-        this.hospitalId = hospitalId;
-    }
-
-
-
-    public void fromDoctor(Doctor doctor) {
-        BeanUtils.copyProperties(doctor, this);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return this == obj || (obj != null && getClass() == obj.getClass() && id.equals(((DoctorEntity) obj).id));
-    }
+    // Convert back to Doctor
     public Doctor toDoctor() {
-        return new Doctor(this.id, this.name, this.salary);
-    }
-
-    @Override
-    public String toString() {
-        return "DoctorEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                ", hospitalId='" + hospitalId + '\'' +
-                '}';
+        return new Doctor(this.id, this.name, this.salary, this.specialty);
     }
 }

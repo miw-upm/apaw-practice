@@ -16,15 +16,12 @@ public class Doctor {
         this.specialty = specialty;
     }
 
-
-    // Constructor
+    // Default constructor
     public Doctor() {
         // Default constructor
     }
 
-
-
-    // Getters y Setters
+    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -34,10 +31,8 @@ public class Doctor {
     }
 
     public BigDecimal getSalary() {
-        return salary; // Getter para salary
+        return salary; // Getter for salary
     }
-
-
 
     public void setId(String id) {
         this.id = id;
@@ -59,10 +54,8 @@ public class Doctor {
         this.specialty = specialty;
     }
 
-
-
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "Doctor{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
