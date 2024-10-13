@@ -29,4 +29,14 @@ public class CompetitionFormResourceIT {
                 .value(Assertions::assertNotNull);
     }
 
+    @Test
+    void testGetTotalDurationBySchoolName(){
+        this.webTestClient
+                .get()
+                .uri(CompetitionFormResource.COMPETITION_FORM + CompetitionFormResource.DURATION + CompetitionFormResource.SCHOOL_NAME_ID, "kk")
+                .exchange()
+                .expectStatus().isNotFound();
+
+    }
+
 }
