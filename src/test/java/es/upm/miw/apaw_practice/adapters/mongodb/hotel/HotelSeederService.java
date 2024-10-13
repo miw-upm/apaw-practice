@@ -59,4 +59,10 @@ public class HotelSeederService {
         };
         this.hotelMainRepository.saveAll(Arrays.asList(hotels));
     }
+    public void deleteAll() {
+        this.hotelRoomRepository.deleteAll();
+        this.hotelClientRepository.deleteAll();
+        this.hotelMainRepository.deleteAll();
+        this.hotelReservationRepository.deleteAll();
+    }
 }
