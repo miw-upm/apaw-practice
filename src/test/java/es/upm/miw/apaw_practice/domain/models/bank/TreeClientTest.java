@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.bank;
 
+import es.upm.miw.apaw_practice.TestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestConfig
 public class TreeClientTest {
 
     private TreeClientLeaf treeClientLeaf1;
