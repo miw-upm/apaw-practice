@@ -46,9 +46,7 @@ public class PatientEntity {
     }
 
 
-    public void setId(String id()) {
-        this.id = id;
-    }
+    public void setId(String id()) {this.id = id;}
 
     public String getName() {
         return name;
