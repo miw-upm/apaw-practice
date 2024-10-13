@@ -23,7 +23,7 @@ public class Doctor {
     }
 
 
- 
+
     // Getters y Setters
     public String getId() {
         return id;
