@@ -6,7 +6,16 @@ public class Doctor {
     private String id;
     private String name;
     private BigDecimal salary;
-    private String hospitalId;
+    private String specialty; ]
+
+    // Constructor
+    public Doctor(String id, String name, BigDecimal salary, String specialty) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.specialty = specialty;
+    }
+
 
     // Constructor
     public Doctor() {
@@ -50,6 +59,14 @@ public class Doctor {
         this.salary = salary;
     }
 
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
     public void setHospitalId(String hospitalId) {
         this.hospitalId = hospitalId;
     }
@@ -60,7 +77,7 @@ public class Doctor {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
-                ", hospitalId='" + hospitalId + '\'' +
+                ", specialty='" + specialty + '\'' +
                 '}';
     }
 }

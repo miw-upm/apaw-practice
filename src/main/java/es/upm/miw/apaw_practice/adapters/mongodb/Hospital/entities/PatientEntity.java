@@ -16,6 +16,8 @@ public class PatientEntity {
     public PatientEntity() {
     }
 
+
+
     public PatientEntity(Patient patient) {
         BeanUtils.copyProperties(patient, this);
         this.id = patient.getId() == null ? UUID.randomUUID().toString() : patient.getId();
@@ -76,6 +78,15 @@ public class PatientEntity {
     @Override
     public boolean equals(Object obj) {
         return this == obj || (obj != null && getClass() == obj.getClass() && id.equals(((PatientEntity) obj).id));
+    }
+    public Patient toPatient(Appointment appointment) {
+        return new Patient(
+                this.id,
+                this.name,
+                this.dateOfBirth,
+                this.insured,
+                appointment
+        );
     }
 
     @Override
