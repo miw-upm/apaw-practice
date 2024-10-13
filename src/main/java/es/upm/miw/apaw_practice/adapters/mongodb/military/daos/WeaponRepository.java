@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface WeaponRepository extends MongoRepository<WeaponEntity, String> {
     List<WeaponEntity> findBySerialCodeIn(List<String> serialCodes);
+
+    void deleteBySerialCode(String serialCode);
 }

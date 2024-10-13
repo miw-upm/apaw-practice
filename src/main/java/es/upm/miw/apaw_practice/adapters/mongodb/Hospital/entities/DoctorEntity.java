@@ -2,21 +2,21 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Document
 public class DoctorEntity {
-
     @Id
     private String dni;
     private String fullname;
     private BigDecimal salary;
 
-    // Getters, Setters, Constructor, equals, hashCode, toString...
-
 
     public DoctorEntity() {
+        // Empty constructor for the framework
     }
 
     public DoctorEntity(String dni, String fullname, BigDecimal salary) {
@@ -25,6 +25,7 @@ public class DoctorEntity {
         this.salary = salary;
     }
 
+    // Getters and Setters
     public String getDni() {
         return dni;
     }
@@ -49,24 +50,6 @@ public class DoctorEntity {
         this.salary = salary;
     }
 
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof DoctorEntity)) return false;
-        if (!super.equals(object)) return false;
-        DoctorEntity that = (DoctorEntity) object;
-        return java.util.Objects.equals(getDni(), that.getDni()) && java.util.Objects.equals(getFullname(), that.getFullname()) && java.util.Objects.equals(getSalary(), that.getSalary());
-    }
 
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getDni(), getFullname(), getSalary());
-    }
 
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "DoctorEntity{" +
-                "dni='" + dni + '\'' +
-                ", fullname='" + fullname + '\'' +
-                ", salary=" + salary +
-                '}';
-    }
 }

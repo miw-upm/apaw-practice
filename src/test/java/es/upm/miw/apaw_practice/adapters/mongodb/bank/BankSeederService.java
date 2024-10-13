@@ -37,8 +37,8 @@ public class BankSeederService {
                 new InvestmentFundEntity(new InvestmentFund("FundB", new BigDecimal("2000.0"), 2)),
                 new InvestmentFundEntity(new InvestmentFund("FundC", new BigDecimal("3000.0"), 10)),
                 new InvestmentFundEntity(new InvestmentFund("FundD", new BigDecimal("1500.0"), 300)),
-                new InvestmentFundEntity(new InvestmentFund("FundE", new BigDecimal("0.0"), 3))
-
+                new InvestmentFundEntity(new InvestmentFund("FundE", new BigDecimal("0.0"), 3)),
+                new InvestmentFundEntity(new InvestmentFund("FundF", new BigDecimal("10000.0"), 1000))
         };
         this.investmentFundRepository.saveAll(Arrays.asList(investmentFunds));
         ClientEntity[] clients = {
@@ -46,7 +46,9 @@ public class BankSeederService {
                 new ClientEntity("22222222B", "Client2", "Client2", 222222222, "email2@example.com", List.of(investmentFunds[1])),
                 new ClientEntity("33333333C", "Client3", "Client3", 333333333, "email3@example.com", List.of(investmentFunds[2], investmentFunds[3])),
                 new ClientEntity("44444444D", "Client4", "Client4", 444444444, "email4@example.com", null),
-                new ClientEntity("55555555E", "Client5", "Client5", 555555555, "email5@example.com", List.of(investmentFunds[4]))
+                new ClientEntity("55555555E", "Client5", "Client5", 555555555, "email5@example.com", List.of(investmentFunds[4],investmentFunds[5])),
+                new ClientEntity("66666666F", "Client6", "Client6", 666666666, "email6@example.com", null),
+                new ClientEntity("77777777G", "Client7", "Client7", 777777777, "email7@example.com", null)
         };
         this.clientRepository.saveAll(Arrays.asList(clients));
         BankAccountEntity[] bankAccounts = {
@@ -54,7 +56,9 @@ public class BankSeederService {
                 new BankAccountEntity("IBAN2", new BigDecimal("40000.0"), LocalDate.of(2002, 4, 6), true, clients[1]),
                 new BankAccountEntity("IBAN3", new BigDecimal("3.5"), LocalDate.of(1990, 1, 3), true, clients[2]),
                 new BankAccountEntity("IBAN4", new BigDecimal("10.0"), LocalDate.of(2000, 7, 25), false, clients[3]),
-                new BankAccountEntity("IBAN5", new BigDecimal("-100.0"), LocalDate.of(2024, 3, 12), true, clients[4])
+                new BankAccountEntity("IBAN5", new BigDecimal("-100.0"), LocalDate.of(2024, 3, 12), true, clients[4]),
+                new BankAccountEntity("IBAN6", new BigDecimal("1000.0"), LocalDate.of(2001, 7, 3), true, clients[5]),
+                new BankAccountEntity("IBAN7", new BigDecimal("500.0"), LocalDate.of(2003, 11, 11), false, clients[6])
         };
         this.bankAccountRepository.saveAll(Arrays.asList(bankAccounts));
         BranchOfficeEntity[] branchOffices = {
@@ -62,7 +66,8 @@ public class BankSeederService {
                 new BranchOfficeEntity("Building2", 150, 3, List.of(clients[2],clients[3],clients[4])),
                 new BranchOfficeEntity("Building3", 100, 2, List.of(clients[3],clients[4])),
                 new BranchOfficeEntity("Building4", 20, 1, List.of(clients[3])),
-                new BranchOfficeEntity("Building5", 220, 6, List.of(clients[0],clients[1],clients[2],clients[3]))
+                new BranchOfficeEntity("Building5", 220, 6, List.of(clients[0],clients[1],clients[2],clients[3])),
+                new BranchOfficeEntity("Building10", 220, 6, List.of(clients[5], clients[6]))
         };
         this.branchOfficeRepository.saveAll(Arrays.asList(branchOffices));
     }

@@ -4,9 +4,10 @@ import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Game;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Console {
-    private String console;
+    private String consoleReference;
     private long serialNumber;
     private boolean portable;
     private LocalDate creationDate;
@@ -16,18 +17,18 @@ public class Console {
         //empty for framework
     }
 
-    public Console(String console, long serialNumber, boolean portable, LocalDate creationDate, List<VideoGame> videoGames) {
-        this.console = console;
+    public Console(String consoleReference, long serialNumber, boolean portable, LocalDate creationDate, List<VideoGame> videoGames) {
+        this.consoleReference = consoleReference;
         this.serialNumber = serialNumber;
         this.portable = portable;
         this.creationDate = creationDate;
         this.videoGames = videoGames;
     }
-    public String getConsole() {
-        return console;
+    public String getConsoleReference() {
+        return consoleReference;
     }
-    public void setConsole(String console) {
-        this.console = console;
+    public void setConsoleReference(String consoleReference) {
+        this.consoleReference = consoleReference;
     }
     public long getSerialNumber() {
         return serialNumber;
@@ -58,9 +59,20 @@ public class Console {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Console console = (Console) o;
+        return Objects.equals(consoleReference, console.consoleReference) && Objects.equals(serialNumber, console.serialNumber) && Objects.equals(portable, console.portable) && Objects.equals(creationDate, console.creationDate) && Objects.equals(videoGames, console.videoGames) && Objects.equals(videoGames, console.videoGames);
+    }
+
+    @Override
+    public int hashCode() {return Objects.hash(consoleReference, serialNumber, portable, creationDate, videoGames);}
+
+    @Override
     public String toString() {
         return "Console{" +
-                "console='" + console + '\'' +
+                "consoleReference='" + consoleReference + '\'' +
                 ", serialNumber=" + serialNumber +
                 ", portable=" + portable +
                 ", creationDate=" + creationDate +

@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface HotelRepository extends MongoRepository<HotelEntity, String> {
     Optional<HotelEntity> findByCif(String cif);
+
+    void deleteByCif(String cif);
 }

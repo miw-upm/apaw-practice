@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.competition;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.daos.TeamCompetitionRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.entities.TeamCompetitionEntity;
 import es.upm.miw.apaw_practice.domain.models.competition.PlayerTeam;
@@ -22,6 +23,9 @@ class TeamCompetitionServiceIT {
     @Autowired
     private TeamCompetitionRepository teamCompetitionRepository;
 
+    @Autowired
+    private CompetitionSeederService competitionSeederService;
+
     @Test
     void testUpdateTeamCompetitionPlayerTeams() {
         Optional<TeamCompetitionEntity> teamCompetitionEntity = this.teamCompetitionRepository.findByNameTeamCompetition("Atlético de Madrid");
@@ -42,6 +46,9 @@ class TeamCompetitionServiceIT {
 
         TeamCompetitionEntity updatedEntity = updatedTeamCompetitionEntity.get();
         assertEquals(1, updatedEntity.getPlayerTeamsEntity().size());
+
+        this.competitionSeederService.deleteAll();
+        this.competitionSeederService.seedDatabase();
 
     }
 }

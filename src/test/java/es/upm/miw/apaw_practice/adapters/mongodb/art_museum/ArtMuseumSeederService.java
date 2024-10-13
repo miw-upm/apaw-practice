@@ -8,7 +8,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities.ArtworkEnti
 import es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities.ExhibitionEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.art_museum.entities.MuseumEntity;
 import es.upm.miw.apaw_practice.domain.models.art_museum.Artist;
-import es.upm.miw.apaw_practice.domain.models.art_museum.Artwork;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,8 @@ public class ArtMuseumSeederService {
                 new ArtistEntity(new Artist("Leonardo da Vinci", 67, "Renaissance")),
                 new ArtistEntity(new Artist("Vincent van Gogh", 37, "Post-Impressionism")),
                 new ArtistEntity(new Artist("Pablo Picasso", 91, "Cubism")),
-                new ArtistEntity(new Artist("Diego Velázquez", 61, "Baroque"))
+                new ArtistEntity(new Artist("Diego Velázquez", 61, "Baroque")),
+                new ArtistEntity(new Artist("Juan Gris", 30, "Cubism")),
         };
         this.artistRepository.saveAll(Arrays.asList(artists));
 
@@ -45,17 +45,21 @@ public class ArtMuseumSeederService {
                 new ArtworkEntity("27004", "Las Meninas", 1656, artists[3]),
                 new ArtworkEntity("27005", "Guernica", 1937, artists[2]),
                 new ArtworkEntity("27006", "The Last Supper", 1498, artists[0]),
+                new ArtworkEntity("27007", "Guitar on a Chair", 1913, artists[4]),
         };
         this.artworkRepository.saveAll(Arrays.asList(artworks));
 
         ExhibitionEntity[] exhibitions = {
                 new ExhibitionEntity("Spanish authors", LocalDateTime.of(2024, 10, 10,10, 0), BigDecimal.valueOf(35.00)),
                 new ExhibitionEntity("Impressionist authors", LocalDateTime.of(2024, 12, 12, 10, 0), BigDecimal.valueOf(40.00)),
-                new ExhibitionEntity("Century 15th", LocalDateTime.of(2025, 5, 20, 11, 0), BigDecimal.valueOf(15.00))
+                new ExhibitionEntity("Century 15th", LocalDateTime.of(2025, 5, 20, 11, 0), BigDecimal.valueOf(15.00)),
+                new ExhibitionEntity("Mixed arts", LocalDateTime.of(2025, 12, 12, 11, 0), BigDecimal.valueOf(50.00))
         };
         MuseumEntity[] museums = {
                 new MuseumEntity("El Prado", 600, true, List.of(artworks[3], artworks[4]), List.of(exhibitions[0])),
-                new MuseumEntity("Thyssen", 300, false, List.of(artworks[0], artworks[1], artworks[2], artworks[5]), List.of(exhibitions[1], exhibitions[2]))
+                new MuseumEntity("Thyssen", 300, false, List.of(artworks[0], artworks[1], artworks[2], artworks[5]), List.of(exhibitions[1], exhibitions[2])),
+                new MuseumEntity("Amsterdam", 1000, true, List.of(artworks), List.of(exhibitions[3])),
+                new MuseumEntity("Sorolla", 500, true, List.of(artworks[6]), List.of(exhibitions[0]))
         };
         this.museumRepository.saveAll(Arrays.asList(museums));
     }
