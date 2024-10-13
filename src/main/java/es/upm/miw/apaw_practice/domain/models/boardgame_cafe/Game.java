@@ -8,6 +8,10 @@ public class Game {
     private String genre;
     private Integer numberOfCopies;
 
+    public static GameBuilders.GameName buider() {
+        return new Builder();
+    }
+
     public Game() {
         //empty for framework
     }
@@ -75,5 +79,43 @@ public class Game {
                 ", genre='" + genre + '\'' +
                 ", numberOfCopies=" + numberOfCopies +
                 '}';
+    }
+
+    public static class Builder implements GameBuilders.GameName, GameBuilders.NumPlayers, GameBuilders.Genre, GameBuilders.NumberOfCopies, GameBuilders.Builder {
+
+        private final Game instance;
+
+        public Builder() {
+            instance = new Game();
+        }
+
+        @Override
+        public GameBuilders.NumPlayers gameName(String gameName) {
+            instance.gameName = gameName;
+            return this;
+        }
+
+        @Override
+        public GameBuilders.Genre numPlayers(Integer numPlayers) {
+            instance.numPlayers = numPlayers;
+            return this;
+        }
+
+        @Override
+        public GameBuilders.NumberOfCopies genre(String genre) {
+            instance.genre = genre;
+            return this;
+        }
+
+        @Override
+        public GameBuilders.Builder numberOfCopies(Integer numberOfCopies) {
+            instance.numberOfCopies = numberOfCopies;
+            return this;
+        }
+
+        @Override
+        public Game build() {
+            return instance;
+        }
     }
 }
