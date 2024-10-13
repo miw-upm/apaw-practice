@@ -47,7 +47,7 @@ public class DatabaseSeederService {
     @Autowired
     public DatabaseSeederService(
             ShopSeederService shopSeederService,
-            hospitalSeederService hospitalSeederService,
+            HospitalSeederService hospitalSeederService,
             CompetitionSeederService competitionSeederService,
             MilitarySeederService militarySeederService,
             ArtMuseumSeederService artMuseumSeederService,
