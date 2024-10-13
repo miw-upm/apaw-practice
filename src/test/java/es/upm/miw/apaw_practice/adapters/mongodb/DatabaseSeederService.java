@@ -7,7 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSee
 import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.HospitalSeederService;
+
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
