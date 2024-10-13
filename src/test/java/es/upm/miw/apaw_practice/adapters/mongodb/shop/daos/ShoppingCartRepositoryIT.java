@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-class ECommerceShoppingCartRepositoryIT {
+class ShoppingCartRepositoryIT {
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
