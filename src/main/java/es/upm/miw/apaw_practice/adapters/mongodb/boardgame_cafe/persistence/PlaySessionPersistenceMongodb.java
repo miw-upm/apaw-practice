@@ -7,6 +7,7 @@ import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.PlaySession;
 import es.upm.miw.apaw_practice.domain.persistence_ports.boardgame_cafe.PlaySessionPersistence;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Repository
@@ -57,5 +58,18 @@ public class PlaySessionPersistenceMongodb implements PlaySessionPersistence {
         return playSessionRepository
                 .findByPlaySessionId(playSessionId)
                 .isPresent();
+    }
+
+    @Override
+    public Integer findTotalMembershipDurationByGameGenre(String genre) {
+        List<PlaySessionEntity> playSessions = this.playSessionRepository.findAll();
+
+        return playSessions.stream()
+                .filter(playSession -> playSession.getSelectedGamesEntities().stream()
+                        .anyMatch(game -> genre.equals(game.getGenre())))
+                .flatMap(playSession -> playSession.getCustomers().stream())
+                .filter(customer -> customer.getMembership() != null)
+                .mapToInt(customer -> customer.getMembership().getDuration())
+                .sum();
     }
 }

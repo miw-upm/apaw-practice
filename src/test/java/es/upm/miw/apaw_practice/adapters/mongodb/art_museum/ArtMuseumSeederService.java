@@ -33,7 +33,8 @@ public class ArtMuseumSeederService {
                 new ArtistEntity(new Artist("Leonardo da Vinci", 67, "Renaissance")),
                 new ArtistEntity(new Artist("Vincent van Gogh", 37, "Post-Impressionism")),
                 new ArtistEntity(new Artist("Pablo Picasso", 91, "Cubism")),
-                new ArtistEntity(new Artist("Diego Velázquez", 61, "Baroque"))
+                new ArtistEntity(new Artist("Diego Velázquez", 61, "Baroque")),
+                new ArtistEntity(new Artist("Juan Gris", 30, "Cubism")),
         };
         this.artistRepository.saveAll(Arrays.asList(artists));
 
@@ -44,6 +45,7 @@ public class ArtMuseumSeederService {
                 new ArtworkEntity("27004", "Las Meninas", 1656, artists[3]),
                 new ArtworkEntity("27005", "Guernica", 1937, artists[2]),
                 new ArtworkEntity("27006", "The Last Supper", 1498, artists[0]),
+                new ArtworkEntity("27007", "Guitar on a Chair", 1913, artists[4]),
         };
         this.artworkRepository.saveAll(Arrays.asList(artworks));
 
@@ -56,7 +58,8 @@ public class ArtMuseumSeederService {
         MuseumEntity[] museums = {
                 new MuseumEntity("El Prado", 600, true, List.of(artworks[3], artworks[4]), List.of(exhibitions[0])),
                 new MuseumEntity("Thyssen", 300, false, List.of(artworks[0], artworks[1], artworks[2], artworks[5]), List.of(exhibitions[1], exhibitions[2])),
-                new MuseumEntity("Amsterdam", 1000, true, List.of(artworks), List.of(exhibitions[3]))
+                new MuseumEntity("Amsterdam", 1000, true, List.of(artworks), List.of(exhibitions[3])),
+                new MuseumEntity("Sorolla", 500, true, List.of(artworks[6]), List.of(exhibitions[0]))
         };
         this.museumRepository.saveAll(Arrays.asList(museums));
     }
