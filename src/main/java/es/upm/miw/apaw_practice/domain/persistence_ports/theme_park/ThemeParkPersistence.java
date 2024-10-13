@@ -9,5 +9,7 @@ import java.util.stream.Stream;
 public interface ThemeParkPersistence {
     Stream<ThemePark> readAll();
 
-    void updateThemePark(ThemePark themePark);
+    ThemePark readById(String id);
+
+    ThemePark updateThemePark(ThemePark themePark);
 }

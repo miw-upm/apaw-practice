@@ -28,12 +28,21 @@ public class ThemeParkPersistenceMongodb implements ThemeParkPersistence {
     }
 
     @Override
-    public void updateThemePark(ThemePark themePark) {
+    public ThemePark readById(String id) {
+        return this.themeParkRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Theme Park with id " + id + " not found"))
+                .toThemePark();
+    }
+
+    @Override
+    public ThemePark updateThemePark(ThemePark themePark) {
         ThemeParkEntity themeParkEntity = this.themeParkRepository
                 .findById(themePark.getId())
                 .orElseThrow(() -> new NotFoundException("Theme Park with id " + themePark.getId() + " not found"));
 
         BeanUtils.copyProperties(themePark, themeParkEntity, "id");
-        this.themeParkRepository.save(themeParkEntity).toThemePark();
+        return this.themeParkRepository.save(themeParkEntity)
+                .toThemePark();
     }
 }
