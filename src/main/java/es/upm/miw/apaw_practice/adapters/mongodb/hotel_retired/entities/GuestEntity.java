@@ -4,11 +4,13 @@ import es.upm.miw.apaw_practice.domain.models.hotel_retired.Guest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@Document
 public class GuestEntity {
     @Id
     private String id;

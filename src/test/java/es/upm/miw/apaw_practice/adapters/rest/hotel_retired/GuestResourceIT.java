@@ -84,4 +84,35 @@ public class GuestResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+
+    @Test
+    void testUpdate() {
+        Guest guest = new Guest(
+                "59089528K",
+                "Enrique Matamoros",
+                LocalDateTime.of(1990, 10, 27, 23, 2, 2)
+        );
+        this.webTestClient
+                .post()
+                .uri(GUESTS)
+                .body(BodyInserters.fromValue(guest))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Guest.class)
+                .value(Assertions::assertNotNull);
+
+        guest.setFullName("Enrique Villadecans");
+
+        this.webTestClient
+                .put()
+                .uri(GUESTS + NIF_ID, "59089528K")
+                .body(BodyInserters.fromValue(guest))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Guest.class)
+                .value(updatedGuest -> {
+                    assertEquals("59089528K", updatedGuest.getNif());
+                    assertEquals("Enrique Villadecans", updatedGuest.getFullName());
+                });
+    }
 }

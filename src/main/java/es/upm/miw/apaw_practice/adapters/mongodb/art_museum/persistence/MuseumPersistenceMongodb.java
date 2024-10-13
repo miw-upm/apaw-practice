@@ -9,6 +9,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.art_museum.MuseumPersis
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+
 @Repository("museumPersistence")
 public class MuseumPersistenceMongodb implements MuseumPersistence {
     private final MuseumRepository museumRepository;
@@ -47,5 +49,17 @@ public class MuseumPersistenceMongodb implements MuseumPersistence {
                 .getPrice());
 
         return this.museumRepository.save(museumEntity).toMuseum();
+    }
+
+    @Override
+    public BigDecimal findByArtistNameSumPricesExhibitions(String artistName) {
+        return this.museumRepository.findAll().stream()
+                .flatMap(museum -> museum.getExhibitionEntities().stream()
+                        .filter(exhibition -> museum.getArtworkEntities().stream()
+                                .anyMatch(artwork -> artistName.equals(artwork.getArtist().getArtistName()))
+                        )
+                        .map(ExhibitionEntity::getPrice)
+                )
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.videogame;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ConsoleCompany {
     private String companyInformation;
@@ -62,6 +63,19 @@ public class ConsoleCompany {
     }
     public void addConsole(Console console){
         this.consoles.add(console);
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConsoleCompany consoleCompany = (ConsoleCompany) o;
+        return Objects.equals(companyInformation, consoleCompany.companyInformation) && Objects.equals(website, consoleCompany.website) && Objects.equals(numberOfEmployee, consoleCompany.numberOfEmployee) && Objects.equals(active, consoleCompany.active) && Objects.equals(foundationDate, consoleCompany.foundationDate) && Objects.equals(consoles, consoleCompany.consoles);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(companyInformation, website, numberOfEmployee, active, foundationDate, consoles);
     }
 
     @Override

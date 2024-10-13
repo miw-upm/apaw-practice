@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.videogame;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Player {
     private String playerName;
@@ -26,7 +27,7 @@ public class Player {
     public String getPlayerName() {
         return playerName;
     }
-    public void setPlayer(String playerName) {
+    public void setPlayerName(String player) {
         this.playerName = playerName;
     }
     public int getAge() {
@@ -52,6 +53,14 @@ public class Player {
     }
     public void setConsole(Console console) {
         this.console = console;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(playerName, player.playerName) && Objects.equals(age, player.age) && Objects.equals(experiencePlayer, player.experiencePlayer) && Objects.equals(birthday, player.birthday) && Objects.equals(console, player.console);
     }
 
     @Override
