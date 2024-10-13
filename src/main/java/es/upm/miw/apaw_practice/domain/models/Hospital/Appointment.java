@@ -3,13 +3,13 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Appoinment {
+public class Appointment {
     private String Id;
     private LocalDate date;
     private LocalTime time;
     private String location;
 
-    public Appoinment(String id, LocalDate date, LocalTime time, String location) {
+    public Appointment(String id, LocalDate date, LocalTime time, String location) {
         this.Id = id;
         this.date = date;
         this.time = time;
