@@ -3,64 +3,50 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.math.BigDecimal;
 
 public class Doctor {
-    private String id;
-    private String name;
+    private String dni;
+    private String fullname;
     private BigDecimal salary;
-    private String specialty;
 
-    // Constructor
-    public Doctor(String id, String name, BigDecimal salary, String specialty) {
-        this.id = id;
-        this.name = name;
-        this.salary = salary;
-        this.specialty = specialty;
+    public Doctor() {
     }
 
-    // Default constructor
-    public Doctor() {
-        // Default constructor
+    public Doctor(String dni, String fullname, BigDecimal salary) {
+        this.dni = dni;
+        this.fullname = fullname;
+        this.salary = salary;
     }
 
     // Getters and Setters
-    public String getId() {
-        return id;
+    public String getDni() {
+        return dni;
     }
 
-    public String getName() {
-        return name;
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public BigDecimal getSalary() {
-        return salary; // Getter for salary
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        return salary;
     }
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 
-    public String getSpecialty() {
-        return specialty;
-    }
-
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
-    }
-
     @Override
     public String toString() {
         return "Doctor{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "dni='" + dni + '\'' +
+                ", fullname='" + fullname + '\'' +
                 ", salary=" + salary +
-                ", specialty='" + specialty + '\'' +
                 '}';
     }
 }

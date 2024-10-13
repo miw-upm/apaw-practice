@@ -4,17 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Appointment {
-    private String id;
+    private Integer id;
     private LocalDate date;
     private LocalTime time;
     private String location;
 
-    // Default constructor
     public Appointment() {
     }
 
-    // Constructor requiring all parameters
-    public Appointment(String id, LocalDate date, LocalTime time, String location) {
+    public Appointment(Integer id, LocalDate date, LocalTime time, String location) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -22,11 +20,11 @@ public class Appointment {
     }
 
     // Getters and Setters
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,7 +55,7 @@ public class Appointment {
     @Override
     public String toString() {
         return "Appointment{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", date=" + date +
                 ", time=" + time +
                 ", location='" + location + '\'' +
