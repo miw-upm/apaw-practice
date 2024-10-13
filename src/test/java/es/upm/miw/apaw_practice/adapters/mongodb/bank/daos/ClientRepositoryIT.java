@@ -31,6 +31,9 @@ class ClientRepositoryIT {
         List<ClientEntity> clients = this.clientRepository.findByDniIn(List.of("11111111A", "22222222B"));
         assertEquals("Client1", clients.get(0).getName());
         assertEquals("Client1", clients.get(0).getSurname());
+        assertEquals(111111111, clients.get(0).getPhoneNumber());
+        assertEquals("Client2", clients.get(1).getName());
+        assertEquals("Client2", clients.get(1).getSurname());
         assertEquals(222222222, clients.get(1).getPhoneNumber());
         assertNotNull(clients.get(0).getInvestmentFunds());
         assertNotNull(clients.get(1).getInvestmentFunds());

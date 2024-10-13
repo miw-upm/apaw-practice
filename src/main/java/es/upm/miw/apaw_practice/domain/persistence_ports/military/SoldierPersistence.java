@@ -8,4 +8,6 @@ import java.util.stream.Stream;
 @Repository
 public interface SoldierPersistence {
     Stream<Soldier> readAll();
+    Soldier read(String identityDocument);
+    Soldier update(String identityDocument, Soldier soldier);
 }

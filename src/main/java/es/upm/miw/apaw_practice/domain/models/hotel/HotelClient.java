@@ -1,20 +1,20 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
-public class Client {
+public class HotelClient {
     private String identityDocument;
     private String name;
     private String phone;
     private String email;
-    private Reservation reservation;
+    private HotelReservation hotelReservation;
 
-    public Client(){
+    public HotelClient(){
 
     }
-    public Client(String identityDocument, String name, String phone, String email, Reservation reservation){
+    public HotelClient(String identityDocument, String name, String phone, String email, HotelReservation hotelReservation){
         this.identityDocument = identityDocument;
         this.name = name;
         this.phone = phone;
-        this.reservation = reservation;
+        this.hotelReservation = hotelReservation;
     }
 
     public String getIdentityDocument() {
@@ -49,18 +49,18 @@ public class Client {
         this.email = email;
     }
 
-    public Reservation getReservation() { return this.reservation; }
+    public HotelReservation getReservation() { return this.hotelReservation; }
 
-    public void setReservation(final Reservation reservation) { this.reservation = reservation; }
+    public void setReservation(final HotelReservation hotelReservation) { this.hotelReservation = hotelReservation; }
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "HotelClientRepository{" +
                 "identityDocument='" + identityDocument + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", reservation=" + reservation +
+                ", HotelReservation=" + hotelReservation +
                 '}';
     }
 }
