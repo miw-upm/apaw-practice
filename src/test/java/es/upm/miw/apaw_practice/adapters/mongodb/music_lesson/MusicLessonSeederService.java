@@ -8,7 +8,6 @@ import java.util.Collections;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.daos.BranchRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.daos.LearnerRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.daos.LessonRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.daos.MusicalInstrumentRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.entities.BranchEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.entities.LearnerEntity;
@@ -28,9 +27,6 @@ public class MusicLessonSeederService {
   @Autowired
   private LearnerRepository learnerRepository;
 
-  @Autowired
-  private LessonRepository lessonRepository;
-
   public void seedDatabase() {
     LogManager.getLogger(this.getClass()).warn("------- Music-Lesson Initial Load -----------");
 
@@ -46,7 +42,7 @@ public class MusicLessonSeederService {
     BranchEntity[] branchEntities = {
         new BranchEntity("MAD-CTRH", "Serrano Street, 45", "913245678"),
         new BranchEntity("MAD-PRDO", "Prado Avenue, 28", "914567890"),
-        new BranchEntity("MAD-SBCT", "Gran Via Street, 12", "912345678")
+        new BranchEntity("MAD-SBCT", "Gran Via Street, 12", "912345778")
     };
     this.branchRepository.saveAll(Arrays.asList(branchEntities));
 
@@ -71,7 +67,6 @@ public class MusicLessonSeederService {
 
   public void deleteAll() {
     this.learnerRepository.deleteAll();
-    this.lessonRepository.deleteAll();
     this.branchRepository.deleteAll();
     this.musicalInstrumentRepository.deleteAll();
   }

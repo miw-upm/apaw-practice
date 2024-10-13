@@ -7,6 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.MusicLessonSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.ThemeParkSeederService;
@@ -32,6 +33,7 @@ public class DatabaseSeederService {
     private final CarSeederService carSeederService;
     private final ThemeParkSeederService themeParkSeederService;
     private final NightLifeSeederService nightLifeSeederService;
+    private final MusicLessonSeederService musicLessonSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -46,7 +48,8 @@ public class DatabaseSeederService {
             VeterinaryClinicSeederService veterinaryClinicSeederService,
             BankSeederService bankSeederService,
             CarSeederService carSeederService,
-            ThemeParkSeederService themeParkSeederService, NightLifeSeederService nightLifeSeederService
+            ThemeParkSeederService themeParkSeederService, NightLifeSeederService nightLifeSeederService,
+            MusicLessonSeederService musicLessonSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.universitySeederService = universitySeederService;
@@ -61,7 +64,8 @@ public class DatabaseSeederService {
         this.carSeederService = carSeederService;
         this.themeParkSeederService = themeParkSeederService;
         this.nightLifeSeederService = nightLifeSeederService;
-        this.seedDatabase();
+        this.musicLessonSeederService = musicLessonSeederService;
+      this.seedDatabase();
     }
 
     public void seedDatabase() {
@@ -78,6 +82,7 @@ public class DatabaseSeederService {
         this.carSeederService.seedDatabase();
         this.themeParkSeederService.seedDatabase();
         this.nightLifeSeederService.seedDatabase();
+        this.musicLessonSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -94,6 +99,7 @@ public class DatabaseSeederService {
         this.carSeederService.deleteAll();
         this.themeParkSeederService.deleteAll();
         this.nightLifeSeederService.deleteAll();
+        this.musicLessonSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
