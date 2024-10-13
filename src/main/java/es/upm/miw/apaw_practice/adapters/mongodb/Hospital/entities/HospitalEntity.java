@@ -18,33 +18,34 @@ public class HospitalEntity {
     private List<DoctorEntity> doctors;
     private List<PatientEntity> patients;
 
-
+    // Default constructor
     public HospitalEntity() {
-
+        this.id = UUID.randomUUID().toString(); // Assign UUID if no id is provided
+        this.doctors = List.of();
+        this.patients = List.of();
     }
 
-
+    // Constructor with parameters
     public HospitalEntity(String name, String address, Integer capacity, List<DoctorEntity> doctors) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.address = address;
         this.capacity = capacity;
         this.doctors = doctors;
-        this.patients = List.of();
+        this.patients = List.of(); // Initialize with an empty list
     }
 
-
-    public HospitalEntity(Hospital hospital) {
-        BeanUtils.copyProperties(hospital, this);
-        this.id = hospital.getId() == null ? UUID.randomUUID().toString() : hospital.getId();
-        this.doctors = hospital.getDoctors().stream()
-                .map(DoctorEntity::new)
-                .collect(Collectors.toList());
-        this.patients = hospital.getPatients().stream()
-                .map(PatientEntity::new)
+    public List<Doctor> getDoctors() {
+        return doctors.stream()
+                .map(DoctorEntity::toDoctor)
                 .collect(Collectors.toList());
     }
 
+    public List<Patient> getPatients() {
+        return patients.stream()
+                .map(PatientEntity::toPatient)
+                .collect(Collectors.toList());
+    }
 
     public Hospital toHospital() {
         return new Hospital(
@@ -52,11 +53,10 @@ public class HospitalEntity {
                 this.name,
                 this.address,
                 this.capacity,
-                this.doctors.stream().map(DoctorEntity::toDoctor).collect(Collectors.toList()),
-                this.patients.stream().map(PatientEntity::toPatient).collect(Collectors.toList())
+                getDoctors(), // Reuse the method
+                getPatients() // Reuse the method
         );
     }
-
 
     public void fromHospital(Hospital hospital) {
         BeanUtils.copyProperties(hospital, this);
@@ -68,6 +68,7 @@ public class HospitalEntity {
                 .collect(Collectors.toList());
     }
 
+    // Getters and Setters
     public String getId() {
         return id;
     }
