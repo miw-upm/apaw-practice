@@ -7,11 +7,12 @@ public class Doctor {
     private BigDecimal salary;
 
     // Constructor, getters, setters
-    public Doctor(String dni, String fullname, BigDecimal salary) {
-        this.dni = dni;
-        this.fullname = fullname;
+    public Doctor(String id, String name, BigDecimal salary) {
+        this.id = id;
+        this.name = name;
         this.salary = salary;
     }
+
 
     public String getDni() {
         return dni;
