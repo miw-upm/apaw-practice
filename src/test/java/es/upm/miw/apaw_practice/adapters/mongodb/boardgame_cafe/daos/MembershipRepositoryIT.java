@@ -17,12 +17,11 @@ public class MembershipRepositoryIT {
     private MembershipRepository membershipRepository;
 
     @Test
-    void testFindByMembershipId() {
-        Optional<MembershipEntity> membershipEntity = this.membershipRepository.findByMembershipId(0);
+    void testFindByType() {
+        Optional<MembershipEntity> membershipEntity = this.membershipRepository.findByType("Bronze");
         assertTrue(membershipEntity.isPresent());
         assertNotNull(membershipEntity.get());
         MembershipEntity membership = membershipEntity.get();
-        assertEquals(0, membership.getMembershipId());
         assertEquals("Bronze", membership.getType());
         assertEquals(1, membership.getDuration());
         assertEquals(new BigDecimal("2.0"), membership.getDiscount());

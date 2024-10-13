@@ -30,4 +30,12 @@ public class GuestService {
     public Guest read(String nif) {
         return this.guestPersistence.read(nif);
     }
+
+    public void delete(String nif) {
+        this.guestPersistence.delete(nif);
+    }
+
+    public Guest update(String nif, Guest guest) {
+        return this.guestPersistence.update(nif, guest);
+    }
 }

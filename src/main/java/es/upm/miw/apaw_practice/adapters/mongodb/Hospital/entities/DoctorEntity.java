@@ -1,39 +1,37 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.util.List;
 
 @Document
 public class DoctorEntity {
-
     @Id
-    private String id;
-
+    private String dni;
     private String fullname;
     private BigDecimal salary;
-    private String hospitalId;
+
 
     public DoctorEntity() {
-        // Empty constructor for framework
+        // Empty constructor for the framework
     }
 
-    public DoctorEntity(Doctor doctor) {
-        BeanUtils.copyProperties(doctor, this);
-        this.id = UUID.randomUUID().toString();
+    public DoctorEntity(String dni, String fullname, BigDecimal salary) {
+        this.dni = dni;
+        this.fullname = fullname;
+        this.salary = salary;
     }
 
-
-    public String getId() {
-        return id;
+    // Getters and Setters
+    public String getDni() {
+        return dni;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getFullname() {
@@ -52,33 +50,6 @@ public class DoctorEntity {
         this.salary = salary;
     }
 
-    public String getHospitalId() {
-        return hospitalId;
-    }
 
-    public void setHospitalId(String hospitalId) {
-        this.hospitalId = hospitalId;
-    }
 
-    // Conversion methods
-    public void fromDoctor(Doctor doctor) {
-        BeanUtils.copyProperties(doctor, this);
-    }
-
-    public Doctor toDoctor() {
-        Doctor doctor = new Doctor();
-        BeanUtils.copyProperties(this, doctor);
-        return doctor;
-    }
-
-    @Override
-    public String toString() {
-        return "DoctorEntity{" +
-                "id='" + id + '\'' +
-                ", fullname='" + fullname + '\'' +
-                ", salary=" + salary +
-                ", hospitalId='" + hospitalId + '\'' +
-                '}';
-    }
 }
-

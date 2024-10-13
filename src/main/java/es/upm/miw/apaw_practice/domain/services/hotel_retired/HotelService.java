@@ -2,9 +2,12 @@ package es.upm.miw.apaw_practice.domain.services.hotel_retired;
 
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Hotel;
+import es.upm.miw.apaw_practice.domain.models.hotel_retired.Room;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel_retired.HotelPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class HotelService {
@@ -32,6 +35,16 @@ public class HotelService {
     }
 
     public Hotel update(String cif, Hotel hotel) {
+        return this.hotelPersistence.update(cif, hotel);
+    }
+
+    public void delete(String cif) {
+        this.hotelPersistence.delete(cif);
+    }
+
+    public Hotel updateRooms(String cif, List<Room> rooms) {
+        Hotel hotel = this.hotelPersistence.read(cif);
+        hotel.setRooms(rooms);
         return this.hotelPersistence.update(cif, hotel);
     }
 }

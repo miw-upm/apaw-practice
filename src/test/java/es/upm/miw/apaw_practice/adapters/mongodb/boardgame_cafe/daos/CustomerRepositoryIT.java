@@ -26,5 +26,6 @@ class CustomerRepositoryIT {
         assertEquals("Jorge", customer.getName());
         assertEquals(LocalDate.of(1997, 9, 23), customer.getBirthDate());
         assertTrue(customer.isMember());
+        assertEquals("Gold", customer.getMembership().getType());
     }
 }

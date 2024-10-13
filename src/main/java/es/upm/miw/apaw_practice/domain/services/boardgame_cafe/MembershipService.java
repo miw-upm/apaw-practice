@@ -15,7 +15,7 @@ public class MembershipService {
         this.membershipPersistence = membershipPersistence;
     }
 
-    public Membership readByMembershipId(Integer membershipId) {
-        return this.membershipPersistence.read(membershipId);
+    public Membership readByType(String type) {
+        return this.membershipPersistence.read(type);
     }
 }

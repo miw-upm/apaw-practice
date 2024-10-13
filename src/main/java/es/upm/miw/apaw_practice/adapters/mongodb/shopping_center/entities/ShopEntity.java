@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities;
 
+import es.upm.miw.apaw_practice.domain.models.shopping_center.Shop;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -64,6 +66,22 @@ public class ShopEntity {
 
     public void setProviders(List<ProviderEntity> providers) {
         this.providers = providers;
+    }
+
+    public Shop toShop() {
+        Shop shop = new Shop();
+        BeanUtils.copyProperties(this, shop);
+        return shop;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((ShopEntity) obj).id));
     }
 
     @Override

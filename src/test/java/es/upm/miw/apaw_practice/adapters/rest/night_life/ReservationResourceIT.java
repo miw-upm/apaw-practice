@@ -18,5 +18,13 @@ class ReservationResourceIT {
                 .bodyValue(newPrice)
                 .exchange()
                 .expectStatus().isOk();
+
+        newPrice = new BigDecimal("50.00");
+        this.webTestClient
+                .patch()
+                .uri(ReservationResource.RESERVATIONS)
+                .bodyValue(newPrice)
+                .exchange()
+                .expectStatus().isOk();
     }
 }
