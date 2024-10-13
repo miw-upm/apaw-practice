@@ -64,7 +64,7 @@ public class DatabaseSeederService {
             DeliveryFoodSeederService deliveryFoodSeederService
     ) {
         this.shopSeederService = shopSeederService;
-        this.hospitalSeederService=hospitalSeederService
+        this.hospitalSeederService=hospitalSeederService;
         this.universitySeederService = universitySeederService;
         this.competitionSeederService = competitionSeederService;
         this.militarySeederService = militarySeederService;
