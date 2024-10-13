@@ -1,9 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.rest.theme_park;
 
 import es.upm.miw.apaw_practice.domain.models.theme_park.ThemePark;
+import es.upm.miw.apaw_practice.domain.models.theme_park.ThemeParkOpenedUpdating;
 import es.upm.miw.apaw_practice.domain.services.theme_park.ThemeParkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ThemeParkResource.THEME_PARKS)
@@ -22,5 +25,9 @@ public class ThemeParkResource {
         return this.themeParkService.updateParkStatus(id);
     }
 
+    @PatchMapping
+    public void updateAllParkStatus(@RequestBody List<ThemeParkOpenedUpdating> themeParkOpenedUpdatingList) {
+        this.themeParkService.updateAllParkStatus(themeParkOpenedUpdatingList.stream());
+    }
 
 }
