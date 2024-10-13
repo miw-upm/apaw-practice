@@ -1,16 +1,16 @@
 package es.upm.miw.apaw_practice.domain.persistence_ports.veterinary_clinic;
 
-import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Owner;
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.OwnerClinic;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OwnerClinicPersistence {
 
-    Owner create(Owner owner);
+    OwnerClinic create(OwnerClinic ownerClinic);
 
     boolean existName(String name);
 
-    Owner read(String name);
+    OwnerClinic read(String name);
 
-    Owner update(String address, String phone, Owner owner);
+    OwnerClinic update(String address, String phone, OwnerClinic ownerClinic);
 }

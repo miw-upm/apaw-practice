@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import es.upm.miw.apaw_practice.TestConfig;
 @TestConfig
-class OwnerNightLifeRepositoryIT {
+class OwnerClinicNightLifeRepositoryIT {
     @Autowired
     private OwnerNightLifeRepository ownerNightLifeRepository;
     @Test
@@ -19,4 +19,3 @@ class OwnerNightLifeRepositoryIT {
     }
 
 }
-

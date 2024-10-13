@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities;
 
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Animal;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -18,26 +20,26 @@ public class AnimalEntity {
     private int age;
     private LocalDateTime dateOfService;
     @DBRef
-    private OwnerEntity ownerEntity;
+    private OwnerClinicEntity ownerClinicEntity;
 
     public AnimalEntity() {
         //empty from framework
     }
 
-    public AnimalEntity(String name, int age, LocalDateTime dateOfService, OwnerEntity ownerEntity) {
+    public AnimalEntity(String name, int age, LocalDateTime dateOfService, OwnerClinicEntity ownerClinicEntity) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.age = age;
         this.dateOfService = dateOfService;
-        this.ownerEntity = ownerEntity;
+        this.ownerClinicEntity = ownerClinicEntity;
     }
 
-    public OwnerEntity getOwnerEntity() {
-        return ownerEntity;
+    public OwnerClinicEntity getOwnerEntity() {
+        return ownerClinicEntity;
     }
 
-    public void setOwnerEntity(OwnerEntity ownerEntity) {
-        this.ownerEntity = ownerEntity;
+    public void setOwnerEntity(OwnerClinicEntity ownerClinicEntity) {
+        this.ownerClinicEntity = ownerClinicEntity;
     }
 
     public String getId() {
@@ -72,6 +74,15 @@ public class AnimalEntity {
         this.dateOfService = dateOfService;
     }
 
+    public Animal toAnimal() {
+        Animal animal = new Animal();
+        BeanUtils.copyProperties(this, animal);
+        if(this.ownerClinicEntity != null) {
+            animal.setOwnerClinic(this.ownerClinicEntity.toOwner());
+        }
+        return animal;
+    }
+
     @Override
     public String toString() {
         return "AnimalEntity{" +
@@ -79,7 +90,7 @@ public class AnimalEntity {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", dateOfService=" + dateOfService +
-                ", ownerEntity=" + ownerEntity +
+                ", ownerClinicEntity=" + ownerClinicEntity +
                 '}';
     }
 }
