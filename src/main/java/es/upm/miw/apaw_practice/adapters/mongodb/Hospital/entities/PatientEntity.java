@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
-import   es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
@@ -14,17 +13,13 @@ public class PatientEntity {
     private LocalDate dateOfBirth;
     private boolean insured;
 
-
     public PatientEntity() {
-
     }
-
 
     public PatientEntity(Patient patient) {
         BeanUtils.copyProperties(patient, this);
         this.id = patient.getId() == null ? UUID.randomUUID().toString() : patient.getId();
     }
-
 
     public Patient toPatient() {
         return new Patient(
@@ -45,8 +40,9 @@ public class PatientEntity {
         return this.id;
     }
 
-
-    public void setId(String id()) {this.id = id;}
+    public void setId(String id) { // Fixed parameter syntax
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -92,4 +88,3 @@ public class PatientEntity {
                 '}';
     }
 }
-
