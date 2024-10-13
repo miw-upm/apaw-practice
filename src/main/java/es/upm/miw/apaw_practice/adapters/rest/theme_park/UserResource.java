@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(UserResource.USERS)
 public class UserResource {
     static final String USERS = "/users";
+    public static final String ID_MEMBERSHIP = "/{idMembership}";
 
     private final UserService userService;
 
@@ -23,4 +24,9 @@ public class UserResource {
         return this.userService.create(user);
     }
 
+    @PutMapping(ID_MEMBERSHIP)
+    public User update(@PathVariable String idMembership, @RequestBody User user) {
+        this.userService.assertIdMembershipNotExist(idMembership);
+        return userService.update(idMembership, user);
+    }
 }
