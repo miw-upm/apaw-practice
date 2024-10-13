@@ -11,7 +11,7 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(String dni, String fullname, BigDecimal salary,specialty) {
+    public Doctor(String dni, String fullname, BigDecimal salary,String specialty) {
         this.dni = dni;
         this.fullname = fullname;
         this.salary = salary;
