@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import java.math.BigDecimal;
 
 public class DoctorEntity {
     private String id;
