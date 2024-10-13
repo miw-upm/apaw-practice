@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.domain.persistence_ports.hospital;
+package es.upm.miw.apaw_practice.domain.persistence_ports.Hospital;
 
 import es.upm.miw.apaw_practice.domain.models.hospital.Hospital; // Ensure this package and class exist
 import org.springframework.stereotype.Repository;

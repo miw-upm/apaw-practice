@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
 
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw_practice.domain.models.hospital.Patient;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.PatientPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
