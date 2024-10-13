@@ -11,9 +11,11 @@ import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntit
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+
 import java.time.LocalTime;
 import java.util.Arrays;
 
@@ -52,11 +54,12 @@ public class HospitalSeederService {
         this.doctorRepository.saveAll(Arrays.asList(doctors));
 
         // Seed Patients
+
         PatientEntity[] patients = {
-                new PatientEntity("PAT001", "John Doe", 30),
-                new PatientEntity("PAT002", "Jane Roe", 25),
-                new PatientEntity("PAT003", "Alice Cooper", 40),
-                new PatientEntity("PAT004", "Bob Marley", 50)
+                new PatientEntity("PAT001", "John Doe", LocalDate.of(1993, 5, 15), true),
+                new PatientEntity("PAT002", "Jane Roe", LocalDate.of(1998, 3, 22), false),
+                new PatientEntity("PAT003", "Alice Cooper", LocalDate.of(1983, 7, 9), true),
+                new PatientEntity("PAT004", "Bob Marley", LocalDate.of(1973, 2, 6), false)
         };
         this.patientRepository.saveAll(Arrays.asList(patients));
 
