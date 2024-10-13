@@ -37,12 +37,14 @@ public class HospitalEntity {
         this.patients = List.of(); // Initialize with an empty list
     }
 
+    // Convert DoctorEntity list to Doctor list
     public List<Doctor> getDoctors() {
         return doctors.stream()
                 .map(DoctorEntity::toDoctor)
                 .collect(Collectors.toList());
     }
 
+    // Convert PatientEntity list to Patient list
     public List<Patient> getPatients() {
         return patients.stream()
                 .map(PatientEntity::toPatient)
@@ -56,7 +58,7 @@ public class HospitalEntity {
                 this.address,
                 this.capacity,
                 getDoctors(), // Reuse the method
-                getPatients() // Reuse the method
+                getPatients()  // Reuse the method
         );
     }
 
@@ -103,19 +105,19 @@ public class HospitalEntity {
         this.capacity = capacity;
     }
 
-    public List<DoctorEntity> getDoctors() {
+    public List<DoctorEntity> getDoctorEntities() {
         return doctors;
     }
 
-    public void setDoctors(List<DoctorEntity> doctors) {
+    public void setDoctorEntities(List<DoctorEntity> doctors) {
         this.doctors = doctors;
     }
 
-    public List<PatientEntity> getPatients() {
+    public List<PatientEntity> getPatientEntities() {
         return patients;
     }
 
-    public void setPatients(List<PatientEntity> patients) {
+    public void setPatientEntities(List<PatientEntity> patients) {
         this.patients = patients;
     }
 
