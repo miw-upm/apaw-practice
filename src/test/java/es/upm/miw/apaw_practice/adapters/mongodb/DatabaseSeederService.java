@@ -7,9 +7,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSee
 import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.HospitalSeederService;
-
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
-
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Service;
 public class DatabaseSeederService {
 
     private final ShopSeederService shopSeederService;
-
     private final CompetitionSeederService competitionSeederService;
     private final HospitalSeederService hospitalSeederService;
     private final MilitarySeederService militarySeederService;
@@ -58,18 +55,19 @@ public class DatabaseSeederService {
             VeterinaryClinicSeederService veterinaryClinicSeederService,
             BankSeederService bankSeederService,
             CarSeederService carSeederService,
-            ThemeParkSeederService themeParkSeederService, NightLifeSeederService nightLifeSeederService,
+            ThemeParkSeederService themeParkSeederService,
+            NightLifeSeederService nightLifeSeederService,
             ShoppingCenterSeederService shoppingCenterSeederService,
             BasketballSeederService basketballSeederService,
             DeliveryFoodSeederService deliveryFoodSeederService
     ) {
         this.shopSeederService = shopSeederService;
-        this.hospitalSeederService=hospitalSeederService;
-        this.universitySeederService = universitySeederService;
+        this.hospitalSeederService = hospitalSeederService;
         this.competitionSeederService = competitionSeederService;
         this.militarySeederService = militarySeederService;
         this.artMuseumSeederService = artMuseumSeederService;
         this.hotelRetiredSeederService = hotelRetiredSeederService;
+        this.universitySeederService = universitySeederService;
         this.boardgameCafeSeederService = boardgameCafeSeederService;
         this.wushuSportSeederService = wushuSportSeederService;
         this.veterinaryClinicSeederService = veterinaryClinicSeederService;
@@ -84,43 +82,43 @@ public class DatabaseSeederService {
     }
 
     public void seedDatabase() {
-        this.shopSeederService.seedDatabase();
-        this.hospitalSeederService.seedDatabase();
-        this.universitySeederService.seedDatabase();
-        this.competitionSeederService.seedDatabase();
-        this.militarySeederService.seedDatabase();
-        this.artMuseumSeederService.seedDatabase();
-        this.hotelRetiredSeederService.seedDatabase();
-        this.boardgameCafeSeederService.seedDatabase();
-        this.wushuSportSeederService.seedDatabase();
-        this.veterinaryClinicSeederService.seedDatabase();
-         this.bankSeederService.seedDatabase();
-        this.carSeederService.seedDatabase();
-        this.themeParkSeederService.seedDatabase();
-        this.nightLifeSeederService.seedDatabase();
-        this.shoppingCenterSeederService.seedDatabase();
-        this.basketballSeederService.seedDatabase();
-        this.deliveryFoodSeederService.seedDatabase();
+        shopSeederService.seedDatabase();
+        hospitalSeederService.seedDatabase();
+        universitySeederService.seedDatabase();
+        competitionSeederService.seedDatabase();
+        militarySeederService.seedDatabase();
+        artMuseumSeederService.seedDatabase();
+        hotelRetiredSeederService.seedDatabase();
+        boardgameCafeSeederService.seedDatabase();
+        wushuSportSeederService.seedDatabase();
+        veterinaryClinicSeederService.seedDatabase();
+        bankSeederService.seedDatabase();
+        carSeederService.seedDatabase();
+        themeParkSeederService.seedDatabase();
+        nightLifeSeederService.seedDatabase();
+        shoppingCenterSeederService.seedDatabase();
+        basketballSeederService.seedDatabase();
+        deliveryFoodSeederService.seedDatabase();
     }
 
     public void deleteAll() {
-        this.shopSeederService.deleteAll();
-        this.hospitalSeederService.deleteAll();
-        this.universitySeederService.deleteAll();
-        this.competitionSeederService.deleteAll();
-        this.militarySeederService.deleteAll();
-        this.artMuseumSeederService.deleteAll();
-        this.hotelRetiredSeederService.deleteAll();
-        this.boardgameCafeSeederService.deleteAll();
-        this.wushuSportSeederService.deleteAll();
-        this.veterinaryClinicSeederService.deleteAll();
-        this.bankSeederService.deleteAll();
-        this.carSeederService.deleteAll();
-        this.themeParkSeederService.deleteAll();
-        this.nightLifeSeederService.deleteAll();
-        this.shoppingCenterSeederService.deleteAll();
-        this.basketballSeederService.deleteAll();
-        this.deliveryFoodSeederService.deleteAll();
+        shopSeederService.deleteAll();
+        hospitalSeederService.deleteAll();
+        universitySeederService.deleteAll();
+        competitionSeederService.deleteAll();
+        militarySeederService.deleteAll();
+        artMuseumSeederService.deleteAll();
+        hotelRetiredSeederService.deleteAll();
+        boardgameCafeSeederService.deleteAll();
+        wushuSportSeederService.deleteAll();
+        veterinaryClinicSeederService.deleteAll();
+        bankSeederService.deleteAll();
+        carSeederService.deleteAll();
+        themeParkSeederService.deleteAll();
+        nightLifeSeederService.deleteAll();
+        shoppingCenterSeederService.deleteAll();
+        basketballSeederService.deleteAll();
+        deliveryFoodSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
