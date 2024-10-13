@@ -54,6 +54,12 @@ public class ProviderEntity {
         isNational = national;
     }
 
+    public Provider toProvider() {
+        Provider provider = new Provider();
+        BeanUtils.copyProperties(this, provider);
+        return provider;
+    }
+
     @Override
     public String toString() {
         return "ProviderEntity{" +
