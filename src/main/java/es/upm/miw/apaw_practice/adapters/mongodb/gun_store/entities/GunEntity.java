@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gun_store.entities;
 
-import es.upm.miw.apaw_practice.domain.models.gun_store.Accesory;
-import es.upm.miw.apaw_practice.domain.models.gun_store.CompatibleAmmo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,19 +14,20 @@ public class GunEntity {
     private BigDecimal price;
     private String name;
     private String manufacturer;
-    private List<Accesory> accesories;
-    private CompatibleAmmo ammo;
+    private List<AccesoryEntity> accesoryEntities;
+    private CompatibleAmmoEntity ammoEntities;
 
     public GunEntity() {
         //Empty for framework
     }
 
-    public GunEntity(BigDecimal price, String name, String manufacturer, List<Accesory> accesories, CompatibleAmmo compatibleAmmo) {
+    public GunEntity(BigDecimal price, String name, String manufacturer,
+                     List<AccesoryEntity> accesoryEntities, CompatibleAmmoEntity compatibleAmmo) {
         this.gunId = UUID.randomUUID().hashCode();
         this.price = price;
         this.manufacturer = manufacturer;
-        this.accesories = accesories;
-        this.ammo = compatibleAmmo;
+        this.accesoryEntities = accesoryEntities;
+        this.ammoEntities = compatibleAmmo;
     }
 
     public BigDecimal getPrice() {
@@ -63,20 +62,20 @@ public class GunEntity {
         this.manufacturer = manufacturer;
     }
 
-    public List<Accesory> getAccesories() {
-        return accesories;
+    public List<AccesoryEntity> getAccesoryEntities() {
+        return accesoryEntities;
     }
 
-    public void setAccesories(List<Accesory> accesories) {
-        this.accesories = accesories;
+    public void setAccesoryEntities(List<AccesoryEntity> accesoryEntities) {
+        this.accesoryEntities = accesoryEntities;
     }
 
-    public CompatibleAmmo getAmmo() {
-        return ammo;
+    public CompatibleAmmoEntity getAmmoEntities() {
+        return ammoEntities;
     }
 
-    public void setAmmo(CompatibleAmmo ammo) {
-        this.ammo = ammo;
+    public void setAmmoEntities(CompatibleAmmoEntity ammoEntities) {
+        this.ammoEntities = ammoEntities;
     }
 
     @Override
@@ -86,8 +85,8 @@ public class GunEntity {
                 ", price=" + price +
                 ", name='" + name + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
-                ", accesories=" + accesories +
-                ", ammo=" + ammo +
+                ", accesories=" + accesoryEntities +
+                ", ammo=" + ammoEntities +
                 '}';
     }
 }

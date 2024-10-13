@@ -19,7 +19,7 @@ public class AccesoryEntity {
         // Empty for Framework
     }
 
-    AccesoryEntity(Accesory accesory) {
+    public AccesoryEntity(Accesory accesory) {
         BeanUtils.copyProperties(accesory, this);
         this.accesoryId = UUID.randomUUID().hashCode();
     }
