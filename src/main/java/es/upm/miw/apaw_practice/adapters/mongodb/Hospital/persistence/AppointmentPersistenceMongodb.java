@@ -11,5 +11,5 @@ import java.util.stream.Stream;
 
 @Repository("appoinmentPersistence")
 public class AppointmentPersistenceMongodb implements AppoinmentPersistence {
-    Optional<AppointmentEntity> findById(String id)
+    Optional<AppointmentEntity> findById(String id);
 }
