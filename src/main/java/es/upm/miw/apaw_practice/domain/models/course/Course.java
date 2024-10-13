@@ -7,7 +7,7 @@ import java.util.List;
 public class Course {
 
     private String title;
-    private Boolean requiresPayment;
+    private Boolean paymentRequired;
     private LocalDate startDate;
     private LocalDate endDate;
     private List<TutoringSession> tutoringSessions;
@@ -17,9 +17,9 @@ public class Course {
         //empty for framework
     }
 
-    public Course(String title, Boolean requiresPayment, LocalDate startDate, LocalDate endDate) {
+    public Course(String title, Boolean paymentRequired, LocalDate startDate, LocalDate endDate) {
         this.title = title;
-        this.requiresPayment = requiresPayment;
+        this.paymentRequired = paymentRequired;
         this.startDate = startDate;
         this.endDate = endDate;
         this.tutoringSessions = new ArrayList<>();
@@ -34,12 +34,12 @@ public class Course {
         this.title = title;
     }
 
-    public Boolean getRequiresPayment() {
-        return requiresPayment;
+    public Boolean getPaymentRequired() {
+        return paymentRequired;
     }
 
-    public void setRequiresPayment(Boolean requiresPayment) {
-        this.requiresPayment = requiresPayment;
+    public void setPaymentRequired(Boolean paymentRequired) {
+        this.paymentRequired = paymentRequired;
     }
 
     public LocalDate getStartDate() {
@@ -86,7 +86,7 @@ public class Course {
     public String toString() {
         return "Course{" +
                 "title='" + title + '\'' +
-                ", requiresPayment=" + requiresPayment +
+                ", paymentRequired=" + paymentRequired +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", tutoringSessions=" + tutoringSessions +

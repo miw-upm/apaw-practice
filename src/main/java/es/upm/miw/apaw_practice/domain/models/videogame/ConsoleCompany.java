@@ -3,11 +3,12 @@ package es.upm.miw.apaw_practice.domain.models.videogame;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ConsoleCompany {
-    private String consoleCompany;
+    private String companyInformation;
     private String website;
-    private int numberOfEmployees;
+    private int numberOfEmployee;
     private boolean active;
     private LocalDate foundationDate;
     private List<Console> consoles;
@@ -16,19 +17,19 @@ public class ConsoleCompany {
         //empty for framework
     }
 
-    public ConsoleCompany(String consoleCompany,  String website, int numberOfEmployees, boolean active, LocalDate foundationDate, List<Console> consoles) {
-        this.consoleCompany = consoleCompany;
+    public ConsoleCompany(String companyInformation,  String website, int numberOfEmployee, boolean active, LocalDate foundationDate, List<Console> consoles) {
+        this.companyInformation = companyInformation;
         this.website = website;
-        this.numberOfEmployees = numberOfEmployees;
+        this.numberOfEmployee = numberOfEmployee;
         this.active = active;
         this.foundationDate = foundationDate;
         this.consoles = consoles;
     }
-    public String getConsoleCompany() {
-        return consoleCompany;
+    public String getCompanyInformation() {
+        return companyInformation;
     }
-    public void setConsoleCompany(String consoleCompany) {
-        this.consoleCompany = consoleCompany;
+    public void setCompanyInformation(String companyInformation) {
+        this.companyInformation = companyInformation;
     }
     public String getWebsite() {
         return website;
@@ -36,11 +37,11 @@ public class ConsoleCompany {
     public void setWebsite(String website) {
         this.website = website;
     }
-    public int getNumberOfEmployees() {
-        return numberOfEmployees;
+    public int getNumberOfEmployee() {
+        return numberOfEmployee;
     }
-    public void setNumberOfEmployees(int numberOfEmployees) {
-        this.numberOfEmployees = numberOfEmployees;
+    public void setNumberOfEmployee(int numberOfEmployee) {
+        this.numberOfEmployee = numberOfEmployee;
     }
     public boolean isActive() {
         return active;
@@ -65,11 +66,24 @@ public class ConsoleCompany {
     }
 
     @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConsoleCompany consoleCompany = (ConsoleCompany) o;
+        return Objects.equals(companyInformation, consoleCompany.companyInformation) && Objects.equals(website, consoleCompany.website) && Objects.equals(numberOfEmployee, consoleCompany.numberOfEmployee) && Objects.equals(active, consoleCompany.active) && Objects.equals(foundationDate, consoleCompany.foundationDate) && Objects.equals(consoles, consoleCompany.consoles);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(companyInformation, website, numberOfEmployee, active, foundationDate, consoles);
+    }
+
+    @Override
     public String toString() {
         return "ConsoleCompany{" +
-                "consoleCompany='" + consoleCompany + '\'' +
+                "companyInformation='" + companyInformation + '\'' +
                 ", website=" + website +
-                ", numberOfEmployees=" + numberOfEmployees +
+                ", numberOfEmployee=" + numberOfEmployee +
                 ", active=" + active +
                 ", foundationDate=" + foundationDate +
                 ", consoles=" + consoles +
