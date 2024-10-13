@@ -1,10 +1,21 @@
-package es.upm.miw.apaw_practice.domain.persistence_ports.Hospital;
+package es.upm.miw.apaw_practice.domain.persistence_ports.hospital;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import es.upm.miw.apaw_practice.domain.models.hospital.Doctor; // Ensure this package and class exist
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface DoctorPersistence {}
+public interface DoctorPersistence {
+
+    Doctor create(Doctor doctor); // Create a new doctor
+
+    Optional<Doctor> read(String id); // Read a doctor by ID
+
+    Doctor update(Doctor doctor); // Update an existing doctor
+
+    void delete(String id); // Delete a doctor by ID
+
+    List<Doctor> readAll(); // Read all doctors
+}
