@@ -35,13 +35,13 @@ public class HotelRetiredSeederService {
         LogManager.getLogger(this.getClass()).warn("------- Hotel Retired Initial Load -----------");
 
         GuestEntity[] guests = {
-                new GuestEntity("99527370E", "Emilio Pedrajas", LocalDateTime.of(1990, 10, 27,  23, 2, 2 )),
-                new GuestEntity("38184875E", "Juan Padrón", LocalDateTime.of(1980, 7, 2,  23, 2, 2 )),
-                new GuestEntity("38087519W", "Iñaki Jauregui", LocalDateTime.of(1976, 2, 21,  23, 2, 2 )),
-                new GuestEntity("84133147K", "Basilio Chamartín", LocalDateTime.of(1945, 2, 21,  23, 2, 2 )),
-                new GuestEntity("03948142P", "Carla Sempere", LocalDateTime.of(2021, 4, 12,  23, 2, 2 )),
-                new GuestEntity("70526971R", "Antonia Ndonga", LocalDateTime.of(2004, 12, 21,  23, 2, 2 )),
-                new GuestEntity("02465328G", "Sisinio Riubal", LocalDateTime.of(1936, 1, 2,  23, 2, 2 )),
+                new GuestEntity("99527370E", "Emilio Pedrajas", LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
+                new GuestEntity("38184875E", "Juan Padrón", LocalDateTime.of(1980, 7, 2, 23, 2, 2)),
+                new GuestEntity("38087519W", "Iñaki Jauregui", LocalDateTime.of(1976, 2, 21, 23, 2, 2)),
+                new GuestEntity("84133147K", "Basilio Chamartín", LocalDateTime.of(1945, 2, 21, 23, 2, 2)),
+                new GuestEntity("03948142P", "Carla Sempere", LocalDateTime.of(2021, 4, 12, 23, 2, 2)),
+                new GuestEntity("70526971R", "Antonia Ndonga", LocalDateTime.of(2004, 12, 21, 23, 2, 2)),
+                new GuestEntity("02465328G", "Sisinio Riubal", LocalDateTime.of(1936, 1, 2, 23, 2, 2)),
         };
         this.guestRepository.saveAll(Arrays.asList(guests));
 
@@ -80,7 +80,8 @@ public class HotelRetiredSeederService {
         this.roomRepository.saveAll(Arrays.asList(rooms));
 
         HotelEntity[] hotels = {
-                new HotelEntity("F91635847", "LaMaria", "C/ Mandrágora 32, Retuerta (Burgos)", List.of(rooms))
+                new HotelEntity("F91635847", "LaMaria", "C/ Mandrágora 32, Retuerta (Burgos)", List.of(rooms)),
+                new HotelEntity("W2135920C", "Papagayo", "C/ Ventisquera 45, Roquetas de Mar (Almería)", Collections.emptyList())
         };
         this.hotelRepository.saveAll(Arrays.asList(hotels));
     }

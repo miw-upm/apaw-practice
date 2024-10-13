@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Document
 public class MembershipEntity {
     @Id
-    private Integer membershipId;
     private String type;
     private Integer duration;
     private BigDecimal discount;
@@ -31,14 +30,6 @@ public class MembershipEntity {
         Membership membership = new Membership();
         BeanUtils.copyProperties(this, membership);
         return membership;
-    }
-
-    public Integer getMembershipId() {
-        return membershipId;
-    }
-
-    public void setMembershipId(Integer membershipId) {
-        this.membershipId = membershipId;
     }
 
     public String getType() {
@@ -67,18 +58,17 @@ public class MembershipEntity {
 
     @Override
     public int hashCode() {
-        return membershipId.hashCode();
+        return type.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (membershipId.equals(((MembershipEntity) obj).membershipId));
+        return this == obj || obj != null && getClass() == obj.getClass() && (type.equals(((MembershipEntity) obj).type));
     }
 
     @Override
     public String toString() {
         return "MembershipEntity{" +
-                "membershipId=" + membershipId +
                 ", type='" + type + '\'' +
                 ", duration=" + duration +
                 ", discount=" + discount +

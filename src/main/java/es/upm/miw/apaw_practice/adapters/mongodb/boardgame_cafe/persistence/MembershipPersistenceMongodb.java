@@ -36,10 +36,10 @@ public class MembershipPersistenceMongodb implements MembershipPersistence {
     }
 
     @Override
-    public Membership update(Integer membershipId, Membership membership) {
+    public Membership update(String type, Membership membership) {
         MembershipEntity membershipEntity = membershipRepository
-                .findByMembershipId(membershipId)
-                .orElseThrow(() -> new NotFoundException("Membership Id: " + membershipId));
+                .findByType(type)
+                .orElseThrow(() -> new NotFoundException("Membership Id: " + type));
         membershipEntity.fromMembership(membership);
         return membershipRepository
                 .save(membershipEntity)
@@ -47,17 +47,17 @@ public class MembershipPersistenceMongodb implements MembershipPersistence {
     }
 
     @Override
-    public Membership read(Integer membershipId) {
+    public Membership read(String type) {
         return membershipRepository
-                .findByMembershipId(membershipId)
-                .orElseThrow(() -> new NotFoundException("Membership Id: " + membershipId))
+                .findByType(type)
+                .orElseThrow(() -> new NotFoundException("Membership Id: " + type))
                 .toMembership();
     }
 
     @Override
-    public boolean existMembershipId(Integer membershipId) {
+    public boolean existType(String type) {
         return membershipRepository
-                .findByMembershipId(membershipId)
+                .findByType(type)
                 .isPresent();
     }
 }

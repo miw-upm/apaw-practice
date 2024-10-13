@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.theme_park.entities;
 
+import es.upm.miw.apaw_practice.domain.models.theme_park.Ride;
+import es.upm.miw.apaw_practice.domain.models.theme_park.ThemePark;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -64,6 +67,17 @@ public class ThemeParkEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public ThemePark toThemePark() {
+        ThemePark themePark = new ThemePark();
+        BeanUtils.copyProperties(this, themePark, "rideEntities");
+        List<Ride> rides = this.rideEntities.stream()
+                .map(RideEntity::toRide)
+                .toList();
+        themePark.setRides(rides);
+        return themePark;
+
     }
 
     @Override

@@ -1,23 +1,18 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
-
 import java.util.List;
 
 public class Hospital {
     private String name;
     private String location;
     private int capacity;
-    private List<Doctor> doctors;
+    private List<Doctor> Doctores;
     private List<Patient> patients;
 
-    public Hospital() {
-        //empty for framework
-    }
-
-    public Hospital(String name, String location, int capacity, List<Doctor> doctors, List<Patient> patients) {
+    public Hospital(String name, String location, int capacity, List<Doctor> doctores, List<Patient> patients) {
         this.name = name;
         this.location = location;
         this.capacity = capacity;
-        this.doctors = doctors;
+        this.Doctores = doctores;
         this.patients = patients;
     }
 
@@ -45,12 +40,12 @@ public class Hospital {
         this.capacity = capacity;
     }
 
-    public List<Doctor> getDoctors() {
-        return doctors;
+    public List<Doctor> getDoctores() {
+        return Doctores;
     }
 
-    public void setDoctors(List<Doctor> doctors) {
-        this.doctors = doctors;
+    public void setDoctores(List<Doctor> doctores) {
+        Doctores = doctores;
     }
 
     public List<Patient> getPatients() {
@@ -61,13 +56,13 @@ public class Hospital {
         this.patients = patients;
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Hospital{" +
                 "name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 ", capacity=" + capacity +
-                ", doctors=" + doctors +
+                ", Doctores=" + Doctores +
                 ", patients=" + patients +
                 '}';
     }
