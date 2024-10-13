@@ -18,6 +18,10 @@ public class Exhibition {
         this.price = price;
     }
 
+    public static ExhibitionBuilders.Name builder() {
+        return new Builder();
+    }
+
     public String getName() {
         return name;
     }
@@ -49,5 +53,36 @@ public class Exhibition {
                 ", dateOfExhibition=" + dateOfExhibition +
                 ", price=" + price +
                 '}';
+    }
+
+    public static class Builder implements ExhibitionBuilders.Name, ExhibitionBuilders.DateOfExhibition, ExhibitionBuilders.Optionals {
+        private final Exhibition exhibition;
+
+        public Builder() {
+            this.exhibition = new Exhibition();
+        }
+
+        @Override
+        public ExhibitionBuilders.DateOfExhibition name(String name) {
+            this.exhibition.name = name;
+            return this;
+        }
+
+        @Override
+        public ExhibitionBuilders.Optionals dateOfExhibition(LocalDateTime dateOfExhibition) {
+            this.exhibition.dateOfExhibition = dateOfExhibition;
+            return this;
+        }
+
+        @Override
+        public ExhibitionBuilders.Optionals price(BigDecimal price) {
+            this.exhibition.price = price;
+            return this;
+        }
+
+        @Override
+        public Exhibition build() {
+            return this.exhibition;
+        }
     }
 }
