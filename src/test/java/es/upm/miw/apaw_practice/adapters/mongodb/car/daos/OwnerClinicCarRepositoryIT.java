@@ -15,7 +15,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.car.entities.OwnerCarEntity;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class OwnerCarRepositoryIT {
+public class OwnerClinicCarRepositoryIT {
 
     @Autowired
     private OwnerCarRepository ownerCarRepository;

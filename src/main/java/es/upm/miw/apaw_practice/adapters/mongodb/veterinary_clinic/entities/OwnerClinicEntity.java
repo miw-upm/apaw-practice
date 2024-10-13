@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities;
 
-import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Owner;
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.OwnerClinic;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;
 
 @Document
-public class OwnerEntity {
+public class OwnerClinicEntity {
 
     @Id
     private String id;
@@ -18,12 +18,12 @@ public class OwnerEntity {
     private String address;
     private String phone;
 
-    public OwnerEntity() {
+    public OwnerClinicEntity() {
         //empty from framework
     }
 
-    public OwnerEntity(Owner owner) {
-        BeanUtils.copyProperties(owner, this);
+    public OwnerClinicEntity(OwnerClinic ownerClinic) {
+        BeanUtils.copyProperties(ownerClinic, this);
         this.id = UUID.randomUUID().toString();
     }
 
@@ -59,20 +59,20 @@ public class OwnerEntity {
         this.phone = phone;
     }
 
-    public void fromOwner(Owner owner) {
-        BeanUtils.copyProperties(owner, this);
+    public void fromOwner(OwnerClinic ownerClinic) {
+        BeanUtils.copyProperties(ownerClinic, this);
     }
 
-    public Owner toOwner() {
-        Owner owner = new Owner();
-        BeanUtils.copyProperties(this, owner);
-        return owner;
+    public OwnerClinic toOwner() {
+        OwnerClinic ownerClinic = new OwnerClinic();
+        BeanUtils.copyProperties(this, ownerClinic);
+        return ownerClinic;
     }
 
     @Override
     public boolean equals(Object object) {
         return this == object || object != null && getClass() == object.getClass() &&
-                (name.equals(((OwnerEntity) object).name));
+                (name.equals(((OwnerClinicEntity) object).name));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class OwnerEntity {
 
     @Override
     public String toString() {
-        return "OwnerEntity{" +
+        return "OwnerClinicEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
