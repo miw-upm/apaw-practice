@@ -67,11 +67,7 @@ public class DoctorEntity {
         this.hospitalId = hospitalId;
     }
 
-    public Doctor toDoctor() {
-        Doctor doctor = new Doctor();
-        BeanUtils.copyProperties(this, doctor);
-        return doctor;
-    }
+  
 
     public void fromDoctor(Doctor doctor) {
         BeanUtils.copyProperties(doctor, this);
