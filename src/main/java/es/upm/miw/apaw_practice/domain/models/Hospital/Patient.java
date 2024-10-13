@@ -8,14 +8,14 @@ public class Patient {
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    private  Appointment Appoinment;
+    private Appointment appointment;
 
-    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appoinment) {
+    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
-        this.appoinment = appoinment;
+        this.appointment = appointment;
     }
 
     public String getDni() {
@@ -50,12 +50,12 @@ public class Patient {
         this.hasInsurance = hasInsurance;
     }
 
-    public Appointment getAppoinment() {
-        return Appoinment;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setAppoinment(Appointment appoinment) {
-        Appoinment = appoinment;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 
     @java.lang.Override
@@ -65,7 +65,7 @@ public class Patient {
                 ", fullname='" + fullname + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", hasInsurance=" + hasInsurance +
-                ", Appoinment=" + Appoinment +
+                ", appointment=" + appointment +
                 '}';
     }
 }
