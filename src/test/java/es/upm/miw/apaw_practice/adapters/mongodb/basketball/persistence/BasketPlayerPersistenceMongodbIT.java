@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.basketball.persistence;
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.basketball.BasketPlayer;
-import es.upm.miw.apaw_practice.domain.persistence_ports.basketball.BasketPlayerPersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
