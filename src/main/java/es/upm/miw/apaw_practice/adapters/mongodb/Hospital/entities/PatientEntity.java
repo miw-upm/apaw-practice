@@ -42,10 +42,11 @@ public class PatientEntity {
 
     // Getters and setters
     public String getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(String id) {
+
+    public void setId(String id()) {
         this.id = id;
     }
 
