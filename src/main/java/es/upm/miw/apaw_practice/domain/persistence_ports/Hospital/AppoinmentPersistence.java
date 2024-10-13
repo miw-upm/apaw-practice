@@ -1,11 +1,14 @@
-package es.upm.miw.apaw_practice.domain.persistence_ports.Hospital;
+package es.upm.miw.apaw_practice.domain.persistence_ports.hospital;
 
+import es.upm.miw.apaw_practice.domain.models.hospital.Appointment; // Asegúrate de que este paquete y clase existan
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 @Repository
-public interface AppoinmentPersistence {
+public interface AppointmentPersistence {
 
+    Stream<Appointment> readAll(); // Método para leer todas las citas
+
+    Appointment read(String id); // Método para leer una cita específica por ID, si es necesario
 }
