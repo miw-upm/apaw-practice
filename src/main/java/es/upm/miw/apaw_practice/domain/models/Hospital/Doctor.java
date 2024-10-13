@@ -1,5 +1,4 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
-
 import java.math.BigDecimal;
 
 public class Doctor {
@@ -7,15 +6,13 @@ public class Doctor {
     private String fullname;
     private BigDecimal salary;
 
-
-    public Doctor() {
-    }
-
+    // Constructor, getters, setters
     public Doctor(String dni, String fullname, BigDecimal salary) {
         this.dni = dni;
         this.fullname = fullname;
         this.salary = salary;
     }
+
 
     public String getDni() {
         return dni;
@@ -33,6 +30,7 @@ public class Doctor {
         this.fullname = fullname;
     }
 
+
     public BigDecimal getSalary() {
         return salary;
     }
@@ -41,8 +39,8 @@ public class Doctor {
         this.salary = salary;
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Doctor{" +
                 "dni='" + dni + '\'' +
                 ", fullname='" + fullname + '\'' +

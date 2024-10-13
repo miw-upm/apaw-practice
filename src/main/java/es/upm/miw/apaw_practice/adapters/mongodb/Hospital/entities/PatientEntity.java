@@ -1,39 +1,41 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import java.time.LocalDate;
-import java.util.UUID;
+import java.util.List;
 
 @Document
 public class PatientEntity {
-
     @Id
-    private String id;
-
+    private String dni;
     private String fullname;
     private LocalDate dateOfBirth;
     private Boolean hasInsurance;
-    private String hospitalId;
+
+    @DBRef // Reference to appointments
+    private List<Appointment> appointments;
 
     public PatientEntity() {
-        // Empty constructor for framework
+        // Empty constructor for the framework
     }
 
-    public PatientEntity(Patient patient) {
-        BeanUtils.copyProperties(patient, this);
-        this.id = UUID.randomUUID().toString();
+    public PatientEntity(String dni, String fullname, LocalDate dateOfBirth, Boolean hasInsurance) {
+        this.dni = dni;
+        this.fullname = fullname;
+        this.dateOfBirth = dateOfBirth;
+        this.hasInsurance = hasInsurance;
     }
 
-    public String getId() {
-        return id;
+    // Getters and Setters
+    public String getDni() {
+        return dni;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getFullname() {
@@ -60,34 +62,11 @@ public class PatientEntity {
         this.hasInsurance = hasInsurance;
     }
 
-    public String getHospitalId() {
-        return hospitalId;
+    public List<Appointment> getAppointments() {
+        return appointments;
     }
 
-    public void setHospitalId(String hospitalId) {
-        this.hospitalId = hospitalId;
-    }
-
-    // Métodos de conversión
-    public void fromPatient(Patient patient) {
-        BeanUtils.copyProperties(patient, this);
-    }
-
-    public Patient toPatient() {
-        Patient patient = new Patient();
-        BeanUtils.copyProperties(this, patient);
-        return patient;
-    }
-
-    @Override
-    public String toString() {
-        return "PatientEntity{" +
-                "id='" + id + '\'' +
-                ", fullname='" + fullname + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", hasInsurance=" + hasInsurance +
-                ", hospitalId='" + hospitalId + '\'' +
-                '}';
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 }
-

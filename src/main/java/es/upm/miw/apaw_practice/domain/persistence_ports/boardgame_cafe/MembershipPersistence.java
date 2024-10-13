@@ -11,9 +11,9 @@ public interface MembershipPersistence {
 
     Membership create(Membership membership);
 
-    Membership update(Integer membershipId, Membership membership);
+    Membership update(String type, Membership membership);
 
-    Membership read(Integer membershipId);
+    Membership read(String type);
 
-    boolean existMembershipId(Integer membershipId);
+    boolean existType(String type);
 }

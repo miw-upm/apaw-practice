@@ -1,4 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.theme_park.entities;
+import es.upm.miw.apaw_practice.domain.models.theme_park.Operator;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -69,6 +71,13 @@ public class OperatorEntity {
     @Override
     public boolean equals(Object obj) {
         return this == obj || obj != null && getClass() == obj.getClass() && (idEmployee.equals(((OperatorEntity) obj).idEmployee));
+    }
+
+    public Operator toOperator() {
+        Operator operator = new Operator();
+        BeanUtils.copyProperties(this, operator, "rideEntity");
+        operator.setRide(this.rideEntity.toRide());
+        return operator;
     }
 
     @Override

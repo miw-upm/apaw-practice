@@ -14,6 +14,10 @@ public class Manufacturer {
         this.numberOfEmployees = numberOfEmployees;
     }
 
+    public static ManufacturerBuilders.Name builder() {
+        return new Builder();
+    }
+
     public String getName() {
         return name;
     }
@@ -44,5 +48,37 @@ public class Manufacturer {
                 ", country='" + country + '\'' +
                 ", numberOfEmployees=" + numberOfEmployees +
                 '}';
+    }
+
+    public static class Builder implements ManufacturerBuilders.Name, ManufacturerBuilders.Country, ManufacturerBuilders.NumberOfEmployees, ManufacturerBuilders.Builder{
+
+        private final Manufacturer instance;
+
+        public Builder() {
+            this.instance = new Manufacturer();
+        }
+
+        @Override
+        public ManufacturerBuilders.Country name(String name) {
+            this.instance.name = name;
+            return this;
+        }
+
+        @Override
+        public ManufacturerBuilders.NumberOfEmployees country(String country) {
+            this.instance.country = country;
+            return this;
+        }
+
+        @Override
+        public ManufacturerBuilders.Builder numberOfEmployees(Integer numberOfEmployees) {
+            this.instance.numberOfEmployees = numberOfEmployees;
+            return this;
+        }
+
+        @Override
+        public Manufacturer build() {
+            return this.instance;
+        }
     }
 }

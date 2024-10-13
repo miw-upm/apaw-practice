@@ -25,10 +25,10 @@ public class HotelResourceIT {
     @Test
     void testCreate() {
         Room[] rooms = {
-                new Room("34301", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
-                new Room("2323", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new Room("78678", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new Room("3789", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
         };
-        Hotel hotel = new Hotel("D33069196", "Lacosta", "C/ Pedralves 32 Barcelona", List.of(rooms));
+        Hotel hotel = new Hotel("D33069196", "Lacosta", "C/ Pedralves 32 Barcelona", Collections.emptyList());
 
         this.webTestClient
                 .post()

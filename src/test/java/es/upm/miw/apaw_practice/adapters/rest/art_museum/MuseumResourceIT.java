@@ -12,7 +12,6 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static es.upm.miw.apaw_practice.adapters.rest.art_museum.MuseumResource.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,7 +24,7 @@ class MuseumResourceIT {
     void testRead() {
         this.webTestClient
                 .get()
-                .uri(MUSEUMS + NAME_MUSEUM, "El Prado")
+                .uri(MuseumResource.MUSEUMS + MuseumResource.NAME_MUSEUM, "El Prado")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Museum.class)
@@ -49,7 +48,7 @@ class MuseumResourceIT {
     void testReadNotFound() {
         this.webTestClient
                 .get()
-                .uri(MUSEUMS + NAME_MUSEUM, "Reina Sofia")
+                .uri(MuseumResource.MUSEUMS + MuseumResource.NAME_MUSEUM, "Reina Sofia")
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -58,7 +57,7 @@ class MuseumResourceIT {
     void testDeleteByName() {
         this.webTestClient
                 .delete()
-                .uri(MUSEUMS + NAME_MUSEUM, "Reina Sofia")
+                .uri(MuseumResource.MUSEUMS + MuseumResource.NAME_MUSEUM, "Reina Sofia")
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -67,7 +66,8 @@ class MuseumResourceIT {
     void testUpdateExhibitionPrice() {
         this.webTestClient
                 .patch()
-                .uri(MUSEUMS + NAME_MUSEUM + EXHIBITIONS + NAME_EXHIBITION, "Thyssen", "Century 15th")
+                .uri(MuseumResource.MUSEUMS + MuseumResource.NAME_MUSEUM +
+                        MuseumResource.EXHIBITIONS + MuseumResource.NAME_EXHIBITION, "Thyssen", "Century 15th")
                 .body(BodyInserters.fromValue(BigDecimal.valueOf(20.00)))
                 .exchange()
                 .expectStatus().isOk();
@@ -77,10 +77,25 @@ class MuseumResourceIT {
     void testUpdateExhibitionPriceNotFound() {
         this.webTestClient
                 .patch()
-                .uri(MUSEUMS + NAME_MUSEUM + EXHIBITIONS + NAME_EXHIBITION, "Reina Sofia", "Century 15th")
+                .uri(MuseumResource.MUSEUMS + MuseumResource.NAME_MUSEUM +
+                        MuseumResource.EXHIBITIONS + MuseumResource.NAME_EXHIBITION, "Reina Sofia", "Century 15th")
                 .body(BodyInserters.fromValue(BigDecimal.valueOf(20.00)))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testSearchByArtistNameSumPricesExhibitions() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(MuseumResource.MUSEUMS + MuseumResource.SEARCH)
+                                .queryParam("q", "artistName:Vincent van Gogh")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(sum -> assertEquals(BigDecimal.valueOf(105.00), sum));
     }
 
 }

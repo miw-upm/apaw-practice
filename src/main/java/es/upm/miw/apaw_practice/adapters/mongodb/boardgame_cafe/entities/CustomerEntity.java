@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.entities;
 
 import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Customer;
-import es.upm.miw.apaw_practice.domain.models.shop.Article;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,6 +14,7 @@ public class CustomerEntity {
     private String name;
     private LocalDate birthDate;
     private boolean isMember;
+    private MembershipEntity membership;
 
     public CustomerEntity() {
         //empty for framework
@@ -26,11 +26,17 @@ public class CustomerEntity {
 
     public void fromCustomer(Customer customer) {
         BeanUtils.copyProperties(customer, this);
+        if (customer.getMembership() != null) {
+            this.membership = new MembershipEntity(customer.getMembership());
+        }
     }
 
     public Customer toCustomer() {
         Customer customer = new Customer();
         BeanUtils.copyProperties(this, customer);
+        if (this.membership != null) {
+            customer.setMembership(this.membership.toMembership());
+        }
         return customer;
     }
 
@@ -66,6 +72,14 @@ public class CustomerEntity {
         this.isMember = isMember;
     }
 
+    public MembershipEntity getMembership() {
+        return membership;
+    }
+
+    public void setMembership(MembershipEntity membership) {
+        this.membership = membership;
+    }
+
     @Override
     public int hashCode() {
         return email.hashCode();
@@ -83,6 +97,7 @@ public class CustomerEntity {
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
                 ", isMember=" + isMember +
+                ", membership=" + membership +
                 '}';
     }
 }
