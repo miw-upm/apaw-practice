@@ -47,4 +47,10 @@ public class MenuCategory {
                 ", active=" + active +
                 '}';
     }
+
+    public static MenuCategory ofName(MenuCategory menuCategory) {
+        MenuCategory menuCategoryDto = new MenuCategory();
+        menuCategoryDto.setName(menuCategory.getName());
+        return menuCategoryDto;
+    }
 }

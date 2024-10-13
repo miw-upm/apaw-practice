@@ -9,6 +9,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.theme_park.UserPersiste
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 
 @Repository("userPersistence")
 public class UserPersistenceMongodb implements UserPersistence {
@@ -39,6 +41,23 @@ public class UserPersistenceMongodb implements UserPersistence {
     public User create(User user) {
         return this.userRepository
                 .save(new UserEntity(user))
+                .toUser();
+    }
+
+    @Override
+    public Stream<User> readAll(){
+        return this.userRepository.findAll().stream()
+                .map(UserEntity::toUser);
+    }
+
+    @Override
+    public User update(String idMembership, User user){
+        UserEntity userEntity = userRepository
+                .findByIdMembership(idMembership)
+                .orElseThrow(() -> new NotFoundException("User idMembership: " + idMembership));
+        userEntity.fromUser(user);
+        return userRepository
+                .save(userEntity)
                 .toUser();
     }
 

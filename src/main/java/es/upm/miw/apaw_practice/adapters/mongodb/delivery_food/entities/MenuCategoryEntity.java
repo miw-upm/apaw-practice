@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.entities;
 
+import es.upm.miw.apaw_practice.domain.models.delivery_food.MenuCategory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -57,5 +58,9 @@ public class MenuCategoryEntity {
                 ", description='" + description + '\'' +
                 ", active=" + active +
                 '}';
+    }
+
+    public MenuCategory toMenuCategory() {
+        return new MenuCategory(name, description, active);
     }
 }
