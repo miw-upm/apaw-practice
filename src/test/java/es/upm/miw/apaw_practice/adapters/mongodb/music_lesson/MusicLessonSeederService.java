@@ -15,7 +15,9 @@ import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.entities.LessonEnt
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.entities.MusicalInstrumentEntity;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MusicLessonSeederService {
 
   @Autowired

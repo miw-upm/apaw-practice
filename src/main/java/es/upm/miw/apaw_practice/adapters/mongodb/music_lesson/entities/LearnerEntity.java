@@ -91,9 +91,12 @@ public class LearnerEntity {
   }
 
   public Learner toLearner() {
-    Learner learner = new Learner();
-    BeanUtils.copyProperties(this, learner);
-    return learner;
+    var branch = (this.branch != null) ? this.branch.toBranch(): null;
+    var lessons = this.lessons.stream()
+        .map(LessonEntity::toLesson)
+        .toList();
+
+    return new Learner(this.identityDocument, this.name, this.beginner, lessons, branch);
   }
 
   @Override

@@ -82,9 +82,10 @@ public class LessonEntity {
   }
 
   public Lesson toLesson() {
-    Lesson lesson = new Lesson();
-    BeanUtils.copyProperties(this, lesson);
-    return lesson;
+    var musicalInstruments = this.musicalInstruments.stream()
+        .map(MusicalInstrumentEntity::toMusicalInstrument)
+        .toList();
+    return new Lesson(this.id, this.date, this.durationInHours, this.fee, musicalInstruments);
   }
 
   @Override
