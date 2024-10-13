@@ -1,63 +1,68 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Hospital {
-    private String id;
     private String name;
     private String location;
-    private Integer capacity;
-    private List<Doctor> doctors;
+    private int capacity;
+    private List<Doctor> Doctores;
     private List<Patient> patients;
 
-    public Hospital() {
-        this.doctors = new ArrayList<>();
-        this.patients = new ArrayList<>();
-    }
-
-    public Hospital(String id, String name, String location, Integer capacity, List<Doctor> doctors, List<Patient> patients) {
-        this.id = id; // Ensure you capture the id here
+    public Hospital(String name, String location, int capacity, List<Doctor> doctores, List<Patient> patients) {
         this.name = name;
         this.location = location;
         this.capacity = capacity;
-        this.doctors = doctors;
+        this.Doctores = doctores;
         this.patients = patients;
-    }
-
-    // Getters
-    public String getId() {
-        return id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getLocation() {
         return location;
     }
 
-    public Integer getCapacity() {
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getCapacity() {
         return capacity;
     }
 
-    public List<Doctor> getDoctors() {
-        return doctors;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public List<Doctor> getDoctores() {
+        return Doctores;
+    }
+
+    public void setDoctores(List<Doctor> doctores) {
+        Doctores = doctores;
     }
 
     public List<Patient> getPatients() {
         return patients;
     }
 
-    @Override
-    public String toString() {
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Hospital{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", location='" + location + '\'' +
                 ", capacity=" + capacity +
-                ", doctors=" + doctors +
+                ", Doctores=" + Doctores +
                 ", patients=" + patients +
                 '}';
     }

@@ -1,26 +1,22 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
-
 import java.time.LocalDate;
+import java.util.List;
 
 public class Patient {
     private String dni;
     private String fullname;
     private LocalDate dateOfBirth;
-    private Boolean hasInsurance;
-    private Appointment appointment; // Association with Appointment
+    private boolean hasInsurance;
+    private  Appoinment Appoinment;
 
-    public Patient() {
-    }
-
-    public Patient(String dni, String fullname, LocalDate dateOfBirth, Boolean hasInsurance, Appointment appointment) {
+    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appoinment appoinment) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
-        this.appointment = appointment;
+        this.Appoinment = appoinment;
     }
 
-    // Getters and Setters
     public String getDni() {
         return dni;
     }
@@ -45,30 +41,30 @@ public class Patient {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Boolean getHasInsurance() {
+    public boolean isHasInsurance() {
         return hasInsurance;
     }
 
-    public void setHasInsurance(Boolean hasInsurance) {
+    public void setHasInsurance(boolean hasInsurance) {
         this.hasInsurance = hasInsurance;
     }
 
-    public Appointment getAppointment() {
-        return appointment;
+    public Appoinment getAppoinment() {
+        return Appoinment;
     }
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
+    public void setAppoinment(Appoinment appoinment) {
+        Appoinment = appoinment;
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Patient{" +
                 "dni='" + dni + '\'' +
                 ", fullname='" + fullname + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", hasInsurance=" + hasInsurance +
-                ", appointment=" + appointment +
+                ", Appoinment=" + Appoinment +
                 '}';
     }
 }

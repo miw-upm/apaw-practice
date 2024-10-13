@@ -3,29 +3,25 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Appointment {
-    private Integer id;
+public class Appoinment {
+    private String Id;
     private LocalDate date;
     private LocalTime time;
     private String location;
 
-    public Appointment() {
-    }
-
-    public Appointment(Integer id, LocalDate date, LocalTime time, String location) {
-        this.id = id;
+    public Appoinment(String id, LocalDate date, LocalTime time, String location) {
+        this.Id = id;
         this.date = date;
         this.time = time;
         this.location = location;
     }
 
-    // Getters and Setters
-    public Integer getId() {
-        return id;
+    public String getId() {
+        return Id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        Id = id;
     }
 
     public LocalDate getDate() {
@@ -52,10 +48,10 @@ public class Appointment {
         this.location = location;
     }
 
-    @Override
-    public String toString() {
-        return "Appointment{" +
-                "id=" + id +
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Appoinment{" +
+                "Id='" + Id + '\'' +
                 ", date=" + date +
                 ", time=" + time +
                 ", location='" + location + '\'' +
