@@ -29,7 +29,7 @@ public class HospitalEntity {
 
     // Constructor with parameters
     public HospitalEntity(String name, String address, Integer capacity, List<DoctorEntity> doctors) {
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString(); // Generate a new UUID
         this.name = name;
         this.address = address;
         this.capacity = capacity;
@@ -51,24 +51,26 @@ public class HospitalEntity {
                 .collect(Collectors.toList());
     }
 
+    // Convert HospitalEntity to Hospital model
     public Hospital toHospital() {
         return new Hospital(
                 this.id,
                 this.name,
                 this.address,
                 this.capacity,
-                getDoctors(), // Reuse the method
-                getPatients()  // Reuse the method
+                getDoctors(), // Reuse the method to convert doctors
+                getPatients()  // Reuse the method to convert patients
         );
     }
 
+    // Populate HospitalEntity from Hospital model
     public void fromHospital(Hospital hospital) {
-        BeanUtils.copyProperties(hospital, this);
+        BeanUtils.copyProperties(hospital, this); // Copy common properties
         this.doctors = hospital.getDoctors().stream()
-                .map(DoctorEntity::new)
+                .map(DoctorEntity::new) // Convert to DoctorEntity
                 .collect(Collectors.toList());
         this.patients = hospital.getPatients().stream()
-                .map(PatientEntity::new)
+                .map(PatientEntity::new) // Convert to PatientEntity
                 .collect(Collectors.toList());
     }
 
@@ -123,7 +125,7 @@ public class HospitalEntity {
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id.hashCode(); // Use UUID as hash code
     }
 
     @Override
