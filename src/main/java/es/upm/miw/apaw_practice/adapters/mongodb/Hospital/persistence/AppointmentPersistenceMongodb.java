@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
 
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.AppointmentEntity;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.AppoinmentPersistence;
 import es.upm.miw.apaw_practice.domain.repositories.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
