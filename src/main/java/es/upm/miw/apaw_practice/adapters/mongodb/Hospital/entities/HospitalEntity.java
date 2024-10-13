@@ -38,11 +38,13 @@ public class HospitalEntity {
     }
 
     // Convert DoctorEntity list to Doctor list
-    public List<Doctor> getDoctors() {
+    // Assuming you have a List<Doctor> doctors in Hospital
+    public List<DoctorEntity> getDoctors() {
         return doctors.stream()
-                .map(DoctorEntity::toDoctor)
+                .map(DoctorEntity::new) // Convert from Doctor to DoctorEntity
                 .collect(Collectors.toList());
     }
+
 
     // Convert PatientEntity list to Patient list
     public List<Patient> getPatients() {
