@@ -8,7 +8,5 @@ import java.util.stream.Stream;
 @Repository
 public interface AppointmentPersistence {
 
-    Stream<Appointment> readAll(); // Método para leer todas las citas
-
     Appointment read(String id); // Método para leer una cita específica por ID, si es necesario
 }
