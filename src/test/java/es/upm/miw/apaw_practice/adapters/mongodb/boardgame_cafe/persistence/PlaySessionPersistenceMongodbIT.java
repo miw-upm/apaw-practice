@@ -112,4 +112,13 @@ public class PlaySessionPersistenceMongodbIT {
         Integer totalDuration = this.playSessionPersistence.findTotalMembershipDurationByGameGenre(genre);
         assertEquals(36, totalDuration);
     }
+
+    @Test
+    void testFindGamesByMembershipType() {
+        String type = "Silver";
+        List<Game> games = this.playSessionPersistence.findGamesByMembershipType(type);
+        assertEquals(2, games.size());
+        assertEquals("Exploding Kittens", games.get(0).getGameName());
+        assertEquals("Gloomhaven", games.get(1).getGameName());
+    }
 }
