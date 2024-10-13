@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-class OwnerNightLifeResourceIT {
+class OwnerClinicNightLifeResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
@@ -58,5 +58,3 @@ class OwnerNightLifeResourceIT {
                 );
     }
 }
-
-

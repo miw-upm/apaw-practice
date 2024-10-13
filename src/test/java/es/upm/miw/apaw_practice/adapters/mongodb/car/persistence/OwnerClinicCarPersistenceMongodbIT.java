@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class OwnerCarPersistenceMongodbIT {
+public class OwnerClinicCarPersistenceMongodbIT {
 
     @Autowired
     private OwnerCarPersistenceMongodb ownerCarPersistence;

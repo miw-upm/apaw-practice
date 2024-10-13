@@ -2,17 +2,17 @@ package es.upm.miw.apaw_practice.domain.models.veterinay_clinic;
 
 import java.util.Objects;
 
-public class Owner {
+public class OwnerClinic {
 
     private String name;
     private String address;
     private String phone;
 
-    public Owner(){
+    public OwnerClinic(){
         //empty from framework
     }
 
-    public Owner(String name, String address, String phone) {
+    public OwnerClinic(String name, String address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -49,8 +49,22 @@ public class Owner {
     }
 
     @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+
+        OwnerClinic ownerClinic = (OwnerClinic) object;
+        return name.equals(ownerClinic.name) && address.equals(ownerClinic.address) && phone.equals(ownerClinic.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, address, phone);
+    }
+
+    @Override
     public String toString() {
-        return "Owner{" +
+        return "OwnerClinic{" +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +

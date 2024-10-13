@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-class OwnerNightLifePersistenceMongodbIT {
+class OwnerClinicNightLifePersistenceMongodbIT {
     @Autowired
     private OwnerNightLifePersistenceMongodb ownerPersistence;
     @Test
@@ -23,7 +23,3 @@ class OwnerNightLifePersistenceMongodbIT {
 
     }
 }
-
-
-
-

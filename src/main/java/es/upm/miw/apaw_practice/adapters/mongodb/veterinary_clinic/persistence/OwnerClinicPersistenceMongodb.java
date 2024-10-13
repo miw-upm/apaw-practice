@@ -1,9 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.daos.OwnerClinicRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.OwnerEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.OwnerClinicEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Owner;
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.OwnerClinic;
 import es.upm.miw.apaw_practice.domain.persistence_ports.veterinary_clinic.OwnerClinicPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,28 +19,28 @@ public class OwnerClinicPersistenceMongodb implements OwnerClinicPersistence {
     }
 
     @Override
-    public Owner read(String name) {
+    public OwnerClinic read(String name) {
         return this.ownerClinicRepository
                 .findByName(name)
-                .orElseThrow(() -> new NotFoundException("Owner name: " + name))
+                .orElseThrow(() -> new NotFoundException("OwnerClinic name: " + name))
                 .toOwner();
     }
 
     @Override
-    public Owner update(String address, String phone, Owner owner) {
-        OwnerEntity ownerEntity = this.ownerClinicRepository
-                .findByName(owner.getName())
-                .orElseThrow(() -> new NotFoundException("Owner name: " + owner.getName()));
-        ownerEntity.fromOwner(owner);
+    public OwnerClinic update(String address, String phone, OwnerClinic ownerClinic) {
+        OwnerClinicEntity ownerClinicEntity = this.ownerClinicRepository
+                .findByName(ownerClinic.getName())
+                .orElseThrow(() -> new NotFoundException("OwnerClinic name: " + ownerClinic.getName()));
+        ownerClinicEntity.fromOwner(ownerClinic);
         return this.ownerClinicRepository
-                .save(ownerEntity)
+                .save(ownerClinicEntity)
                 .toOwner();
     }
 
     @Override
-    public Owner create(Owner owner) {
+    public OwnerClinic create(OwnerClinic ownerClinic) {
         return this.ownerClinicRepository
-                .save(new OwnerEntity(owner))
+                .save(new OwnerClinicEntity(ownerClinic))
                 .toOwner();
     }
 
