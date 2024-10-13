@@ -7,7 +7,11 @@ import org.springframework.stereotype.Service;
 public class WeaponService {
     private final WeaponPersistence weaponPersistence;
 
-    public WeaponService(WeaponPersistence weaponPersistence) { this.weaponPersistence = weaponPersistence; }
+    public WeaponService(WeaponPersistence weaponPersistence) {
+        this.weaponPersistence = weaponPersistence;
+    }
 
-    public void delete(String serialCode) { this.weaponPersistence.delete(serialCode); }
+    public void delete(String serialCode) {
+        this.weaponPersistence.delete(serialCode);
+    }
 }

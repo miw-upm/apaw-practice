@@ -1,12 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.rest.military;
 
 import es.upm.miw.apaw_practice.domain.models.military.Soldier;
+import es.upm.miw.apaw_practice.domain.models.military.SoldierRankUpdating;
 import es.upm.miw.apaw_practice.domain.services.military.SoldierService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
@@ -24,5 +24,10 @@ public class SoldierResource {
     @GetMapping
     public Stream<Soldier> readAll() {
         return this.soldierService.readAll();
+    }
+
+    @PatchMapping()
+    public void updateRanks(@RequestBody List<SoldierRankUpdating> soldierRankUpdatingList) {
+        this.soldierService.updateRanks(soldierRankUpdatingList.stream());
     }
 }
