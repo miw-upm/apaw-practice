@@ -9,16 +9,18 @@ public class PlaySession {
     private Integer groupSize;
     private LocalDateTime sessionDate;
     private List<Game> selectedGames;
+    private List<Customer> customers;
 
     public PlaySession() {
         //empty for framework
     }
 
-    public PlaySession(Integer playSessionId, Integer groupSize, LocalDateTime sessionDate, List<Game> selectedGames) {
+    public PlaySession(Integer playSessionId, Integer groupSize, LocalDateTime sessionDate, List<Game> selectedGames, List<Customer> customers) {
         this.playSessionId = playSessionId;
         this.groupSize = groupSize;
         this.sessionDate = sessionDate;
         this.selectedGames = selectedGames;
+        this.customers = customers;
     }
 
     public Integer getPlaySessionId() {
@@ -53,6 +55,14 @@ public class PlaySession {
         this.selectedGames = selectedGames;
     }
 
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,6 +86,7 @@ public class PlaySession {
                 ", groupSize=" + groupSize +
                 ", sessionDate=" + sessionDate +
                 ", selectedGames=" + selectedGames +
+                ", customers=" + customers +
                 '}';
     }
 }

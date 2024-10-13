@@ -19,9 +19,9 @@ public class MembershipServiceIT {
     private MembershipRepository membershipRepository;
 
     @Test
-    void testReadById() {
+    void testReadByType() {
         MembershipEntity membership = this.membershipRepository.findAll().get(0);
-        Membership newMembershipEntity = this.membershipService.readByMembershipId(membership.getMembershipId());
-        assertEquals(membership.toMembership().getMembershipId(), newMembershipEntity.getMembershipId());
+        Membership newMembershipEntity = this.membershipService.readByType(membership.getType());
+        assertEquals(membership.toMembership().getType(), newMembershipEntity.getType());
     }
 }

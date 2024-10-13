@@ -21,13 +21,12 @@ public class MembershipResourceIT {
     void testReadMembership() {
         this.webTestClient
                 .get()
-                .uri(MembershipResource.MEMBERSHIP + MembershipResource.MEMBERSHIPID_ID, 0 )
+                .uri(MembershipResource.MEMBERSHIP + MembershipResource.TYPE_ID, "Bronze" )
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Membership.class)
                 .value(Assertions::assertNotNull)
                 .value(membership -> {
-                    assertEquals(0, membership.getMembershipId());
                     assertEquals("Bronze", membership.getType());
                     assertEquals(1, membership.getDuration());
                     assertEquals(new BigDecimal("2.0"), membership.getDiscount());
@@ -38,7 +37,7 @@ public class MembershipResourceIT {
     void testReadNotFound() {
         this.webTestClient
                 .get()
-                .uri(MembershipResource.MEMBERSHIP + MembershipResource.MEMBERSHIPID_ID, 999)
+                .uri(MembershipResource.MEMBERSHIP + MembershipResource.TYPE_ID, "Ruby")
                 .exchange()
                 .expectStatus().isNotFound();
     }

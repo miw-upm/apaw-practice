@@ -8,16 +8,18 @@ public class Customer {
     private String name;
     private LocalDate birthDate;
     private boolean isMember;
+    private Membership membership;
 
     public Customer() {
         //empty for framework
     }
 
-    public Customer(String email, String name, LocalDate birthDate, boolean isMember) {
+    public Customer(String email, String name, LocalDate birthDate, boolean isMember, Membership membership) {
         this.email = email;
         this.name = name;
         this.birthDate = birthDate;
         this.isMember = isMember;
+        this.membership = membership;
     }
 
     public String getEmail() {
@@ -52,6 +54,14 @@ public class Customer {
         this.isMember = isMember;
     }
 
+    public Membership getMembership() {
+        return membership;
+    }
+
+    public void setMembership(Membership membership) {
+        this.membership = membership;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,6 +85,7 @@ public class Customer {
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +
                 ", isMember=" + isMember +
+                ", membership=" + membership +
                 '}';
     }
 }
