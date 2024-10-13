@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.veterinary_clinic;
 
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
-import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Owner;
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.OwnerClinic;
 import es.upm.miw.apaw_practice.domain.persistence_ports.veterinary_clinic.OwnerClinicPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +18,9 @@ public class OwnerService {
         this.ownerClinicPersistence = ownerClinicPersistence;
     }
 
-    public Owner create(Owner owner) {
-        this.assertNameNotExist(owner.getName());
-        return this.ownerClinicPersistence.create(owner);
+    public OwnerClinic create(OwnerClinic ownerClinic) {
+        this.assertNameNotExist(ownerClinic.getName());
+        return this.ownerClinicPersistence.create(ownerClinic);
     }
 
     private void assertNameNotExist(String name) {
@@ -29,11 +29,11 @@ public class OwnerService {
         }
     }
 
-    public void updateOwner(Stream<Owner> ownerUpdatingList) {
+    public void updateOwner(Stream<OwnerClinic> ownerUpdatingList) {
         ownerUpdatingList.map(ownerNewName -> {
-            Owner owner = this.ownerClinicPersistence.read(ownerNewName.getName());
-            owner.setName(ownerNewName.getName());
-            return owner;
+            OwnerClinic ownerClinic = this.ownerClinicPersistence.read(ownerNewName.getName());
+            ownerClinic.setName(ownerNewName.getName());
+            return ownerClinic;
         })
                 .forEach(owner -> this.ownerClinicPersistence.update(owner.getAddress(), owner.getPhone(), owner));
     }

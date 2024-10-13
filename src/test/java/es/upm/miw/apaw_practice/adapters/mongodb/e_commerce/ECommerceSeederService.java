@@ -1,9 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.CustomerRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ECommerceCustomerRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ECommerceShoppingCartRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ProductRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ShippingAddressRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ShoppingCartRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ProductEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShippingAddressEntity;
@@ -15,13 +15,14 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class ECommerceSeederService {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private ECommerceCustomerRepository eCommerceCustomerRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -30,7 +31,7 @@ public class ECommerceSeederService {
     private ShippingAddressRepository shippingAddressRepository;
 
     @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
+    private ECommerceShoppingCartRepository eCommerceShoppingCartRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- E-Commerce Initial Load -----------");
@@ -53,25 +54,25 @@ public class ECommerceSeederService {
 
         ShoppingCartEntity[] shoppingCarts = {
                 new ShoppingCartEntity(1, LocalDateTime.now(), false, BigDecimal.valueOf(1800.00), Arrays.asList(savedProducts.get(0), savedProducts.get(1))),
-                new ShoppingCartEntity(2, LocalDateTime.now(), true, BigDecimal.valueOf(800.00), Arrays.asList(savedProducts.get(1))),
+                new ShoppingCartEntity(2, LocalDateTime.now(), true, BigDecimal.valueOf(800.00), Collections.singletonList(savedProducts.get(1))),
                 new ShoppingCartEntity(3, LocalDateTime.now(), false, BigDecimal.valueOf(750.00), Arrays.asList(savedProducts.get(3), savedProducts.get(2))),
-                new ShoppingCartEntity(4, LocalDateTime.now(), true, BigDecimal.valueOf(150.00), Arrays.asList(savedProducts.get(3)))
+                new ShoppingCartEntity(4, LocalDateTime.now(), true, BigDecimal.valueOf(150.00), Collections.singletonList(savedProducts.get(3)))
         };
-        List<ShoppingCartEntity> savedShoppingCarts = this.shoppingCartRepository.saveAll(Arrays.asList(shoppingCarts));
+        List<ShoppingCartEntity> savedShoppingCarts = this.eCommerceShoppingCartRepository.saveAll(Arrays.asList(shoppingCarts));
 
         CustomerEntity[] customers = {
                 new CustomerEntity("1", "user1", "user1@example.com", 12345, savedShoppingCarts.get(0), Arrays.asList(savedShippingAddresses.get(0), savedShippingAddresses.get(1))),
-                new CustomerEntity("2", "user2", "user2@example.com", 54321, savedShoppingCarts.get(1), Arrays.asList(savedShippingAddresses.get(2))),
-                new CustomerEntity("3", "user3", "user3@example.com", 11111, savedShoppingCarts.get(2), Arrays.asList(savedShippingAddresses.get(3))),
+                new CustomerEntity("2", "user2", "user2@example.com", 54321, savedShoppingCarts.get(1), Collections.singletonList(savedShippingAddresses.get(2))),
+                new CustomerEntity("3", "user3", "user3@example.com", 11111, savedShoppingCarts.get(2), Collections.singletonList(savedShippingAddresses.get(3))),
                 new CustomerEntity("4", "user4", "user4@example.com", 22222, savedShoppingCarts.get(3), Arrays.asList(savedShippingAddresses.get(1), savedShippingAddresses.get(3)))
         };
-        this.customerRepository.saveAll(Arrays.asList(customers));
+        this.eCommerceCustomerRepository.saveAll(Arrays.asList(customers));
     }
 
     public void deleteAll() {
-        this.customerRepository.deleteAll();
+        this.eCommerceCustomerRepository.deleteAll();
         this.productRepository.deleteAll();
         this.shippingAddressRepository.deleteAll();
-        this.shoppingCartRepository.deleteAll();
+        this.eCommerceShoppingCartRepository.deleteAll();
     }
 }

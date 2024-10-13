@@ -7,8 +7,8 @@ import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.daos.OwnerCli
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.AnimalEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.ClinicEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.EmployeeEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.OwnerEntity;
-import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Owner;
+import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.OwnerClinicEntity;
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.OwnerClinic;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +32,11 @@ public class VeterinaryClinicSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("-------- Veterinary Clinic Initial Load --------");
 
-        OwnerEntity[] owners = {
-                new OwnerEntity(new Owner("Marcos", "Street Toledo", "980453215")),
-                new OwnerEntity(new Owner("Juan", "Street Segundo", "841256798")),
-                new OwnerEntity(new Owner("Mary", "Street Principal", "852693147")),
-                new OwnerEntity(new Owner("Aitana", "Street San Juan", "651234879"))
+        OwnerClinicEntity[] owners = {
+                new OwnerClinicEntity(new OwnerClinic("Marcos", "Street Toledo", "980453215")),
+                new OwnerClinicEntity(new OwnerClinic("Juan", "Street Segundo", "841256798")),
+                new OwnerClinicEntity(new OwnerClinic("Mary", "Street Principal", "852693147")),
+                new OwnerClinicEntity(new OwnerClinic("Aitana", "Street San Juan", "651234879"))
         };
         this.ownerClinicRepository.saveAll(Arrays.asList(owners));
 

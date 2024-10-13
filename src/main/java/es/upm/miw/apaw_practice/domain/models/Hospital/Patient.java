@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
-
 import java.time.LocalDate;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment; // Corrected spelling
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
+import java.util.List;
 
 public class Patient {
     private String dni;
@@ -9,10 +9,8 @@ public class Patient {
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
     private Appointment appointment;
-    public Patient() {
-        //empty for framework
-    }
-    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) { // Updated parameter type
+
+    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
@@ -60,8 +58,8 @@ public class Patient {
         this.appointment = appointment;
     }
 
-    @Override
-    public String toString() {
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Patient{" +
                 "dni='" + dni + '\'' +
                 ", fullname='" + fullname + '\'' +

@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface OperatorRepository extends MongoRepository<OperatorEntity, String> {
     Optional<OperatorEntity> findByIdEmployee(String idEmployee);
 
+    void deleteByIdEmployee(String idEmployee);
 }

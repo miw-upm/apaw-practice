@@ -82,7 +82,7 @@ public class OwnerCarEntity {
 
     @Override
     public String toString() {
-        return "OwnerEntity{" +
+        return "OwnerClinicEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", driverLicense='" + driverLicense + '\'' +

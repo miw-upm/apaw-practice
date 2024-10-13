@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
@@ -23,10 +22,11 @@ class BankAccountPersistenceMongodbIT {
 
     @Test
     void testUpdateNotFound() {
+        InvestmentFund investmentFund = new InvestmentFund("FundC", new BigDecimal("3000.0"), 10);
         Client client =
-                new Client("11111111A", "Client1", "Client1", 111111111, "email1@example.com",emptyList());
+                new Client("00000", "Client1", "Client1", 111111111, "email1@example.com", List.of(investmentFund));
         BankAccount bankAccount =
-                new BankAccount("IBAN1", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, client);
+                new BankAccount("IBAN4", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, client);
         assertThrows(NotFoundException.class, () -> this.bankAccountPersistenceMongodb.update("00000", bankAccount));
     }
 

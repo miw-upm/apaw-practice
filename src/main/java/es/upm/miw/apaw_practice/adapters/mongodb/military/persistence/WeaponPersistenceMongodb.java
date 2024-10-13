@@ -10,8 +10,12 @@ public class WeaponPersistenceMongodb implements WeaponPersistence {
     private final WeaponRepository weaponRepository;
 
     @Autowired
-    public WeaponPersistenceMongodb(WeaponRepository weaponRepository) { this.weaponRepository = weaponRepository; }
+    public WeaponPersistenceMongodb(WeaponRepository weaponRepository) {
+        this.weaponRepository = weaponRepository;
+    }
 
     @Override
-    public void delete(String serialCode) { this.weaponRepository.deleteBySerialCode(serialCode); }
+    public void delete(String serialCode) {
+        this.weaponRepository.deleteBySerialCode(serialCode);
+    }
 }

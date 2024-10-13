@@ -35,4 +35,9 @@ public class GuestResource {
     public void delete(@PathVariable String nif) {
         this.guestService.delete(nif);
     }
+
+    @PutMapping(NIF_ID)
+    public Guest update(@PathVariable String nif, @RequestBody Guest guest) {
+        return this.guestService.update(nif, guest);
+    }
 }
