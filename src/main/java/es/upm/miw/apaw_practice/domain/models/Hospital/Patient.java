@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appoinment;
 import java.util.List;
 
 public class Patient {
