@@ -6,7 +6,7 @@ public class Doctor {
     private String id;
     private String name;
     private BigDecimal salary;
-    private String specialty; 
+    private String specialty;
 
     // Constructor
     public Doctor(String id, String name, BigDecimal salary, String specialty) {
@@ -23,13 +23,7 @@ public class Doctor {
     }
 
 
-    public Doctor(String id, String name, BigDecimal salary, String hospitalId) {
-        this.id = id;
-        this.name = name;
-        this.salary = salary;
-        this.hospitalId = hospitalId;
-    }
-
+ 
     // Getters y Setters
     public String getId() {
         return id;
