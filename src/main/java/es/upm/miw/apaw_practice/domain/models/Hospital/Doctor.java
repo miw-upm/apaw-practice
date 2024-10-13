@@ -1,4 +1,4 @@
-ppackage es.upm.miw.apaw_practice.domain.models.Hospital;
+package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.math.BigDecimal;
 
 public class Doctor {
