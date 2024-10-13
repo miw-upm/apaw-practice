@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
+import   es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
