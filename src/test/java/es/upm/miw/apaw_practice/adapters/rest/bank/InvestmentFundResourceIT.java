@@ -15,7 +15,7 @@ class InvestmentFundResourceIT {
     void testDelete() {
         this.webTestClient
                 .delete()
-                .uri(InvestmentFundResource.FUNDS + InvestmentFundResource.NAME, "Fund1")
+                .uri(InvestmentFundResource.FUNDS + InvestmentFundResource.NAME, "FundC")
                 .exchange()
                 .expectStatus().isOk();
     }
