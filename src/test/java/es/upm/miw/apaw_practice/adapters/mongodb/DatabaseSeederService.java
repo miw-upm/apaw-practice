@@ -6,7 +6,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.basketball.BasketballSeederServ
 import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
-
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.HospitalSeederService;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
 
@@ -28,6 +28,7 @@ public class DatabaseSeederService {
     private final ShopSeederService shopSeederService;
 
     private final CompetitionSeederService competitionSeederService;
+    private final HospitalSeederService hospitalSeederService;
     private final MilitarySeederService militarySeederService;
     private final ArtMuseumSeederService artMuseumSeederService;
     private final HotelRetiredSeederService hotelRetiredSeederService;
@@ -46,6 +47,7 @@ public class DatabaseSeederService {
     @Autowired
     public DatabaseSeederService(
             ShopSeederService shopSeederService,
+            hospitalSeederService hospitalSeederService,
             CompetitionSeederService competitionSeederService,
             MilitarySeederService militarySeederService,
             ArtMuseumSeederService artMuseumSeederService,
@@ -62,6 +64,7 @@ public class DatabaseSeederService {
             DeliveryFoodSeederService deliveryFoodSeederService
     ) {
         this.shopSeederService = shopSeederService;
+        this.hospitalSeederService=hospitalSeederService
         this.universitySeederService = universitySeederService;
         this.competitionSeederService = competitionSeederService;
         this.militarySeederService = militarySeederService;
@@ -82,6 +85,7 @@ public class DatabaseSeederService {
 
     public void seedDatabase() {
         this.shopSeederService.seedDatabase();
+        this.hospitalSeederService.seedDatabase();
         this.universitySeederService.seedDatabase();
         this.competitionSeederService.seedDatabase();
         this.militarySeederService.seedDatabase();
@@ -101,6 +105,7 @@ public class DatabaseSeederService {
 
     public void deleteAll() {
         this.shopSeederService.deleteAll();
+        this.hospitalSeederService.deleteAll();
         this.universitySeederService.deleteAll();
         this.competitionSeederService.deleteAll();
         this.militarySeederService.deleteAll();
