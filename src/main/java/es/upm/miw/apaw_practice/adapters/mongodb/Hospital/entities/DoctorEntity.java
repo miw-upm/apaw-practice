@@ -86,6 +86,9 @@ public class DoctorEntity {
     public boolean equals(Object obj) {
         return this == obj || (obj != null && getClass() == obj.getClass() && id.equals(((DoctorEntity) obj).id));
     }
+    public Doctor toDoctor() {
+        return new Doctor(this.id, this.name, this.salary, this.specialization);
+    }
 
     @Override
     public String toString() {

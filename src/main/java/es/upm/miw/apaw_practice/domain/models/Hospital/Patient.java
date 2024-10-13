@@ -12,6 +12,7 @@ public class Patient {
     private boolean hasInsurance;
     private Appointment appointment;
 
+ 
     public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) {
         this.dni = dni;
         this.fullname = fullname;

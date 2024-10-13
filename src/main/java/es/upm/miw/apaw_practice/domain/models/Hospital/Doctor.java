@@ -9,6 +9,9 @@ public class Doctor {
     private String hospitalId;
 
     // Constructor
+    public Doctor() {
+        // Default constructor
+    }
 
 
     public Doctor(String id, String name, BigDecimal salary, String hospitalId) {
