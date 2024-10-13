@@ -37,8 +37,8 @@ public class HospitalSeederService {
 
         // Seed Hospitals
         HospitalEntity[] hospitals = {
-                new HospitalEntity("HOSP001", "Hospital General", "123 Main St"),
-                new HospitalEntity("HOSP002", "Hospital Universitario", "456 University Ave")
+                new HospitalEntity("Hospital General", "123 Main St", 200),
+                new HospitalEntity("Hospital Universitario", "456 University Ave", 300)
         };
         this.hospitalRepository.saveAll(Arrays.asList(hospitals));
 
