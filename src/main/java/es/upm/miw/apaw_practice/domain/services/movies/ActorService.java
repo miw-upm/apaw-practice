@@ -13,9 +13,18 @@ public class ActorService {
     @Autowired
     public ActorService(ActorPersistence actorPersistence) { this.actorPersistence = actorPersistence; }
 
+    public void updateActor(Actor actor) {
+        this.actorPersistence.update(actor);
+    }
+
     public void updateAvailability(String artisticName, boolean availability) {
         Actor actor = this.actorPersistence.findByArtisticName(artisticName);
         actor.setIsAvailable(availability);
         this.actorPersistence.update(actor);
     }
+
+    public Actor findByArtisticName(String artisticName) {
+        return this.actorPersistence.findByArtisticName(artisticName);
+    }
+
 }

@@ -1,11 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.rest.movies;
 
+import es.upm.miw.apaw_practice.domain.models.movies.Actor;
 import es.upm.miw.apaw_practice.domain.services.movies.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(ActorResource.ACTORS)
@@ -16,6 +14,16 @@ public class ActorResource {
 
     @Autowired
     public ActorResource(ActorService actorService) { this.actorService = actorService; }
+
+    @GetMapping("/{artisticName}")
+    public Actor getActorByArtisticName(@PathVariable String artisticName) {
+        return this.actorService.findByArtisticName(artisticName);
+    }
+
+    @PutMapping
+    public void update(@RequestBody Actor actor) {
+        this.actorService.updateActor(actor);
+    }
 
     @PatchMapping
     public void updateAvailability(@RequestParam String artisticName, @RequestParam boolean availability){
