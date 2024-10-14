@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.domain.services.videogame;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.ConsoleCompanyRepository;
 import es.upm.miw.apaw_practice.domain.models.videogame.ConsoleCompany;
 import es.upm.miw.apaw_practice.domain.models.videogame.ConsoleCompanyActivedUpdating;
 import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.ConsoleCompanyPersistence;
@@ -20,12 +19,12 @@ public class ConsoleCompanyService {
     }
 
     public ConsoleCompany updateActiveCompany(String consoleInformation) {
-        ConsoleCompany consoleCompany1 = this.consoleCompanyPersistence.readByCompanyInformation(consoleInformation);
+        ConsoleCompany consoleCompany1 = this.consoleCompanyPersistence.readById(consoleInformation);
         consoleCompany1.setActive(true);
         return this.consoleCompanyPersistence.updateConsoleCompany(consoleCompany1);
     }
 
-    public void updateAllCompanyActive(Stream<ConsoleCompanyActivedUpdating> consoleCompanyActivedUpdatingStream) {
-        consoleCompanyActivedUpdatingStream.forEach(consoleCompanyNewStatus -> {updateActiveCompany(consoleCompanyNewStatus.getCompanyInformation());});
+    public void updateAllCompanyActive(Stream<ConsoleCompanyActivedUpdating> consoleCompanyActivedUpdatingList) {
+        consoleCompanyActivedUpdatingList.forEach(consoleCompanyNewStatus -> {updateActiveCompany(consoleCompanyNewStatus.getCompanyInformation());});
     }
 }
