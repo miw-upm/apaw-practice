@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.wuhshu_sport;
 
 import java.time.Duration;
+import java.util.Objects;
 
 public class CompetitionForm {
 
@@ -49,5 +50,18 @@ public class CompetitionForm {
                 ", duration=" + duration +
                 ", category='" + category + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CompetitionForm that = (CompetitionForm) o;
+        return Objects.equals(score, that.score) && Objects.equals(duration, that.duration) && Objects.equals(category, that.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(score, duration, category);
     }
 }
