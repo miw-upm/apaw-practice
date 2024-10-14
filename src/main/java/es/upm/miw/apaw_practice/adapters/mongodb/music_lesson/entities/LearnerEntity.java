@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import es.upm.miw.apaw_practice.domain.models.music_lesson.Learner;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -91,7 +90,7 @@ public class LearnerEntity {
   }
 
   public Learner toLearner() {
-    var branch = (this.branch != null) ? this.branch.toBranch(): null;
+    var branch = (this.branch != null) ? this.branch.toBranch() : null;
     var lessons = this.lessons.stream()
         .map(LessonEntity::toLesson)
         .toList();

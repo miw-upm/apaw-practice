@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.models.music_lesson.MusicalInstrument;
@@ -18,6 +19,11 @@ class MusicalInstrumentPersistenceMongodbIT {
     MusicalInstrument actualMusicalInstrument = this.musicalInstrumentPersistenceMongodb.readByModel("GBS-LP-234");
     assertEquals("Intermediate", actualMusicalInstrument.getDifficultyLevel());
     assertEquals("Electric Guitar", actualMusicalInstrument.getType());
+  }
+
+  @Test
+  void testExistsModel() {
+    assertTrue(this.musicalInstrumentPersistenceMongodb.existsModel("GBS-LP-234"));
   }
 
 }

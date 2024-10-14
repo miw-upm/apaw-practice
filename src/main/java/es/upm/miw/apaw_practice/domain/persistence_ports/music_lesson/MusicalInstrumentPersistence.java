@@ -12,4 +12,7 @@ public interface MusicalInstrumentPersistence {
 
   Stream<MusicalInstrument> readAll();
 
+  MusicalInstrument create(MusicalInstrument musicalInstrument);
+
+  boolean existsModel(String model);
 }

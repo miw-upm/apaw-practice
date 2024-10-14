@@ -33,4 +33,18 @@ public class MusicalInstrumentPersistenceMongodb implements MusicalInstrumentPer
         .stream()
         .map(MusicalInstrumentEntity::toMusicalInstrument);
   }
+
+  @Override
+  public MusicalInstrument create(MusicalInstrument musicalInstrument) {
+    return this.musicalInstrumentRepository
+        .save(new MusicalInstrumentEntity(musicalInstrument))
+        .toMusicalInstrument();
+  }
+
+  @Override
+  public boolean existsModel(String model) {
+    return this.musicalInstrumentRepository
+        .findByModel(model)
+        .isPresent();
+  }
 }
