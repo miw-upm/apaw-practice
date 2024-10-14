@@ -10,4 +10,5 @@ public interface MenuPersistence {
 
     Menu create(Menu menu);
 
+    Menu update(String name, Menu menu);
 }

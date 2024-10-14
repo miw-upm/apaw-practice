@@ -1,10 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.rest.delivery_food;
 
+import es.upm.miw.apaw_practice.domain.models.delivery_food.Menu;
 import es.upm.miw.apaw_practice.domain.services.delivery_food.MenuService;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(MenuResource.MENU)
@@ -22,5 +20,10 @@ public class MenuResource {
     @DeleteMapping(NAME_ID)
     public void delete(@PathVariable String name) {
         this.menuService.delete(name);
+    }
+
+    @PutMapping(NAME_ID)
+    public Menu update(@PathVariable String name, @RequestBody Menu menu){
+        return this.menuService.update(name, menu);
     }
 }
