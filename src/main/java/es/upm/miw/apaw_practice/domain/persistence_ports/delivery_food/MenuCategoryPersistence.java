@@ -7,4 +7,6 @@ import java.util.stream.Stream;
 public interface MenuCategoryPersistence {
 
     Stream<MenuCategory> findByActive(Boolean active);
+
+    MenuCategory read(String name);
 }

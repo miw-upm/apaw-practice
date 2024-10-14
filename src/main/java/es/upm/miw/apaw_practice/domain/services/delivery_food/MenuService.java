@@ -20,4 +20,8 @@ public class MenuService {
     public Menu read(String name){
         return menuPersistence.read(name);
     }
+
+    public Menu update(String name, Menu menu) {
+        return menuPersistence.update(name, menu);
+    }
 }
