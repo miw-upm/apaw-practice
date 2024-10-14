@@ -21,7 +21,7 @@ public class Animal {
         this.ownerClinic = ownerClinic;
     }
 
-    public static Animal ofIdAnimal(Animal animal){
+    public static Animal ofName(Animal animal){
         Animal animalDto = new Animal();
         animalDto.setName(animal.getName());
         return animalDto;

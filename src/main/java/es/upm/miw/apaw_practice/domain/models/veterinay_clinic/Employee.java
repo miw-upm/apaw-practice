@@ -42,10 +42,13 @@ public class Employee {
         this.animals = animals;
     }
 
-    public static Employee ofName(Employee employee) {
-        Employee employeeDto = new Employee();
-        employeeDto.setName(employee.getName());
-        return employeeDto;
+    public static Employee ofAnimalName(Employee employee) {
+        employee.setAnimals(
+                employee.animals.stream()
+                        .map(Animal::ofName)
+                        .toList()
+        );
+        return employee;
     }
 
     @Override
