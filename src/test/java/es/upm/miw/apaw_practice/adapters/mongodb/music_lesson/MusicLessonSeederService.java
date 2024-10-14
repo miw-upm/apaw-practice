@@ -42,9 +42,9 @@ public class MusicLessonSeederService {
     this.musicalInstrumentRepository.saveAll(Arrays.asList(musicalInstrumentEntities));
 
     BranchEntity[] branchEntities = {
-        new BranchEntity("MAD-CTRH", "Serrano Street, 45", "913245678"),
-        new BranchEntity("MAD-PRDO", "Prado Avenue, 28", "914567890"),
-        new BranchEntity("MAD-SBCT", "Gran Via Street, 12", "912345778")
+        new BranchEntity("MAD-CTRH", "Serrano Street, 45; Barcelona", "913245678"),
+        new BranchEntity("MAD-PRDO", "Prado Avenue, 28; Madrid", "914567890"),
+        new BranchEntity("MAD-SBCT", "Gran Via Street, 12; Madrid", "912345778")
     };
     this.branchRepository.saveAll(Arrays.asList(branchEntities));
 
