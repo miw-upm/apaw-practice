@@ -25,13 +25,14 @@ public class ConsoleCompanyrEntity {
         //empty for framework
     }
 
-    public ConsoleCompanyrEntity(String companyInformation, String website, Integer numberOfEmployee, Boolean active, LocalDate foundationDate) {
+    public ConsoleCompanyrEntity(String companyInformation, String website, Integer numberOfEmployee, Boolean active, LocalDate foundationDate, List<ConsoleEntity> consoleEntities) {
         this.id = UUID.randomUUID().toString();
         this.companyInformation = companyInformation;
         this.website = website;
         this.numberOfEmployee = numberOfEmployee;
         this.active = active;
         this.foundationDate = foundationDate;
+        this.consoleEntities = consoleEntities;
     }
     public String getId() {
         return id;
@@ -68,6 +69,12 @@ public class ConsoleCompanyrEntity {
     }
     public void setFoundationDate(LocalDate foundationDate) {
         this.foundationDate = foundationDate;
+    }
+    public List<ConsoleEntity> getConsoleEntities() {
+        return consoleEntities;
+    }
+    public void setConsoleEntities(List<ConsoleEntity> consoleEntities) {
+        this.consoleEntities = consoleEntities;
     }
 
     public ConsoleCompany toConsoleCompany() {

@@ -17,7 +17,7 @@ public class VideoGamerEntity {
     private String videoGameAlias;
     private Integer numberOfPlayer;
     private Boolean crossPlatform;
-    private LocalDate LocalDate;
+    private LocalDate releaseDate;
 
     public VideoGamerEntity() {
         //empty for framework
@@ -50,11 +50,11 @@ public class VideoGamerEntity {
     public void setCrossPlatform(Boolean crossPlatform) {
         this.crossPlatform = crossPlatform;
     }
-    public LocalDate getLocalDate() {
-        return LocalDate;
+    public LocalDate getReleaseDate() {
+        return releaseDate;
     }
-    public void setLocalDate(LocalDate localDate) {
-        this.LocalDate = localDate;
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public VideoGame toVideoGame() {
@@ -84,7 +84,7 @@ public class VideoGamerEntity {
                 ", videoGameAlias='" + videoGameAlias + '\'' +
                 ", numberOfPlayer='" + numberOfPlayer + '\'' +
                 ", crossPlatform=" + crossPlatform +
-                ", LocalDate=" + LocalDate +
+                ", releaseDate=" + releaseDate +
                 '}';
     }
 }
