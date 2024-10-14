@@ -25,8 +25,6 @@ class ClientPersistenceMongodbIT {
 
     @Test
     void testFindByDni() {
-        bankSeederService.deleteAll();
-        bankSeederService.seedDatabase();
         Client client = this.clientPersistenceMongodb.findByDni("11111111A");
         assertEquals("Client1", client.getName());
         assertEquals("Client1", client.getSurname());

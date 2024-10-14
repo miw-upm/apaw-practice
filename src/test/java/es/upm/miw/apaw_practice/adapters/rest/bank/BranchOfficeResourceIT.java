@@ -31,7 +31,7 @@ class BranchOfficeResourceIT {
         Client client1 = new Client("11111111A", "Client1", "Client1", 111111111, "email1@example.com", emptyList());
         Client client2 = new Client("22222222B", "Client2", "Client2", 222222222, "email2@example.com", emptyList());
         List<Client> clients = Arrays.asList(client1, client2);
-        BranchOffice branchOffice = new BranchOffice("Building1", 10,10,clients);
+        BranchOffice branchOffice = new BranchOffice("Building8", 10,10,clients);
         this.webTestClient
                 .post()
                 .uri(OFFICES)
@@ -53,16 +53,14 @@ class BranchOfficeResourceIT {
 
     @Test
     void testGetAssociatedBalance() {
-        bankSeederService.deleteAll();
-        bankSeederService.seedDatabase();
         this.webTestClient
                 .get()
-                .uri(OFFICES + BUILDING_NAME + BALANCE, "Building1")
+                .uri(OFFICES + BUILDING_NAME + BALANCE, "Building10")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BigDecimal.class)
                 .value(value -> {
-                    assertEquals(new BigDecimal("40100.0"), value);
+                    assertEquals(new BigDecimal("1500.0"), value);
                 });
     }
 

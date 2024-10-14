@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.car;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
-import es.upm.miw.apaw_practice.domain.models.bank.Client;
 import es.upm.miw.apaw_practice.domain.models.car.OwnerCar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
 class OwnerCarResourceIT {
-
     @Autowired
     private WebTestClient webTestClient;
 
@@ -62,7 +60,7 @@ class OwnerCarResourceIT {
                 .body(BodyInserters.fromValue("Juan"))
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(Client.class)
+                .expectBody(OwnerCar.class)
                 .value(Assertions::assertNotNull)
                 .value(ownerCar -> assertEquals("Juan", ownerCar.getName()));
     }
