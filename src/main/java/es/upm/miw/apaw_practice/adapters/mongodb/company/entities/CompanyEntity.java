@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.company.entities;
 
+import es.upm.miw.apaw_practice.domain.models.company.Company;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -35,6 +36,8 @@ public class CompanyEntity {
         this.creationDate = creationDate;
         this.departmentEntities = departmentEntities;
     }
+
+
 
 
     public String getCompanyname() {

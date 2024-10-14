@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,9 +17,8 @@ public class DepartmentEntity {
 
     @Indexed(unique = true)
     private String departmentName;
-
-    private String location;
-
+    private BigDecimal annualBudget;
+    private int employeeCount;
     @DBRef
     private ManagementEntity managementEntity; // Assuming a relationship with management
 
@@ -26,10 +26,11 @@ public class DepartmentEntity {
         // Empty for framework
     }
 
-    public DepartmentEntity(String departmentName, String location, ManagementEntity managementEntity) {
+    public DepartmentEntity(String departmentName,BigDecimal annualBudget,int employeeCount, ManagementEntity managementEntity) {
         this.id = UUID.randomUUID().toString();
         this.departmentName = departmentName;
-        this.location = location;
+        this.annualBudget = annualBudget;
+        this.employeeCount = employeeCount;
         this.managementEntity = managementEntity;
     }
 
@@ -50,13 +51,20 @@ public class DepartmentEntity {
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
     }
-
-    public String getLocation() {
-        return location;
+    public BigDecimal getAnnualBudget() {
+        return annualBudget;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setAnnualBudget(BigDecimal annualBudget) {
+        this.annualBudget = annualBudget;
+    }
+
+    public int getEmployeeCount() {
+        return employeeCount;
+    }
+
+    public void setEmployeeCount(int employeeCount) {
+        this.employeeCount = employeeCount;
     }
 
     public ManagementEntity getManagementEntity() {
@@ -87,7 +95,8 @@ public class DepartmentEntity {
         return "DepartmentEntity{" +
                 "id='" + id + '\'' +
                 ", departmentName='" + departmentName + '\'' +
-                ", location='" + location + '\'' +
+                ", annualBudget=" + annualBudget +
+                ", employeeCount=" + employeeCount +
                 ", managementEntity=" + managementEntity +
                 '}';
     }

@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.company.entities;
 
+import es.upm.miw.apaw_practice.domain.models.bank.BankAccount;
+import es.upm.miw.apaw_practice.domain.models.company.Management;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -17,16 +19,16 @@ public class ManagementEntity {
     private String name;
 
     @Field
-    private String position;
+    private boolean activated;
 
     public ManagementEntity() {
         // Empty for framework
     }
 
-    public ManagementEntity(String name, String position) {
+    public ManagementEntity(String name, boolean activated) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
-        this.position = position;
+        this.activated = activated;
     }
 
     // Getters and setters
@@ -47,13 +49,14 @@ public class ManagementEntity {
         this.name = name;
     }
 
-    public String getPosition() {
-        return position;
+    public boolean isActivated() {
+        return activated;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
+
 
     // equals, hashCode, toString
 
@@ -62,12 +65,13 @@ public class ManagementEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ManagementEntity that = (ManagementEntity) o;
-        return Objects.equals(name, that.name);
+        return activated == that.activated &&
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, activated);
     }
 
     @Override
@@ -75,7 +79,7 @@ public class ManagementEntity {
         return "ManagementEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", position='" + position + '\'' +
+                ", activated=" + activated +
                 '}';
     }
 }

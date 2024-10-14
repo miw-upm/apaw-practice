@@ -3,9 +3,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.company.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,22 +18,27 @@ public class ExpenseBillEntity {
     private String id;
 
     @Field
+    private String description;
+
+    @Field
     private BigDecimal amount;
 
     @Field
-    private LocalDate date;
+    private LocalDateTime date;
 
-    private String departmentId; // Assuming a reference to the department
+    @DBRef
+    private List<DepartmentEntity> departments;
 
     public ExpenseBillEntity() {
         // Empty for framework
     }
 
-    public ExpenseBillEntity(BigDecimal amount, LocalDate date, String departmentId) {
+    public ExpenseBillEntity(String description, BigDecimal amount, LocalDateTime date, List<DepartmentEntity> departments) {
         this.id = UUID.randomUUID().toString();
+        this.description = description;
         this.amount = amount;
         this.date = date;
-        this.departmentId = departmentId;
+        this.departments = departments;
     }
 
     // Getters and setters
@@ -44,6 +51,14 @@ public class ExpenseBillEntity {
         this.id = id;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
@@ -52,20 +67,20 @@ public class ExpenseBillEntity {
         this.amount = amount;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public List<DepartmentEntity> getDepartments() {
+        return departments;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartments(List<DepartmentEntity> departments) {
+        this.departments = departments;
     }
 
     // equals, hashCode, toString
@@ -75,21 +90,25 @@ public class ExpenseBillEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ExpenseBillEntity that = (ExpenseBillEntity) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(description, that.description) &&
+                Objects.equals(amount, that.amount) &&
+                Objects.equals(date, that.date) &&
+                Objects.equals(departments, that.departments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(description, amount, date, departments);
     }
 
     @Override
     public String toString() {
         return "ExpenseBillEntity{" +
                 "id='" + id + '\'' +
+                ", description='" + description + '\'' +
                 ", amount=" + amount +
                 ", date=" + date +
-                ", departmentId='" + departmentId + '\'' +
+                ", departments=" + departments +
                 '}';
     }
 }
