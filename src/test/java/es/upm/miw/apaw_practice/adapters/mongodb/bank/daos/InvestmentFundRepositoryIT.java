@@ -29,7 +29,7 @@ class InvestmentFundRepositoryIT {
     @Test
     void testDeleteByName() {
         assertTrue(this.investmentFundRepository.deleteByName("FundD").isPresent());
-        assertFalse(this.investmentFundRepository.deleteByName("FundD").isPresent());
+        assertFalse(this.investmentFundRepository.findByName("FundD").isPresent());
     }
 
 }

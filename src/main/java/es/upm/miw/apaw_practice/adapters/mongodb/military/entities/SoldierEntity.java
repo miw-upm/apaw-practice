@@ -68,6 +68,13 @@ public class SoldierEntity {
         this.birthDate = birthDate;
     }
 
+    public void fromSoldier(String identityDocument, String fullName, String rank, LocalDate birthDate) {
+        this.identityDocument = identityDocument;
+        this.fullName = fullName;
+        this.rank = rank;
+        this.birthDate = birthDate;
+    }
+
     public Soldier toSoldier() {
         Soldier soldier = new Soldier();
         BeanUtils.copyProperties(this, soldier);

@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.entities;
 
+import es.upm.miw.apaw_practice.domain.models.delivery_food.Menu;
+import es.upm.miw.apaw_practice.domain.models.delivery_food.MenuCategory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -94,5 +97,17 @@ public class MenuEntity {
                 ", categories=" + categories +
                 ", rating=" + rating +
                 '}';
+    }
+
+    public Menu toMenu() {
+        Menu menu = new Menu();
+        BeanUtils.copyProperties(this, menu, "categories");
+        if (this.categories != null) {
+            List<MenuCategory> menuCategories = this.categories.stream()
+                    .map(MenuCategoryEntity::toMenuCategory)
+                    .toList();
+            menu.setCategories(menuCategories);
+        }
+        return menu;
     }
 }

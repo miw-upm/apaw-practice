@@ -46,7 +46,7 @@ public class Actor {
                 "  artisticName: \"" + artisticName + "\"" + NEWLINE_WITH_COMMA +
                 "  realName: \"" + realName + "\"" + NEWLINE_WITH_COMMA +
                 "  isAvailable: " + isAvailable + NEWLINE_WITH_COMMA +
-                "  birthDate: \"" + birthDate +  "\n" +
+                "  birthDate: \"" + birthDate +  "\"\n" +
                 "}";
     }
 

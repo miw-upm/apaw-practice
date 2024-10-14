@@ -1,15 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Clinic;
 import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Employee;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 class ClinicPersistenceMongodbIT {
@@ -24,7 +22,12 @@ class ClinicPersistenceMongodbIT {
         assertEquals(1, clinic.getEmployees().size());
         assertTrue(clinic.getEmployees().stream()
                 .map(Employee::getName)
-                .collect(Collectors.toList())
+                .toList()
                 .contains("Paco"));
+    }
+
+    @Test
+    void testReadByNameNotFound() {
+        assertThrows(NotFoundException.class, () -> this.clinicPersistence.readByName("Happy Heal"));
     }
 }

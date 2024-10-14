@@ -22,7 +22,7 @@ public class OwnerNightLifeService {
 
     public Owner readByName(String name) {
         return this.ownerPersistence.readByName(name)
-                .orElseThrow(() -> new RuntimeException("Owner not found: " + name));
+                .orElseThrow(() -> new RuntimeException("OwnerClinic not found: " + name));
     }
 
     public BigDecimal calculateTotalPriceByOwner(String name) {

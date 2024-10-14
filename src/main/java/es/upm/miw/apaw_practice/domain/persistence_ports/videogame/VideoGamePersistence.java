@@ -7,10 +7,9 @@ import java.util.stream.Stream;
 
 @Repository
 public interface VideoGamePersistence {
-    Stream<VideoGame> readAll();
-    VideoGame create(VideoGame videoGame);
-    VideoGame update(String videoGameAlias, VideoGame videoGame);
     VideoGame read(String videoGameAlias);
-    boolean exitsVideoGameAlias(String videoGameAlias);
-    void delete(String videoGameAlias);
+    VideoGame create(VideoGame videoGame);
+    boolean existVideoGameAlias(String videoGameAlias);
+    VideoGame update(String videoGameAlias, VideoGame videoGame);
+    Stream<VideoGame> readAll();
 }

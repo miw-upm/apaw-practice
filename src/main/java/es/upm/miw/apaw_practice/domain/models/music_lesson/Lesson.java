@@ -6,34 +6,23 @@ import java.util.List;
 
 public class Lesson {
 
-  private String id;
-
   private LocalDate date;
 
   private Integer durationInHours;
 
   private BigDecimal fee;
 
-  private List<MusicalInstrument> musicalInstrument;
+  private List<MusicalInstrument> musicalInstruments;
 
   public Lesson() {
     //Empty for framework
   }
 
-  public Lesson(String id, LocalDate date, Integer durationInHours, BigDecimal fee, List<MusicalInstrument> musicalInstrument) {
-    this.id = id;
+  public Lesson(LocalDate date, Integer durationInHours, BigDecimal fee, List<MusicalInstrument> musicalInstruments) {
     this.date = date;
     this.durationInHours = durationInHours;
     this.fee = fee;
-    this.musicalInstrument = musicalInstrument;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
+    this.musicalInstruments = musicalInstruments;
   }
 
   public LocalDate getDate() {
@@ -52,12 +41,12 @@ public class Lesson {
     this.durationInHours = durationInHours;
   }
 
-  public List<MusicalInstrument> getMusicalInstrument() {
-    return musicalInstrument;
+  public List<MusicalInstrument> getMusicalInstruments() {
+    return musicalInstruments;
   }
 
-  public void setMusicalInstrument(List<MusicalInstrument> musicalInstrument) {
-    this.musicalInstrument = musicalInstrument;
+  public void setMusicalInstruments(List<MusicalInstrument> musicalInstruments) {
+    this.musicalInstruments = musicalInstruments;
   }
 
   public BigDecimal getFee() {
@@ -71,10 +60,9 @@ public class Lesson {
   @Override
   public String toString() {
     return "Lesson{" +
-        "id='" + id + '\'' +
         ", date=" + date +
         ", durationInHours=" + durationInHours +
-        ", musicalInstrument=" + musicalInstrument +
+        ", musicalInstruments=" + musicalInstruments +
         ", fee=" + fee +
         '}';
   }

@@ -7,16 +7,23 @@ import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSee
 import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.HospitalSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.course.CourseSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.GunStoreSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.HotelSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.MartialArtSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.MusicLessonSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.ShoppingCenterSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.ThemeParkSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.UniversitySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.VideoGameSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.WushuSportSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.VeterinaryClinicSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.movies.MoviesSeederService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +47,13 @@ public class DatabaseSeederService {
     private final ShoppingCenterSeederService shoppingCenterSeederService;
     private final BasketballSeederService basketballSeederService;
     private final DeliveryFoodSeederService deliveryFoodSeederService;
+    private final MoviesSeederService moviesSeederService;
+    private final HotelSeederService hotelSeederService;
+    private final MusicLessonSeederService musicLessonSeederService;
+    private final CourseSeederService courseSeederService;
+    private final VideoGameSeederService videoGameSeederService;
+    private final GunStoreSeederService gunStoreSeederService;
+    private final MartialArtSeederService martialArtSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -59,7 +73,14 @@ public class DatabaseSeederService {
             NightLifeSeederService nightLifeSeederService,
             ShoppingCenterSeederService shoppingCenterSeederService,
             BasketballSeederService basketballSeederService,
-            DeliveryFoodSeederService deliveryFoodSeederService
+            DeliveryFoodSeederService deliveryFoodSeederService,
+            MoviesSeederService moviesSeederService,
+            HotelSeederService hotelSeederService,
+            MusicLessonSeederService musicLessonSeederService,
+            CourseSeederService courseSeederService,
+            VideoGameSeederService videoGameSeederService,
+            GunStoreSeederService gunStoreSeederService,
+            MartialArtSeederService martialArtSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.hospitalSeederService = hospitalSeederService;
@@ -78,7 +99,15 @@ public class DatabaseSeederService {
         this.shoppingCenterSeederService = shoppingCenterSeederService;
         this.basketballSeederService = basketballSeederService;
         this.deliveryFoodSeederService = deliveryFoodSeederService;
-        this.seedDatabase();
+        this.moviesSeederService = moviesSeederService;
+        this.hotelSeederService = hotelSeederService;
+        this.musicLessonSeederService = musicLessonSeederService;
+        this.courseSeederService = courseSeederService;
+        this.videoGameSeederService = videoGameSeederService;
+        this.gunStoreSeederService = gunStoreSeederService;
+        this.martialArtSeederService = martialArtSeederService;
+
+      this.seedDatabase();
     }
 
     public void seedDatabase() {
@@ -99,6 +128,13 @@ public class DatabaseSeederService {
         shoppingCenterSeederService.seedDatabase();
         basketballSeederService.seedDatabase();
         deliveryFoodSeederService.seedDatabase();
+        moviesSeederService.seedDatabase();
+        hotelSeederService.seedDatabase();
+        musicLessonSeederService.seedDatabase();
+        courseSeederService.seedDatabase();
+        videoGameSeederService.seedDatabase();
+        gunStoreSeederService.seedDatabase();
+        martialArtSeederService.seedDatabase() ;
     }
 
     public void deleteAll() {
@@ -119,8 +155,17 @@ public class DatabaseSeederService {
         shoppingCenterSeederService.deleteAll();
         basketballSeederService.deleteAll();
         deliveryFoodSeederService.deleteAll();
+        moviesSeederService.deleteAll();
+        hotelSeederService.deleteAll();
+        musicLessonSeederService.deleteAll();
+        courseSeederService.deleteAll();
+        videoGameSeederService.deleteAll();
+        gunStoreSeederService.deleteAll();
+        martialArtSeederService.deleteAll();
+        this.seedDatabase();
     }
 
+  
     public void reSeedDatabase() {
         this.deleteAll();
         this.seedDatabase();

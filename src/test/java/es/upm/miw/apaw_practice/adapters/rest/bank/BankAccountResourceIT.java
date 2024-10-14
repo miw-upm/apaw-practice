@@ -16,7 +16,6 @@ import java.util.List;
 
 import static es.upm.miw.apaw_practice.adapters.rest.bank.BankAccountResource.ACCOUNTS;
 import static es.upm.miw.apaw_practice.adapters.rest.bank.BankAccountResource.IBAN;
-import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
@@ -27,10 +26,11 @@ class BankAccountResourceIT {
 
     @Test
     void testUpdateNotFound() {
+        InvestmentFund investmentFund = new InvestmentFund("FundC", new BigDecimal("3000.0"), 10);
         Client client =
-                new Client("11111111A", "Client1", "Client1", 111111111, "email1@example.com",emptyList());
+                new Client("11111111A", "Client1", "Client1", 111111111, "email1@example.com", List.of(investmentFund));
         BankAccount bankAccount =
-                new BankAccount("IBAN1", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, client);
+                new BankAccount("IBAN4", new BigDecimal("100.0"), LocalDate.of(2023, 12, 1), false, client);
         this.webTestClient
                 .put()
                 .uri(ACCOUNTS + IBAN, "kk")

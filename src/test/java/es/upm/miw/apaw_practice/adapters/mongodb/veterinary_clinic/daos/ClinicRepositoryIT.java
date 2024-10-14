@@ -6,10 +6,9 @@ import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities.Empl
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.stream.Collectors;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 class ClinicRepositoryIT {
@@ -25,7 +24,18 @@ class ClinicRepositoryIT {
         assertEquals("Street San Francisco", clinic.getAddress());
         assertTrue(clinic.getEmployeeEntities().stream()
                 .map(EmployeeEntity::getName)
-                .collect(Collectors.toList())
+                .toList()
                 .contains("Paco"));
+    }
+
+    @Test
+    void testDeleteByName() {
+        ClinicEntity clinicEntity = new ClinicEntity("Your Heal", "Street Brasil", List.of());
+        this.clinicRepository.save(clinicEntity);
+        assertTrue(this.clinicRepository.findByName("Your Heal").isPresent());
+
+        int deletedCount = this.clinicRepository.deleteByName("Your Heal");
+        assertEquals(1, deletedCount);
+        assertFalse(this.clinicRepository.findByName("Your Heal").isPresent());
     }
 }

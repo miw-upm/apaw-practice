@@ -13,8 +13,8 @@ public class PieceService {
         this.piecePersistence = piecePersistence;
     }
 
-    public void create(Piece piece) {
-        piecePersistence.create(piece);
+    public Piece create(Piece piece) {
+        return piecePersistence.create(piece);
     }
 
     public boolean existsPartNumber(String partNumber) {
