@@ -1,4 +1,4 @@
-package es.upm.miw.apaw_practice.domain.persistence_ports.Hospita.AppoinmentPersistencel;
+package es.upm.miw.apaw_practice.domain.persistence_ports.Hospita;
 
 import java.util.List;
 import java.util.Optional;
