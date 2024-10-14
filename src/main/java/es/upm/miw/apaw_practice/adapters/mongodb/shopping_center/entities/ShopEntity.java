@@ -19,7 +19,7 @@ public class ShopEntity {
     private String name;
     private String address;
     @DBRef
-    private List<EmployeeEntity> employees;
+    private List<EmployeeShoppingCenterEntity> employees;
     @DBRef
     private List<ProviderEntity> providers;
 
@@ -27,7 +27,7 @@ public class ShopEntity {
         //empty from framework
     }
 
-    public ShopEntity(String name, String address, List<EmployeeEntity> employees, List<ProviderEntity> providers) {
+    public ShopEntity(String name, String address, List<EmployeeShoppingCenterEntity> employees, List<ProviderEntity> providers) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.address = address;
@@ -55,11 +55,11 @@ public class ShopEntity {
         this.address = address;
     }
 
-    public List<EmployeeEntity> getEmployees() {
+    public List<EmployeeShoppingCenterEntity> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<EmployeeEntity> employees) {
+    public void setEmployees(List<EmployeeShoppingCenterEntity> employees) {
         this.employees = employees;
     }
 
@@ -75,7 +75,7 @@ public class ShopEntity {
         Shop shop = new Shop();
         BeanUtils.copyProperties(this, shop, "employees", "providers");
         List<Employee> employees = this.employees.stream()
-                .map(EmployeeEntity::toEmployee)
+                .map(EmployeeShoppingCenterEntity::toEmployee)
                 .collect(Collectors.toList());
         shop.setEmployees(employees);
         List<Provider> providers = this.providers.stream()

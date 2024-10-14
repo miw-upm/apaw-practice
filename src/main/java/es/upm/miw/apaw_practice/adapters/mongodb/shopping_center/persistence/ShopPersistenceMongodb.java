@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.EmployeeShoppingCenterRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.ShopRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.EmployeeEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.EmployeeShoppingCenterEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.ShopEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.shopping_center.Shop;
@@ -44,8 +44,8 @@ public class ShopPersistenceMongodb implements ShopPersistence {
         ShopEntity shopEntity = this.shopRepository
                 .findById(shop.getId())
                 .orElseThrow(() -> new NotFoundException("Shop id:" + shop.getId()));
-        List<EmployeeEntity> employeeEntities = shop.getEmployees().stream()
-                .map(EmployeeEntity::new).collect(Collectors.toList());
+        List<EmployeeShoppingCenterEntity> employeeEntities = shop.getEmployees().stream()
+                .map(EmployeeShoppingCenterEntity::new).collect(Collectors.toList());
         shopEntity.setEmployees(employeeEntities);
         this.employeeShoppingCenterRepository.saveAll(employeeEntities);
         return this.shopRepository.save(shopEntity).toShop();

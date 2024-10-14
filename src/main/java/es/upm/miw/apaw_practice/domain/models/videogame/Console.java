@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
-import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Game;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -59,24 +57,13 @@ public class Console {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Console console = (Console) o;
-        return Objects.equals(consoleReference, console.consoleReference) && Objects.equals(serialNumber, console.serialNumber) && Objects.equals(portable, console.portable) && Objects.equals(creationDate, console.creationDate) && Objects.equals(videoGames, console.videoGames) && Objects.equals(videoGames, console.videoGames);
-    }
-
-    @Override
-    public int hashCode() {return Objects.hash(consoleReference, serialNumber, portable, creationDate, videoGames);}
-
-    @Override
     public String toString() {
         return "Console{" +
                 "consoleReference='" + consoleReference + '\'' +
                 ", serialNumber=" + serialNumber +
                 ", portable=" + portable +
                 ", creationDate=" + creationDate +
-                ", videoGames=" + videoGames +
+                ", videoGames=" + videoGames.stream().map(VideoGame::getVideoGameAlias).toList() +
                 '}';
     }
 }

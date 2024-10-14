@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Document
-public class EmployeeEntity {
+public class EmployeeShoppingCenterEntity {
     @Id
     private String id;
     @Indexed(unique = true)
@@ -19,11 +19,11 @@ public class EmployeeEntity {
     private String phone;
     private LocalDate hiringDay;
 
-    public EmployeeEntity() {
+    public EmployeeShoppingCenterEntity() {
         //empty from framework
     }
 
-    public EmployeeEntity(Employee employee) {
+    public EmployeeShoppingCenterEntity(Employee employee) {
         BeanUtils.copyProperties(employee, this);
         this.id = UUID.randomUUID().toString();
     }
