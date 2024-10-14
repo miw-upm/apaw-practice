@@ -33,6 +33,11 @@ public class MusicalInstrumentEntity {
     this.type = type;
   }
 
+  public MusicalInstrumentEntity(MusicalInstrument musicalInstrument) {
+    BeanUtils.copyProperties(musicalInstrument, this);
+    this.id = UUID.randomUUID().toString();
+  }
+
   public String getId() {
     return id;
   }
