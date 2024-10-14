@@ -7,8 +7,7 @@ import java.util.stream.Stream;
 
 @Repository
 public interface PlayerPersistence {
+    Player readyByPlayerName(String playerName);
+    void delete(String playerName);
     Stream<Player> readAll();
-    Player create(Player player);
-    Player update(String playerName, Player player);
-    boolean existsPlayer(String playerName);
 }

@@ -18,6 +18,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.ShoppingCenterSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.ThemeParkSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.university.UniversitySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.VideoGameSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.WushuSportSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.VeterinaryClinicSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.movies.MoviesSeederService;
@@ -48,6 +49,7 @@ public class DatabaseSeederService {
     private final HotelSeederService hotelSeederService;
     private final MusicLessonSeederService musicLessonSeederService;
     private final CourseSeederService courseSeederService;
+    private final VideoGameSeederService videoGameSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -71,7 +73,8 @@ public class DatabaseSeederService {
             MoviesSeederService moviesSeederService,
             HotelSeederService hotelSeederService,
             MusicLessonSeederService musicLessonSeederService,
-            CourseSeederService courseSeederService
+            CourseSeederService courseSeederService,
+            VideoGameSeederService videoGameSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.hospitalSeederService = hospitalSeederService;
@@ -94,6 +97,8 @@ public class DatabaseSeederService {
         this.hotelSeederService = hotelSeederService;
         this.musicLessonSeederService = musicLessonSeederService;
         this.courseSeederService = courseSeederService;
+        this.videoGameSeederService = videoGameSeederService;
+
       this.seedDatabase();
     }
 
@@ -119,6 +124,7 @@ public class DatabaseSeederService {
         hotelSeederService.seedDatabase();
         musicLessonSeederService.seedDatabase();
         courseSeederService.seedDatabase();
+        videoGameSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -143,6 +149,7 @@ public class DatabaseSeederService {
         hotelSeederService.deleteAll();
         musicLessonSeederService.deleteAll();
         courseSeederService.deleteAll();
+        videoGameSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {
