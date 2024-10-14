@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import org.springframework.stereotype.Repository;
-@Repository
-public interface AppoinmentPersistence {
-    List<Appointment> findAll();
 
+@Repository
+public interface AppointmentPersistence { // Corregido aquí
+    List<Appointment> findAll();
 }
