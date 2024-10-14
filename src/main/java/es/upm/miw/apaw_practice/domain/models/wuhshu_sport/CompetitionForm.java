@@ -13,6 +13,10 @@ public class CompetitionForm {
         //empty for framework
     }
 
+    public static CompetitionFormBuilders.Score builder() {
+        return new Builder();
+    }
+
     public CompetitionForm(Double score, Duration duration, String category) {
         this.score = score;
         this.duration = duration;
@@ -63,5 +67,35 @@ public class CompetitionForm {
     @Override
     public int hashCode() {
         return Objects.hash(score, duration, category);
+    }
+
+    public static class Builder implements CompetitionFormBuilders.Score, CompetitionFormBuilders.Category,CompetitionFormBuilders.Duration,CompetitionFormBuilders.Optionals {
+
+        private final CompetitionForm competitionForm;
+
+        public Builder() {
+            this.competitionForm = new CompetitionForm();
+        }
+
+        @Override
+        public CompetitionFormBuilders.Duration score(double score){
+            this.competitionForm.score = score;
+            return this;
+        }
+
+        @Override
+        public CompetitionFormBuilders.Category duration(java.time.Duration duration){
+            this.competitionForm.duration = duration;
+            return this;
+        }
+        @Override
+        public CompetitionFormBuilders.Optionals category(String category){
+            this.competitionForm.category = category;
+            return this;
+        }
+        @Override
+        public CompetitionForm build() {
+            return this.competitionForm;
+        }
     }
 }
