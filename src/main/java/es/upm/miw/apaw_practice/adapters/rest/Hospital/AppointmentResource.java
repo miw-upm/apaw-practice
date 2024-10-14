@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(AppointmentResource.APPOINTMENTS)
-public class AppointmentResource {
+public class AppoinmentPersistence {
 
     static final String APPOINTMENTS = "/hospital/appointments";
     static final String APPOINTMENT_ID = "/{id}";
