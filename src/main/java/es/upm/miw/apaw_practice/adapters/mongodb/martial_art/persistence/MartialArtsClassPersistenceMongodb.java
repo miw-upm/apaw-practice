@@ -45,17 +45,6 @@ public class MartialArtsClassPersistenceMongodb implements MartialArtsClassPersi
     }
 
     @Override
-    public MartialArtsClass update(String name, MartialArtsClass martialArtsClass) {
-        MartialArtsClassEntity martialArtsClassEntity = this.martialArtsClassRepository
-                .findByName(name)
-                .orElseThrow(() -> new NotFoundException("MartialArtsClass name: " + name));
-       // martialArtsClassEntity.(hotel);
-        return this.martialArtsClassRepository
-                .save(martialArtsClassEntity)
-                .toMartialArtsClass();
-    }
-
-    @Override
     public MartialArtsClass read(String name) {
         return this.martialArtsClassRepository
                 .findByName(name)
