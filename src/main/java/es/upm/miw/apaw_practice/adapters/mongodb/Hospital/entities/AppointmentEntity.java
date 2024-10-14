@@ -14,11 +14,11 @@ public class AppointmentEntity {
     private LocalTime time;
     private String location;
 
-    private String patientDni; // Link to the Patient
-    private String doctorDni; // Link to the Doctor
+    private String patientDni;
+    private String doctorDni;
 
     public AppointmentEntity() {
-        // Empty constructor for the framework
+     
     }
 
     public AppointmentEntity(Integer id, LocalDate date, LocalTime time, String location, String patientDni, String doctorDni) {
@@ -77,5 +77,10 @@ public class AppointmentEntity {
 
     public void setDoctorDni(String doctorDni) {
         this.doctorDni = doctorDni;
+    }
+    public Appointment toAppointment() {
+        Appointment appointment = new Appointment();
+
+        return appointment;
     }
 }
