@@ -63,6 +63,10 @@ public class MusicLessonSeederService {
             Arrays.asList(lessonEntities[0], lessonEntities[1]), branchEntities[0]),
         new LearnerEntity("N1254552", "Maria Perez", Boolean.TRUE,
             Arrays.asList(lessonEntities[2], lessonEntities[3]), branchEntities[1]),
+        new LearnerEntity("Y5879632", "Jose Perez", Boolean.TRUE,
+            Collections.emptyList(), branchEntities[2]),
+        new LearnerEntity("O4758589", "Mercedes Perez", Boolean.FALSE,
+            Collections.emptyList(), branchEntities[2])
     };
     this.learnerRepository.saveAll(Arrays.asList(learnerEntities));
   }
