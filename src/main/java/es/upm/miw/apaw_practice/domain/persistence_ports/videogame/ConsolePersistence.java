@@ -7,5 +7,5 @@ import java.util.stream.Stream;
 
 @Repository
 public interface ConsolePersistence {
-    Stream<Console> findByConsoleReferenceAndSerialNumber(String consoleReference, long serialNumber);
+    Stream<Console> findByConsoleReference(String consoleReference);
 }
