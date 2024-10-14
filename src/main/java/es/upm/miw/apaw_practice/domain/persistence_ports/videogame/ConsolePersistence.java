@@ -7,10 +7,5 @@ import java.util.stream.Stream;
 
 @Repository
 public interface ConsolePersistence {
-    Stream<Console> readAll();
-    Console create(Console console);
-    Console update(String consoleReference, Console console);
-    Console read(String consoleReference);
-    boolean existsConsole(String consoleReference);
-    void delete(Console console);
+    Stream<Console> findByConsoleReferenceAndSerialNumber(String consoleReference, long serialNumber);
 }

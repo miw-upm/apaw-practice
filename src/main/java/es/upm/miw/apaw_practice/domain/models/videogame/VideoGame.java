@@ -9,7 +9,7 @@ public class VideoGame {
     private Boolean crossPlatform;
     private LocalDate releaseDate;
 
-    private  VideoGame() {
+    public   VideoGame() {
         //empty for framework
     }
 
@@ -43,17 +43,6 @@ public class VideoGame {
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        VideoGame videoGame = (VideoGame) o;
-        return Objects.equals(videoGameAlias, videoGame.videoGameAlias);
-    }
-
-    @Override
-    public int hashCode() {return Objects.hash(videoGameAlias);}
 
     @Override
     public String toString() {
