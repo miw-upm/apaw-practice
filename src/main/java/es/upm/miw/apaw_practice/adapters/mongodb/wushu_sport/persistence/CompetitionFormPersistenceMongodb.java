@@ -30,5 +30,4 @@ public class CompetitionFormPersistenceMongodb implements CompetitionFormPersist
         return this.competitionFormRepository.findAll().stream()
                 .map(CompetitionFormEntity::toCompetitionForm);
     }
-
 }
