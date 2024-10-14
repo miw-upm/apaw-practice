@@ -12,14 +12,5 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.HospitalPersis
 
 @Service
 public class HospitalService {
-    private final HospitalPersistence hospitalPersistence;
-
-    @Autowired
-    public HospitalService(HospitalPersistence hospitalPersistence) {
-        this.hospitalPersistence = hospitalPersistence;
-    }
-    public Stream<Hospital> readAll() {
-        return this.hospitalPersistence.readAll();
-    }
 
 }
