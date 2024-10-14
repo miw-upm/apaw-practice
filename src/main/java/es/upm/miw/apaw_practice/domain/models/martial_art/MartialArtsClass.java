@@ -1,18 +1,19 @@
 package es.upm.miw.apaw_practice.domain.models.martial_art;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class MartialArtsClass {
     private String name;
-    private LocalDateTime startDate;
+    private LocalDate startDate;
     private String academy;
     private List<Technique> techniques;
 
-    public MartialArtsClass() {
+    public MartialArtsClass(String name, LocalDateTime localDateTime, String academy, List<Technique> techniques) {
         // empty for framework
     }
 
-    public MartialArtsClass(String name, LocalDateTime startDate, String academy, List<Technique> techniques) {
+    public MartialArtsClass(String name, LocalDate startDate, String academy, List<Technique> techniques) {
         this.name = name;
         this.startDate = startDate;
         this.academy = academy;
@@ -27,11 +28,11 @@ public class MartialArtsClass {
         this.name = name;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 

@@ -40,7 +40,7 @@ public class MartialArtsClassPersistenceMongodb implements MartialArtsClassPersi
                 .findAll().stream()
                 .toList();
         return this.martialArtsClassRepository
-                .save(new MartialArtsClassEntity(martialArtsClass.getName(), martialArtsClass.getStartDate(), martialArtsClass.getAcademy(), techniqueEntities))
+                .save(new MartialArtsClassEntity(martialArtsClass.getName(), martialArtsClass.getStartDate().atStartOfDay(), martialArtsClass.getAcademy(), techniqueEntities))
                 .toMartialArtsClass();
     }
 
