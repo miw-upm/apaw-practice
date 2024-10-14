@@ -9,10 +9,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(AppointmentResource.APPOINTMENTS)
-public class AppoinmentPersistence {
+public class AppointmentResource {
 
     static final String APPOINTMENTS = "/hospital/appointments";
-    static final String APPOINTMENT_ID = "/{id}";
 
     private final AppointmentService appointmentService;
 
@@ -21,12 +20,8 @@ public class AppoinmentPersistence {
         this.appointmentService = appointmentService;
     }
 
-    // Método para obtener todas las citas
     @GetMapping
-    public List<Appointment> getAllAppointments() {
+    public List<Appointment> findAll() {
         return this.appointmentService.findAll();
     }
-
-
 }
-
