@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -18,7 +18,7 @@ public class AppointmentEntity {
     private String doctorDni;
 
     public AppointmentEntity() {
-     
+
     }
 
     public AppointmentEntity(Integer id, LocalDate date, LocalTime time, String location, String patientDni, String doctorDni) {
