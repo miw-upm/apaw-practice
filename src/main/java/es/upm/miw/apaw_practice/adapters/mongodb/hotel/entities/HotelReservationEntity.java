@@ -1,15 +1,22 @@
-package es.upm.miw.apaw_practice.domain.models.hotel;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
+
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
 
-public class Reservation {
+public class HotelReservationEntity {
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String reservationNumber;
     private String roomNumber;
     private LocalDate reservationDate;
 
-    public Reservation(){}
+    public HotelReservationEntity(){}
 
-    public Reservation(String reservationNumber, String roomNumber, LocalDate reservationDate){
+    public HotelReservationEntity(String reservationNumber, String roomNumber, LocalDate reservationDate){
         this.reservationNumber = reservationNumber;
         this.roomNumber = roomNumber;
         this.reservationDate = reservationDate;
@@ -29,7 +36,7 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" +
+        return "HotelReservation{" +
                 "reservationNumber='" + reservationNumber + '\'' +
                 ", roomNumber='" + roomNumber + '\'' +
                 ", reservationDate=" + reservationDate +

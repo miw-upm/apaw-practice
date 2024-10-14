@@ -7,9 +7,12 @@ import es.upm.miw.apaw_practice.adapters.mongodb.boardgame_cafe.BoardgameCafeSee
 import es.upm.miw.apaw_practice.adapters.mongodb.car.CarSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.HospitalSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.course.CourseSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.HotelSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.MusicLessonSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.ShoppingCenterSeederService;
@@ -42,6 +45,9 @@ public class DatabaseSeederService {
     private final BasketballSeederService basketballSeederService;
     private final DeliveryFoodSeederService deliveryFoodSeederService;
     private final MoviesSeederService moviesSeederService;
+    private final HotelSeederService hotelSeederService;
+    private final MusicLessonSeederService musicLessonSeederService;
+    private final CourseSeederService courseSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -62,7 +68,10 @@ public class DatabaseSeederService {
             ShoppingCenterSeederService shoppingCenterSeederService,
             BasketballSeederService basketballSeederService,
             DeliveryFoodSeederService deliveryFoodSeederService,
-            MoviesSeederService moviesSeederService
+            MoviesSeederService moviesSeederService,
+            HotelSeederService hotelSeederService,
+            MusicLessonSeederService musicLessonSeederService,
+            CourseSeederService courseSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.hospitalSeederService = hospitalSeederService;
@@ -82,7 +91,10 @@ public class DatabaseSeederService {
         this.basketballSeederService = basketballSeederService;
         this.deliveryFoodSeederService = deliveryFoodSeederService;
         this.moviesSeederService = moviesSeederService;
-        this.seedDatabase();
+        this.hotelSeederService = hotelSeederService;
+        this.musicLessonSeederService = musicLessonSeederService;
+        this.courseSeederService = courseSeederService;
+      this.seedDatabase();
     }
 
     public void seedDatabase() {
@@ -104,6 +116,9 @@ public class DatabaseSeederService {
         basketballSeederService.seedDatabase();
         deliveryFoodSeederService.seedDatabase();
         moviesSeederService.seedDatabase();
+        hotelSeederService.seedDatabase();
+        musicLessonSeederService.seedDatabase();
+        courseSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -125,6 +140,9 @@ public class DatabaseSeederService {
         basketballSeederService.deleteAll();
         deliveryFoodSeederService.deleteAll();
         moviesSeederService.deleteAll();
+        hotelSeederService.deleteAll();
+        musicLessonSeederService.deleteAll();
+        courseSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {

@@ -24,6 +24,10 @@ public class Client {
         this.investmentFunds = investmentFunds;
     }
 
+    public static ClientBuilders.Dni builder() {
+        return new Builder();
+    }
+
     public String getDni() {
         return dni;
     }
@@ -82,5 +86,56 @@ public class Client {
                 ", email=" + email + '\'' +
                 ", investmentFunds=" + investmentFunds.stream().map(InvestmentFund::getName).toList() +
                 '}';
+    }
+
+    public static class Builder implements ClientBuilders.Dni, ClientBuilders.Name, ClientBuilders.Surname,
+            ClientBuilders.PhoneNumber, ClientBuilders.Email, ClientBuilders.Optionals {
+
+        private final Client client;
+
+        public Builder() {
+            this.client = new Client();
+        }
+
+        @Override
+        public ClientBuilders.Name dni(String dni) {
+            this.client.dni = dni;
+            return this;
+        }
+
+        @Override
+        public ClientBuilders.Surname name(String name) {
+            this.client.name = name;
+            return this;
+        }
+
+        @Override
+        public ClientBuilders.PhoneNumber surname(String surname) {
+            this.client.surname = surname;
+            return this;
+        }
+
+        @Override
+        public ClientBuilders.Email phoneNumber(Integer phoneNumber) {
+            this.client.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        @Override
+        public ClientBuilders.Optionals email(String email) {
+            this.client.email = email;
+            return this;
+        }
+
+        @Override
+        public ClientBuilders.Optionals investmentFunds(List<InvestmentFund> investmentFunds) {
+            this.client.investmentFunds = investmentFunds;
+            return this;
+        }
+
+        @Override
+        public Client build() {
+            return this.client;
+        }
     }
 }

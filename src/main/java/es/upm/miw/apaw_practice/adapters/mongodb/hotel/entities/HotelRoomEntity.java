@@ -1,22 +1,28 @@
-package es.upm.miw.apaw_practice.domain.models.hotel;
+package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.math.BigDecimal;
 
-public class Room {
+public class HotelRoomEntity {
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String number;
     private String type;
     private BigDecimal price;
     private Boolean reserved;
 
-    public Room(){
+    public HotelRoomEntity() {
 
     }
 
-    public Room(String number, String type, BigDecimal price, Boolean reserved){
-    this.number = number;
-    this.type = type;
-    this.price = price;
-    this.reserved = reserved;
+    public HotelRoomEntity(String number, String type, BigDecimal price, Boolean reserved) {
+        this.number = number;
+        this.type = type;
+        this.price = price;
+        this.reserved = reserved;
     }
 
     public String getNumber() {
@@ -53,11 +59,12 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
+        return "HotelRoom{" +
                 "number='" + number + '\'' +
                 ", type='" + type + '\'' +
                 ", price=" + price +
                 ", reserved=" + reserved +
                 '}';
     }
+
 }
