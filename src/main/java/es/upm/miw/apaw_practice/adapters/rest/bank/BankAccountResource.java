@@ -17,9 +17,10 @@ public class BankAccountResource {
     private final BankAccountService bankAccountService;
 
     @Autowired
-    public BankAccountResource(BankAccountService ) { 
+    public BankAccountResource(BankAccountService bankAccountService) {
         this.bankAccountService = bankAccountService;
     }
+
     @PutMapping(IBAN)
     public BankAccount update(@PathVariable String iban, @RequestBody BankAccount bankAccount) {
         return this.bankAccountService.update(iban, bankAccount);
