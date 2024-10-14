@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.entities;
 
+import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Animal;
 import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Employee;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -65,9 +65,10 @@ public class EmployeeEntity {
     }
 
     public Employee toEmployee() {
-        Employee employee = new Employee();
-        BeanUtils.copyProperties(this, employee);
-        return employee;
+        List<Animal> animals = this.animalEntities.stream()
+                .map(AnimalEntity::toAnimal)
+                .toList();
+        return new Employee(name, isDoctor, animals);
     }
 
     @Override
