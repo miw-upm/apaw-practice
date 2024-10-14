@@ -36,7 +36,7 @@ public class LearnerServiceIT {
   }
 
   @Test
-  void testUpdateLesson(){
+  void testUpdateLesson() {
     LocalDate currentDate = LocalDate.now();
     Integer durationInHours = 2;
     BigDecimal fee = new BigDecimal("15.50");
@@ -64,7 +64,7 @@ public class LearnerServiceIT {
   }
 
   @Test
-  void testUpdateLesson_notFoundLearner(){
+  void testUpdateLesson_notFoundLearner() {
     LocalDate currentDate = LocalDate.now();
     Integer durationInHours = 2;
     BigDecimal fee = new BigDecimal("15.50");
@@ -73,7 +73,7 @@ public class LearnerServiceIT {
     musicalInstrument.setModel(musicalInstrumentModel);
 
     Lesson lesson = new Lesson(currentDate, durationInHours, fee, List.of(musicalInstrument));
-    assertThrows(NotFoundException.class, () ->this.learnerService.updateLessons("B8858525X", List.of(lesson)));
+    assertThrows(NotFoundException.class, () -> this.learnerService.updateLessons("B8858525X", List.of(lesson)));
 
   }
 
