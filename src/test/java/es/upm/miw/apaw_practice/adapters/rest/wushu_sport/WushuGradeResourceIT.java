@@ -2,15 +2,17 @@ package es.upm.miw.apaw_practice.adapters.rest.wushu_sport;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import static es.upm.miw.apaw_practice.adapters.rest.wushu_sport.WushuGradeResource.WUSHU_GRADES;
-import static es.upm.miw.apaw_practice.adapters.rest.wushu_sport.WushuGradeResource.GRADE_TITLE_ID;
+import static es.upm.miw.apaw_practice.adapters.rest.wushu_sport.WushuGradeResource.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
 public class WushuGradeResourceIT {
@@ -45,5 +47,18 @@ public class WushuGradeResourceIT {
                 .body(BodyInserters.fromValue(3))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+    @Test
+    void testGetGradeTitleListByCategory(){
+        this.webTestClient
+                .get()
+                .uri(WUSHU_GRADES + CATEGORY_ID + GRADE_TITLE_LIST, "changquan")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(Assertions::assertNotNull)
+                .value(listData -> {
+                    assertEquals(2, listData.size());
+                });
     }
 }

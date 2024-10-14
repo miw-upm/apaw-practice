@@ -12,10 +12,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @RestTestConfig
-public class ManufacturerResourceIT {
+class ManufacturerResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
