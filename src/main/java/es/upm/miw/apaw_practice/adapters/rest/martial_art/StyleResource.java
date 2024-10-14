@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.martial_art;
-import es.upm.miw.apaw_practice.domain.models.martial_art.Instructor;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Style;
-import es.upm.miw.apaw_practice.domain.services.martial_art.InstructorService;
 import es.upm.miw.apaw_practice.domain.services.martial_art.StyleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
