@@ -21,4 +21,7 @@ public class MenuCategoryService {
         return menuCategoryPersistence.findByActive(active);
     }
 
+    public MenuCategory read(String name) {
+        return menuCategoryPersistence.read(name);
+    }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +28,15 @@ class MenuCategoryRepositoryIT {
         assertTrue(menuCategoriesList.stream()
                 .map(MenuCategoryEntity::getName)
                 .allMatch(menuCategoriesSave::contains));
+    }
+
+    @Test
+    void testFindByName() {
+        Optional<MenuCategoryEntity> menuCategoriesOptional = this.menuCategoryRepository.findByName("Vegetarian");
+        assertTrue(menuCategoriesOptional.isPresent());
+        assertNotNull(menuCategoriesOptional.get().getName());
+        assertNotNull(menuCategoriesOptional.get().getDescription());
+        assertNotNull(menuCategoriesOptional.get().getActive());
     }
 
 }

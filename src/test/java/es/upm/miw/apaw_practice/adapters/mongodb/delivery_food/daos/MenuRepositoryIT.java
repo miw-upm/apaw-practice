@@ -24,4 +24,9 @@ class MenuRepositoryIT {
         assertFalse(menuEntityNotExist.isPresent());
     }
 
+    @Test
+    void testFindByName(){
+        Optional<MenuEntity> menuEntity = menuRepository.findByName("Vegetarian Delight");
+        assertTrue(menuEntity.isPresent());
+    }
 }
