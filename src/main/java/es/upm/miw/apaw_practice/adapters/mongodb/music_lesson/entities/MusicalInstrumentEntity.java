@@ -103,4 +103,7 @@ public class MusicalInstrumentEntity {
         '}';
   }
 
+  public void fromMusicalInstrument(MusicalInstrument musicalInstrument) {
+    BeanUtils.copyProperties(musicalInstrument, this);
+  }
 }

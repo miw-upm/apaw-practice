@@ -15,4 +15,6 @@ public interface MusicalInstrumentPersistence {
   MusicalInstrument create(MusicalInstrument musicalInstrument);
 
   boolean existsModel(String model);
+
+  MusicalInstrument update(String model, MusicalInstrument musicalInstrument);
 }

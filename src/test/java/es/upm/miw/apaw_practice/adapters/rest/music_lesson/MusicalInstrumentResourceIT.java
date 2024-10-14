@@ -2,8 +2,11 @@ package es.upm.miw.apaw_practice.adapters.rest.music_lesson;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.music_lesson.MusicalInstrument;
+import es.upm.miw.apaw_practice.domain.models.music_lesson.MusicalInstrumentLevelUpdating;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +53,33 @@ public class MusicalInstrumentResourceIT {
         .expectStatus().isEqualTo(HttpStatus.CONFLICT);
   }
 
+  @Test
+  void testUpdateDifficultyLevel() {
+    String model = "YMH-FL-222";
+    String newDifficultyLevel = "Advanced";
+    MusicalInstrumentLevelUpdating musicalInstrumentLevelUpdating =
+        new MusicalInstrumentLevelUpdating(model, newDifficultyLevel);
+
+    this.webTestClient
+        .patch()
+        .uri(MusicalInstrumentResource.MUSICAL_INSTRUMENTS)
+        .body(BodyInserters.fromValue(List.of(musicalInstrumentLevelUpdating)))
+        .exchange()
+        .expectStatus().isOk();
+  }
+
+  @Test
+  void testUpdateDifficultyLevel_notFound() {
+    String model = "YMH-FL-224";
+    String newDifficultyLevel = "Advanced";
+    MusicalInstrumentLevelUpdating musicalInstrumentLevelUpdating =
+        new MusicalInstrumentLevelUpdating(model, newDifficultyLevel);
+
+    this.webTestClient
+        .patch()
+        .uri(MusicalInstrumentResource.MUSICAL_INSTRUMENTS)
+        .body(BodyInserters.fromValue(List.of(musicalInstrumentLevelUpdating)))
+        .exchange()
+        .expectStatus().isNotFound();
+  }
 }

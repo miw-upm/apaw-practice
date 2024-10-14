@@ -47,4 +47,16 @@ public class MusicalInstrumentPersistenceMongodb implements MusicalInstrumentPer
         .findByModel(model)
         .isPresent();
   }
+
+  @Override
+  public MusicalInstrument update(String model, MusicalInstrument musicalInstrument) {
+    MusicalInstrumentEntity musicalInstrumentEntity = this.musicalInstrumentRepository
+        .findByModel(musicalInstrument.getModel())
+        .orElseThrow(() -> new NotFoundException("Musical Instrument : " + musicalInstrument.getModel()));
+
+    musicalInstrumentEntity.fromMusicalInstrument(musicalInstrument);
+    return this.musicalInstrumentRepository
+        .save(musicalInstrumentEntity)
+        .toMusicalInstrument();
+  }
 }
