@@ -1,7 +1,6 @@
-package es.upm.miw.apaw_practice.domain.services.hospital;
+package es.upm.miw.apaw_practice.domain.services.Hospital;
 
-import es.upm.miw.apaw_practice.domain.models.hospital.Appointment; // Asegúrate de que este paquete y clase existan
-import es.upm.miw.apaw_practice.domain.persistence_ports.hospital.AppointmentPersistence;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
