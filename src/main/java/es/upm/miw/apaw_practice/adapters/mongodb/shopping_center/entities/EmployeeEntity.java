@@ -64,6 +64,12 @@ public class EmployeeEntity {
         this.hiringDay = hiringDay;
     }
 
+    public Employee toEmployee() {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(this, employee);
+        return employee;
+    }
+
     @Override
     public String toString() {
         return "EmployeeEntity{" +

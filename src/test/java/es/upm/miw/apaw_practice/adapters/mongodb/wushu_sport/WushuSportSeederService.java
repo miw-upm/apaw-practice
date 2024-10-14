@@ -52,9 +52,9 @@ public class WushuSportSeederService {
 
         CompetitorEntity[] competitors = {
                 new CompetitorEntity("WU/A/00126", 1, LocalDate.now(), wushuGrades[0], List.of(competitionForms[0])),
-                new CompetitorEntity("WU/A/00127", 2, LocalDate.now().minusYears(1), wushuGrades[0], List.of(competitionForms[1],competitionForms[2])),
-                new CompetitorEntity("WU/A/00128", 3, LocalDate.now().minusYears(2), wushuGrades[0], List.of(competitionForms[0], competitionForms[1])),
-                new CompetitorEntity("WU/A/00129", 4, LocalDate.now().minusYears(3), wushuGrades[0], List.of(competitionForms[2])),
+                new CompetitorEntity("WU/A/00127", 2, LocalDate.now().minusYears(1), wushuGrades[1], List.of(competitionForms[1],competitionForms[2])),
+                new CompetitorEntity("WU/A/00128", 3, LocalDate.now().minusYears(2), wushuGrades[2], List.of(competitionForms[0], competitionForms[1])),
+                new CompetitorEntity("WU/A/00129", 4, LocalDate.now().minusYears(3), wushuGrades[3], List.of(competitionForms[2])),
         };
         this.competitorRepository.saveAll(Arrays.asList(competitors));
 

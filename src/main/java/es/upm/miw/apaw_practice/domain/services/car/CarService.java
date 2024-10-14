@@ -16,8 +16,8 @@ public class CarService {
     }
 
 
-    public void create(Car car) {
-        carPersistence.create(car);
+    public Car create(Car car) {
+        return carPersistence.create(car);
     }
 
     public void delete(String model) {
