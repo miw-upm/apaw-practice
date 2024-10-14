@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.theme_park;
 
-import es.upm.miw.apaw_practice.domain.models.theme_park.UserBuilder;
-
 import java.time.LocalDateTime;
 
 public class User {
