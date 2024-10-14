@@ -12,8 +12,6 @@ public interface MartialArtsClassPersistence {
 
     MartialArtsClass create(MartialArtsClass martialArtsClass);
 
-    MartialArtsClass update(String name, MartialArtsClass martialArtsClass);
-
     MartialArtsClass read(String name);
 
     boolean existsByName(String name);

@@ -10,6 +10,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.course.CourseSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.GunStoreSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.MartialArtSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.military.MilitarySeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.movies.MoviesSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.night_life.NightLifeSeederService;
@@ -44,6 +45,7 @@ public class DatabaseSeederService {
     private final MoviesSeederService moviesSeederService;
     private final CourseSeederService courseSeederService;
     private final GunStoreSeederService gunStoreSeederService;
+    private final MartialArtSeederService martialArtSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -64,7 +66,8 @@ public class DatabaseSeederService {
             DeliveryFoodSeederService deliveryFoodSeederService,
             MoviesSeederService moviesSeederService,
             CourseSeederService courseSeederService,
-            GunStoreSeederService gunStoreSeederService
+            GunStoreSeederService gunStoreSeederService,
+            MartialArtSeederService martialArtSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.universitySeederService = universitySeederService;
@@ -85,6 +88,7 @@ public class DatabaseSeederService {
         this.moviesSeederService = moviesSeederService;
         this.courseSeederService = courseSeederService;
         this.gunStoreSeederService = gunStoreSeederService;
+        this.martialArtSeederService = martialArtSeederService;
         this.seedDatabase();
     }
 
@@ -108,6 +112,7 @@ public class DatabaseSeederService {
         this.moviesSeederService.seedDatabase();
         this.courseSeederService.seedDatabase();
         this.gunStoreSeederService.seedDatabase();
+        this.martialArtSeederService.seedDatabase() ;
     }
 
     public void deleteAll() {
@@ -130,6 +135,7 @@ public class DatabaseSeederService {
         this.moviesSeederService.deleteAll();
         this.courseSeederService.deleteAll();
         this.gunStoreSeederService.deleteAll();
+        this.martialArtSeederService.deleteAll();
     }
 
     public void reSeedDatabase() {

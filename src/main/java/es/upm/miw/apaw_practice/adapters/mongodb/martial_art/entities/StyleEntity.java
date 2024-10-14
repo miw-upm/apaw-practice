@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.martial_art.entities;
 
+import es.upm.miw.apaw_practice.domain.models.martial_art.Instructor;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Style;
 import org.springframework.beans.BeanUtils;
 
@@ -41,6 +42,9 @@ public class StyleEntity {
 
     public void setOriginCountry(String originCountry) {
         this.originCountry = originCountry;
+    }
+    public void fromStyle(Style style) {
+        BeanUtils.copyProperties(style, this);
     }
     public Style toStyle() {
         Style style = new Style();
