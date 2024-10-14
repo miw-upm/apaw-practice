@@ -17,7 +17,7 @@ public class BankAccountResource {
     private final BankAccountService bankAccountService;
 
     @Autowired
-    public BankAccountResource(BankAccountService bankAccountService) {
+    public BankAccountResource(  bankAccountService) {
         this.bankAccountService = bankAccountService;
     }
 
