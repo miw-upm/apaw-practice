@@ -2,12 +2,8 @@ package es.upm.miw.apaw_practice.adapters.rest.veterinary_clinic;
 
 import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Animal;
 import es.upm.miw.apaw_practice.domain.services.veterinary_clinic.AnimalService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(AnimalResource.ANIMALS)

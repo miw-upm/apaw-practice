@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.movies.entities;
 
+import es.upm.miw.apaw_practice.domain.models.movies.Actor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -54,6 +55,17 @@ public class ActorEntity {
     public LocalDate getBirthDate() { return birthDate; }
 
     public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+
+    public Actor toActor() {
+        return new Actor(this.artisticName, this.realName, this.isAvailable, this.birthDate);
+    }
+
+    public void fromActor(Actor actor) {
+        this.artisticName = actor.getArtisticName();
+        this.realName = actor.getRealName();
+        this.isAvailable = actor.isAvailable();
+        this.birthDate = actor.getBirthDate();
+    }
 
     @Override
     public String toString(){
