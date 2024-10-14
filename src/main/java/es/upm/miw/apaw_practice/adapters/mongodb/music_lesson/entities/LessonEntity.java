@@ -84,7 +84,7 @@ public class LessonEntity {
     var musicalInstruments = this.musicalInstruments.stream()
         .map(MusicalInstrumentEntity::toMusicalInstrument)
         .toList();
-    return new Lesson(this.id, this.date, this.durationInHours, this.fee, musicalInstruments);
+    return new Lesson(this.date, this.durationInHours, this.fee, musicalInstruments);
   }
 
   @Override

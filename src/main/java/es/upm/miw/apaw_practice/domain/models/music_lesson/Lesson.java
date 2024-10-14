@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Lesson {
 
-  private String id;
-
   private LocalDate date;
 
   private Integer durationInHours;
@@ -20,20 +18,11 @@ public class Lesson {
     //Empty for framework
   }
 
-  public Lesson(String id, LocalDate date, Integer durationInHours, BigDecimal fee, List<MusicalInstrument> musicalInstruments) {
-    this.id = id;
+  public Lesson(LocalDate date, Integer durationInHours, BigDecimal fee, List<MusicalInstrument> musicalInstruments) {
     this.date = date;
     this.durationInHours = durationInHours;
     this.fee = fee;
     this.musicalInstruments = musicalInstruments;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public LocalDate getDate() {
@@ -71,7 +60,6 @@ public class Lesson {
   @Override
   public String toString() {
     return "Lesson{" +
-        "id='" + id + '\'' +
         ", date=" + date +
         ", durationInHours=" + durationInHours +
         ", musicalInstruments=" + musicalInstruments +
