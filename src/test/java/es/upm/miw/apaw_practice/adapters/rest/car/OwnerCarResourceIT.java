@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class OwnerCarResourceIT {
+class OwnerCarResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
