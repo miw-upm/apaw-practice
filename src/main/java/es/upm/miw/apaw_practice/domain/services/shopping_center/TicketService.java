@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 @Service
 public class TicketService {
@@ -15,6 +16,10 @@ public class TicketService {
     @Autowired
     public TicketService(TicketPersistence ticketPersistence) {
         this.ticketPersistence = ticketPersistence;
+    }
+
+    public Stream<Ticket> findAllTickets() {
+        return this.ticketPersistence.readAll();
     }
 
     public void delete(String id) {
