@@ -33,4 +33,11 @@ public class BranchPersistenceMongodb implements BranchPersistence {
         .stream()
         .map(BranchEntity::toBranch);
   }
+
+  @Override
+  public Stream<Branch> findByAddress(String address) {
+    return this.branchRepository.findAll().stream()
+        .filter(branchEntity -> branchEntity.getAddress().contains(address))
+        .map(BranchEntity::toBranch);
+  }
 }

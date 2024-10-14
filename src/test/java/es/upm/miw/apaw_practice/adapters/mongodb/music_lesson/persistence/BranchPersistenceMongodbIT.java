@@ -16,7 +16,7 @@ class BranchPersistenceMongodbIT {
   @Test
   void testReadByCode() {
     Branch actualBranch = this.branchPersistenceMongodb.readByCode("MAD-SBCT");
-    assertEquals("Gran Via Street, 12", actualBranch.getAddress());
+    assertEquals("Gran Via Street, 12; Madrid", actualBranch.getAddress());
     assertEquals("912345778", actualBranch.getPhoneNumber());
   }
 

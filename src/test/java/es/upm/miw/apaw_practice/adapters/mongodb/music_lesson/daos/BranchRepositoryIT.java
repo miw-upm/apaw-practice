@@ -21,7 +21,7 @@ class BranchRepositoryIT {
     Optional<BranchEntity> actualBranchEntity = this.branchRepository.findByCode("MAD-CTRH");
     assertTrue(actualBranchEntity.isPresent());
     BranchEntity actualBranch = actualBranchEntity.get();
-    assertEquals("Serrano Street, 45", actualBranch.getAddress());
+    assertEquals("Serrano Street, 45; Barcelona", actualBranch.getAddress());
     assertEquals("913245678", actualBranch.getPhoneNumber());
   }
 
