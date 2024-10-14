@@ -30,14 +30,14 @@ public class OwnerCarPersistenceMongodb implements OwnerCarPersistence {
     public OwnerCar readByDriverLicense(String driverLicense){
         return ownerCarRepository
                 .findByDriverLicense(driverLicense)
-                .orElseThrow(() -> new NotFoundException("Owner Car driverLicense: " + driverLicense))
+                .orElseThrow(() -> new NotFoundException("OwnerClinic Car driverLicense: " + driverLicense))
                 .toOwnerCar();
     }
 
     @Override
     public OwnerCar updateName(String driverLicense, String name) {
         OwnerCarEntity ownerCarEntity = this.ownerCarRepository.findByDriverLicense(driverLicense)
-                .orElseThrow(() -> new NotFoundException(" Owner Car driverLicense: " + driverLicense));
+                .orElseThrow(() -> new NotFoundException(" OwnerClinic Car driverLicense: " + driverLicense));
         ownerCarEntity.setName(name);
         return this.ownerCarRepository.save(ownerCarEntity).toOwnerCar();
     }

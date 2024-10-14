@@ -1,11 +1,12 @@
 package es.upm.miw.apaw_practice.domain.models.course;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Video {
 
     private String name;
-    private String duration;
+    private LocalTime duration;
     private LocalDateTime creationDate;
     private Course course;
 
@@ -13,7 +14,7 @@ public class Video {
         //empty for framework
     }
 
-    public Video(String name, String duration, LocalDateTime creationDate, Course course) {
+    public Video(String name, LocalTime duration, LocalDateTime creationDate, Course course) {
         this.name = name;
         this.duration = duration;
         this.creationDate = creationDate;
@@ -28,11 +29,11 @@ public class Video {
         this.name = name;
     }
 
-    public String getDuration() {
+    public LocalTime getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(LocalTime duration) {
         this.duration = duration;
     }
 

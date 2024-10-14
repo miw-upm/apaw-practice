@@ -41,7 +41,7 @@ public class Owner {
 
     @Override
     public String toString() {
-        return "Owner{" + "name=" + name + ", phone=" + phone + ", email=" + email + '}';
+        return "OwnerClinic{" + "name=" + name + ", phone=" + phone + ", email=" + email + '}';
     }
 
 

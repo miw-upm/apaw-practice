@@ -24,39 +24,37 @@ class BranchOfficePersistenceMongodbIT {
 
     @Test
     void testCreateNoClients() {
-        BranchOffice branchOffice = new BranchOffice("Building1", 10, 10, emptyList());
+        BranchOffice branchOffice = new BranchOffice("Building6", 10, 10, emptyList());
         BranchOffice branchOfficeSaved = this.branchOfficePersistenceMongodb.create(branchOffice);
         assertNotNull(branchOfficeSaved);
-        assertEquals("Building1", branchOfficeSaved.getBuildingName());
+        assertEquals("Building6", branchOfficeSaved.getBuildingName());
         assertEquals(10, branchOfficeSaved.getEmployees());
         assertEquals(10, branchOfficeSaved.getAtmNumber());
         assertNotNull(branchOfficeSaved.getClients());
+        assertTrue(branchOfficeSaved.getClients().isEmpty());
     }
 
     @Test
     void testCreate() {
-        bankSeederService.deleteAll();
-        bankSeederService.seedDatabase();
         Client client = new Client("11111111A", "Client1", "Client1", 111111111, "email1@example.com", emptyList());
-        BranchOffice branchOffice = new BranchOffice("Building1", 10, 10, List.of(client));
+        BranchOffice branchOffice = new BranchOffice("Building7", 5, 5, List.of(client));
         BranchOffice branchOfficeSaved = this.branchOfficePersistenceMongodb.create(branchOffice);
         assertNotNull(branchOfficeSaved);
-        assertEquals("Building1", branchOfficeSaved.getBuildingName());
-        assertEquals(10, branchOfficeSaved.getEmployees());
-        assertEquals(10, branchOfficeSaved.getAtmNumber());
+        assertEquals("Building7", branchOfficeSaved.getBuildingName());
+        assertEquals(5, branchOfficeSaved.getEmployees());
+        assertEquals(5, branchOfficeSaved.getAtmNumber());
         assertNotNull(branchOfficeSaved.getClients());
+        assertFalse(branchOfficeSaved.getClients().isEmpty());
     }
 
     @Test
     void testGetAssociatedBalanceNoBranchOffice() {
-        assertThrows(NotFoundException.class, () -> this.branchOfficePersistenceMongodb.getAssociatedBalance("A"));
+        assertThrows(NotFoundException.class, () -> this.branchOfficePersistenceMongodb.getAssociatedBalance("BuildingZ"));
     }
 
     @Test
     void testGetAssociatedBalance() {
-        bankSeederService.deleteAll();
-        bankSeederService.seedDatabase();
-        assertEquals(new BigDecimal("40100.0"),this.branchOfficePersistenceMongodb.getAssociatedBalance("Building1"));
+        assertEquals(new BigDecimal("1500.0"),this.branchOfficePersistenceMongodb.getAssociatedBalance("Building10"));
     }
 
 }

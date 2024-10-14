@@ -42,7 +42,7 @@ public class OwnerCar {
 
     @Override
     public String toString() {
-        return "Owner{" +
+        return "OwnerClinic{" +
                 "name='" + name + '\'' +
                 ", driverLicense='" + driverLicense + '\'' +
                 ", birthDate=" + birthDate +

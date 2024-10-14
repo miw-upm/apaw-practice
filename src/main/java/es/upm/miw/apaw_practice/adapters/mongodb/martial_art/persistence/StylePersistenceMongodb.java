@@ -46,6 +46,7 @@ public class StylePersistenceMongodb implements StylePersistence {
         StyleEntity styleRepository = this.styleRepository
                 .findByName(name)
                 .orElseThrow(() -> new NotFoundException("Style name: " + name));
+        styleRepository.fromStyle(style);
         return this.styleRepository
                 .save(styleRepository)
                 .toStyle();

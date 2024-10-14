@@ -1,8 +1,10 @@
 package es.upm.miw.apaw_practice.domain.persistence_ports.boardgame_cafe;
 
+import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.Game;
 import es.upm.miw.apaw_practice.domain.models.boardgame_cafe.PlaySession;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Repository
@@ -18,4 +20,6 @@ public interface PlaySessionPersistence {
     boolean existPlaySessionId(Integer playSessionId);
 
     Integer findTotalMembershipDurationByGameGenre(String genre);
+
+    List <Game> findGamesByMembershipType(String type);
 }

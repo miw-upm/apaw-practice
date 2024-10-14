@@ -8,8 +8,6 @@ import java.util.stream.Stream;
 @Repository
 public interface ConsoleCompanyPersistence {
     Stream<ConsoleCompany> readAll();
-    ConsoleCompany create(ConsoleCompany company);
-    ConsoleCompany update(String companyInformation, ConsoleCompany company);
-    ConsoleCompany read(String companyInformation);
-    void delete(String companyInformation);
+    ConsoleCompany readByCompanyInformation(String companyInformation);
+    ConsoleCompany updateConsoleCompany(ConsoleCompany consoleCompany);
 }

@@ -16,7 +16,7 @@ public class AwardEntity {
     @Id
     private String id;
     @Indexed(unique = true)
-    private String nameCategoryAndYear;
+    private String nameCategoryYear;
     private String name;
     private String category;
     private LocalDate year;
@@ -25,9 +25,9 @@ public class AwardEntity {
         //empty for framework
     }
 
-    public AwardEntity(String nameCategoryAndYear, String name, String category, LocalDate year){
+    public AwardEntity(String nameCategoryYear, String name, String category, LocalDate year){
         this.id = UUID.randomUUID().toString();
-        this.nameCategoryAndYear = nameCategoryAndYear;
+        this.nameCategoryYear = nameCategoryYear;
         this.name = name;
         this.category = category;
         this.year = year;
@@ -39,9 +39,9 @@ public class AwardEntity {
         this.id = id;
     }
 
-    public String getNameCategoryAndYear() { return nameCategoryAndYear; }
+    public String getNameCategoryYear() { return nameCategoryYear; }
 
-    public void setNameCategoryAndYear(String nameCategoryAndYear) { this.nameCategoryAndYear = nameCategoryAndYear; }
+    public void setNameCategoryYear(String nameCategoryYear) { this.nameCategoryYear = nameCategoryYear; }
 
     public String getName() { return name; }
 
@@ -58,7 +58,7 @@ public class AwardEntity {
     @Override
     public String toString() {
         return "AwardEntity {\n" +
-                "  nameCategoryAndYear: \"" + nameCategoryAndYear + NEWLINE_WITH_COMMA +
+                "  nameCategoryAndYear: \"" + nameCategoryYear + NEWLINE_WITH_COMMA +
                 "  name: \"" + name + NEWLINE_WITH_COMMA +
                 "  category: \"" + category + NEWLINE_WITH_COMMA +
                 "  year: " + year +  "\n" +
@@ -70,12 +70,12 @@ public class AwardEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AwardEntity award = (AwardEntity) o;
-        return nameCategoryAndYear.equals(award.nameCategoryAndYear);
+        return nameCategoryYear.equals(award.nameCategoryYear);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameCategoryAndYear);
+        return Objects.hash(nameCategoryYear);
     }
 
 }

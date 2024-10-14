@@ -19,6 +19,10 @@ public class ManufacturerService {
         return this.manufacturerPersistence.update(name,manufacturer);
     }
 
+    public Manufacturer readByName(String name) {
+        return this.manufacturerPersistence.readByName(name);
+    }
+
     public boolean existsName(String name) {
         return manufacturerPersistence.existName(name);
     }

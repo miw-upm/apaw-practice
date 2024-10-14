@@ -1,0 +1,31 @@
+package es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.persistence;
+
+import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.delivery_food.Menu;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@TestConfig
+class MenuPersistenceMongodbIT {
+
+    @Autowired
+    private MenuPersistenceMongodb menuPersistenceMongodb;
+
+    @Test
+    void testDelete() {
+        String menuName = "Food Test";
+        Menu menuInsert = new Menu(menuName, menuName,null, 4.8);
+        menuPersistenceMongodb.create(menuInsert);
+        Menu menuSave = menuPersistenceMongodb.read(menuName);
+        assertNotNull(menuSave);
+        menuPersistenceMongodb.delete(menuName);
+
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> {
+            menuPersistenceMongodb.read(menuName);
+        });
+        assertEquals("Not Found Exception (404). Menu name: " + menuName, exception.getMessage());
+    }
+}
