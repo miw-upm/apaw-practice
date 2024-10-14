@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.ShoppingCenterSeederService;
 import es.upm.miw.apaw_practice.domain.models.shopping_center.Employee;
 import es.upm.miw.apaw_practice.domain.models.shopping_center.Shop;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,9 @@ public class ShopPersistenceMongodbIT {
 
     @Autowired
     private ShopPersistenceMongodb shopPersistenceMongodb;
+
+    @Autowired
+    private ShoppingCenterSeederService shoppingCenterSeederService;
 
     @Test
     void testReadAll() {
@@ -46,5 +50,7 @@ public class ShopPersistenceMongodbIT {
         assertNotEquals(shop.get().getEmployees(), newShop.get().getEmployees());
         assertEquals("600000008", newShop.get().getEmployees().get(0).getPhone());
         assertEquals("Janna", newShop.get().getEmployees().get(1).getName());
+        shoppingCenterSeederService.deleteAll();
+        shoppingCenterSeederService.seedDatabase();
     }
 }

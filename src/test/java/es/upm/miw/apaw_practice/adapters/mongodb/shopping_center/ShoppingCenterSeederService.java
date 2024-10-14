@@ -4,7 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.EmployeeSh
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.ProviderRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.ShopRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.daos.TicketRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.EmployeeEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.EmployeeShoppingCenterEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.ProviderEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.ShopEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.TicketEntity;
@@ -38,12 +38,12 @@ public class ShoppingCenterSeederService {
                 new ProviderEntity(new Provider("provider3", "clothes", true))
         };
         this.providerRepository.saveAll(Arrays.asList(providers));
-        EmployeeEntity[] employees = {
-                new EmployeeEntity(new Employee("11122233A", "Alex", "600000001")),
-                new EmployeeEntity(new Employee("11122233B", "Carlos", "600000002")),
-                new EmployeeEntity(new Employee("11122233C", "Marta", "600000003")),
-                new EmployeeEntity(new Employee("11122233D", "Juan", "600000004")),
-                new EmployeeEntity(new Employee("11122233E", "Maria", "600000005"))
+        EmployeeShoppingCenterEntity[] employees = {
+                new EmployeeShoppingCenterEntity(new Employee("11122233A", "Alex", "600000001")),
+                new EmployeeShoppingCenterEntity(new Employee("11122233B", "Carlos", "600000002")),
+                new EmployeeShoppingCenterEntity(new Employee("11122233C", "Marta", "600000003")),
+                new EmployeeShoppingCenterEntity(new Employee("11122233D", "Juan", "600000004")),
+                new EmployeeShoppingCenterEntity(new Employee("11122233E", "Maria", "600000005"))
         };
         this.employeeShoppingCenterRepositoryRepository.saveAll(Arrays.asList(employees));
         ShopEntity[] shops = {

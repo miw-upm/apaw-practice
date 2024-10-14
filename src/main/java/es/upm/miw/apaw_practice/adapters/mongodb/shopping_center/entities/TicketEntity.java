@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities;
 
-import es.upm.miw.apaw_practice.domain.models.shopping_center.Employee;
 import es.upm.miw.apaw_practice.domain.models.shopping_center.Ticket;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -19,17 +18,17 @@ public class TicketEntity {
     private boolean isPaidByCreditCard;
     private LocalDateTime date;
     @DBRef
-    private EmployeeEntity employee;
+    private EmployeeShoppingCenterEntity employeeEntity;
 
     public TicketEntity() {
         //empty from framework
     }
 
-    public TicketEntity(BigDecimal totalPrice, boolean isPaidByCreditCard, EmployeeEntity employee) {
+    public TicketEntity(BigDecimal totalPrice, boolean isPaidByCreditCard, EmployeeShoppingCenterEntity employeeEntity) {
         this.id = UUID.randomUUID().toString();
         this.totalPrice = totalPrice;
         this.isPaidByCreditCard = isPaidByCreditCard;
-        this.employee = employee;
+        this.employeeEntity = employeeEntity;
         this.date = LocalDateTime.now();
     }
 
@@ -61,18 +60,18 @@ public class TicketEntity {
         this.date = date;
     }
 
-    public EmployeeEntity getEmployee() {
-        return employee;
+    public EmployeeShoppingCenterEntity getEmployeeEntity() {
+        return employeeEntity;
     }
 
-    public void setEmployee(EmployeeEntity employee) {
-        this.employee = employee;
+    public void setEmployeeEntity(EmployeeShoppingCenterEntity employeeEntity) {
+        this.employeeEntity = employeeEntity;
     }
 
     public Ticket toTicket() {
         Ticket ticket = new Ticket();
         BeanUtils.copyProperties(this, ticket, "employee");
-        ticket.setEmployee(this.employee.toEmployee());
+        ticket.setEmployee(this.employeeEntity.toEmployee());
         return ticket;
     }
 
@@ -83,7 +82,7 @@ public class TicketEntity {
                 ", totalPrice=" + totalPrice +
                 ", isPaidByCreditCard=" + isPaidByCreditCard +
                 ", date=" + date +
-                ", employee=" + employee +
+                ", employeeEntity=" + employeeEntity +
                 '}';
     }
 }
