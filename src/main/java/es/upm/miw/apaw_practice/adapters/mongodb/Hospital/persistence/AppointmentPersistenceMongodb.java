@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository("appointmentPersistence")
-public class AppointmentPersistenceMongodb implements AppoinmentPersistence {
+public class AppointmentPersistenceMongodb implements AppointmentPersistence {
 
     private final AppointmentRepository appointmentRepository;
 
