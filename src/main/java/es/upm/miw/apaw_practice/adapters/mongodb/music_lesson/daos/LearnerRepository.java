@@ -8,4 +8,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface LearnerRepository extends MongoRepository<LearnerEntity, String> {
 
   Optional<LearnerEntity> findByIdentityDocument(String identityDocument);
+
+  void deleteByIdentityDocument(String identityDocument);
 }

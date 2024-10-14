@@ -12,4 +12,5 @@ public interface LearnerPersistence {
 
   Stream<Learner> readAll();
 
+  void delete(String identityDocument);
 }

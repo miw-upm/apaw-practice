@@ -33,4 +33,9 @@ public class LearnerPersistenceMongodb implements LearnerPersistence {
         .stream()
         .map(LearnerEntity::toLearner);
   }
+
+  @Override
+  public void delete(String identityDocument) {
+    this.learnerRepository.deleteByIdentityDocument(identityDocument);
+  }
 }
