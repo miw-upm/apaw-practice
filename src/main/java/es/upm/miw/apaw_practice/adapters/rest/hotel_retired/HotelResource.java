@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(HotelResource.HOTELS)
@@ -58,4 +59,11 @@ public class HotelResource {
         String fullName = new LexicalAnalyzer().extractWithAssure(q, "fullName").trim();
         return this.hotelService.findTotalSumOfPrice(hotelName, fullName);
     }
+
+//    @GetMapping(SEARCH)
+//    public Stream<String> findNonDuplicatedHotelNamesByNumBedsAndNumBookings(@RequestParam String q) {
+//        int numBeds = Integer.parseInt(new LexicalAnalyzer().extractWithAssure(q, "numBeds"));
+//        int numBookings = Integer.parseInt(new LexicalAnalyzer().extractWithAssure(q, "numBookings"));
+//        return this.hotelService.findNonDuplicatedHotelNamesByNumBedsAndNumBookings(numBeds, numBookings);
+//    }
 }

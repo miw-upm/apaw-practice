@@ -22,4 +22,6 @@ public interface HotelPersistence {
     void delete(String cif);
 
     BigDecimal findTotalSumOfPrice(String hotelName, String fullName);
+
+    Stream<String> findNonDuplicatedHotelNamesByNumBedsAndNumBookings(int numBeds, int numBookings);
 }
