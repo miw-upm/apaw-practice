@@ -59,8 +59,9 @@ public class VideoGameSeederService {
         this.playerRepository.saveAll(Arrays.asList(players));
 
         ConsoleCompanyrEntity[] consoleCompanies = {
-                new ConsoleCompanyrEntity("Sony","www.Sony.com",2000,true,LocalDate.of(2022,12,31),List.of(consoles[0],consoles[1])),
+                new ConsoleCompanyrEntity("Sony","www.Sony.com",2000,false,LocalDate.of(2022,12,31),List.of(consoles[0],consoles[1])),
                 new ConsoleCompanyrEntity("Bungie","www.burys.com",6000,true,LocalDate.of(2002,1,15),List.of(consoles[2],consoles[3])),
+                new ConsoleCompanyrEntity("Tuto","www.burys.com",6000,true,LocalDate.of(2002,1,15),List.of(consoles[2],consoles[3])),
         };
         this.consoleCompanyRepository.saveAll(Arrays.asList(consoleCompanies));
     }

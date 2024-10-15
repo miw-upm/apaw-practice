@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;
 
 @Document
-public class UserEntity {
+public class UserCourseEntity {
 
     @Id
     private String id;
@@ -16,11 +16,11 @@ public class UserEntity {
     private String email;
     private TypeUser role;
 
-    public UserEntity() {
+    public UserCourseEntity() {
         //Empty for framework
     }
 
-    public UserEntity(String firstName, String email, TypeUser role) {
+    public UserCourseEntity(String firstName, String email, TypeUser role) {
         this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.email = email;
@@ -66,7 +66,7 @@ public class UserEntity {
 
     @Override
     public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (email.equals(((UserEntity) obj).email));
+        return this == obj || obj != null && getClass() == obj.getClass() && (email.equals(((UserCourseEntity) obj).email));
     }
 
     @Override

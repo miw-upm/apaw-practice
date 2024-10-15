@@ -21,14 +21,14 @@ public class CourseEntity {
     private LocalDate endDate;
     @DBRef
     private List<TutoringSessionEntity> tutoringSessions;
-    private List<UserEntity> users;
+    private List<UserCourseEntity> users;
     private List<VideoEntity> videos;
 
     public CourseEntity() {
         //Empty for framework
     }
 
-    public CourseEntity(String title, Boolean paymentRequired, LocalDate startDate, LocalDate endDate, List<TutoringSessionEntity> tutoringSessions, List<UserEntity> users, List<VideoEntity> videos) {
+    public CourseEntity(String title, Boolean paymentRequired, LocalDate startDate, LocalDate endDate, List<TutoringSessionEntity> tutoringSessions, List<UserCourseEntity> users, List<VideoEntity> videos) {
         this.id = UUID.randomUUID().toString();
         this.title = title;
         this.paymentRequired = paymentRequired;
@@ -87,11 +87,11 @@ public class CourseEntity {
         this.tutoringSessions = tutoringSessions;
     }
 
-    public List<UserEntity> getUsers() {
+    public List<UserCourseEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(List<UserEntity> users) {
+    public void setUsers(List<UserCourseEntity> users) {
         this.users = users;
     }
 

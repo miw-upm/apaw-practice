@@ -13,7 +13,6 @@ import java.util.UUID;
 @Document
 public class ConsoleCompanyrEntity {
     @Id
-    private String id;
     private String companyInformation;
     private String website;
     private Integer numberOfEmployee;
@@ -26,19 +25,12 @@ public class ConsoleCompanyrEntity {
     }
 
     public ConsoleCompanyrEntity(String companyInformation, String website, Integer numberOfEmployee, Boolean active, LocalDate foundationDate, List<ConsoleEntity> consoleEntities) {
-        this.id = UUID.randomUUID().toString();
         this.companyInformation = companyInformation;
         this.website = website;
         this.numberOfEmployee = numberOfEmployee;
         this.active = active;
         this.foundationDate = foundationDate;
         this.consoleEntities = consoleEntities;
-    }
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
     }
     public String getCompanyInformation() {
         return companyInformation;
@@ -90,7 +82,6 @@ public class ConsoleCompanyrEntity {
     @Override
     public String toString() {
         return "ConsoleCompanyEntity{" +
-                "id='" + id + '\'' +
                 ", companyInformation=" + companyInformation +
                 ", website=" + website +
                 ", numberOfEmployee='" + numberOfEmployee + '\'' +

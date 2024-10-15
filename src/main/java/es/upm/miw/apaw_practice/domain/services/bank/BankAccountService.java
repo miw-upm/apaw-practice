@@ -13,6 +13,7 @@ public class BankAccountService {
     private final BankAccountPersistence bankAccountPersistence;
 
     @Autowired
+
     public BankAccountService(BankAccountPersistence bankAccountPersistence) {
         this.bankAccountPersistence = bankAccountPersistence;
     }

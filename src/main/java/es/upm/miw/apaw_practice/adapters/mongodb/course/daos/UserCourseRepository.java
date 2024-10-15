@@ -1,10 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.course.daos;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.UserEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.UserCourseEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface UserCourseRepository extends MongoRepository<UserEntity, String> {
-    Optional<UserEntity> findByEmail(String eamil);
+public interface UserCourseRepository extends MongoRepository<UserCourseEntity, String> {
+    Optional<UserCourseEntity> findByEmail(String email);
 }
