@@ -16,11 +16,11 @@ public class StyleService {
     }
 
     public Style create(Style style) {
-        this.assertNIFNotExists(style.getName());
+        this.assertNameNotExists(style.getName());
         return this.stylePersistence.create(style);
     }
 
-    private void assertNIFNotExists(String name) {
+    private void assertNameNotExists(String name) {
         if (this.stylePersistence.existsByName(name)) {
             throw new ConflictException("name exists: " + name);
         }

@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.entities.OperatorEntity;
 import es.upm.miw.apaw_practice.domain.models.videogame.Player;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;

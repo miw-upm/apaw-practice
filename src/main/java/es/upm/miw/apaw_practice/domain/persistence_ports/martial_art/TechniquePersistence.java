@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository
 public interface TechniquePersistence {
 
     Stream<Technique> readAll();

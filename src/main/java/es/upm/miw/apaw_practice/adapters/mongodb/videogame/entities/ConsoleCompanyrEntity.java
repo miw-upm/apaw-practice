@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Document
 public class ConsoleCompanyrEntity {

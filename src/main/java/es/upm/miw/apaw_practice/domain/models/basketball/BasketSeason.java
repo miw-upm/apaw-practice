@@ -1,7 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.basketball;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class BasketSeason {
 
@@ -60,5 +61,11 @@ public class BasketSeason {
 
     public void setBasketMatches(List<BasketMatch> basketMatches) {
         this.basketMatches = basketMatches;
+    }
+
+    public void doDefault() {
+        if (Objects.isNull(basketMatches)) {
+            this.basketMatches = Collections.emptyList();
+        }
     }
 }
