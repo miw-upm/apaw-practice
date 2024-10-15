@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Document
-public class ShoppingCartEntity {
+public class ShoppingCartECommerceEntity {
 
     @Id
     private String id;
@@ -23,13 +23,13 @@ public class ShoppingCartEntity {
     private BigDecimal totalPrice;
 
     @DBRef
-    private List<ProductEntity> products;
+    private List<ProductECommerceEntity> products;
 
-    public ShoppingCartEntity() {
+    public ShoppingCartECommerceEntity() {
         //Empty for framework
     }
 
-    public ShoppingCartEntity(Integer shoppingNum, LocalDateTime shoppingTime, Boolean isPaid, BigDecimal totalPrice, List<ProductEntity> products) {
+    public ShoppingCartECommerceEntity(Integer shoppingNum, LocalDateTime shoppingTime, Boolean isPaid, BigDecimal totalPrice, List<ProductECommerceEntity> products) {
         this.id = UUID.randomUUID().toString();
         this.shoppingNum = shoppingNum;
         this.shoppingTime = shoppingTime;
@@ -77,11 +77,11 @@ public class ShoppingCartEntity {
         this.totalPrice = totalPrice;
     }
 
-    public List<ProductEntity> getProducts() {
+    public List<ProductECommerceEntity> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductEntity> products) {
+    public void setProducts(List<ProductECommerceEntity> products) {
         this.products = products;
     }
 
@@ -89,7 +89,7 @@ public class ShoppingCartEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ShoppingCartEntity that = (ShoppingCartEntity) o;
+        ShoppingCartECommerceEntity that = (ShoppingCartECommerceEntity) o;
         return Objects.equals(shoppingNum, that.shoppingNum);
     }
 

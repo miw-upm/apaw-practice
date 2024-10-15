@@ -29,4 +29,13 @@ class MenuCategoryPersistenceMongodbIT {
                 .allMatch(menuCategoriesSave::contains));
     }
 
+    @Test
+    void testRead() {
+        MenuCategory menuCategory = menuCategoryPersistenceMongodb.read("Vegetarian");
+        assertNotNull(menuCategory);
+        assertNotNull(menuCategory.getDescription());
+        assertNotNull(menuCategory.getName());
+        assertNotNull(menuCategory.getActive());
+    }
+
 }

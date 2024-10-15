@@ -8,11 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class VideoRepositoryIT {
+class VideoRepositoryIT {
     @Autowired
     private VideoRepository videoRepository;
 
@@ -22,6 +21,7 @@ public class VideoRepositoryIT {
         VideoEntity videoEntity = this.videoRepository.findByName("Introducción a Python").get();
         assertEquals(LocalTime.of(0, 15).toString() , videoEntity.getDuration().toString());
         assertEquals(LocalDateTime.of(2023, 1, 10, 10, 0).toString(), videoEntity.getCreationDate().toString());
+        assertFalse(videoEntity.toString().isEmpty());
     }
 
 }

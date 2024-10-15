@@ -2,8 +2,10 @@ package es.upm.miw.apaw_practice.adapters.mongodb.martial_art.entities;
 
 
 
+import es.upm.miw.apaw_practice.domain.models.martial_art.Instructor;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Technique;
 import es.upm.miw.apaw_practice.domain.models.martial_art.MartialArtsClass;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -57,7 +59,6 @@ public class MartialArtsClassEntity {
     }
 
     public MartialArtsClass toMartialArtsClass() {
-
         List<Technique> techniques = this.techniqueList.stream()
                 .map(TechniqueEntity::toTechnique)
                 .toList();

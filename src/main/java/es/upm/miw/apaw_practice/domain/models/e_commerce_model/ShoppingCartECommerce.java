@@ -4,18 +4,18 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ShoppingCart {
+public class ShoppingCartECommerce {
     private Integer shoppingNum;
     private LocalDateTime shoppingTime;
     private Boolean isPaid;
     private BigDecimal totalPrice;
-    private List<Product> products;
+    private List<ProductECommerce> products;
 
-    public ShoppingCart() {
+    public ShoppingCartECommerce() {
         // Empty for framework
     }
 
-    public ShoppingCart(Integer shoppingNum, LocalDateTime shoppingTime, Boolean isPaid, BigDecimal totalPrice, List<Product> products) {
+    public ShoppingCartECommerce(Integer shoppingNum, LocalDateTime shoppingTime, Boolean isPaid, BigDecimal totalPrice, List<ProductECommerce> products) {
         this.shoppingNum = shoppingNum;
         this.shoppingTime = shoppingTime;
         this.isPaid = isPaid;
@@ -55,11 +55,11 @@ public class ShoppingCart {
         this.totalPrice = totalPrice;
     }
 
-    public List<Product> getProducts() {
+    public List<ProductECommerce> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<ProductECommerce> products) {
         this.products = products;
     }
 

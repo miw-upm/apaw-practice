@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,13 +12,13 @@ public class AppointmentEntity {
     private Integer id;
     private LocalDate date;
     private LocalTime time;
-    private String location;
+    private String location; // Asumiendo que 'location' se usa como descripción
 
-    private String patientDni; // Link to the Patient
-    private String doctorDni; // Link to the Doctor
+    private String patientDni;
+    private String doctorDni;
 
     public AppointmentEntity() {
-        // Empty constructor for the framework
+        // Constructor vacío para MongoDB
     }
 
     public AppointmentEntity(Integer id, LocalDate date, LocalTime time, String location, String patientDni, String doctorDni) {
@@ -30,7 +30,7 @@ public class AppointmentEntity {
         this.doctorDni = doctorDni;
     }
 
-    // Getters and Setters
+ 
     public Integer getId() {
         return id;
     }
@@ -77,5 +77,15 @@ public class AppointmentEntity {
 
     public void setDoctorDni(String doctorDni) {
         this.doctorDni = doctorDni;
+    }
+
+    public Appointment toAppointment() {
+        // Asegúrate de proporcionar todos los parámetros necesarios
+        return new Appointment(
+                String.valueOf(this.id), // Convierte el ID a String si es necesario
+                this.date,
+                this.time,
+                this.location // Si 'location' se usa como descripción
+        );
     }
 }
