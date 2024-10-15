@@ -5,8 +5,6 @@ import es.upm.miw.apaw_practice.domain.services.Hospital.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(PatientResource.PATIENTS)
 public class PatientResource {
@@ -20,14 +18,10 @@ public class PatientResource {
         this.patientService = patientService;
     }
 
-    @GetMapping
-    public List<Patient> findAll() {
-        return this.patientService.findAll();
+    @DeleteMapping("/{dni}")
+    public void deletePatient(@PathVariable String dni) {
+        patientService.delete(dni);
     }
 
-    // Endpoint para eliminar un paciente por ID
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        this.patientService.delete(id);
-    }
+
 }

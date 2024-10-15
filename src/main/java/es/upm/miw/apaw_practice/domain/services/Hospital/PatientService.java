@@ -5,8 +5,6 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.PatientPersist
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class PatientService {
 
@@ -17,11 +15,9 @@ public class PatientService {
         this.patientPersistence = patientPersistence;
     }
 
-    public List<Patient> findAll() {
-        return this.patientPersistence.findAll();
+
+    public void delete(String dni) {
+        patientPersistence.delete(dni);
     }
 
-    public void delete(String id) {
-        this.patientPersistence.delete(id);
-    }
 }
