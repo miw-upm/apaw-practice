@@ -25,14 +25,6 @@ public class ConsoleCompanyPersistenceMongodb implements ConsoleCompanyPersisten
         return this.consoleCompanyRepository.findAll().stream()
                 .map(ConsoleCompanyrEntity::toConsoleCompany);
     }
-/*
-    @Override
-    public ConsoleCompany readByCompanyInformation(String companyInformation) {
-        return this.consoleCompanyRepository
-                .findById(companyInformation)
-                .orElseThrow(() -> new NotFoundException("ConsoleCompany with " + companyInformation + " not found"))
-                .toConsoleCompany();
-    }*/
 
     @Override
     public ConsoleCompany readById(String id) {

@@ -1,10 +1,8 @@
 package es.upm.miw.apaw_practice.domain.services.videogame;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.VideoGameRepository;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.models.videogame.VideoGame;
 import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.VideoGamePersistence;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
