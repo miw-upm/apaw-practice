@@ -7,5 +7,5 @@ import java.math.BigDecimal;
 
 @Repository
 public interface BasketBallPersistence {
-    BasketBall update(String id, BasketBall basketBall);
+    BasketBall update(Integer id, BasketBall basketBall);
 }
