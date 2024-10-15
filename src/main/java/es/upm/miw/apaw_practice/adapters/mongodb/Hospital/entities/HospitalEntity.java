@@ -1,4 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
+
 import org.springframework.data.annotation.Id;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
@@ -24,6 +25,7 @@ public class HospitalEntity {
     public HospitalEntity() {
         // Empty constructor for the framework
     }
+
     // Constructor accepting a Hospital model
     public HospitalEntity(Hospital hospital) {
         this.id = hospital.getId();
@@ -86,6 +88,7 @@ public class HospitalEntity {
     public void setPatients(List<Patient> patients) {
         this.patients = patients;
     }
+
     // Method to convert to Hospital model
     public Hospital toHospital() {
         return new Hospital(this.id, this.name, this.location, this.capacity);
