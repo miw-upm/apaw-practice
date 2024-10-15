@@ -46,7 +46,7 @@ class ThemeParkPersistenceMongodbIT {
     }
 
     @Test
-    void testGetSumByNick() {
+    void testGetSumPriceByNick() {
         String nick = "Luca";
         BigDecimal sumPrice = this.themeParkPersistence.getSumPriceByNick(nick);
         assertEquals(new BigDecimal("100.0"), sumPrice);

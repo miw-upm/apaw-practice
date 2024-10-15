@@ -73,13 +73,13 @@ public class ThemeParkResourceIT {
     }
 
     @Test
-    void testGetSumByNick() {
-        String nick = "Luca";
+    void testGetSumPriceByNick() {
         this.webTestClient
                 .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(ThemeParkResource.THEME_PARKS + ThemeParkResource.OPERATOR)
-                        .build(nick))
+                .uri(uriBuilder ->
+                        uriBuilder.path(ThemeParkResource.THEME_PARKS + ThemeParkResource.SEARCH)
+                                .queryParam("q", "nick: Luca")
+                                .build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BigDecimal.class)
