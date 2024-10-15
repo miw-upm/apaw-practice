@@ -30,7 +30,7 @@ public class AppointmentEntity {
         this.doctorDni = doctorDni;
     }
 
- 
+
     public Integer getId() {
         return id;
     }
