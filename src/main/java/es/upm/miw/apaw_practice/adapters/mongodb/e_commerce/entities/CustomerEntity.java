@@ -1,4 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities;
+import es.upm.miw.apaw_practice.domain.models.e_commerce_model.Customer;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -108,5 +110,11 @@ public class CustomerEntity {
                 ", shoppingCart=" + shoppingCart +
                 ", shippingAddresses=" + shippingAddresses +
                 '}';
+    }
+
+    public Customer toCustomer() {
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(this, customer);
+        return customer;
     }
 }
