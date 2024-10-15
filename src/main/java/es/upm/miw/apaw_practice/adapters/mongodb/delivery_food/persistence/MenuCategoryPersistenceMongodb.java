@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.daos.MenuCategoryRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.entities.MenuCategoryEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.delivery_food.MenuCategory;
 import es.upm.miw.apaw_practice.domain.persistence_ports.delivery_food.MenuCategoryPersistence;
 import org.springframework.stereotype.Repository;
@@ -21,5 +22,13 @@ public class MenuCategoryPersistenceMongodb implements MenuCategoryPersistence {
     public Stream<MenuCategory> findByActive(Boolean active) {
         return menuCategoryRepository.findByActive(active)
                 .map(MenuCategoryEntity::toMenuCategory);
+    }
+
+    @Override
+    public MenuCategory read(String name) {
+        return menuCategoryRepository
+                .findByName(name)
+                .orElseThrow(() -> new NotFoundException("Menu category name: " + name))
+                .toMenuCategory();
     }
 }

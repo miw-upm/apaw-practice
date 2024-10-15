@@ -49,4 +49,26 @@ public class MenuPersistenceMongodb implements MenuPersistence {
                 .save(new MenuEntity(menu.getName(), menu.getDescription(), menuCategoryEntities, menu.getRating()))
                 .toMenu();
     }
+
+    @Override
+    public Menu update(String name, Menu menu) {
+        MenuEntity menuEntity = this.menuRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Menu name: " + menu.getName()));
+        menuEntity.setName(menu.getName());
+        menuEntity.setDescription(menu.getDescription());
+        menuEntity.setRating(menu.getRating());
+
+        if (menu.getCategories() != null) {
+            menuEntity.setCategories(menu.getCategories()
+                    .stream()
+                    .map(x -> menuCategoryRepository.findByName(x.getName())
+                            .orElseGet(() -> {
+                                MenuCategoryEntity menuCategory = new MenuCategoryEntity(
+                                        x.getName(), x.getDescription(), x.getActive());
+                                return menuCategoryRepository.save(menuCategory);
+                            }))
+                    .toList());
+        }
+        return this.menuRepository.save(menuEntity).toMenu();
+    }
 }
