@@ -46,9 +46,7 @@ public class Hospital {
     public List<Patient> getPatients() {
         return patients;
     }
-    public Hospital toHospital() {
-        return new Hospital(this.id, this.name, this.location, this.capacity, this.doctors, this.patients);
-    }
+
 
 
 }

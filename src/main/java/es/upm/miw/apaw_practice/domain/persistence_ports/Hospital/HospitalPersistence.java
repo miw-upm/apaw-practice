@@ -12,6 +12,6 @@ public interface HospitalPersistence {
 
     // Method to create a new hospital
     Hospital create(Hospital hospital);
-
+    boolean existsByName(String name);
 
 }

@@ -92,6 +92,7 @@ public class HospitalEntity {
 
     // Method to convert to Hospital model
     public Hospital toHospital() {
-        return new Hospital(this.id, this.name, this.location, this.capacity);
+        return new Hospital(this.id, this.name, this.location, this.capacity, this.doctors, this.patients);
     }
+
 }
