@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Document
-public class ProductEntity {
+public class ProductECommerceEntity {
 
     @Id
     private String id;
@@ -19,11 +19,11 @@ public class ProductEntity {
     private Integer numberProduct;
     private BigDecimal unitPrice;
 
-    public ProductEntity() {
+    public ProductECommerceEntity() {
         //Empty for framework
     }
 
-    public ProductEntity(String productName, Integer numberProduct, BigDecimal unitPrice) {
+    public ProductECommerceEntity(String productName, Integer numberProduct, BigDecimal unitPrice) {
         this.id = UUID.randomUUID().toString();
         this.productName = productName;
         this.numberProduct = numberProduct;
@@ -66,7 +66,7 @@ public class ProductEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProductEntity that = (ProductEntity) o;
+        ProductECommerceEntity that = (ProductECommerceEntity) o;
         return Objects.equals(productName, that.productName);
     }
 

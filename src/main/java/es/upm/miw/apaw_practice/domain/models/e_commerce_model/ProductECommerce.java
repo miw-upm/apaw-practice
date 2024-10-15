@@ -2,17 +2,17 @@ package es.upm.miw.apaw_practice.domain.models.e_commerce_model;
 
 import java.math.BigDecimal;
 
-public class Product {
+public class ProductECommerce {
 
     private String productName;
     private Integer numberProduct;
     private BigDecimal unitPrice;
 
-    public Product() {
+    public ProductECommerce() {
         // Empty for framework
     }
 
-    public Product(String productName, Integer numberProduct, BigDecimal unitPrice) {
+    public ProductECommerce(String productName, Integer numberProduct, BigDecimal unitPrice) {
         this.productName = productName;
         this.numberProduct = numberProduct;
         this.unitPrice = unitPrice;

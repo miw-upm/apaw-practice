@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.ECommerceSeederService;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ProductEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ProductECommerceEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +28,16 @@ public class ProductRepositoryIT {
 
     @Test
     void testFindByProductNameNonExisting() {
-        Optional<ProductEntity> productEntity = productRepository.findByProductName("NonExistingProduct");
+        Optional<ProductECommerceEntity> productEntity = productRepository.findByProductName("NonExistingProduct");
         assertTrue(productEntity.isEmpty(), "Product should not exist for this product name");
     }
 
     @Test
     void testFindByProductName() {
-        Optional<ProductEntity> productEntity = productRepository.findByProductName("Laptop");
+        Optional<ProductECommerceEntity> productEntity = productRepository.findByProductName("Laptop");
         assertTrue(productEntity.isPresent(), "Product should exist for this product name");
 
-        ProductEntity entity = productEntity.get();
+        ProductECommerceEntity entity = productEntity.get();
         assertNotNull(entity);
 
         assertEquals("Laptop", entity.getProductName(), "Product name should match");

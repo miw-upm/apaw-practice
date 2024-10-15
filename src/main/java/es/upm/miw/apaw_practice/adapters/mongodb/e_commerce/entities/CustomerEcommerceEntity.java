@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities;
-import es.upm.miw.apaw_practice.domain.models.e_commerce_model.Customer;
+
+import es.upm.miw.apaw_practice.domain.models.e_commerce_model.CustomerECommerce;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -11,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Document
-public class CustomerEntity {
+public class CustomerEcommerceEntity {
 
     @Id
     private String id;
@@ -22,16 +23,16 @@ public class CustomerEntity {
     private Integer postalCode;
 
     @DBRef
-    private ShoppingCartEntity shoppingCart;
+    private ShoppingCartECommerceEntity shoppingCart;
 
     @DBRef
     private List<ShippingAddressEntity> shippingAddresses;
 
-    public CustomerEntity() {
+    public CustomerEcommerceEntity() {
         // Empty constructor for framework
     }
 
-    public CustomerEntity(String customerId, String userName, String email, Integer postalCode, ShoppingCartEntity shoppingCart, List<ShippingAddressEntity> shippingAddresses) {
+    public CustomerEcommerceEntity(String customerId, String userName, String email, Integer postalCode, ShoppingCartECommerceEntity shoppingCart, List<ShippingAddressEntity> shippingAddresses) {
         this.id = UUID.randomUUID().toString();
         this.userName = userName;
         this.email = email;
@@ -71,11 +72,11 @@ public class CustomerEntity {
         this.postalCode = postalCode;
     }
 
-    public ShoppingCartEntity getShoppingCart() {
+    public ShoppingCartECommerceEntity getShoppingCart() {
         return shoppingCart;
     }
 
-    public void setShoppingCart(ShoppingCartEntity shoppingCart) {
+    public void setShoppingCart(ShoppingCartECommerceEntity shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
 
@@ -91,7 +92,7 @@ public class CustomerEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CustomerEntity that = (CustomerEntity) o;
+        CustomerEcommerceEntity that = (CustomerEcommerceEntity) o;
         return Objects.equals(userName, that.userName);
     }
 
@@ -112,8 +113,8 @@ public class CustomerEntity {
                 '}';
     }
 
-    public Customer toCustomer() {
-        Customer customer = new Customer();
+    public CustomerECommerce toCustomer() {
+        CustomerECommerce customer = new CustomerECommerce();
         BeanUtils.copyProperties(this, customer);
         return customer;
     }

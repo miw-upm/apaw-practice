@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.ECommerceSeederService;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShoppingCartEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShoppingCartECommerceEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +28,16 @@ public class ECommerceShoppingCartRepositoryIT {
 
     @Test
     void testFindByShoppingNumNonExisting() {
-        Optional<ShoppingCartEntity> shoppingCartEntity = eCommerceShoppingCartRepository.findByShoppingNum(9999);
+        Optional<ShoppingCartECommerceEntity> shoppingCartEntity = eCommerceShoppingCartRepository.findByShoppingNum(9999);
         assertTrue(shoppingCartEntity.isEmpty(), "ShoppingCart should not exist for this shopping number");
     }
 
     @Test
     void testFindByShoppingNum() {
-        Optional<ShoppingCartEntity> shoppingCartEntity = eCommerceShoppingCartRepository.findByShoppingNum(1);
+        Optional<ShoppingCartECommerceEntity> shoppingCartEntity = eCommerceShoppingCartRepository.findByShoppingNum(1);
         assertTrue(shoppingCartEntity.isPresent(), "ShoppingCart should exist for this shopping number");
 
-        ShoppingCartEntity entity = shoppingCartEntity.get();
+        ShoppingCartECommerceEntity entity = shoppingCartEntity.get();
         assertNotNull(entity);
 
         assertEquals(1, entity.getShoppingNum(), "Shopping number should match");
