@@ -27,7 +27,7 @@ class MenuServiceIT {
 
     @Test
     void testUpdate() {
-        String menuNameUpdate = "Vegetarian Delight";
+        String menuNameUpdate = "Grill Master";
         MenuCategory menuCategory = new MenuCategory();
         menuCategory.setName("Grilled");
         menuCategory.setDescription("Description");
