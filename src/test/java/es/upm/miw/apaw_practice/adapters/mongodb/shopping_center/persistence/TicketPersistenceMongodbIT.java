@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.domain.models.shopping_center.Ticket;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,5 +34,16 @@ public class TicketPersistenceMongodbIT {
         List<Ticket> newTickets = this.ticketPersistenceMongodb.readAll().collect(Collectors.toList());
         int newSize = newTickets.size();
         assertNotEquals(oldSize, newSize);
+    }
+
+    @Test
+    void testUpdate() {
+        Optional<Ticket> ticket = this.ticketPersistenceMongodb.readAll().findFirst();
+        assertTrue(ticket.isPresent());
+        BigDecimal newTotalPrice = new BigDecimal("99.99");
+        this.ticketPersistenceMongodb.updateTotalPrice(ticket.get().getId(), newTotalPrice);
+        Optional<Ticket> newTicket = this.ticketPersistenceMongodb.readAll().findFirst();
+        assertTrue(newTicket.isPresent());
+        assertEquals(new BigDecimal("99.99"), newTicket.get().getTotalPrice());
     }
 }

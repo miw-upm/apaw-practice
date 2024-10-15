@@ -1,18 +1,19 @@
 package es.upm.miw.apaw_practice.domain.models.martial_art;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Instructor {
     private String dni;
     private String fullName;
     private Integer phoneNumber;
-    private LocalDate birthDate;
+    private LocalDateTime birthDate;
 
-    public Instructor() {
+    public Instructor(String dni, String fullName, LocalDate phoneNumber, LocalDateTime birthDate) {
         // empty for framework
     }
 
-    public Instructor(String dni, String fullName, Integer phoneNumber, LocalDate birthDate) {
+    public Instructor(String dni, String fullName, Integer phoneNumber, LocalDateTime birthDate) {
         this.dni = dni;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
@@ -43,11 +44,11 @@ public class Instructor {
         this.phoneNumber = phoneNumber;
     }
 
-    public LocalDate getBirthDate() {
+    public LocalDateTime getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
 
