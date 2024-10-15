@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.movies.entities;
 
+import es.upm.miw.apaw_practice.domain.models.movies.Studio;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class StudioEntity {
@@ -58,6 +60,15 @@ public class StudioEntity {
     public Set<MovieEntity> getProducedMovies() { return producedMovies; }
 
     public void setProducedMovies(Set<MovieEntity> producedMovies) { this.producedMovies = producedMovies; }
+
+    public Studio toStudio() {
+        return new Studio(
+                this.name,
+                this.foundedDate,
+                this.marketCapitalization,
+                this.producedMovies.stream().map(MovieEntity::toMovie).collect(Collectors.toSet())
+        );
+    }
 
     @Override
     public String toString() {
