@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class Menu {
 
-    private String id;
     private String name;
     private String description;
     private Double rating;
@@ -14,20 +13,11 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(String id, String name, String description, List<MenuCategory> categories, Double rating) {
-        this.id = id;
+    public Menu(String name, String description, List<MenuCategory> categories, Double rating) {
         this.name = name;
         this.description = description;
         this.categories = categories;
         this.rating = rating;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -67,19 +57,18 @@ public class Menu {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Menu menu = (Menu) o;
-        return Objects.equals(id, menu.id);
+        return Objects.equals(name, menu.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 
     @Override
     public String toString() {
         return "Menu{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", categories=" + categories +
                 ", rating=" + rating +

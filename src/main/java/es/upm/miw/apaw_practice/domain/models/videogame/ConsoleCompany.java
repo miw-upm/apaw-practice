@@ -12,7 +12,7 @@ public class ConsoleCompany {
     private LocalDate foundationDate;
     private List<Console> consoles;
 
-    public   ConsoleCompany(){
+    public ConsoleCompany(){
         //empty for framework
     }
 
