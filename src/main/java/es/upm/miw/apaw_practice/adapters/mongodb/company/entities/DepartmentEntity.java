@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.company.entities;
 
+import es.upm.miw.apaw_practice.domain.models.company.Department;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -75,6 +77,11 @@ public class DepartmentEntity {
         this.managementEntity = managementEntity;
     }
 
+    public Department toDepartment() {
+        Department department = new Department();
+        BeanUtils.copyProperties(this, department);
+        return department;
+    }
     // equals, hashCode, toString
 
     @Override
