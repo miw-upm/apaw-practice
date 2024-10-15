@@ -6,6 +6,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.theme_park.ThemeParkPer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 
@@ -29,4 +30,7 @@ public class ThemeParkService {
         themeParkOpenedStatusList.forEach(themeParkNewStatus -> updateParkStatus(themeParkNewStatus.getId()));
     }
 
+    public BigDecimal getSumPriceByNick(String nick) {
+        return this.themeParkPersistence.getSumPriceByNick(nick);
+    }
 }
