@@ -7,9 +7,10 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.martial_art.TechniquePe
 import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.entities.TechniqueEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
-
+@Repository("techniquePersistence")
 public class TechniquePersistenceMongodb implements TechniquePersistence{
 
     private final TechniqueRepository techniqueRepository;

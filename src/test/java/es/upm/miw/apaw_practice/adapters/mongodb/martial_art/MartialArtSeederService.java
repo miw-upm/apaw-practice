@@ -1,13 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.martial_art;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.BookingRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.GuestRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.HotelRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.daos.RoomRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.BookingEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.GuestEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.HotelEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.RoomEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.daos.MartialArtsClassRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.daos.TechniqueRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.daos.StyleRepository;
@@ -21,11 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 @Service
 public class MartialArtSeederService {
@@ -56,15 +46,25 @@ public class MartialArtSeederService {
         };
 
         this.martialArtsClassRepository.saveAll(Arrays.asList(martialArtsClassEntities));
-
-        InstructorEntity[] instructorEntities = {
-                new InstructorEntity("Z1521743C","Bastian red",999999,LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
-                new InstructorEntity("Z1621543C","Felipe flip",999999,LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
-                new InstructorEntity("Z1721643C","Robert wat",999999,LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
-                new InstructorEntity("Z1728143C","Bruce lee",999999,LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
+        long countBefore = this.instructorRepository.count();
+        InstructorEntity[] instructorEntities = new InstructorEntity[]{
+                new InstructorEntity("Z1521143C", "Bastian red", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
+                new InstructorEntity("84134147K", "Felipe flip", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
+                new InstructorEntity("Z1721643C", "Robert wat", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
+                new InstructorEntity("03948142R", "Bruce lee", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
         };
 
         this.instructorRepository.saveAll(Arrays.asList(instructorEntities));
+        // Contar después de guardar
+        long countAfter = this.instructorRepository.count();
+
+        // Verificar que el tamaño ha aumentado
+        if (countAfter != countBefore + instructorEntities.length) {
+            throw new RuntimeException("No se han guardado todas las entidades.");
+        }
+        LogManager.getLogger(this.getClass()).info("Cantidad de instructores antes: " + countBefore);
+        LogManager.getLogger(this.getClass()).info("Cantidad de instructores después: " + countAfter);
+
 
         StyleEntity[] styleEntities ={
                 new StyleEntity("Estilo de combate","Tecnica pensada para el deporte de contacto","america",4),
