@@ -9,6 +9,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederSe
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.HospitalSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.CourseSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.DeliveryFoodSeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.ECommerceSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.GunStoreSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.HotelSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.HotelRetiredSeederService;
@@ -53,6 +54,7 @@ public class DatabaseSeederService {
     private final CourseSeederService courseSeederService;
     private final VideoGameSeederService videoGameSeederService;
     private final GunStoreSeederService gunStoreSeederService;
+    private final ECommerceSeederService eCommerceSeederService;
     private final MartialArtSeederService martialArtSeederService;
 
     @Autowired
@@ -80,6 +82,7 @@ public class DatabaseSeederService {
             CourseSeederService courseSeederService,
             VideoGameSeederService videoGameSeederService,
             GunStoreSeederService gunStoreSeederService,
+            ECommerceSeederService eCommerceSeederService,
             MartialArtSeederService martialArtSeederService
     ) {
         this.shopSeederService = shopSeederService;
@@ -106,6 +109,7 @@ public class DatabaseSeederService {
         this.videoGameSeederService = videoGameSeederService;
         this.gunStoreSeederService = gunStoreSeederService;
         this.martialArtSeederService = martialArtSeederService;
+        this.eCommerceSeederService = eCommerceSeederService;
 
       this.seedDatabase();
     }
@@ -135,6 +139,7 @@ public class DatabaseSeederService {
         videoGameSeederService.seedDatabase();
         gunStoreSeederService.seedDatabase();
         martialArtSeederService.seedDatabase() ;
+        eCommerceSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -161,6 +166,7 @@ public class DatabaseSeederService {
         courseSeederService.deleteAll();
         videoGameSeederService.deleteAll();
         gunStoreSeederService.deleteAll();
+        martialArtSeederService.deleteAll();
         martialArtSeederService.deleteAll();
         this.seedDatabase();
     }
