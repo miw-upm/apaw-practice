@@ -45,7 +45,7 @@ public class InstructorEntity {
         this.fullName = fullName;
     }
     public InstructorEntity(String dni, String fullName, Integer phoneNumber, LocalDateTime birthDate) {
-        this.dni = UUID.randomUUID().toString();
+        this.dni = dni; ;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
