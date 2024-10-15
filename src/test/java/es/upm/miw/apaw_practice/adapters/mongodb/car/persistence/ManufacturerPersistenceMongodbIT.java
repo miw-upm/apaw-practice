@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.models.car.Manufacturer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
@@ -12,6 +14,7 @@ public class ManufacturerPersistenceMongodbIT {
 
     @Autowired
     private ManufacturerPersistenceMongodb manufacturerPersistence;
+
 
     @Test
     public void testReadByName(){
@@ -37,6 +40,15 @@ public class ManufacturerPersistenceMongodbIT {
     @Test
     void testNameExists() {
         assertTrue(manufacturerPersistence.existName("Tesla"));
+    }
+
+    @Test
+    void testFindOwnerNamesByManufacturerCountry(){
+
+        List<String> result = manufacturerPersistence.findOwnerNamesByManufacturerCountry("France");
+
+        assertEquals(1, result.size());
+        assertEquals("Lucia", result.get(0));
     }
 
 

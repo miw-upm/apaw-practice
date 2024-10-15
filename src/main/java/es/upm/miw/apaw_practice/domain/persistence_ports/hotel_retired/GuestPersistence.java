@@ -17,4 +17,6 @@ public interface GuestPersistence {
     Guest read(String nif);
 
     boolean existsNIF(String nif);
+
+    void delete(String nif);
 }

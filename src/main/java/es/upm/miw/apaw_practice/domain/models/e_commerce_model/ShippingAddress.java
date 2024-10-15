@@ -1,9 +1,13 @@
-package es.upm.miw.apaw_practice.domain.models.E_commerce_model;
+package es.upm.miw.apaw_practice.domain.models.e_commerce_model;
 
 public class ShippingAddress {
     private String location;
     private String telefono;
     private String recipientName;
+
+    public ShippingAddress() {
+        //Empty for framework
+    }
 
     public ShippingAddress(String location, String telefono, String recipientName) {
         this.location = location;

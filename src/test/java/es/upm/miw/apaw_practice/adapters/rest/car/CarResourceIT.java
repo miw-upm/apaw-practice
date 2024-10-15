@@ -4,7 +4,6 @@ import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.car.Car;
 import es.upm.miw.apaw_practice.domain.models.car.OwnerCar;
 import es.upm.miw.apaw_practice.domain.models.car.Piece;
-import es.upm.miw.apaw_practice.domain.persistence_ports.car.CarPersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.OwnerCarPersistence;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.PiecePersistence;
 import org.junit.jupiter.api.Test;
@@ -17,14 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 @RestTestConfig
 public class CarResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
 
-    @Autowired
-    private CarPersistence carPersistence;
 
     @Autowired
     private PiecePersistence piecePersistence;
@@ -64,6 +62,8 @@ public class CarResourceIT {
                 .expectStatus().isCreated()
                 .expectBody(Car.class);
     }
+
+
 
 
 

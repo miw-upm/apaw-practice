@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 public class CarPersistenceMongodbIT {
@@ -26,6 +25,7 @@ public class CarPersistenceMongodbIT {
 
     @Autowired
     private PiecePersistenceMongodb piecePersistence;
+
 
     @Test
     public void testReadByModel(){
@@ -59,4 +59,6 @@ public class CarPersistenceMongodbIT {
         this.carPersistence.delete("Supra");
 
     }
+
+
 }

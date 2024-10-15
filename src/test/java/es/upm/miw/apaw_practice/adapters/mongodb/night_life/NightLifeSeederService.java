@@ -54,7 +54,7 @@ public class NightLifeSeederService {
 
         ReservationEntity[] reservations = {
                 new ReservationEntity(LocalDate.now().plusDays(1),new BigDecimal("50.00"),2,clubs[0],Arrays.asList(customers[0], customers[1])),
-                new ReservationEntity(LocalDate.now().plusDays(2),new BigDecimal("100.00"),2,clubs[1],Arrays.asList(customers[2], customers[3])),
+                new ReservationEntity(LocalDate.now().plusDays(2),new BigDecimal("50.00"),2,clubs[1],Arrays.asList(customers[2], customers[3])),
 
         };
         this.reservationRepository.saveAll(Arrays.asList(reservations));

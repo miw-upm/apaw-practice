@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface GuestRepository extends MongoRepository<GuestEntity, String> {
     Optional<GuestEntity> findByNif(String nif);
+
+    void deleteByNif(String nif);
 }

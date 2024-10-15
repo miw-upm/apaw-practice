@@ -67,4 +67,28 @@ public class HotelResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testDelete() {
+        Room[] rooms = {
+                new Room("34301", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+                new Room("2323", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
+        };
+        Hotel hotel = new Hotel("B28649549", "Lacosta", "C/ Pedralves 32 Barcelona", List.of(rooms));
+
+        this.webTestClient
+                .post()
+                .uri(HOTELS)
+                .body(BodyInserters.fromValue(hotel))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Hotel.class)
+                .value(Assertions::assertNotNull);
+
+        this.webTestClient
+                .delete()
+                .uri(HOTELS + CIF_ID, "B28649549")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }

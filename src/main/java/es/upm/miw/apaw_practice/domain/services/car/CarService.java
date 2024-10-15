@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.models.car.Car;
 import es.upm.miw.apaw_practice.domain.persistence_ports.car.CarPersistence;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
 public class CarService {
 
@@ -13,6 +15,7 @@ public class CarService {
         this.carPersistence = carPersistence;
     }
 
+
     public void create(Car car) {
         carPersistence.create(car);
     }
@@ -20,4 +23,6 @@ public class CarService {
     public void delete(String model) {
         carPersistence.delete(model);
     }
+
+
 }
