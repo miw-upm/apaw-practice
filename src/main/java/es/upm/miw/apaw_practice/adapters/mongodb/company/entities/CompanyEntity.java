@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.company.entities;
 
 import es.upm.miw.apaw_practice.domain.models.company.Company;
+import es.upm.miw.apaw_practice.domain.models.company.Department;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Document
@@ -78,6 +80,12 @@ public class CompanyEntity {
 
     public void setDepartmentEntities(List<DepartmentEntity> departmentEntities) {
         this.departmentEntities = departmentEntities;
+    }
+    public Company toCompany() {
+        List<Department> departments = this.departmentEntities.stream()
+                .map(DepartmentEntity::toDepartment)
+                .collect(Collectors.toList());
+        return new Company(companyname, location, industry, creationDate, departments);
     }
 
     @Override

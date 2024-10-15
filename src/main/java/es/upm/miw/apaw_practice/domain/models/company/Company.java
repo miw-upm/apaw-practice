@@ -14,11 +14,12 @@ public class Company {
         //empty for framework
     }
 
-    public Company(String companyname, String location, String industry, LocalDate creationDate) {
+    public Company(String companyname, String location, String industry, LocalDate creationDate,List<Department> departments) {
         this.companyname = companyname;
         this.location = location;
         this.industry = industry;
         this.creationDate = creationDate;
+        this.departments = departments;
     }
 
     public String getCompanyname() {
