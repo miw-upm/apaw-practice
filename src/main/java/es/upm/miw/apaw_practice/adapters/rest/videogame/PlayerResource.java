@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping(PlayerResource.PLAYERS)
 public class PlayerResource {
     public static final String PLAYERS = "/players";
 
