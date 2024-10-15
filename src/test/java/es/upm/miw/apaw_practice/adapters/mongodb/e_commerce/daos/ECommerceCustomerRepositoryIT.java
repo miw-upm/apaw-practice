@@ -2,8 +2,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.ECommerceSeederService;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerEntity;
-import es.upm.miw.apaw_practice.domain.models.e_commerce_model.Customer;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerEcommerceEntity;
+import es.upm.miw.apaw_practice.domain.models.e_commerce_model.CustomerECommerce;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +29,19 @@ public class ECommerceCustomerRepositoryIT {
 
     @Test
     void testFindByUserNameNonExisting() {
-        Optional<CustomerEntity> customerEntity = eCommerceCustomerRepository.findByUserName("nonexistentUser");
+        Optional<CustomerEcommerceEntity> customerEntity = eCommerceCustomerRepository.findByUserName("nonexistentUser");
         assertTrue(customerEntity.isEmpty(), "Customer should not exist for this username");
     }
 
     @Test
     void testFindByUserName() {
-        Optional<CustomerEntity> customerEntity = eCommerceCustomerRepository.findByUserName("user1");
+        Optional<CustomerEcommerceEntity> customerEntity = eCommerceCustomerRepository.findByUserName("user1");
         assertTrue(customerEntity.isPresent(), "Customer should exist for this username");
 
-        CustomerEntity entity = customerEntity.get();
+        CustomerEcommerceEntity entity = customerEntity.get();
         assertNotNull(entity);
 
-        Customer customer = entity.toCustomer();
+        CustomerECommerce customer = entity.toCustomer();
 
         assertEquals("user1@example.com", customer.getEmail(), "Customer email should match");
         assertEquals(12345, customer.getPostalCode(), "Postal code should match");
