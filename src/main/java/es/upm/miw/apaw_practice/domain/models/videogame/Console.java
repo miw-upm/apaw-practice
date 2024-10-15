@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.domain.models.videogame;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 public class Console {
     private String consoleReference;

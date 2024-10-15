@@ -12,6 +12,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.hotel_retired.HotelPers
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -91,5 +92,15 @@ public class HotelPersistenceMongodb implements HotelPersistence {
     @Override
     public void delete(String cif) {
         this.hotelRepository.deleteByCif(cif);
+    }
+
+    @Override
+    public BigDecimal findTotalSumOfPrice(String hotelName, String fullName) {
+        return this.hotelRepository.findAll().stream()
+                .filter(hotelEntity -> hotelName.equals(hotelEntity.getHotelName()))
+                .flatMap(hotelEntity -> hotelEntity.getRoomsEntities().stream()
+                        .filter(roomEntity -> roomEntity.getBookingEntities().stream().anyMatch(bookingEntity -> fullName.equals(bookingEntity.getGuestEntity().getFullName()))))
+                .map(RoomEntity::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
