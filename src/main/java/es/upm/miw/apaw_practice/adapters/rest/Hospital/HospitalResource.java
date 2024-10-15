@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.Hospital;
 
-import es.upm.miw.apaw_practice.domain.models.hHspital.Hospital;
+import es.upm.miw.apaw_practice.domain.models.Hspital.Hospital;
 import es.upm.miw.apaw_practice.domain.services.Hospital.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

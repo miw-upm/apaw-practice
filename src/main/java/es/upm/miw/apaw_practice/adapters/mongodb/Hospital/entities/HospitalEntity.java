@@ -24,6 +24,13 @@ public class HospitalEntity {
     public HospitalEntity() {
         // Empty constructor for the framework
     }
+    // Constructor accepting a Hospital model
+    public HospitalEntity(Hospital hospital) {
+        this.id = hospital.getId();
+        this.name = hospital.getName();
+        this.location = hospital.getLocation();
+        this.capacity = hospital.getCapacity();
+    }
 
     public HospitalEntity(String name, String location, Integer capacity) {
         this.name = name;
@@ -78,5 +85,9 @@ public class HospitalEntity {
 
     public void setPatients(List<Patient> patients) {
         this.patients = patients;
+    }
+    // Method to convert to Hospital model
+    public Hospital toHospital() {
+        return new Hospital(this.id, this.name, this.location, this.capacity);
     }
 }
