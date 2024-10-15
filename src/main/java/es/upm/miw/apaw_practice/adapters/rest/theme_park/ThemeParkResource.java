@@ -6,6 +6,7 @@ import es.upm.miw.apaw_practice.domain.services.theme_park.ThemeParkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -13,6 +14,8 @@ import java.util.List;
 public class ThemeParkResource {
     public static final String THEME_PARKS = "/theme-parks";
     static final String ID_ID = "/{id}";
+    static final String OPERATOR = "/ride/operator/{nick}";
+
     private final ThemeParkService themeParkService;
 
     @Autowired
@@ -28,6 +31,11 @@ public class ThemeParkResource {
     @PatchMapping
     public void updateAllParkStatus(@RequestBody List<ThemeParkOpenedUpdating> themeParkOpenedUpdatingList) {
         this.themeParkService.updateAllParkStatus(themeParkOpenedUpdatingList.stream());
+    }
+
+    @GetMapping(ThemeParkResource.OPERATOR)
+    public BigDecimal getSumPriceByNick(@PathVariable String nick){
+        return this.themeParkService.getSumPriceByNick(nick);
     }
 
 }
