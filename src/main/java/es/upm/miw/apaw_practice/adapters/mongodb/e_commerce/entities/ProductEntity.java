@@ -16,8 +16,6 @@ public class ProductEntity {
 
     @Indexed(unique = true)
     private String productName;
-
-    private String name;
     private Integer numberProduct;
     private BigDecimal unitPrice;
 
@@ -25,15 +23,13 @@ public class ProductEntity {
         //Empty for framework
     }
 
-    public ProductEntity(String productName, String name, Integer numberProduct, BigDecimal unitPrice) {
-        this.id = UUID.randomUUID().toString();  // 使用UUID生成唯一标识符
+    public ProductEntity(String productName, Integer numberProduct, BigDecimal unitPrice) {
+        this.id = UUID.randomUUID().toString();
         this.productName = productName;
-        this.name = name;
         this.numberProduct = numberProduct;
         this.unitPrice = unitPrice;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -48,14 +44,6 @@ public class ProductEntity {
 
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Integer getNumberProduct() {
@@ -74,7 +62,6 @@ public class ProductEntity {
         this.unitPrice = unitPrice;
     }
 
-    // Equals and HashCode based on `productName` for uniqueness
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,13 +75,11 @@ public class ProductEntity {
         return Objects.hash(productName);
     }
 
-    // ToString method
     @Override
     public String toString() {
         return "ProductEntity{" +
                 "id='" + id + '\'' +
                 ", productName='" + productName + '\'' +
-                ", name='" + name + '\'' +
                 ", numberProduct=" + numberProduct +
                 ", unitPrice=" + unitPrice +
                 '}';

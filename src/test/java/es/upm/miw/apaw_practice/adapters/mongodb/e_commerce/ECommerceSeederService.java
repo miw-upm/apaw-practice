@@ -1,9 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ECommerceCustomerRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ECommerceShoppingCartRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ProductRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ShippingAddressRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.*;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ProductEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShippingAddressEntity;
@@ -37,10 +34,10 @@ public class ECommerceSeederService {
         LogManager.getLogger(this.getClass()).warn("------- E-Commerce Initial Load -----------");
 
         ProductEntity[] products = {
-                new ProductEntity("product1", "Laptop", 10, BigDecimal.valueOf(1200.00)),
-                new ProductEntity("product2", "Smartphone", 50, BigDecimal.valueOf(800.00)),
-                new ProductEntity("product3", "Tablet", 20, BigDecimal.valueOf(600.00)),
-                new ProductEntity("product4", "Headphones", 100, BigDecimal.valueOf(150.00))
+                new ProductEntity("Laptop", 10, BigDecimal.valueOf(1200.00)),
+                new ProductEntity("Smartphone", 50, BigDecimal.valueOf(800.00)),
+                new ProductEntity("Tablet", 20, BigDecimal.valueOf(600.00)),
+                new ProductEntity("Headphones",  100, BigDecimal.valueOf(150.00))
         };
         List<ProductEntity> savedProducts = this.productRepository.saveAll(Arrays.asList(products));
 
