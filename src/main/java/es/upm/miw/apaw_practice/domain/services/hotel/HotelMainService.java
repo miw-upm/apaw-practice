@@ -4,7 +4,6 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelMainPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 @Service
 public class HotelMainService {
@@ -16,7 +15,7 @@ public class HotelMainService {
         this.hotelMainPersistence = hotelMainPersistence;
     }
 
-    public HotelMain findById(String id) {
-        return this.hotelMainPersistence.findById(id);
+    public HotelMain findByName(String name) {
+        return this.hotelMainPersistence.findByName(name);
     }
 }

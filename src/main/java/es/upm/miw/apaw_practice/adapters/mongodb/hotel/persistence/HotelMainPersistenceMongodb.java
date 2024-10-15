@@ -5,8 +5,6 @@ import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelMainPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Mono;
 
 public class HotelMainPersistenceMongodb implements HotelMainPersistence{
 
@@ -18,9 +16,9 @@ public class HotelMainPersistenceMongodb implements HotelMainPersistence{
         }
 
         @Override
-        public HotelMain findById(String id) {
-            return this.hotelMainRepository.findById(id)
-                    .orElseThrow(() -> new NotFoundException(" HotelMain id: " + id))
+        public HotelMain findByName(String name) {
+            return this.hotelMainRepository.findByName(name)
+                    .orElseThrow(() -> new NotFoundException(" HotelMain name: " + name))
                     .toHotel();
         }
 }
