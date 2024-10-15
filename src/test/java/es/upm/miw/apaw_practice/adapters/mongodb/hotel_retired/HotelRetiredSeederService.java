@@ -59,7 +59,7 @@ public class HotelRetiredSeederService {
         RoomEntity[] rooms = {
                 new RoomEntity("101", false, 1, BigDecimal.valueOf(59.99), List.of(bookings)),
                 new RoomEntity("102", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
-                new RoomEntity("103", false, 2, BigDecimal.valueOf(79.99), Collections.emptyList()),
+                new RoomEntity("103", false, 2, BigDecimal.valueOf(79.99), List.of(bookings)),
                 new RoomEntity("104", false, 1, BigDecimal.valueOf(59.99), List.of(bookings)),
                 new RoomEntity("105", false, 2, BigDecimal.valueOf(79.99), Collections.emptyList()),
                 new RoomEntity("106", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),

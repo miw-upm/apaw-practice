@@ -141,4 +141,19 @@ public class HotelResourceIT {
                     assertEquals(updatedRooms, updatedHotel.getRooms());
                 });
     }
+
+    @Test
+    void testFindTotalSumOfPrice() {
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(HOTELS + SEARCH)
+                                .queryParam("q", "hotelName: LaMaria;fullName: Emilio Pedrajas")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(value -> assertEquals(BigDecimal.valueOf(319.95), value));
+    }
 }
