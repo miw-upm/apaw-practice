@@ -22,7 +22,7 @@ public class HospitalPersistenceMongodb implements HospitalPersistence {
     }
     @Override
     public boolean existsByName(String name) {
-        return hospitalRepository.existsByName(name); 
+        return hospitalRepository.existsByName(name);
     }
 
 
