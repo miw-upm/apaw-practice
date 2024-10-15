@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.entities;
 
+import es.upm.miw.apaw_practice.domain.models.delivery_food.DeliveryOrderItem;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -67,5 +68,9 @@ public class DeliveryOrderItemEntity {
                 ", quantity=" + quantity +
                 ", menu=" + menu +
                 '}';
+    }
+
+    public DeliveryOrderItem toDeliveryOrderItem() {
+        return new DeliveryOrderItem(id, price, quantity, menu.toMenu());
     }
 }
