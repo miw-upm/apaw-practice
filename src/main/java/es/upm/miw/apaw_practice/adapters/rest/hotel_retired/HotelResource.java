@@ -1,11 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel_retired;
 
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Hotel;
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Room;
 import es.upm.miw.apaw_practice.domain.services.hotel_retired.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -48,5 +50,12 @@ public class HotelResource {
     @PatchMapping(CIF_ID + ROOMS)
     public Hotel updateRooms(@PathVariable String cif, @RequestBody List<Room> rooms) {
         return this.hotelService.updateRooms(cif, rooms);
+    }
+
+    @GetMapping(SEARCH)
+    public BigDecimal findTotalSumOfPrice(@RequestParam String q) {
+        String hotelName = new LexicalAnalyzer().extractWithAssure(q, "hotelName").trim();
+        String fullName = new LexicalAnalyzer().extractWithAssure(q, "fullName").trim();
+        return this.hotelService.findTotalSumOfPrice(hotelName, fullName);
     }
 }
