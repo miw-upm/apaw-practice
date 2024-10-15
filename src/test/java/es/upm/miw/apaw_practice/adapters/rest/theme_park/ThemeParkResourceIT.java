@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -64,11 +65,26 @@ public class ThemeParkResourceIT {
                 .filter(themePark -> !themePark.getOpened()).toList();
 
         assertEquals(0, closedThemeParks.size());
-        assertTrue(this.themeParkPersistence
-                                            .readAll()
+        assertTrue(this.themeParkPersistence.readAll()
                                             .allMatch(ThemePark::getOpened));
 
         themeParkSeederService.deleteAll();
         themeParkSeederService.seedDatabase();
+    }
+
+    @Test
+    void testGetSumByNick() {
+        String nick = "Luca";
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ThemeParkResource.THEME_PARKS + ThemeParkResource.OPERATOR)
+                        .build(nick))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(sum -> {
+                    assertEquals(sum, new BigDecimal("100.0"));
+                });
     }
 }

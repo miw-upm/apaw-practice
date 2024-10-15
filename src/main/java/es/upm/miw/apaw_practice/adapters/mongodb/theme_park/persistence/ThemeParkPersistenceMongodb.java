@@ -62,7 +62,9 @@ public class ThemeParkPersistenceMongodb implements ThemeParkPersistence {
 
         return this.themeParkRepository.findAll()
                 .stream()
-                .filter(themePark -> themePark.getRideEntities().stream().anyMatch(rides::contains))
+                .filter(themePark -> themePark.getRideEntities()
+                        .stream()
+                        .anyMatch(rides::contains))
                 .map(ThemeParkEntity::toThemePark)
                 .distinct()
                 .map(ThemePark::getPrice)
