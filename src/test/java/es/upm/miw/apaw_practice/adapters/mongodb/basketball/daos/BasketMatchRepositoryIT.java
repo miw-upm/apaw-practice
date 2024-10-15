@@ -7,15 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 public class BasketMatchRepositoryIT {
 
     @Autowired
     private BasketMatchRepository basketMatchRepository;
+
+    @Test
+    void testFindByMatchId() {
+        Optional<BasketMatchEntity> result = basketMatchRepository.findByMatchId(1);
+        assertTrue(result.isPresent());
+        BasketMatchEntity basketMatch = result.get();
+        assertEquals(1, basketMatch.getMatchId());
+        assertEquals("Stadium A", basketMatch.getAddress());
+        assertEquals("Lebron", basketMatch.getBasketPlayers().get(0).getName());
+    }
 
     @Test
     void testFindByIdList(){
