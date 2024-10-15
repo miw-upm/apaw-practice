@@ -1,38 +1,41 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
-import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.UUID;
 
 @Document
 public class AppointmentEntity {
-
     @Id
-    private String id;
+    private Integer id;
     private LocalDate date;
     private LocalTime time;
-    private String location;
-    private String patientId;
+    private String location; // Asumiendo que 'location' se usa como descripción
+
+    private String patientDni;
+    private String doctorDni;
 
     public AppointmentEntity() {
-        // Empty constructor for framework
+        // Constructor vacío para MongoDB
     }
 
-    public AppointmentEntity(Appointment appointment) {
-        BeanUtils.copyProperties(appointment, this);
-        this.id = UUID.randomUUID().toString(); // Ensure a new ID is generated
+    public AppointmentEntity(Integer id, LocalDate date, LocalTime time, String location, String patientDni, String doctorDni) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.patientDni = patientDni;
+        this.doctorDni = doctorDni;
     }
 
-    public String getId() {
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -60,26 +63,29 @@ public class AppointmentEntity {
         this.location = location;
     }
 
-    public String getPatientId() {
-        return patientId;
+    public String getPatientDni() {
+        return patientDni;
     }
 
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
+    public void setPatientDni(String patientDni) {
+        this.patientDni = patientDni;
+    }
+
+    public String getDoctorDni() {
+        return doctorDni;
+    }
+
+    public void setDoctorDni(String doctorDni) {
+        this.doctorDni = doctorDni;
     }
 
     public Appointment toAppointment() {
-        return new Appointment(this.id, this.date, this.time, this.location);
-    }
-
-    @Override
-    public String toString() {
-        return "AppointmentEntity{" +
-                "id='" + id + '\'' +
-                ", date=" + date +
-                ", time=" + time +
-                ", location='" + location + '\'' +
-                ", patientId='" + patientId + '\'' +
-                '}';
+        // Asegúrate de proporcionar todos los parámetros necesarios
+        return new Appointment(
+                String.valueOf(this.id), // Convierte el ID a String si es necesario
+                this.date,
+                this.time,
+                this.location // Si 'location' se usa como descripción
+        );
     }
 }

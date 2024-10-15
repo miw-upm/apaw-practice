@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @RestTestConfig
-public class CarResourceIT {
+class CarResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

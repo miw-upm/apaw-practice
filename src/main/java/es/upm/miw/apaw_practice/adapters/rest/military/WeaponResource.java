@@ -16,8 +16,12 @@ public class WeaponResource {
     private final WeaponService weaponService;
 
     @Autowired
-    public WeaponResource(WeaponService weaponService) { this.weaponService = weaponService; }
+    public WeaponResource(WeaponService weaponService) {
+        this.weaponService = weaponService;
+    }
 
     @DeleteMapping(SERIALCODE_ID)
-    public void delete(@PathVariable String serialCode) { this.weaponService.delete(serialCode); }
+    public void delete(@PathVariable String serialCode) {
+        this.weaponService.delete(serialCode);
+    }
 }

@@ -19,9 +19,8 @@ public class AccesoryEntity {
         // Empty for Framework
     }
 
-    AccesoryEntity(Accesory accesory) {
+    public AccesoryEntity(Accesory accesory) {
         BeanUtils.copyProperties(accesory, this);
-        this.accesoryId = UUID.randomUUID().hashCode();
     }
 
     public Integer getAccesoryId() {
@@ -46,6 +45,16 @@ public class AccesoryEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public void fromAccesory(Accesory accesory) {
+        BeanUtils.copyProperties(accesory, this);
+    }
+
+    public Accesory toAccesory() {
+        Accesory accesory = new Accesory();
+        BeanUtils.copyProperties(this, accesory);
+        return accesory;
     }
 
     @Override

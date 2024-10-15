@@ -8,20 +8,20 @@ public class Animal {
     private String name;
     private int age;
     private LocalDateTime dateOfService;
-    private Owner owner;
+    private OwnerClinic ownerClinic;
 
     public Animal() {
         //empty from framework
     }
 
-    public Animal(String name, int age, LocalDateTime dateOfService, Owner owner) {
+    public Animal(String name, int age, LocalDateTime dateOfService, OwnerClinic ownerClinic) {
         this.name = name;
         this.age = age;
         this.dateOfService = dateOfService;
-        this.owner = owner;
+        this.ownerClinic = ownerClinic;
     }
 
-    public static Animal ofIdAnimal(Animal animal){
+    public static Animal ofName(Animal animal){
         Animal animalDto = new Animal();
         animalDto.setName(animal.getName());
         return animalDto;
@@ -57,12 +57,12 @@ public class Animal {
         this.dateOfService = dateOfService;
     }
 
-    public Owner getOwner() {
-        return owner;
+    public OwnerClinic getOwnerClinic() {
+        return ownerClinic;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setOwnerClinic(OwnerClinic ownerClinic) {
+        this.ownerClinic = ownerClinic;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class Animal {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", dateOfService=" + dateOfService +
-                ", owner=" + owner +
+                ", ownerClinic=" + ownerClinic +
                 '}';
     }
 }

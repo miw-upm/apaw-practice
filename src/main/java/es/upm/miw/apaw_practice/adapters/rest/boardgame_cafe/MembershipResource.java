@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(MembershipResource.MEMBERSHIP)
 public class MembershipResource {
     static final String MEMBERSHIP = "/boardgame-cafe/membership";
-    static final String MEMBERSHIPID_ID = "/{membershipId}";
+    static final String TYPE_ID = "/{type}";
 
     private final MembershipService membershipService;
 
@@ -18,8 +18,8 @@ public class MembershipResource {
         this.membershipService = membershipService;
     }
 
-    @GetMapping(MEMBERSHIPID_ID)
-    public Membership getMembership(@PathVariable Integer membershipId) {
-        return this.membershipService.readByMembershipId(membershipId);
+    @GetMapping(TYPE_ID)
+    public Membership getMembership(@PathVariable String  type) {
+        return this.membershipService.readByType(type);
     }
 }

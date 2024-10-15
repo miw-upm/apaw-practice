@@ -12,10 +12,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @RestTestConfig
-public class ManufacturerResourceIT {
+class ManufacturerResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -53,6 +52,16 @@ public class ManufacturerResourceIT {
                 .uri(ManufacturerResource.MANUFACTURER + ManufacturerResource.NAME_ID, manufacturer.getName())
                 .body(BodyInserters.fromValue(manufacturer))
                 .exchange();
+    }
+
+    @Test
+    void testFindOwnerNamesByManufacturerCountryNoParam() {
+        this.webTestClient
+                .get()
+                .uri(ManufacturerResource.MANUFACTURER + ManufacturerResource.SEARCH)
+                .exchange()
+                .expectStatus()
+                .isBadRequest();
     }
 
     @Test

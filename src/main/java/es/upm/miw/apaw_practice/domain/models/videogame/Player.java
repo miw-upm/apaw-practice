@@ -1,33 +1,32 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Player {
-    private String player;
+    private String playerName;
     private int age;
     private boolean experiencePlayer;
     private LocalDate birthday;
     private Console console;
 
-    private  Player(){
+    public Player(){
         //empty for framework
     }
 
-    public Player(String player, int age, boolean experiencePlayer, LocalDate birthday, Console console){
-        this.player = player;
+    public Player(String playerName, int age, boolean experiencePlayer, LocalDate birthday, Console console){
+        this.playerName = playerName;
         this.age = age;
         this.experiencePlayer = experiencePlayer;
         this.birthday = birthday;
         this.console = console;
     }
 
-    public String getPlayer() {
-        return player;
+    public String getPlayerName() {
+        return playerName;
     }
-    public void setPlayer(String player) {
-        this.player = player;
+    public void setPlayerName(String player) {
+        this.playerName = playerName;
     }
     public int getAge() {
         return age;
@@ -57,7 +56,7 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "player='" + player + '\'' +
+                "playerName='" + playerName + '\'' +
                 ", age=" + age +
                 ", experiencePlayer=" + experiencePlayer +
                 ", birthday=" + birthday +

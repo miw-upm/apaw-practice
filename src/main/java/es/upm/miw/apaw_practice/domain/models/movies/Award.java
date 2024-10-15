@@ -23,9 +23,9 @@ public class Award {
         this.year = year;
     }
 
-    public String getNameCategoryAndYear() { return nameCategoryAndYear; }
+    public String getNameCategoryYear() { return nameCategoryAndYear; }
 
-    public void setNameCategoryAndYear(String nameCategoryAndYear) { this.nameCategoryAndYear = nameCategoryAndYear; }
+    public void setNameCategoryYear(String nameCategoryAndYear) { this.nameCategoryAndYear = nameCategoryAndYear; }
 
     public String getName() { return name; }
 

@@ -15,6 +15,10 @@ public class BasketPlayer {
         this.points = 0;
     }
 
+    public BasketPlayer() {
+
+    }
+
     public String getDni() {
         return dni;
     }
