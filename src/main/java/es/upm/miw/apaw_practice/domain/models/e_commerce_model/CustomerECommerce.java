@@ -4,7 +4,7 @@ import es.upm.miw.apaw_practice.domain.models.shop.ShoppingCart;
 
 import java.util.List;
 
-public class Customer {
+public class CustomerECommerce {
 
     private String userName;
     private String email;
@@ -12,11 +12,11 @@ public class Customer {
     private ShoppingCart shoppingCart;
     private List<ShippingAddress> shippingAddresses;
 
-    public Customer() {
+    public CustomerECommerce() {
         // Empty for framework
     }
 
-    public Customer(String userName, String email, Integer postalCode, ShoppingCart shoppingCart) {
+    public CustomerECommerce(String userName, String email, Integer postalCode, ShoppingCart shoppingCart) {
         this.userName = userName;
         this.email = email;
         this.postalCode = postalCode;

@@ -32,7 +32,7 @@ class MenuCategoryRepositoryIT {
 
     @Test
     void testFindByName() {
-        Optional<MenuCategoryEntity> menuCategoriesOptional = this.menuCategoryRepository.findByName("Vegetarian");
+        Optional<MenuCategoryEntity> menuCategoriesOptional = this.menuCategoryRepository.findByName("Seafood");
         assertTrue(menuCategoriesOptional.isPresent());
         assertNotNull(menuCategoriesOptional.get().getName());
         assertNotNull(menuCategoriesOptional.get().getDescription());
