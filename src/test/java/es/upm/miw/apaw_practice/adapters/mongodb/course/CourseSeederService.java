@@ -96,7 +96,11 @@ public class CourseSeederService {
 
         UserCourseEntity[] usersSpring = {
                 new UserCourseEntity("Sofia", "sofia@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Raul", "raul@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Raul", "raul@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Daniel", "daniel@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Lucia", "lucia@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Andrea", "andrea@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR),
+                new UserCourseEntity("Pablo", "pablo@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR)
         };
 
         this.userRepository.saveAll(Arrays.asList(usersPython1));
@@ -112,7 +116,9 @@ public class CourseSeederService {
 
         TutoringSessionEntity[] tutoringSessionsCursoSpring = {
                 new TutoringSessionEntity("Spring Framework Básico", LocalDateTime.of(2024, 12, 15, 18, 0), BigDecimal.valueOf(40.00)),
-                new TutoringSessionEntity("Spring Boot Avanzado", LocalDateTime.of(2024, 12, 17, 18, 0), BigDecimal.valueOf(50.00))
+                new TutoringSessionEntity("Spring Boot Avanzado", LocalDateTime.of(2024, 12, 17, 18, 0), BigDecimal.valueOf(60.00)),
+                new TutoringSessionEntity("Spring Security", LocalDateTime.of(2024, 12, 20, 18, 0), BigDecimal.valueOf(50.00)),
+                new TutoringSessionEntity("Spring Cloud", LocalDateTime.of(2024, 12, 22, 18, 0), BigDecimal.valueOf(50.00))
         };
 
         this.tutoringSessionRepository.saveAll(Arrays.asList(tutoringSessionsCursoC));

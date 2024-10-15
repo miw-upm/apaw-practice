@@ -5,7 +5,7 @@ import es.upm.miw.apaw_practice.domain.services.basketball.BasketBallService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(BasketPlayerResource.BASKETPLAYERS)
+@RequestMapping(BasketBallResource.BALLS)
 public class BasketBallResource {
 
     static final String ID_ID = "/{id}";
@@ -18,7 +18,7 @@ public class BasketBallResource {
     }
 
     @PutMapping(ID_ID)
-    public BasketBall update(@PathVariable String id, @RequestBody BasketBall basketBall) {
+    public BasketBall update(@PathVariable Integer id, @RequestBody BasketBall basketBall) {
         return this.basketBallService.update(id,basketBall);
     }
 }

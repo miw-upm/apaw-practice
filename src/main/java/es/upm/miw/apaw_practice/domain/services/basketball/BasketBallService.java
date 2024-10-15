@@ -15,7 +15,7 @@ public class BasketBallService {
         this.basketBallPersistence = basketBallPersistence;
     }
 
-    public BasketBall update(String id, BasketBall basketBall) {
+    public BasketBall update(Integer id, BasketBall basketBall) {
         return this.basketBallPersistence.update(id, basketBall);
     }
 }
