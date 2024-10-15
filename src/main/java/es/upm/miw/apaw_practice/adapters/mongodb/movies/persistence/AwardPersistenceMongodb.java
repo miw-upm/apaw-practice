@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.movies.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.movies.daos.AwardRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.movies.entities.AwardEntity;
-import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.movies.Award;
 import es.upm.miw.apaw_practice.domain.persistence_ports.movies.AwardPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
