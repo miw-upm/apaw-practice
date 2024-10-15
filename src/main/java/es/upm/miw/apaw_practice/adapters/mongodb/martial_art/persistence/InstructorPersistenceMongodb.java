@@ -30,7 +30,7 @@ public class InstructorPersistenceMongodb implements InstructorPersistence {
     @Override
     public Instructor create(Instructor instructor) {
         return this.instructorRepository
-                .save(new InstructorEntity(instructor.getDni(), instructor.getFullName(), instructor.getBirthDate(),instructor.getFullName()))
+                .save(new InstructorEntity(instructor.getDni(), instructor.getFullName(),instructor.getPhoneNumber(), instructor.getBirthDate()))
                 .toInstructor();
 
     }
@@ -40,6 +40,7 @@ public class InstructorPersistenceMongodb implements InstructorPersistence {
         InstructorEntity instructorEntity = this.instructorRepository
                 .findByDni(dni)
                 .orElseThrow(() -> new NotFoundException("Instructor dni: " + dni));
+        instructorEntity.fromInstructor(instructor);
     return this.instructorRepository
                 .save(instructorEntity)
                 .toInstructor();

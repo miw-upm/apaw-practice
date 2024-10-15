@@ -1,20 +1,22 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.martial_art.entities;
 
-import es.upm.miw.apaw_practice.domain.models.hotel_retired.Guest;
+import es.upm.miw.apaw_practice.domain.models.hotel_retired.Booking;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Instructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
 public class InstructorEntity {
     @Indexed(unique = true)
     private String dni;
-    private Integer phoneNumber;
-    private LocalDate birthDate;
     private String fullName;
+    private Integer phoneNumber;
+    private LocalDateTime birthDate;
+
 
     public String getDni() {
         return dni;
@@ -26,13 +28,14 @@ public class InstructorEntity {
     public Integer getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public LocalDate getBirthDate() {
+    public LocalDateTime getBirthDate() {
         return birthDate;
     }
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
     public String getFullName() {
@@ -41,19 +44,18 @@ public class InstructorEntity {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-    public InstructorEntity(String dni, String fullName, LocalDate birthDate, String name) {
-        // empty for framework
-    }
-
-    public InstructorEntity(String dni, String fullName, Integer phoneNumber, LocalDate birthDate) {
-        this.dni = UUID.randomUUID().toString();
+    public InstructorEntity(String dni, String fullName, Integer phoneNumber, LocalDateTime birthDate) {
+        this.dni = dni; ;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
     }
 
     public Instructor toInstructor() {
-        return new Instructor(dni, fullName, phoneNumber, birthDate);
+        return new Instructor(dni, fullName, phoneNumber, LocalDateTime.from(birthDate));
+    }
+    public void fromInstructor(Instructor instructor) {
+        BeanUtils.copyProperties(instructor, this);
     }
     @Override
     public boolean equals(Object o) {

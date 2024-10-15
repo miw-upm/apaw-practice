@@ -1,9 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
+
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ConsoleCompany {
     private String companyInformation;
@@ -13,7 +12,7 @@ public class ConsoleCompany {
     private LocalDate foundationDate;
     private List<Console> consoles;
 
-    private  ConsoleCompany(){
+    public ConsoleCompany(){
         //empty for framework
     }
 
@@ -66,21 +65,18 @@ public class ConsoleCompany {
     }
 
     @Override
-    public boolean equals(Object o){
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ConsoleCompany consoleCompany = (ConsoleCompany) o;
-        return Objects.equals(companyInformation, consoleCompany.companyInformation) && Objects.equals(website, consoleCompany.website) && Objects.equals(numberOfEmployee, consoleCompany.numberOfEmployee) && Objects.equals(active, consoleCompany.active) && Objects.equals(foundationDate, consoleCompany.foundationDate) && Objects.equals(consoles, consoleCompany.consoles);
+    public int hashCode(){
+        return this.companyInformation.hashCode();
     }
 
     @Override
-    public int hashCode(){
-        return Objects.hash(companyInformation, website, numberOfEmployee, active, foundationDate, consoles);
+    public boolean equals(Object obj){
+        return this == obj || obj != null && getClass() == obj.getClass() && (companyInformation.equals(((ConsoleCompany) obj).companyInformation));
     }
 
     @Override
     public String toString() {
-        return "ConsoleCompany{" +
+        return "ConsoleCompanyEntity{" +
                 "companyInformation='" + companyInformation + '\'' +
                 ", website=" + website +
                 ", numberOfEmployee=" + numberOfEmployee +

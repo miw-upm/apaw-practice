@@ -24,7 +24,7 @@ class MenuCategoryResourceIT {
 
         this.webTestClient
                 .get()
-                .uri(MENU_CATEGORIES + "/" + Boolean.TRUE + NAME)
+                .uri(MENU_CATEGORIES + ACTIVE+ NAME, Boolean.TRUE)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(MenuCategory.class)

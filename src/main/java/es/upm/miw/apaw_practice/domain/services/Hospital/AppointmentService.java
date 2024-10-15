@@ -1,13 +1,23 @@
 package es.upm.miw.apaw_practice.domain.services.Hospital;
 
+import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
+import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.AppointmentPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.stream.Stream;
+import java.util.List;
 
 @Service
 public class AppointmentService {
 
+    private final AppointmentPersistence appointmentPersistence;
+
+    @Autowired
+    public AppointmentService(AppointmentPersistence appointmentPersistence) {
+        this.appointmentPersistence = appointmentPersistence;
+    }
+
+    public List<Appointment> findAll() {
+        return this.appointmentPersistence.findAll();
+    }
 }

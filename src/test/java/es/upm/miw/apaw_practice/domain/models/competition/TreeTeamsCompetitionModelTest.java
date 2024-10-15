@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-class TeamCompetitionTest {
+class TreeTeamsCompetitionModelTest {
 
     private TeamCompetition nationalTeam;
     private TeamCompetition footballTeam;

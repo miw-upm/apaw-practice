@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.basketball.entities;
 
+import es.upm.miw.apaw_practice.domain.models.basketball.BasketMatch;
+import es.upm.miw.apaw_practice.domain.models.basketball.BasketSeason;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -79,6 +81,13 @@ public class BasketSeasonEntity {
 
     public void setBasketMatchEntities(List<BasketMatchEntity> basketMatchEntities) {
         this.basketMatchEntities = basketMatchEntities;
+    }
+
+    public BasketSeason toBasketSeason() {
+        List<BasketMatch> matches = this.basketMatchEntities.stream()
+                .map(BasketMatchEntity::toBasketMatch)
+                .toList();
+        return new BasketSeason(this.seasonId,this.startYear,this.endYear,this.league,matches);
     }
 
     @Override

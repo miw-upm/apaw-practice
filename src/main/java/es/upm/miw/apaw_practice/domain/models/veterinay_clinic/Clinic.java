@@ -52,7 +52,7 @@ public class Clinic {
 
     public static Clinic ofEmployeeName(Clinic clinic) {
         clinic.setEmployees(
-                clinic.employees.stream().map(Employee::ofName)
+                clinic.employees.stream().map(Employee::ofAnimalName)
                         .collect(Collectors.toList())
         );
         return clinic;

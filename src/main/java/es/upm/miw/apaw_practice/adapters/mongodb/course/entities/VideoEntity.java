@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Document
@@ -14,14 +15,14 @@ public class VideoEntity {
     private String id;
     @Indexed(unique = true)
     private String name;
-    private String duration;
+    private LocalTime duration;
     private LocalDateTime creationDate;
 
     public VideoEntity() {
         //Empty for framework
     }
 
-    public VideoEntity(String name, String duration, LocalDateTime creationDate) {
+    public VideoEntity(String name, LocalTime duration, LocalDateTime creationDate) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.duration = duration;
@@ -44,11 +45,11 @@ public class VideoEntity {
         this.name = name;
     }
 
-    public String getDuration() {
+    public LocalTime getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(LocalTime duration) {
         this.duration = duration;
     }
 
@@ -70,11 +71,12 @@ public class VideoEntity {
         return this.name.hashCode();
     }
 
+
     @Override
     public String toString() {
         return "VideoEntity{" +
                 "name='" + name + '\'' +
-                ", duration='" + duration + '\'' +
+                ", duration=" + duration +
                 ", creationDate=" + creationDate +
                 '}';
     }

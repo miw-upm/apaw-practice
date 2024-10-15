@@ -28,7 +28,7 @@ public class CompetitionFormResource {
         return this.competitionFormService.create(competitionForm);
     }
 
-@GetMapping(DURATION+ SCHOOL_NAME_ID)
+    @GetMapping(DURATION+ SCHOOL_NAME_ID)
     public Duration getTotalDurationBySchoolName(@PathVariable String name) {
         return this.competitionFormService.getTotalDurationBySchoolName(name);
     }

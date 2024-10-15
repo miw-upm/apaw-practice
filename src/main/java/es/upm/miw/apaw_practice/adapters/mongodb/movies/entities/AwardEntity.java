@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.movies.entities;
 
+import es.upm.miw.apaw_practice.domain.models.movies.Award;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,7 +26,7 @@ public class AwardEntity {
         //empty for framework
     }
 
-    public AwardEntity(String nameCategoryYear, String name, String category, LocalDate year){
+    public AwardEntity(String nameCategoryYear, String name, String category, LocalDate year) {
         this.id = UUID.randomUUID().toString();
         this.nameCategoryYear = nameCategoryYear;
         this.name = name;
@@ -55,6 +56,24 @@ public class AwardEntity {
 
     public void setYear(LocalDate year) { this.year = year; }
 
+    public Award toAward() {
+        return new Award(
+                this.nameCategoryYear,
+                this.name,
+                this.category,
+                this.year
+        );
+    }
+
+    public static AwardEntity fromAward(Award award) {
+        return new AwardEntity(
+                award.getNameCategoryYear(),
+                award.getName(),
+                award.getCategory(),
+                award.getYear()
+        );
+    }
+
     @Override
     public String toString() {
         return "AwardEntity {\n" +
@@ -77,5 +96,4 @@ public class AwardEntity {
     public int hashCode() {
         return Objects.hash(nameCategoryYear);
     }
-
 }
