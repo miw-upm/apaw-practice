@@ -20,6 +20,10 @@ public class HospitalPersistenceMongodb implements HospitalPersistence {
     public HospitalPersistenceMongodb(HospitalRepository hospitalRepository) {
         this.hospitalRepository = hospitalRepository;
     }
+    @Override
+    public boolean existsByName(String name) {
+        return hospitalRepository.existsByName(name); 
+    }
 
 
 
