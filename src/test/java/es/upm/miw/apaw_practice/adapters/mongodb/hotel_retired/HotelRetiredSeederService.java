@@ -47,12 +47,12 @@ public class HotelRetiredSeederService {
 
         BookingEntity[] bookings = {
                 new BookingEntity(true, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(0)),
-                new BookingEntity(false, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(1)),
+                new BookingEntity(true, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(1)),
                 new BookingEntity(true, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(2)),
                 new BookingEntity(true, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(3)),
-                new BookingEntity(true, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(4)),
-                new BookingEntity(true, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(5)),
-                new BookingEntity(true, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(6)),
+                new BookingEntity(false, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(4)),
+                new BookingEntity(false, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(5)),
+                new BookingEntity(false, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 7), Arrays.asList(guests).get(6)),
         };
         bookingRepository.saveAll(Arrays.asList(bookings));
 
@@ -72,7 +72,7 @@ public class HotelRetiredSeederService {
                 new RoomEntity("203", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
                 new RoomEntity("204", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
                 new RoomEntity("205", false, 4, BigDecimal.valueOf(99.99), Collections.emptyList()),
-                new RoomEntity("206", false, 1, BigDecimal.valueOf(59.99), List.of(bookings)),
+                new RoomEntity("206", false, 4, BigDecimal.valueOf(59.99), List.of(bookings)),
                 new RoomEntity("207", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),
                 new RoomEntity("208", false, 2, BigDecimal.valueOf(79.99), Collections.emptyList()),
                 new RoomEntity("209", false, 1, BigDecimal.valueOf(59.99), Collections.emptyList()),

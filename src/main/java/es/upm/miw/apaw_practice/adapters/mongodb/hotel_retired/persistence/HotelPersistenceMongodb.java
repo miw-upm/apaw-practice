@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository("hotelPersistence")
@@ -102,5 +103,17 @@ public class HotelPersistenceMongodb implements HotelPersistence {
                         .filter(roomEntity -> roomEntity.getBookingEntities().stream().anyMatch(bookingEntity -> fullName.equals(bookingEntity.getGuestEntity().getFullName()))))
                 .map(RoomEntity::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @Override
+    public Stream<String> findNonDuplicatedHotelNamesByNumBedsAndNumBookings(int numBeds, int numBookings) {
+        return this.hotelRepository.findAll().stream()
+                .filter(hotelEntity -> hotelEntity.getRoomsEntities().stream()
+                        .filter(roomEntity -> roomEntity.getNumBeds() > numBeds)
+                        .flatMap(roomEntity -> roomEntity.getBookingEntities().stream())
+                        .filter(BookingEntity::isConfirmed)
+                        .count() > numBookings)
+                .map(HotelEntity::getHotelName)
+                .distinct();
     }
 }
