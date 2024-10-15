@@ -26,7 +26,7 @@ class MenuRepositoryIT {
 
     @Test
     void testFindByName(){
-        Optional<MenuEntity> menuEntity = menuRepository.findByName("Vegetarian Delight");
+        Optional<MenuEntity> menuEntity = menuRepository.findByName("Italian Feast");
         assertTrue(menuEntity.isPresent());
     }
 }

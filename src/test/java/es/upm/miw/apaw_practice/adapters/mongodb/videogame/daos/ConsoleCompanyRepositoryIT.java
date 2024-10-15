@@ -22,8 +22,8 @@ public class ConsoleCompanyRepositoryIT {
         assertFalse(this.consoleCompanyRepository.findAll().stream()
                 .anyMatch(consoleCompany ->
                         consoleCompany.getActive() &&
-                        consoleCompany.getId() != null &&
-                        consoleCompany.getFoundationDate() != null &&
+                                consoleCompany.getCompanyInformation() != null &&
+                                consoleCompany.getFoundationDate() != null &&
                         consoleCompany.getFoundationDate().isBefore(LocalDate.now()) &&
                         2 == consoleCompany.getConsoleEntities().size() &&
                         "PlayStation".equals(consoleCompany.getConsoleEntities().get(0).getConsoleReference()) &&
