@@ -11,13 +11,15 @@ public class Hospital {
     private List<Patient> patients;
 
     // Constructor
+
+
     public Hospital(String id, String name, String location, Integer capacity, List<Doctor> doctors, List<Patient> patients) {
         this.id = id;
         this.name = name;
         this.location = location;
         this.capacity = capacity;
         this.doctors = doctors;
-        this.patients = patients; 
+        this.patients = patients;
     }
 
     // Métodos get
@@ -44,4 +46,9 @@ public class Hospital {
     public List<Patient> getPatients() {
         return patients;
     }
+    public Hospital toHospital() {
+        return new Hospital(this.id, this.name, this.location, this.capacity, this.doctors, this.patients);
+    }
+
+
 }
