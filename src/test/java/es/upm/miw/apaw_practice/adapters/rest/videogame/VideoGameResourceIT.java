@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.rest.videogame;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.videogame.VideoGame;
-import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.VideoGamePersistence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ public class VideoGameResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Autowired
-    private VideoGamePersistence videoGamePersistence;
     @Autowired
     private VideoGameResource videoGameResource;
 
@@ -44,5 +41,15 @@ public class VideoGameResourceIT {
                 .body(BodyInserters.fromValue(videoGame))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
+    }
+
+    @Test
+    void testUpdate(){
+        VideoGame videoGame = new VideoGame("PUBG",1,false, LocalDate.of(2016,3,30));
+        this.webTestClient.put()
+                .uri(videoGameResource.VIDEOGAMES + videoGameResource.VIDEOGAMES, "law")
+                .body(BodyInserters.fromValue(videoGame))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
