@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface DoctorRepository extends MongoRepository<DoctorEntity, String> {
     // Método para verificar si existe un doctor por su DNI
-    boolean existsByDni(String dni);
+    boolean existsByDni(String dni)
 }

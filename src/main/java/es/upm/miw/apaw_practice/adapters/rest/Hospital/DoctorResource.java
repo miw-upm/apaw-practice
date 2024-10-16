@@ -16,7 +16,8 @@ public class DoctorResource {
     }
 
     @PutMapping("/{dni}")
-    public DoctorEntity updateDoctor(@PathVariable String dni, @RequestBody DoctorEntity updatedDoctor) {
+    public Doctor updateDoctor(@PathVariable String dni, @RequestBody Doctor updatedDoctor) {
         return this.doctorPersistence.update(dni, updatedDoctor);
     }
+
 }

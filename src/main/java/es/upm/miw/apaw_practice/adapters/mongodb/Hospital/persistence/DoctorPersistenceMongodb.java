@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.DoctorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
-import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.DoctorPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,18 +19,21 @@ public class DoctorPersistenceMongodb implements DoctorPersistence {
 
     @Override
     public Doctor update(String dni, Doctor doctor) {
-        // Verificar si el doctor existe en la base de datos
-        DoctorEntity existingDoctorEntity = doctorRepository.findById(dni)
-                .orElseThrow(() -> new NotFoundException("Doctor with dni '" + dni + "' not found."));
+        if (!doctorRepository.existsByDni(dni)) {
+            throw new NotFoundException("Doctor with dni '" + dni + "' not found.");
+        }
 
-        // Actualizar los campos del doctor existente con los valores nuevos
-        existingDoctorEntity.setFullname(doctor.getFullname());
-        existingDoctorEntity.setSalary(doctor.getSalary());
+        DoctorEntity doctorEntity = mapToEntity(dni, doctor);
+        DoctorEntity updatedDoctorEntity = doctorRepository.save(doctorEntity);
 
-        // Guardar los cambios en MongoDB
-        DoctorEntity updatedDoctorEntity = doctorRepository.save(existingDoctorEntity);
+        return mapToDomain(updatedDoctorEntity);
+    }
 
-        // Retornar el objeto de dominio actualizado
-        return new Doctor(updatedDoctorEntity.getDni(), updatedDoctorEntity.getFullname(), updatedDoctorEntity.getSalary());
+    private DoctorEntity mapToEntity(String dni, Doctor doctor) {
+        return new DoctorEntity(dni, doctor.getFullname(), doctor.getSalary());
+    }
+
+    private Doctor mapToDomain(DoctorEntity doctorEntity) {
+        return new Doctor(doctorEntity.getDni(), doctorEntity.getFullname(), doctorEntity.getSalary());
     }
 }
