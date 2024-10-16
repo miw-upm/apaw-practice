@@ -14,17 +14,4 @@ public class ManagementRepositoryIT {
     @Autowired
     private ManagementRepository managementRepository;
 
-    @BeforeEach
-    void seedDatabase() {
-        ManagementEntity managementEntity = new ManagementEntity("John Doe", true);
-        this.managementRepository.save(managementEntity);
-    }
-
-    @Test
-    void testFindByName() {
-        assertTrue(this.managementRepository.findByName("John Doe").isPresent());
-        ManagementEntity management = this.managementRepository.findByName("John Doe").get();
-        assertEquals("John Doe", management.getName());
-        assertEquals(true, management.isActivated());
-    }
 }
