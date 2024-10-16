@@ -31,7 +31,7 @@ public class PlayerResourceIT {
         assertNotNull(playerPersistence.readyByPlayerName("Julia"));
         this.webTestClient
                 .delete()
-                .uri(PlayerResource.PLAYERS + PlayerResource.PLAYER_NAME, "Julia")
+                .uri(playerResource.PLAYERS + playerResource.PLAYER_NAME, "Julia")
                 .exchange()
                 .expectStatus()
                 .isOk();
@@ -45,7 +45,7 @@ public class PlayerResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(PlayerResource.PLAYERS + PlayerResource.SEARCH + PlayerResource.VIDEOGAMEALIAS_BY_PLAYERNAMES)
+                        uriBuilder.path(playerResource.PLAYERS + playerResource.SEARCH + playerResource.VIDEOGAMEALIAS_BY_PLAYERNAMES)
                                 .queryParam("l","playerName: Julia")
                                 .build())
                 .exchange()
