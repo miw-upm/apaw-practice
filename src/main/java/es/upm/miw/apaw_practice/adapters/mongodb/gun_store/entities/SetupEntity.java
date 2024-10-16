@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gun_store.entities;
 
 import es.upm.miw.apaw_practice.domain.models.gun_store.Gun;
+import es.upm.miw.apaw_practice.domain.models.gun_store.Setup;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
@@ -19,8 +21,8 @@ public class SetupEntity {
         //Empty for framework
     }
 
-    public SetupEntity(BigDecimal totalPrice, List<GunEntity> gunEntities) {
-        this.setupId = UUID.randomUUID().hashCode();
+    public SetupEntity(Integer setupId, BigDecimal totalPrice, List<GunEntity> gunEntities) {
+        this.setupId = setupId;
         this.totalPrice = totalPrice;
         this.orderDate = LocalDate.now();
         this.gunEntities = gunEntities;
@@ -67,4 +69,11 @@ public class SetupEntity {
                 ", guns=" + gunEntities +
                 '}';
     }
+
+    public Setup toSetup() {
+        Setup setup = new Setup();
+        BeanUtils.copyProperties(this, setup);
+        return setup;
+    }
+
 }
