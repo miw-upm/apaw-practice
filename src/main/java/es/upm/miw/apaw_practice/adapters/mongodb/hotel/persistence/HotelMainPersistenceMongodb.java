@@ -5,7 +5,9 @@ import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelMainPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository("hotelMainPersistence")
 public class HotelMainPersistenceMongodb implements HotelMainPersistence{
 
     private final HotelMainRepository hotelMainRepository;
