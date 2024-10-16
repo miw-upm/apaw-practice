@@ -31,9 +31,7 @@ public class CompetitorResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Competitor.class)
                 .value(Assertions::assertNotNull)
-                .value(competitor -> {
-                    assertEquals(1, competitor.getFederatedYears());
-                });
+                .value(competitor -> assertEquals(1, competitor.getFederatedYears()));
 
     }
 }
