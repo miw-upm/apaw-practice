@@ -12,7 +12,7 @@ public interface TreeWushuSchool {
 
     void remove(TreeWushuSchool treeWushuSchool);
 
-    public boolean isComposite();
+    boolean isComposite();
 
     int number();
 

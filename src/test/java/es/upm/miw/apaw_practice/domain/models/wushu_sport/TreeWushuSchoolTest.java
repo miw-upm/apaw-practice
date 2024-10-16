@@ -1,10 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.wushu_sport;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.CompetitionFormEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.CompetitorEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.WushuGradeEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.WushuSchoolEntity;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.CompetitionForm;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.Competitor;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
