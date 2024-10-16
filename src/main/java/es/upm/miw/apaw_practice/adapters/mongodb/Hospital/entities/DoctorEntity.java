@@ -12,7 +12,7 @@ public class DoctorEntity {
     private BigDecimal  salary;
 
     // Constructor
-    public DoctorEntity(String dni, String fullname, Double salary) {
+    public DoctorEntity(String dni, String fullname, BigDecimal salary) {
         this.dni = dni;
         this.fullname = fullname;
         this.salary = salary;
@@ -35,11 +35,11 @@ public class DoctorEntity {
         this.fullname = fullname;
     }
 
-    public Double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 }
