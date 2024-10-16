@@ -2,30 +2,23 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
 import java.math.BigDecimal;
-import java.util.List;
-
-@Document
+@Document()
 public class DoctorEntity {
+
     @Id
     private String dni;
     private String fullname;
-    private BigDecimal salary;
+    private BigDecimal  salary;
 
-
-    public DoctorEntity() {
-        // Empty constructor for the framework
-    }
-
+    // Constructor
     public DoctorEntity(String dni, String fullname, BigDecimal salary) {
         this.dni = dni;
         this.fullname = fullname;
         this.salary = salary;
     }
 
-    // Getters and Setters
+    // Getters and setters
     public String getDni() {
         return dni;
     }
@@ -49,7 +42,4 @@ public class DoctorEntity {
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
-
-
-
 }
