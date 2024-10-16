@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static es.upm.miw.apaw_practice.adapters.rest.hotel_retired.HotelResource.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -140,5 +141,33 @@ public class HotelResourceIT {
                 .value(updatedHotel -> {
                     assertEquals(updatedRooms, updatedHotel.getRooms());
                 });
+    }
+
+    @Test
+    void testFindTotalSumOfPrice() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(HOTELS + SEARCH + TOTAL_SUM_OF_PRICE)
+                                .queryParam("q", "hotelName: LaMaria;fullName: Emilio Pedrajas")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(value -> assertEquals(BigDecimal.valueOf(319.95), value));
+    }
+
+    @Test
+    void testFindNonDuplicatedHotelNamesByNumBedsAndNumBookings() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(HOTELS + SEARCH + NON_DUPLICATED_HOTELNAMES)
+                                .queryParam("q", "numBeds: 2;numBookings: 3")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(value -> assertEquals(List.of("LaMaria"), value));
     }
 }

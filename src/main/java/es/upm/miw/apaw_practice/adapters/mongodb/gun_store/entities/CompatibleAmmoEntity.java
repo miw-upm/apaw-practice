@@ -48,6 +48,12 @@ public class CompatibleAmmoEntity {
         this.caliber = caliber;
     }
 
+    public CompatibleAmmo toCompatibleAmmo() {
+        CompatibleAmmo compatibleAmmo = new CompatibleAmmo();
+        BeanUtils.copyProperties(this, compatibleAmmo);
+        return compatibleAmmo;
+    }
+
     @Override
     public String toString() {
         return "CompatibleAmmoEntity{" + "price=" + price + ", ammoId=" + ammoId + ", caliber='" + caliber + '\'' + '}';

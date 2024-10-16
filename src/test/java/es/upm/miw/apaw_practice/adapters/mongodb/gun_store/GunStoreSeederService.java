@@ -60,8 +60,8 @@ public class GunStoreSeederService {
         this.gunRepository.saveAll(Arrays.asList(guns));
 
         SetupEntity[] setups = {
-                new SetupEntity(new BigDecimal("2249.98"), Arrays.asList(guns[0], guns[1])),
-                new SetupEntity(new BigDecimal("2599.98"), Arrays.asList(guns[2], guns[3]))
+                new SetupEntity(0, new BigDecimal("2249.98"), Arrays.asList(guns[0], guns[1])),
+                new SetupEntity(1, new BigDecimal("2599.98"), Arrays.asList(guns[2], guns[3]))
         };
 
         this.setupRepository.saveAll(Arrays.asList(setups));
