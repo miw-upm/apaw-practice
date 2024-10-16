@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-public class CompetitorServiceIT {
+class CompetitorServiceIT {
 
     @Autowired
     private CompetitorService competitorService;
