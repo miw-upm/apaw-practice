@@ -10,7 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class CompetitorResourceIT {
+class CompetitorResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 

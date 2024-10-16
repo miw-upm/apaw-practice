@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class WushuSchoolPersistenceMongodbIT {
+class WushuSchoolPersistenceMongodbIT {
 
     @Autowired
     private WushuSchoolPersistenceMongodb wushuSchoolPersistenceMongodb;
@@ -52,5 +52,4 @@ public class WushuSchoolPersistenceMongodbIT {
         wushuSportSeederService.deleteAll();
         wushuSportSeederService.seedDatabase();
     }
-
 }

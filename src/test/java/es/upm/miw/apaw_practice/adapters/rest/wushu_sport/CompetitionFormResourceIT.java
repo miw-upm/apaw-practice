@@ -14,7 +14,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class CompetitionFormResourceIT {
+class CompetitionFormResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

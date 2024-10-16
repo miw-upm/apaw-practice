@@ -15,7 +15,7 @@ import static es.upm.miw.apaw_practice.adapters.rest.wushu_sport.WushuGradeResou
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class WushuGradeResourceIT {
+class WushuGradeResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

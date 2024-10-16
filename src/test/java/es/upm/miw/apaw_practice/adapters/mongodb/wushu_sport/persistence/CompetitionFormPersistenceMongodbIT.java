@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @TestConfig
-public class CompetitionFormPersistenceMongodbIT {
+class CompetitionFormPersistenceMongodbIT {
 
     @Autowired
     CompetitionFormPersistenceMongodb competitionFormPersistenceMongodb;

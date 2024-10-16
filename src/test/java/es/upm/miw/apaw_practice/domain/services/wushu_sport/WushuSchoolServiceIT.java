@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-public class WushuSchoolServiceIT {
+class WushuSchoolServiceIT {
 
     @Autowired
     private WushuSchoolService wushuSchoolService;

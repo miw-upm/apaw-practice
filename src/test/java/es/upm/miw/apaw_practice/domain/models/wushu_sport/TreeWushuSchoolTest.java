@@ -18,7 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestConfig
-public class TreeWushuSchoolTest {
+class TreeWushuSchoolTest {
 
     private TreeWushuSchool root;
 
