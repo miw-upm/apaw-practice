@@ -41,6 +41,7 @@ class WushuSchoolPersistenceMongodbIT {
         competitionForms.add(new CompetitionForm(9.45, Duration.ofMinutes(1).plusSeconds(30), "changquan"));
         competitors.add(new Competitor("WU/A/00126", 1, LocalDate.now(), wushuGrade, competitionForms));
         wushuSchool.get().setCompetitors(competitors);
+        this.wushuSchoolPersistenceMongodb.update(wushuSchool.get());
         Optional<WushuSchool> newWushuSchool = this.wushuSchoolPersistenceMongodb.readAll()
                 .filter(school ->  "Wushu Fuenlabrada".equals(school.getName()))
                 .findFirst();
