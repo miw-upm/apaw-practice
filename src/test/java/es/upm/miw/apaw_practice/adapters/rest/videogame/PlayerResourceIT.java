@@ -8,8 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 public class PlayerResourceIT {
@@ -22,6 +23,8 @@ public class PlayerResourceIT {
 
     @Autowired
     private VideoGameSeederService videoGameSeederService;
+    @Autowired
+    private PlayerResource playerResource;
 
     @Test
     void testDeletePlayer(){
@@ -35,5 +38,19 @@ public class PlayerResourceIT {
         assertThrows(NotFoundException.class, () -> playerPersistence.readyByPlayerName("Julia"));
         videoGameSeederService.deleteAll();
         videoGameSeederService.seedDatabase();
+    }
+
+    @Test
+    void testFindVideoGameAliasByPlayerName(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(PlayerResource.PLAYERS + PlayerResource.SEARCH + PlayerResource.VIDEOGAMEALIAS_BY_PLAYERNAMES)
+                                .queryParam("l","playerName: Julia")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(name -> assertEquals(List.of("Call of Duty"), name));
     }
 }
