@@ -57,8 +57,6 @@ class WushuGradeResourceIT {
                 .expectStatus().isOk()
                 .expectBody(List.class)
                 .value(Assertions::assertNotNull)
-                .value(listData -> {
-                    assertEquals(2, listData.size());
-                });
+                .value(listData -> assertEquals(2, listData.size()));
     }
 }
