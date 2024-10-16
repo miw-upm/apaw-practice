@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/doctors")
-public class DoctorController {
+public class DoctorResource {
 
     private final DoctorPersistence doctorPersistence;
 
