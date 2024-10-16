@@ -1,3 +1,4 @@
+package es.upm.miw.apaw_practice.adapters.rest.Hospital;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.DoctorPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
