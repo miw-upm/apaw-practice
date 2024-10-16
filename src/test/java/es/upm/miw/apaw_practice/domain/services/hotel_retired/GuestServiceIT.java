@@ -20,11 +20,11 @@ public class GuestServiceIT {
 
     @Test
     void testCreateAndRead() {
-        Guest guest = new Guest(
-                "49376787L",
-                "Ricardo Amaro",
-                LocalDateTime.of(1990, 10, 27, 23, 2, 2)
-        );
+        Guest guest = Guest.builder()
+                .nif("49376787L")
+                .fullName("Ricardo Amaro")
+                .birthDay(LocalDateTime.of(1990, 10, 27, 23, 2, 2))
+                .build();
         Guest createdGuest = this.guestService.create(guest);
         assertEquals("49376787L", createdGuest.getNif());
         assertEquals("Ricardo Amaro", createdGuest.getFullName());
@@ -39,11 +39,11 @@ public class GuestServiceIT {
 
     @Test
     void testDelete() {
-        Guest guest = new Guest(
-                "00914833P",
-                "Juan Carpeto",
-                LocalDateTime.of(1990, 10, 27, 23, 2, 2)
-        );
+        Guest guest = Guest.builder()
+                .nif("00914833P")
+                .fullName("Juan Carpeto")
+                .birthDay(LocalDateTime.of(1990, 10, 27, 23, 2, 2))
+                .build();
         this.guestService.create(guest);
         this.guestService.delete("00914833P");
         assertThrows(NotFoundException.class, () -> this.guestService.read("00914833P"));
