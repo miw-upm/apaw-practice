@@ -22,11 +22,11 @@ public class BookingResourceIT {
 
     @Test
     void testCreate() {
-        Guest guest = new Guest(
-                "99527370E",
-                "Emilio Pedrajas",
-                LocalDateTime.of(1990, 10, 27,  23, 2, 2 )
-        );
+        Guest guest = Guest.builder()
+                .nif("99527370E")
+                .fullName("Emilio Pedrajas")
+                .birthDay(LocalDateTime.of(1990, 10, 27,  23, 2, 2 ))
+                .build();
         Booking booking = new Booking(false, LocalDate.now(), LocalDate.now().plusWeeks(1), guest);
         this.webTestClient
                 .post()
