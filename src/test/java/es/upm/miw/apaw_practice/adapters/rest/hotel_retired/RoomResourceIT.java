@@ -131,7 +131,12 @@ public class RoomResourceIT {
                 .birthDay(LocalDateTime.of(2021, 4, 12, 23, 2, 2))
                 .build();
         List<Booking> updatedBookings = List.of(
-                new Booking(false, LocalDate.now(), LocalDate.now().plusWeeks(1), guest)
+                Booking.builder()
+                        .confirmed(false)
+                        .dateIn(LocalDate.now())
+                        .dateOut(LocalDate.now().plusWeeks(1))
+                        .guest(guest)
+                        .build()
         );
 
         this.webTestClient

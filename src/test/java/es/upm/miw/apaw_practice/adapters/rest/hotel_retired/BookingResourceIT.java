@@ -27,7 +27,12 @@ public class BookingResourceIT {
                 .fullName("Emilio Pedrajas")
                 .birthDay(LocalDateTime.of(1990, 10, 27,  23, 2, 2 ))
                 .build();
-        Booking booking = new Booking(false, LocalDate.now(), LocalDate.now().plusWeeks(1), guest);
+        Booking booking = Booking.builder()
+                .confirmed(false)
+                .dateIn(LocalDate.now())
+                .dateOut(LocalDate.now().plusWeeks(1))
+                .guest(guest)
+                .build();
         this.webTestClient
                 .post()
                 .uri(BOOKINGS)
