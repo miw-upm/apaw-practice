@@ -9,18 +9,19 @@ public class CustomerECommerce {
     private String userName;
     private String email;
     private Integer postalCode;
-    private ShoppingCart shoppingCart;
+    private ShoppingCartECommerce shoppingCartECommerce;
     private List<ShippingAddress> shippingAddresses;
 
     public CustomerECommerce() {
         // Empty for framework
     }
 
-    public CustomerECommerce(String userName, String email, Integer postalCode, ShoppingCart shoppingCart) {
+    public CustomerECommerce(String userName, String email, Integer postalCode, ShoppingCartECommerce shoppingCartECommerce,List<ShippingAddress> shippingAddresses) {
         this.userName = userName;
         this.email = email;
         this.postalCode = postalCode;
-        this.shoppingCart = shoppingCart;
+        this.shoppingCartECommerce = shoppingCartECommerce;
+        this.shippingAddresses = shippingAddresses;
     }
 
     public String getUserName() {
@@ -47,12 +48,12 @@ public class CustomerECommerce {
         this.postalCode = postalCode;
     }
 
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
+    public ShoppingCartECommerce getShoppingCartECommerce() {
+        return shoppingCartECommerce;
     }
 
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
+    public void setShoppingCartECommerce(ShoppingCartECommerce shoppingCartECommerce) {
+        this.shoppingCartECommerce = shoppingCartECommerce;
     }
 
     public List<ShippingAddress> getShippingAddresses() {
@@ -69,8 +70,9 @@ public class CustomerECommerce {
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", postalCode=" + postalCode +
-                ", shoppingCart=" + shoppingCart +
+                ", shoppingCart=" + shoppingCartECommerce +
                 ", shippingAddresses=" + shippingAddresses +
                 '}';
     }
+
 }

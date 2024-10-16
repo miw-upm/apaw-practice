@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Document
-public class CustomerEcommerceEntity {
+public class CustomerECommerceEntity {
 
     @Id
     private String id;
@@ -23,21 +23,21 @@ public class CustomerEcommerceEntity {
     private Integer postalCode;
 
     @DBRef
-    private ShoppingCartECommerceEntity shoppingCart;
+    private ShoppingCartECommerceEntity shoppingCartECommerce;
 
     @DBRef
     private List<ShippingAddressEntity> shippingAddresses;
 
-    public CustomerEcommerceEntity() {
+    public CustomerECommerceEntity() {
         // Empty constructor for framework
     }
 
-    public CustomerEcommerceEntity(String customerId, String userName, String email, Integer postalCode, ShoppingCartECommerceEntity shoppingCart, List<ShippingAddressEntity> shippingAddresses) {
+    public CustomerECommerceEntity(String userName, String email, Integer postalCode, ShoppingCartECommerceEntity shoppingCartECommerce, List<ShippingAddressEntity> shippingAddresses) {
         this.id = UUID.randomUUID().toString();
         this.userName = userName;
         this.email = email;
         this.postalCode = postalCode;
-        this.shoppingCart = shoppingCart;
+        this.shoppingCartECommerce = shoppingCartECommerce;
         this.shippingAddresses = shippingAddresses;
     }
 
@@ -72,12 +72,12 @@ public class CustomerEcommerceEntity {
         this.postalCode = postalCode;
     }
 
-    public ShoppingCartECommerceEntity getShoppingCart() {
-        return shoppingCart;
+    public ShoppingCartECommerceEntity getShoppingCartECommerce() {
+        return shoppingCartECommerce;
     }
 
-    public void setShoppingCart(ShoppingCartECommerceEntity shoppingCart) {
-        this.shoppingCart = shoppingCart;
+    public void setShoppingCartECommerce(ShoppingCartECommerceEntity shoppingCartECommerce) {
+        this.shoppingCartECommerce = shoppingCartECommerce;
     }
 
     public List<ShippingAddressEntity> getShippingAddresses() {
@@ -92,7 +92,7 @@ public class CustomerEcommerceEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CustomerEcommerceEntity that = (CustomerEcommerceEntity) o;
+        CustomerECommerceEntity that = (CustomerECommerceEntity) o;
         return Objects.equals(userName, that.userName);
     }
 
@@ -108,7 +108,7 @@ public class CustomerEcommerceEntity {
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", postalCode=" + postalCode +
-                ", shoppingCart=" + shoppingCart +
+                ", shoppingCart=" + shoppingCartECommerce +
                 ", shippingAddresses=" + shippingAddresses +
                 '}';
     }
@@ -117,5 +117,10 @@ public class CustomerEcommerceEntity {
         CustomerECommerce customer = new CustomerECommerce();
         BeanUtils.copyProperties(this, customer);
         return customer;
+    }
+
+    public CustomerECommerceEntity(CustomerECommerce customerECommerce) {
+        BeanUtils.copyProperties(customerECommerce, this);
+        this.id = UUID.randomUUID().toString();
     }
 }
