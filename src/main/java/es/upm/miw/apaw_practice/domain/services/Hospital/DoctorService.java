@@ -19,10 +19,7 @@ public class DoctorService {
     }
 
     public Doctor updateDoctor(String dni, Doctor updatedDoctor) {
-        // Verificar si el doctor existe
-        if (!doctorPersistence.existsByDni(dni)) {
-            throw new NotFoundException("Doctor with dni '" + dni + "' not found.");
-        }
+       
 
         return doctorPersistence.update(dni, updatedDoctor);
     }
