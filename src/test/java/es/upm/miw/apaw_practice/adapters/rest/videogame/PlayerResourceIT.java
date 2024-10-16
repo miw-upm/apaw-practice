@@ -10,6 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
 
+import static es.upm.miw.apaw_practice.adapters.rest.videogame.PlayerResource.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
@@ -23,15 +24,13 @@ public class PlayerResourceIT {
 
     @Autowired
     private VideoGameSeederService videoGameSeederService;
-    @Autowired
-    private PlayerResource playerResource;
 
     @Test
     void testDeletePlayer(){
         assertNotNull(playerPersistence.readyByPlayerName("Julia"));
         this.webTestClient
                 .delete()
-                .uri(playerResource.PLAYERS + playerResource.PLAYER_NAME, "Julia")
+                .uri(PLAYERS + PLAYER_NAME, "Julia")
                 .exchange()
                 .expectStatus()
                 .isOk();
@@ -45,7 +44,7 @@ public class PlayerResourceIT {
         this.webTestClient
                 .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(playerResource.PLAYERS + playerResource.SEARCH + playerResource.VIDEOGAMEALIAS_BY_PLAYERNAMES)
+                        uriBuilder.path(PLAYERS + SEARCH + VIDEOGAMEALIAS_BY_PLAYERNAMES)
                                 .queryParam("l","playerName: Julia")
                                 .build())
                 .exchange()
