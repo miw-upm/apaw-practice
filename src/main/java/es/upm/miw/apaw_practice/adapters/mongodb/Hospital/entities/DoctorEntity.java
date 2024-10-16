@@ -9,7 +9,7 @@ public class DoctorEntity {
     @Id
     private String dni;
     private String fullname;
-    private Double salary;
+    private BigDecimal  salary;
 
     // Constructor
     public DoctorEntity(String dni, String fullname, Double salary) {
