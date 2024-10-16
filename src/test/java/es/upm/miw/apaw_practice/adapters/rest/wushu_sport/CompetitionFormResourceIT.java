@@ -9,7 +9,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.time.Duration;
-import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -50,8 +50,6 @@ public class CompetitionFormResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Duration.class)
                 .value(Assertions::assertNotNull)
-                .value(duration -> {
-                    assertEquals( Duration.ofMinutes(1).plusSeconds(13), duration);
-                });
+                .value(duration -> assertEquals( Duration.ofMinutes(1).plusSeconds(13), duration));
     }
 }

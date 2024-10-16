@@ -14,9 +14,6 @@ public class CompetitorResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Autowired
-    private CompetitorResource competitorResource;
-
     @Test
     void testGetCompetitorNotFound(){
         this.webTestClient
