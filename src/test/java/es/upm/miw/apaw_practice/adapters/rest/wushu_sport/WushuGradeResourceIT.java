@@ -15,7 +15,7 @@ import static es.upm.miw.apaw_practice.adapters.rest.wushu_sport.WushuGradeResou
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class WushuGradeResourceIT {
+class WushuGradeResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -57,8 +57,6 @@ public class WushuGradeResourceIT {
                 .expectStatus().isOk()
                 .expectBody(List.class)
                 .value(Assertions::assertNotNull)
-                .value(listData -> {
-                    assertEquals(2, listData.size());
-                });
+                .value(listData -> assertEquals(2, listData.size()));
     }
 }
