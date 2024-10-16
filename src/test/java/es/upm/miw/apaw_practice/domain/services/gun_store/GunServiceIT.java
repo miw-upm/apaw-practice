@@ -1,11 +1,9 @@
 package es.upm.miw.apaw_practice.domain.services.gun_store;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.entities.GunEntity;
 import es.upm.miw.apaw_practice.domain.models.gun_store.Accesory;
 import es.upm.miw.apaw_practice.domain.models.gun_store.CompatibleAmmo;
 import es.upm.miw.apaw_practice.domain.models.gun_store.Gun;
-import es.upm.miw.apaw_practice.domain.persistence_ports.gun_store.GunPersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,9 +18,6 @@ public class GunServiceIT {
     public static final String AK_47 = "AK-47";
     @Autowired
     GunService gunService;
-
-    @Autowired
-    GunPersistence gunPersistence;
 
     @Test
     void testRead() {
