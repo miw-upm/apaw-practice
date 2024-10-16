@@ -19,7 +19,7 @@ public class DoctorService {
     }
 
     public Doctor updateDoctor(String dni, Doctor updatedDoctor) {
-       
+
 
         return doctorPersistence.update(dni, updatedDoctor);
     }
