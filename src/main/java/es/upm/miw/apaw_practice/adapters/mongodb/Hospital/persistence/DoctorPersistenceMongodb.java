@@ -36,4 +36,9 @@ public class DoctorPersistenceMongodb implements DoctorPersistence {
     private Doctor mapToDomain(DoctorEntity doctorEntity) {
         return new Doctor(doctorEntity.getDni(), doctorEntity.getFullname(), doctorEntity.getSalary());
     }
+    @Override
+    public boolean existsByDni(String dni) {
+        return doctorRepository.existsByDni(dni);
+    }
+
 }
