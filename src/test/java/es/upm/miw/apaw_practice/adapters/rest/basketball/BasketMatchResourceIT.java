@@ -15,7 +15,7 @@ public class BasketMatchResourceIT {
     void testDelete() {
         this.webTestClient
                 .delete()
-                .uri(BasketMatchResource.MATCHES + BasketMatchResource.ID_ID, 1)
+                .uri(BasketMatchResource.MATCHES + BasketMatchResource.ID_ID, 5)
                 .exchange()
                 .expectStatus().isOk();
     }
