@@ -2,10 +2,11 @@ package es.upm.miw.apaw_practice.adapters.rest.basketball;
 
 import es.upm.miw.apaw_practice.domain.models.basketball.BasketBall;
 import es.upm.miw.apaw_practice.domain.services.basketball.BasketBallService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(BasketPlayerResource.BASKETPLAYERS)
+@RequestMapping(BasketBallResource.BALLS)
 public class BasketBallResource {
 
     static final String ID_ID = "/{id}";
@@ -13,12 +14,13 @@ public class BasketBallResource {
 
     private final BasketBallService basketBallService;
 
+    @Autowired
     public BasketBallResource(BasketBallService basketBallService) {
         this.basketBallService = basketBallService;
     }
 
     @PutMapping(ID_ID)
-    public BasketBall update(@PathVariable String id, @RequestBody BasketBall basketBall) {
+    public BasketBall update(@PathVariable Integer id, @RequestBody BasketBall basketBall) {
         return this.basketBallService.update(id,basketBall);
     }
 }

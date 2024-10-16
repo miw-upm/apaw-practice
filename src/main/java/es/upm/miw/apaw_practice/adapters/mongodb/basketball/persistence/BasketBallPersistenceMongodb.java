@@ -22,11 +22,11 @@ public class BasketBallPersistenceMongodb implements BasketBallPersistence {
     }
 
     @Override
-    public BasketBall update(String id, BasketBall basketBall) {
-        BasketBallEntity basketBallEntity = this.basketBallRepository.findById(id)
+    public BasketBall update(Integer id, BasketBall basketBall) {
+        BasketBallEntity basketBallEntity = this.basketBallRepository.findByBallId(id)
                 .orElseThrow(() -> new NotFoundException("Basket Ball id:" + id));
         BeanUtils.copyProperties(basketBall, basketBallEntity);
-        BasketMatchEntity basketMatchEntity = this.basketMatchRepository.findById(String.valueOf(basketBall.getBasketMatch().getId()))
+        BasketMatchEntity basketMatchEntity = this.basketMatchRepository.findByMatchId(basketBall.getBasketMatch().getId())
                 .orElseThrow(() -> new NotFoundException("Match ID:" + basketBall.getBasketMatch().getId()));
         basketBallEntity.setBasketMatchEntity(basketMatchEntity);
         return basketBallRepository.save(basketBallEntity).toBasketBall();

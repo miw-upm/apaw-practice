@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.entities.WushuGradeEntity;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.WushuGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class WushuGradePersistenceMongodbIT {
+class WushuGradePersistenceMongodbIT {
 
     @Autowired
     private WushuGradePersistenceMongodb wushuGradePersistenceMongodb;
