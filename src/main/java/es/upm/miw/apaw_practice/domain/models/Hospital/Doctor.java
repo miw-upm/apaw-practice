@@ -6,10 +6,10 @@ public class Doctor {
 
     private String dni;
     private String fullname;
-    private Double salary;
+    private BigDecimal salary;
 
     // Constructor
-    public Doctor(String dni, String fullname, Double salary) {
+    public Doctor(String dni, String fullname, BigDecimal salary) {
         this.dni = dni;
         this.fullname = fullname;
         this.salary = salary;
@@ -32,11 +32,11 @@ public class Doctor {
         this.fullname = fullname;
     }
 
-    public Double getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 }
