@@ -6,7 +6,7 @@ import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.DoctorPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import java.math.BigDecimal;
 @Repository("doctorPersistence")
 public class DoctorPersistenceMongodb implements DoctorPersistence {
 
