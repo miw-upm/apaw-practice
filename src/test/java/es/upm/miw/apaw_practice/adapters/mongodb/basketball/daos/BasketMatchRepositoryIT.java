@@ -39,7 +39,7 @@ public class BasketMatchRepositoryIT {
 
     @Test
     void testDeleteByMatchId() {
-        assertTrue(this.basketMatchRepository.deleteByMatchId(5).isPresent());
+        assertTrue(this.basketMatchRepository.deleteByMatchId(6).isPresent());
         assertFalse(this.basketMatchRepository.deleteByMatchId(0).isPresent());
     }
 }
