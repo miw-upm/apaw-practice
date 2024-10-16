@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
-public class Room {
+public class Room implements Accomodation {
 
     private String num;
     private Boolean occupied;
@@ -48,6 +48,16 @@ public class Room {
         this.numBeds = numBeds;
     }
 
+    @Override
+    public void add(Accomodation accomodation) {
+        // //Do nothing because is a leaf
+    }
+
+    @Override
+    public void remove(Accomodation accomodation) {
+        //Do nothing because is a leaf
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -62,6 +72,11 @@ public class Room {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    @Override
+    public boolean isComposite() {
+        return false;
     }
 
     @Override
