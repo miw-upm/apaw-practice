@@ -47,4 +47,8 @@ public class Doctor {
                 ", salary=" + salary +
                 '}';
     }
+    private Doctor convertToModel(DoctorEntity doctorEntity) {
+        return new Doctor(doctorEntity.getDni(), doctorEntity.getFullname(), doctorEntity.getSalary());
+    }
+
 }
