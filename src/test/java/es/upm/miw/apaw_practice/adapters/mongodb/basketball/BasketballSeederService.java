@@ -44,7 +44,8 @@ public class BasketballSeederService {
         BasketMatchEntity[] matches = {
                 new BasketMatchEntity(1,LocalDateTime.of(2023, 10, 12, 18, 0), "Stadium A", List.of(players[0], players[1])),
                 new BasketMatchEntity(2,LocalDateTime.of(2023, 10, 13, 19, 0), "Stadium B", List.of(players[2], players[3])),
-                new BasketMatchEntity(3,LocalDateTime.of(2023, 10, 14, 20, 0), "Stadium C", List.of(players[0], players[3], players[4]))
+                new BasketMatchEntity(3,LocalDateTime.of(2023, 10, 14, 20, 0), "Stadium C", List.of(players[0], players[3], players[4])),
+                new BasketMatchEntity(5,LocalDateTime.of(2023, 10, 14, 20, 0), "Stadium D", List.of(players[0], players[1], players[2]))
         };
         this.basketMatchRepository.saveAll(Arrays.asList(matches));
 
