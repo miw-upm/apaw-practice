@@ -11,7 +11,7 @@ public class DoctorResource {
     private final DoctorPersistence doctorPersistence;
 
     @Autowired
-    public DoctorController(DoctorPersistence doctorPersistence) {
+    public DoctorResource(DoctorPersistence doctorPersistence) {
         this.doctorPersistence = doctorPersistence;
     }
 
