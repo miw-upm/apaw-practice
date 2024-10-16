@@ -10,6 +10,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 import java.time.Duration;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RestTestConfig
 public class CompetitionFormResourceIT {
 
@@ -30,7 +33,7 @@ public class CompetitionFormResourceIT {
     }
 
     @Test
-    void testGetTotalDurationBySchoolName(){
+    void testGetTotalDurationBySchoolNameNotFound(){
         this.webTestClient
                 .get()
                 .uri(CompetitionFormResource.COMPETITION_FORM + CompetitionFormResource.DURATION + CompetitionFormResource.SCHOOL_NAME_ID, "kk")
@@ -38,5 +41,15 @@ public class CompetitionFormResourceIT {
                 .expectStatus().isNotFound();
 
     }
-
+    @Test
+    void testGetTotalDurationBySchoolName(){
+        this.webTestClient
+                .get()
+                .uri(CompetitionFormResource.COMPETITION_FORM + CompetitionFormResource.DURATION + CompetitionFormResource.SCHOOL_NAME_ID, "Jingwu")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Duration.class)
+                .value(Assertions::assertNotNull)
+                .value(duration -> assertEquals( Duration.ofMinutes(1).plusSeconds(13), duration));
+    }
 }
