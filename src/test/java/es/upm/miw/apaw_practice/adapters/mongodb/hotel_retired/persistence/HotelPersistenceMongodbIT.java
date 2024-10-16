@@ -7,7 +7,9 @@ import es.upm.miw.apaw_practice.domain.models.hotel_retired.Room;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,5 +58,17 @@ public class HotelPersistenceMongodbIT {
         createdHotel.setHotelName("Bar hotel");
         Hotel updatedHotel = this.hotelPersistenceMongodb.update("J37512043", createdHotel);
         assertEquals("Bar hotel", updatedHotel.getHotelName());
+    }
+
+    @Test
+    void testFindByArtistNameSumPricesExhibitions() {
+        assertEquals(BigDecimal.valueOf(319.95), this.hotelPersistenceMongodb.findTotalSumOfPrice("LaMaria", "Emilio Pedrajas"));
+    }
+
+    @Test
+    void testFindNonDuplicatedHotelNamesByNumBedsAndNumBookings() {
+        Stream<String> hotelNames= this.hotelPersistenceMongodb.findNonDuplicatedHotelNamesByNumBedsAndNumBookings(2, 3);
+
+        assertEquals(List.of("LaMaria"), hotelNames.toList());
     }
 }

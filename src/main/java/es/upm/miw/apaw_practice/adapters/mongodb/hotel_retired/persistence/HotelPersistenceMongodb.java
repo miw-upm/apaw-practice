@@ -12,7 +12,9 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.hotel_retired.HotelPers
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Repository("hotelPersistence")
@@ -91,5 +93,27 @@ public class HotelPersistenceMongodb implements HotelPersistence {
     @Override
     public void delete(String cif) {
         this.hotelRepository.deleteByCif(cif);
+    }
+
+    @Override
+    public BigDecimal findTotalSumOfPrice(String hotelName, String fullName) {
+        return this.hotelRepository.findAll().stream()
+                .filter(hotelEntity -> hotelName.equals(hotelEntity.getHotelName()))
+                .flatMap(hotelEntity -> hotelEntity.getRoomsEntities().stream()
+                        .filter(roomEntity -> roomEntity.getBookingEntities().stream().anyMatch(bookingEntity -> fullName.equals(bookingEntity.getGuestEntity().getFullName()))))
+                .map(RoomEntity::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @Override
+    public Stream<String> findNonDuplicatedHotelNamesByNumBedsAndNumBookings(int numBeds, int numBookings) {
+        return this.hotelRepository.findAll().stream()
+                .filter(hotelEntity -> hotelEntity.getRoomsEntities().stream()
+                        .filter(roomEntity -> roomEntity.getNumBeds() > numBeds)
+                        .flatMap(roomEntity -> roomEntity.getBookingEntities().stream())
+                        .filter(BookingEntity::isConfirmed)
+                        .count() > numBookings)
+                .map(HotelEntity::getHotelName)
+                .distinct();
     }
 }

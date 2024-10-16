@@ -40,18 +40,7 @@ public class MartialArtsClassPersistenceMongodb implements MartialArtsClassPersi
                 .findAll().stream()
                 .toList();
         return this.martialArtsClassRepository
-                .save(new MartialArtsClassEntity(martialArtsClass.getName(), martialArtsClass.getStartDate(), martialArtsClass.getAcademy(), techniqueEntities))
-                .toMartialArtsClass();
-    }
-
-    @Override
-    public MartialArtsClass update(String name, MartialArtsClass martialArtsClass) {
-        MartialArtsClassEntity martialArtsClassEntity = this.martialArtsClassRepository
-                .findByName(name)
-                .orElseThrow(() -> new NotFoundException("MartialArtsClass name: " + name));
-       // martialArtsClassEntity.(hotel);
-        return this.martialArtsClassRepository
-                .save(martialArtsClassEntity)
+                .save(new MartialArtsClassEntity(martialArtsClass.getName(), martialArtsClass.getStartDate().atStartOfDay(), martialArtsClass.getAcademy(), techniqueEntities))
                 .toMartialArtsClass();
     }
 

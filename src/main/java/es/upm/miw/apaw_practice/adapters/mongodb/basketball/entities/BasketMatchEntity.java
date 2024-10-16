@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.basketball.entities;
 
+import es.upm.miw.apaw_practice.domain.models.basketball.BasketMatch;
+import es.upm.miw.apaw_practice.domain.models.basketball.BasketPlayer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -70,6 +72,13 @@ public class BasketMatchEntity {
 
     public void setBasketPlayers(List<BasketPlayerEntity> basketPlayers) {
         this.basketPlayers = basketPlayers;
+    }
+
+    public BasketMatch toBasketMatch() {
+        List<BasketPlayer> players = this.basketPlayers.stream()
+                .map(BasketPlayerEntity::toBasketPlayer)
+                .toList();
+        return new BasketMatch(this.matchId,this.date,this.address,players);
     }
 
     @Override

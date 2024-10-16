@@ -7,7 +7,9 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.hotel_retired.HotelPers
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class HotelService {
@@ -46,5 +48,13 @@ public class HotelService {
         Hotel hotel = this.hotelPersistence.read(cif);
         hotel.setRooms(rooms);
         return this.hotelPersistence.update(cif, hotel);
+    }
+
+    public BigDecimal findTotalSumOfPrice(String hotelName, String fullName) {
+        return this.hotelPersistence.findTotalSumOfPrice(hotelName, fullName);
+    }
+
+    public Stream<String> findNonDuplicatedHotelNamesByNumBedsAndNumBookings(int numBeds, int numBookings) {
+        return this.hotelPersistence.findNonDuplicatedHotelNamesByNumBedsAndNumBookings(numBeds, numBookings);
     }
 }

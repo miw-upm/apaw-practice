@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class VideoGame {
     private String videoGameAlias;

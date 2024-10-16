@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.delivery_food.entities;
 
+import es.upm.miw.apaw_practice.domain.models.delivery_food.DeliveryOrder;
+import es.upm.miw.apaw_practice.domain.models.delivery_food.DeliveryOrderItem;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -105,5 +107,15 @@ public class DeliveryOrderEntity {
                 ", delivered=" + delivered +
                 ", deliveryOrderItems=" + deliveryOrderItems +
                 '}';
+    }
+
+    public DeliveryOrder toDeliveryOrder() {
+        List<DeliveryOrderItem> orderItemList = null;
+        if (this.deliveryOrderItems != null) {
+            orderItemList = this.deliveryOrderItems.stream()
+                    .map(DeliveryOrderItemEntity::toDeliveryOrderItem)
+                    .toList();
+        }
+        return new DeliveryOrder(id, deliveryAddress, customerName, orderDate, delivered, orderItemList);
     }
 }

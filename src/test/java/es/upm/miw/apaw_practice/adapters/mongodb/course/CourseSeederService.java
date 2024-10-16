@@ -6,7 +6,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.course.daos.UserCourseRepositor
 import es.upm.miw.apaw_practice.adapters.mongodb.course.daos.VideoRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.CourseEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.TutoringSessionEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.UserEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.UserCourseEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.VideoEntity;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,29 +74,33 @@ public class CourseSeederService {
         this.videoRepository.saveAll(Arrays.asList(videosCursoC));
         this.videoRepository.saveAll(Arrays.asList(videosCursoSpring));
 
-        UserEntity[] usersPython1 = {
-                new UserEntity("Jose", "jose@gmail.com", UserEntity.TypeUser.STUDENT),
-                new UserEntity("Ana", "ana@gmail.com", UserEntity.TypeUser.STUDENT)
+        UserCourseEntity[] usersPython1 = {
+                new UserCourseEntity("Jose", "jose@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Ana", "ana@gmail.com", UserCourseEntity.TypeUser.STUDENT)
         };
 
-        UserEntity[] usersPython2 = {
-                new UserEntity("Luis", "luis@gmail.com", UserEntity.TypeUser.STUDENT),
-                new UserEntity("Maria", "maria@gmail.com", UserEntity.TypeUser.STUDENT)
+        UserCourseEntity[] usersPython2 = {
+                new UserCourseEntity("Luis", "luis@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Maria", "maria@gmail.com", UserCourseEntity.TypeUser.STUDENT)
         };
 
-        UserEntity[] usersJava = {
-                new UserEntity("Laura", "laura@gmail.com", UserEntity.TypeUser.STUDENT),
-                new UserEntity("Carlos", "carlos@gmail.com", UserEntity.TypeUser.STUDENT)
+        UserCourseEntity[] usersJava = {
+                new UserCourseEntity("Laura", "laura@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Carlos", "carlos@gmail.com", UserCourseEntity.TypeUser.STUDENT)
         };
 
-        UserEntity[] usersC = {
-                new UserEntity("Pedro", "pedro@gmail.com", UserEntity.TypeUser.STUDENT),
-                new UserEntity("Miguel", "miguel@gmail.com", UserEntity.TypeUser.STUDENT)
+        UserCourseEntity[] usersC = {
+                new UserCourseEntity("Pedro", "pedro@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Miguel", "miguel@gmail.com", UserCourseEntity.TypeUser.STUDENT)
         };
 
-        UserEntity[] usersSpring = {
-                new UserEntity("Sofia", "sofia@gmail.com", UserEntity.TypeUser.STUDENT),
-                new UserEntity("Raul", "raul@gmail.com", UserEntity.TypeUser.STUDENT)
+        UserCourseEntity[] usersSpring = {
+                new UserCourseEntity("Sofia", "sofia@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Raul", "raul@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Daniel", "daniel@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Lucia", "lucia@gmail.com", UserCourseEntity.TypeUser.STUDENT),
+                new UserCourseEntity("Andrea", "andrea@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR),
+                new UserCourseEntity("Pablo", "pablo@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR)
         };
 
         this.userRepository.saveAll(Arrays.asList(usersPython1));
@@ -112,7 +116,9 @@ public class CourseSeederService {
 
         TutoringSessionEntity[] tutoringSessionsCursoSpring = {
                 new TutoringSessionEntity("Spring Framework Básico", LocalDateTime.of(2024, 12, 15, 18, 0), BigDecimal.valueOf(40.00)),
-                new TutoringSessionEntity("Spring Boot Avanzado", LocalDateTime.of(2024, 12, 17, 18, 0), BigDecimal.valueOf(50.00))
+                new TutoringSessionEntity("Spring Boot Avanzado", LocalDateTime.of(2024, 12, 17, 18, 0), BigDecimal.valueOf(60.00)),
+                new TutoringSessionEntity("Spring Security", LocalDateTime.of(2024, 12, 20, 18, 0), BigDecimal.valueOf(50.00)),
+                new TutoringSessionEntity("Spring Cloud", LocalDateTime.of(2024, 12, 22, 18, 0), BigDecimal.valueOf(50.00))
         };
 
         this.tutoringSessionRepository.saveAll(Arrays.asList(tutoringSessionsCursoC));

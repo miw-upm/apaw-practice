@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.movies.entities;
 
+import es.upm.miw.apaw_practice.domain.models.movies.Movie;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class MovieEntity {
@@ -70,6 +72,17 @@ public class MovieEntity {
     public AwardEntity getAwardWon() { return awardWon; }
 
     public void setAwardWon(AwardEntity awardWon) { this.awardWon = awardWon; }
+
+    public Movie toMovie() {
+        return new Movie(
+                this.imdbId,
+                this.title,
+                this.boxOffice,
+                this.releaseDate,
+                this.actorsFeaturing.stream().map(ActorEntity::toActor).collect(Collectors.toSet()),
+                this.awardWon != null ? this.awardWon.toAward() : null
+        );
+    }
 
     @Override
     public String toString() {

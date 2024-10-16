@@ -1,7 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.basketball;
 
-import java.util.List;
-
 public class BasketPlayer {
     private String dni;
     private String name;

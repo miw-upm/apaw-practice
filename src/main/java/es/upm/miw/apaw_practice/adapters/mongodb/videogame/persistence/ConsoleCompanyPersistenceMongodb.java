@@ -27,10 +27,10 @@ public class ConsoleCompanyPersistenceMongodb implements ConsoleCompanyPersisten
     }
 
     @Override
-    public ConsoleCompany readByCompanyInformation(String companyInformation) {
+    public ConsoleCompany readById(String id) {
         return this.consoleCompanyRepository
-                .findById(companyInformation)
-                .orElseThrow(() -> new NotFoundException("ConsoleCompany with " + companyInformation + " not found"))
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("ConsoleCompany with " + id + " not found"))
                 .toConsoleCompany();
     }
 
