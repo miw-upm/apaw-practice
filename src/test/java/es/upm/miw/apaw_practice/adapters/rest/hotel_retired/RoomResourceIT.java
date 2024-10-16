@@ -125,16 +125,21 @@ public class RoomResourceIT {
                 .expectBody(Room.class)
                 .value(Assertions::assertNotNull);
 
-        Guest guest = new Guest(
-                "03948142P",
-                "Carla Sempere",
-                LocalDateTime.of(2021, 4, 12, 23, 2, 2)
-        );
+        Guest guest = Guest.builder()
+                .nif("03948142P")
+                .fullName("Carla Sempere")
+                .birthDay(LocalDateTime.of(2021, 4, 12, 23, 2, 2))
+                .build();
         List<Booking> updatedBookings = List.of(
-                new Booking(false, LocalDate.now(), LocalDate.now().plusWeeks(1), guest)
+                Booking.builder()
+                        .confirmed(false)
+                        .dateIn(LocalDate.now())
+                        .dateOut(LocalDate.now().plusWeeks(1))
+                        .guest(guest)
+                        .build()
         );
 
-         this.webTestClient
+        this.webTestClient
                 .patch()
                 .uri(ROOMS + NUM_ID + BOOKINGS, "56578")
                 .body(BodyInserters.fromValue(updatedBookings))

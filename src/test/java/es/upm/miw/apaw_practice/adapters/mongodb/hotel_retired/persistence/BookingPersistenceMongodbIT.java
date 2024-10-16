@@ -22,12 +22,12 @@ public class BookingPersistenceMongodbIT {
     @Test
     void testCreateAndRead() {
         Guest guest = this.guestPersistenceMongodb.read("99527370E");
-        Booking booking = new Booking(
-                false,
-                LocalDate.of(2024, 10, 1),
-                LocalDate.of(2024, 10, 1),
-                guest
-        );
+        Booking booking = Booking.builder()
+                .confirmed(false)
+                .dateIn(LocalDate.of(2024, 10, 1))
+                .dateOut(LocalDate.of(2024, 10, 1))
+                .guest(guest)
+                .build();
         Booking createdBooking = this.bookingPersistenceMongodb
                 .create(booking);
         assertFalse(createdBooking.getConfirmed());
