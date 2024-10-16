@@ -6,11 +6,16 @@ import java.util.List;
 
 public interface TreeWushuSchool {
 
+    String name();
+
     void add(TreeWushuSchool treeWushuSchool);
 
     void remove(TreeWushuSchool treeWushuSchool);
 
     public boolean isComposite();
 
+    int number();
+
+    List<Competitor> getAllCompetitors();
 
 }
