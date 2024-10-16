@@ -1,11 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
+
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.DoctorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.DoctorEntity;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.DoctorPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigDecimal;
-import java.util.Optional;
 
 @Repository("doctorPersistence")
 public class DoctorPersistenceMongodb implements DoctorPersistence {
@@ -18,16 +19,19 @@ public class DoctorPersistenceMongodb implements DoctorPersistence {
     }
 
     @Override
-    public DoctorEntity update(String dni, DoctorEntity updatedDoctor) {
-        Optional<DoctorEntity> doctorOptional = this.doctorRepository.findById(dni);
-        if (doctorOptional.isPresent()) {
-            DoctorEntity existingDoctor = doctorOptional.get();
-            existingDoctor.setFullname(updatedDoctor.getFullname());
-            existingDoctor.setSalary(updatedDoctor.getSalary());
-            // Actualiza otros campos según sea necesario
-            return this.doctorRepository.save(existingDoctor);
-        } else {
-            throw new RuntimeException("Doctor not found with dni: " + dni);
-        }
+    public Doctor update(String dni, Doctor doctor) {
+        // Verificar si el doctor existe en la base de datos
+        DoctorEntity existingDoctorEntity = doctorRepository.findById(dni)
+                .orElseThrow(() -> new NotFoundException("Doctor with dni '" + dni + "' not found."));
+
+        // Actualizar los campos del doctor existente con los valores nuevos
+        existingDoctorEntity.setFullname(doctor.getFullname());
+        existingDoctorEntity.setSalary(doctor.getSalary());
+
+        // Guardar los cambios en MongoDB
+        DoctorEntity updatedDoctorEntity = doctorRepository.save(existingDoctorEntity);
+
+        // Retornar el objeto de dominio actualizado
+        return new Doctor(updatedDoctorEntity.getDni(), updatedDoctorEntity.getFullname(), updatedDoctorEntity.getSalary());
     }
 }
