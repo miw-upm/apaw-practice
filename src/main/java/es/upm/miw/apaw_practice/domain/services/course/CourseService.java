@@ -15,7 +15,7 @@ public class CourseService {
         this.coursePersistence = coursePersistence;
     }
 
-    public Course findByTittle(String tittle) {
-        return null;
+    public Course read(String tittle) {
+        return this.coursePersistence.read(tittle);
     }
 }

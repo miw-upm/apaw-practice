@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.course.entities;
 
+import es.upm.miw.apaw_practice.domain.models.course.Course;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -101,6 +103,12 @@ public class CourseEntity {
 
     public void setVideos(List<VideoEntity> videos) {
         this.videos = videos;
+    }
+
+    public Course toCourse(){
+        Course course = new Course();
+        BeanUtils.copyProperties(this, course);
+        return course;
     }
 
     @Override

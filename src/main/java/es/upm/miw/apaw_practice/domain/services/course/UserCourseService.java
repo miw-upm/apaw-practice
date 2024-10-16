@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserCourseService {
 
     private final UserPersistence userPersistence;
 
     @Autowired
-    public UserService(UserPersistence userPersistence) {
+    public UserCourseService(UserPersistence userPersistence) {
         this.userPersistence = userPersistence;
     }
 
