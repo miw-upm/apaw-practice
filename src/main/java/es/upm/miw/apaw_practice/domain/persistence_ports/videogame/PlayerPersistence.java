@@ -10,4 +10,6 @@ public interface PlayerPersistence {
     Player readyByPlayerName(String playerName);
     void delete(String playerName);
     Stream<Player> readAll();
+
+    Stream<String>findVideoGameAliasByPlayerName(String playerName);
 }

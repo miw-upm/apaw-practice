@@ -15,11 +15,53 @@ public class Booking {
         // empty for framework
     }
 
-    public Booking(Boolean confirmed,  LocalDate dateIn, LocalDate dateOut, Guest guest) {
+    public Booking(Boolean confirmed, LocalDate dateIn, LocalDate dateOut, Guest guest) {
         this.confirmed = confirmed;
         this.dateIn = dateIn;
         this.dateOut = dateOut;
         this.guest = guest;
+    }
+
+    public static BookingBuilders.Confirmed builder() {
+        return new Builder();
+    }
+
+    public static class Builder implements BookingBuilders.Confirmed, BookingBuilders.DateIn, BookingBuilders.DateOut, BookingBuilders.Optionals {
+
+        private final Booking booking;
+
+        public Builder() {
+            this.booking = new Booking();
+        }
+
+        @Override
+        public BookingBuilders.DateIn confirmed(boolean confirmed) {
+            this.booking.confirmed = confirmed;
+            return this;
+        }
+
+        @Override
+        public BookingBuilders.DateOut dateIn(LocalDate dateIn) {
+            this.booking.dateIn = dateIn;
+            return this;
+        }
+
+        @Override
+        public BookingBuilders.Optionals dateOut(LocalDate dateOut) {
+            this.booking.dateOut = dateOut;
+            return this;
+        }
+
+        @Override
+        public BookingBuilders.Optionals guest(Guest guest) {
+            this.booking.guest = guest;
+            return this;
+        }
+
+        @Override
+        public Booking build() {
+            return this.booking;
+        }
     }
 
     public Boolean getConfirmed() {

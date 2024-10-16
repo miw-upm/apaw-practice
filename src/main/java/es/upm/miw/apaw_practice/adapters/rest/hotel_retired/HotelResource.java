@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(HotelResource.HOTELS)
@@ -19,6 +20,8 @@ public class HotelResource {
     static final String CIF_ID = "/{cif}";
     static final String ROOMS = "/rooms";
     static final String SEARCH = "/search";
+    static final String TOTAL_SUM_OF_PRICE = "total-sum-of-price";
+    static final String NON_DUPLICATED_HOTELNAMES = "non-duplicated-hotelnames";
 
     private final HotelService hotelService;
 
@@ -52,10 +55,17 @@ public class HotelResource {
         return this.hotelService.updateRooms(cif, rooms);
     }
 
-    @GetMapping(SEARCH)
+    @GetMapping(SEARCH + TOTAL_SUM_OF_PRICE)
     public BigDecimal findTotalSumOfPrice(@RequestParam String q) {
         String hotelName = new LexicalAnalyzer().extractWithAssure(q, "hotelName").trim();
         String fullName = new LexicalAnalyzer().extractWithAssure(q, "fullName").trim();
         return this.hotelService.findTotalSumOfPrice(hotelName, fullName);
+    }
+
+    @GetMapping(SEARCH + NON_DUPLICATED_HOTELNAMES)
+    public List<String> findNonDuplicatedHotelNamesByNumBedsAndNumBookings(@RequestParam String q) {
+        int numBeds = Integer.parseInt(new LexicalAnalyzer().extractWithAssure(q, "numBeds").trim());
+        int numBookings = Integer.parseInt(new LexicalAnalyzer().extractWithAssure(q, "numBookings").trim());
+        return this.hotelService.findNonDuplicatedHotelNamesByNumBedsAndNumBookings(numBeds, numBookings).toList();
     }
 }

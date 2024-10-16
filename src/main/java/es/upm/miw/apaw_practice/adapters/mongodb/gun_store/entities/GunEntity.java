@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gun_store.entities;
 
+import es.upm.miw.apaw_practice.domain.models.gun_store.Gun;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,7 +17,7 @@ public class GunEntity {
     private String name;
     private String manufacturer;
     private List<AccesoryEntity> accesoryEntities;
-    private CompatibleAmmoEntity ammoEntities;
+    private CompatibleAmmoEntity ammoEntity;
 
     public GunEntity() {
         //Empty for framework
@@ -23,11 +25,12 @@ public class GunEntity {
 
     public GunEntity(BigDecimal price, String name, String manufacturer,
                      List<AccesoryEntity> accesoryEntities, CompatibleAmmoEntity compatibleAmmo) {
+        this.name = name;
         this.gunId = UUID.randomUUID().hashCode();
         this.price = price;
         this.manufacturer = manufacturer;
         this.accesoryEntities = accesoryEntities;
-        this.ammoEntities = compatibleAmmo;
+        this.ammoEntity = compatibleAmmo;
     }
 
     public BigDecimal getPrice() {
@@ -70,12 +73,20 @@ public class GunEntity {
         this.accesoryEntities = accesoryEntities;
     }
 
-    public CompatibleAmmoEntity getAmmoEntities() {
-        return ammoEntities;
+    public CompatibleAmmoEntity getAmmoEntity() {
+        return ammoEntity;
     }
 
-    public void setAmmoEntities(CompatibleAmmoEntity ammoEntities) {
-        this.ammoEntities = ammoEntities;
+    public void setAmmoEntity(CompatibleAmmoEntity ammoEntity) {
+        this.ammoEntity = ammoEntity;
+    }
+
+    public Gun toGun() {
+        Gun gun = new Gun();
+        BeanUtils.copyProperties(this, gun);
+        gun.setAccesories(this.accesoryEntities.stream().map(AccesoryEntity::toAccesory).toList());
+        gun.setAmmo(this.ammoEntity.toCompatibleAmmo());
+        return gun;
     }
 
     @Override
@@ -86,7 +97,7 @@ public class GunEntity {
                 ", name='" + name + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", accesories=" + accesoryEntities +
-                ", ammo=" + ammoEntities +
+                ", ammo=" + ammoEntity +
                 '}';
     }
 }

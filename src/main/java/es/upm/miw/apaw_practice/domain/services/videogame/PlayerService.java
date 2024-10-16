@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.PlayerPersist
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class PlayerService {
 
@@ -21,5 +23,9 @@ public class PlayerService {
 
     public void delete(String playerName){
         this.playerPersistence.delete(playerName);
+    }
+
+    public Stream<String> findVideoGameAliasByPlayerName(String playerName){
+        return this.playerPersistence.findVideoGameAliasByPlayerName(playerName);
     }
 }

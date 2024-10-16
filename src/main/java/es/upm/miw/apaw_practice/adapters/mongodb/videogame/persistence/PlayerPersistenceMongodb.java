@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.videogame.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.PlayerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.PlayerEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.VideoGamerEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.videogame.Player;
 import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.PlayerPersistence;
@@ -35,5 +36,16 @@ public class PlayerPersistenceMongodb implements PlayerPersistence {
     @Override
     public void delete(String playerName) {
         this.playerRepository.deleteByPlayerName(playerName);
+    }
+
+    @Override
+    public Stream<String> findVideoGameAliasByPlayerName(String playerName) {
+        return this.playerRepository.findAll().stream()
+                .filter(playerEntity ->
+                        playerEntity.getPlayerName().equals(playerName))
+                .flatMap(playerEntity ->
+                playerEntity.getConsoleEntity().getVideoGameEntities().stream())
+                .map(VideoGamerEntity::getVideoGameAlias)
+                .distinct();
     }
 }

@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.ECommerceSeederService;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerEcommerceEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerECommerceEntity;
 import es.upm.miw.apaw_practice.domain.models.e_commerce_model.CustomerECommerce;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,16 +29,16 @@ public class ECommerceCustomerRepositoryIT {
 
     @Test
     void testFindByUserNameNonExisting() {
-        Optional<CustomerEcommerceEntity> customerEntity = eCommerceCustomerRepository.findByUserName("nonexistentUser");
+        Optional<CustomerECommerceEntity> customerEntity = eCommerceCustomerRepository.findByUserName("nonexistentUser");
         assertTrue(customerEntity.isEmpty(), "Customer should not exist for this username");
     }
 
     @Test
     void testFindByUserName() {
-        Optional<CustomerEcommerceEntity> customerEntity = eCommerceCustomerRepository.findByUserName("user1");
+        Optional<CustomerECommerceEntity> customerEntity = eCommerceCustomerRepository.findByUserName("user1");
         assertTrue(customerEntity.isPresent(), "Customer should exist for this username");
 
-        CustomerEcommerceEntity entity = customerEntity.get();
+        CustomerECommerceEntity entity = customerEntity.get();
         assertNotNull(entity);
 
         CustomerECommerce customer = entity.toCustomer();

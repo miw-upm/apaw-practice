@@ -11,7 +11,6 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @TestConfig
 public class BasketSeasonPersistenceMongodbIT {
