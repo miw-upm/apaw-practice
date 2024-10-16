@@ -36,4 +36,10 @@ public class BasketMatchRepositoryIT {
         assertNotNull(basketMatchEntities.get(0).getBasketPlayers());
         assertNotNull(basketMatchEntities.get(1).getBasketPlayers());
     }
+
+    @Test
+    void testDeleteByMatchId() {
+        assertTrue(this.basketMatchRepository.deleteByMatchId(1).isPresent());
+        assertFalse(this.basketMatchRepository.deleteByMatchId(0).isPresent());
+    }
 }
