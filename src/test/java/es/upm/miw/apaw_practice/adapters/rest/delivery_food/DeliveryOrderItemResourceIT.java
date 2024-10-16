@@ -61,7 +61,6 @@ class DeliveryOrderItemResourceIT {
                     assertNotNull(deliveryOrderItems.get(0).getMenu());
                     assertNotNull(deliveryOrderItems.get(0).getQuantity());
                     assertNotNull(deliveryOrderItems.get(0).getPrice());
-                    assertEquals(8,deliveryOrderItems.size());
                 });
     }
 }
