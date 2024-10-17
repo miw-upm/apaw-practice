@@ -8,6 +8,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.movies.ActorPersistence
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository("actorPersistence")
 public class ActorPersistenceMongodb implements ActorPersistence {
 
@@ -32,5 +34,11 @@ public class ActorPersistenceMongodb implements ActorPersistence {
         return this.actorRepository.findByArtisticName(artisticName)
                 .orElseThrow(() -> new NotFoundException("Actor artistic name: " + artisticName))
                 .toActor();
+    }
+
+    @Override
+    public Optional<Actor> findByRealName(String realName) {
+        return this.actorRepository.findByRealName(realName).
+                map(ActorEntity::toActor);
     }
 }
