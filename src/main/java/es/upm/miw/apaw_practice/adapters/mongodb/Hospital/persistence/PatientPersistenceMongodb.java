@@ -19,14 +19,19 @@ public class PatientPersistenceMongodb implements PatientPersistence {
 
     @Override
     public void delete(String dni) {
-        patientRepository.deleteByDni(dni);
+        this.patientRepository.deleteByDni(dni);
     }
+
     @Override
     public Patient updateName(String dni, String name) {
-        PatientEntity PatientEntity = this.patientRepository.findByDni(dni).
-        PatientEntity.setFullname(fullname);
-        return this.patientRepository.save(PatientEntity).toClient();
+
+        PatientEntity patientEntity = this.patientRepository.findByDni(dni)
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+
+        patientEntity.setFullname(name);
+
+
+        return this.patientRepository.save(patientEntity).toClient();
     }
-
-
 }

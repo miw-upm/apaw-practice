@@ -22,9 +22,12 @@ public class PatientResource {
     public void deletePatient(@PathVariable String dni) {
         patientService.delete(dni);
     }
-    @PatchMapping(dni)
+
+
+    @PatchMapping("/{dni}")
     public Patient updateName(@PathVariable String dni, @RequestBody String name) {
-        return this.PatientService.updateName(dni,name);
+        return this.patientService.updateName(dni, name);
     }
 
 }
+
