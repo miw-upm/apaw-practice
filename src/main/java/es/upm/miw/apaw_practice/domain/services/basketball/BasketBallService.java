@@ -4,8 +4,6 @@ import es.upm.miw.apaw_practice.domain.models.basketball.BasketBall;
 import es.upm.miw.apaw_practice.domain.persistence_ports.basketball.BasketBallPersistence;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
 @Service
 public class BasketBallService {
 

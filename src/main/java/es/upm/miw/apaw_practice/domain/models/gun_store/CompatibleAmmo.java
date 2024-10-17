@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.gun_store;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class CompatibleAmmo {
     private Integer ammoId;
@@ -40,5 +41,13 @@ public class CompatibleAmmo {
     public void setCaliber(String caliber) {
         this.caliber = caliber;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CompatibleAmmo that)) return false;
+        return Objects.equals(price, that.price) && Objects.equals(caliber, that.caliber);
+    }
+
 }
 

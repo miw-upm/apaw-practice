@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.wushu_sport;
 
+import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.models.wuhshu_sport.CompetitionForm;
 import org.junit.jupiter.api.Test;
 
@@ -7,8 +8,8 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CompetitionFormTest {
-
+@TestConfig
+ class CompetitionFormTest {
     @Test
     void testCompetitionFormBuilder() {
         CompetitionForm competitionForm = CompetitionForm.builder()
@@ -20,5 +21,4 @@ public class CompetitionFormTest {
         assertEquals(Duration.ofMinutes(1), competitionForm.getDuration());
         assertEquals("Changquan", competitionForm.getCategory());
     }
-
 }

@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.domain.models.gun_store;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 public class Gun {
     private Integer gunId;
@@ -15,12 +16,14 @@ public class Gun {
         //Empty for framework
     }
 
-    public Gun(String name, BigDecimal price, int gunId, String manufacturer) {
-        this.name = name;
+    public Gun(BigDecimal price, String name, String manufacturer, List<Accesory> accesories, CompatibleAmmo ammo) {
         this.price = price;
-        this.gunId = gunId;
+        this.name = name;
         this.manufacturer = manufacturer;
+        this.accesories = accesories;
+        this.ammo = ammo;
     }
+
 
     public int getGunId() {
         return gunId;
@@ -52,5 +55,29 @@ public class Gun {
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public CompatibleAmmo getAmmo() {
+        return ammo;
+    }
+
+    public void setAmmo(CompatibleAmmo ammo) {
+        this.ammo = ammo;
+    }
+
+    public List<Accesory> getAccesories() {
+        return accesories;
+    }
+
+    public void setAccesories(List<Accesory> accesories) {
+        this.accesories = accesories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Gun gun)) return false;
+        return Objects.equals(price, gun.price) && Objects.equals(name, gun.name)
+                && Objects.equals(manufacturer, gun.manufacturer) && Objects.equals(ammo, gun.ammo);
     }
 }

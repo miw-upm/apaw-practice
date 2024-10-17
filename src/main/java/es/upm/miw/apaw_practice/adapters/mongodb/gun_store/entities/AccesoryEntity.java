@@ -47,8 +47,9 @@ public class AccesoryEntity {
         this.price = price;
     }
 
-    public void fromAccesory(Accesory accesory) {
+    public AccesoryEntity fromAccesory(Accesory accesory) {
         BeanUtils.copyProperties(accesory, this);
+        return this;
     }
 
     public Accesory toAccesory() {

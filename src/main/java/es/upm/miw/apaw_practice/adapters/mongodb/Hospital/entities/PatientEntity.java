@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import java.time.LocalDate;
 import java.util.List;
@@ -68,5 +69,14 @@ public class PatientEntity {
 
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
+    }
+    public Patient toClient() {
+        return new Patient(
+                this.dni,
+                this.fullname,
+                this.dateOfBirth,
+                this.hasInsurance,
+                this.appointments
+        );
     }
 }

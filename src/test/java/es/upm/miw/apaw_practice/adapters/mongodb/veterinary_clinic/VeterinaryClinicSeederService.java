@@ -43,6 +43,8 @@ public class VeterinaryClinicSeederService {
         AnimalEntity[] animals = {
                 new AnimalEntity("Lara", 10,
                         LocalDateTime.of(2014, 8, 10, 15, 10), owners[0]),
+                new AnimalEntity("Lili", 10,
+                        LocalDateTime.of(2014, 8, 10, 15, 10), owners[0]),
                 new AnimalEntity("Pingo", 8,
                         LocalDateTime.of(2016, 5, 2, 10, 11), owners[1]),
                 new AnimalEntity("Toy", 5,
