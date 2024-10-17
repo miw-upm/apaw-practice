@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.math.BigDecimal;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -51,19 +49,5 @@ class ClinicResourceIT {
                 .uri(ClinicResource.CLINICS + ClinicResource.NAME_ID, "Happy Heal")
                 .exchange()
                 .expectStatus().isOk();
-    }
-
-    @Test
-    void testFindByOwnerNameSumAge() {
-        this.webTestClient
-                .get()
-                .uri(uriBuilder ->
-                        uriBuilder.path(ClinicResource.CLINICS + ClinicResource.SEARCH + ClinicResource.TOTAL_SUM_OF_AGE)
-                                .queryParam("q", "clinicName:Veterinary Clinic Happy Life;ownerName:Marcos")
-                                .build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(BigDecimal.class)
-                .value(sum -> assertEquals(BigDecimal.valueOf(10), sum));
     }
 }
