@@ -8,4 +8,6 @@ public interface SetupPersistence {
     void delete(Integer id);
 
     Setup read(Integer id);
+
+    Setup create(Setup setup);
 }
