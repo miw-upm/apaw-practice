@@ -55,11 +55,11 @@ public class DeliveryFoodSeederService {
 
         List<DeliveryOrderItemEntity> deliveryOrderItems = List.of(
                 new DeliveryOrderItemEntity(new BigDecimal("12.99"), 2, menus.get(0)),
-                new DeliveryOrderItemEntity(new BigDecimal("15.50"), 1, menus.get(1)),
+                new DeliveryOrderItemEntity(new BigDecimal("15.50"), 1, menus.get(3)),
                 new DeliveryOrderItemEntity(new BigDecimal("9.99"), 3, menus.get(2)),
                 new DeliveryOrderItemEntity(new BigDecimal("11.75"), 2, menus.get(3)),
-                new DeliveryOrderItemEntity(new BigDecimal("7.50"), 4, menus.get(4)),
-                new DeliveryOrderItemEntity(new BigDecimal("14.00"), 1, menus.get(1)),
+                new DeliveryOrderItemEntity(new BigDecimal("7.50"), 4, menus.get(2)),
+                new DeliveryOrderItemEntity(new BigDecimal("14.00"), 1, menus.get(2)),
                 new DeliveryOrderItemEntity(new BigDecimal("10.00"), 2, menus.get(0)),
                 new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(2))
         );

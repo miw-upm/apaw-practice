@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestTestConfig
-public class WushuSchoolResourceIT {
+class WushuSchoolResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

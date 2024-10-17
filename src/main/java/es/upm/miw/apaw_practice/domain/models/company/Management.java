@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.company;
 import java.util.List;
 
 public class Management {
-    private int managerId;// Primary Key
+    private String managerId;// Primary Key
     private String name;
     private boolean Activated;
     
@@ -11,17 +11,17 @@ public class Management {
     public Management() {
         //empty for framework
     }
-    public Management(int managerId, String name, boolean Activated) {
+    public Management(String managerId, String name, boolean Activated) {
         this.managerId = managerId;
         this.name = name;
         this.Activated = Activated;
     }
 
-    public int getManagerId() {
+    public String getManagerId() {
         return managerId;
     }
 
-    public void setManagerId(int managerId) {
+    public void setManagerId(String managerId) {
         this.managerId = managerId;
     }
 

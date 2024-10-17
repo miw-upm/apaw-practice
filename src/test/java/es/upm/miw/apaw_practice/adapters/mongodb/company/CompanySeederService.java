@@ -33,7 +33,7 @@ public class CompanySeederService {
         LogManager.getLogger(this.getClass()).warn("------- Company Initial Load -----------");
 
         ManagementEntity[] managements = {
-                new ManagementEntity("Alice Johnson", true),
+                new ManagementEntity("John Doe", true),
                 new ManagementEntity("Bob Smith", false),
                 new ManagementEntity( "Carol White", true),
                 new ManagementEntity("David Brown", false)

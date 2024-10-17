@@ -3,6 +3,9 @@ package es.upm.miw.apaw_practice.domain.services.veterinary_clinic;
 import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Clinic;
 import es.upm.miw.apaw_practice.domain.persistence_ports.veterinary_clinic.ClinicPersistence;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+
+import java.math.BigDecimal;
 
 @Service
 public class ClinicService {
@@ -19,5 +22,9 @@ public class ClinicService {
 
     public void delete(String name) {
         this.clinicPersistence.delete(name);
+    }
+
+    public Mono<BigDecimal> findByOwnerNameSumAge(String clinicName, String ownerName) {
+        return this.clinicPersistence.findByOwnerNameSumAge(clinicName, ownerName);
     }
 }

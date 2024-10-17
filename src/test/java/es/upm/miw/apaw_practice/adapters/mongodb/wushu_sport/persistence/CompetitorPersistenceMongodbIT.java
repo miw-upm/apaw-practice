@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @TestConfig
-public class CompetitorPersistenceMongodbIT {
+class CompetitorPersistenceMongodbIT {
 
     @Autowired
     private CompetitorPersistenceMongodb competitorPersistenceMongodb;

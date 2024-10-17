@@ -12,7 +12,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class ProductRepositoryIT {
+public class    ProductCommerceRepositoryIT {
 
     @Autowired
     private ProductRepository productRepository;
