@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GunPersistence {
     Gun readByName(String name);
+    Gun update(Integer id, Gun gun);
 }

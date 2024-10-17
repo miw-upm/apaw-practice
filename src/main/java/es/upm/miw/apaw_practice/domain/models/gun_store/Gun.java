@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Gun {
+    private static Integer gunIdCount = 0;
     private Integer gunId;
     private BigDecimal price;
     private String name;
@@ -17,6 +18,7 @@ public class Gun {
     }
 
     public Gun(BigDecimal price, String name, String manufacturer, List<Accesory> accesories, CompatibleAmmo ammo) {
+        Gun.gunIdCount++;
         this.price = price;
         this.name = name;
         this.manufacturer = manufacturer;
