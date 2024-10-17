@@ -2,22 +2,24 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
 import java.util.List;
+import java.util.List;
 
 public class Patient {
     private String dni;
     private String fullname;
     private LocalDate dateOfBirth;
     private boolean hasInsurance;
-    private Appointment appointment;
+    private List<Appointment> appointments;
 
-    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, Appointment appointment) {
+    public Patient(String dni, String fullname, LocalDate dateOfBirth, boolean hasInsurance, List<Appointment> appointments) {
         this.dni = dni;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
         this.hasInsurance = hasInsurance;
-        this.appointment = appointment;
+        this.appointments = appointments;
     }
 
+    // Getters y Setters
     public String getDni() {
         return dni;
     }
@@ -50,22 +52,22 @@ public class Patient {
         this.hasInsurance = hasInsurance;
     }
 
-    public Appointment getAppointment() {
-        return appointment;
+    public List<Appointment> getAppointments() {
+        return appointments;
     }
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "Patient{" +
                 "dni='" + dni + '\'' +
                 ", fullname='" + fullname + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", hasInsurance=" + hasInsurance +
-                ", appointment=" + appointment +
+                ", appointments=" + appointments +
                 '}';
     }
 }
