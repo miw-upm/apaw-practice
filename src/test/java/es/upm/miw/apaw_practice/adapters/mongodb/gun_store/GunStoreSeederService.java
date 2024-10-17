@@ -96,11 +96,13 @@ public class GunStoreSeederService {
         return new Setup(6, LocalDate.now(), new BigDecimal("1000"), guns);
     }
 
-    public static Gun getNewDummyGun() {
+    public static Gun getNewDummyGun(Integer gunId) {
         Accesory accesory1 = new Accesory(7, "Scope", new BigDecimal("100.00"));
         CompatibleAmmo ammo = new CompatibleAmmo(7, new BigDecimal("20.00"), "9mm");
         List<Accesory> accesories = new ArrayList<>();
         accesories.add(accesory1);
-        return new Gun(new BigDecimal("500.00"), "Pistol", "Manufacturer A", accesories, ammo);
+        Gun gun = new Gun(new BigDecimal("500.00"), "Pistol", "Manufacturer A", accesories, ammo);
+        gun.setGunId(gunId);
+        return gun;
     }
 }

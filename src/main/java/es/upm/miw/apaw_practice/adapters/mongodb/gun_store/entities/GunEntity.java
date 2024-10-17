@@ -39,12 +39,15 @@ public class GunEntity {
         this.gunId = gun.getGunId();
         this.price = gun.getPrice();
         this.manufacturer = gun.getManufacturer();
-        this.accesoryEntities = gun.getAccesories().stream()
-                .map(accesory -> new AccesoryEntity().fromAccesory(accesory))
-                .collect(Collectors.toList());
+        this.accesoryEntities = getAccesoryEntities(gun);
         this.ammoEntity = new CompatibleAmmoEntity().fromCompatibleAmmo(gun.getAmmo());
     }
 
+    public static List<AccesoryEntity> getAccesoryEntities(Gun gun) {
+        return gun.getAccesories().stream()
+                .map(accesory -> new AccesoryEntity().fromAccesory(accesory))
+                .collect(Collectors.toList());
+    }
 
     public BigDecimal getPrice() {
         return price;
