@@ -22,7 +22,7 @@ public class ECommerceSeederService {
     private ECommerceCustomerRepository eCommerceCustomerRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ECommerceProductRepository productRepository;
 
     @Autowired
     private ShippingAddressRepository shippingAddressRepository;

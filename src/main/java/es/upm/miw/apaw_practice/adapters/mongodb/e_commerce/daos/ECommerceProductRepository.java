@@ -4,6 +4,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ProductECom
 import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
-public interface ProductRepository extends MongoRepository<ProductECommerceEntity, String> {
+public interface ECommerceProductRepository extends MongoRepository<ProductECommerceEntity, String> {
     Optional<ProductECommerceEntity> findByProductName(String productName);
 }

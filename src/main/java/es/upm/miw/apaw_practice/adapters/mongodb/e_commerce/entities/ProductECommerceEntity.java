@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities;
 
+import es.upm.miw.apaw_practice.domain.models.e_commerce_model.ProductECommerce;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -83,5 +84,13 @@ public class ProductECommerceEntity {
                 ", numberProduct=" + numberProduct +
                 ", unitPrice=" + unitPrice +
                 '}';
+    }
+
+    public ProductECommerce toProductECommerce() {
+        return new ProductECommerce(
+                this.getProductName(),
+                this.getNumberProduct(),
+                this.getUnitPrice()
+        );
     }
 }
