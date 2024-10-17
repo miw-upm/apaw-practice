@@ -9,8 +9,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelClientEntit
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelMainEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelReservationEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelRoomEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.RoomEntity;
-import es.upm.miw.apaw_practice.domain.models.bank.Client;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,17 +20,22 @@ import java.util.List;
 
 @Service
 public class HotelSeederService {
+
     @Autowired
     private HotelMainRepository hotelMainRepository;
+
     @Autowired
     private HotelRoomRepository hotelRoomRepository;
+
     @Autowired
     private HotelClientRepository hotelClientRepository;
+
     @Autowired
     private HotelReservationRepository hotelReservationRepository;
 
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Hotel Initial Load -----------");
+
         HotelRoomEntity[] rooms = {
                 new HotelRoomEntity("101", "single", new BigDecimal("75.00"), true),
                 new HotelRoomEntity("202", "dual", new BigDecimal("125.00"), true),
@@ -40,6 +43,7 @@ public class HotelSeederService {
                 new HotelRoomEntity("404", "single", new BigDecimal("60.00"), false)
         };
         this.hotelRoomRepository.saveAll(Arrays.asList(rooms));
+
         HotelReservationEntity[] reservations = {
                 new HotelReservationEntity("1", "101", LocalDate.of(2020,1,1)),
                 new HotelReservationEntity("2", "202", LocalDate.of(2020,12,22)),
@@ -60,9 +64,9 @@ public class HotelSeederService {
         this.hotelMainRepository.saveAll(Arrays.asList(hotels));
     }
     public void deleteAll() {
-        this.hotelRoomRepository.deleteAll();
-        this.hotelClientRepository.deleteAll();
         this.hotelMainRepository.deleteAll();
+        this.hotelClientRepository.deleteAll();
         this.hotelReservationRepository.deleteAll();
+        this.hotelRoomRepository.deleteAll();
     }
 }

@@ -19,6 +19,7 @@ class MovieRepositoryIT {
 
     @Test
     void testFindByImdbIdNotExists(){
+        System.out.println(this.movieRepository.findByImdbId("tt1234567"));
         assertTrue(this.movieRepository.findByImdbId("tt1234567").isEmpty());
     }
 

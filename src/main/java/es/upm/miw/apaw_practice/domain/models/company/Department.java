@@ -1,9 +1,11 @@
 package es.upm.miw.apaw_practice.domain.models.company;
+import org.springframework.data.mongodb.core.index.Indexed;
+
 import java.math.BigDecimal;
-import java.util.List;
 
 public class Department {
-    private String departmentname;// Primary Key
+    @Indexed(unique = true)
+    private String departmentName;// Primary Key
     private BigDecimal annualBudget;
     private int employeeCount;
     private Management management;
@@ -12,19 +14,19 @@ public class Department {
         //empty for framework
     }
 
-    public Department(String departmentname, BigDecimal annualBudget, int employeeCount,Management management) {
-        this.departmentname = departmentname;
+    public Department(String departmentName, BigDecimal annualBudget, int employeeCount, Management management) {
+        this.departmentName = departmentName;
         this.annualBudget = annualBudget;
         this.employeeCount = employeeCount;
         this.management = management;
     }
 
-    public String getDepartmentname() {
-        return departmentname;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setDepartmentname(String departmentname) {
-        this.departmentname = departmentname;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public BigDecimal getAnnualBudget() {

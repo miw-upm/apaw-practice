@@ -15,4 +15,5 @@ public interface TicketPersistence {
 
     Ticket updateTotalPrice(String id, BigDecimal totalPrice);
 
+    BigDecimal sumTotalPrice(String mainService);
 }

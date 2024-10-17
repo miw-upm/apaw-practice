@@ -23,11 +23,9 @@ public class StylePersistenceMongodb implements StylePersistence {
 
     @Override
     public Stream<Style> readAll() {
-        return null;
-      /*
         return this.styleRepository
                 .findAll().stream()
-                .map(StyleRepository::toStyle);*/
+                .map(StyleEntity::toStyle);
     }
 
     @Override

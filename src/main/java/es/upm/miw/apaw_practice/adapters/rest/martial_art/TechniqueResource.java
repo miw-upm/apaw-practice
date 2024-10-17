@@ -21,10 +21,4 @@ public class TechniqueResource {
         return this.techniqueService.create(technique);
     }
 
-    @DeleteMapping(NAME)
-    public void delete(@PathVariable String name) {
-        this.techniqueService.delete(name);
-    }
-
-
 }

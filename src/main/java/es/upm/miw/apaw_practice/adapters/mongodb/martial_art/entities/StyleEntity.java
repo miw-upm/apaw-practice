@@ -3,15 +3,27 @@ package es.upm.miw.apaw_practice.adapters.mongodb.martial_art.entities;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Instructor;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Style;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class StyleEntity {
+    @Id
+    private String id;
+    @Indexed(unique = true)
     private String name;
     private String description;
     private Integer popularity;
     private String originCountry;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
@@ -73,6 +85,7 @@ public class StyleEntity {
     @Override
     public String toString() {
         return "StyleEntity{" +
+                "id='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", popularity=" + popularity +
