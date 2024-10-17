@@ -15,9 +15,11 @@ public class PatientService {
         this.patientPersistence = patientPersistence;
     }
 
-
     public void delete(String dni) {
         patientPersistence.delete(dni);
     }
 
+    public Patient updateName(String dni, String name) {
+        return this.patientPersistence.updateName(dni, name); // Usar patientPersistence aquí
+    }
 }
