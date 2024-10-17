@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class GunEntity {
@@ -32,6 +33,18 @@ public class GunEntity {
         this.accesoryEntities = accesoryEntities;
         this.ammoEntity = compatibleAmmo;
     }
+
+    public GunEntity(Gun gun) {
+        this.name = gun.getName();
+        this.gunId = gun.getGunId();
+        this.price = gun.getPrice();
+        this.manufacturer = gun.getManufacturer();
+        this.accesoryEntities = gun.getAccesories().stream()
+                .map(accesory -> new AccesoryEntity().fromAccesory(accesory))
+                .collect(Collectors.toList());
+        this.ammoEntity = new CompatibleAmmoEntity().fromCompatibleAmmo(gun.getAmmo());
+    }
+
 
     public BigDecimal getPrice() {
         return price;

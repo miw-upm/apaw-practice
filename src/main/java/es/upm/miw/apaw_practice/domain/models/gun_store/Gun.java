@@ -24,6 +24,7 @@ public class Gun {
         this.ammo = ammo;
     }
 
+
     public int getGunId() {
         return gunId;
     }

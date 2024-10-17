@@ -84,7 +84,7 @@ public class CompanyEntity {
     public Company toCompany() {
         List<Department> departments = this.departmentEntities.stream()
                 .map(DepartmentEntity::toDepartment)
-                .collect(Collectors.toList());
+                .toList();
         return new Company(companyname, location, industry, creationDate, departments);
     }
 
