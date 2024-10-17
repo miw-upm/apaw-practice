@@ -24,8 +24,7 @@ public class PatientPersistenceMongodb implements PatientPersistence {
     @Override
     public Patient updateName(String dni, String name) {
         PatientEntity PatientEntity = this.patientRepository.findByDni(dni)
-                .orElseThrow(() -> new NotFoundException(" patient dni: " + dni));
-        PatientEntity.setName(name);
+        PatientEntity.setFullname(fullname);
         return this.patientRepository.save(PatientEntity).toClient();
     }
 
