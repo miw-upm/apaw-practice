@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class PatientService {
 
-    private final PatientPersistence patientPersistence;
+    private final PatientPersistence patientPersistence; 
 
-    @Autowired
     public PatientService(PatientPersistence patientPersistence) {
         this.patientPersistence = patientPersistence;
     }
-
 
     public void delete(String dni) {
         patientPersistence.delete(dni);
