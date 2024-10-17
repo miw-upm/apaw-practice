@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.martial_art.persistence;
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.persistence.InstructorPersistenceMongodb;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw_practice.domain.models.hotel_retired.Guest;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Instructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,7 +9,7 @@ public class Instructor {
     private Integer phoneNumber;
     private LocalDateTime birthDate;
 
-    public Instructor(String dni, String fullName, LocalDate phoneNumber, LocalDateTime birthDate) {
+    public Instructor() {
         // empty for framework
     }
 
