@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.course;
 
-import es.upm.miw.apaw_practice.adapters.rest.military.MissionResource;
 import es.upm.miw.apaw_practice.domain.models.course.Course;
 import es.upm.miw.apaw_practice.domain.services.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,5 @@ public class CourseResource {
     public Course read(@PathVariable String tittle){
         return this.courseService.read(tittle);
     }
-
 
 }
