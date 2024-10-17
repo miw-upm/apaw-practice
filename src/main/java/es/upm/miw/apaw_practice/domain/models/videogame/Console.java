@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.videogame;
 
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Console {
@@ -9,6 +11,10 @@ public class Console {
     private boolean portable;
     private LocalDate creationDate;
     private List<VideoGame> videoGames;
+
+    public static ConsoleBuilder.ConsoleReference builder(){
+        return new Builder();
+    }
 
     private  Console() {
         //empty for framework
@@ -64,5 +70,48 @@ public class Console {
                 ", creationDate=" + creationDate +
                 ", videoGames=" + videoGames.stream().map(VideoGame::getVideoGameAlias).toList() +
                 '}';
+    }
+
+    public static class Builder implements ConsoleBuilder.ConsoleReference, ConsoleBuilder.SerialNumber, ConsoleBuilder.Portable, ConsoleBuilder.CreationDate, ConsoleBuilder.VideoGames, ConsoleBuilder.Builder {
+        private final Console instance;
+
+        private Builder() {
+            instance = new Console();
+        }
+
+        @Override
+        public ConsoleBuilder.SerialNumber consoleReference(String consoleReference) {
+            instance.setConsoleReference(consoleReference);
+            return this;
+        }
+
+        @Override
+        public ConsoleBuilder.Portable serialNumber(long serialNumber) {
+            instance.setSerialNumber(serialNumber);
+            return this;
+        }
+
+        @Override
+        public ConsoleBuilder.CreationDate portable(boolean portable) {
+            instance.setPortable(portable);
+            return this;
+        }
+
+        @Override
+        public ConsoleBuilder.VideoGames creationDate(LocalDate creationDate) {
+            instance.setCreationDate(creationDate);
+            return this;
+        }
+
+        @Override
+        public ConsoleBuilder.Builder videoGames(ArrayList<VideoGame> videoGames){
+            instance.setVideoGames(videoGames);
+            return this;
+        }
+
+        @Override
+        public Console build() {
+            return instance;
+        }
     }
 }
