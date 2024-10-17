@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
 public class ConsoleTest {
@@ -20,8 +21,24 @@ public class ConsoleTest {
     private Console fifthConsole;
     private ConsoleComposite consoleGroup;
 
+    @Test
+    void testBuilder(){
+        Console instance = Console.builder()
+                .consoleReference("Nanoby")
+                .serialNumber(916617214312418L)
+                .portable(true)
+                .creationDate(LocalDate.of(1996,6,17))
+                .videoGames(new ArrayList<>())
+                .build();
+assertEquals("Nanoby", instance.getConsoleReference());
+assertEquals(916617214312418L, instance.getSerialNumber());
+        assertTrue(instance.isPortable());
+assertEquals(LocalDate.of(1996,6,17), instance.getCreationDate());
+assertEquals(new ArrayList<>(), instance.getVideoGames());
+    }
+
     @BeforeEach
-    void testComposite() {
+    void testCompositeAndComponent() {
         List<ConsoleComponent> consoles = new ArrayList<>();
         consoleGroup = new ConsoleComposite(consoles);
 
