@@ -1,8 +1,12 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import reactor.core.CoreSubscriber;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -65,6 +69,22 @@ public class HotelMainEntity {
     public List<HotelClientEntity> getClients() { return this.clients; }
 
     public void setClients(List<HotelClientEntity> clients) { this.clients = clients; }
+
+    public HotelMain toHotel() {
+        HotelMain hotel = new HotelMain();
+        BeanUtils.copyProperties(this, hotel);
+        return hotel;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((HotelMainEntity) obj).id));
+    }
 
     @Override
     public String toString() {

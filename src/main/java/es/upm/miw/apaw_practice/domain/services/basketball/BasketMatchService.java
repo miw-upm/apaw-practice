@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.basketball;
 
+import es.upm.miw.apaw_practice.domain.models.basketball.BasketMatch;
 import es.upm.miw.apaw_practice.domain.persistence_ports.basketball.BasketMatchPersistence;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +15,9 @@ public class BasketMatchService {
 
     public void delete(Integer id) {
         this.basketMatchPersistence.delete(id);
+    }
+
+    public BasketMatch updateAddress(Integer matchId, String address) {
+        return this.basketMatchPersistence.updateAddress(matchId,address);
     }
 }
