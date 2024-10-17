@@ -24,10 +24,10 @@ public class GunEntity {
         //Empty for framework
     }
 
-    public GunEntity(BigDecimal price, String name, String manufacturer,
+    public GunEntity(Integer id, BigDecimal price, String name, String manufacturer,
                      List<AccesoryEntity> accesoryEntities, CompatibleAmmoEntity compatibleAmmo) {
+        this.gunId = id;
         this.name = name;
-        this.gunId = UUID.randomUUID().hashCode();
         this.price = price;
         this.manufacturer = manufacturer;
         this.accesoryEntities = accesoryEntities;
