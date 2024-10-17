@@ -23,7 +23,7 @@ public class PatientPersistenceMongodb implements PatientPersistence {
     }
     @Override
     public Patient updateName(String dni, String name) {
-        PatientEntity PatientEntity = this.patientRepository.findByDni(dni)
+        PatientEntity PatientEntity = this.patientRepository.findByDni(dni).
         PatientEntity.setFullname(fullname);
         return this.patientRepository.save(PatientEntity).toClient();
     }
