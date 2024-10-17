@@ -1,7 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.PatientRepository;
-import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.PatientPersistence; // Asegúrate de que esta línea esté presente
+import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.PatientPersistence;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,13 @@ public class PatientPersistenceMongodb implements PatientPersistence {
     @Override
     public void delete(String dni) {
         patientRepository.deleteByDni(dni);
+    }
+    @Override
+    public Patient updateName(String dni, String name) {
+        PatientEntity PatientEntity = this.patientRepository.findByDni(dni)
+                .orElseThrow(() -> new NotFoundException(" Client dni: " + dni));
+        PatientEntity.setName(name);
+        return this.patientRepository.save(clientEntity).toClient();
     }
 
 

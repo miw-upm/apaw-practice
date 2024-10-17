@@ -12,7 +12,7 @@ public class AppointmentEntity {
     private Integer id;
     private LocalDate date;
     private LocalTime time;
-    private String location; // Asumiendo que 'location' se usa como descripción
+    private String location;
 
     private String patientDni;
     private String doctorDni;
@@ -80,12 +80,12 @@ public class AppointmentEntity {
     }
 
     public Appointment toAppointment() {
-        // Asegúrate de proporcionar todos los parámetros necesarios
+
         return new Appointment(
-                String.valueOf(this.id), // Convierte el ID a String si es necesario
+                String.valueOf(this.id),
                 this.date,
                 this.time,
-                this.location // Si 'location' se usa como descripción
+                this.location
         );
     }
 }

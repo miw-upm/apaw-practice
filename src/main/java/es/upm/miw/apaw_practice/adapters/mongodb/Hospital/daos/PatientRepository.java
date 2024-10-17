@@ -7,5 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PatientRepository extends MongoRepository<PatientEntity, String> {
     void deleteByDni(String dni);
+    Optional<PatientEntity> findByDni(String dni);
+
+    List<PatientEntity> findByDniIn(List<String> dniList);
 
 }

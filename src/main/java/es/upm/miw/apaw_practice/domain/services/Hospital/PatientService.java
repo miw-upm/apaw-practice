@@ -19,5 +19,8 @@ public class PatientService {
     public void delete(String dni) {
         patientPersistence.delete(dni);
     }
+    public Patient updateName(String dni, String name){
+        return this.PatientPersistence.updateName(dni,name);
+    }
 
 }
