@@ -28,7 +28,7 @@ public class DepartmentEntity {
         // Empty for framework
     }
 
-    public DepartmentEntity(String departmentName,BigDecimal annualBudget,int employeeCount, ManagementEntity managementEntity) {
+    public DepartmentEntity(String departmentName, BigDecimal annualBudget, int employeeCount, ManagementEntity managementEntity) {
         this.id = UUID.randomUUID().toString();
         this.departmentName = departmentName;
         this.annualBudget = annualBudget;

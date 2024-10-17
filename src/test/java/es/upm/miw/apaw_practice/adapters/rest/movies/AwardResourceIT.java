@@ -38,6 +38,74 @@ class AwardResourceIT {
         deleteAward(existingAward).expectStatus().isOk();
     }
 
+    @Test
+    void testFindAwardNamesByActorRealNameNotFound() {
+        String realName = "Non-Existent Actor";
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/movies/awards/search")
+                                .queryParam("realName", realName)
+                                .build()
+                )
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .isEqualTo("[]");
+    }
+
+    @Test
+    void testFindAwardNamesByActorRealNameFoundWithRepeats() {
+        String realName = "Edward Thomas Hardy";
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/movies/awards/search")
+                                .queryParam("realName", realName)
+                                .build()
+                )
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .isEqualTo("[\"Golden Globe\",\"Oscar\"]");
+    }
+
+    @Test
+    void testFindAwardNamesByActorRealNameFoundWithNoAwards() {
+        String realName = "John Joseph Nicholson";
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/movies/awards/search")
+                                .queryParam("realName", realName)
+                                .build()
+                )
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .isEqualTo("[]");
+    }
+
+    @Test
+    void testFindAwardNamesByActorRealNameFoundWithDifferentAwards() {
+        String realName = "Natalie Hershlag";
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/movies/awards/search")
+                                .queryParam("realName", realName)
+                                .build()
+                )
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .isEqualTo("[\"Golden Globe\",\"Oscar\"]");
+    }
+
     private WebTestClient.ResponseSpec deleteAward(String awardNameCategoryYear) {
         return webTestClient
                 .delete()

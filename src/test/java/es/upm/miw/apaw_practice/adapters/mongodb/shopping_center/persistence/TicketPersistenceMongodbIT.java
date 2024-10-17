@@ -46,4 +46,16 @@ public class TicketPersistenceMongodbIT {
         assertTrue(newTicket.isPresent());
         assertEquals(new BigDecimal("99.99"), newTicket.get().getTotalPrice());
     }
+
+    @Test
+    void testSumTotalPrice() {
+        BigDecimal sumTotalPrice = this.ticketPersistenceMongodb.sumTotalPrice("food");
+        assertEquals(new BigDecimal("286.19"), sumTotalPrice);
+    }
+
+    @Test
+    void testSumTotalPriceNoTickets() {
+        BigDecimal sumTotalPrice = this.ticketPersistenceMongodb.sumTotalPrice("games");
+        assertEquals(new BigDecimal("0"), sumTotalPrice);
+    }
 }

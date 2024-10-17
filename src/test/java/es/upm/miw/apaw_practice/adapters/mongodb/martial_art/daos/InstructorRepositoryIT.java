@@ -17,7 +17,7 @@ public class InstructorRepositoryIT {
     private InstructorRepository instructorRepository;
 
     @Test
-    void testFindByNif() {
+    void testFindByDnI() {
         assertTrue(this.instructorRepository.findByDni("Z1521143C").isPresent());
         InstructorEntity instructorEntity = this.instructorRepository.findByDni("Z1521143C").get();
         assertEquals("Bastian red", instructorEntity.getFullName());

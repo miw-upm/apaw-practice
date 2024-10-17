@@ -1,11 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.rest.basketball;
 
+import es.upm.miw.apaw_practice.domain.models.basketball.BasketMatch;
 import es.upm.miw.apaw_practice.domain.services.basketball.BasketMatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(BasketMatchResource.MATCHES)
@@ -24,5 +22,10 @@ public class BasketMatchResource {
     @DeleteMapping(ID_ID)
     public void delete(@PathVariable Integer matchId) {
         this.basketMatchService.delete(matchId);
+    }
+
+    @PatchMapping(ID_ID)
+    public BasketMatch updateAddress(@PathVariable Integer matchId, @RequestBody String address) {
+        return this.basketMatchService.updateAddress(matchId,address);
     }
 }

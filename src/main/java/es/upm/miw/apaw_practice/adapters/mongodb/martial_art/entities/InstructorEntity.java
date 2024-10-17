@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.martial_art.entities;
 import es.upm.miw.apaw_practice.domain.models.hotel_retired.Booking;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Instructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
@@ -11,13 +12,22 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class InstructorEntity {
+
+    @Id
+    private String id;
     @Indexed(unique = true)
     private String dni;
     private String fullName;
     private Integer phoneNumber;
     private LocalDateTime birthDate;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getDni() {
         return dni;
     }
@@ -52,7 +62,7 @@ public class InstructorEntity {
     }
 
     public Instructor toInstructor() {
-        return new Instructor(dni, fullName, phoneNumber, LocalDateTime.from(birthDate));
+        return new Instructor(dni, fullName, phoneNumber, birthDate);
     }
     public void fromInstructor(Instructor instructor) {
         BeanUtils.copyProperties(instructor, this);
@@ -73,6 +83,7 @@ public class InstructorEntity {
     @Override
     public String toString() {
         return "InstructorEntity{" +
+                "id='" + id + '\'' +
                 "dni='" + dni + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", birthDate=" + birthDate +

@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.models.gun_store.Setup;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gun_store.SetupPersistence;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class SetupService {
 
@@ -19,5 +21,10 @@ public class SetupService {
 
     public Setup read(Integer id) {
         return this.setupPersistence.read(id);
+    }
+
+    public Setup create(Setup setup) {
+        setup.setOrderDate(LocalDate.now());
+        return this.setupPersistence.create(setup);
     }
 }

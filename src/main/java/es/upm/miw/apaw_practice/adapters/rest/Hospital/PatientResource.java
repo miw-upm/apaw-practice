@@ -24,4 +24,10 @@ public class PatientResource {
     }
 
 
+    @PatchMapping("/{dni}")
+    public Patient updateName(@PathVariable String dni, @RequestBody String name) {
+        return this.patientService.updateName(dni, name);
+    }
+
 }
+
