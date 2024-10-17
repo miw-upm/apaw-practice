@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.PatientRepository;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.PatientPersistence;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
