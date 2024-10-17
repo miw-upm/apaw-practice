@@ -75,32 +75,32 @@ public class CourseSeederService {
         this.videoRepository.saveAll(Arrays.asList(videosCursoSpring));
 
         UserCourseEntity[] usersPython1 = {
-                new UserCourseEntity("Jose", "jose@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Ana", "ana@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Jose", "jose@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Ana", "ana@gmail.com", UserCourseEntity.TypeUser.STUDENT.name())
         };
 
         UserCourseEntity[] usersPython2 = {
-                new UserCourseEntity("Luis", "luis@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Maria", "maria@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Luis", "luis@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Maria", "maria@gmail.com", UserCourseEntity.TypeUser.STUDENT.name())
         };
 
         UserCourseEntity[] usersJava = {
-                new UserCourseEntity("Laura", "laura@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Carlos", "carlos@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Laura", "laura@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Carlos", "carlos@gmail.com", UserCourseEntity.TypeUser.STUDENT.name())
         };
 
         UserCourseEntity[] usersC = {
-                new UserCourseEntity("Pedro", "pedro@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Miguel", "miguel@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Pedro", "pedro@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Miguel", "miguel@gmail.com", UserCourseEntity.TypeUser.STUDENT.name())
         };
 
         UserCourseEntity[] usersSpring = {
-                new UserCourseEntity("Sofia", "sofia@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Raul", "raul@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Daniel", "daniel@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Lucia", "lucia@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Andrea", "andrea@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR),
-                new UserCourseEntity("Pablo", "pablo@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR)
+                new UserCourseEntity("Sofia", "sofia@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Raul", "raul@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Daniel", "daniel@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Lucia", "lucia@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Andrea", "andrea@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR.name()),
+                new UserCourseEntity("Pablo", "pablo@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR.name())
         };
 
         this.userRepository.saveAll(Arrays.asList(usersPython1));
