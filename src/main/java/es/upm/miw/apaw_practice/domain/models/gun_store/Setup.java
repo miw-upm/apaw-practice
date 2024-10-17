@@ -20,6 +20,13 @@ public class Setup {
         this.totalPrice = totalPrice;
     }
 
+    public Setup(Integer setupId, LocalDate orderDate, BigDecimal totalPrice, List<Gun> guns) {
+        this.setupId = setupId;
+        this.totalPrice = totalPrice;
+        this.orderDate = orderDate;
+        this.guns = guns;
+    }
+
     public int getSetupId() {
         return setupId;
     }
