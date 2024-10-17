@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository("CompetitorPersistence")
+@Repository("competitorPersistence")
 public class CompetitorPersistenceMongodb implements CompetitorPersistence {
 
     private final CompetitorRepository competitorRepository;

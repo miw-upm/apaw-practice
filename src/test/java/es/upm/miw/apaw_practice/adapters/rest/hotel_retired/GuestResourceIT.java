@@ -22,11 +22,11 @@ public class GuestResourceIT {
 
     @Test
     void testCreate() {
-        Guest guest = new Guest(
-                "51408710F",
-                "Pedro Nieto",
-                LocalDateTime.of(1990, 10, 27, 23, 2, 2)
-        );
+        Guest guest = Guest.builder()
+                .nif("51408710F")
+                .fullName("Pedro Nieto")
+                .birthDay(LocalDateTime.of(1990, 10, 27, 23, 2, 2))
+                .build();
         this.webTestClient
                 .post()
                 .uri(GUESTS)
@@ -49,7 +49,7 @@ public class GuestResourceIT {
                 .value(guest -> {
                     assertEquals("99527370E", guest.getNif());
                     assertEquals("Emilio Pedrajas", guest.getFullName());
-                    assertEquals(LocalDateTime.of(1990, 10, 27,  23, 2, 2 ), guest.getBirthDay());
+                    assertEquals(LocalDateTime.of(1990, 10, 27, 23, 2, 2), guest.getBirthDay());
                 });
     }
 
@@ -64,11 +64,11 @@ public class GuestResourceIT {
 
     @Test
     void testDelete() {
-        Guest guest = new Guest(
-                "26317099Q",
-                "Julio Carrasco",
-                LocalDateTime.of(1990, 10, 27, 23, 2, 2)
-        );
+        Guest guest = Guest.builder()
+                .nif("26317099Q")
+                .fullName("Julio Carrasco")
+                .birthDay(LocalDateTime.of(1990, 10, 27, 23, 2, 2))
+                .build();
         this.webTestClient
                 .post()
                 .uri(GUESTS)
@@ -87,11 +87,11 @@ public class GuestResourceIT {
 
     @Test
     void testUpdate() {
-        Guest guest = new Guest(
-                "59089528K",
-                "Enrique Matamoros",
-                LocalDateTime.of(1990, 10, 27, 23, 2, 2)
-        );
+        Guest guest = Guest.builder()
+                .nif("59089528K")
+                .fullName("Enrique Matamoros")
+                .birthDay(LocalDateTime.of(1990, 10, 27, 23, 2, 2))
+                .build();
         this.webTestClient
                 .post()
                 .uri(GUESTS)

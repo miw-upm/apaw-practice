@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.rest.basketball;
 
 import es.upm.miw.apaw_practice.domain.models.basketball.BasketBall;
 import es.upm.miw.apaw_practice.domain.services.basketball.BasketBallService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +14,7 @@ public class BasketBallResource {
 
     private final BasketBallService basketBallService;
 
+    @Autowired
     public BasketBallResource(BasketBallService basketBallService) {
         this.basketBallService = basketBallService;
     }
