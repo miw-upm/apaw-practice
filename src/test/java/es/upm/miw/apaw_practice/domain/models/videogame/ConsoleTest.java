@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
 public class ConsoleTest {
@@ -31,7 +32,7 @@ public class ConsoleTest {
                 .build();
 assertEquals("Nanoby", instance.getConsoleReference());
 assertEquals(916617214312418L, instance.getSerialNumber());
-assertEquals(true, instance.isPortable());
+        assertTrue(instance.isPortable());
 assertEquals(LocalDate.of(1996,6,17), instance.getCreationDate());
 assertEquals(new ArrayList<>(), instance.getVideoGames());
     }
