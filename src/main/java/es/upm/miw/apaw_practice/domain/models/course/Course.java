@@ -58,8 +58,20 @@ public class Course {
         this.endDate = endDate;
     }
 
+    public List<TutoringSession> getTutoringSessions() {
+        return tutoringSessions;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
     public void setTutoringSession(TutoringSession tutoringSession) {
         this.tutoringSessions.add(tutoringSession);
+    }
+
+    public void setTutoringSessions(List<TutoringSession> tutoringSessions) {
+        this.tutoringSessions = tutoringSessions;
     }
 
     public TutoringSession getTutoringSession(Integer idTutoringSession) {
@@ -72,6 +84,10 @@ public class Course {
 
     public void setUser(User user) {
         this.users.add(user);
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public User getUser(Integer idUser) {
