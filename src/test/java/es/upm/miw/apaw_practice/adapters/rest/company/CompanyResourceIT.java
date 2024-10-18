@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static es.upm.miw.apaw_practice.adapters.rest.company.CompanyResource.COMPANIES;
-import static es.upm.miw.apaw_practice.adapters.rest.company.CompanyResource.SEARCH;
+import static es.upm.miw.apaw_practice.adapters.rest.company.CompanyResource.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -47,5 +46,32 @@ public class CompanyResourceIT {
                                 .build())
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdateIndustry() {
+        String companyName = "TechCorp";
+        String newIndustry = "Renewable Energy";
+
+        this.webTestClient
+                .patch()
+                .uri(uriBuilder ->
+                        uriBuilder.path(COMPANIES + INDUSTRY)
+                                .queryParam("companyname", companyName)
+                                .build())
+                .bodyValue(newIndustry)
+                .exchange()
+                .expectStatus().isOk();
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(COMPANIES + SEARCH)
+                                .queryParam("companyname", companyName)
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Company.class)
+                .value(company -> assertEquals(newIndustry, company.getIndustry()));
     }
 }
