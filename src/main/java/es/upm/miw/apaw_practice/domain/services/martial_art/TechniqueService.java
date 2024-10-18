@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.martial_art;
 
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
+import es.upm.miw.apaw_practice.domain.models.martial_art.Style;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Technique;
 import es.upm.miw.apaw_practice.domain.persistence_ports.martial_art.TechniquePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class TechniqueService {
     public Technique create(Technique technique) {return this.techniquePersistence.create(technique);}
     public void delete(String name) {
         this.techniquePersistence.delete(name);
+    }
+    public Technique read(String name) {
+        return this.techniquePersistence.read(name);
     }
 
 }

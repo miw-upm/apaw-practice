@@ -19,4 +19,8 @@ public class GunService {
         return gunPersistence.readByName(name);
     }
 
+    public Gun update(Integer id, Gun gun){
+        return gunPersistence.update(id, gun);
+    }
+
 }

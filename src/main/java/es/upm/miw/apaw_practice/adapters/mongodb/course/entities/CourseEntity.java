@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.course.entities;
 
 import es.upm.miw.apaw_practice.domain.models.course.Course;
+import es.upm.miw.apaw_practice.domain.models.course.TutoringSession;
+import es.upm.miw.apaw_practice.domain.models.course.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -105,9 +107,18 @@ public class CourseEntity {
         this.videos = videos;
     }
 
+
     public Course toCourse(){
         Course course = new Course();
-        BeanUtils.copyProperties(this, course);
+        BeanUtils.copyProperties(this, course, "tutoringSessions, users, videos");
+        List<User> userList = this.users.stream()
+                .map(UserCourseEntity::toUserCourse)
+                .toList();
+        course.setUsers(userList);
+        List<TutoringSession> tutoringSessionList = this.tutoringSessions.stream()
+                .map(TutoringSessionEntity::toTutoringSession)
+                .toList();
+        course.setTutoringSessions(tutoringSessionList);
         return course;
     }
 

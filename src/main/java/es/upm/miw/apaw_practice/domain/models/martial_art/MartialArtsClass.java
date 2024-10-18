@@ -9,17 +9,6 @@ public class MartialArtsClass {
     private String academy;
     private List<Technique> techniques;
 
-    public MartialArtsClass(String name, LocalDateTime localDateTime, String academy, List<Technique> techniques) {
-        // empty for framework
-    }
-
-    public MartialArtsClass(String name, LocalDate startDate, String academy, List<Technique> techniques) {
-        this.name = name;
-        this.startDate = startDate;
-        this.academy = academy;
-        this.techniques = techniques;
-    }
-
     public String getName() {
         return name;
     }
@@ -49,6 +38,12 @@ public class MartialArtsClass {
     }
 
     public void setTechniques(List<Technique> techniques) {
+        this.techniques = techniques;
+    }
+    public MartialArtsClass(String name, LocalDate startDate, String academy, List<Technique> techniques) {
+        this.name = name;
+        this.startDate = startDate;
+        this.academy = academy;
         this.techniques = techniques;
     }
 

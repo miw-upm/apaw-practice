@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.basketball;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
-import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.basketball.BasketBall;
 import es.upm.miw.apaw_practice.domain.models.basketball.BasketMatch;
 import es.upm.miw.apaw_practice.domain.models.basketball.BasketPlayer;
@@ -17,8 +16,6 @@ import java.util.List;
 
 import static es.upm.miw.apaw_practice.adapters.rest.basketball.BasketBallResource.BALLS;
 import static es.upm.miw.apaw_practice.adapters.rest.basketball.BasketBallResource.ID_ID;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RestTestConfig
 public class BasketBallResourceIT {
