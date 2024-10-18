@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.company.entities;
 
+import es.upm.miw.apaw_practice.domain.models.company.ExpenseBill;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -83,6 +85,16 @@ public class ExpenseBillEntity {
         this.departments = departments;
     }
 
+    public ExpenseBill toExpenseBill() {
+        ExpenseBill expenseBill = new ExpenseBill();
+        BeanUtils.copyProperties(this, expenseBill);
+        if (this.departments != null) {
+            expenseBill.setDepartments(this.departments.stream()
+                    .map(DepartmentEntity::toDepartment)
+                    .toList());
+        }
+        return expenseBill;
+    }
     // equals, hashCode, toString
 
     @Override

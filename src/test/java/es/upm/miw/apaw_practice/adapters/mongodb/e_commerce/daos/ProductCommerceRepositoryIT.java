@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class    ProductCommerceRepositoryIT {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ECommerceProductRepository productRepository;
 
     @Autowired
     private ECommerceSeederService eCommerceSeederService;
