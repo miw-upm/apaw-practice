@@ -17,7 +17,7 @@ public class VideoService {
     }
 
     public Video update(String name, Video video) {
-        return null;
+        return this.videoPersistence.update(name, video);
     }
 
 }
