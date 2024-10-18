@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class ExpenseBill {
-    private int expenseBill_id;// Primary Key
+    private String expenseBill_id;// Primary Key
     private String description;
     private BigDecimal amount;
     private LocalDateTime date;
@@ -15,19 +15,18 @@ public class ExpenseBill {
     public ExpenseBill() {
         //empty for framework
     }
-    public ExpenseBill(int expenseBill_id, String description, BigDecimal amount, LocalDateTime date) {
+    public ExpenseBill(String expenseBill_id, String description, BigDecimal amount, LocalDateTime date) {
         this.expenseBill_id = expenseBill_id;
         this.description = description;
         this.amount = amount;
         this.date = date;
-
     }
 
-    public int getExpenseBill_id() {
+    public String getExpenseBill_id() {
         return expenseBill_id;
     }
 
-    public void setExpenseBill_id(int expenseBill_id) {
+    public void setExpenseBill_id(String expenseBill_id) {
         this.expenseBill_id = expenseBill_id;
     }
 
