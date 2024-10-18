@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -30,23 +31,6 @@ public class MartialArtSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Martial Art Initial Load -----------");
 
-        TechniqueEntity[] techniqueEntities ={
-                new TechniqueEntity("Dollyo",3,true,1.0),
-                new TechniqueEntity("Bandal",5,true,1.0),
-                new TechniqueEntity("Punch",7,false,1.0),
-                new TechniqueEntity("Tuitchagui",1,true,1.0)
-        };
-        this.techniqueRepository.saveAll(Arrays.asList(techniqueEntities));
-
-        MartialArtsClassEntity[] martialArtsClassEntities = {
-                new MartialArtsClassEntity("Taekwondo",  LocalDateTime.of(1990, 10, 27, 23, 2, 2),"forestal", List.of(techniqueEntities)),
-                new MartialArtsClassEntity("Karate",  LocalDateTime.of(1990, 10, 27, 23, 2, 2),"Karate Doo", List.of(techniqueEntities)),
-                new MartialArtsClassEntity("Muay thai",  LocalDateTime.of(1990, 10, 27, 23, 2, 2),"Han moo", List.of(techniqueEntities)),
-                new MartialArtsClassEntity("Kick boxing",  LocalDateTime.of(1990, 10, 27, 23, 2, 2),"Brutal stricker", List.of(techniqueEntities)),
-        };
-
-        this.martialArtsClassRepository.saveAll(Arrays.asList(martialArtsClassEntities));
-        long countBefore = this.instructorRepository.count();
         InstructorEntity[] instructorEntities = new InstructorEntity[]{
                 new InstructorEntity("Z1521143C", "Bastian red", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
                 new InstructorEntity("84134147K", "Felipe flip", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
@@ -55,23 +39,33 @@ public class MartialArtSeederService {
         };
 
         this.instructorRepository.saveAll(Arrays.asList(instructorEntities));
-        // Contar después de guardar
-        long countAfter = this.instructorRepository.count();
-
-        // Verificar que el tamaño ha aumentado
-        if (countAfter != countBefore + instructorEntities.length) {
-            throw new RuntimeException("No se han guardado todas las entidades.");
-        }
-        LogManager.getLogger(this.getClass()).info("Cantidad de instructores antes: " + countBefore);
-        LogManager.getLogger(this.getClass()).info("Cantidad de instructores después: " + countAfter);
-
 
         StyleEntity[] styleEntities ={
                 new StyleEntity("Estilo de combate","Tecnica pensada para el deporte de contacto","america",4),
                 new StyleEntity("Estilo de marcial","Tecnica pensada para el deporte de contacto","Corea",4)
         };
         this.styleRepository.saveAll(Arrays.asList(styleEntities));
-    }
+
+
+
+        TechniqueEntity[] techniqueEntities ={
+                new TechniqueEntity("Dollyo",3,true,1.0,List.of(instructorEntities), Arrays.asList(styleEntities).get(0)),
+                new TechniqueEntity("Bandal",5,true,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(1)),
+                new TechniqueEntity("Punch",7,false,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(0)),
+                new TechniqueEntity("Tuitchagui",1,true,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(1))
+        };
+        this.techniqueRepository.saveAll(Arrays.asList(techniqueEntities));
+
+        MartialArtsClassEntity[] martialArtsClassEntities = {
+                new MartialArtsClassEntity("Taekwondo",  LocalDate.of(2024, 10, 7),"forestal", List.of(techniqueEntities)),
+                new MartialArtsClassEntity("Karate",  LocalDate.of(2024, 10, 7),"Karate Doo", List.of(techniqueEntities)),
+                new MartialArtsClassEntity("Muay thai",  LocalDate.of(2024, 10, 7),"Han moo", List.of(techniqueEntities)),
+                new MartialArtsClassEntity("Kick boxing",  LocalDate.of(2024, 10, 7),"Brutal stricker", List.of(techniqueEntities)),
+        };
+
+        this.martialArtsClassRepository.saveAll(Arrays.asList(martialArtsClassEntities));
+
+       }
 
     public void deleteAll() {
         this.martialArtsClassRepository.deleteAll();

@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.*;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerEcommerceEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerECommerceEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ProductECommerceEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShippingAddressEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShoppingCartECommerceEntity;
@@ -22,7 +22,7 @@ public class ECommerceSeederService {
     private ECommerceCustomerRepository eCommerceCustomerRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ECommerceProductRepository productRepository;
 
     @Autowired
     private ShippingAddressRepository shippingAddressRepository;
@@ -57,11 +57,11 @@ public class ECommerceSeederService {
         };
         List<ShoppingCartECommerceEntity> savedShoppingCarts = this.eCommerceShoppingCartRepository.saveAll(Arrays.asList(shoppingCarts));
 
-        CustomerEcommerceEntity[] customers = {
-                new CustomerEcommerceEntity("1", "user1", "user1@example.com", 12345, savedShoppingCarts.get(0), Arrays.asList(savedShippingAddresses.get(0), savedShippingAddresses.get(1))),
-                new CustomerEcommerceEntity("2", "user2", "user2@example.com", 54321, savedShoppingCarts.get(1), Collections.singletonList(savedShippingAddresses.get(2))),
-                new CustomerEcommerceEntity("3", "user3", "user3@example.com", 11111, savedShoppingCarts.get(2), Collections.singletonList(savedShippingAddresses.get(3))),
-                new CustomerEcommerceEntity("4", "user4", "user4@example.com", 22222, savedShoppingCarts.get(3), Arrays.asList(savedShippingAddresses.get(1), savedShippingAddresses.get(3)))
+        CustomerECommerceEntity[] customers = {
+                new CustomerECommerceEntity("user1", "user1@example.com", 12345, savedShoppingCarts.get(0), Arrays.asList(savedShippingAddresses.get(0), savedShippingAddresses.get(1))),
+                new CustomerECommerceEntity( "user2", "user2@example.com", 54321, savedShoppingCarts.get(1), Collections.singletonList(savedShippingAddresses.get(2))),
+                new CustomerECommerceEntity( "user3", "user3@example.com", 11111, savedShoppingCarts.get(2), Collections.singletonList(savedShippingAddresses.get(3))),
+                new CustomerECommerceEntity("user4", "user4@example.com", 22222, savedShoppingCarts.get(3), Arrays.asList(savedShippingAddresses.get(1), savedShippingAddresses.get(3)))
         };
         this.eCommerceCustomerRepository.saveAll(Arrays.asList(customers));
     }

@@ -57,6 +57,10 @@ public class ManagementEntity {
         this.activated = activated;
     }
 
+    public Management toManagement() {
+        return new Management(UUID.randomUUID().toString(),name, activated);
+    }
+
 
     // equals, hashCode, toString
 

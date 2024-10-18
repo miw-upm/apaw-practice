@@ -19,6 +19,42 @@ public class Guest {
         this.birthDay = birthDay;
     }
 
+    public static GuestBuilders.Nif builder() {
+        return new Builder();
+    }
+
+    public static class Builder implements GuestBuilders.Nif, GuestBuilders.FullName, GuestBuilders.BirthDay, GuestBuilders.Optionals {
+
+        private final Guest guest;
+
+        public Builder() {
+            this.guest = new Guest();
+        }
+
+        @Override
+        public GuestBuilders.FullName nif(String nif) {
+            this.guest.nif = nif;
+            return this;
+        }
+
+        @Override
+        public GuestBuilders.BirthDay fullName(String fullName) {
+            this.guest.fullName = fullName;
+            return this;
+        }
+
+        @Override
+        public GuestBuilders.Optionals birthDay(LocalDateTime birthDay) {
+            this.guest.birthDay = birthDay;
+            return this;
+        }
+
+        @Override
+        public Guest build() {
+            return this.guest;
+        }
+    }
+
     public String getNif() {
         return nif;
     }
@@ -42,6 +78,8 @@ public class Guest {
     public void setBirthDay(LocalDateTime birthDay) {
         this.birthDay = birthDay;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

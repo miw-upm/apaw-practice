@@ -11,11 +11,9 @@ import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntit
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-
 
 import java.math.BigDecimal;
-
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 
@@ -42,7 +40,7 @@ public class HospitalSeederService {
                 new HospitalEntity("Hospital General", "123 Main St", 200),
                 new HospitalEntity("Hospital Universitario", "456 University Ave", 300)
         };
-        this.hospitalRepository.saveAll(Arrays.asList(hospitals));
+        hospitalRepository.saveAll(Arrays.asList(hospitals));
 
         // Seed Doctors
         DoctorEntity[] doctors = {
@@ -51,17 +49,16 @@ public class HospitalSeederService {
                 new DoctorEntity("DNI003", "Dr. Carol Williams", new BigDecimal("5500.00")),
                 new DoctorEntity("DNI004", "Dr. David Brown", new BigDecimal("5200.00"))
         };
-        this.doctorRepository.saveAll(Arrays.asList(doctors));
+        doctorRepository.saveAll(Arrays.asList(doctors));
 
         // Seed Patients
-
         PatientEntity[] patients = {
                 new PatientEntity("PAT001", "John Doe", LocalDate.of(1993, 5, 15), true),
                 new PatientEntity("PAT002", "Jane Roe", LocalDate.of(1998, 3, 22), false),
                 new PatientEntity("PAT003", "Alice Cooper", LocalDate.of(1983, 7, 9), true),
                 new PatientEntity("PAT004", "Bob Marley", LocalDate.of(1973, 2, 6), false)
         };
-        this.patientRepository.saveAll(Arrays.asList(patients));
+        patientRepository.saveAll(Arrays.asList(patients));
 
         // Seed Appointments
         AppointmentEntity[] appointments = {
@@ -70,13 +67,13 @@ public class HospitalSeederService {
                 new AppointmentEntity(3, LocalDate.of(2024, 10, 22), LocalTime.of(14, 0), "Room 103", patients[2].getDni(), doctors[2].getDni()),
                 new AppointmentEntity(4, LocalDate.of(2024, 10, 23), LocalTime.of(16, 30), "Room 104", patients[3].getDni(), doctors[3].getDni())
         };
-        this.appointmentRepository.saveAll(Arrays.asList(appointments));
+        appointmentRepository.saveAll(Arrays.asList(appointments));
     }
 
     public void deleteAll() {
-        this.appointmentRepository.deleteAll();
-        this.doctorRepository.deleteAll();
-        this.patientRepository.deleteAll();
-        this.hospitalRepository.deleteAll();
+        appointmentRepository.deleteAll();
+        doctorRepository.deleteAll();
+        patientRepository.deleteAll();
+        hospitalRepository.deleteAll();
     }
 }

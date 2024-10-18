@@ -14,14 +14,13 @@ public class Technique {
     public Technique() {
         // empty for framework
     }
-
-    public Technique(String name, Integer duration, Boolean advanced, Double difficulty, Style style) {
+    public Technique(String name, Integer duration, Boolean advanced, Double difficulty, Style style, List<Instructor> instructors) {
         this.name = name;
         this.duration = duration;
         this.advanced = advanced;
         this.difficulty = difficulty;
         this.style = style;
-        this.instructors = new ArrayList<>();
+        this.instructors = instructors;
     }
 
     public String getName() {
@@ -58,7 +57,9 @@ public class Technique {
 
 
     public List<Instructor> getInstructors() { return instructors; }
-    public void setInstructors(Instructor instructor) { this.instructors.add(instructor); }
+    public void setInstructors(List<Instructor> instructors) {
+        this.instructors = instructors;
+    }
 
     public Style getStyle() { return style; }
     public void setStyle(Style style) { this.style = style; }
@@ -70,6 +71,8 @@ public class Technique {
                 ", duration=" + duration +
                 ", advanced=" + advanced +
                 ", difficulty=" + difficulty +
+                ", instructors=" + instructors +
+                ", style=" + style +
                 '}';
     }
 }

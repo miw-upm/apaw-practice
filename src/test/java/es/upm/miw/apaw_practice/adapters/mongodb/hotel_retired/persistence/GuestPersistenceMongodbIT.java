@@ -33,23 +33,26 @@ public class GuestPersistenceMongodbIT {
 
     @Test
     void testCreateAndRead() {
-        Guest guest = new Guest(
-                "63376389G", "Ricardo Pérez",
-                LocalDateTime.of(1990, 10, 27,  23, 2, 2 )
-        );
+        Guest guest = Guest.builder()
+                .nif("63376389G")
+                .fullName("Ricardo Pérez")
+                .birthDay(LocalDateTime.of(1990, 10, 27, 23, 2, 2))
+                .build();
         this.guestPersistenceMongodb.create(guest);
         Guest createdGuest = this.guestPersistenceMongodb.read("63376389G");
-        assertEquals("63376389G", createdGuest.getNif());;
+        assertEquals("63376389G", createdGuest.getNif());
+        ;
         assertEquals("Ricardo Pérez", createdGuest.getFullName());
-        assertEquals(LocalDateTime.of(1990, 10, 27,  23, 2, 2 ), createdGuest.getBirthDay());
+        assertEquals(LocalDateTime.of(1990, 10, 27, 23, 2, 2), createdGuest.getBirthDay());
     }
 
     @Test
     void testCreateAndUpdate() {
-        Guest guest = new Guest(
-                "66802285G", "Ricardo Pérez",
-                LocalDateTime.of(1990, 10, 27,  23, 2, 2 )
-        );
+        Guest guest = Guest.builder()
+                .nif("66802285G")
+                .fullName("Ricardo Pérez")
+                .birthDay(LocalDateTime.of(1990, 10, 27, 23, 2, 2))
+                .build();
         this.guestPersistenceMongodb.create(guest);
         Guest createdGuest = this.guestPersistenceMongodb.read("66802285G");
         assertEquals("Ricardo Pérez", createdGuest.getFullName());

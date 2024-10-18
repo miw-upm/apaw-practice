@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.course.entities;
 
+import es.upm.miw.apaw_practice.domain.models.course.TutoringSession;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -59,6 +61,12 @@ public class TutoringSessionEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public TutoringSession toTutoringSession(){
+        TutoringSession tutoringSession = new TutoringSession();
+        BeanUtils.copyProperties(this, tutoringSession);
+        return tutoringSession;
     }
 
     @Override

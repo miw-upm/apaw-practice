@@ -9,6 +9,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.movies.MoviePersistence
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
@@ -44,5 +45,14 @@ public class MoviePersistenceMongodb implements MoviePersistence {
     @Override
     public boolean existsImdbId(String imdbId) {
         return this.movieRepository.findByImdbId(imdbId).isPresent();
+    }
+
+    @Override
+    public List<Movie> findByActorRealName(String realName) {
+        return this.movieRepository.findAll().stream()
+                .filter(movieEntity -> movieEntity.getActorsFeaturing().stream()
+                    .anyMatch(actorEntity -> realName.equals(actorEntity.getRealName())))
+                    .map(MovieEntity::toMovie)
+                    .toList();
     }
 }

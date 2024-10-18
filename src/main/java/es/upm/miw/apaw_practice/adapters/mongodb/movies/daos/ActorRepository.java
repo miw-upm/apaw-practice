@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ActorRepository extends MongoRepository<ActorEntity, String> {
     Optional<ActorEntity> findByArtisticName(String artisticName);
+    Optional<ActorEntity> findByRealName(String realName);
 }

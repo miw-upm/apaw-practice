@@ -64,11 +64,6 @@ public class Competitor {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (licence.equals(((Competitor) obj).licence));
-    }
-
-    @Override
     public String toString() {
         return "Competitor{" +
                 "licence='" + licence + '\'' +

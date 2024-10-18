@@ -19,7 +19,7 @@ class UserCourseRepositoryIT {
         UserCourseEntity userEntity = this.userCourseRepository.findByEmail("jose@gmail.com").get();
         assertEquals("Jose", userEntity.getFirstName());
         assertEquals("jose@gmail.com", userEntity.getEmail());
-        assertEquals(UserCourseEntity.TypeUser.STUDENT, userEntity.getRole());
+        assertEquals(UserCourseEntity.TypeUser.STUDENT.name(), userEntity.getRole());
         assertFalse(userEntity.toString().isEmpty());
     }
 }

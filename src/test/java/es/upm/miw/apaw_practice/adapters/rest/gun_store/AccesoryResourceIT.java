@@ -22,6 +22,7 @@ public class AccesoryResourceIT {
                 .uri(AccesoryResource.ACCESORIES)
                 .body(BodyInserters.fromValue(accesoryPriceUpdating))
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isOk()
+        ;
     }
 }

@@ -29,4 +29,8 @@ public class TicketService {
     public Ticket updateTotalPrice(String id, BigDecimal totalPrice) {
         return this.ticketPersistence.updateTotalPrice(id, totalPrice);
     }
+
+    public BigDecimal sumTotalPrice(String mainService) {
+        return this.ticketPersistence.sumTotalPrice(mainService);
+    }
 }

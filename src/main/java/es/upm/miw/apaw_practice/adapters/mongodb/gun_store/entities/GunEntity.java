@@ -1,11 +1,14 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.gun_store.entities;
 
+import es.upm.miw.apaw_practice.domain.models.gun_store.Gun;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Document
 public class GunEntity {
@@ -15,19 +18,35 @@ public class GunEntity {
     private String name;
     private String manufacturer;
     private List<AccesoryEntity> accesoryEntities;
-    private CompatibleAmmoEntity ammoEntities;
+    private CompatibleAmmoEntity ammoEntity;
 
     public GunEntity() {
         //Empty for framework
     }
 
-    public GunEntity(BigDecimal price, String name, String manufacturer,
+    public GunEntity(Integer id, BigDecimal price, String name, String manufacturer,
                      List<AccesoryEntity> accesoryEntities, CompatibleAmmoEntity compatibleAmmo) {
-        this.gunId = UUID.randomUUID().hashCode();
+        this.gunId = id;
+        this.name = name;
         this.price = price;
         this.manufacturer = manufacturer;
         this.accesoryEntities = accesoryEntities;
-        this.ammoEntities = compatibleAmmo;
+        this.ammoEntity = compatibleAmmo;
+    }
+
+    public GunEntity(Gun gun) {
+        this.name = gun.getName();
+        this.gunId = gun.getGunId();
+        this.price = gun.getPrice();
+        this.manufacturer = gun.getManufacturer();
+        this.accesoryEntities = getAccesoryEntities(gun);
+        this.ammoEntity = new CompatibleAmmoEntity().fromCompatibleAmmo(gun.getAmmo());
+    }
+
+    public static List<AccesoryEntity> getAccesoryEntities(Gun gun) {
+        return gun.getAccesories().stream()
+                .map(accesory -> new AccesoryEntity().fromAccesory(accesory))
+                .collect(Collectors.toList());
     }
 
     public BigDecimal getPrice() {
@@ -70,12 +89,20 @@ public class GunEntity {
         this.accesoryEntities = accesoryEntities;
     }
 
-    public CompatibleAmmoEntity getAmmoEntities() {
-        return ammoEntities;
+    public CompatibleAmmoEntity getAmmoEntity() {
+        return ammoEntity;
     }
 
-    public void setAmmoEntities(CompatibleAmmoEntity ammoEntities) {
-        this.ammoEntities = ammoEntities;
+    public void setAmmoEntity(CompatibleAmmoEntity ammoEntity) {
+        this.ammoEntity = ammoEntity;
+    }
+
+    public Gun toGun() {
+        Gun gun = new Gun();
+        BeanUtils.copyProperties(this, gun);
+        gun.setAccesories(this.accesoryEntities.stream().map(AccesoryEntity::toAccesory).toList());
+        gun.setAmmo(this.ammoEntity.toCompatibleAmmo());
+        return gun;
     }
 
     @Override
@@ -86,7 +113,7 @@ public class GunEntity {
                 ", name='" + name + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", accesories=" + accesoryEntities +
-                ", ammo=" + ammoEntities +
+                ", ammo=" + ammoEntity +
                 '}';
     }
 }
