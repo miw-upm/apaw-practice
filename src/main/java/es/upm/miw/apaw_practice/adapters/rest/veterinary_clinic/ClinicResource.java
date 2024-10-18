@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.domain.models.veterinay_clinic.Clinic;
 import es.upm.miw.apaw_practice.domain.services.veterinary_clinic.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
@@ -40,5 +41,11 @@ public class ClinicResource {
         String clinicName = new LexicalAnalyzer().extractWithAssure(q, "clinicName").trim();
         String ownerName = new LexicalAnalyzer().extractWithAssure(q, "ownerName").trim();
         return this.clinicService.findByOwnerNameSumAge(clinicName, ownerName);
+    }
+
+    @GetMapping(SEARCH)
+    public Flux<String> findByOwnerPhoneDistincClinicName(@RequestParam String q) {
+        String phone = new LexicalAnalyzer().extractWithAssure(q, "phone").trim();
+        return this.clinicService.findByOwnerPhoneDistincClinicName(phone);
     }
 }
