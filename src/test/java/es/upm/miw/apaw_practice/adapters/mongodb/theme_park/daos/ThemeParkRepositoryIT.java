@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.theme_park.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.daos.ThemeParkRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.entities.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
