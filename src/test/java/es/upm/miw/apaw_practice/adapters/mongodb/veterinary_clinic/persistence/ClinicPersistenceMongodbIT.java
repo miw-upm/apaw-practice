@@ -40,4 +40,12 @@ class ClinicPersistenceMongodbIT {
                 .block();
         assertEquals(BigDecimal.valueOf(10), result);
     }
+
+    @Test
+    void testFinfByOwnerPhoneDistincClinicName() {
+        String phone = "980453215";
+        String clinicName = this.clinicPersistence.findByOwnerPhoneDistincClinicName(phone)
+                .blockFirst();
+        assertEquals("Veterinary Clinic Happy Life", clinicName);
+    }
 }

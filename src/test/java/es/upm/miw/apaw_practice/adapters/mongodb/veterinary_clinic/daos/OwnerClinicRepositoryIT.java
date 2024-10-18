@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-class OwnerClinicClinicRepositoryIT {
+class OwnerClinicRepositoryIT {
 
     @Autowired
     private OwnerClinicRepository ownerClinicRepository;
@@ -20,5 +20,13 @@ class OwnerClinicClinicRepositoryIT {
         OwnerClinicEntity owner = this.ownerClinicRepository.findByName("Juan").get();
         assertEquals("Street Segundo", owner.getAddress());
         assertEquals("841256798", owner.getPhone());
+    }
+
+    @Test
+    void testFindByPhone() {
+        assertTrue(this.ownerClinicRepository.findByPhone("980453215").isPresent());
+        OwnerClinicEntity owner = this.ownerClinicRepository.findByPhone("980453215").get();
+        assertEquals("Marcos", owner.getName());
+        assertEquals("Street Toledo", owner.getAddress());
     }
 }

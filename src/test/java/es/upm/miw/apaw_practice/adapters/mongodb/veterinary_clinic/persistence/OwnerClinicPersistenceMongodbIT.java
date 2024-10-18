@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-class OwnerClinicClinicPersistenceMongodbIT {
+class OwnerClinicPersistenceMongodbIT {
 
     @Autowired
     private OwnerClinicPersistenceMongodb ownerPersistenceMongodb;
