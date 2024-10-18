@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface OwnerClinicRepository extends MongoRepository<OwnerClinicEntity, String> {
 
     Optional<OwnerClinicEntity> findByName(String name);
+
+    Optional<OwnerClinicEntity> findByPhone(String phone);
 }

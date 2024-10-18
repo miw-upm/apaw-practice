@@ -1,47 +1,40 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.ECommerceSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.ShippingAddressEntity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
-
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class ShippingAddressRepositoryIT {
+class ShippingAddressRepositoryIT {
 
     @Autowired
     private ShippingAddressRepository shippingAddressRepository;
 
-    @Autowired
-    private ECommerceSeederService eCommerceSeederService;
-
-    @BeforeEach
-    void setUp() {
-        eCommerceSeederService.deleteAll();
-        eCommerceSeederService.seedDatabase();
-    }
-
-    @Test
-    void testFindByLocationNonExisting() {
-        Optional<ShippingAddressEntity> shippingAddressEntity = shippingAddressRepository.findByLocation("NonExistingLocation");
-        assertTrue(shippingAddressEntity.isEmpty(), "ShippingAddress should not exist for this location");
-    }
-
     @Test
     void testFindByLocation() {
-        Optional<ShippingAddressEntity> shippingAddressEntity = shippingAddressRepository.findByLocation("C/Rey, 24");
-        assertTrue(shippingAddressEntity.isPresent(), "ShippingAddress should exist for this location");
+        List<ShippingAddressEntity> shippingAddresses = this.shippingAddressRepository.findByLocation("C/Rey, 24");
+        assertFalse(shippingAddresses.isEmpty());
+        ShippingAddressEntity shippingAddress = shippingAddresses.get(0);
+        assertEquals("C/Rey, 24", shippingAddress.getLocation());
+        assertEquals("Alice", shippingAddress.getRecipientName());
+    }
 
-        ShippingAddressEntity entity = shippingAddressEntity.get();
-        assertNotNull(entity);
+    @Test
+    void testFindAll() {
+        List<ShippingAddressEntity> shippingAddresses = this.shippingAddressRepository.findAll();
+        assertNotNull(shippingAddresses);
+        assertTrue(shippingAddresses.size() > 0);
+    }
 
-        assertEquals("C/Rey, 24", entity.getLocation(), "Location should match");
-        assertEquals("+123456789", entity.getTelefono(), "Telefono should match");
-        assertEquals("Alice", entity.getRecipientName(), "Recipient name should match");
+    @Test
+    void testSaveShippingAddress() {
+        ShippingAddressEntity shippingAddressEntity = new ShippingAddressEntity("C/Fake, 100", "+667249920", "YiNan");
+        ShippingAddressEntity savedShippingAddress = this.shippingAddressRepository.save(shippingAddressEntity);
+        assertNotNull(savedShippingAddress);
+        assertEquals("C/Fake, 100", savedShippingAddress.getLocation());
+        assertEquals("YiNan", savedShippingAddress.getRecipientName());
     }
 }

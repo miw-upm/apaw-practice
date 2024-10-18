@@ -27,4 +27,16 @@ public class CompanyPersistenceMongodbIT {
         assertEquals("New York", company.getLocation());
         assertNotNull(company.getDepartments());
     }
+
+    @Test
+    void testUpdateIndustry() {
+        String companyName = "TechCorp";
+        String newIndustry = "Renewable Energy";
+
+        this.companyPersistenceMongodb.updateIndustry(companyName, newIndustry);
+
+        Company updatedCompany = this.companyPersistenceMongodb.findByCompanyname(companyName);
+        assertNotNull(updatedCompany);
+        assertEquals(newIndustry, updatedCompany.getIndustry());
+    }
 }
