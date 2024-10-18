@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.rest.shopping_center;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.shopping_center.Ticket;
-import org.hamcrest.number.BigDecimalCloseTo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
