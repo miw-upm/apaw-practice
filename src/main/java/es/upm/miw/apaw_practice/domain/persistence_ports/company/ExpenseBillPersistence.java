@@ -4,4 +4,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExpenseBillPersistence {
+
+    void delete(String id);
 }
