@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.company.persistence;
 
 
 import es.upm.miw.apaw_practice.adapters.mongodb.company.daos.CompanyRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.company.entities.CompanyEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.company.Company;
 import es.upm.miw.apaw_practice.domain.persistence_ports.company.CompanyPersistence;
@@ -22,6 +23,14 @@ public class CompanyPersistenceMongodb implements CompanyPersistence{
         return this.companyRepository.findByCompanyname(companyname)
                 .orElseThrow(() -> new NotFoundException("Company name: " + companyname))
                 .toCompany();
+    }
+
+    @Override
+    public void updateIndustry(String companyname, String newIndustry) {
+        CompanyEntity companyEntity = this.companyRepository.findByCompanyname(companyname)
+                .orElseThrow(() -> new NotFoundException("Company name: " + companyname));
+        companyEntity.setIndustry(newIndustry);
+        this.companyRepository.save(companyEntity);
     }
 
 
