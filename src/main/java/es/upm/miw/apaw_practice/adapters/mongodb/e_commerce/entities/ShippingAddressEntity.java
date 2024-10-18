@@ -1,9 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities;
-
+import es.upm.miw.apaw_practice.domain.models.e_commerce_model.ShippingAddress;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -79,5 +81,11 @@ public class ShippingAddressEntity {
                 ", telefono='" + telefono + '\'' +
                 ", recipientName='" + recipientName + '\'' +
                 '}';
+    }
+
+    public ShippingAddress toShippingAddress() {
+        ShippingAddress shippingAddress = new ShippingAddress();
+        BeanUtils.copyProperties(this, shippingAddress);
+        return shippingAddress;
     }
 }
