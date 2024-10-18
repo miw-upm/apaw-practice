@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,6 +52,13 @@ class ThemeParkPersistenceMongodbIT {
         String nick = "Luca";
         BigDecimal sumPrice = this.themeParkPersistence.getSumPriceByNick(nick);
         assertEquals(new BigDecimal("100.0"), sumPrice);
+    }
+
+    @Test
+    void testGetIdsByAfterEntranceDate() {
+        LocalDateTime entranceDate = LocalDateTime.of(2020,7,15,9,55);
+        List<String> themeParkIds = this.themeParkPersistence.getThemeParkIdsByEntranceDate(entranceDate);
+        assertEquals(2, themeParkIds.size());
     }
 
 }
