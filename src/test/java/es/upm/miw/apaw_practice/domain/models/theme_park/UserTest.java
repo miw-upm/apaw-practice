@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @TestConfig
-public class UserTest {
+class UserTest {
     private User user1;
     private User user2;
     private UserComposite userGroup;

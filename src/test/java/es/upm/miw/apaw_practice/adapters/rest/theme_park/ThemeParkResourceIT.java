@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RestTestConfig
-public class ThemeParkResourceIT {
+class ThemeParkResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
