@@ -36,16 +36,15 @@ class CoursePersistenceMongodbIT {
 
     @Test
     void testCourseEquals() {
-        Course actualCourse = this.coursePersistenceMongodb.read("Curso de Spring Framework");
-        assertNotNull(actualCourse);
-        assertEquals("Curso de Spring Framework", actualCourse.getTitle());
-        assertEquals(false, actualCourse.getPaymentRequired());
-        assertEquals(LocalDate.of(2023, 12, 30), actualCourse.getStartDate());
-        assertEquals(LocalDate.of(2024, 06, 30), actualCourse.getEndDate());
+        Course course = this.coursePersistenceMongodb.read("Curso de Spring Framework");
+        assertNotNull(course);
+        assertEquals("Curso de Spring Framework", course.getTitle());
+        assertEquals(false, course.getPaymentRequired());
+        assertEquals(LocalDate.of(2023, 12, 30), course.getStartDate());
+        assertEquals(LocalDate.of(2024, 06, 30), course.getEndDate());
 
-        System.out.println(actualCourse.toString());
-        verifyTutoringSessions(actualCourse.getTutoringSessions());
-        verifyUsers(actualCourse.getUsers());
+        verifyTutoringSessions(course.getTutoringSessions());
+        verifyUsers(course.getUsers());
     }
 
     private List<TutoringSession> getTutoringSessions() {
@@ -68,23 +67,21 @@ class CoursePersistenceMongodbIT {
         ));
     }
 
-    // Métodos privados que verifican las listas
-
-    private void verifyTutoringSessions(List<TutoringSession> actualTutoringSessions) {
-        assertEquals(this.expectedTutoringSessions.size(), actualTutoringSessions.size());
+    private void verifyTutoringSessions(List<TutoringSession> tutoringSessions) {
+        assertEquals(this.expectedTutoringSessions.size(), tutoringSessions.size());
         for (int i = 0; i < this.expectedTutoringSessions.size(); i++) {
-            assertEquals(this.expectedTutoringSessions.get(i).getTitle(), actualTutoringSessions.get(i).getTitle());
-            assertEquals(this.expectedTutoringSessions.get(i).getDateTime(), actualTutoringSessions.get(i).getDateTime());
-            assertEquals(this.expectedTutoringSessions.get(i).getPrice(), actualTutoringSessions.get(i).getPrice());
+            assertEquals(this.expectedTutoringSessions.get(i).getTitle(), tutoringSessions.get(i).getTitle());
+            assertEquals(this.expectedTutoringSessions.get(i).getDateTime(), tutoringSessions.get(i).getDateTime());
+            assertEquals(this.expectedTutoringSessions.get(i).getPrice(), tutoringSessions.get(i).getPrice());
         }
     }
 
-    private void verifyUsers(List<User> actualUsers) {
-        assertEquals(expectedUsers.size(), actualUsers.size());
+    private void verifyUsers(List<User> users) {
+        assertEquals(expectedUsers.size(), users.size());
         for (int i = 0; i < expectedUsers.size(); i++) {
-            assertEquals(expectedUsers.get(i).getFirstName(), actualUsers.get(i).getFirstName());
-            assertEquals(expectedUsers.get(i).getEmail(), actualUsers.get(i).getEmail());
-            assertEquals(expectedUsers.get(i).getRole(), actualUsers.get(i).getRole());
+            assertEquals(expectedUsers.get(i).getFirstName(), users.get(i).getFirstName());
+            assertEquals(expectedUsers.get(i).getEmail(), users.get(i).getEmail());
+            assertEquals(expectedUsers.get(i).getRole(), users.get(i).getRole());
         }
     }
 
