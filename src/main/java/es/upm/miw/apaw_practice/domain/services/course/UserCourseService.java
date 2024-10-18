@@ -16,7 +16,7 @@ public class UserCourseService {
     }
 
     public User create(User user) {
-        return null;
+        return this.userPersistence.create(user);
     }
 
 }
