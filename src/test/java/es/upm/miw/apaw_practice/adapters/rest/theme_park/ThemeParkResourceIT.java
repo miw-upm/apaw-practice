@@ -12,6 +12,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -87,4 +88,19 @@ public class ThemeParkResourceIT {
                     assertEquals(sum, new BigDecimal("100.0"));
                 });
     }
+
+    @Test
+    void testGetIdsByAfterEntranceDate() {
+        String values = "entranceDate: " + LocalDateTime.of(2021,6,4,10,6).toString();
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(ThemeParkResource.THEME_PARKS + ThemeParkResource.RIDES + ThemeParkResource.SEARCH)
+                                .queryParam("q", "entranceDate: 2021-06-04T10.06.00")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(ids -> assertEquals(1, ids.size()));
+        }
 }
