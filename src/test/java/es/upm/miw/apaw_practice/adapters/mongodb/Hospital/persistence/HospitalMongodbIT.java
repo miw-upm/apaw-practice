@@ -9,6 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList; // Import for ArrayList
+import java.util.List; // Import for List
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -42,14 +45,16 @@ public class HospitalMongodbIT {
     @Test
     void testCreate() {
         // Arrange
+        String id = "1"; // Assuming you want to set an ID
         String name = "Central Hospital";
-        String address = "Address 123";
-        String phoneNumber = "123456789";
-        int bedCount = 100;
+        String location = "Address 123";
+        Integer capacity = 100; // Adjusted to Integer type
+        List<Doctor> doctors = new ArrayList<>(); // Assuming you have a Doctor model
+        List<Patient> patients = new ArrayList<>(); // Assuming you have a Patient model
 
         // Update the Hospital constructor as per its definition
-        Hospital hospitalToCreate = new Hospital(name, address, phoneNumber, bedCount, new ArrayList<>(), new ArrayList<>());
-        HospitalEntity hospitalEntity = new HospitalEntity(hospitalToCreate);
+        Hospital hospitalToCreate = new Hospital(name, location, capacity, doctors, patients);
+        HospitalEntity hospitalEntity = new HospitalEntity(id, name, location, capacity, doctors, patients); // Updated to match constructor
 
         // Mock the repository to return the saved entity
         when(hospitalRepository.save(hospitalEntity)).thenReturn(hospitalEntity);
@@ -59,6 +64,6 @@ public class HospitalMongodbIT {
 
         // Assert
         assertEquals(name, createdHospital.getName());
-        assertEquals(address, createdHospital.getAddress());
+        assertEquals(location, createdHospital.getAddress()); // Ensure this method exists in Hospital
     }
 }
