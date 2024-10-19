@@ -9,10 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class HospitalServiceIT {
+public class HospitalServiceTest {
 
     @InjectMocks
     private HospitalService hospitalService;
@@ -28,7 +30,7 @@ public class HospitalServiceIT {
     @Test
     void testCreateHospitalSuccessfully() {
         // Given
-        Hospital hospital = new Hospital("Central Hospital");
+        Hospital hospital = new Hospital("Central Hospital", "Address 1", "123456789", 100, Collections.emptyList(), Collections.emptyList());
 
         when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(false);
         when(hospitalPersistence.create(hospital)).thenReturn(hospital);
@@ -46,7 +48,7 @@ public class HospitalServiceIT {
     @Test
     void testCreateHospitalConflict() {
         // Given
-        Hospital hospital = new Hospital("Central Hospital");
+        Hospital hospital = new Hospital("Central Hospital", "Address 1", "123456789", 100, Collections.emptyList(), Collections.emptyList());
 
         when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(true);
 
