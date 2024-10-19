@@ -52,9 +52,7 @@ public class DoctorServiceIT {
         // Given
         String dni = "12345678A";
         Doctor updatedDoctor = new Doctor(12345678A, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
-
         when(doctorPersistence.update(12345678A, updatedDoctor)).thenThrow(new NotFoundException("Doctor not found"));
-
         // When & Then
         NotFoundException exception = assertThrows(NotFoundException.class, () -> doctorService.updateDoctor(dni, updatedDoctor));
         assertEquals("Doctor not found", exception.getMessage());
