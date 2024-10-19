@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.rest.shopping_center;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.shopping_center.Employee;
 import es.upm.miw.apaw_practice.domain.models.shopping_center.Shop;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -63,5 +64,34 @@ public class ShopResourceIT {
                 .body(BodyInserters.fromValue(newEmployees))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testFindShopsNameByEmployeeName() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                uriBuilder.path(ShopResource.SHOPS + ShopResource.SEARCH)
+                        .queryParam("q", "name:Juan")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(Assertions::assertNotNull)
+                .value(shops -> {
+                    assertEquals(1, shops.size());
+                });
+    }
+
+    @Test
+    void testFindShopsNameByEmployeeNameBadRequest() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(ShopResource.SHOPS + ShopResource.SEARCH)
+                                .queryParam("q", "dni:alex")
+                                .build())
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 }
