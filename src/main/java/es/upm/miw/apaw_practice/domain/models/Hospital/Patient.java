@@ -1,8 +1,10 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
-import java.time.LocalDate;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Appointment;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
+
 
 
 import java.util.List;
