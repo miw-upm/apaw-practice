@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.course.daos.VideoRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.CourseEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.VideoEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.course.Course;
 import es.upm.miw.apaw_practice.domain.models.course.Video;
 import es.upm.miw.apaw_practice.domain.persistence_ports.course.VideoPersistence;
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,7 @@ public class VideoPersistenceMongodb implements VideoPersistence {
         VideoEntity videoEntity = this.videoRepository.findByName(name)
                 .orElseThrow( () -> new NotFoundException("Video name: " + name));
 
-                videoEntity.setName(video.getName());
+        videoEntity.setName(video.getName());
         videoEntity.setDuration(video.getDuration());
         videoEntity.setCreationDate(video.getCreationDate());
 
@@ -42,5 +43,22 @@ public class VideoPersistenceMongodb implements VideoPersistence {
             videoResult.setCourse(null);
         }
         return videoResult;
+    }
+
+    @Override
+    public Video update(String name, String tittleCourse) {
+        VideoEntity videoEntity = this.videoRepository.findByName(name)
+                .orElseThrow( () -> new NotFoundException("Video name: " + name));
+
+        CourseEntity courseEntity = this.courseRepository.findByTitle(tittleCourse)
+                .orElseThrow( () -> new NotFoundException("Course tittle: " + tittleCourse));
+
+        Video video = videoEntity.toVideo();
+        video.setCourse(courseEntity.toCourse());
+
+        courseEntity.getVideos().remove(videoEntity);
+        this.courseRepository.save(courseEntity);
+
+        return video;
     }
 }
