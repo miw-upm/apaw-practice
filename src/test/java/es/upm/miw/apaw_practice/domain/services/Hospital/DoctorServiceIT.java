@@ -33,30 +33,31 @@ public class DoctorServiceIT {
     void testUpdateDoctorSuccessfully() {
         // Given
         String dni = "12345678A";
-        Doctor existingDoctor = new Doctor(1, "Dr. Smith", "Cardiology", new BigDecimal("100000"));
-        Doctor updatedDoctor = new Doctor(2, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
+        Doctor existingDoctor = new Doctor(12345678A, "Dr. Smith", "Cardiology", new BigDecimal("100000"));
+        Doctor updatedDoctor = new Doctor(12345678A, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
 
-        when(doctorPersistence.update(1, updatedDoctor)).thenReturn(updatedDoctor);
+        when(doctorPersistence.update(12345678A, updatedDoctor)).thenReturn(updatedDoctor);
 
         // When
-1
+        Doctor result = doctorService.updateDoctor(12345678A, updatedDoctor);
+
         // Then
         assertNotNull(result);
         assertEquals("Dr. John Smith", result.getName());
-        verify(doctorPersistence).update(1, updatedDoctor);
+        verify(doctorPersistence).update(12345678A, updatedDoctor);
     }
 
     @Test
     void testUpdateDoctorNotFound() {
         // Given
         String dni = "12345678A";
-        Doctor updatedDoctor = new Doctor(1, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
+        Doctor updatedDoctor = new Doctor(12345678A, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
 
-        when(doctorPersistence.update(1, updatedDoctor)).thenThrow(new NotFoundException("Doctor not found"));
+        when(doctorPersistence.update(12345678A, updatedDoctor)).thenThrow(new NotFoundException("Doctor not found"));
 
         // When & Then
         NotFoundException exception = assertThrows(NotFoundException.class, () -> doctorService.updateDoctor(dni, updatedDoctor));
         assertEquals("Doctor not found", exception.getMessage());
-        verify(doctorPersistence).update(1, updatedDoctor);
+        verify(doctorPersistence).update(12345678A, updatedDoctor);
     }
 }
