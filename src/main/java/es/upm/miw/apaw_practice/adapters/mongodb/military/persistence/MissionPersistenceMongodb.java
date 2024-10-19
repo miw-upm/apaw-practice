@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository("missionPersistence")
 public class MissionPersistenceMongodb implements MissionPersistence {
@@ -26,6 +27,12 @@ public class MissionPersistenceMongodb implements MissionPersistence {
         this.missionRepository = missionRepository;
         this.unitRepository = unitRepository;
         this.weaponRepository = weaponRepository;
+    }
+
+    @Override
+    public Stream<Mission> readAll() {
+        return this.missionRepository.findAll().stream()
+                .map(MissionEntity::toMission);
     }
 
     @Override

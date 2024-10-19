@@ -14,7 +14,7 @@ class WeaponResourceIT {
     void testDelete() {
         this.webTestClient
                 .delete()
-                .uri(WeaponResource.WEAPONS + WeaponResource.SERIALCODE_ID, "SN11223344")
+                .uri(WeaponResource.WEAPONS + WeaponResource.SERIALCODE_ID, "SN55667788")
                 .exchange()
                 .expectStatus().isOk();
     }
