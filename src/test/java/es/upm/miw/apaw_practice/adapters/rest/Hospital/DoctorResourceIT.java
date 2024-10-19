@@ -19,6 +19,9 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDate;
+import java.math.BigDecimal;
+
 
 @WebMvcTest(DoctorResource.class)
 @RestTestConfig

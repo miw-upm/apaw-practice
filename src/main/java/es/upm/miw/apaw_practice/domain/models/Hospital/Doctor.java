@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
+import java.util.List;
 
 public class Doctor {
 

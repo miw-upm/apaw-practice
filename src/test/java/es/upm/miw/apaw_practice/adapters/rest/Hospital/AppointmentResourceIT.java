@@ -18,6 +18,9 @@ import org.springframework.http.MediaType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.time.LocalDate;
+import java.math.BigDecimal;
+
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -76,5 +79,12 @@ public class AppointmentResourceIT {
         Appointment updatedAppointment = new Appointment("DNI456", "Dr. Adams", newAppointmentDate);
 
         // Assert and other test logic...
+    }
+    @Test
+    public void testAppointmentDateConversion() {
+        String dateStr = "2024-10-19"; // Date as a string
+        LocalDate date = LocalDate.parse(dateStr); // Convert string to LocalDate
+
+        assertEquals(LocalDate.of(2024, 10, 19), date);
     }
 }

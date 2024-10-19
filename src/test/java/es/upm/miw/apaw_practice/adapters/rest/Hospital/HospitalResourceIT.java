@@ -57,18 +57,5 @@ public class HospitalResourceIT {
         // Verify that the service layer's create method was called exactly once
         verify(hospitalService, times(1)).create(hospital);
     }
-    @Test
-    public void testCreateHospital() {
-        // Creating mock lists of doctors and patients
-        List<Doctor> doctors = new ArrayList<>();
-        doctors.add(new Doctor("DNI789", "Cardiologist", new BigDecimal("50000")));
 
-        List<Patient> patients = new ArrayList<>();
-        patients.add(new Patient("DNI123", "John Doe", LocalDate.parse("1990-01-01"), true, new ArrayList<>()));
-
-        // Matching the constructor parameters for Hospital
-        Hospital hospital = new Hospital("Hospital General", "Madrid", "12345", 500, doctors, patients);
-
-        // Assert and other test logic...
-    }
 }
