@@ -2,6 +2,8 @@ package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.AppointmentEntity;
 import org.junit.jupiter.api.Test;
+import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.AppointmentRepository;
+
 import es.upm.miw.apaw_practice.TestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -21,7 +23,7 @@ public class AppointmentRepositoryIT {
     @Test
     void testCreateAndFindAppointment() {
         AppointmentEntity appointment = new AppointmentEntity(
-                "1", // Use String ID
+                "1",
                 LocalDate.of(2024, 10, 10),
                 "General Checkup"
         );
