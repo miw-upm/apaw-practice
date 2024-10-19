@@ -58,4 +58,3 @@ public class HospitalServiceIT {
         verify(hospitalPersistence, never()).create(any());
     }
 }
-
