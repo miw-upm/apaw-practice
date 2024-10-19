@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.services.Hospital;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.DoctorPersistence;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import es.upm.miw.apaw_practice.TestConfig;
 import org.mockito.InjectMocks;
@@ -26,10 +26,7 @@ public class DoctorServiceIT {
 
     private final String dniA = "12345678A";
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+
 
     @Test
     void testUpdateDoctorSuccessfully() {
