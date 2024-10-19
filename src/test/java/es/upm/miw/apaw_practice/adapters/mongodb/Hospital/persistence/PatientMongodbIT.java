@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
+
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.PatientRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.PatientEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence.PatientPersistenceMongodb;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Patient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,11 +45,15 @@ public class PatientMongodbIT {
         // Arrange
         String dni = "12345678A";
         String newName = "John Doe";
-        PatientEntity patientEntity = new PatientEntity(dni, "Old Name");
+        LocalDate birthDate = LocalDate.of(1990, 1, 1); // Example birth date
+        Boolean someBooleanField = true; // Example boolean field
+
+        // Update the PatientEntity to include all required parameters
+        PatientEntity patientEntity = new PatientEntity(dni, "Old Name", birthDate, someBooleanField);
 
         // Mock the repository to return the existing patient
         when(patientRepository.findByDni(dni)).thenReturn(Optional.of(patientEntity));
-        when(patientRepository.save(any(PatientEntity.class))).thenReturn(new PatientEntity(dni, newName));
+        when(patientRepository.save(any(PatientEntity.class))).thenReturn(new PatientEntity(dni, newName, birthDate, someBooleanField));
 
         // Act
         Patient updatedPatient = patientPersistenceMongodb.updateName(dni, newName);
@@ -75,4 +80,3 @@ public class PatientMongodbIT {
         verify(patientRepository, times(0)).save(any(PatientEntity.class)); // Ensure save was not called
     }
 }
-
