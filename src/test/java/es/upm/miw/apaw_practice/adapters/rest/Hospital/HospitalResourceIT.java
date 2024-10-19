@@ -38,14 +38,11 @@ public class HospitalResourceIT {
 
     @Test
     void testCreateHospital() throws Exception {
-        // Mock the create method of HospitalService
-        when(hospitalService.create(hospital)).thenReturn(hospital);
+        when(hospitalService.create(any(Hospital.class))).thenReturn(hospital);
 
-        // Use ObjectMapper to convert the Hospital object to JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String hospitalJson = objectMapper.writeValueAsString(hospital);
 
-        // Perform the POST request and validate the response
         mockMvc.perform(MockMvcRequestBuilders.post(HospitalResource.HOSPITALS)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(hospitalJson))
@@ -54,8 +51,8 @@ public class HospitalResourceIT {
                 .andExpect(jsonPath("$.location").value("Madrid"))
                 .andExpect(jsonPath("$.capacity").value(500));
 
-        // Verify that the service layer's create method was called exactly once
-        verify(hospitalService, times(1)).create(hospital);
+        verify(hospitalService, times(1)).create(any(Hospital.class));
     }
+
 
 }

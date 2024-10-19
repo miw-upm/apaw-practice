@@ -40,6 +40,27 @@ public class DoctorResourceIT {
         // Initialize the mock Doctor object
         updatedDoctor = new Doctor("12345678A", "Dr. Jane Doe", "Cardiology");
     }
+    @Test
+    public void testCreateDoctor() throws Exception {
+        BigDecimal salary = new BigDecimal("50000");
+        Doctor doctor = new Doctor("DNI789", "Dr. John Doe", salary);
+
+        when(doctorPersistence.create(any(Doctor.class))).thenReturn(doctor);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String doctorJson = objectMapper.writeValueAsString(doctor);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/doctors")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(doctorJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.dni").value("DNI789"))
+                .andExpect(jsonPath("$.name").value("Dr. John Doe"))
+                .andExpect(jsonPath("$.salary").value(50000));
+
+        verify(doctorPersistence, times(1)).create(any(Doctor.class));
+    }
+
 
     @Test
     void testUpdateDoctor() throws Exception {
@@ -63,12 +84,5 @@ public class DoctorResourceIT {
         // Verify that the persistence layer's update method was called exactly once
         verify(doctorPersistence, times(1)).update(dni, updatedDoctor);
     }
-    @Test
-    public void testCreateDoctor() {
-        // Correcting the salary type to BigDecimal
-        BigDecimal salary = new BigDecimal("50000");
-        Doctor doctor = new Doctor("DNI789", "Cardiologist", salary);
 
-        // Assert and other test logic...
-    }
 }

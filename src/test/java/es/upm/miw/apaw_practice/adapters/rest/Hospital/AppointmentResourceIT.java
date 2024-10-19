@@ -65,13 +65,27 @@ public class AppointmentResourceIT {
         verify(appointmentService, times(1)).findAll();
     }
     @Test
-    public void testCreateAppointment() {
-        // Correcting the date type to LocalDate
+    void testCreateAppointment() throws Exception {
         LocalDate appointmentDate = LocalDate.parse("2023-10-15");
-        Appointment appointment = new Appointment("DNI123", "Dr. Smith", appointmentDate);
+        Appointment appointment = new Appointment("DNI123", "Dr. Smith", appointmentDate, "Dentist");
 
-        // Assert and other test logic...
+        when(appointmentService.create(any(Appointment.class))).thenReturn(appointment);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String appointmentJson = objectMapper.writeValueAsString(appointment);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(AppointmentResource.APPOINTMENTS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(appointmentJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("DNI123"))
+                .andExpect(jsonPath("$.patientName").value("Dr. Smith"))
+                .andExpect(jsonPath("$.date").value("2023-10-15"))
+                .andExpect(jsonPath("$.doctorName").value("Dentist"));
+
+        verify(appointmentService, times(1)).create(any(Appointment.class));
     }
+
 
     @Test
     public void testUpdateAppointmentDate() {

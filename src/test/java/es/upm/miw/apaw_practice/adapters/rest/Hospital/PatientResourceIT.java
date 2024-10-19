@@ -68,15 +68,27 @@ public class PatientResourceIT {
         verify(patientService, times(1)).updateName(dni, updatedName);
     }
     @Test
-    public void testCreatePatient() {
-        // Correcting the date type to LocalDate and matching constructor
+    void testCreatePatient() throws Exception {
         LocalDate birthDate = LocalDate.parse("1990-01-01");
-        List<Appointment> appointments = new ArrayList<>();
+        Patient patient = new Patient("DNI123", "John Doe", "123-456-789", 30);
 
-        Patient patient = new Patient("DNI123", "John Doe", birthDate, true, appointments);
+        when(patientService.create(any(Patient.class))).thenReturn(patient);
 
-        // Assert and other test logic...
+        ObjectMapper objectMapper = new ObjectMapper();
+        String patientJson = objectMapper.writeValueAsString(patient);
+
+        mockMvc.perform(MockMvcRequestBuilders.post(PatientResource.PATIENTS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(patientJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.dni").value("DNI123"))
+                .andExpect(jsonPath("$.name").value("John Doe"))
+                .andExpect(jsonPath("$.phoneNumber").value("123-456-789"))
+                .andExpect(jsonPath("$.age").value(30));
+
+        verify(patientService, times(1)).create(any(Patient.class));
     }
+
 
     @Test
     public void testUpdatePatient() {
