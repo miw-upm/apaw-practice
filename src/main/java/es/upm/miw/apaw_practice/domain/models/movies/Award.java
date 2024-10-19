@@ -12,6 +12,8 @@ public class Award {
     private String category;
     private LocalDate year;
 
+    public static AwardBuilders.NameCategoryAndYear builder() { return new Builder(); }
+
     public Award() {
         //empty for framework
     }
@@ -62,4 +64,49 @@ public class Award {
         return Objects.hash(nameCategoryAndYear);
     }
 
+    public static class Builder implements
+            AwardBuilders.NameCategoryAndYear,
+            AwardBuilders.Name,
+            AwardBuilders.Category,
+            AwardBuilders.Year,
+            AwardBuilders.Builder {
+
+        private String nameCategoryAndYear;
+        private String name;
+        private String category;
+        private LocalDate year;
+
+        private Builder() {
+            //private constructor
+        }
+
+        @Override
+        public AwardBuilders.Name nameCategoryAndYear(String nameCategoryAndYear) {
+            this.nameCategoryAndYear = nameCategoryAndYear;
+            return this;
+        }
+
+        @Override
+        public AwardBuilders.Category name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        @Override
+        public AwardBuilders.Year category(String category) {
+            this.category = category;
+            return this;
+        }
+
+        @Override
+        public AwardBuilders.Builder year(LocalDate year) {
+            this.year = year;
+            return this;
+        }
+
+        @Override
+        public Award build() {
+            return new Award(nameCategoryAndYear, name, category, year);
+        }
+    }
 }
