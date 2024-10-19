@@ -85,6 +85,7 @@ public class VideoGamePersistenceMongodb implements VideoGamePersistence {
                                 .orElse(false))
                 .flatMap(consoleEntity -> consoleEntity.getVideoGameEntities().stream())
                 .map(VideoGamerEntity::getNumberOfPlayer)
+                .distinct()
                 .reduce(0, Integer::sum);
     }
 }
