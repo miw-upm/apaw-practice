@@ -26,4 +26,16 @@ public class CustomerECommercePersistenceMongodbIT {
         assertEquals("user1", customer.getUserName());
         assertEquals("user1@example.com", customer.getEmail());
     }
+
+    @Test
+    void testUpdateEmail() {
+        String userName = "user1";
+        String newEmail = "newemail@example.com";
+        this.customerECommercePersistenceMongodb.updateEmail(userName, newEmail);
+        CustomerECommerce updatedCustomer = this.customerECommercePersistenceMongodb.findByUserName(userName);
+        assertNotNull(updatedCustomer);
+        assertEquals(newEmail, updatedCustomer.getEmail());
+        this.customerECommercePersistenceMongodb.updateEmail(userName, "user1@example.com");
+    }
+
 }

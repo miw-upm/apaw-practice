@@ -50,4 +50,10 @@ public class BasketBallPersistenceMongodbIT {
         assertTrue(brands.contains("Peak"));
         assertTrue(brands.contains("New Balance"));
     }
+
+    @Test
+    void testGetTotalPrice(){
+        BigDecimal sum = this.basketBallPersistenceMongodb.getTotalPrice(15);
+        assertEquals(new BigDecimal("127.30"), sum);
+    }
 }
