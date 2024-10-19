@@ -13,4 +13,6 @@ public interface ShopPersistence {
     Shop readById(String id);
 
     Shop update(Shop shop);
+
+    Stream<String> findShopsNameByEmployeeName(String name);
 }

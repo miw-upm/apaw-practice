@@ -28,7 +28,7 @@ class MissionResourceIT {
 
         this.webTestClient
                 .put()
-                .uri(MissionResource.MISSIONS + MissionResource.CODENAME_ID, "Atalanta")
+                .uri(MissionResource.MISSIONS + MissionResource.CODENAME_ID, "Enduring Freedom")
                 .body(BodyInserters.fromValue(mission))
                 .exchange()
                 .expectStatus().isOk();
