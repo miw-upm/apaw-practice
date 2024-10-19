@@ -22,7 +22,7 @@ public class HospitalRepositoryIT {
                 "1",
                 "Hospital General",
                 "123 Main St",
-                200, // Integer for capacity
+                200,
                 Collections.emptyList(),
                 Collections.emptyList()
         );

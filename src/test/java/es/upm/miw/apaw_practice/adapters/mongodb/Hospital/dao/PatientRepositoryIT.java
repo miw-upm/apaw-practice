@@ -34,7 +34,7 @@ public class PatientRepositoryIT {
     void testFindAll() {
         List<PatientEntity> patients = patientRepository.findAll();
         assertNotNull(patients);
-        assertTrue(patients.size() >= 0);  // Verify that the list is not null and can hold patients
+        assertTrue(patients.size() >= 0);
     }
 
     @Test
