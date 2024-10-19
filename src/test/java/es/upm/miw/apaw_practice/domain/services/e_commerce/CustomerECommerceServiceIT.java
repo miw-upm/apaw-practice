@@ -4,16 +4,26 @@ import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.ECommerceSeederServi
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ECommerceCustomerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerECommerceEntity;
 
+import es.upm.miw.apaw_practice.domain.persistence_ports.e_commerce.CustomerECommercePersistence;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.mockito.Mockito.*;
+
+
 @TestConfig
 public class CustomerECommerceServiceIT {
 
     private final List<String> expectedCustomerUsernames = List.of("user1", "user2", "user3", "user4");
+    @MockBean
+    private CustomerECommercePersistence customerECommercePersistence;
+    @Autowired
+    private CustomerECommerceService customerECommerceService;
 
     @Autowired
     private ECommerceSeederService eCommerceSeederService;
@@ -32,4 +42,17 @@ public class CustomerECommerceServiceIT {
         });
 
     }
+    @Test
+    void testUpdateEmail() {
+        String userName = "user1";
+        String newEmail = "newemail@example.com";
+
+        doNothing().when(customerECommercePersistence).updateEmail(userName, newEmail);
+
+        customerECommerceService.updateEmail(userName, newEmail);
+
+        verify(customerECommercePersistence, times(1)).updateEmail(userName, newEmail);
+    }
 }
+
+
