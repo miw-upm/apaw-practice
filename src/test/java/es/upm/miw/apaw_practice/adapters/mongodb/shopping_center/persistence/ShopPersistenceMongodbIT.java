@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,5 +53,13 @@ public class ShopPersistenceMongodbIT {
         assertEquals("Janna", newShop.get().getEmployees().get(1).getName());
         shoppingCenterSeederService.deleteAll();
         shoppingCenterSeederService.seedDatabase();
+    }
+
+    @Test
+    void testFindShopsNameByEmployeeName() {
+        List<String> nameShops =
+                this.shopPersistenceMongodb.findShopsNameByEmployeeName("Alex").collect(Collectors.toList());
+        assertNotNull(nameShops);
+        assertNotEquals(0, nameShops.size());
     }
 }
