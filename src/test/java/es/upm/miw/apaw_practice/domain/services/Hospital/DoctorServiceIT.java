@@ -1,8 +1,8 @@
 package es.upm.miw.apaw_practice.domain.services.Hospital;
 
-import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
-import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
-import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.HospitalPersistence;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.Hospital.Doctor;
+import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.DoctorPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import es.upm.miw.apaw_practice.TestConfig;
@@ -10,18 +10,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 @TestConfig
 public class DoctorServiceIT {
 
     @InjectMocks
-    private HospitalService hospitalService;
+    private DoctorService doctorService;
 
     @Mock
-    private HospitalPersistence hospitalPersistence;
+    private DoctorPersistence doctorPersistence;
 
     @BeforeEach
     void setUp() {
@@ -29,34 +28,34 @@ public class DoctorServiceIT {
     }
 
     @Test
-    void testCreateHospitalSuccessfully() {
+    void testUpdateDoctorSuccessfully() {
         // Given
-        Hospital hospital = new Hospital("Central Hospital", "Address 1", "123456789", 100, Collections.emptyList(), Collections.emptyList());
+        String dni = "12345678A";
+        Doctor existingDoctor = new Doctor(dni, "Dr. Smith", "Cardiology");
+        Doctor updatedDoctor = new Doctor(dni, "Dr. John Smith", "Cardiology");
 
-        when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(false);
-        when(hospitalPersistence.create(hospital)).thenReturn(hospital);
+        when(doctorPersistence.update(dni, updatedDoctor)).thenReturn(updatedDoctor);
 
         // When
-        Hospital createdHospital = hospitalService.create(hospital);
+        Doctor result = doctorService.updateDoctor(dni, updatedDoctor);
 
         // Then
-        assertNotNull(createdHospital);
-        assertEquals("Central Hospital", createdHospital.getName());
-        verify(hospitalPersistence).existsByName(hospital.getName());
-        verify(hospitalPersistence).create(hospital);
+        assertNotNull(result);
+        assertEquals("Dr. John Smith", result.getName());
+        verify(doctorPersistence).update(dni, updatedDoctor);
     }
 
     @Test
-    void testCreateHospitalConflict() {
+    void testUpdateDoctorNotFound() {
         // Given
-        Hospital hospital = new Hospital("Central Hospital", "Address 1", "123456789", 100, Collections.emptyList(), Collections.emptyList());
+        String dni = "12345678A";
+        Doctor updatedDoctor = new Doctor(dni, "Dr. John Smith", "Cardiology");
 
-        when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(true);
+        when(doctorPersistence.update(dni, updatedDoctor)).thenThrow(new NotFoundException("Doctor not found"));
 
         // When & Then
-        ConflictException exception = assertThrows(ConflictException.class, () -> hospitalService.create(hospital));
-        assertEquals("Hospital with name 'Central Hospital' already exists.", exception.getMessage());
-        verify(hospitalPersistence).existsByName(hospital.getName());
-        verify(hospitalPersistence, never()).create(hospital);
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> doctorService.updateDoctor(dni, updatedDoctor));
+        assertEquals("Doctor not found", exception.getMessage());
+        verify(doctorPersistence).update(dni, updatedDoctor);
     }
 }
