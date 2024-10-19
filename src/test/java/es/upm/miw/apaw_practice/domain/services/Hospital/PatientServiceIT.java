@@ -3,16 +3,17 @@ package es.upm.miw.apaw_practice.domain.services.Hospital;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.HospitalPersistence;
+
 import org.junit.jupiter.api.Test;
 import es.upm.miw.apaw_practice.TestConfig;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 @TestConfig
 public class PatientServiceIT {
 
@@ -21,8 +22,6 @@ public class PatientServiceIT {
 
     @Mock
     private HospitalPersistence hospitalPersistence;
-
-
 
     @Test
     void testCreateHospitalSuccessfully() {
