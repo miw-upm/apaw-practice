@@ -79,6 +79,6 @@ public class BasketBallResourceIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BigDecimal.class)
-                .value(value -> assertEquals(new BigDecimal("127.3"), value));
+                .value(value -> assertEquals(new BigDecimal("127.30"), value));
     }
 }
