@@ -24,7 +24,7 @@ public class DoctorServiceIT {
     @Mock
     private DoctorPersistence doctorPersistence;
 
-    private final String dniA = "12345678A"; 
+    private final String dniA = "12345678A";
 
     @BeforeEach
     void setUp() {
@@ -44,7 +44,7 @@ public class DoctorServiceIT {
 
         // Then
         assertNotNull(result);
-        assertEquals("Dr. John Smith", result.getName());
+        assertEquals("Dr. John Smith", result.getFullname());
         verify(doctorPersistence).update(dniA, updatedDoctor);
     }
 
