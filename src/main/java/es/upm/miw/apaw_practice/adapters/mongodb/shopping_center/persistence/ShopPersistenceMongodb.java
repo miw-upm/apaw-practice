@@ -45,9 +45,21 @@ public class ShopPersistenceMongodb implements ShopPersistence {
                 .findById(shop.getId())
                 .orElseThrow(() -> new NotFoundException("Shop id:" + shop.getId()));
         List<EmployeeShoppingCenterEntity> employeeEntities = shop.getEmployees().stream()
-                .map(EmployeeShoppingCenterEntity::new).collect(Collectors.toList());
+                .map(EmployeeShoppingCenterEntity::new)
+                .collect(Collectors.toList());
         shopEntity.setEmployees(employeeEntities);
         this.employeeShoppingCenterRepository.saveAll(employeeEntities);
         return this.shopRepository.save(shopEntity).toShop();
+    }
+
+    @Override
+    public Stream<String> findShopsNameByEmployeeName(String name) {
+        return this.shopRepository
+                .findAll()
+                .stream()
+                .filter(shop -> shop.getEmployees().stream()
+                        .anyMatch(employee -> employee.getName().equals(name)))
+                .map(ShopEntity::toShop)
+                .map(Shop::getName);
     }
 }
