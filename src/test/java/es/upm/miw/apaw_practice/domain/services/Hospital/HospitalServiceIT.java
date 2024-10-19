@@ -15,7 +15,7 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 @TestConfig
-public class HospitalServiceTest {
+public class HospitalServiceIT {
 
     @InjectMocks
     private HospitalService hospitalService;
