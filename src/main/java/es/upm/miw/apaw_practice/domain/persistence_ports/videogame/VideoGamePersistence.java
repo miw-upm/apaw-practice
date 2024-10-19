@@ -12,4 +12,5 @@ public interface VideoGamePersistence {
     boolean existVideoGameAlias(String videoGameAlias);
     VideoGame update(String videoGameAlias, VideoGame videoGame);
     Stream<VideoGame> readAll();
+    Stream<String>findPlayerNameByVideoGameAlias(String videoGameAlias);
 }
