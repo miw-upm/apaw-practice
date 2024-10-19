@@ -22,35 +22,35 @@ public class AppointmentRepositoryIT {
     @Test
     void testCreateAndFindAppointment() {
         AppointmentEntity appointment = new AppointmentEntity(
-                1,  // Assuming id is Integer
+                1,  
                 LocalDate.of(2024, 10, 10),
-                LocalTime.of(10, 30),  // Assuming there's a time field
-                "General Checkup",
-                "Dr. Smith",
-                "John Doe"
+                LocalTime.of(10, 30),
+                "Room 101",
+                "12345678A",
+                "87654321B"
         );
         appointmentRepository.save(appointment);
         Optional<AppointmentEntity> retrievedAppointment = appointmentRepository.findById(appointment.getId());
         assertTrue(retrievedAppointment.isPresent());
-        assertEquals("General Checkup", retrievedAppointment.get().getDescription());
+        assertEquals("Room 101", retrievedAppointment.get().getLocation());
     }
 
     @Test
     void testUpdateAppointment() {
         AppointmentEntity appointment = new AppointmentEntity(
                 2,
-                LocalDate.of(2024, 11, 12),
+                LocalDate.of(2024, 11, 12),  /
                 LocalTime.of(14, 0),
-                "Initial Consultation",
-                "Dr. Smith",
-                "Jane Doe"
+                "Room 102",
+                "12345678A",
+                "87654321B"
         );
         appointmentRepository.save(appointment);
-        appointment.setDescription("Updated Consultation");
+        appointment.setLocation("Room 203");
         appointmentRepository.save(appointment);
         Optional<AppointmentEntity> updatedAppointment = appointmentRepository.findById(appointment.getId());
         assertTrue(updatedAppointment.isPresent());
-        assertEquals("Updated Consultation", updatedAppointment.get().getDescription());
+        assertEquals("Room 203", updatedAppointment.get().getLocation());
     }
 
     @Test
@@ -59,9 +59,9 @@ public class AppointmentRepositoryIT {
                 3,
                 LocalDate.of(2024, 12, 25),
                 LocalTime.of(16, 0),
-                "Christmas Appointment",
-                "Dr. Smith",
-                "Mary Doe"
+                "Room 103",
+                "12345678A",
+                "87654321B"
         );
         appointmentRepository.save(appointment);
         appointmentRepository.deleteById(appointment.getId());
