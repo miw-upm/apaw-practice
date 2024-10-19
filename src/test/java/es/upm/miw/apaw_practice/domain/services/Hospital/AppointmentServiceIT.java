@@ -28,7 +28,7 @@ public class AppointmentServiceIT {
     @Test
     void testCreateHospitalSuccessfully() {
         // Given
-        Hospital hospital = new Hospital("Central Hospital", "Address 1", "123456789", 100, Collections.emptyList(), Collections.emptyList());
+        Hospital hospital = new Hospital("Central Hospital", "Address 8", "123456789", 100, Collections.emptyList(), Collections.emptyList());
 
         when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(false);
         when(hospitalPersistence.create(hospital)).thenReturn(hospital);
@@ -46,7 +46,7 @@ public class AppointmentServiceIT {
     @Test
     void testCreateHospitalConflict() {
         // Given
-        Hospital hospital = new Hospital("Central Hospital", "Address 1", "123456789", 100, Collections.emptyList(), Collections.emptyList());
+        Hospital hospital = new Hospital("Central Hospital", "Address 8", "123456789", 100, Collections.emptyList(), Collections.emptyList());
 
         when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(true);
 
