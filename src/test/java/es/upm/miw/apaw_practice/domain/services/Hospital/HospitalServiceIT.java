@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
 import es.upm.miw.apaw_practice.domain.persistence_ports.Hospital.HospitalPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import es.upm.miw.apaw_practice.TestConfig;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -13,7 +14,7 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+@TestConfig
 public class HospitalServiceTest {
 
     @InjectMocks
