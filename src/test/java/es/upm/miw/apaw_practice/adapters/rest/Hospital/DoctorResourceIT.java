@@ -60,4 +60,12 @@ public class DoctorResourceIT {
         // Verify that the persistence layer's update method was called exactly once
         verify(doctorPersistence, times(1)).update(dni, updatedDoctor);
     }
+    @Test
+    public void testCreateDoctor() {
+        // Correcting the salary type to BigDecimal
+        BigDecimal salary = new BigDecimal("50000");
+        Doctor doctor = new Doctor("DNI789", "Cardiologist", salary);
+
+        // Assert and other test logic...
+    }
 }

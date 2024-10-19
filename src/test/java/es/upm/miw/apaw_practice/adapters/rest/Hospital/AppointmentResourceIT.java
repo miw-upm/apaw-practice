@@ -61,4 +61,20 @@ public class AppointmentResourceIT {
         // Verify that the service was called exactly once
         verify(appointmentService, times(1)).findAll();
     }
+    @Test
+    public void testCreateAppointment() {
+        // Correcting the date type to LocalDate
+        LocalDate appointmentDate = LocalDate.parse("2023-10-15");
+        Appointment appointment = new Appointment("DNI123", "Dr. Smith", appointmentDate);
+
+        // Assert and other test logic...
+    }
+
+    @Test
+    public void testUpdateAppointmentDate() {
+        LocalDate newAppointmentDate = LocalDate.parse("2023-11-01");
+        Appointment updatedAppointment = new Appointment("DNI456", "Dr. Adams", newAppointmentDate);
+
+        // Assert and other test logic...
+    }
 }

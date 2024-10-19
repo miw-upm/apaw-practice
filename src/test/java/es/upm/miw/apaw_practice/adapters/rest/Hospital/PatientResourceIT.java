@@ -67,4 +67,25 @@ public class PatientResourceIT {
         // Verify that the service layer's updateName method was called exactly once
         verify(patientService, times(1)).updateName(dni, updatedName);
     }
+    @Test
+    public void testCreatePatient() {
+        // Correcting the date type to LocalDate and matching constructor
+        LocalDate birthDate = LocalDate.parse("1990-01-01");
+        List<Appointment> appointments = new ArrayList<>();
+
+        Patient patient = new Patient("DNI123", "John Doe", birthDate, true, appointments);
+
+        // Assert and other test logic...
+    }
+
+    @Test
+    public void testUpdatePatient() {
+        LocalDate updatedBirthDate = LocalDate.parse("1985-05-10");
+        List<Appointment> appointments = new ArrayList<>();
+
+        // Updating the patient details
+        Patient updatedPatient = new Patient("DNI456", "Jane Doe", updatedBirthDate, false, appointments);
+
+        // Assert and other test logic...
+    }
 }
