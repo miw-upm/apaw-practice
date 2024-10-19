@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -51,13 +53,11 @@ class ArtistResourceIT {
                                 .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(String.class)
+                .expectBody(List.class)
                 .value(artStyles -> {
+                    assertEquals(2, artStyles.size());
                     assertTrue(artStyles.contains("Baroque"));
                     assertTrue(artStyles.contains("Cubism"));
-
-                    String[] artStyleListJson = artStyles.replaceAll("[\\[\\]\"]", "").split(",");
-                    assertEquals(2, artStyleListJson.length);
                 });
     }
 }
