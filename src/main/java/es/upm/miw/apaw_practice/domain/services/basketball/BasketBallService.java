@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.models.basketball.BasketBall;
 import es.upm.miw.apaw_practice.domain.persistence_ports.basketball.BasketBallPersistence;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BasketBallService {
 
@@ -15,5 +17,9 @@ public class BasketBallService {
 
     public BasketBall update(Integer id, BasketBall basketBall) {
         return this.basketBallPersistence.update(id, basketBall);
+    }
+
+    public List<String> getDistinctBrands(String league, String playerName){
+        return this.basketBallPersistence.getDistinctBrands(league, playerName);
     }
 }

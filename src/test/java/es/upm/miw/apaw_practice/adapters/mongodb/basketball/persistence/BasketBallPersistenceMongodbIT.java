@@ -40,4 +40,14 @@ public class BasketBallPersistenceMongodbIT {
         assertEquals(1,updatedBasketBall.getId());
         assertEquals(new BigDecimal("50.0"), updatedBasketBall.getPrice());
     }
+
+    @Test
+    void testGetDistinctBrands(){
+        List<String> brands = this.basketBallPersistenceMongodb.getDistinctBrands("ACB", "Lebron");
+        assertTrue(brands.contains("Nike"));
+        assertTrue(brands.contains("Spalding"));
+        assertTrue(brands.contains("Wilson"));
+        assertTrue(brands.contains("Peak"));
+        assertTrue(brands.contains("New Balance"));
+    }
 }

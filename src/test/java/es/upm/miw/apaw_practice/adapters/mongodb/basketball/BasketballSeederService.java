@@ -54,14 +54,21 @@ public class BasketballSeederService {
         BasketBallEntity[] basketballs = {
                 new BasketBallEntity(1, "Nike", new BigDecimal("50.0"), matches[0]),
                 new BasketBallEntity(2, "Adidas", new BigDecimal("60.0"), matches[1]),
-                new BasketBallEntity(3, "Spalding", new BigDecimal("70.0"), matches[2])
+                new BasketBallEntity(3, "Spalding", new BigDecimal("70.0"), matches[2]),
+                new BasketBallEntity(4, "Puma", new BigDecimal("22.75"), matches[3]),
+                new BasketBallEntity(5, "Wilson", new BigDecimal("27.30"), matches[0]),
+                new BasketBallEntity(6, "Molten", new BigDecimal("31.90"), matches[1]),
+                new BasketBallEntity(7, "Under Armour", new BigDecimal("34.25"), matches[3]),
+                new BasketBallEntity(8, "Li-Ning", new BigDecimal("28.45"), matches[1]),
+                new BasketBallEntity(9, "Peak", new BigDecimal("24.99"), matches[5]),
+                new BasketBallEntity(10, "New Balance", new BigDecimal("30.50"), matches[2])
         };
         this.basketBallRepository.saveAll(Arrays.asList(basketballs));
 
         BasketSeasonEntity[] seasons = {
                 new BasketSeasonEntity(1, 2022, 2023, "NBA", List.of(matches[0], matches[1])),
                 new BasketSeasonEntity(2, 2023, 2024, "Euroleague", List.of(matches[2])),
-                new BasketSeasonEntity(3, 2021, 2022, "ACB", List.of(matches[0], matches[1], matches[2]))
+                new BasketSeasonEntity(3, 2021, 2022, "ACB", List.of(matches[0], matches[1], matches[2], matches[5])),
         };
         this.basketSeasonRepository.saveAll(Arrays.asList(seasons));
     }
