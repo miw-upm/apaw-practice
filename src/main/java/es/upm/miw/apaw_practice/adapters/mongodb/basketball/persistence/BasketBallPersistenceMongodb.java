@@ -12,6 +12,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.basketball.BasketBallPe
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository("basketBallPersistence")
@@ -51,6 +52,18 @@ public class BasketBallPersistenceMongodb implements BasketBallPersistence {
                         .map(player -> ball.getBrand()))
                 .distinct()
                 .toList();
+    }
+
+    @Override
+    public BigDecimal getTotalPrice(Integer dorsal) {
+        List<BasketBallEntity> balls = basketBallRepository.findAll();
+
+        return balls.stream()
+                .filter(ball -> ball.getBasketMatchEntity() != null)
+                .flatMap(ball -> ball.getBasketMatchEntity().getBasketPlayers().stream()
+                        .filter(player -> player.getDorsal() == dorsal)
+                        .map(player -> ball.getPrice()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }

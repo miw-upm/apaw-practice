@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.domain.models.basketball.BasketBall;
 import es.upm.miw.apaw_practice.domain.persistence_ports.basketball.BasketBallPersistence;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -21,5 +22,9 @@ public class BasketBallService {
 
     public List<String> getDistinctBrands(String league, String playerName){
         return this.basketBallPersistence.getDistinctBrands(league, playerName);
+    }
+
+    public BigDecimal getTotalPrice(Integer dorsal){
+        return this.basketBallPersistence.getTotalPrice(dorsal);
     }
 }
