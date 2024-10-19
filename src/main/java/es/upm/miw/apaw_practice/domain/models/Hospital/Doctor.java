@@ -2,6 +2,8 @@ package es.upm.miw.apaw_practice.domain.models.Hospital;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.math.BigDecimal;
+
 import java.util.List;
 
 
