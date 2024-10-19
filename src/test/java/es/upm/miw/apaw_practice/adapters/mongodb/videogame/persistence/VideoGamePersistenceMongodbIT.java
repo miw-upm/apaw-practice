@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,5 +71,11 @@ class VideoGamePersistenceMongodbIT {
         assertTrue(newVideoGame.get().getCrossPlatform());
         videoGameSeederService.deleteAll();
         videoGameSeederService.seedDatabase();
+    }
+
+    @Test
+    void findPlayerNameByVideoGameAlias(){
+        Stream<String> videoGameAlias = videoGamePersistence.findPlayerNameByVideoGameAlias("Halo");
+        assertEquals(List.of("Luis","Melba"), videoGameAlias.toList());
     }
 }
