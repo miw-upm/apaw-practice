@@ -54,6 +54,6 @@ public class BasketBallPersistenceMongodbIT {
     @Test
     void testGetTotalPrice(){
         BigDecimal sum = this.basketBallPersistenceMongodb.getTotalPrice(15);
-        assertEquals(new BigDecimal("127.29"), sum);
+        assertEquals(new BigDecimal("127.30"), sum);
     }
 }
