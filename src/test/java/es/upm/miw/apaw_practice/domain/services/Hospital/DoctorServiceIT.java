@@ -33,29 +33,29 @@ public class DoctorServiceIT {
     void testUpdateDoctorSuccessfully() {
         // Given
         String dni = "12345678A";
-        Doctor existingDoctor = new Doctor(12345678A, "Dr. Smith", "Cardiology", new BigDecimal("100000"));
-        Doctor updatedDoctor = new Doctor(12345678A, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
+        Doctor existingDoctor = new Doctor(dni, "Dr. Smith", "Cardiology", new BigDecimal("100000"));
+        Doctor updatedDoctor = new Doctor(dni, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
 
-        when(doctorPersistence.update(12345678A, updatedDoctor)).thenReturn(updatedDoctor);
+        when(doctorPersistence.update(dni, updatedDoctor)).thenReturn(updatedDoctor);
 
         // When
-        Doctor result = doctorService.updateDoctor(12345678A, updatedDoctor);
+        Doctor result = doctorService.updateDoctor(dni, updatedDoctor);
 
         // Then
         assertNotNull(result);
         assertEquals("Dr. John Smith", result.getName());
-        verify(doctorPersistence).update(12345678A, updatedDoctor);
+        verify(doctorPersistence).update(dni, updatedDoctor);
     }
 
     @Test
     void testUpdateDoctorNotFound() {
         // Given
         String dni = "12345678A";
-        Doctor updatedDoctor = new Doctor(12345678A, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
-        when(doctorPersistence.update(12345678A, updatedDoctor)).thenThrow(new NotFoundException("Doctor not found"));
+        Doctor updatedDoctor = new Doctor(dni, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
+        when(doctorPersistence.update(dniA, updatedDoctor)).thenThrow(new NotFoundException("Doctor not found"));
         // When & Then
         NotFoundException exception = assertThrows(NotFoundException.class, () -> doctorService.updateDoctor(dni, updatedDoctor));
         assertEquals("Doctor not found", exception.getMessage());
-        verify(doctorPersistence).update(12345678A, updatedDoctor);
+        verify(doctorPersistence).update(dniA, updatedDoctor);
     }
 }
