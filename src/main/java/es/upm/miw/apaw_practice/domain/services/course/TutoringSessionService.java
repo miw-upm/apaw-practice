@@ -15,6 +15,6 @@ public class TutoringSessionService {
     }
 
     public void delete(String tittle){
-
-    };
+        this.tutoringSessionPersistence.delete(tittle);
+    }
 }
