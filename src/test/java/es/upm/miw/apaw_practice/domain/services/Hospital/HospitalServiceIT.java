@@ -14,6 +14,7 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 @TestConfig
 public class HospitalServiceIT {
 
@@ -51,12 +52,16 @@ public class HospitalServiceIT {
         // Given
         Hospital hospital = new Hospital("Central Hospital", "Address 1", "123456789", 100, Collections.emptyList(), Collections.emptyList());
 
-        when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(true);
+        when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(true); // Simulate conflict
 
         // When & Then
-        ConflictException exception = assertThrows(ConflictException.class, () -> hospitalService.create(hospital));
-        assertEquals("Hospital with name 'Central Hospital' already exists.", exception.getMessage());
+        Exception exception = assertThrows(ConflictException.class, () -> {
+            hospitalService.create(hospital);
+        });
+
+        assertEquals("Hospital with name " + hospital.getName() + " already exists.", exception.getMessage());
         verify(hospitalPersistence).existsByName(hospital.getName());
-        verify(hospitalPersistence, never()).create(hospital);
+        verify(hospitalPersistence, never()).create(any());
     }
 }
+
