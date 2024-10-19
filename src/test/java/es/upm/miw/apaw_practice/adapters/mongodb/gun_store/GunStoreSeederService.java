@@ -66,7 +66,10 @@ public class GunStoreSeederService {
 
         SetupEntity[] setups = {
                 new SetupEntity(0, new BigDecimal("2249.98"), Arrays.asList(guns[0], guns[1])),
-                new SetupEntity(1, new BigDecimal("2599.98"), Arrays.asList(guns[2], guns[3]))
+                new SetupEntity(1, new BigDecimal("2599.98"), Arrays.asList(guns[2], guns[3])),
+                new SetupEntity(2, new BigDecimal("1599.98"), Arrays.asList(guns[1], guns[4])), // Setup combining Colt M1911 and Remington 870
+                new SetupEntity(3, new BigDecimal("2049.98"), Arrays.asList(guns[0], guns[2])), // Glock 17 and AR-15
+                new SetupEntity(4, new BigDecimal("2899.98"), Arrays.asList(guns[3], guns[4])),
         };
 
         this.setupRepository.saveAll(Arrays.asList(setups));
