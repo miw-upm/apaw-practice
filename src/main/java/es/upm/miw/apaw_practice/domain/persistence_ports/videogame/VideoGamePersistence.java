@@ -13,4 +13,5 @@ public interface VideoGamePersistence {
     VideoGame update(String videoGameAlias, VideoGame videoGame);
     Stream<VideoGame> readAll();
     Stream<String>findPlayerNameByVideoGameAlias(String videoGameAlias);
+    Integer sumNumberOfPlayerByPlayerNameAndWebsite(String playerName, String website);
 }

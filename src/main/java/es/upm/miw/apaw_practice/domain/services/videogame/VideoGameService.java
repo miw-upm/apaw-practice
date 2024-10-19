@@ -33,4 +33,8 @@ public class VideoGameService {
     public Stream<String> findPlayerNamesByVideoGameAlias(String videoGameAlias) {
         return this.videoGamePersistence.findPlayerNameByVideoGameAlias(videoGameAlias);
     }
+
+    public Integer sumNumberOfPlayerByPlayerNameAndWebsite(String playerName, String website) {
+        return this.videoGamePersistence.sumNumberOfPlayerByPlayerNameAndWebsite(playerName, website);
+    }
 }

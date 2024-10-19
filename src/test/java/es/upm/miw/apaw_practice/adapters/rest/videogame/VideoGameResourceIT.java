@@ -67,4 +67,18 @@ public class VideoGameResourceIT {
                 .expectBody(List.class)
                 .value(name -> assertEquals(List.of("Luis","Melba"),name));
     }
+
+    @Test
+    void testSumNumberOfPlayerByPlayerNameAndWebsite(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(VIDEOGAMES + SEARCH + NUMBEROFPLAYERS_BY_PLAYERNAME_AND_WEBSITE)
+                                .queryParam("l","playerName: Nelson;website: www.nanoby.com")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Integer.class)
+                .value(name -> assertEquals(360,name));
+    }
 }

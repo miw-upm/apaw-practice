@@ -78,4 +78,9 @@ class VideoGamePersistenceMongodbIT {
         Stream<String> videoGameAlias = videoGamePersistence.findPlayerNameByVideoGameAlias("Halo");
         assertEquals(List.of("Luis","Melba"), videoGameAlias.toList());
     }
+
+    @Test
+    void sumNumberOfPlayerByPlayerNameAndWebsite(){
+        assertEquals(Integer.valueOf(360), this.videoGamePersistence.sumNumberOfPlayerByPlayerNameAndWebsite("Nelson","www.nanoby.com"));
+    }
 }
