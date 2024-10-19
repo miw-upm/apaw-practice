@@ -18,10 +18,10 @@ public class CoursePersistenceMongodb implements CoursePersistence {
     }
 
     @Override
-    public Course read(String tittle) {
+    public Course read(String title) {
         return this.courseRepository
-                .findByTitle(tittle)
-                .orElseThrow(() -> new NotFoundException("Course tittle: " + tittle))
+                .findByTitle(title)
+                .orElseThrow(() -> new NotFoundException("Course title: " + title))
                 .toCourse();
     }
 }

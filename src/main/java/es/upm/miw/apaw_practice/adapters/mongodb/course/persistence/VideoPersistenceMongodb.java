@@ -5,7 +5,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.course.daos.VideoRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.CourseEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.VideoEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw_practice.domain.models.course.Course;
 import es.upm.miw.apaw_practice.domain.models.course.Video;
 import es.upm.miw.apaw_practice.domain.persistence_ports.course.VideoPersistence;
 import org.springframework.stereotype.Repository;
@@ -46,12 +45,12 @@ public class VideoPersistenceMongodb implements VideoPersistence {
     }
 
     @Override
-    public Video update(String name, String tittleCourse) {
+    public Video update(String name, String titleCourse) {
         VideoEntity videoEntity = this.videoRepository.findByName(name)
                 .orElseThrow( () -> new NotFoundException("Video name: " + name));
 
-        CourseEntity courseEntity = this.courseRepository.findByTitle(tittleCourse)
-                .orElseThrow( () -> new NotFoundException("Course tittle: " + tittleCourse));
+        CourseEntity courseEntity = this.courseRepository.findByTitle(titleCourse)
+                .orElseThrow( () -> new NotFoundException("Course tittle: " + titleCourse));
 
         Video video = videoEntity.toVideo();
         video.setCourse(courseEntity.toCourse());
