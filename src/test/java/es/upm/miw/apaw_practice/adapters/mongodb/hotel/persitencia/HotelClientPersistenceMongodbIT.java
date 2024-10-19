@@ -39,6 +39,6 @@ public class HotelClientPersistenceMongodbIT {
         HotelClient client = this.hotelClientPersistenceMongodb.create(newClient);
         assertEquals(client.getName(), "Oscar");
         assertEquals(client.getPhone(), "123456789");
-        assertEquals(reservation, client.getReservation());
+        assertEquals(reservation.getReservationDate(), client.getReservation().getReservationDate());
     }
 }

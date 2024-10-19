@@ -2,10 +2,12 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class HotelClientEntity {
@@ -26,11 +28,7 @@ public class HotelClientEntity {
         this.identityDocument = identityDocument;
         this.name = name;
         this.phone = phone;
-        this.email = email;
         this.reservation = reservation;
-    }
-    public HotelClientEntity(HotelClient client) {
-        BeanUtils.copyProperties(client, this);
         this.id = UUID.randomUUID().toString();
     }
     public String getIdentityDocument() {
@@ -67,14 +65,18 @@ public class HotelClientEntity {
 
     public HotelReservationEntity getReservation() { return this.reservation; }
 
-    public void setReservation(HotelReservationEntity reservation) { this.reservation = reservation; }
+    public void setReservation(final HotelReservationEntity reservation) { this.reservation = reservation; }
 
     public HotelClient toClient() {
-        HotelClient client = new HotelClient();
+        String reservationNumber = this.getReservation().getReservationNumber();
+        String roomNumber = this.getReservation().getRoomNumber();
+        LocalDate reservationDate = this.getReservation().getReservationDate();
+        HotelReservation reservation = new HotelReservation(reservationNumber, roomNumber, reservationDate);
+        HotelClient client= new HotelClient();
         BeanUtils.copyProperties(this, client);
+        client.setReservation(reservation);
         return client;
     }
-
     @Override
     public String toString() {
         return "HotelClientRepository{" +

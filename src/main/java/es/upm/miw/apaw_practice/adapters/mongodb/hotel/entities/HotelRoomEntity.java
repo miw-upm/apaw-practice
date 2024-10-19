@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
@@ -55,6 +58,12 @@ public class HotelRoomEntity {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
+    }
+
+    public HotelRoom toRoom() {
+            HotelRoom room = new HotelRoom();
+            BeanUtils.copyProperties(this, room);
+            return room;
     }
 
     @Override
