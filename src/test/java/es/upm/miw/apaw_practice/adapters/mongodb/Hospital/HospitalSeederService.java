@@ -37,11 +37,14 @@ public class HospitalSeederService {
 
         // Seed Hospitals
         HospitalEntity[] hospitals = {
-                new HospitalEntity(1,"Hospital General", "123 Main St", 200),
-                new HospitalEntity(2,"Hospital Universitario", "456 University Ave", 300)
+                new HospitalEntity("1", "Hospital General", "123 Main St", 200, Collections.emptyList(), Collections.emptyList()),
+                new HospitalEntity("2", "Hospital Universitario", "456 University Ave", 300, Collections.emptyList(), Collections.emptyList())
         };
-        hospitalRepository.saveAll(Arrays.asList(hospitals));
 
+        for (HospitalEntity hospital : hospitals) {
+            hospitalRepository.save(hospital);
+        }
+        hospitalRepository.saveAll(Arrays.asList(hospitals));
         // Seed Doctors
         DoctorEntity[] doctors = {
                 new DoctorEntity("DNI001", "Dr. Alice Smith", new BigDecimal("5000.00")),
