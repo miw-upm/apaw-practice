@@ -37,8 +37,9 @@ public class BasketballSeederService {
                 new BasketPlayerEntity("23456789B", "Stephen", 10, 20),
                 new BasketPlayerEntity("34567890C", "Kobe", 23, 50),
                 new BasketPlayerEntity("45678901D", "Michael", 12, 15),
-                new BasketPlayerEntity("56789012E", "Jordan", 15, 40),
-                new BasketPlayerEntity("12312312H", "Martxel", 15, 45)
+                new BasketPlayerEntity("56789012E", "Jordan", 3, 40),
+                new BasketPlayerEntity("12312312H", "Martxel", 15, 45),
+                new BasketPlayerEntity("12342312H", "Curry", 15, 15)
         };
         this.basketPlayerRepository.saveAll(Arrays.asList(players));
 
@@ -48,7 +49,8 @@ public class BasketballSeederService {
                 new BasketMatchEntity(3,LocalDateTime.of(2023, 10, 14, 20, 0), "Stadium C", List.of(players[0], players[3])),
                 new BasketMatchEntity(5,LocalDateTime.of(2024, 10, 14, 20, 0), "Stadium D", List.of(players[0], players[1], players[2])),
                 new BasketMatchEntity(6,LocalDateTime.of(2024, 10, 15, 20, 0), "Stadium E", List.of(players[1], players[2], players[4])),
-                new BasketMatchEntity(7,LocalDateTime.of(2024, 10, 16, 20, 0), "Stadium F", List.of(players[0], players[1], players[4]))
+                new BasketMatchEntity(7,LocalDateTime.of(2024, 10, 16, 20, 0), "Stadium F", List.of(players[0], players[1], players[4])),
+                new BasketMatchEntity(7,LocalDateTime.of(2024, 10, 16, 20, 0), "Stadium G", List.of(players[1], players[5], players[6])),
         };
         this.basketMatchRepository.saveAll(Arrays.asList(matches));
 
@@ -63,7 +65,7 @@ public class BasketballSeederService {
                 new BasketBallEntity(8, "Li-Ning", new BigDecimal("28.45"), matches[1]),
                 new BasketBallEntity(9, "Peak", new BigDecimal("24.99"), matches[5]),
                 new BasketBallEntity(10, "New Balance", new BigDecimal("30.50"), matches[2]),
-                new BasketBallEntity(10, "Jordan", new BigDecimal("25.0"), matches[4])
+                new BasketBallEntity(10, "Jordan", new BigDecimal("25.0"), matches[6])
         };
         this.basketBallRepository.saveAll(Arrays.asList(basketballs));
 
