@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.daos.ECommerceCustomerRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.e_commerce.entities.CustomerECommerceEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.e_commerce_model.CustomerECommerce;
 import es.upm.miw.apaw_practice.domain.persistence_ports.e_commerce.CustomerECommercePersistence;
@@ -21,5 +22,12 @@ public class CustomerECommercePersistenceMongodb implements CustomerECommercePer
         return this.customerRepository.findByUserName(userName)
                 .orElseThrow(() -> new NotFoundException("User name: " + userName))
                 .toCustomer();
+    }
+    @Override
+    public void updateEmail(String userName, String newEmail) {
+        CustomerECommerceEntity customerECommerceEntity = this.customerRepository.findByUserName(userName)
+                .orElseThrow(() -> new NotFoundException("User name: " + userName));
+        customerECommerceEntity.setEmail(newEmail);
+        this.customerRepository.save(customerECommerceEntity);
     }
 }
