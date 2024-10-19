@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import es.upm.miw.apaw_practice.TestConfig;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
 
@@ -23,7 +22,6 @@ public class HospitalServiceIT {
 
     @Mock
     private HospitalPersistence hospitalPersistence;
-
 
     @Test
     void testCreateHospitalSuccessfully() {
@@ -51,11 +49,11 @@ public class HospitalServiceIT {
         when(hospitalPersistence.existsByName(hospital.getName())).thenReturn(true); // Simulate conflict
 
         // When & Then
-        Exception exception = assertThrows(ConflictException.class, () -> {
+        ConflictException exception = assertThrows(ConflictException.class, () -> {
             hospitalService.create(hospital);
         });
 
-        assertEquals("Hospital with name " + hospital.getName() + " already exists.", exception.getMessage());
+        assertEquals("Hospital with name 'Central Hospital' already exists.", exception.getMessage());
         verify(hospitalPersistence).existsByName(hospital.getName());
         verify(hospitalPersistence, never()).create(any());
     }

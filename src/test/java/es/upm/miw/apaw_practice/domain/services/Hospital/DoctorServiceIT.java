@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import es.upm.miw.apaw_practice.TestConfig;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 
@@ -26,13 +25,11 @@ public class DoctorServiceIT {
 
     private final String dniA = "12345678A";
 
-
-
     @Test
     void testUpdateDoctorSuccessfully() {
         // Given
-        Doctor existingDoctor = new Doctor(dniA, "Dr. Smith", new BigDecimal("100000")); // Updated constructor
-        Doctor updatedDoctor = new Doctor(dniA, "Dr. John Smith", new BigDecimal("120000")); // Updated constructor
+        Doctor existingDoctor = new Doctor(dniA, "Dr. Smith", new BigDecimal("100000"));
+        Doctor updatedDoctor = new Doctor(dniA, "Dr. John Smith", new BigDecimal("120000"));
 
         when(doctorPersistence.update(dniA, updatedDoctor)).thenReturn(updatedDoctor);
 
@@ -48,7 +45,7 @@ public class DoctorServiceIT {
     @Test
     void testUpdateDoctorNotFound() {
         // Given
-        Doctor updatedDoctor = new Doctor(dniA, "Dr. John Smith", new BigDecimal("120000")); // Updated constructor
+        Doctor updatedDoctor = new Doctor(dniA, "Dr. John Smith", new BigDecimal("120000"));
 
         when(doctorPersistence.update(dniA, updatedDoctor)).thenThrow(new NotFoundException("Doctor not found"));
 
