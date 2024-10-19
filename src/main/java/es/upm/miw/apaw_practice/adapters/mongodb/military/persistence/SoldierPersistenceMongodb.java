@@ -43,4 +43,11 @@ public class SoldierPersistenceMongodb implements SoldierPersistence {
                 .save(soldierEntity)
                 .toSoldier();
     }
+
+    @Override
+    public Stream<Soldier> findByFullName(String fullName) {
+        return this.soldierRepository.findAll().stream()
+                .filter(soldier -> fullName.equals(soldier.getFullName()))
+                .map(SoldierEntity::toSoldier);
+    }
 }
