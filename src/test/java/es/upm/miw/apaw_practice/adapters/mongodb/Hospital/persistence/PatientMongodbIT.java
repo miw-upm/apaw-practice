@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PatientPersistenceMongodbTest {
+public class PatientMongodbIT {
 
     @Mock
     private PatientRepository patientRepository;
