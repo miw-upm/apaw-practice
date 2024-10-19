@@ -1,5 +1,5 @@
-package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.persistence;
 
+<<<<<<< HEAD
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos.HospitalRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntity;
 import es.upm.miw.apaw_practice.domain.models.Hospital.Hospital;
@@ -67,3 +67,5 @@ public class HospitalMongodbIT {
         assertEquals(location, createdHospital.getAddress()); // Ensure this method exists in Hospital
     }
 }
+=======
+>>>>>>> issue#1025
