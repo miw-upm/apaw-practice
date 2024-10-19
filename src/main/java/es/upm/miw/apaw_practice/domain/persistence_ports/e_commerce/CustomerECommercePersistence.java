@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerECommercePersistence {
     CustomerECommerce findByUserName(String userName);
+    void updateEmail(String userName, String newEmail);
 }

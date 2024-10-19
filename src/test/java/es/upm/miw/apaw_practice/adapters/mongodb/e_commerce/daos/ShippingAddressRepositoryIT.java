@@ -15,11 +15,11 @@ class ShippingAddressRepositoryIT {
 
     @Test
     void testFindByLocation() {
-        List<ShippingAddressEntity> shippingAddresses = this.shippingAddressRepository.findByLocation("C/Rey, 24");
+        List<ShippingAddressEntity> shippingAddresses = this.shippingAddressRepository.findByLocation("C/Gamepolis, 2");
         assertFalse(shippingAddresses.isEmpty());
         ShippingAddressEntity shippingAddress = shippingAddresses.get(0);
-        assertEquals("C/Rey, 24", shippingAddress.getLocation());
-        assertEquals("Alice", shippingAddress.getRecipientName());
+        assertEquals("C/Gamepolis, 2", shippingAddress.getLocation());
+        assertEquals("Bob", shippingAddress.getRecipientName());
     }
 
     @Test

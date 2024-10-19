@@ -28,4 +28,8 @@ public class ShopService {
         shop.setEmployees(employeeList);
         return this.shopPersistence.update(shop);
     }
+
+    public Stream<String> findShopsNameByEmployeeName(String name) {
+        return this.shopPersistence.findShopsNameByEmployeeName(name);
+    }
 }
