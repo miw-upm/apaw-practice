@@ -50,7 +50,7 @@ public class BasketballSeederService {
                 new BasketMatchEntity(5,LocalDateTime.of(2024, 10, 14, 20, 0), "Stadium D", List.of(players[0], players[1], players[2])),
                 new BasketMatchEntity(6,LocalDateTime.of(2024, 10, 15, 20, 0), "Stadium E", List.of(players[1], players[2], players[4])),
                 new BasketMatchEntity(7,LocalDateTime.of(2024, 10, 16, 20, 0), "Stadium F", List.of(players[0], players[1], players[4])),
-                new BasketMatchEntity(7,LocalDateTime.of(2024, 10, 16, 20, 0), "Stadium G", List.of(players[1], players[5], players[6])),
+                new BasketMatchEntity(8,LocalDateTime.of(2024, 10, 16, 20, 0), "Stadium G", List.of(players[1], players[5], players[6])),
         };
         this.basketMatchRepository.saveAll(Arrays.asList(matches));
 
@@ -65,7 +65,7 @@ public class BasketballSeederService {
                 new BasketBallEntity(8, "Li-Ning", new BigDecimal("28.45"), matches[1]),
                 new BasketBallEntity(9, "Peak", new BigDecimal("24.99"), matches[5]),
                 new BasketBallEntity(10, "New Balance", new BigDecimal("30.50"), matches[2]),
-                new BasketBallEntity(10, "Jordan", new BigDecimal("25.0"), matches[6])
+                new BasketBallEntity(11, "Jordan", new BigDecimal("25.0"), matches[6])
         };
         this.basketBallRepository.saveAll(Arrays.asList(basketballs));
 
