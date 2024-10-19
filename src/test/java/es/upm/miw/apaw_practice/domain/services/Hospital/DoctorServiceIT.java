@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -31,8 +33,8 @@ public class DoctorServiceIT {
     void testUpdateDoctorSuccessfully() {
         // Given
         String dni = "12345678A";
-        Doctor existingDoctor = new Doctor(dni, "Dr. Smith", "Cardiology");
-        Doctor updatedDoctor = new Doctor(dni, "Dr. John Smith", "Cardiology");
+        Doctor existingDoctor = new Doctor(dni, "Dr. Smith", "Cardiology", new BigDecimal("100000"));
+        Doctor updatedDoctor = new Doctor(dni, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
 
         when(doctorPersistence.update(dni, updatedDoctor)).thenReturn(updatedDoctor);
 
@@ -49,7 +51,7 @@ public class DoctorServiceIT {
     void testUpdateDoctorNotFound() {
         // Given
         String dni = "12345678A";
-        Doctor updatedDoctor = new Doctor(dni, "Dr. John Smith", "Cardiology");
+        Doctor updatedDoctor = new Doctor(dni, "Dr. John Smith", "Cardiology", new BigDecimal("120000"));
 
         when(doctorPersistence.update(dni, updatedDoctor)).thenThrow(new NotFoundException("Doctor not found"));
 
