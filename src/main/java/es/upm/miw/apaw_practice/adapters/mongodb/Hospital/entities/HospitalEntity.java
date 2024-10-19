@@ -44,6 +44,7 @@ public class HospitalEntity {
         this.patients = patients;
     }
 
+
     // Getters and Setters
     public String getId() {
         return id;

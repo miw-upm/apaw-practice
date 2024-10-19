@@ -23,6 +23,14 @@ public class HospitalRepositoryIT {
 
         assertTrue(exists);
     }
+    @Test
+    void testHospitalCreation() {
+        // Correct constructor usage with String ID and empty lists
+        HospitalEntity hospital = new HospitalEntity("1", "Hospital General", "123 Main St", 200, Collections.emptyList(), Collections.emptyList());
+        hospitalRepository.save(hospital);
+
+        assertTrue(hospitalRepository.existsByName("Hospital General"));
+    }
 
     @Test
     void testSaveAndFindHospitalById() {
