@@ -1,7 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.Hospital.daos;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.Hospital.entities.HospitalEntity;
-iimport org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import java.util.Collections;
