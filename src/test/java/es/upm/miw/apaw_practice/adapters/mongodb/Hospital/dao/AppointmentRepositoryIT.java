@@ -22,7 +22,7 @@ public class AppointmentRepositoryIT {
     @Test
     void testCreateAndFindAppointment() {
         AppointmentEntity appointment = new AppointmentEntity(
-                1,  
+                1,
                 LocalDate.of(2024, 10, 10),
                 LocalTime.of(10, 30),
                 "Room 101",
@@ -39,7 +39,7 @@ public class AppointmentRepositoryIT {
     void testUpdateAppointment() {
         AppointmentEntity appointment = new AppointmentEntity(
                 2,
-                LocalDate.of(2024, 11, 12),  /
+                LocalDate.of(2024, 11, 12),  
                 LocalTime.of(14, 0),
                 "Room 102",
                 "12345678A",
