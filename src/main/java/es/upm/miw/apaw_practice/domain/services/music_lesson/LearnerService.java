@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.music_lesson;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import es.upm.miw.apaw_practice.domain.models.music_lesson.Learner;
@@ -26,5 +27,9 @@ public class LearnerService {
     Learner learner = this.learnerPersistence.readByIdentityDocument(identityDocument);
     learner.setLessons(lessons);
     return this.learnerPersistence.update(learner);
+  }
+
+  public BigDecimal findFeeSumByInstrumentDifficultyLevel(String difficultyLevel) {
+    return this.learnerPersistence.findFeeSumByInstrumentDifficultyLevel(difficultyLevel);
   }
 }
