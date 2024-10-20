@@ -14,4 +14,6 @@ public interface TechniquePersistence {
     Technique read(String name);
 
     void delete(String name);
+
+    Stream<Integer> findNonDuplicatedInstructorPhonesByPopularity(int popularity);
 }
