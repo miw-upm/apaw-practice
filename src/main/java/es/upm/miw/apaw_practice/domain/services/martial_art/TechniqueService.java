@@ -6,6 +6,7 @@ import es.upm.miw.apaw_practice.domain.models.martial_art.Technique;
 import es.upm.miw.apaw_practice.domain.persistence_ports.martial_art.TechniquePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.stream.Stream;
 
 @Service
 public class TechniqueService {
@@ -22,6 +23,10 @@ public class TechniqueService {
     }
     public Technique read(String name) {
         return this.techniquePersistence.read(name);
+    }
+    // Nuevo método en el servicio
+    public Stream<Integer> findNonDuplicatedInstructorPhonesByPopularity(int popularity) {
+        return this.techniquePersistence.findNonDuplicatedInstructorPhonesByPopularity(popularity);
     }
 
 }

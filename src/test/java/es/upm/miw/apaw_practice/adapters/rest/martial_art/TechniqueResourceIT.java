@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.time.LocalDateTime;
 import java.util.List;
 import static es.upm.miw.apaw_practice.adapters.rest.martial_art.TechniqueResource.TECHNIQUE;
+import static es.upm.miw.apaw_practice.adapters.rest.martial_art.TechniqueResource.POPULARITY;
 import static es.upm.miw.apaw_practice.adapters.rest.martial_art.TechniqueResource.NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -51,5 +52,20 @@ public class TechniqueResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Technique.class)
                 .value(Assertions::assertNotNull);
+    }
+    @Test
+    void testFindNonDuplicatedInstructorPhonesByPopularity() {
+        int popularity = 2;  // Puedes ajustar este valor según el caso de prueba que quieras verificar
+
+        this.webTestClient
+                .get()
+                .uri(TECHNIQUE + POPULARITY, popularity)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Integer.class)
+                .value(phones -> {
+                    assertEquals(3, phones.size());  // Ajusta el tamaño según lo esperado
+                    Assertions.assertTrue(phones.contains(978957449));  // Verifica que el número esperado esté presente
+                });
     }
 }

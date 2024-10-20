@@ -1,7 +1,4 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.martial_art.persistence;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.BookingEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.GuestEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.RoomEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.daos.InstructorRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.daos.StyleRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.martial_art.daos.TechniqueRepository;
@@ -15,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 @Repository("techniquePersistence")
 public class TechniquePersistenceMongodb implements TechniquePersistence{
@@ -88,4 +86,23 @@ public class TechniquePersistenceMongodb implements TechniquePersistence{
                 .orElseThrow(() -> new NotFoundException("Technique name: " + name));
         this.techniqueRepository.delete(techniqueEntity);
     }
+    @Override
+    public Stream<Integer> findNonDuplicatedInstructorPhonesByPopularity(int popularity) {
+        return this.techniqueRepository.findAll().stream()
+                .filter(techniqueEntity -> techniqueEntity.getStyle().getPopularity() == popularity)
+                .peek(techniqueEntity -> System.out.println("Filtrando técnica: " + techniqueEntity.getName()))
+                .flatMap(techniqueEntity -> {
+                    System.out.println("Técnica: " + techniqueEntity.getName() + " tiene instructores: "
+                            + techniqueEntity.getInstructors().stream()
+                            .map(InstructorEntity::getFullName)
+                            .collect(Collectors.joining(", ")));
+                    return techniqueEntity.getInstructors().stream();
+                })
+                .map(InstructorEntity::getPhoneNumber)
+                .distinct();
+    }
+
+
+
+
 }
