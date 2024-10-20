@@ -57,3 +57,4 @@ class ActorServiceIT {
         assertEquals(LocalDate.of(1984, 11, 22), actor.getBirthDate());
     }
 }
+
