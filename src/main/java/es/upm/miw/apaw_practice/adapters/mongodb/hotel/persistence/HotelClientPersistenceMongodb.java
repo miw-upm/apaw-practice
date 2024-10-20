@@ -7,7 +7,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelClientEntit
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelReservationEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelClientPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,9 +27,15 @@ public class HotelClientPersistenceMongodb implements HotelClientPersistence {
     @Override
     public HotelClient create(HotelClient client) {
         String dni = client.getIdentityDocument();
-        boolean exist = this.existDNI(dni);
-        if(exist){
+        boolean existDNI = this.existDNI(dni);
+        String number = client.getReservation().getReservationNumber();
+        boolean existReservationNumber = this.hotelClientRepository.findAll().stream()
+                .map(clientRN -> clientRN.getReservation().getReservationNumber())
+                .anyMatch(reservation -> reservation.equals(number));
+        if(existDNI){
             throw new ConflictException("DNI exist: " + dni);
+        }else if(existReservationNumber){
+            throw new ConflictException("Reservation exist: " + number);
         }
         else {
             String reservationNumber = client.getReservation().getReservationNumber();
@@ -48,6 +53,13 @@ public class HotelClientPersistenceMongodb implements HotelClientPersistence {
         return this.hotelClientRepository
                 .findByIdentityDocument(dni)
                 .isPresent();
+    }
+
+    @Override
+    public boolean existReservationNumber(String number){
+        return this.hotelClientRepository.findAll().stream()
+                .map(clientRN -> clientRN.getReservation().getReservationNumber())
+                .anyMatch(reservation -> reservation.equals(number));
     }
 
 }

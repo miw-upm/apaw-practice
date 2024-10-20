@@ -11,4 +11,5 @@ public interface HotelClientPersistence {
 
     boolean existDNI(String dni);
 
+    boolean existReservationNumber(String number);
 }

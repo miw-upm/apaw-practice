@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
