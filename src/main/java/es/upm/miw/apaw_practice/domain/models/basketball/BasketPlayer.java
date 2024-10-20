@@ -50,7 +50,7 @@ public class BasketPlayer {
     }
 
     public static class Builder implements BasketPlayerBuilders.Dni, BasketPlayerBuilders.Name,
-            BasketPlayerBuilders.Dorsal, BasketPlayerBuilders.Optionals {
+            BasketPlayerBuilders.Dorsal, BasketPlayerBuilders.Points, BasketPlayerBuilders.Builder {
 
         private final BasketPlayer basketPlayer;
 
@@ -71,13 +71,13 @@ public class BasketPlayer {
         }
 
         @Override
-        public BasketPlayerBuilders.Optionals dorsal(int dorsal) {
+        public BasketPlayerBuilders.Points dorsal(int dorsal) {
             this.basketPlayer.dorsal = dorsal;
             return this;
         }
 
         @Override
-        public BasketPlayerBuilders.Optionals points(int points) {
+        public BasketPlayerBuilders.Builder points(int points) {
             this.basketPlayer.points = points;
             return this;
         }

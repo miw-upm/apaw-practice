@@ -11,11 +11,14 @@ public interface BasketPlayerBuilders {
     }
 
     interface Dorsal {
-        Optionals dorsal(int dorsal);
+        Points dorsal(int dorsal);
     }
 
-    interface Optionals {
-        Optionals points(int points);
+    interface Points {
+        Builder points(int points);
+    }
+
+    interface Builder {
         BasketPlayer build();
     }
 }
