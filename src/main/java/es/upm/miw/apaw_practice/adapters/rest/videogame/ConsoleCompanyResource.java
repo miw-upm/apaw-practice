@@ -35,4 +35,9 @@ public class ConsoleCompanyResource {
     public ConsoleCompany create(@RequestBody ConsoleCompany consoleCompany) {
         return this.consoleCompanyService.create(consoleCompany);
     }
+
+    @DeleteMapping(COMPANY_INFORMATION)
+    public void delete(@PathVariable String companyInformation) {
+        this.consoleCompanyService.delete(companyInformation);
+    }
 }

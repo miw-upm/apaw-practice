@@ -15,6 +15,10 @@ public class User {
         this.role = role;
     }
 
+    public static UserCourseBuilders.Email build(){
+        return new Builder();
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -52,4 +56,38 @@ public class User {
         STUDENT,
         STUDENT_TUTOR
     }
+
+    public static class Builder implements UserCourseBuilders.FirstName, UserCourseBuilders.Email, UserCourseBuilders.Role, UserCourseBuilders.Builder {
+
+
+        private final User user;
+
+        public Builder(){
+            this.user = new User();
+        }
+
+        @Override
+        public UserCourseBuilders.FirstName email(String email) {
+            this.user.email = email;
+            return this;
+        }
+
+        @Override
+        public UserCourseBuilders.Role firstName(String firstName) {
+            this.user.firstName = firstName;
+            return this;
+        }
+
+        @Override
+        public UserCourseBuilders.Builder role(User.TypeUser role) {
+            this.user.role = role;
+            return this;
+        }
+
+        @Override
+        public User build() {
+            return this.user;
+        }
+    }
+
 }

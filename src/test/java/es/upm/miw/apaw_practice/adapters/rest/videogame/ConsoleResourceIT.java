@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static es.upm.miw.apaw_practice.adapters.rest.videogame.ConsoleResource.*;
 
 @RestTestConfig
  class ConsoleResourceIT {
@@ -16,8 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testFindByConsoleReference(){
-        this.webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path(ConsoleResource.CONSOLES + ConsoleResource.SEARCH)
+        this.webTestClient.
+                get()
+                .uri(uriBuilder -> uriBuilder.path(CONSOLES + SEARCH)
                         .queryParam("console","consoleReference:Xbox")
                         .build())
                 .exchange()
@@ -30,12 +32,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
     @Test
     void testFindByConsoleReferenceThanBadRequest(){
-        this.webTestClient.get()
+        this.webTestClient
+                .get()
                 .uri(uriBuilder ->
-                        uriBuilder.path(ConsoleResource.CONSOLES + ConsoleResource.SEARCH)
+                        uriBuilder.path(CONSOLES + SEARCH)
                                 .queryParam("console","NOSTRADAMUS")
                                 .build())
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testDelete(){
+        this.webTestClient
+                .delete()
+                .uri(CONSOLES + CONSOLE_REFERENCE, "GameCube")
+                .exchange()
+                .expectStatus().isOk();
     }
 }
