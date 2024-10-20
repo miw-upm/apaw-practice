@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.persistence;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.daos.LearnerRepository;
@@ -62,6 +64,22 @@ public class LearnerPersistenceMongodb implements LearnerPersistence {
 
     return this.learnerRepository.save(learnerEntity)
         .toLearner();
+  }
+
+  @Override
+  public BigDecimal findFeeSumByInstrumentDifficultyLevel(String difficultyLevel) {
+    if (Objects.isNull(difficultyLevel)) {
+      return BigDecimal.ZERO;
+    }
+    return this.learnerRepository.findAll()
+        .stream()
+        .flatMap(learnerEntity -> learnerEntity.getLessons().stream())
+        .filter(lessonEntity -> lessonEntity.getMusicalInstruments()
+            .stream()
+            .anyMatch(musicalInstrumentEntity -> difficultyLevel.equals(musicalInstrumentEntity.getDifficultyLevel())))
+        .map(LessonEntity::getFee)
+        .distinct()
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
   private LessonEntity buildLessonEntityByModel(Lesson lesson) {
