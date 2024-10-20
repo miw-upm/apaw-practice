@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.services.movies.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping(StudioResource.STUDIOS)
 public class StudioResource {
@@ -21,5 +23,10 @@ public class StudioResource {
     @GetMapping("/{name}")
     public Studio getStudioByName(@PathVariable String name) {
         return this.studioService.findByName(name);
+    }
+
+    @GetMapping("/award-category/{category}/market-capitalization-sum")
+    public BigDecimal getMarketCapitalizationSumByAwardCategory(@PathVariable String category) {
+        return this.studioService.findMarketCapitalizationSumByAwardCategory(category);
     }
 }
