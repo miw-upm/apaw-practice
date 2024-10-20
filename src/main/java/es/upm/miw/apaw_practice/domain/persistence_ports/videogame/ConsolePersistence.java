@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 @Repository
 public interface ConsolePersistence {
     Stream<Console> findByConsoleReference(String consoleReference);
-
     void delete(String consoleReference);
+    boolean existsConsole(String consoleReference);
+    Console create(Console console);
 }

@@ -33,4 +33,9 @@ public class ConsoleResource {
     public void delete(@PathVariable String consoleReference) {
         this.consoleService.delete(consoleReference);
     }
+
+    @PostMapping
+    public Console create(@RequestBody Console console) {
+        return consoleService.create(console);
+    }
 }
