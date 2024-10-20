@@ -7,6 +7,8 @@ import es.upm.miw.apaw_practice.domain.services.course.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(VideoResource.VIDEOS)
 public class VideoResource {
