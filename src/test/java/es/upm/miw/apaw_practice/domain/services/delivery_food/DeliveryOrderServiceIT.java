@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @TestConfig
 class DeliveryOrderServiceIT {
@@ -51,6 +52,13 @@ class DeliveryOrderServiceIT {
         Menu menu = new Menu();
         menu.setName("Italian Feast");
         return menu;
+    }
+
+    @Test
+    void testCalculateTotalRating(){
+        Double totalRating = deliveryOrderService.calculateTotalRating("TEST", "MenuRating");
+        assertNotNull(totalRating);
+        assertEquals(20, totalRating);
     }
 
 }
