@@ -33,10 +33,10 @@ public class GunPersistenceMongodbIT {
 
     @Test
     public void testUpdate() {
-        Integer idOfUpdated = 2;
-        Gun newGun = GunStoreSeederService.getNewDummyGun(2);
-        assertEquals(idOfUpdated, this.gunPersistenceMongodb.readByName("AR-15").getGunId());
-        assertNotEquals(newGun, this.gunPersistenceMongodb.readByName("AR-15"));
+        Integer idOfUpdated = 0;
+        Gun newGun = GunStoreSeederService.getNewDummyGun(idOfUpdated);
+        assertEquals(idOfUpdated, this.gunPersistenceMongodb.readByName("Glock 17").getGunId());
+        assertNotEquals(newGun, this.gunPersistenceMongodb.readByName("Glock 17"));
         gunPersistenceMongodb.update(idOfUpdated, newGun);
         assertEquals(idOfUpdated, this.gunPersistenceMongodb.readByName(newGun.getName()).getGunId());
         assertEquals(newGun, this.gunPersistenceMongodb.readByName(newGun.getName()));
