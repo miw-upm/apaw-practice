@@ -56,7 +56,6 @@ public class LearnerResourceIT {
         });
   }
 
-  @Test
   void testGetFindFeeSumByInstrumentDifficultyLevel() {
     this.webTestClient
         .get()

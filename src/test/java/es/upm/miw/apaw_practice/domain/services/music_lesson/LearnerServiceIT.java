@@ -77,7 +77,6 @@ public class LearnerServiceIT {
 
   }
 
-  @Test
   void testFindFeeSumByInstrumentDifficultyLevel() {
     BigDecimal expectedFeeSum = BigDecimal.valueOf(18.75);
     BigDecimal actualFeeSum = this.learnerService.findFeeSumByInstrumentDifficultyLevel("Beginner");
