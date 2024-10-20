@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Stream;
 
 
@@ -33,4 +35,9 @@ public class ThemeParkService {
     public BigDecimal getSumPriceByNick(String nick) {
         return this.themeParkPersistence.getSumPriceByNick(nick);
     }
+
+    public List<String> getIdsByAfterEntranceDate(LocalDateTime entranceDate) {
+        return this.themeParkPersistence.getThemeParkIdsByEntranceDate(entranceDate);
+    }
+
 }

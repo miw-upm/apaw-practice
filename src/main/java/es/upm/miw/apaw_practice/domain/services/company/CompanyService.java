@@ -18,4 +18,9 @@ public class CompanyService {
     public Company findByCompanyname(String companyname) {
         return this.companyPersistence.findByCompanyname(companyname);
     }
-}
+
+    public void updateIndustry(String companyname, String newIndustry) {
+        this.companyPersistence.updateIndustry(companyname, newIndustry);
+    }
+    }
+

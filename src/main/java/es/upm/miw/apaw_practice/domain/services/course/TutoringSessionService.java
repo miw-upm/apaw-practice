@@ -4,6 +4,9 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.course.TutoringSessionP
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalTime;
+
 @Service
 public class TutoringSessionService {
 
@@ -15,6 +18,11 @@ public class TutoringSessionService {
     }
 
     public void delete(String tittle){
+        this.tutoringSessionPersistence.delete(tittle);
+    }
 
-    };
+    public BigDecimal priceSumOfRoleDuration(String role, LocalTime duration) {
+
+        return this.tutoringSessionPersistence.priceSumOfRoleDuration(role, duration);
+    }
 }

@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.shopping_center;
 
+import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.shopping_center.Ticket;
 import es.upm.miw.apaw_practice.domain.services.shopping_center.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ public class TicketResource {
     static final String TICKETS = "/shopping_center/tags";
 
     static final String ID_ID = "/{id}";
+    static final String SEARCH = "/search";
 
     private final TicketService ticketService;
 
@@ -35,5 +37,11 @@ public class TicketResource {
     @PatchMapping(ID_ID)
     public void updateTotalPrice(@PathVariable String id, @RequestBody BigDecimal totalPrice) {
         this.ticketService.updateTotalPrice(id, totalPrice);
+    }
+
+    @GetMapping(SEARCH)
+    public BigDecimal sumTotalPriceOfMainService(@RequestParam String q) {
+        String mainService = new LexicalAnalyzer().extractWithAssure(q, "mainService");
+        return this.ticketService.sumTotalPrice(mainService);
     }
 }

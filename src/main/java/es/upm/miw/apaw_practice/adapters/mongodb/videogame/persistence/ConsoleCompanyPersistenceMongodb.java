@@ -9,6 +9,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Repository("consoleCompanyPersistence")
@@ -42,5 +44,17 @@ public class ConsoleCompanyPersistenceMongodb implements ConsoleCompanyPersisten
         BeanUtils.copyProperties(consoleCompany, consoleCompanyrEntity, "companyInformation");
         return this.consoleCompanyRepository.save(consoleCompanyrEntity)
                 .toConsoleCompany();
+    }
+
+    @Override
+    public ConsoleCompany create(ConsoleCompany consoleCompany) {
+        return this.consoleCompanyRepository
+                .save(new ConsoleCompanyrEntity("Sony","www.Sony.com",2000,false,LocalDate.of(2022,12,31),List.of()))
+                .toConsoleCompany();
+    }
+
+    @Override
+    public boolean existsConsoleCompany(String consoleCompany) {
+        return this.consoleCompanyRepository.findById(consoleCompany).isPresent();
     }
 }

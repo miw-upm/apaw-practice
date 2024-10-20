@@ -57,7 +57,7 @@ public class CourseSeederService {
         VideoEntity[] videosCursoC = {
                 new VideoEntity("Introducción al Lenguaje C", LocalTime.of(0, 30), LocalDateTime.of(2023, 1, 14, 12, 0)),
                 new VideoEntity("Estructuras de control en C", LocalTime.of(0, 35), LocalDateTime.of(2023, 1, 16, 13, 0)),
-                new VideoEntity("Funciones en C", LocalTime.of(0, 40), LocalDateTime.of(2023, 1, 18, 14, 0)),
+                new VideoEntity("Funciones en C", LocalTime.of(0, 57), LocalDateTime.of(2023, 1, 18, 14, 0)),
                 new VideoEntity("Punteros en C", LocalTime.of(0, 45), LocalDateTime.of(2023, 1, 20, 15, 0))
         };
 
@@ -75,32 +75,32 @@ public class CourseSeederService {
         this.videoRepository.saveAll(Arrays.asList(videosCursoSpring));
 
         UserCourseEntity[] usersPython1 = {
-                new UserCourseEntity("Jose", "jose@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Ana", "ana@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Jose", "jose@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Ana", "ana@gmail.com", UserCourseEntity.TypeUser.STUDENT.name())
         };
 
         UserCourseEntity[] usersPython2 = {
-                new UserCourseEntity("Luis", "luis@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Maria", "maria@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Luis", "luis@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Maria", "maria@gmail.com", UserCourseEntity.TypeUser.STUDENT.name())
         };
 
         UserCourseEntity[] usersJava = {
-                new UserCourseEntity("Laura", "laura@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Carlos", "carlos@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Laura", "laura@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Carlos", "carlos@gmail.com", UserCourseEntity.TypeUser.STUDENT.name())
         };
 
         UserCourseEntity[] usersC = {
-                new UserCourseEntity("Pedro", "pedro@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Miguel", "miguel@gmail.com", UserCourseEntity.TypeUser.STUDENT)
+                new UserCourseEntity("Pedro", "pedro@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Miguel", "miguel@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR.name())
         };
 
         UserCourseEntity[] usersSpring = {
-                new UserCourseEntity("Sofia", "sofia@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Raul", "raul@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Daniel", "daniel@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Lucia", "lucia@gmail.com", UserCourseEntity.TypeUser.STUDENT),
-                new UserCourseEntity("Andrea", "andrea@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR),
-                new UserCourseEntity("Pablo", "pablo@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR)
+                new UserCourseEntity("Sofia", "sofia@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Raul", "raul@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Daniel", "daniel@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Lucia", "lucia@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
+                new UserCourseEntity("Andrea", "andrea@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR.name()),
+                new UserCourseEntity("Pablo", "pablo@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR.name())
         };
 
         this.userRepository.saveAll(Arrays.asList(usersPython1));
@@ -110,7 +110,8 @@ public class CourseSeederService {
         this.userRepository.saveAll(Arrays.asList(usersSpring));
 
         TutoringSessionEntity[] tutoringSessionsCursoC = {
-                new TutoringSessionEntity("Lenguaje C Básico", LocalDateTime.of(2024, 12, 5, 16, 0), BigDecimal.valueOf(20.00)),
+                new TutoringSessionEntity("Lenguaje C Básico 1", LocalDateTime.of(2024, 12, 5, 16, 0), BigDecimal.valueOf(20.00)),
+                new TutoringSessionEntity("Lenguaje C Básico 2", LocalDateTime.of(2024, 12, 5, 20, 0), BigDecimal.valueOf(20.00)),
                 new TutoringSessionEntity("Punteros en C", LocalDateTime.of(2024, 12, 7, 16, 0), BigDecimal.valueOf(30.00))
         };
 

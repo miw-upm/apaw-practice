@@ -35,7 +35,8 @@ public class ShoppingCenterSeederService {
         ProviderEntity[] providers = {
                 new ProviderEntity(new Provider("provider1", "food", true)),
                 new ProviderEntity(new Provider("provider2", "tools", false)),
-                new ProviderEntity(new Provider("provider3", "clothes", true))
+                new ProviderEntity(new Provider("provider3", "clothes", true)),
+                new ProviderEntity(new Provider("provider12", "food", false))
         };
         this.providerRepository.saveAll(Arrays.asList(providers));
         EmployeeShoppingCenterEntity[] employees = {
@@ -49,7 +50,7 @@ public class ShoppingCenterSeederService {
         ShopEntity[] shops = {
                 new ShopEntity("shop1", "dir1", List.of(employees[0], employees[1]), List.of(providers[1])),
                 new ShopEntity("shop2", "dir2", List.of(employees[2], employees[3]), List.of(providers[0], providers[1], providers[2])),
-                new ShopEntity("shop3", "dir3", List.of(employees[4]), List.of(providers[0], providers[2]))
+                new ShopEntity("shop3", "dir3", List.of(employees[4]), List.of(providers[0], providers[2], providers[3]))
         };
         this.shopRepository.saveAll(Arrays.asList(shops));
         TicketEntity[] tickets = {
@@ -60,6 +61,7 @@ public class ShoppingCenterSeederService {
                 new TicketEntity(new BigDecimal("26.98"), false, employees[2]),
                 new TicketEntity(new BigDecimal("23.67"), false, employees[3]),
                 new TicketEntity(new BigDecimal("127.43"), true, employees[4]),
+                new TicketEntity(new BigDecimal("10.00"), true, employees[4]),
         };
         this.ticketRepository.saveAll(Arrays.asList(tickets));
     }

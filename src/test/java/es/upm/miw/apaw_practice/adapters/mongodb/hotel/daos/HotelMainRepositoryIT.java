@@ -16,8 +16,8 @@ public class HotelMainRepositoryIT {
 
     @Test
     void testFindByName() {
-        assertTrue(this.hotelMainRepository.findByName("xiangHotel").isPresent());
         HotelMainEntity hotelMainEntity = this.hotelMainRepository.findByName("xiangHotel").get();
+        assertTrue(this.hotelMainRepository.findByName("xiangHotel").isPresent());
         assertEquals("xiangHotel", hotelMainEntity.getName());
         assertEquals("Street God", hotelMainEntity.getAddress());
     }

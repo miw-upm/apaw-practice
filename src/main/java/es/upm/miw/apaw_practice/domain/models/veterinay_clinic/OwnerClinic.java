@@ -18,6 +18,10 @@ public class OwnerClinic {
         this.phone = phone;
     }
 
+    public static OwnerClinicBuilders.Name builder() {
+        return new Builder();
+    }
+
     public String getName() {
         return name;
     }
@@ -69,5 +73,37 @@ public class OwnerClinic {
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
+    }
+
+    public static class Builder implements OwnerClinicBuilders.Name, OwnerClinicBuilders.Address, OwnerClinicBuilders.Optionals {
+
+        private final OwnerClinic ownerClinic;
+
+        public Builder() {
+            this.ownerClinic = new OwnerClinic();
+        }
+
+        @Override
+        public OwnerClinicBuilders.Address name(String name) {
+            this.ownerClinic.name = name;
+            return this;
+        }
+
+        @Override
+        public OwnerClinicBuilders.Optionals address(String address) {
+            this.ownerClinic.address = address;
+            return this;
+        }
+
+        @Override
+        public OwnerClinicBuilders.Optionals phone(String phone) {
+            this.ownerClinic.phone = phone;
+            return this;
+        }
+
+        @Override
+        public OwnerClinic build() {
+            return this.ownerClinic;
+        }
     }
 }

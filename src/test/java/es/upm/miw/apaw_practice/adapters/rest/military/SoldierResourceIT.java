@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @RestTestConfig
@@ -57,5 +58,45 @@ class SoldierResourceIT {
                 .body(BodyInserters.fromValue(soldierRankUpdatingList))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testCountDistinctWeaponsByFullName() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(SoldierResource.SOLDIERS + SoldierResource.SEARCH)
+                        .queryParam("q", "fullName:Ana Ramírez López")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Long.class)
+                .value(count -> assertEquals(4, count));
+    }
+
+    @Test
+    void testCountDistinctWeaponsByFullNameNotFound() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(SoldierResource.SOLDIERS + SoldierResource.SEARCH)
+                        .queryParam("q", "fullName:Ana López")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Long.class)
+                .value(count -> assertEquals(0, count));
+    }
+
+    @Test
+    void testCountDistinctWeaponsByFullNameBadRequest() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(SoldierResource.SOLDIERS + SoldierResource.SEARCH)
+                        .queryParam("q", "name:Ana Ramírez López")
+                        .build())
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 }

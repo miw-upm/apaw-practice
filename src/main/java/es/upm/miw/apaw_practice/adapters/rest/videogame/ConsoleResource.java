@@ -24,6 +24,7 @@ public class ConsoleResource {
     public ConsoleResource(ConsoleService consoleService) {
         this.consoleService = consoleService;
     }
+
     @GetMapping(SEARCH)
     public Stream<Console> findByConsoleReference(@RequestParam String console) {
         String consoleReference = new LexicalAnalyzer().extractWithAssure(console, "consoleReference");

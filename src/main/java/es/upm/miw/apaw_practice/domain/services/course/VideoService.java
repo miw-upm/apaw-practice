@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.course;
 
 
+import es.upm.miw.apaw_practice.domain.models.course.Course;
 import es.upm.miw.apaw_practice.domain.models.course.Video;
 import es.upm.miw.apaw_practice.domain.persistence_ports.course.VideoPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,10 @@ public class VideoService {
     }
 
     public Video update(String name, Video video) {
-        return null;
+        return this.videoPersistence.update(name, video);
     }
 
+    public Video update(String name, String course){
+        return this.videoPersistence.update(name, course);
+    }
 }

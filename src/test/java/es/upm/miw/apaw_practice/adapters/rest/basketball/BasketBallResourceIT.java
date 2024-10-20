@@ -14,8 +14,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static es.upm.miw.apaw_practice.adapters.rest.basketball.BasketBallResource.BALLS;
-import static es.upm.miw.apaw_practice.adapters.rest.basketball.BasketBallResource.ID_ID;
+import static es.upm.miw.apaw_practice.adapters.rest.basketball.BasketBallResource.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RestTestConfig
 public class BasketBallResourceIT {
@@ -51,5 +52,33 @@ public class BasketBallResourceIT {
                 .expectStatus().isOk()
                 .expectBody(BasketBall.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testGetDistinctBrands(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(BALLS + SEARCH + DISTINCT_BRANDS)
+                                .queryParam("q", "league:NBA;playerName:Lebron")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(value -> assertTrue(value.contains("Nike")));
+    }
+
+    @Test
+    void testGetTotalPrice(){
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(BALLS + SEARCH + TOTAL_PRICE_BY_DORSAL)
+                                .queryParam("q", "dorsal:15")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(value -> assertEquals(new BigDecimal("127.30"), value));
     }
 }

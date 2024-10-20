@@ -18,6 +18,10 @@ public class Employee {
         this.phone = phone;
     }
 
+    public static EmployeeBuilders.Dni builder() {
+        return new Builder();
+    }
+
     public String getDni() {
         return dni;
     }
@@ -58,5 +62,37 @@ public class Employee {
                 ", phone='" + phone + '\'' +
                 ", hiringDay=" + hiringDay +
                 '}';
+    }
+
+    public static class Builder implements EmployeeBuilders.Dni, EmployeeBuilders.Name, EmployeeBuilders.Optionals {
+
+        private final Employee employee;
+
+        public Builder() {
+            this.employee = new Employee();
+        }
+
+        @Override
+        public EmployeeBuilders.Name dni(String dni) {
+            this.employee.dni = dni;
+            return this;
+        }
+
+        @Override
+        public EmployeeBuilders.Optionals name(String name) {
+            this.employee.name = name;
+            return this;
+        }
+
+        @Override
+        public EmployeeBuilders.Optionals phone(String phone) {
+            this.employee.phone = phone;
+            return this;
+        }
+
+        @Override
+        public Employee build() {
+            return this.employee;
+        }
     }
 }

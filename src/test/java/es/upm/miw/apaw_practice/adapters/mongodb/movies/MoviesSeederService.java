@@ -50,7 +50,7 @@ public class MoviesSeederService {
                 new ActorEntity("Tom Hardy", "Edward Thomas Hardy", true, LocalDate.of(1977, 9, 15)),
                 new ActorEntity("Scarlett Johansson", "Scarlett Ingrid Johansson", true, LocalDate.of(1984, 11, 22)),
                 new ActorEntity("Robert De Niro", "Robert Anthony De Niro", false, LocalDate.of(1943, 8, 17)),
-                new ActorEntity("Natalie Portman", "Natalie Hershlag", true, LocalDate.of(1981, 6, 9)),
+                new ActorEntity("Natalie Portman", "Natalie Hershlag", false, LocalDate.of(1981, 6, 9)),
                 new ActorEntity("Jack Nicholson", "John Joseph Nicholson", false, LocalDate.of(1937, 4, 22)),
                 new ActorEntity("Samuel L. Jackson", "Samuel Leroy Jackson", true, LocalDate.of(1948, 12, 21)),
                 new ActorEntity("Leonardo DiCaprio", "Leonardo Wilhelm DiCaprio", true, LocalDate.of(1974, 11, 11)),

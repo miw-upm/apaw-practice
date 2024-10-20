@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.course.entities;
 
+import es.upm.miw.apaw_practice.domain.models.course.User;
+import es.upm.miw.apaw_practice.domain.models.course.Video;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -59,6 +62,12 @@ public class VideoEntity {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Video toVideo(){
+        Video video = new Video();
+        BeanUtils.copyProperties(this, video);
+        return video;
     }
 
     @Override

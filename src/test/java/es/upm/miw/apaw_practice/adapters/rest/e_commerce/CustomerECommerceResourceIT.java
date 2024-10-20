@@ -43,4 +43,42 @@ public class CustomerECommerceResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+    @Test
+    void testUpdateEmail() {
+        String userName = "user1";
+        String newEmail = "newemail@example.com";
+        String originalEmail = "user1@example.com";
+
+        this.webTestClient
+                .patch()
+                .uri(uriBuilder ->
+                        uriBuilder.path(CUSTOMERS + "/email")
+                                .queryParam("userName", userName)
+                                .build())
+                .bodyValue(newEmail)
+                .exchange()
+                .expectStatus().isOk();
+
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(CUSTOMERS + SEARCH)
+                                .queryParam("userName", userName)
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(CustomerECommerce.class)
+                .value(customerECommerce -> assertEquals(newEmail, customerECommerce.getEmail()));
+
+        this.webTestClient
+                .patch()
+                .uri(uriBuilder ->
+                        uriBuilder.path(CUSTOMERS + "/email")
+                                .queryParam("userName", userName)
+                                .build())
+                .bodyValue(originalEmail)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
 }

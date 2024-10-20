@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.course.entities;
 
+import es.upm.miw.apaw_practice.domain.models.course.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,13 +16,13 @@ public class UserCourseEntity {
     @Indexed(unique = true)
     private String firstName;
     private String email;
-    private TypeUser role;
+    private String role;
 
     public UserCourseEntity() {
         //Empty for framework
     }
 
-    public UserCourseEntity(String firstName, String email, TypeUser role) {
+    public UserCourseEntity(String firstName, String email, String role) {
         this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.email = email;
@@ -51,16 +53,23 @@ public class UserCourseEntity {
         this.email = email;
     }
 
-    public TypeUser getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(TypeUser role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
+    public User toUserCourse(){
+        User user = new User();
+        BeanUtils.copyProperties(this, user, "role");
+        user.setRole(User.TypeUser.valueOf(this.role));
+        return user;
+    }
+
     public enum TypeUser {
-        STUDENT,
+        STUDENT ,
         STUDENT_TUTOR
     }
 

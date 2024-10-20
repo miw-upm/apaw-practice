@@ -15,7 +15,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
-public class OperatorResourceIT {
+class OperatorResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

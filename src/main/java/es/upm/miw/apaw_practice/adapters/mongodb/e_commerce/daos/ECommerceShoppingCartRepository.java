@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface ECommerceShoppingCartRepository extends MongoRepository<ShoppingCartECommerceEntity, String> {
     Optional<ShoppingCartECommerceEntity> findByShoppingNum(Integer shoppingNum);
+    void deleteByShoppingNum(Integer ShoppingNum);
+
 }

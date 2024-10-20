@@ -16,4 +16,7 @@ public class CustomerECommerceService {
     public CustomerECommerce findByUserName(String userName) {
         return this.customerPersistence.findByUserName(userName);
     }
+    public void updateEmail(String userName, String newEmail) {
+        this.customerPersistence.updateEmail(userName, newEmail);
+    }
 }

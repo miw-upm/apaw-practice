@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.course;
 
-import es.upm.miw.apaw_practice.adapters.rest.military.MissionResource;
 import es.upm.miw.apaw_practice.domain.models.course.Course;
 import es.upm.miw.apaw_practice.domain.services.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(CourseResource.COURSES)
 public class CourseResource {
 
-    static final String COURSES = "/course/courses";
+    static final String COURSES = "/course/course";
     static final String TITTLE = "/{tittle}";
 
     private final CourseService courseService;
@@ -24,6 +23,5 @@ public class CourseResource {
     public Course read(@PathVariable String tittle){
         return this.courseService.read(tittle);
     }
-
 
 }

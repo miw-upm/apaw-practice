@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RestTestConfig
 public class SetupResourceIT {
 
@@ -42,6 +44,19 @@ public class SetupResourceIT {
                 .isOk()
                 .expectBody(Setup.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    public void testFindMostExpensiveByCaliberAndCategory() {
+        webTestClient.get()
+                .uri(uribuilder -> uribuilder.path(SetupResource.SETUPS + SetupResource.SEARCH)
+                        .queryParam("q", "caliber:7.62x39mm;category:Scope")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Setup.class)
+                .value(setup -> assertEquals(4, setup.getSetupId()))
+                .value(setup -> assertEquals(new BigDecimal("4299.98"), setup.getTotalPrice()));
     }
 
 }
