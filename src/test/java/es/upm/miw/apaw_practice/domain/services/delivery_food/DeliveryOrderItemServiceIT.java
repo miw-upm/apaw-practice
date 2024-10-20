@@ -38,7 +38,6 @@ class DeliveryOrderItemServiceIT {
     void testFindDescriptionsMenuGreaterThanQuantity() {
         List<String> descriptionsMenuGreaterThanQuantity = deliveryOrderItemService.findDescriptionsMenuGreaterThanQuantity(5);
         assertNotNull(descriptionsMenuGreaterThanQuantity);
-        System.out.println(descriptionsMenuGreaterThanQuantity);
         assertEquals(2, descriptionsMenuGreaterThanQuantity.size());
     }
 }
