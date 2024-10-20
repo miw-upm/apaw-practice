@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.course.UserPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserCourseService {
 
@@ -19,4 +21,7 @@ public class UserCourseService {
         return this.userPersistence.create(user);
     }
 
+    public List<String> emailsOfTitleTutoringSession(String title) {
+        return this.userPersistence.emailsOfTitleTutoringSession(title);
+    }
 }
