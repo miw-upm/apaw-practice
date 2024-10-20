@@ -5,12 +5,16 @@ import es.upm.miw.apaw_practice.domain.services.course.TutoringSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalTime;
+
 @RestController
 @RequestMapping(TutoringSessionResource.TUTORINGSESSIONS)
 public class TutoringSessionResource {
 
-    static final String TUTORINGSESSIONS = "/course/tutoringsessions";
+    static final String TUTORINGSESSIONS = "/course/tutoringsession";
     static final String TITTLE = "/{tittle}";
+    static final String ROLE_PRICE = "/{role}";
 
 
     private final TutoringSessionService tutoringSessionService;
@@ -23,5 +27,10 @@ public class TutoringSessionResource {
     @DeleteMapping(TITTLE)
     public void delete(@PathVariable String tittle){
         this.tutoringSessionService.delete(tittle);
+    }
+
+    @GetMapping(ROLE_PRICE)
+    public BigDecimal priceSumOfRoleDuration(@PathVariable String role, @RequestBody LocalTime duration){
+        return this.tutoringSessionService.priceSumOfRoleDuration(role, duration);
     }
 }

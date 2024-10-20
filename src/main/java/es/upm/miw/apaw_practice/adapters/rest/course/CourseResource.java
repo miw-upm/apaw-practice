@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(CourseResource.COURSES)
 public class CourseResource {
 
-    static final String COURSES = "/course/courses";
+    static final String COURSES = "/course/course";
     static final String TITTLE = "/{tittle}";
 
     private final CourseService courseService;

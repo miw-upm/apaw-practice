@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(VideoResource.VIDEOS)
 public class VideoResource {
 
-    static final String VIDEOS = "/course/videos";
+    static final String VIDEOS = "/course/video";
     static final String COURSE = "/course";
 
     private final VideoService videoService;
