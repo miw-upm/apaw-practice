@@ -10,6 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,5 +75,17 @@ import static es.upm.miw.apaw_practice.adapters.rest.videogame.ConsoleResource.*
                 .expectStatus().isOk()
                 .expectBody(Console.class)
                 .value(Assertions::assertNotNull);
+    }
+
+    @Test
+    void testUpdate(){
+        Console console =
+                new Console("Rabbit", 9875456464646L, true,LocalDate.of(1985,9,6), Collections.emptyList());
+        this.webTestClient
+                .put()
+                .uri(CONSOLES + CONSOLE_REFERENCE, "Rabbit 2")
+                .body(BodyInserters.fromValue(console))
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

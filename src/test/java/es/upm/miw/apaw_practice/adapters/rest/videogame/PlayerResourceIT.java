@@ -1,7 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.rest.videogame;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.VideoGameSeederService;
-import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.ConsoleEntity;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.videogame.Console;
