@@ -63,7 +63,9 @@ public class GunStoreSeederService {
                 new GunEntity(4, new BigDecimal("599.99"), "Remington 870", "Remington", Arrays.asList(accesories[4], accesories[2]), compatibleAmmos[4]),
                 new GunEntity(5, new BigDecimal("849.99"), "Beretta 92FS", "Beretta", Arrays.asList(accesories[0], accesories[1]), compatibleAmmos[0]),
                 new GunEntity(6, new BigDecimal("699.99"), "Mossberg 500", "Mossberg", Arrays.asList(accesories[4], accesories[3]), compatibleAmmos[4]),
-                new GunEntity(7, new BigDecimal("2999.99"), "FN SCAR 17", "FN Herstal", Arrays.asList(accesories[2], accesories[0]), compatibleAmmos[3])
+                new GunEntity(7, new BigDecimal("2999.99"), "FN SCAR 17", "FN Herstal", Arrays.asList(accesories[2], accesories[0]), compatibleAmmos[3]),
+                new GunEntity(8, new BigDecimal("2999.99"), "FN SCAR 17 - 2", "FN Herstal", Arrays.asList(accesories[2], accesories[0]), compatibleAmmos[3]),
+                new GunEntity(9, new BigDecimal("2999.99"), "FN SCAR 17 - 3", "FN Herstal", Arrays.asList(accesories[2], accesories[0]), compatibleAmmos[3]),
         };
         this.gunRepository.saveAll(Arrays.asList(guns));
 

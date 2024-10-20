@@ -16,7 +16,7 @@ class MusicalInstrumentPersistenceMongodbIT {
 
   @Test
   void testReadByModel() {
-    MusicalInstrument actualMusicalInstrument = this.musicalInstrumentPersistenceMongodb.readByModel("GBS-LP-234");
+    MusicalInstrument actualMusicalInstrument = this.musicalInstrumentPersistenceMongodb.readByModel("GBS-LP-235");
     assertEquals("Intermediate", actualMusicalInstrument.getDifficultyLevel());
     assertEquals("Electric Guitar", actualMusicalInstrument.getType());
   }

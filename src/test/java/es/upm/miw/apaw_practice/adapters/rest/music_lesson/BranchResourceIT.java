@@ -39,7 +39,7 @@ public class BranchResourceIT {
   }
 
   @Test
-  void tesSearchUniqueModelsByAddress() {
+  void testSearchUniqueModelsByAddress() {
     this.webTestClient
         .get()
         .uri(uriBuilder ->
