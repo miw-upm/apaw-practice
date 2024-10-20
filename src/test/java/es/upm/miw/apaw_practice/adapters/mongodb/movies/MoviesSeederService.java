@@ -39,7 +39,10 @@ public class MoviesSeederService {
                 new AwardEntity("Oscar_2022_BestSupportingActor", "Oscar", "Best Supporting Actor", LocalDate.of(2022, 3, 27)),
                 new AwardEntity("Oscar_2020_BestDirector", "Oscar", "Best Director", LocalDate.of(2020, 2, 9)),
                 new AwardEntity("GoldenGlobe_1995_BestActor", "Golden Globe", "Best Actor", LocalDate.of(1995, 1, 15)),
-                new AwardEntity("BAFTA_2020_BestDirector", "BAFTA", "Best Director", LocalDate.of(2020, 2, 2))
+                new AwardEntity("BAFTA_2020_BestDirector", "BAFTA", "Best Director", LocalDate.of(2020, 2, 2)),
+                new AwardEntity("Oscar_1994_BestPicture", "Oscar", "Best Picture", LocalDate.of(1994, 3, 27)),
+                new AwardEntity("BAFTA_1995_BestPicture", "BAFTA", "Best Picture", LocalDate.of(1995, 2, 19))
+
         };
         this.awardRepository.saveAll(Arrays.asList(awards));
 
@@ -55,7 +58,7 @@ public class MoviesSeederService {
         };
         this.actorRepository.saveAll(Arrays.asList(actors));
 
-        // Relacionar actores y premios a películas
+        // 4 y 6
         Set<ActorEntity> actorsForInception = new HashSet<>(Set.of(actors[0], actors[3], actors[5]));
         Set<ActorEntity> actorsForTitanic = new HashSet<>(Set.of(actors[0], actors[7]));
         Set<ActorEntity> actorsForPulpFiction = new HashSet<>(Set.of(actors[5], actors[1]));
@@ -64,27 +67,38 @@ public class MoviesSeederService {
         Set<ActorEntity> actorsForMarsAttacks = new HashSet<>(Set.of(actors[3], actors[4]));
         Set<ActorEntity> actorsForTheRevenant = new HashSet<>(Set.of(actors[6], actors[0]));
         Set<ActorEntity> actorsForTheProfessional = new HashSet<>(Set.of(actors[3]));
+        Set<ActorEntity> actorsForTheShawshankRedemption = new HashSet<>(Set.of(actors[3]));
+        Set<ActorEntity> actorsForFightClub = new HashSet<>(Set.of(actors[3]));
+        Set<ActorEntity> actorsForStarWarsEpisodeIV = new HashSet<>(Set.of(actors[3]));
 
         MovieEntity[] movies = {
                 new MovieEntity("tt1375666", "Inception", new BigDecimal("292587330"), LocalDate.of(2010, 7, 8), actorsForInception, awards[2]),
                 new MovieEntity("tt7654321", "Titanic", new BigDecimal("500000000"), LocalDate.of(2020, 5, 10), actorsForTitanic, awards[4]),
                 new MovieEntity("tt0110912", "Pulp Fiction", new BigDecimal("107928762"), LocalDate.of(1994, 10, 14), actorsForPulpFiction, null),
-                new MovieEntity("tt0075314", "Taxi Driver", new BigDecimal("28262576"), LocalDate.of(1976, 2, 8), actorsForTaxiDriver, null),
+                new MovieEntity("tt0075314", "Taxi Driver", new BigDecimal("28262576"), LocalDate.of(1976, 2, 8), actorsForTaxiDriver, awards[6]),
                 new MovieEntity("tt0113277", "Heat", new BigDecimal("187436818"), LocalDate.of(1995, 12, 15), actorsForHeat, awards[0]),
                 new MovieEntity("tt0116996", "Mars Attacks!", new BigDecimal("101371017"), LocalDate.of(1996, 12, 13), actorsForMarsAttacks, null),
                 new MovieEntity("tt1663202", "The Revenant", new BigDecimal("528966675"), LocalDate.of(2015, 12, 25), actorsForTheRevenant, awards[0]),
-                new MovieEntity("tt0110413", "The Professional", new BigDecimal("47000000"), LocalDate.of(1994, 11, 18), actorsForTheProfessional, awards[2])
+                new MovieEntity("tt0110413", "The Professional", new BigDecimal("47000000"), LocalDate.of(1994, 11, 18), actorsForTheProfessional, awards[2]),
+                new MovieEntity("tt0111161", "The Shawshank Redemption", new BigDecimal("28341469"), LocalDate.of(1994, 9, 23), actorsForTheShawshankRedemption, awards[7]),
+                new MovieEntity("tt0137523", "Fight Club", new BigDecimal("100853753"), LocalDate.of(1999, 10, 15), actorsForFightClub, awards[8]),
+                new MovieEntity("tt0076759", "Star Wars: Episode IV - A New Hope", new BigDecimal("775398007"), LocalDate.of(1977, 5, 25),actorsForStarWarsEpisodeIV, awards[4])
+
         };
         this.movieRepository.saveAll(Arrays.asList(movies));
 
-        Set<MovieEntity> moviesForWarnerBros = new HashSet<>(Set.of(movies[0], movies[2], movies[4]));
-        Set<MovieEntity> moviesForUniversal = new HashSet<>(Set.of(movies[3]));
-        Set<MovieEntity> moviesForMiramax = new HashSet<>(Set.of(movies[1]));
+        Set<MovieEntity> moviesForWarnerBros = new HashSet<>(Set.of(movies[1], movies[2], movies[4], movies[3]));
+        Set<MovieEntity> moviesForUniversal = new HashSet<>(Set.of(movies[0], movies[5]));
+        Set<MovieEntity> moviesForMiramax = new HashSet<>(Set.of(movies[6], movies[8], movies[7]));
+        Set<MovieEntity> moviesForLionsgate = new HashSet<>(Set.of(movies[9]));
 
         StudioEntity[] studios = {
                 new StudioEntity("Warner Bros", LocalDate.of(1923, 4, 4), new BigDecimal("10000000000"), moviesForWarnerBros),
                 new StudioEntity("Universal Pictures", LocalDate.of(1912, 4, 30), new BigDecimal("8000000000"), moviesForUniversal),
-                new StudioEntity("Miramax", LocalDate.of(1979, 12, 31), new BigDecimal("500000000"), moviesForMiramax)
+                new StudioEntity("Miramax", LocalDate.of(1979, 12, 31), new BigDecimal("500000000"), moviesForMiramax),
+                new StudioEntity("Lionsgate", LocalDate.of(2000, 1, 1), new BigDecimal("150000000"), moviesForLionsgate),
+                new StudioEntity("Disney Pixar", LocalDate.of(2005, 1, 1), null, new HashSet<>())
+
         };
         this.studioRepository.saveAll(Arrays.asList(studios));
     }
