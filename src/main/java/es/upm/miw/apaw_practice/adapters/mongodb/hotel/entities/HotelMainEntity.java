@@ -1,14 +1,15 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import reactor.core.CoreSubscriber;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Document
 public class HotelMainEntity {
@@ -70,9 +71,19 @@ public class HotelMainEntity {
 
     public void setClients(List<HotelClientEntity> clients) { this.clients = clients; }
 
+
     public HotelMain toHotel() {
         HotelMain hotel = new HotelMain();
+        List<HotelClient> clients = this.clients.stream()
+                .map(HotelClientEntity::toClient)
+                .collect(Collectors.toList());
+        hotel.setClients(clients);
+        List<HotelRoom> rooms = this.rooms.stream()
+                .map(HotelRoomEntity::toRoom)
+                .collect(Collectors.toList());
+        hotel.setRooms(rooms);
         BeanUtils.copyProperties(this, hotel);
+
         return hotel;
     }
 

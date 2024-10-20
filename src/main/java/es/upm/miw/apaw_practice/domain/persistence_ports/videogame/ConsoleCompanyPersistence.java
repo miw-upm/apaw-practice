@@ -10,4 +10,6 @@ public interface ConsoleCompanyPersistence {
     Stream<ConsoleCompany> readAll();
     ConsoleCompany readById(String id);
     ConsoleCompany updateConsoleCompany(ConsoleCompany consoleCompany);
+    ConsoleCompany create(ConsoleCompany consoleCompany);
+    boolean existsConsoleCompany(String consoleInformation);
 }

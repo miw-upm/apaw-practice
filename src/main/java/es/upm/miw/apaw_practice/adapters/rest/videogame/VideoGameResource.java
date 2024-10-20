@@ -48,4 +48,9 @@ public class VideoGameResource {
         String website = new LexicalAnalyzer().extractWithAssure(l,"website").trim();
         return this.videoGameService.sumNumberOfPlayerByPlayerNameAndWebsite(playerName, website);
     }
+
+    @DeleteMapping(VIDEOGAME_ALIAS)
+    public void delete(@PathVariable String videoGameAlias) {
+        this.videoGameService.delete(videoGameAlias);
+    }
 }

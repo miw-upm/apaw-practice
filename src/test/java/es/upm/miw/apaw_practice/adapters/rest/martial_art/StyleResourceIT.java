@@ -45,7 +45,7 @@ public class StyleResourceIT {
                 .value(style -> {
                     assertEquals("Estilo de combate", style.getName());
                     assertEquals("america", style.getOriginCountry());
-                    assertEquals("Tecnica pensada para el deporte de contacto", style.getDescription());
+                    assertEquals("Tecnica pensada para el deporte de marcial", style.getDescription());
                 });
     }
 

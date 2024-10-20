@@ -40,4 +40,40 @@ class StudioResourceIT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    @Test
+    void testGetMarketCapitalizationSumDifferentStudios() {
+        WebTestClient.ResponseSpec response = webTestClient
+                .get()
+                .uri(StudioResource.STUDIOS + "/award-category/{category}/market-capitalization-sum", "Best Picture")
+                .exchange();
+
+        response.expectStatus().isOk();
+        response.expectBody(BigDecimal.class).value(sum -> {
+            assertEquals(new BigDecimal("650000000"), sum);
+        });
+    }
+
+    @Test
+    void testGetMarketCapitalizationSumByAwardCategoryDuplicated() {
+        WebTestClient.ResponseSpec response = webTestClient
+                .get()
+                .uri(StudioResource.STUDIOS + "/award-category/{category}/market-capitalization-sum", "Best Director")
+                .exchange();
+
+        response.expectStatus().isOk();
+        response.expectBody(BigDecimal.class).value(sum -> {
+            assertEquals(new BigDecimal("10000000000"), sum);
+        });
+    }
+
+    @Test
+    void testGetMarketCapitalizationSumByAwardCategoryNotExist() {
+        webTestClient
+                .get()
+                .uri(StudioResource.STUDIOS + "/award-category/{category}/market-capitalization-sum", "Best Catering")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class).isEqualTo(BigDecimal.ZERO);
+    }
 }

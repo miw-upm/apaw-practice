@@ -32,17 +32,18 @@ public class MartialArtSeederService {
         LogManager.getLogger(this.getClass()).warn("------- Martial Art Initial Load -----------");
 
         InstructorEntity[] instructorEntities = new InstructorEntity[]{
-                new InstructorEntity("Z1521143C", "Bastian red", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
-                new InstructorEntity("84134147K", "Felipe flip", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
-                new InstructorEntity("Z1721643C", "Robert wat", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
-                new InstructorEntity("03948142R", "Bruce lee", 999999, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
+                new InstructorEntity("Z1521143C", "Bastian red", 978957449, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
+                new InstructorEntity("84134147K", "Felipe flip", 978957449, LocalDateTime.of(1990, 10, 27, 23, 2, 2)), // Cambiado
+                new InstructorEntity("Z1721643C", "Robert wat", 987539464, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
+                new InstructorEntity("03948142R", "Bruce lee", 997790286, LocalDateTime.of(1990, 10, 27, 23, 2, 2)),
         };
 
         this.instructorRepository.saveAll(Arrays.asList(instructorEntities));
 
         StyleEntity[] styleEntities ={
-                new StyleEntity("Estilo de combate","Tecnica pensada para el deporte de contacto","america",4),
-                new StyleEntity("Estilo de marcial","Tecnica pensada para el deporte de contacto","Corea",4)
+                new StyleEntity("Estilo de combate","Tecnica pensada para el deporte de marcial","america",4),
+                new StyleEntity("Estilo de marcial","Tecnica pensada para el deporte de contacto","Corea",4),
+                new StyleEntity("Estilo de popularidad 2", "Técnica con popularidad 2", "Asia", 2)
         };
         this.styleRepository.saveAll(Arrays.asList(styleEntities));
 
@@ -52,8 +53,13 @@ public class MartialArtSeederService {
                 new TechniqueEntity("Dollyo",3,true,1.0,List.of(instructorEntities), Arrays.asList(styleEntities).get(0)),
                 new TechniqueEntity("Bandal",5,true,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(1)),
                 new TechniqueEntity("Punch",7,false,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(0)),
-                new TechniqueEntity("Tuitchagui",1,true,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(1))
+                new TechniqueEntity("Tuitchagui",5,true,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(1)),
+                new TechniqueEntity("Neryo", 1, true, 1.0, List.of(instructorEntities), Arrays.asList(styleEntities).get(2))
+
         };
+
+
+
         this.techniqueRepository.saveAll(Arrays.asList(techniqueEntities));
 
         MartialArtsClassEntity[] martialArtsClassEntities = {
