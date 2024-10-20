@@ -82,4 +82,13 @@ public class ConsoleCompanyResourceIT {
                 .expectBody(Console.class)
                 .value(Assertions::assertNotNull);
     }
+
+    @Test
+    void testDelete(){
+        this.webTestClient
+                .delete()
+                .uri(CONSOLE_COMPANIES + COMPANY_INFORMATION, "Xbox")
+                .exchange()
+                .expectStatus().isOk();
+    }
 }
