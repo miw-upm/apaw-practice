@@ -13,4 +13,6 @@ public interface BranchPersistence {
   Stream<Branch> readAll();
 
   Stream<Branch> findByAddress(String address);
+
+  Stream<String> findUniqueMusicalInstrumentModelsByAddress(String address);
 }
