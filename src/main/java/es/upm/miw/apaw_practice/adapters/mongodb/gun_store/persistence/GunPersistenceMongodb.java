@@ -4,7 +4,6 @@ import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.daos.GunRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.entities.CompatibleAmmoEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.entities.GunEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw_practice.domain.models.gun_store.CompatibleAmmo;
 import es.upm.miw.apaw_practice.domain.models.gun_store.Gun;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gun_store.GunPersistence;
 import org.springframework.beans.BeanUtils;
