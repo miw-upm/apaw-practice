@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.videogame;
 
 import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
+import es.upm.miw.apaw_practice.domain.models.videogame.Player;
 import es.upm.miw.apaw_practice.domain.services.videogame.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,10 @@ public class PlayerResource {
     public List<String> findVideoGameAliasByPlayerName(@RequestParam String l) {
         String playerName = new LexicalAnalyzer().extractWithAssure(l, "playerName").trim();
         return this.playerService.findVideoGameAliasByPlayerName(playerName).toList();
+    }
+
+    @PostMapping
+    public Player create(@RequestBody Player player) {
+        return playerService.create(player);
     }
 }

@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.videogame.persistence;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.ConsoleRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.ConsoleEntity;
 import es.upm.miw.apaw_practice.domain.models.videogame.Console;
-import es.upm.miw.apaw_practice.domain.models.videogame.ConsoleCompany;
 import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.ConsolePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

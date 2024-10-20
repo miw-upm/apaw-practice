@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.PlayerRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.ConsoleEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.PlayerEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.VideoGamerEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -9,6 +10,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.PlayerPersist
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.stream.Stream;
 
 @Repository("playerPersistence")
@@ -47,5 +49,19 @@ public class PlayerPersistenceMongodb implements PlayerPersistence {
                 playerEntity.getConsoleEntity().getVideoGameEntities().stream())
                 .map(VideoGamerEntity::getVideoGameAlias)
                 .distinct();
+    }
+
+    @Override
+    public Player create(Player player) {
+        return this.playerRepository
+                .save(new PlayerEntity("David",23,false,LocalDate.of(1961,5,12), new ConsoleEntity()))
+                .toPlayer();
+    }
+
+    @Override
+    public boolean existsPlayer(String playerName){
+        return this.playerRepository
+                .findByPlayerName(playerName)
+                .isPresent();
     }
 }
