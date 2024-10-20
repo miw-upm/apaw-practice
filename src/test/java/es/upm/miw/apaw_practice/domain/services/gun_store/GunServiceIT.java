@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GunServiceIT {
 
     public static final String AK_47 = "AK-47";
-    public static final int ID_OF_UPDATED_GUN = 2;
+    public static final int ID_OF_UPDATED_GUN = 8;
     @Autowired
     GunService gunService;
 
@@ -37,6 +37,7 @@ public class GunServiceIT {
     @Test
     public void testPUT() {
         Gun newGun = GunStoreSeederService.getNewDummyGun(ID_OF_UPDATED_GUN);
+        newGun.setName("TestGun1");
         this.gunService.update(ID_OF_UPDATED_GUN, newGun);
         assertEquals(newGun, this.gunPersistence.readByName(newGun.getName()));
     }
