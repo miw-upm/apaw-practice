@@ -37,4 +37,8 @@ public class VideoGameService {
     public Integer sumNumberOfPlayerByPlayerNameAndWebsite(String playerName, String website) {
         return this.videoGamePersistence.sumNumberOfPlayerByPlayerNameAndWebsite(playerName, website);
     }
+
+    public void delete(String videoGameAlias) {
+        this.videoGamePersistence.delete(videoGameAlias);
+    }
 }

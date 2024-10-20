@@ -25,7 +25,8 @@ public class VideoGameResourceIT {
     void testCreate(){
         VideoGame videoGame =
                 new VideoGame("Metroid",1,false, LocalDate.of(2015,2,5));
-        this.webTestClient.post()
+        this.webTestClient
+                .post()
                 .uri(VIDEOGAMES)
                 .body(BodyInserters.fromValue(videoGame))
                 .exchange()
@@ -37,7 +38,8 @@ public class VideoGameResourceIT {
     @Test
     void testCreateConflict(){
         VideoGame videoGame = new VideoGame("Zelda",2,true, LocalDate.of(2024,6,15));
-        this.webTestClient.post()
+        this.webTestClient
+                .post()
                 .uri(VIDEOGAMES)
                 .body(BodyInserters.fromValue(videoGame))
                 .exchange()
@@ -47,7 +49,8 @@ public class VideoGameResourceIT {
     @Test
     void testUpdate(){
         VideoGame videoGame = new VideoGame("PUBG",1,false, LocalDate.of(2016,3,30));
-        this.webTestClient.put()
+        this.webTestClient
+                .put()
                 .uri(VIDEOGAMES + VIDEOGAMES, "law")
                 .body(BodyInserters.fromValue(videoGame))
                 .exchange()
@@ -80,5 +83,14 @@ public class VideoGameResourceIT {
                 .expectStatus().isOk()
                 .expectBody(Integer.class)
                 .value(name -> assertEquals(360,name));
+    }
+
+    @Test
+    void testDelete(){
+        this.webTestClient
+                .delete()
+                .uri(VIDEOGAMES + VIDEOGAMES, "Zelda")
+                .exchange()
+                .expectStatus().isOk();
     }
 }

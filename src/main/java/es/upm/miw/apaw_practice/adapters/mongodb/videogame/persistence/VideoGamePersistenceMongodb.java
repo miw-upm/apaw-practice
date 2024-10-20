@@ -88,4 +88,9 @@ public class VideoGamePersistenceMongodb implements VideoGamePersistence {
                 .distinct()
                 .reduce(0, Integer::sum);
     }
+
+    @Override
+    public void delete(String videoGameAlias){
+        this.videoGameRepository.deleteByVideoGameAlias(videoGameAlias);
+    }
 }
