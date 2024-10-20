@@ -19,6 +19,8 @@ public class BranchResource {
 
   static final String SEARCH = "/search";
 
+  static final String UNIQUE_MODELS_BY_ADDRESS = "/unique-models-by-address";
+
   private final BranchService branchService;
 
   @Autowired
@@ -30,6 +32,12 @@ public class BranchResource {
   public Stream<Branch> findByAddress(@RequestParam String q) {
     String address = new LexicalAnalyzer().extractWithAssure(q, "address");
     return this.branchService.findByAddress(address);
+  }
+
+  @GetMapping(SEARCH + UNIQUE_MODELS_BY_ADDRESS)
+  public Stream<String> findUniqueMusicalInstrumentModelsByAddress(@RequestParam String q) {
+    String address = new LexicalAnalyzer().extractWithAssure(q, "address");
+    return this.branchService.findUniqueMusicalInstrumentModelsByAddress(address);
   }
 
 }
