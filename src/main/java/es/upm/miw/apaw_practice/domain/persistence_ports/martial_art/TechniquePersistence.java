@@ -16,4 +16,6 @@ public interface TechniquePersistence {
     void delete(String name);
 
     Stream<Integer> findNonDuplicatedInstructorPhonesByPopularity(int popularity);
+
+    Integer findTotalDurationNoRepeatByDescription(String description);
 }
