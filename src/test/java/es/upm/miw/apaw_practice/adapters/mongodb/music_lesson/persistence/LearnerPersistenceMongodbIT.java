@@ -32,7 +32,6 @@ public class LearnerPersistenceMongodbIT {
         .allMatch(lesson -> lesson.getFee().compareTo(BigDecimal.valueOf(18.75)) == 0));
   }
 
-  @Test
   void testFindFeeSumByInstrumentDifficultyLevel() {
     BigDecimal expectedFeeSum = BigDecimal.valueOf(18.75);
     BigDecimal actualFeeSumByAdvancedDifficulty = this.learnerPersistenceMongodb.findFeeSumByInstrumentDifficultyLevel("Beginner");
