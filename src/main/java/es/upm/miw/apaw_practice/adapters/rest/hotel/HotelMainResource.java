@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
-import es.upm.miw.apaw_practice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.services.hotel.HotelMainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +11,13 @@ public class HotelMainResource {
 
     static final String HOTELS = "/hotel/hotels";
     static final String NAMES= "/{name}";
+
     private final HotelMainService hotelMainService;
 
     @Autowired
     public HotelMainResource(HotelMainService hotelMainService) {
-            this.hotelMainService = hotelMainService;
-        }
+        this.hotelMainService = hotelMainService;
+    }
 
     @GetMapping(NAMES)
     public HotelMain findByName(@PathVariable String name) {

@@ -11,8 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping(ConsoleCompanyResource.CONSOLE_COMPANIES)
 public class ConsoleCompanyResource {
-    public static final String CONSOLE_COMPANIES = "/console-companies";
+    static final String CONSOLE_COMPANIES = "/console-companies";
     static final String COMPANY_INFORMATION = "/{companyInformation}";
+
     private final ConsoleCompanyService consoleCompanyService;
 
     @Autowired
@@ -28,5 +29,21 @@ public class ConsoleCompanyResource {
     @PatchMapping
     public void updateAllCompanyActive(@RequestBody List<ConsoleCompanyActivedUpdating> consoleCompanyActivedUpdating) {
         this.consoleCompanyService.updateAllCompanyActive(consoleCompanyActivedUpdating.stream());
+    }
+
+    @PostMapping
+    public ConsoleCompany create(@RequestBody ConsoleCompany consoleCompany) {
+        return this.consoleCompanyService.create(consoleCompany);
+    }
+
+    @DeleteMapping(COMPANY_INFORMATION)
+    public void delete(@PathVariable String companyInformation) {
+        this.consoleCompanyService.delete(companyInformation);
+    }
+
+    @PutMapping(COMPANY_INFORMATION)
+    public ConsoleCompany update(@PathVariable String companyInformation, @RequestBody ConsoleCompany consoleCompany) {
+        this.consoleCompanyService.assertCompanyInformationNotExist(companyInformation);
+        return consoleCompanyService.update(companyInformation, consoleCompany);
     }
 }

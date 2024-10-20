@@ -55,7 +55,7 @@ public class HotelMain {
 
     public List<HotelClient> getClients() { return this.HotelClients; }
 
-    public void setClients(final List<HotelClient> HotelClients) { this.HotelClients = HotelClients; }
+    public void setClients(List<HotelClient> HotelClients) { this.HotelClients = HotelClients; }
 
     @Override
     public String toString() {

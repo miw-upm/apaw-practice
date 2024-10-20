@@ -3,16 +3,15 @@ package es.upm.miw.apaw_practice.adapters.rest.course;
 import es.upm.miw.apaw_practice.domain.models.course.User;
 import es.upm.miw.apaw_practice.domain.services.course.UserCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(UserCourseResource.USERS)
 public class UserCourseResource {
 
-    static final String USERS = "/course/users";
+    static final String USERS = "/course/user";
 
     private final UserCourseService userCourseService;
 
@@ -26,4 +25,8 @@ public class UserCourseResource {
         return this.userCourseService.create(user);
     }
 
+    @GetMapping()
+    public List<String> emailsOfTitleTutoringSession(@RequestParam String title){
+        return this.userCourseService.emailsOfTitleTutoringSession(title);
+    }
 }

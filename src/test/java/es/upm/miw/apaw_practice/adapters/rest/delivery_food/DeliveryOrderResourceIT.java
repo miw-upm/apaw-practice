@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static es.upm.miw.apaw_practice.adapters.rest.delivery_food.DeliveryOrderResource.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
@@ -25,7 +26,7 @@ class DeliveryOrderResourceIT {
         DeliveryOrder orderInsert = getDeliveryOrderInsert();
         this.webTestClient
                 .post()
-                .uri(DeliveryOrderResource.DELIVERY_ORDER)
+                .uri(DELIVERY_ORDER)
                 .body(BodyInserters.fromValue(orderInsert))
                 .exchange()
                 .expectStatus().isCreated()
@@ -52,7 +53,7 @@ class DeliveryOrderResourceIT {
     private List<DeliveryOrderItem> mapDeliveryOrderItems() {
         DeliveryOrderItem orderItem = new DeliveryOrderItem();
         orderItem.setPrice(new BigDecimal("4.4"));
-        orderItem.setQuantity(7);
+        orderItem.setQuantity(3);
         orderItem.setMenu(mapMenu());
         return List.of(orderItem);
     }
@@ -61,5 +62,22 @@ class DeliveryOrderResourceIT {
         Menu menu = new Menu();
         menu.setName("Italian Feast");
         return menu;
+    }
+
+    @Test
+    void testCalculateTotalRating(){
+        this.webTestClient
+                .get()
+                .uri(uribuilder -> uribuilder.path(DELIVERY_ORDER + SEARCH)
+                            .queryParam("q", "customerName:TEST;description:MenuRating")
+                            .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Double.class)
+                .value(totalRating -> {
+                            assertNotNull(totalRating);
+                            assertEquals(20, totalRating);
+                        }
+                );
     }
 }

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CoursePersistence {
-    Course read(String tittle);
+    Course read(String title);
 }

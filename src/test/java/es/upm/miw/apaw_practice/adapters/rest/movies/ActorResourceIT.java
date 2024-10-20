@@ -4,7 +4,6 @@ import es.upm.miw.apaw_practice.domain.models.movies.Actor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
@@ -19,8 +18,6 @@ class ActorResourceIT {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
 
     @Test
     void testUpdateActorNotExists(){
@@ -38,6 +35,23 @@ class ActorResourceIT {
 
         Actor updatedActor = getActorByArtisticName(actor.getArtisticName());
         assertEquals("Edward T. Hardy", updatedActor.getRealName());
+        assertFalse(updatedActor.isAvailable());
+    }
+
+    @Test
+    void testUpdateAvailability() {
+        String artisticName = "Tom Hardy";
+        this.webTestClient
+                .patch()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ActorResource.ACTORS)
+                        .queryParam("artisticName", artisticName)
+                        .queryParam("availability", false)
+                        .build())
+                .exchange()
+                .expectStatus().isOk();
+
+        Actor updatedActor = getActorByArtisticName(artisticName);
         assertFalse(updatedActor.isAvailable());
     }
 

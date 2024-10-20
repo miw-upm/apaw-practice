@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities;
 
 import es.upm.miw.apaw_practice.domain.models.videogame.Console;
 import es.upm.miw.apaw_practice.domain.models.videogame.VideoGame;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -77,6 +78,10 @@ public class ConsoleEntity {
                 .map(VideoGamerEntity::toVideoGame)
                 .toList();
         return new Console(consoleReference, serialNumber, portable, creationDate, videoGames);
+    }
+
+    public void fromConsole(Console console){
+        BeanUtils.copyProperties(this, console);
     }
 
     @Override

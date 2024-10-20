@@ -3,7 +3,7 @@ package es.upm.miw.apaw_practice.domain.services.martial_art;
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 
-import es.upm.miw.apaw_practice.domain.models.hotel_retired.Hotel;
+
 import es.upm.miw.apaw_practice.domain.models.martial_art.Style;
 import es.upm.miw.apaw_practice.domain.models.martial_art.Technique;
 

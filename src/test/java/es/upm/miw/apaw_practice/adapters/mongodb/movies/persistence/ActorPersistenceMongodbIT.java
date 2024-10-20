@@ -17,9 +17,6 @@ class ActorPersistenceMongodbIT {
     @Autowired
     private ActorPersistenceMongodb actorPersistence;
 
-    @Autowired
-    private MoviesSeederService moviesSeederService;
-
     @Test
     void testFindByArtisticNameNotFound() {
         assertThrows(NotFoundException.class, () -> this.actorPersistence.findByArtisticName("Jennifer Aniston"));
@@ -30,7 +27,7 @@ class ActorPersistenceMongodbIT {
         Actor actor = this.actorPersistence.findByArtisticName("Natalie Portman");
         assertEquals("Natalie Portman", actor.getArtisticName());
         assertEquals("Natalie Hershlag", actor.getRealName());
-        assertTrue(actor.isAvailable());
+        assertFalse(actor.isAvailable());
         assertEquals(LocalDate.of(1981, 6, 9), actor.getBirthDate());
     }
 

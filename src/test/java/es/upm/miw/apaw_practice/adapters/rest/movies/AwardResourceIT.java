@@ -103,7 +103,7 @@ class AwardResourceIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(String.class)
-                .isEqualTo("[\"Golden Globe\",\"Oscar\"]");
+                .isEqualTo("[\"Golden Globe\",\"Oscar\",\"BAFTA\"]");
     }
 
     private WebTestClient.ResponseSpec deleteAward(String awardNameCategoryYear) {

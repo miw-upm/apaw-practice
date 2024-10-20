@@ -57,7 +57,7 @@ public class CourseSeederService {
         VideoEntity[] videosCursoC = {
                 new VideoEntity("Introducción al Lenguaje C", LocalTime.of(0, 30), LocalDateTime.of(2023, 1, 14, 12, 0)),
                 new VideoEntity("Estructuras de control en C", LocalTime.of(0, 35), LocalDateTime.of(2023, 1, 16, 13, 0)),
-                new VideoEntity("Funciones en C", LocalTime.of(0, 40), LocalDateTime.of(2023, 1, 18, 14, 0)),
+                new VideoEntity("Funciones en C", LocalTime.of(0, 57), LocalDateTime.of(2023, 1, 18, 14, 0)),
                 new VideoEntity("Punteros en C", LocalTime.of(0, 45), LocalDateTime.of(2023, 1, 20, 15, 0))
         };
 
@@ -91,7 +91,7 @@ public class CourseSeederService {
 
         UserCourseEntity[] usersC = {
                 new UserCourseEntity("Pedro", "pedro@gmail.com", UserCourseEntity.TypeUser.STUDENT.name()),
-                new UserCourseEntity("Miguel", "miguel@gmail.com", UserCourseEntity.TypeUser.STUDENT.name())
+                new UserCourseEntity("Miguel", "miguel@gmail.com", UserCourseEntity.TypeUser.STUDENT_TUTOR.name())
         };
 
         UserCourseEntity[] usersSpring = {
@@ -110,7 +110,8 @@ public class CourseSeederService {
         this.userRepository.saveAll(Arrays.asList(usersSpring));
 
         TutoringSessionEntity[] tutoringSessionsCursoC = {
-                new TutoringSessionEntity("Lenguaje C Básico", LocalDateTime.of(2024, 12, 5, 16, 0), BigDecimal.valueOf(20.00)),
+                new TutoringSessionEntity("Lenguaje C Básico 1", LocalDateTime.of(2024, 12, 5, 16, 0), BigDecimal.valueOf(20.00)),
+                new TutoringSessionEntity("Lenguaje C Básico 2", LocalDateTime.of(2024, 12, 5, 20, 0), BigDecimal.valueOf(20.00)),
                 new TutoringSessionEntity("Punteros en C", LocalDateTime.of(2024, 12, 7, 16, 0), BigDecimal.valueOf(30.00))
         };
 
