@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.movies;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
+import es.upm.miw.apaw_practice.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw_practice.domain.models.movies.Movie;
 import es.upm.miw.apaw_practice.domain.persistence_ports.movies.MoviePersistence;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 class MovieResourceIT {
