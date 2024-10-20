@@ -38,7 +38,8 @@ public class MusicLessonSeederService {
         new MusicalInstrumentEntity("STW-PN-998", "Advanced", "Grand Piano"),
         new MusicalInstrumentEntity("GBS-LP-234", "Intermediate", "Electric Guitar"),
         new MusicalInstrumentEntity("LWG-SN-400", "Advanced", "Snare Drum"),
-        new MusicalInstrumentEntity("LWG-SN-401", "Intermediate", "Snare Drum 2")
+        new MusicalInstrumentEntity("LWG-SN-401", "Intermediate", "Snare Drum 2"),
+        new MusicalInstrumentEntity("GBS-LP-235", "Intermediate", "Electric Guitar")
     };
     this.musicalInstrumentRepository.saveAll(Arrays.asList(musicalInstrumentEntities));
 
