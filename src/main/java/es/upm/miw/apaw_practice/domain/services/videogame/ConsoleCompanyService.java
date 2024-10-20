@@ -39,4 +39,8 @@ public class ConsoleCompanyService {
             throw new ConflictException("ConsoleInformation exists: " + consoleInformation);
         }
     }
+
+    public void delete(String companyInformation){
+        this.consoleCompanyPersistence.delete(companyInformation);
+    }
 }

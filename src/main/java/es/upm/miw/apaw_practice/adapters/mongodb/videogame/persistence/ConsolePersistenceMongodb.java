@@ -24,4 +24,9 @@ public class ConsolePersistenceMongodb implements ConsolePersistence {
                 .filter(console -> consoleReference.equals(console.getConsoleReference()))
                 .map(ConsoleEntity::toConsole);
     }
+
+    @Override
+    public void delete(String consoleReference) {
+        this.consoleRepository.deleteByConsoleReference(consoleReference);
+    }
 }
