@@ -20,4 +20,8 @@ public class BranchService {
   public Stream<Branch> findByAddress(String address) {
     return this.branchPersistence.findByAddress(address);
   }
+
+  public Stream<String> findUniqueMusicalInstrumentModelsByAddress(String address) {
+    return this.branchPersistence.findUniqueMusicalInstrumentModelsByAddress(address);
+  }
 }

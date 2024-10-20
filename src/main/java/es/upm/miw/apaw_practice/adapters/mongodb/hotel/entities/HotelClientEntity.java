@@ -1,10 +1,17 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
+import java.time.LocalDate;
+import java.util.UUID;
+
 public class HotelClientEntity {
+
     @Id
     private String id;
     @Indexed(unique = true)
@@ -22,8 +29,8 @@ public class HotelClientEntity {
         this.name = name;
         this.phone = phone;
         this.reservation = reservation;
+        this.id = UUID.randomUUID().toString();
     }
-
     public String getIdentityDocument() {
         return identityDocument;
     }
@@ -60,6 +67,16 @@ public class HotelClientEntity {
 
     public void setReservation(final HotelReservationEntity reservation) { this.reservation = reservation; }
 
+    public HotelClient toClient() {
+        String reservationNumber = this.getReservation().getReservationNumber();
+        String roomNumber = this.getReservation().getRoomNumber();
+        LocalDate reservationDate = this.getReservation().getReservationDate();
+        HotelReservation reservation = new HotelReservation(reservationNumber, roomNumber, reservationDate);
+        HotelClient client= new HotelClient();
+        BeanUtils.copyProperties(this, client);
+        client.setReservation(reservation);
+        return client;
+    }
     @Override
     public String toString() {
         return "HotelClientRepository{" +
