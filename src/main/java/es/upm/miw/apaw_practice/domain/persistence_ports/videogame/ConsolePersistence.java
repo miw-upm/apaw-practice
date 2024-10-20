@@ -11,4 +11,5 @@ public interface ConsolePersistence {
     void delete(String consoleReference);
     boolean existsConsole(String consoleReference);
     Console create(Console console);
+    Console update(String consoleReference, Console console);
 }

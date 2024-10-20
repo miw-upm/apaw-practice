@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.videogame.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.ConsoleRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.ConsoleEntity;
+import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.videogame.Console;
 import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.ConsolePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,16 @@ public class ConsolePersistenceMongodb implements ConsolePersistence {
     @Override
     public boolean existsConsole(String consoleReference) {
         return this.consoleRepository.findByConsoleReference(consoleReference).isPresent();
+    }
+
+    @Override
+    public Console update(String consoleReference, Console console) {
+        ConsoleEntity consoleEntity = consoleRepository
+                .findByConsoleReference(consoleReference)
+                .orElseThrow(() -> new NotFoundException("Console reference: " + consoleReference + " not found"));
+        consoleEntity.fromConsole(console);
+        return this.consoleRepository
+                .save(consoleEntity)
+                .toConsole();
     }
 }

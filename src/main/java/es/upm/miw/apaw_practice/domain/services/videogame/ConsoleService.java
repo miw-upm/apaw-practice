@@ -35,4 +35,8 @@ public class ConsoleService {
             throw new ConflictException("ConsoleReference exists: " + consoleReference);
         }
     }
+
+    public Console update(String consoleReference, Console console) {
+        return this.consolePersistence.update(consoleReference, console);
+    }
 }
