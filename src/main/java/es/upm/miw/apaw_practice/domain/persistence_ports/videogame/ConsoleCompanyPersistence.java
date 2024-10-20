@@ -13,4 +13,5 @@ public interface ConsoleCompanyPersistence {
     ConsoleCompany create(ConsoleCompany consoleCompany);
     boolean existsConsoleCompany(String consoleInformation);
     void delete(String consoleInformation);
+    ConsoleCompany update(String companyInformation, ConsoleCompany consoleCompany);
 }

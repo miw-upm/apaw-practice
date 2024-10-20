@@ -43,4 +43,8 @@ public class ConsoleCompanyService {
     public void delete(String companyInformation){
         this.consoleCompanyPersistence.delete(companyInformation);
     }
+
+    public ConsoleCompany update(String companyInformation,ConsoleCompany consoleCompany) {
+        return this.consoleCompanyPersistence.update(companyInformation, consoleCompany);
+    }
 }
