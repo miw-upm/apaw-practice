@@ -19,4 +19,8 @@ public class ConsoleService {
     public Stream<Console> findByConsoleReference(String consoleReference) {
         return this.consolePersistence.findByConsoleReference(consoleReference);
     }
+
+    public void delete(String consoleReference) {
+        this.consolePersistence.delete(consoleReference);
+    }
 }
