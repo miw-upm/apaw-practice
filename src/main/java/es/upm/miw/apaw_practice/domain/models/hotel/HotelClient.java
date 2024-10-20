@@ -14,6 +14,7 @@ public class HotelClient {
         this.identityDocument = identityDocument;
         this.name = name;
         this.phone = phone;
+        this.email = email;
         this.hotelReservation = hotelReservation;
     }
 
@@ -51,7 +52,7 @@ public class HotelClient {
 
     public HotelReservation getReservation() { return this.hotelReservation; }
 
-    public void setReservation(final HotelReservation hotelReservation) { this.hotelReservation = hotelReservation; }
+    public void setReservation(HotelReservation hotelReservation) { this.hotelReservation = hotelReservation; }
 
     @Override
     public String toString() {

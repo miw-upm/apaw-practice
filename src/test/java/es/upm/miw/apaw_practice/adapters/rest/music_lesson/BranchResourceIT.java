@@ -16,6 +16,8 @@ public class BranchResourceIT {
 
   private final List<String> madridBranchCodes = List.of("MAD-PRDO", "MAD-SBCT");
 
+  private final List<String> pradoMusicalInstrumentUniqueModels = List.of("YMH-FL-222", "STW-PN-998");
+
   @Autowired
   private WebTestClient webTestClient;
 
@@ -31,9 +33,24 @@ public class BranchResourceIT {
         .expectStatus().isOk()
         .expectBodyList(Branch.class)
         .value(branches -> assertFalse(branches.isEmpty()))
-        .value(articles -> assertTrue(articles.stream()
+        .value(branches -> assertTrue(branches.stream()
             .map(Branch::getCode)
             .allMatch(madridBranchCodes::contains)));
   }
 
+  @Test
+  void tesSearchUniqueModelsByAddress() {
+    this.webTestClient
+        .get()
+        .uri(uriBuilder ->
+            uriBuilder.path(BranchResource.BRANCHES + BranchResource.SEARCH + BranchResource.UNIQUE_MODELS_BY_ADDRESS)
+                .queryParam("q", "address:Prado")
+                .build())
+        .exchange()
+        .expectStatus().isOk()
+        .expectBody(List.class)
+        .value(branches -> assertFalse(branches.isEmpty()))
+        .value(branches -> assertTrue(pradoMusicalInstrumentUniqueModels.containsAll(branches)));
+
+  }
 }

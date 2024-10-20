@@ -3,7 +3,9 @@ package es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.persistence;
 import java.util.stream.Stream;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.daos.BranchRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.daos.LearnerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.entities.BranchEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_lesson.entities.MusicalInstrumentEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.music_lesson.Branch;
 import es.upm.miw.apaw_practice.domain.persistence_ports.music_lesson.BranchPersistence;
@@ -15,9 +17,12 @@ public class BranchPersistenceMongodb implements BranchPersistence {
 
   private final BranchRepository branchRepository;
 
+  private final LearnerRepository learnerRepository;
+
   @Autowired
-  public BranchPersistenceMongodb(BranchRepository branchRepository) {
+  public BranchPersistenceMongodb(BranchRepository branchRepository, LearnerRepository learnerRepository) {
     this.branchRepository = branchRepository;
+    this.learnerRepository = learnerRepository;
   }
 
   @Override
@@ -40,4 +45,16 @@ public class BranchPersistenceMongodb implements BranchPersistence {
         .filter(branchEntity -> branchEntity.getAddress().contains(address))
         .map(BranchEntity::toBranch);
   }
+
+  @Override
+  public Stream<String> findUniqueMusicalInstrumentModelsByAddress(String address) {
+    return this.branchRepository.findAll().stream()
+        .filter(branchEntity -> branchEntity.getAddress().contains(address))
+        .flatMap(branchEntity -> this.learnerRepository.findByBranchId(branchEntity.getId()))
+        .flatMap(learnerEntity -> learnerEntity.getLessons().stream())
+        .flatMap(lessonEntity -> lessonEntity.getMusicalInstruments().stream())
+        .map(MusicalInstrumentEntity::getModel)
+        .distinct();
+  }
+
 }

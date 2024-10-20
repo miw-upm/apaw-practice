@@ -102,7 +102,20 @@ public class TechniquePersistenceMongodb implements TechniquePersistence{
                 .distinct();
     }
 
-
-
+    @Override
+    public Integer findTotalDurationNoRepeatByDescription(String description) {
+        return this.techniqueRepository.findAll().stream()
+                .filter(techniqueEntity -> {
+                    boolean matches = techniqueEntity.getStyle().getDescription().equals(description);
+                    if (matches) {
+                        System.out.println("Matched Technique: " + techniqueEntity.getName());
+                    }
+                    return matches;
+                })
+                .map(TechniqueEntity::getDuration)
+                .distinct()
+                .peek(duration -> System.out.println("Unique Duration: " + duration))
+                .reduce(0, Integer::sum);
+    }
 
 }
