@@ -17,12 +17,12 @@ class DeliveryOrderItemServiceIT {
 
     @Test
     void testUpdateQuantity() {
-        Integer quantity = 55;
+        Integer quantity = 4;
         List<DeliveryOrderItem> orderItemList = deliveryOrderItemService.findAll();
         DeliveryOrderItem orderItemResponse = deliveryOrderItemService.updateQuantity(orderItemList.get(0).getId(), quantity);
         assertEquals(quantity, orderItemResponse.getQuantity());
     }
-/*
+
     @Test
     void testFindAll() {
         List<DeliveryOrderItem> orderItemList = deliveryOrderItemService.findAll();
@@ -32,6 +32,13 @@ class DeliveryOrderItemServiceIT {
         assertNotNull(orderItemList.get(0).getMenu());
         assertNotNull(orderItemList.get(0).getQuantity());
         assertNotNull(orderItemList.get(0).getPrice());
-        assertEquals(9, orderItemList.size());
-    }*/
+    }
+
+    @Test
+    void testFindDescriptionsMenuGreaterThanQuantity() {
+        List<String> descriptionsMenuGreaterThanQuantity = deliveryOrderItemService.findDescriptionsMenuGreaterThanQuantity(5);
+        assertNotNull(descriptionsMenuGreaterThanQuantity);
+        System.out.println(descriptionsMenuGreaterThanQuantity);
+        assertEquals(2, descriptionsMenuGreaterThanQuantity.size());
+    }
 }
