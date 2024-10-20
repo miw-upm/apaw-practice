@@ -41,4 +41,13 @@ public class SetupServiceIT {
         assertEquals(expectedCreatedSetup.getGuns(), actualCreatedSetup.getGuns());
     }
 
+    @Test
+    public void testFindMostExpensiveByCaliberAndCategory() {
+        Setup actualMostExpensive = setupService
+                .findMostExpensiveByCaliberAndCategory("7.62x39mm", "Scope");
+        assertEquals(4, actualMostExpensive
+                .getSetupId());
+        assertEquals(new BigDecimal("4299.98"), actualMostExpensive.getTotalPrice());
+    }
+
 }
