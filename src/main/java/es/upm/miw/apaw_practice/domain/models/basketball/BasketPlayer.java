@@ -17,6 +17,10 @@ public class BasketPlayer {
 
     }
 
+    public static BasketPlayerBuilders.Dni builder(){
+        return new Builder();
+    }
+
     public String getDni() {
         return dni;
     }
@@ -43,5 +47,44 @@ public class BasketPlayer {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public static class Builder implements BasketPlayerBuilders.Dni, BasketPlayerBuilders.Name,
+            BasketPlayerBuilders.Dorsal, BasketPlayerBuilders.Optionals {
+
+        private final BasketPlayer basketPlayer;
+
+        public Builder() {
+            this.basketPlayer = new BasketPlayer();
+        }
+
+        @Override
+        public BasketPlayerBuilders.Name dni(String dni) {
+            this.basketPlayer.dni = dni;
+            return this;
+        }
+
+        @Override
+        public BasketPlayerBuilders.Dorsal name(String name) {
+            this.basketPlayer.name = name;
+            return this;
+        }
+
+        @Override
+        public BasketPlayerBuilders.Optionals dorsal(int dorsal) {
+            this.basketPlayer.dorsal = dorsal;
+            return this;
+        }
+
+        @Override
+        public BasketPlayerBuilders.Optionals points(int points) {
+            this.basketPlayer.points = points;
+            return this;
+        }
+
+        @Override
+        public BasketPlayer build() {
+            return this.basketPlayer;
+        }
     }
 }
