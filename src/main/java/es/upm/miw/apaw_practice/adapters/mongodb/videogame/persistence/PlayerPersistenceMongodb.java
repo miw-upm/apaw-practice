@@ -64,4 +64,15 @@ public class PlayerPersistenceMongodb implements PlayerPersistence {
                 .findByPlayerName(playerName)
                 .isPresent();
     }
+
+    @Override
+    public Player update(String playerName, Player player) {
+        PlayerEntity playerEntity = playerRepository
+                .findByPlayerName(playerName)
+                .orElseThrow(() -> new NotFoundException("Player name: " + playerName + " not found"));
+        playerEntity.fromPlayer(player);
+        return this.playerRepository
+                .save(playerEntity)
+                .toPlayer();
+    }
 }

@@ -39,4 +39,10 @@ public class PlayerResource {
     public Player create(@RequestBody Player player) {
         return playerService.create(player);
     }
+
+    @PutMapping(PLAYER_NAME)
+    public Player update(@PathVariable String playerName, @RequestBody Player player) {
+        this.playerService.assertPlayerNotExist(playerName);
+        return playerService.update(playerName, player);
+    }
 }

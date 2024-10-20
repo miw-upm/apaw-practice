@@ -13,4 +13,5 @@ public interface PlayerPersistence {
     Stream<String>findVideoGameAliasByPlayerName(String playerName);
     boolean existsPlayer(String playerName);
     Player create(Player player);
+    Player update(String playerName, Player player);
 }

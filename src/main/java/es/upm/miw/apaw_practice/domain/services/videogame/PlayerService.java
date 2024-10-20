@@ -40,4 +40,8 @@ public class PlayerService {
             throw new ConflictException("Player name exists: " + playerName);
         }
     }
+
+    public Player update(String playerName, Player player){
+        return this.playerPersistence.update(playerName, player);
+    }
 }

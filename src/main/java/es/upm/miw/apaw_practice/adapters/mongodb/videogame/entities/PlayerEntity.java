@@ -70,6 +70,10 @@ public class PlayerEntity {
         this.consoleEntity = consoleEntity;
     }
 
+    public void fromPlayer(Player player){
+        BeanUtils.copyProperties(this, player);
+    }
+
     @Override
     public int hashCode() {
         return playerName.hashCode();
