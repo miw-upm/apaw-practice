@@ -16,7 +16,7 @@ class VideoGameRepositoryIT {
     private VideoGameRepository videoGameRepository;
 
     @Test
-    void testfindByVideoGameAlias(){
+    void testFindByVideoGameAlias(){
         assertTrue(this.videoGameRepository.findByVideoGameAlias("Halo").isPresent());
         VideoGamerEntity videoGame = this.videoGameRepository.findByVideoGameAlias("Halo").get();
         assertEquals(2, videoGame.getNumberOfPlayer());

@@ -1,5 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.videogame.persistence;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.ConsoleCompanyRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.PlayerRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.daos.VideoGameRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.videogame.entities.VideoGamerEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -13,10 +15,14 @@ import java.util.stream.Stream;
 @Repository("videoGamePersistence")
 public class VideoGamePersistenceMongodb implements VideoGamePersistence {
     private final VideoGameRepository videoGameRepository;
+    private final PlayerRepository playerRepository;
+    private final ConsoleCompanyRepository consoleCompanyRepository;
 
     @Autowired
-    public VideoGamePersistenceMongodb(VideoGameRepository videoGameRepository) {
+    public VideoGamePersistenceMongodb(VideoGameRepository videoGameRepository, PlayerRepository playerRepository, ConsoleCompanyRepository consoleCompanyRepository) {
         this.videoGameRepository = videoGameRepository;
+        this.playerRepository = playerRepository;
+        this.consoleCompanyRepository = consoleCompanyRepository;
     }
 
     @Override
@@ -56,5 +62,35 @@ public class VideoGamePersistenceMongodb implements VideoGamePersistence {
         return videoGameRepository
                 .save(videoGamerEntity)
                 .toVideoGame();
+    }
+
+    @Override
+    public Stream<String> findPlayerNameByVideoGameAlias(String videoGameAlias) {
+        return this.playerRepository.findAll().stream()
+                .filter(playerEntity -> playerEntity.getConsoleEntity() != null)
+                .flatMap(playerEntity -> playerEntity.getConsoleEntity().getVideoGameEntities().stream()
+                        .filter(videoGamerEntity -> videoGamerEntity.getVideoGameAlias().equals(videoGameAlias))
+                        .map(VideoGamerEntity -> playerEntity.getPlayerName())
+                        .distinct());
+    }
+
+    @Override
+    public Integer sumNumberOfPlayerByPlayerNameAndWebsite(String playerName, String website) {
+        return this.consoleCompanyRepository.findAll().stream()
+                .filter(consoleCompanyEntity -> website.equals(consoleCompanyEntity.getWebsite()))
+                .flatMap(consoleCompanyEntity -> consoleCompanyEntity.getConsoleEntities().stream())
+                .filter(consoleEntity ->
+                        playerRepository.findByPlayerName(playerName)
+                                .map(playerEntity -> playerEntity.getConsoleEntity().equals(consoleEntity))
+                                .orElse(false))
+                .flatMap(consoleEntity -> consoleEntity.getVideoGameEntities().stream())
+                .map(VideoGamerEntity::getNumberOfPlayer)
+                .distinct()
+                .reduce(0, Integer::sum);
+    }
+
+    @Override
+    public void delete(String videoGameAlias){
+        this.videoGameRepository.deleteByVideoGameAlias(videoGameAlias);
     }
 }

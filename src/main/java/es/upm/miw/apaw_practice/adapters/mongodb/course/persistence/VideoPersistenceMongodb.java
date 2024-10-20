@@ -26,7 +26,7 @@ public class VideoPersistenceMongodb implements VideoPersistence {
         VideoEntity videoEntity = this.videoRepository.findByName(name)
                 .orElseThrow( () -> new NotFoundException("Video name: " + name));
 
-                videoEntity.setName(video.getName());
+        videoEntity.setName(video.getName());
         videoEntity.setDuration(video.getDuration());
         videoEntity.setCreationDate(video.getCreationDate());
 
@@ -42,5 +42,22 @@ public class VideoPersistenceMongodb implements VideoPersistence {
             videoResult.setCourse(null);
         }
         return videoResult;
+    }
+
+    @Override
+    public Video update(String name, String titleCourse) {
+        VideoEntity videoEntity = this.videoRepository.findByName(name)
+                .orElseThrow( () -> new NotFoundException("Video name: " + name));
+
+        CourseEntity courseEntity = this.courseRepository.findByTitle(titleCourse)
+                .orElseThrow( () -> new NotFoundException("Course tittle: " + titleCourse));
+
+        Video video = videoEntity.toVideo();
+        video.setCourse(courseEntity.toCourse());
+
+        courseEntity.getVideos().remove(videoEntity);
+        this.courseRepository.save(courseEntity);
+
+        return video;
     }
 }

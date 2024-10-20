@@ -30,11 +30,11 @@ public class ConsoleTest {
                 .creationDate(LocalDate.of(1996,6,17))
                 .videoGames(new ArrayList<>())
                 .build();
-assertEquals("Nanoby", instance.getConsoleReference());
-assertEquals(916617214312418L, instance.getSerialNumber());
-        assertTrue(instance.isPortable());
-assertEquals(LocalDate.of(1996,6,17), instance.getCreationDate());
-assertEquals(new ArrayList<>(), instance.getVideoGames());
+        assertEquals("Nanoby", instance.getConsoleReference());
+        assertEquals(916617214312418L, instance.getSerialNumber());
+            assertTrue(instance.isPortable());
+        assertEquals(LocalDate.of(1996,6,17), instance.getCreationDate());
+        assertEquals(new ArrayList<>(), instance.getVideoGames());
     }
 
     @BeforeEach

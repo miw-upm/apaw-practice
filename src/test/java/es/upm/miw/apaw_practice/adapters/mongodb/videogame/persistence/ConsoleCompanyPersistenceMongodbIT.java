@@ -23,7 +23,7 @@ class ConsoleCompanyPersistenceMongodbIT {
 
     @Test
     void testUpdateConsoleCompany() {
-        Integer number = Integer.valueOf(4000);
+        Integer number = 4000;
         Optional<ConsoleCompany> consoleCompany = this.consoleCompanyPersistence.readAll()
                 .filter(consoleCompany1 -> number.compareTo(consoleCompany1.getNumberOfEmployee()) == 0)
                 .findFirst();
