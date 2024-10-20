@@ -24,9 +24,11 @@ public class TechniqueService {
     public Technique read(String name) {
         return this.techniquePersistence.read(name);
     }
-    // Nuevo método en el servicio
     public Stream<Integer> findNonDuplicatedInstructorPhonesByPopularity(int popularity) {
         return this.techniquePersistence.findNonDuplicatedInstructorPhonesByPopularity(popularity);
+    }
+    public Integer findTotalDurationNoRepeatByDescription(String description) {
+        return this.techniquePersistence.findTotalDurationNoRepeatByDescription(description);
     }
 
 }
