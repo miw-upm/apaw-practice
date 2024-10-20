@@ -83,4 +83,16 @@ public class EmployeeTest {
         assertTrue(names.contains("700000002"));
         assertTrue(names.contains("700000003"));
     }
+
+    @Test
+    void testEmployeeBuilder() {
+        Employee employee = Employee.builder()
+                .dni("01122233Z")
+                .name("Jaime")
+                .phone("700000009")
+                .build();
+        assertEquals("Jaime", employee.getName());
+        assertEquals("01122233Z", employee.getDni());
+        assertEquals("700000009", employee.getPhone());
+    }
 }
