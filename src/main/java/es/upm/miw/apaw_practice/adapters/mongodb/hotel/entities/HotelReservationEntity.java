@@ -1,6 +1,8 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
@@ -33,6 +35,13 @@ public class HotelReservationEntity {
     public LocalDate getReservationDate() { return this.reservationDate; }
 
     public void setReservationDate(LocalDate reservationDate) { this.reservationDate = reservationDate; }
+
+
+    public HotelReservation toReservation() {
+        HotelReservation reservation = new HotelReservation();
+        BeanUtils.copyProperties(this, reservation);
+        return reservation;
+    }
 
     @Override
     public String toString() {
