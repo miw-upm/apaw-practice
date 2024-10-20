@@ -49,7 +49,7 @@ class SoldierResourceIT {
     @Test
     void testUpdateRanksNotFound() {
         List<SoldierRankUpdating> soldierRankUpdatingList = Arrays.asList(
-                new SoldierRankUpdating("11223344J", "Captain"),
+                new SoldierRankUpdating("87654321F", "Captain"),
                 new SoldierRankUpdating("99887766V", "Corporal")
         );
         this.webTestClient
