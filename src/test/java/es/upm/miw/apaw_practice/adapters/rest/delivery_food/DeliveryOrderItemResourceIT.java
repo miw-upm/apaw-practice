@@ -7,8 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
 import static es.upm.miw.apaw_practice.adapters.rest.delivery_food.DeliveryOrderItemResource.DELIVERY_ORDER_ITEM;
 import static es.upm.miw.apaw_practice.adapters.rest.delivery_food.DeliveryOrderItemResource.DELIVERY_ORDER_ITEM_ID;
+import static es.upm.miw.apaw_practice.adapters.rest.delivery_food.DeliveryOrderItemResource.SEARCH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -20,7 +23,7 @@ class DeliveryOrderItemResourceIT {
 
     @Test
     void testUpdateQuantity() {
-        Integer quantity = 10;
+        Integer quantity = 4;
         this.webTestClient
                 .get()
                 .uri(DELIVERY_ORDER_ITEM)
@@ -62,5 +65,22 @@ class DeliveryOrderItemResourceIT {
                     assertNotNull(deliveryOrderItems.get(0).getQuantity());
                     assertNotNull(deliveryOrderItems.get(0).getPrice());
                 });
+    }
+
+    @Test
+    void testFindDescriptionsMenuGreaterThanQuantity() {
+        this.webTestClient
+                .get()
+                .uri(uribuilder -> uribuilder.path(DELIVERY_ORDER_ITEM + SEARCH)
+                        .queryParam("q", "quantity:5")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(descriptionList -> {
+                            assertNotNull(descriptionList);
+                            assertEquals(2, descriptionList.size());
+                        }
+                );
     }
 }
