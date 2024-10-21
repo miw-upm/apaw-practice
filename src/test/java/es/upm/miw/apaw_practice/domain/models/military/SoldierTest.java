@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @TestConfig
 class SoldierTest {
@@ -49,5 +50,32 @@ class SoldierTest {
     void testCompositeBirthDate() {
         assertEquals(LocalDate.of(1986, 7, 22), this.squad.getBirthDate());
         assertEquals(LocalDate.of(1972, 1, 15), this.platoon.getBirthDate());
+    }
+
+    @Test
+    void testBuilderFull() {
+        Soldier soldier = Soldier.builder()
+                .identityDocument("X8776655E")
+                .fullName("Enya Cox Dempsey")
+                .rank("Lieutenant")
+                .birthDate(LocalDate.of(1988, 10, 21))
+                .build();
+        assertEquals("X8776655E", soldier.getIdentityDocument());
+        assertEquals("Enya Cox Dempsey", soldier.getFullName());
+        assertEquals("Lieutenant", soldier.getRank());
+        assertEquals(LocalDate.of(1988, 10, 21), soldier.getBirthDate());
+    }
+
+    @Test
+    void testBuilderPartial() {
+        Soldier soldier = Soldier.builder()
+                .identityDocument("Z4332211Y")
+                .fullName("Cornelia Jakobs")
+                .rank("Captain")
+                .build();
+        assertEquals("Z4332211Y", soldier.getIdentityDocument());
+        assertEquals("Cornelia Jakobs", soldier.getFullName());
+        assertEquals("Captain", soldier.getRank());
+        assertNull(soldier.getBirthDate());
     }
 }
