@@ -19,6 +19,8 @@ public class Soldier {
         this.birthDate = birthDate;
     }
 
+    public static SoldierBuilders.IdentityDocument builder() { return new Builder(); }
+
     public String getIdentityDocument() {
         return identityDocument;
     }
@@ -49,6 +51,39 @@ public class Soldier {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public static class Builder implements SoldierBuilders.IdentityDocument, SoldierBuilders.FullName, SoldierBuilders.Rank, SoldierBuilders.Optionals {
+        private final Soldier soldier;
+
+        public Builder() { this.soldier = new Soldier(); }
+
+        @Override
+        public SoldierBuilders.FullName identityDocument(String identityDocument) {
+            this.soldier.identityDocument = identityDocument;
+            return this;
+        }
+
+        @Override
+        public SoldierBuilders.Rank fullName(String fullName) {
+            this.soldier.fullName = fullName;
+            return this;
+        }
+
+        @Override
+        public SoldierBuilders.Optionals rank(String rank) {
+            this.soldier.rank = rank;
+            return this;
+        }
+
+        @Override
+        public SoldierBuilders.Optionals birthDate(LocalDate birthDate) {
+            this.soldier.birthDate = birthDate;
+            return this;
+        }
+
+        @Override
+        public Soldier build() { return this.soldier; }
     }
 
     @Override
