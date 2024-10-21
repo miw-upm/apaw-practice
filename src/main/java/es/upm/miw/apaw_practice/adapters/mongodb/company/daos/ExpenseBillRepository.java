@@ -11,4 +11,7 @@ public interface ExpenseBillRepository extends MongoRepository<ExpenseBillEntity
 
     @Query("{ 'departments.location': ?0 }")
     List<ExpenseBillEntity> findAllByLocation(String location);
+    @Query("{ 'description': ?0 }")
+    List<ExpenseBillEntity> findByDescription(String description);
+
 }
