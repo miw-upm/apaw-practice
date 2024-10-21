@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.company.CompanyPersiste
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class CompanyService {
 
@@ -21,6 +23,9 @@ public class CompanyService {
 
     public void updateIndustry(String companyname, String newIndustry) {
         this.companyPersistence.updateIndustry(companyname, newIndustry);
+    }
+    public BigDecimal findHighestExpenseAmountByLocation(String location) {
+        return this.companyPersistence.findHighestExpenseAmountByLocation(location);
     }
     }
 

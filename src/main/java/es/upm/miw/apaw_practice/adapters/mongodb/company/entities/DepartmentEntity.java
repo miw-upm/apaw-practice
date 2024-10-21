@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,6 +25,11 @@ public class DepartmentEntity {
     @DBRef
     private ManagementEntity managementEntity; // Assuming a relationship with management
 
+
+
+    @DBRef
+    private List<ExpenseBillEntity> expenseBills;
+
     public DepartmentEntity() {
         // Empty for framework
     }
@@ -34,6 +40,7 @@ public class DepartmentEntity {
         this.annualBudget = annualBudget;
         this.employeeCount = employeeCount;
         this.managementEntity = managementEntity;
+
     }
 
     // Getters and setters
@@ -75,6 +82,13 @@ public class DepartmentEntity {
 
     public void setManagementEntity(ManagementEntity managementEntity) {
         this.managementEntity = managementEntity;
+    }
+    public List<ExpenseBillEntity> getExpenseBills() {
+        return expenseBills;
+    }
+
+    public void setExpenseBills(List<ExpenseBillEntity> expenseBills) {
+        this.expenseBills = expenseBills;
     }
 
     public Department toDepartment() {

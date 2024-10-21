@@ -5,10 +5,13 @@ import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.company.Company;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestConfig
+@SpringBootTest
 public class CompanyPersistenceMongodbIT {
 
     @Autowired
@@ -39,4 +42,15 @@ public class CompanyPersistenceMongodbIT {
         assertNotNull(updatedCompany);
         assertEquals(newIndustry, updatedCompany.getIndustry());
     }
+    @Test
+    void testFindHighestExpenseAmountByLocation() {
+        String location = "New York";
+        BigDecimal highestExpenseAmount = this.companyPersistenceMongodb.findHighestExpenseAmountByLocation(location);
+
+        assertNotNull(highestExpenseAmount);
+        assertEquals(new BigDecimal("0"), highestExpenseAmount);
+    }
+
+
+
 }
