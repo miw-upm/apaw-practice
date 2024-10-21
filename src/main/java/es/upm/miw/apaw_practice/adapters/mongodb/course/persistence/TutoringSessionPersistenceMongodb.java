@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.Optional;
 
 @Repository("tutoringSessionPersistence")
 public class TutoringSessionPersistenceMongodb implements TutoringSessionPersistence {
@@ -38,9 +40,12 @@ public class TutoringSessionPersistenceMongodb implements TutoringSessionPersist
                 .stream()
                 .filter(courseEntity -> courseHasUserWithRole(role, courseEntity))
                 .flatMap(courseEntity ->
-                        courseEntity.getVideos().stream()
+                        Optional.ofNullable(courseEntity.getVideos())
+                                .orElseGet(Collections::emptyList)
+                                .stream()
                                 .filter(videoEntity -> videoEntity.getDuration().equals(duration))
-                                .flatMap(videoEntity -> courseEntity.getTutoringSessions()
+                                .flatMap(videoEntity -> Optional.ofNullable(courseEntity.getTutoringSessions())
+                                        .orElseGet(Collections::emptyList)
                                         .stream()
                                         .map(TutoringSessionEntity::getPrice)
                                 )

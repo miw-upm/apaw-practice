@@ -40,4 +40,10 @@ public class ConsoleCompanyResource {
     public void delete(@PathVariable String companyInformation) {
         this.consoleCompanyService.delete(companyInformation);
     }
+
+    @PutMapping(COMPANY_INFORMATION)
+    public ConsoleCompany update(@PathVariable String companyInformation, @RequestBody ConsoleCompany consoleCompany) {
+        this.consoleCompanyService.assertCompanyInformationNotExist(companyInformation);
+        return consoleCompanyService.update(companyInformation, consoleCompany);
+    }
 }
