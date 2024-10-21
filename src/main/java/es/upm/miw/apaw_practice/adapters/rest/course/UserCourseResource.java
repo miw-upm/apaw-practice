@@ -12,6 +12,7 @@ import java.util.List;
 public class UserCourseResource {
 
     static final String USERS = "/course/user";
+    static final String EMAIL_TUTORING = "/emailsOfTitleTutoringSession";
 
     private final UserCourseService userCourseService;
 
@@ -25,7 +26,7 @@ public class UserCourseResource {
         return this.userCourseService.create(user);
     }
 
-    @GetMapping()
+    @GetMapping(EMAIL_TUTORING)
     public List<String> emailsOfTitleTutoringSession(@RequestParam String title){
         return this.userCourseService.emailsOfTitleTutoringSession(title);
     }

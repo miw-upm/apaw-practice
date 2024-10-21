@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.models.course;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,16 @@ public class Course {
 
     public Integer getSizeUser(){
         return this.users.size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this == obj || obj != null && getClass() == obj.getClass() && (title.equals(((Course) obj).getTitle()));
+    }
+
+    @Override
+    public int hashCode() {
+        return this.title.hashCode();
     }
 
     @Override

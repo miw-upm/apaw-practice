@@ -29,7 +29,7 @@ public class TutoringSessionResource {
     }
 
     @GetMapping(ROLE_PRICE)
-    public BigDecimal priceSumOfRoleDuration(@RequestBody String role, @RequestBody LocalTime duration){
+    public BigDecimal priceSumOfRoleDuration(@RequestParam String role, @RequestParam LocalTime duration){
         return this.tutoringSessionService.priceSumOfRoleDuration(role, duration);
     }
 }
