@@ -16,7 +16,49 @@ public class Style {
         this.popularity = popularity;
         this.originCountry = originCountry;
     }
+    // Método estático para iniciar el proceso de construcción
+    public static StyleBuilders.Name builder() {
+        return new Builder();
+    }
 
+    // Builder interno con pasos definidos a través de interfaces
+    public static class Builder implements StyleBuilders.Name, StyleBuilders.Description, StyleBuilders.Popularity, StyleBuilders.OriginCountry, StyleBuilders.Optionals {
+
+        private final Style style;
+
+        public Builder() {
+            this.style = new Style();
+        }
+
+        @Override
+        public StyleBuilders.Description name(String name) {
+            this.style.name = name;
+            return this;
+        }
+
+        @Override
+        public StyleBuilders.Popularity description(String description) {
+            this.style.description = description;
+            return this;
+        }
+
+        @Override
+        public StyleBuilders.OriginCountry popularity(Integer popularity) {
+            this.style.popularity = popularity;
+            return this;
+        }
+
+        @Override
+        public StyleBuilders.Optionals originCountry(String originCountry) {
+            this.style.originCountry = originCountry;
+            return this;
+        }
+
+        @Override
+        public Style build() {
+            return this.style;
+        }
+    }
     public String getName() {
         return name;
     }
