@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelClientRepository;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelReservationRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelClientEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelReservationEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
@@ -18,17 +19,20 @@ import java.time.LocalDate;
 public class HotelClientPersistenceMongodb implements HotelClientPersistence {
 
     private final HotelClientRepository hotelClientRepository;
+    private final HotelReservationRepository hotelReservationRepository;
 
     @Autowired
-    public HotelClientPersistenceMongodb(HotelClientRepository hotelClientRepository) {
+    public HotelClientPersistenceMongodb(HotelClientRepository hotelClientRepository,
+                                         HotelReservationRepository hotelReservationRepository) {
         this.hotelClientRepository = hotelClientRepository;
+        this.hotelReservationRepository = hotelReservationRepository;
     }
 
     @Override
     public HotelClient create(HotelClient client) {
         String dni = client.getIdentityDocument();
         boolean existDNI = this.existDNI(dni);
-        String number = client.getReservation().getReservationNumber();
+        String number = "1";
         boolean existReservationNumber = this.hotelClientRepository.findAll().stream()
                 .map(clientRN -> clientRN.getReservation().getReservationNumber())
                 .anyMatch(reservation -> reservation.equals(number));
