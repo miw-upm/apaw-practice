@@ -28,7 +28,6 @@ public class DepartmentTest {
         assertEquals("John Doe", department.getManagement().getName());
         assertTrue(department.getManagement().isActivated());
     }
-
     @Test
     void testBuilderWithOptionals() {
         Department department = Department.builder()
