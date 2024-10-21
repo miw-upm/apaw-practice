@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class HotelReservationEntity {
     @Id
@@ -22,6 +23,7 @@ public class HotelReservationEntity {
         this.reservationNumber = reservationNumber;
         this.roomNumber = roomNumber;
         this.reservationDate = reservationDate;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getReservationNumber() { return this.reservationNumber; }

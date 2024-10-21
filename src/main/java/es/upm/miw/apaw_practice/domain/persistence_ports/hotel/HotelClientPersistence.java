@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.persistence_ports.hotel;
 
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,5 +12,7 @@ public interface HotelClientPersistence {
 
     boolean existDNI(String dni);
 
-    boolean existReservationNumber(String number);
+    HotelReservation getReservation(String rNumber);
+
+
 }
