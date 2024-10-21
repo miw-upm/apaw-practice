@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Document
 public class ShopEntity {
@@ -76,23 +75,13 @@ public class ShopEntity {
         BeanUtils.copyProperties(this, shop, "employees", "providers");
         List<Employee> employees = this.employees.stream()
                 .map(EmployeeShoppingCenterEntity::toEmployee)
-                .collect(Collectors.toList());
+                .toList();
         shop.setEmployees(employees);
         List<Provider> providers = this.providers.stream()
                 .map(ProviderEntity::toProvider)
-                .collect(Collectors.toList());
+                .toList();
         shop.setProviders(providers);
         return shop;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.id.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((ShopEntity) obj).id));
     }
 
     @Override
