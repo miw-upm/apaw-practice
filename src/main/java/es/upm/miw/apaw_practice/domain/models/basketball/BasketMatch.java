@@ -15,7 +15,7 @@ public class BasketMatch {
 
     public BasketMatch(int id, LocalDateTime date, String address, List<BasketPlayer> basketPlayers) {
         this.id = id;
-        this.date = LocalDateTime.now();
+        this.date = date;
         this.address = address;
         this.basketPlayers = basketPlayers;
     }

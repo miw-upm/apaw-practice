@@ -10,7 +10,7 @@ public class BasketPlayer {
         this.dni = dni;
         this.name = name;
         this.dorsal = dorsal;
-        this.points = 0;
+        this.points = points;
     }
 
     public BasketPlayer() {
