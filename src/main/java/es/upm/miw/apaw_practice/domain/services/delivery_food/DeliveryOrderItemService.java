@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.delivery_food.DeliveryO
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class DeliveryOrderItemService {
@@ -21,5 +22,13 @@ public class DeliveryOrderItemService {
 
     public List<DeliveryOrderItem> findAll() {
         return deliveryOrderPersistence.findAll();
+    }
+
+    public List<String> findDescriptionsMenuGreaterThanQuantity(Integer quantity) {
+        return deliveryOrderPersistence.findAll().stream()
+                .filter(item -> item.getQuantity() > quantity)
+                .flatMap(item -> Stream.of(item.getMenu().getDescription()))
+                .distinct()
+                .toList();
     }
 }

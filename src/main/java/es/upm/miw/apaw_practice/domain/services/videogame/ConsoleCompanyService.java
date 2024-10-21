@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.videogame;
 
+import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.models.videogame.ConsoleCompany;
 import es.upm.miw.apaw_practice.domain.models.videogame.ConsoleCompanyActivedUpdating;
 import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.ConsoleCompanyPersistence;
@@ -26,5 +27,24 @@ public class ConsoleCompanyService {
 
     public void updateAllCompanyActive(Stream<ConsoleCompanyActivedUpdating> consoleCompanyActivedUpdatingList) {
         consoleCompanyActivedUpdatingList.forEach(consoleCompanyNewStatus -> {updateActiveCompany(consoleCompanyNewStatus.getCompanyInformation());});
+    }
+
+    public ConsoleCompany create(ConsoleCompany consoleCompany) {
+        this.assertCompanyInformationNotExist(consoleCompany.getCompanyInformation());
+        return this.consoleCompanyPersistence.create(consoleCompany);
+    }
+
+    public void assertCompanyInformationNotExist(String consoleInformation) {
+        if(this.consoleCompanyPersistence.existsConsoleCompany(consoleInformation)) {
+            throw new ConflictException("ConsoleInformation exists: " + consoleInformation);
+        }
+    }
+
+    public void delete(String companyInformation){
+        this.consoleCompanyPersistence.delete(companyInformation);
+    }
+
+    public ConsoleCompany update(String companyInformation,ConsoleCompany consoleCompany) {
+        return this.consoleCompanyPersistence.update(companyInformation, consoleCompany);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class EmployeeTest {
+class EmployeeTest {
 
     private EmployeeComponent root;
     private EmployeeComposite composite;
@@ -46,6 +46,8 @@ public class EmployeeTest {
     void testAddRemoveUnsupported() {
         EmployeeLeaf leaf5 = new EmployeeLeaf(new Employee("01122233E", "Peter", "700000005"));
         assertThrows(UnsupportedOperationException.class, () -> leaf1.add(leaf5));
+        EmployeeLeaf leaf6 = new EmployeeLeaf(new Employee("01122233F", "Paco", "700000006"));
+        assertThrows(UnsupportedOperationException.class, () -> leaf1.remove(leaf6));
     }
 
     @Test
@@ -82,5 +84,17 @@ public class EmployeeTest {
         assertTrue(names.contains("700000001"));
         assertTrue(names.contains("700000002"));
         assertTrue(names.contains("700000003"));
+    }
+
+    @Test
+    void testEmployeeBuilder() {
+        Employee employee = Employee.builder()
+                .dni("01122233Z")
+                .name("Jaime")
+                .phone("700000009")
+                .build();
+        assertEquals("Jaime", employee.getName());
+        assertEquals("01122233Z", employee.getDni());
+        assertEquals("700000009", employee.getPhone());
     }
 }

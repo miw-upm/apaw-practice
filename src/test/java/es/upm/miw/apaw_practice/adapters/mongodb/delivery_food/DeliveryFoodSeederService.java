@@ -49,7 +49,17 @@ public class DeliveryFoodSeederService {
                 new MenuEntity("Grill Master", "Grilled specialties with a unique flavor.",
                         List.of(menuCategories.get(1), menuCategories.get(3)), 4.6),
                 new MenuEntity("Dessert Extravaganza", "A sweet ending with various desserts.",
-                        List.of(menuCategories.get(2)), 4.9)
+                        List.of(menuCategories.get(2)), 4.9),
+                new MenuEntity("MenuRating1", "MenuRating",
+                        List.of(menuCategories.get(2)), 6.0),
+                new MenuEntity("MenuRating2", "MenuRating",
+                        List.of(menuCategories.get(2)), 5.0),
+                new MenuEntity("MenuRating3", "MenuRating",
+                        List.of(menuCategories.get(2)), 5.0),
+                new MenuEntity("MenuRating4", "MenuRating",
+                        List.of(menuCategories.get(2)), 9.0),
+                new MenuEntity("MenuRating4", "Menu test",
+                        List.of(menuCategories.get(2)), 9.0)
         );
         menuRepository.saveAll(menus);
 
@@ -61,7 +71,13 @@ public class DeliveryFoodSeederService {
                 new DeliveryOrderItemEntity(new BigDecimal("7.50"), 4, menus.get(2)),
                 new DeliveryOrderItemEntity(new BigDecimal("14.00"), 1, menus.get(2)),
                 new DeliveryOrderItemEntity(new BigDecimal("10.00"), 2, menus.get(0)),
-                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(2))
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 2, menus.get(2)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(5)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(6)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(7)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(8)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(9)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(9))
         );
         deliveryOrderItemRepository.saveAll(deliveryOrderItems);
 
@@ -75,7 +91,12 @@ public class DeliveryFoodSeederService {
                 new DeliveryOrderEntity("Gran via 002", "Bob Marley", LocalDateTime.now(),
                         false, List.of(deliveryOrderItems.get(5), deliveryOrderItems.get(6))),
                 new DeliveryOrderEntity("Calle A. P2", "Carol Gutierrez", LocalDateTime.now(),
-                        true, List.of(deliveryOrderItems.get(1), deliveryOrderItems.get(2)))
+                        true, List.of(deliveryOrderItems.get(1), deliveryOrderItems.get(2))),
+                new DeliveryOrderEntity("Calle BB", "TEST", LocalDateTime.now(),
+                        true, List.of(
+                        deliveryOrderItems.get(8), deliveryOrderItems.get(9), deliveryOrderItems.get(10),
+                        deliveryOrderItems.get(11), deliveryOrderItems.get(12), deliveryOrderItems.get(13))
+                )
         );
         deliveryOrderRepository.saveAll(deliveryOrders);
     }

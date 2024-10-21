@@ -78,6 +78,10 @@ public class ConsoleCompanyrEntity {
         return consoleCompany;
     }
 
+    public void fromConsoleCompany(ConsoleCompany consoleCompany) {
+        BeanUtils.copyProperties(this, consoleCompany, "consoleEntities");
+    }
+
     @Override
     public String toString() {
         return "ConsoleCompanyEntity{" +

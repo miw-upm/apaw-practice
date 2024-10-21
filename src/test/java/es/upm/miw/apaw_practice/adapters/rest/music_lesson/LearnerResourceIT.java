@@ -56,4 +56,32 @@ public class LearnerResourceIT {
         });
   }
 
+  @Test
+  void testGetFindFeeSumByInstrumentDifficultyLevel() {
+    this.webTestClient
+        .get()
+        .uri(uriBuilder ->
+            uriBuilder.path(LearnerResource.LEARNERS + LearnerResource.SEARCH + LearnerResource.FEE_SUM_BY_DIFFICULTY_LEVEL)
+                .queryParam("q", "difficultyLevel:Beginner")
+                .build())
+        .exchange()
+        .expectStatus().isOk()
+        .expectBody(BigDecimal.class)
+        .value(feeSum -> assertEquals(BigDecimal.valueOf(18.75), feeSum));
+  }
+
+  @Test
+  void testGetFindFeeSumByInstrumentDifficultyLevel_NotValidLevel() {
+    this.webTestClient
+        .get()
+        .uri(uriBuilder ->
+            uriBuilder.path(LearnerResource.LEARNERS + LearnerResource.SEARCH + LearnerResource.FEE_SUM_BY_DIFFICULTY_LEVEL)
+                .queryParam("q", "difficultyLevel:Extra")
+                .build())
+        .exchange()
+        .expectStatus().isOk()
+        .expectBody(BigDecimal.class)
+        .value(feeSum -> assertEquals(BigDecimal.ZERO, feeSum));
+  }
+
 }

@@ -43,7 +43,7 @@ public class MusicalInstrumentServiceIT {
 
   @Test
   void testUpdateDifficultyLevel() {
-    String model = "YMH-FL-222";
+    String model = "GBS-LP-234";
     String newDifficultyLevel = "Advanced";
     MusicalInstrumentLevelUpdating musicalInstrumentLevelUpdating = new MusicalInstrumentLevelUpdating();
     musicalInstrumentLevelUpdating.setModel(model);

@@ -76,5 +76,4 @@ public class VideoGameSeederService {
         this.consoleRepository.deleteAll();
         this.videoGameRepository.deleteAll();
     }
-
 }

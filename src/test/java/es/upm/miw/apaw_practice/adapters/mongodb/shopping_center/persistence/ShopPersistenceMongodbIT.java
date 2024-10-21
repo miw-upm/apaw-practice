@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class ShopPersistenceMongodbIT {
+class ShopPersistenceMongodbIT {
 
     @Autowired
     private ShopPersistenceMongodb shopPersistenceMongodb;

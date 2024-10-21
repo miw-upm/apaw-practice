@@ -36,4 +36,9 @@ public class InstructorService {
     public Instructor update(String dni, Instructor instructor) {
         return this.instructorPersistence.update(dni, instructor);
     }
+    public Instructor updatePhoneNumber(String dni, Integer phone){
+        Instructor instructor = this.instructorPersistence.read(dni);
+        instructor.setPhoneNumber(phone);
+        return this.instructorPersistence.update(dni,instructor);
+    }
 }

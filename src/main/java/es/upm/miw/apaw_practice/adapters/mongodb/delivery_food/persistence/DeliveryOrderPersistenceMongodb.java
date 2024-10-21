@@ -57,4 +57,12 @@ public class DeliveryOrderPersistenceMongodb implements DeliveryOrderPersistence
         return menuRepository.findByName(menuName)
                 .orElseThrow(() -> new NotFoundException("Menu name: " + menuName));
     }
+
+    @Override
+    public List<DeliveryOrder> find(String customerName) {
+        return deliveryOrderRepository.findByCustomerName(customerName)
+                .stream()
+                .map(DeliveryOrderEntity::toDeliveryOrder)
+                .toList();
+    }
 }

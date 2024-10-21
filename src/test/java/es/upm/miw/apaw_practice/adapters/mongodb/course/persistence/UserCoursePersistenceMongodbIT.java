@@ -6,7 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 class UserCoursePersistenceMongodbIT {
@@ -37,4 +39,17 @@ class UserCoursePersistenceMongodbIT {
         userTemp.setRole(User.TypeUser.STUDENT);
         return userTemp;
     }
+    @Test
+    void testEmailsOfTitleTutoringSession() {
+        List<String> emails = this.userCoursePersistenceMongodb.emailsOfTitleTutoringSession("Spring Security");
+        assertNotNull(emails);
+        assertEquals(6, emails.size());
+        assertTrue(emails.contains("sofia@gmail.com"));
+        assertTrue(emails.contains("raul@gmail.com"));
+        assertTrue(emails.contains("daniel@gmail.com"));
+        assertTrue(emails.contains("lucia@gmail.com"));
+        assertTrue(emails.contains("andrea@gmail.com"));
+        assertTrue(emails.contains("pablo@gmail.com"));
+    }
+
 }

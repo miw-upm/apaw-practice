@@ -70,8 +70,8 @@ public class VideoGamePersistenceMongodb implements VideoGamePersistence {
                 .filter(playerEntity -> playerEntity.getConsoleEntity() != null)
                 .flatMap(playerEntity -> playerEntity.getConsoleEntity().getVideoGameEntities().stream()
                         .filter(videoGamerEntity -> videoGamerEntity.getVideoGameAlias().equals(videoGameAlias))
-                        .map(VideoGamerEntity -> playerEntity.getPlayerName())
-                        .distinct());
+                        .map(VideoGamerEntity -> playerEntity.getPlayerName()))
+                        .distinct();
     }
 
     @Override
@@ -87,5 +87,10 @@ public class VideoGamePersistenceMongodb implements VideoGamePersistence {
                 .map(VideoGamerEntity::getNumberOfPlayer)
                 .distinct()
                 .reduce(0, Integer::sum);
+    }
+
+    @Override
+    public void delete(String videoGameAlias){
+        this.videoGameRepository.deleteByVideoGameAlias(videoGameAlias);
     }
 }

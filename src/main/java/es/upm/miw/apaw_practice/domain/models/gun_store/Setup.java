@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.domain.models.gun_store;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Setup {
     private Integer setupId;
@@ -58,6 +59,14 @@ public class Setup {
     public void setGuns(List<Gun> guns) {
         this.guns = guns;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Setup setup)) return false;
+        return Objects.equals(setupId, setup.setupId) && Objects.equals(totalPrice, setup.totalPrice) && Objects.equals(orderDate, setup.orderDate) && Objects.equals(guns, setup.guns);
+    }
+
 }
 
 

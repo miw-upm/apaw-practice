@@ -55,7 +55,7 @@ public class MusicalInstrumentResourceIT {
 
   @Test
   void testUpdateDifficultyLevel() {
-    String model = "YMH-FL-222";
+    String model = "LWG-SN-401";
     String newDifficultyLevel = "Advanced";
     MusicalInstrumentLevelUpdating musicalInstrumentLevelUpdating =
         new MusicalInstrumentLevelUpdating(model, newDifficultyLevel);

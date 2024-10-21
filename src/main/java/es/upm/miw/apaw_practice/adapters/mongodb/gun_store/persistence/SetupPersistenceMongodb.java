@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.gun_store.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.daos.SetupRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.gun_store.entities.SetupEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.shop.entities.ArticleEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.gun_store.Setup;
 import es.upm.miw.apaw_practice.domain.persistence_ports.gun_store.SetupPersistence;

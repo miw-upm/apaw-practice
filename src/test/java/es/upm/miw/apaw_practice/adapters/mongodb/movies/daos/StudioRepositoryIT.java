@@ -23,7 +23,7 @@ class StudioRepositoryIT {
     void testFindByName() {
         assertTrue(this.studioRepository.findByName("Warner Bros").isPresent());
         StudioEntity studio = this.studioRepository.findByName("Warner Bros").get();
-        assertEquals(3, studio.getProducedMovies().size());
+        assertEquals(4, studio.getProducedMovies().size());
         assertEquals(10000000000L, studio.getMarketCapitalization().longValue());
     }
 }
