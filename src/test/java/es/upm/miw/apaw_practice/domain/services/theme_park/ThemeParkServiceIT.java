@@ -7,6 +7,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.theme_park.ThemeParkPer
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,5 +41,19 @@ class ThemeParkServiceIT {
 
         this.themeParkSeederService.deleteAll();
         this.themeParkSeederService.seedDatabase();
+    }
+
+    @Test
+    void testGetSumPriceByNick() {
+        String nick = "Luca";
+        BigDecimal sumPrice = this.themeParkService.getSumPriceByNick(nick);
+        assertEquals(new BigDecimal("100.0"), sumPrice);
+    }
+
+    @Test
+    void testGetIdsByAfterEntranceDate() {
+        LocalDateTime entranceDate = LocalDateTime.of(2020,7,15,9,55);
+        List<String> themeParkIds = this.themeParkService.getIdsByAfterEntranceDate(entranceDate);
+        assertEquals(2, themeParkIds.size());
     }
 }

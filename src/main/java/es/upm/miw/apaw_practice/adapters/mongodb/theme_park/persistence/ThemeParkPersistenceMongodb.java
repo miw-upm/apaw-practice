@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.theme_park.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.daos.OperatorRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.daos.RideRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.daos.ThemeParkRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.entities.OperatorEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.theme_park.entities.RideEntity;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -21,10 +23,12 @@ public class ThemeParkPersistenceMongodb implements ThemeParkPersistence {
 
     private final ThemeParkRepository themeParkRepository;
     private final OperatorRepository operatorRepository;
+    private final RideRepository rideRepository;
     @Autowired
-    public ThemeParkPersistenceMongodb(ThemeParkRepository themeParkRepository, OperatorRepository operatorRepository) {
+    public ThemeParkPersistenceMongodb(ThemeParkRepository themeParkRepository, OperatorRepository operatorRepository, RideRepository rideRepository) {
         this.themeParkRepository = themeParkRepository;
         this.operatorRepository = operatorRepository;
+        this.rideRepository = rideRepository;
     }
 
     @Override
@@ -55,10 +59,10 @@ public class ThemeParkPersistenceMongodb implements ThemeParkPersistence {
     @Override
     public BigDecimal getSumPriceByNick(String nick){
         List<RideEntity> rides = this.operatorRepository.findAll()
-                .stream()
-                .filter(operatorEntity -> operatorEntity.getNick().equals(nick))
-                .map(OperatorEntity::getRideEntity)
-                .toList();
+                                .stream()
+                                .filter(operatorEntity -> operatorEntity.getNick().equals(nick))
+                                .map(OperatorEntity::getRideEntity)
+                                .toList();
 
         return this.themeParkRepository.findAll()
                 .stream()
@@ -69,5 +73,21 @@ public class ThemeParkPersistenceMongodb implements ThemeParkPersistence {
                 .distinct()
                 .map(ThemePark::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public List<String> getThemeParkIdsByEntranceDate(LocalDateTime entranceDate){
+        List <RideEntity> ridesWithUserEntranceDate = this.rideRepository.findAll().stream()
+                .filter(ride -> ride.getUserEntities().stream()
+                        .anyMatch(user -> user.getEntranceDate().equals(entranceDate)))
+                .toList();
+        return this.themeParkRepository.findAll()
+                .stream()
+                .filter(themePark -> themePark.getRideEntities()
+                        .stream()
+                        .anyMatch(ridesWithUserEntranceDate::contains))
+                .filter(themePark -> themePark.getCreationDate().isAfter(entranceDate))
+                .map(ThemeParkEntity::getId)
+                .distinct()
+                .toList();
     }
 }

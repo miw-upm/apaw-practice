@@ -30,7 +30,7 @@ class ActorPersistenceMongodbIT {
         Actor actor = this.actorPersistence.findByArtisticName("Natalie Portman");
         assertEquals("Natalie Portman", actor.getArtisticName());
         assertEquals("Natalie Hershlag", actor.getRealName());
-        assertTrue(actor.isAvailable());
+        assertFalse(actor.isAvailable());
         assertEquals(LocalDate.of(1981, 6, 9), actor.getBirthDate());
     }
 

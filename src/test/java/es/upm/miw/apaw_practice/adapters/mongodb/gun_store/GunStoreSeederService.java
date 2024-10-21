@@ -60,13 +60,19 @@ public class GunStoreSeederService {
                 new GunEntity(1, new BigDecimal("1249.99"), "Colt M1911", "Colt", Arrays.asList(accesories[2], accesories[3]), compatibleAmmos[1]),
                 new GunEntity(2, new BigDecimal("749.99"), "AR-15", "Armalite", Arrays.asList(accesories[4], accesories[2], accesories[3]), compatibleAmmos[2]),
                 new GunEntity(3, new BigDecimal("1299.99"), "AK-47", "Kalashnikov", Arrays.asList(accesories[3], accesories[0]), compatibleAmmos[3]),
-                new GunEntity(4, new BigDecimal("599.99"), "Remington 870", "Remington", Arrays.asList(accesories[4], accesories[2]), compatibleAmmos[4])
+                new GunEntity(4, new BigDecimal("599.99"), "Remington 870", "Remington", Arrays.asList(accesories[4], accesories[2]), compatibleAmmos[4]),
+                new GunEntity(5, new BigDecimal("849.99"), "Beretta 92FS", "Beretta", Arrays.asList(accesories[0], accesories[1]), compatibleAmmos[0]),
+                new GunEntity(6, new BigDecimal("699.99"), "Mossberg 500", "Mossberg", Arrays.asList(accesories[4], accesories[3]), compatibleAmmos[4]),
+                new GunEntity(7, new BigDecimal("2999.99"), "FN SCAR 17", "FN Herstal", Arrays.asList(accesories[2], accesories[0]), compatibleAmmos[3])
         };
         this.gunRepository.saveAll(Arrays.asList(guns));
 
         SetupEntity[] setups = {
                 new SetupEntity(0, new BigDecimal("2249.98"), Arrays.asList(guns[0], guns[1])),
-                new SetupEntity(1, new BigDecimal("2599.98"), Arrays.asList(guns[2], guns[3]))
+                new SetupEntity(1, new BigDecimal("2599.98"), Arrays.asList(guns[2], guns[3])),
+                new SetupEntity(2, new BigDecimal("1849.98"), Arrays.asList(guns[5], guns[0])),
+                new SetupEntity(3, new BigDecimal("3999.98"), Arrays.asList(guns[6], guns[3])),
+                new SetupEntity(4, new BigDecimal("4299.98"), Arrays.asList(guns[7], guns[2]))
         };
 
         this.setupRepository.saveAll(Arrays.asList(setups));

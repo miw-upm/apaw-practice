@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(UserCourseResource.USERS)
 public class UserCourseResource {
 
-    static final String USERS = "/course/users";
+    static final String USERS = "/course/user";
 
     private final UserCourseService userCourseService;
 

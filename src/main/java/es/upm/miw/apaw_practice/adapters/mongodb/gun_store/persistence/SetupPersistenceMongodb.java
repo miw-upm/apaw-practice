@@ -9,6 +9,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.gun_store.SetupPersiste
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 @Repository("setupPersistence")
 public class SetupPersistenceMongodb implements SetupPersistence {
 
@@ -30,6 +32,10 @@ public class SetupPersistenceMongodb implements SetupPersistence {
 
     public Setup create(Setup setup) {
         return this.setupRepository.save(new SetupEntity(setup)).toSetup();
+    }
+
+    public Stream<Setup> findAll() {
+        return this.setupRepository.findAll().stream().map(SetupEntity::toSetup);
     }
 
 }

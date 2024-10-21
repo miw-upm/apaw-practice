@@ -10,4 +10,5 @@ public interface SoldierPersistence {
     Stream<Soldier> readAll();
     Soldier read(String identityDocument);
     Soldier update(String identityDocument, Soldier soldier);
+    Stream<Soldier> findByFullName(String fullName);
 }

@@ -35,11 +35,15 @@ public class HospitalEntity {
         this.capacity = hospital.getCapacity();
     }
 
-    public HospitalEntity(String name, String location, Integer capacity) {
+    public HospitalEntity(String id, String name, String location, Integer capacity, List<Doctor> doctors, List<Patient> patients) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.capacity = capacity;
+        this.doctors = doctors;
+        this.patients = patients;
     }
+
 
     // Getters and Setters
     public String getId() {

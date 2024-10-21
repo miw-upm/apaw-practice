@@ -60,7 +60,7 @@ public class MilitarySeederService {
                 new MissionEntity("Desert Storm", true, LocalDate.of(1990, 8, 2), units[2], Arrays.asList(weapons[2], weapons[3])),
                 new MissionEntity("Air Traffic Control", false, LocalDate.of(2019, 2, 25), units[2], Collections.emptyList()),
                 new MissionEntity("Atalanta", true, LocalDate.of(2008, 12, 8), units[1], Arrays.asList(weapons[1], weapons[4])),
-                new MissionEntity("Perejil Crisis", false, LocalDate.of(2002, 7, 11), units[1], Arrays.asList(weapons[0], weapons[2], weapons[3]))
+                new MissionEntity("Perejil Crisis", false, LocalDate.of(2002, 7, 11), units[1], Arrays.asList(weapons[0], weapons[2], weapons[4]))
         };
         this.missionRepository.saveAll(Arrays.asList(missions));
     }

@@ -48,4 +48,17 @@ public class GunResourceIT {
                 .expectBody(Gun.class)
                 .value(Assertions::assertNotNull);
     }
+
+    @Test
+    void testGetAccesoryPriceSumByGunName() {
+        this.webTestClient
+                .get()
+                .uri(uribuilder -> uribuilder.path(GunResource.GUNS + GunResource.SEARCH)
+                        .queryParam("q", "name:Remington 870").build())
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(BigDecimal.class)
+                .value(totalPrice -> assertEquals(totalPrice, new BigDecimal("114.98")));
+    }
 }

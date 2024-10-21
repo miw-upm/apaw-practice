@@ -6,6 +6,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.videogame.VideoGamePers
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class VideoGameService {
     private final VideoGamePersistence videoGamePersistence;
@@ -26,5 +28,13 @@ public class VideoGameService {
 
     public VideoGame update(String videoGameAlias, VideoGame videoGame) {
         return this.videoGamePersistence.update(videoGameAlias, videoGame);
+    }
+
+    public Stream<String> findPlayerNamesByVideoGameAlias(String videoGameAlias) {
+        return this.videoGamePersistence.findPlayerNameByVideoGameAlias(videoGameAlias);
+    }
+
+    public Integer sumNumberOfPlayerByPlayerNameAndWebsite(String playerName, String website) {
+        return this.videoGamePersistence.sumNumberOfPlayerByPlayerNameAndWebsite(playerName, website);
     }
 }
