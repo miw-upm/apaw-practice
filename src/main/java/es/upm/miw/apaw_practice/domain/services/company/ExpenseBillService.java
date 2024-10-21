@@ -4,6 +4,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.company.ExpenseBillPers
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class ExpenseBillService {
     private final ExpenseBillPersistence expenseBillPersistence;
@@ -16,4 +18,5 @@ public class ExpenseBillService {
     public void delete(String id) {
         this.expenseBillPersistence.delete(id);
     }
+
 }
