@@ -37,7 +37,9 @@ public class MusicLessonSeederService {
         new MusicalInstrumentEntity("YMH-FL-222", "Beginner", "Flute"),
         new MusicalInstrumentEntity("STW-PN-998", "Advanced", "Grand Piano"),
         new MusicalInstrumentEntity("GBS-LP-234", "Intermediate", "Electric Guitar"),
-        new MusicalInstrumentEntity("LWG-SN-400", "Advanced", "Snare Drum")
+        new MusicalInstrumentEntity("LWG-SN-400", "Advanced", "Snare Drum"),
+        new MusicalInstrumentEntity("LWG-SN-401", "Intermediate", "Snare Drum 2"),
+        new MusicalInstrumentEntity("GBS-LP-235", "Intermediate", "Electric Guitar")
     };
     this.musicalInstrumentRepository.saveAll(Arrays.asList(musicalInstrumentEntities));
 
@@ -70,7 +72,9 @@ public class MusicLessonSeederService {
         new LearnerEntity("B8858525", "Marcos Perez", Boolean.FALSE,
             Collections.emptyList(), branchEntities[0]),
         new LearnerEntity("C1234567", "Mario Perez", Boolean.FALSE,
-            Collections.emptyList(), branchEntities[1])
+            Collections.emptyList(), branchEntities[1]),
+        new LearnerEntity("PE0110144", "Jose Diaz", Boolean.TRUE,
+            Collections.emptyList(), branchEntities[2])
     };
     this.learnerRepository.saveAll(Arrays.asList(learnerEntities));
   }

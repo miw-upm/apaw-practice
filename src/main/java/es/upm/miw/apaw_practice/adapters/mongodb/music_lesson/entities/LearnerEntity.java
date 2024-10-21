@@ -90,12 +90,12 @@ public class LearnerEntity {
   }
 
   public Learner toLearner() {
-    var branch = (this.branch != null) ? this.branch.toBranch() : null;
-    var lessons = this.lessons.stream()
+    var branchCopy = (this.branch != null) ? this.branch.toBranch() : null;
+    var lessonsCopy = this.lessons.stream()
         .map(LessonEntity::toLesson)
         .toList();
 
-    return new Learner(this.identityDocument, this.name, this.beginner, lessons, branch);
+    return new Learner(this.identityDocument, this.name, this.beginner, lessonsCopy, branchCopy);
   }
 
   @Override

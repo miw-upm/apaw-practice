@@ -52,14 +52,14 @@ public class CompanySeederService {
         CompanyEntity[] companies = {
                 new CompanyEntity("TechCorp", "New York", "Technology", LocalDate.of(2005, 4, 20),List.of(departments[1])),
                 new CompanyEntity("FinServe", "London", "Finance", LocalDate.of(2010, 8, 15),List.of(departments[0])),
-                new CompanyEntity("HealthPlus", "Berlin", "Healthcare", LocalDate.of(2018, 3, 10),List.of(departments[2]))
+                new CompanyEntity("HealthPlus", "New York", "Healthcare", LocalDate.of(2018, 3, 10),List.of(departments[2]))
         };
         this.companyRepository.saveAll(Arrays.asList(companies));
 
         ExpenseBillEntity[] expenseBills = {
                 new ExpenseBillEntity( "Office Supplies", new BigDecimal("500.0"), LocalDateTime.of(2023, 2, 15, 10, 0), List.of(departments[1])),
                 new ExpenseBillEntity("Travel Expenses", new BigDecimal("1200.0"), LocalDateTime.of(2023, 6, 10, 15, 30), List.of(departments[0])),
-                new ExpenseBillEntity("IT Upgrade", new BigDecimal("15000.0"), LocalDateTime.of(2023, 8, 5, 10, 0), List.of(departments[1]))
+                new ExpenseBillEntity("IT Upgrade", new BigDecimal("15000.0"), LocalDateTime.of(2023, 8, 5, 10, 0), List.of(departments[2]))
         };
         this.expenseBillRepository.saveAll(Arrays.asList(expenseBills));
     }

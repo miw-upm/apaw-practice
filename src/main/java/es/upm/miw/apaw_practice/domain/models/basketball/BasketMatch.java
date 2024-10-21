@@ -15,9 +15,13 @@ public class BasketMatch {
 
     public BasketMatch(int id, LocalDateTime date, String address, List<BasketPlayer> basketPlayers) {
         this.id = id;
-        this.date = LocalDateTime.now();
+        this.date = date;
         this.address = address;
         this.basketPlayers = basketPlayers;
+    }
+
+    public static BasketMatchBuilders.Id builder() {
+        return new Builder();
     }
 
     public int getId() {
@@ -50,5 +54,44 @@ public class BasketMatch {
 
     public void setPlayers(List<BasketPlayer> players) {
         this.basketPlayers = players;
+    }
+
+    public static class Builder implements BasketMatchBuilders.Id, BasketMatchBuilders.Date,
+            BasketMatchBuilders.Address, BasketMatchBuilders.Optionals {
+
+        private final BasketMatch basketMatch;
+
+        public Builder() {
+            this.basketMatch = new BasketMatch();
+        }
+
+        @Override
+        public BasketMatchBuilders.Date id(int id) {
+            this.basketMatch.id = id;
+            return this;
+        }
+
+        @Override
+        public BasketMatchBuilders.Address date(LocalDateTime date) {
+            this.basketMatch.date = date;
+            return this;
+        }
+
+        @Override
+        public BasketMatchBuilders.Optionals address(String address) {
+            this.basketMatch.address = address;
+            return this;
+        }
+
+        @Override
+        public BasketMatchBuilders.Optionals basketPlayers(List<BasketPlayer> basketPlayers) {
+            this.basketMatch.basketPlayers = basketPlayers;
+            return this;
+        }
+
+        @Override
+        public BasketMatch build() {
+            return this.basketMatch;
+        }
     }
 }

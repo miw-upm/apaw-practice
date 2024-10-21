@@ -17,9 +17,6 @@ class ActorPersistenceMongodbIT {
     @Autowired
     private ActorPersistenceMongodb actorPersistence;
 
-    @Autowired
-    private MoviesSeederService moviesSeederService;
-
     @Test
     void testFindByArtisticNameNotFound() {
         assertThrows(NotFoundException.class, () -> this.actorPersistence.findByArtisticName("Jennifer Aniston"));

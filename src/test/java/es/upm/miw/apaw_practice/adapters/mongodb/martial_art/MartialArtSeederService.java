@@ -41,7 +41,7 @@ public class MartialArtSeederService {
         this.instructorRepository.saveAll(Arrays.asList(instructorEntities));
 
         StyleEntity[] styleEntities ={
-                new StyleEntity("Estilo de combate","Tecnica pensada para el deporte de contacto","america",4),
+                new StyleEntity("Estilo de combate","Tecnica pensada para el deporte de marcial","america",4),
                 new StyleEntity("Estilo de marcial","Tecnica pensada para el deporte de contacto","Corea",4),
                 new StyleEntity("Estilo de popularidad 2", "Técnica con popularidad 2", "Asia", 2)
         };
@@ -53,7 +53,7 @@ public class MartialArtSeederService {
                 new TechniqueEntity("Dollyo",3,true,1.0,List.of(instructorEntities), Arrays.asList(styleEntities).get(0)),
                 new TechniqueEntity("Bandal",5,true,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(1)),
                 new TechniqueEntity("Punch",7,false,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(0)),
-                new TechniqueEntity("Tuitchagui",1,true,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(1)),
+                new TechniqueEntity("Tuitchagui",5,true,1.0,List.of(instructorEntities),Arrays.asList(styleEntities).get(1)),
                 new TechniqueEntity("Neryo", 1, true, 1.0, List.of(instructorEntities), Arrays.asList(styleEntities).get(2))
 
         };

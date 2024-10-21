@@ -30,7 +30,7 @@ public class LearnerServiceIT {
   @Test
   void testDelete() {
     var learnerCountPrev = this.getLearnersCount();
-    this.learnerService.delete("Y5879632");
+    this.learnerService.delete("PE0110144");
     var learnerCountAfter = this.getLearnersCount();
     assertTrue(learnerCountPrev > learnerCountAfter);
   }
@@ -75,6 +75,13 @@ public class LearnerServiceIT {
     Lesson lesson = new Lesson(currentDate, durationInHours, fee, List.of(musicalInstrument));
     assertThrows(NotFoundException.class, () -> this.learnerService.updateLessons("B8858525X", List.of(lesson)));
 
+  }
+
+  @Test
+  void testFindFeeSumByInstrumentDifficultyLevel() {
+    BigDecimal expectedFeeSum = BigDecimal.valueOf(18.75);
+    BigDecimal actualFeeSum = this.learnerService.findFeeSumByInstrumentDifficultyLevel("Beginner");
+    assertEquals(expectedFeeSum, actualFeeSum);
   }
 
   private Long getLearnersCount() {

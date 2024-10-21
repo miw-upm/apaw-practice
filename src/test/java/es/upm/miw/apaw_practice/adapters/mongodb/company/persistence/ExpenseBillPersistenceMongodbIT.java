@@ -41,4 +41,6 @@ public class ExpenseBillPersistenceMongodbIT {
 
         assertThrows(NotFoundException.class, () -> this.expenseBillPersistence.delete("nonExistingId"));
     }
+
+
 }

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -108,17 +109,27 @@ public class CourseEntity {
     }
 
 
-    public Course toCourse(){
+    public Course toCourse() {
         Course course = new Course();
-        BeanUtils.copyProperties(this, course, "tutoringSessions, users, videos");
-        List<User> userList = this.users.stream()
-                .map(UserCourseEntity::toUserCourse)
-                .toList();
-        course.setUsers(userList);
-        List<TutoringSession> tutoringSessionList = this.tutoringSessions.stream()
-                .map(TutoringSessionEntity::toTutoringSession)
-                .toList();
-        course.setTutoringSessions(tutoringSessionList);
+        BeanUtils.copyProperties(this, course, "tutoringSessions", "users", "videos");
+
+        if (this.users != null) {
+            List<User> userList = this.users.stream()
+                    .map(UserCourseEntity::toUserCourse)
+                    .toList();
+            course.setUsers(userList);
+        } else {
+            course.setUsers(new ArrayList<>());
+        }
+
+        if (this.tutoringSessions != null) {
+            List<TutoringSession> tutoringSessionList = this.tutoringSessions.stream()
+                    .map(TutoringSessionEntity::toTutoringSession)
+                    .toList();
+            course.setTutoringSessions(tutoringSessionList);
+        } else {
+            course.setTutoringSessions(new ArrayList<>());
+        }
         return course;
     }
 

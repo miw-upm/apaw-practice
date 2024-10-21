@@ -47,6 +47,7 @@ class DeliveryOrderPersistenceMongodbIT {
     private Menu mapMenu() {
         Menu menu = new Menu();
         menu.setName("Italian Feast");
+        menu.setRating(2.3);
         return menu;
     }
 }

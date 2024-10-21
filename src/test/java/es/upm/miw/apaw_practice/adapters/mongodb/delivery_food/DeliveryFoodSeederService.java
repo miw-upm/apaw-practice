@@ -57,6 +57,8 @@ public class DeliveryFoodSeederService {
                 new MenuEntity("MenuRating3", "MenuRating",
                         List.of(menuCategories.get(2)), 5.0),
                 new MenuEntity("MenuRating4", "MenuRating",
+                        List.of(menuCategories.get(2)), 9.0),
+                new MenuEntity("MenuRating4", "Menu test",
                         List.of(menuCategories.get(2)), 9.0)
         );
         menuRepository.saveAll(menus);
@@ -69,13 +71,13 @@ public class DeliveryFoodSeederService {
                 new DeliveryOrderItemEntity(new BigDecimal("7.50"), 4, menus.get(2)),
                 new DeliveryOrderItemEntity(new BigDecimal("14.00"), 1, menus.get(2)),
                 new DeliveryOrderItemEntity(new BigDecimal("10.00"), 2, menus.get(0)),
-                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(2)),
-                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(5)),
-                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(6)),
-                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(7)),
-                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(8)),
-                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(5)),
-                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 5, menus.get(6))
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 2, menus.get(2)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(5)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(6)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(7)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(8)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(9)),
+                new DeliveryOrderItemEntity(new BigDecimal("8.50"), 7, menus.get(9))
         );
         deliveryOrderItemRepository.saveAll(deliveryOrderItems);
 

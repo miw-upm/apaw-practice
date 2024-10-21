@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ConsoleRepository extends MongoRepository<ConsoleEntity, String> {
     Optional<ConsoleEntity> findByConsoleReference(String consoleReference);
+    Optional<ConsoleEntity> deleteByConsoleReference(String consoleReference);
 }

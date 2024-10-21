@@ -20,6 +20,6 @@ public class StyleRepositoryIT {
         assertTrue(this.styleRepository.findByName("Estilo de combate").isPresent());
         StyleEntity styleEntity = this.styleRepository.findByName("Estilo de combate").get();
         assertEquals("Estilo de combate", styleEntity.getName());
-        assertEquals("Tecnica pensada para el deporte de contacto", styleEntity.getDescription());
+        assertEquals("Tecnica pensada para el deporte de marcial", styleEntity.getDescription());
     }
 }

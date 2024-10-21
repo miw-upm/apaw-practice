@@ -5,10 +5,14 @@ import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.company.Company;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestConfig
+@SpringBootTest
 public class CompanyPersistenceMongodbIT {
 
     @Autowired
@@ -39,4 +43,33 @@ public class CompanyPersistenceMongodbIT {
         assertNotNull(updatedCompany);
         assertEquals(newIndustry, updatedCompany.getIndustry());
     }
+    @Test
+    void testFindHighestExpenseAmountByLocation() {
+        String location = "New York";
+        BigDecimal highestExpenseAmount = this.companyPersistenceMongodb.findHighestExpenseAmountByLocation(location);
+
+        assertNotNull(highestExpenseAmount);
+        assertEquals(new BigDecimal("0"), highestExpenseAmount);
+    }
+    @Test
+    void testFindManagementNamesByIndustryAndDescription() {
+        String industry = "Technology";
+        String description = "Office Supplies";
+
+
+        List<String> managementNames = this.companyPersistenceMongodb.findManagementNamesByIndustryAndDescription(industry, description);
+
+
+        assertNotNull(managementNames);
+        assertFalse(managementNames.isEmpty());
+
+
+        assertTrue(managementNames.contains("John Doe"));
+
+
+        assertEquals(managementNames.size(), managementNames.stream().distinct().count());
+    }
+
+
+
 }

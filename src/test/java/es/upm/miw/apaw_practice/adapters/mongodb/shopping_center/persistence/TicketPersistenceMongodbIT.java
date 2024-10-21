@@ -8,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
-public class TicketPersistenceMongodbIT {
+class TicketPersistenceMongodbIT {
 
     @Autowired
     private TicketPersistenceMongodb ticketPersistenceMongodb;
@@ -27,11 +26,11 @@ public class TicketPersistenceMongodbIT {
 
     @Test
     void testDelete() {
-        List<Ticket> oldTickets = this.ticketPersistenceMongodb.readAll().collect(Collectors.toList());
+        List<Ticket> oldTickets = this.ticketPersistenceMongodb.readAll().toList();
         int oldSize = oldTickets.size();
         assertNotNull(oldTickets.get(0).getId());
         this.ticketPersistenceMongodb.delete(oldTickets.get(0).getId());
-        List<Ticket> newTickets = this.ticketPersistenceMongodb.readAll().collect(Collectors.toList());
+        List<Ticket> newTickets = this.ticketPersistenceMongodb.readAll().toList();
         int newSize = newTickets.size();
         assertNotEquals(oldSize, newSize);
     }

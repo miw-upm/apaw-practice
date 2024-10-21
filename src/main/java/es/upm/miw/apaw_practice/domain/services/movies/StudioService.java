@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.movies.StudioPersistenc
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class StudioService {
 
@@ -17,5 +19,9 @@ public class StudioService {
 
     public Studio findByName(String name) {
         return this.studioPersistence.findByName(name);
+    }
+
+    public BigDecimal findMarketCapitalizationSumByAwardCategory(String category) {
+        return this.studioPersistence.findMarketCapitalizationSumByAwardCategory(category);
     }
 }

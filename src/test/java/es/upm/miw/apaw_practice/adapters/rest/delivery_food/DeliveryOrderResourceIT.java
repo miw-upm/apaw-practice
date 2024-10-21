@@ -53,7 +53,7 @@ class DeliveryOrderResourceIT {
     private List<DeliveryOrderItem> mapDeliveryOrderItems() {
         DeliveryOrderItem orderItem = new DeliveryOrderItem();
         orderItem.setPrice(new BigDecimal("4.4"));
-        orderItem.setQuantity(7);
+        orderItem.setQuantity(3);
         orderItem.setMenu(mapMenu());
         return List.of(orderItem);
     }

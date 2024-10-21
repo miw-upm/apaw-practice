@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.rest.course;
 
-import es.upm.miw.apaw_practice.domain.models.course.TutoringSession;
 import es.upm.miw.apaw_practice.domain.services.course.TutoringSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ public class TutoringSessionResource {
 
     static final String TUTORINGSESSIONS = "/course/tutoringsession";
     static final String TITTLE = "/{tittle}";
-    static final String ROLE_PRICE = "/{role}";
+    static final String ROLE_PRICE = "/price/ofroleduration";
 
 
     private final TutoringSessionService tutoringSessionService;
@@ -30,7 +29,7 @@ public class TutoringSessionResource {
     }
 
     @GetMapping(ROLE_PRICE)
-    public BigDecimal priceSumOfRoleDuration(@PathVariable String role, @RequestBody LocalTime duration){
+    public BigDecimal priceSumOfRoleDuration(@RequestParam String role, @RequestParam LocalTime duration){
         return this.tutoringSessionService.priceSumOfRoleDuration(role, duration);
     }
 }

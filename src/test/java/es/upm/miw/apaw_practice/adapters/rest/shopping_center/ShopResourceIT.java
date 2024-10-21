@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
-public class ShopResourceIT {
+class ShopResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
