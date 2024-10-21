@@ -14,13 +14,6 @@ public class Ticket {
         //empty for framework
     }
 
-    public Ticket(String id, BigDecimal totalPrice, boolean isPaidByCreditCard, Employee employee) {
-        this.id = id;
-        this.totalPrice = totalPrice;
-        this.isPaidByCreditCard = isPaidByCreditCard;
-        this.employee = employee;
-    }
-
     public String getId() {
         return id;
     }
