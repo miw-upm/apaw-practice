@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.domain.models.company.Company;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Repository
 public interface CompanyPersistence {
@@ -13,6 +14,8 @@ public interface CompanyPersistence {
     void updateIndustry(String companyname, String newIndustry);
 
     BigDecimal findHighestExpenseAmountByLocation(String location);
+
+    List<String> findManagementNamesByIndustryAndDescription(String industry, String description);
 
 
 }

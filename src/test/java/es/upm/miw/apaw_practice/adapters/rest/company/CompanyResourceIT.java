@@ -92,4 +92,27 @@ public class CompanyResourceIT {
                 .expectBody(BigDecimal.class)
                 .value(actualHighestExpense -> assertEquals(expectedHighestExpense, actualHighestExpense));
     }
+
+    @Test
+    void testFindManagementNamesByIndustryAndDescription() {
+        String industry = "Technology";
+        String description = "Office Supplies";
+
+        // 发送请求并获取管理者名称列表
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(COMPANIES + "/management-search")
+                                .queryParam("industry", industry)
+                                .queryParam("description", description)
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(managementNames -> {
+                    assertNotNull(managementNames);
+                    assertEquals(1, managementNames.size());
+                    assertEquals("[\"John Doe\"]", managementNames.get(0));  // 根据种子数据的预期结果
+                });
+    }
 }
