@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestTestConfig
-public class TicketResourceIT {
+class TicketResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;

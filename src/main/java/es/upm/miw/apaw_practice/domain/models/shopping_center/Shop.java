@@ -13,14 +13,6 @@ public class Shop {
         //empty for framework
     }
 
-    public Shop(String id, String name, String address, List<Employee> employees, List<Provider> providers) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.employees = employees;
-        this.providers = providers;
-    }
-
     public String getId() {
         return id;
     }
