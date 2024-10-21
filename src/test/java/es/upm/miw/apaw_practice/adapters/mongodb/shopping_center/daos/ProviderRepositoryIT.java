@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestConfig
-public class ProviderRepositoryIT {
+class ProviderRepositoryIT {
 
     @Autowired
     private ProviderRepository providerRepository;
