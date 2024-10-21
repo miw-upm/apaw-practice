@@ -5,6 +5,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.company.daos.CompanyRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.company.daos.DepartmentRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.company.daos.ExpenseBillRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.company.entities.CompanyEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.company.entities.DepartmentEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.company.entities.ExpenseBillEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.company.Company;
@@ -61,12 +62,12 @@ public class CompanyPersistenceMongodb implements CompanyPersistence{
         AggregationResults<HighestExpenseResult> results = mongoTemplate.aggregate(aggregation, "expenseBillEntity", HighestExpenseResult.class);
         HighestExpenseResult highestExpenseResult = results.getUniqueMappedResult();
         if (highestExpenseResult == null || highestExpenseResult.getHighestAmount() == null) {
-            return BigDecimal.ZERO;  // 或者返回其他默认值
+            return BigDecimal.ZERO;
         }
         return highestExpenseResult.getHighestAmount();
     }
 
-    // 用于存储聚合结果的内部类
+
     public static class HighestExpenseResult {
         private BigDecimal highestAmount;
 
@@ -78,4 +79,27 @@ public class CompanyPersistenceMongodb implements CompanyPersistence{
             this.highestAmount = highestAmount;
         }
     }
+
+    @Override
+    public List<String> findManagementNamesByIndustryAndDescription(String industry, String description) {
+        // 1. 从 `ExpenseBillEntity` 中查找符合 description 的账单
+        List<ExpenseBillEntity> expenseBills = this.expenseBillRepository.findByDescription(description);
+
+        // 2. 提取所有关联的 `DepartmentEntity`
+        List<DepartmentEntity> departments = expenseBills.stream()
+                .flatMap(expenseBill -> expenseBill.getDepartments().stream())
+                .collect(Collectors.toList());
+
+        // 3. 获取符合 `industry` 的公司
+        List<CompanyEntity> companies = this.companyRepository.findByIndustry(industry);
+
+        // 4. 通过公司过滤部门，并返回管理者名称列表
+        return departments.stream()
+                .filter(department -> companies.stream()
+                        .anyMatch(company -> company.getDepartmentEntities().contains(department)))
+                .map(department -> department.getManagementEntity().getName())
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
 }

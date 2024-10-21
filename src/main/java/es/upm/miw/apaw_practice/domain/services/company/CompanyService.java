@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class CompanyService {
@@ -27,5 +28,11 @@ public class CompanyService {
     public BigDecimal findHighestExpenseAmountByLocation(String location) {
         return this.companyPersistence.findHighestExpenseAmountByLocation(location);
     }
+
+    public List<String> findManagementNamesByIndustryAndDescription(String industry, String description) {
+        return this.companyPersistence.findManagementNamesByIndustryAndDescription(industry, description);
     }
+
+
+}
 

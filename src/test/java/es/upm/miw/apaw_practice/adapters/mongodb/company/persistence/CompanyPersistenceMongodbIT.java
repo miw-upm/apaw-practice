@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,6 +50,24 @@ public class CompanyPersistenceMongodbIT {
 
         assertNotNull(highestExpenseAmount);
         assertEquals(new BigDecimal("0"), highestExpenseAmount);
+    }
+    @Test
+    void testFindManagementNamesByIndustryAndDescription() {
+        String industry = "Technology";
+        String description = "Office Supplies";
+
+
+        List<String> managementNames = this.companyPersistenceMongodb.findManagementNamesByIndustryAndDescription(industry, description);
+
+
+        assertNotNull(managementNames);
+        assertFalse(managementNames.isEmpty());
+
+
+        assertTrue(managementNames.contains("John Doe"));
+
+
+        assertEquals(managementNames.size(), managementNames.stream().distinct().count());
     }
 
 
