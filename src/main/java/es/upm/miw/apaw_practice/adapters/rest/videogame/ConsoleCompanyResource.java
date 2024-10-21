@@ -35,4 +35,15 @@ public class ConsoleCompanyResource {
     public ConsoleCompany create(@RequestBody ConsoleCompany consoleCompany) {
         return this.consoleCompanyService.create(consoleCompany);
     }
+
+    @DeleteMapping(COMPANY_INFORMATION)
+    public void delete(@PathVariable String companyInformation) {
+        this.consoleCompanyService.delete(companyInformation);
+    }
+
+    @PutMapping(COMPANY_INFORMATION)
+    public ConsoleCompany update(@PathVariable String companyInformation, @RequestBody ConsoleCompany consoleCompany) {
+        this.consoleCompanyService.assertCompanyInformationNotExist(companyInformation);
+        return consoleCompanyService.update(companyInformation, consoleCompany);
+    }
 }

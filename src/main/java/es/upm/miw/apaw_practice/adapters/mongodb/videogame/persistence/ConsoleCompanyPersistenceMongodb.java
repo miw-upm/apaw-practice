@@ -57,4 +57,20 @@ public class ConsoleCompanyPersistenceMongodb implements ConsoleCompanyPersisten
     public boolean existsConsoleCompany(String consoleCompany) {
         return this.consoleCompanyRepository.findById(consoleCompany).isPresent();
     }
+
+    @Override
+    public void delete(String companyInformation){
+        this.consoleCompanyRepository.deleteByCompanyInformation(companyInformation);
+    }
+
+    @Override
+    public ConsoleCompany update(String companyInformation, ConsoleCompany consoleCompany) {
+        ConsoleCompanyrEntity consoleCompanyrEntity = consoleCompanyRepository
+                .findByCompanyInformation(companyInformation)
+                .orElseThrow(() -> new NotFoundException("ConsoleInformation: " + consoleCompany + " not found"));
+        consoleCompanyrEntity.fromConsoleCompany(consoleCompany);
+        return this.consoleCompanyRepository
+                .save(consoleCompanyrEntity)
+                .toConsoleCompany();
+    }
 }
