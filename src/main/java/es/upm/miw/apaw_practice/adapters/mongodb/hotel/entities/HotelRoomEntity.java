@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class HotelRoomEntity {
     @Id
@@ -25,6 +26,7 @@ public class HotelRoomEntity {
         this.type = type;
         this.price = price;
         this.reserved = reserved;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getNumber() {

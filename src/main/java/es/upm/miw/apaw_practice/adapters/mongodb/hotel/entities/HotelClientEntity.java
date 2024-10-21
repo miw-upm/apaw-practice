@@ -6,6 +6,7 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class HotelClientEntity {
     private String name;
     private String phone;
     private String email;
+    @DBRef
     private HotelReservationEntity reservation;
 
     public HotelClientEntity(){
