@@ -57,7 +57,7 @@ class WeaponResourceIT {
                 .expectStatus().isOk()
                 .expectBody(new ParameterizedTypeReference<List<String>>() {
                 })
-                .value(ranks -> assertEquals(ranks.size(), 0));
+                .value(ranks -> assertEquals(0, ranks.size()));
     }
 
     @Test
