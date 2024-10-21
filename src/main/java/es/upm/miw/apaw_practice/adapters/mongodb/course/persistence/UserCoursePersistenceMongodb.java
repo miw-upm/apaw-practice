@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.mongodb.course.persistence;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.daos.CourseRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.daos.TutoringSessionRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.daos.UserCourseRepository;
-import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.TutoringSessionEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.course.entities.UserCourseEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.course.TutoringSession;
@@ -37,8 +36,9 @@ public class UserCoursePersistenceMongodb implements UserPersistence {
     @Override
     public List<String> emailsOfTitleTutoringSession(String title) {
 
-        this.tutoringSessionRepository.findByTitle(title)
-                .orElseThrow(() -> new NotFoundException("No Title: " + title));
+        TutoringSession tutoringSession = this.tutoringSessionRepository.findByTitle(title)
+                .orElseThrow(() -> new NotFoundException("No Title: " + title)).toTutoringSession();
+        tutoringSession.toString();
 
         return this.courseRepository.findAll().stream()
                 .flatMap(courseEntity -> Optional.ofNullable(courseEntity.getTutoringSessions())
