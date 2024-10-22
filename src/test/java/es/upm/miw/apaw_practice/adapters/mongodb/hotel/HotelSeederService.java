@@ -58,8 +58,8 @@ public class HotelSeederService {
         };
         this.hotelClientRepository.saveAll(Arrays.asList(clients));
         HotelMainEntity[] hotels = {
-                new HotelMainEntity("xiangHotel", "Street God", "966666666", List.of(rooms[0], rooms[1], rooms[2]), List.of(clients[0], clients[1], clients[2]))
-
+                new HotelMainEntity("xiangHotel", "Street God", "966666666", List.of(rooms[0], rooms[1], rooms[2]), List.of(clients[0], clients[1], clients[2])),
+                new HotelMainEntity("mengfeiHotel", "Street Kekw", "5201314", List.of(rooms[0], rooms[1]), List.of(clients[0], clients[1]))
         };
         this.hotelMainRepository.saveAll(Arrays.asList(hotels));
     }

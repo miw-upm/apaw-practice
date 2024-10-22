@@ -21,4 +21,5 @@ public class HotelClientRepositoryIT {
         assertEquals("David", hotelClientEntity.getName());
         assertEquals("y1111111x", hotelClientEntity.getIdentityDocument());
     }
+
 }

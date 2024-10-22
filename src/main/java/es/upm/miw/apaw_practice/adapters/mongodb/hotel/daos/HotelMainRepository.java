@@ -9,4 +9,6 @@ public interface HotelMainRepository extends MongoRepository<HotelMainEntity, St
 
     Optional<HotelMainEntity> findByName(String name);
 
+    void deleteByName(String name);
+
 }

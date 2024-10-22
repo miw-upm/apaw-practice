@@ -15,7 +15,9 @@ public class HotelMainService {
         this.hotelMainPersistence = hotelMainPersistence;
     }
 
-    public HotelMain findByName(String name) {
-        return this.hotelMainPersistence.findByName(name);
-    }
+    public HotelMain findByName(String name) { return this.hotelMainPersistence.findByName(name); }
+
+
+    public void delete(String name){ this.hotelMainPersistence.delete(name); }
+
 }

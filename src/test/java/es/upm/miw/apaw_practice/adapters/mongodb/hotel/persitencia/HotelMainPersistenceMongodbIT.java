@@ -4,14 +4,11 @@ import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence.HotelMainPersistenceMongodb;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
-import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelMainPersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestConfig
 public class HotelMainPersistenceMongodbIT {
@@ -28,6 +25,12 @@ public class HotelMainPersistenceMongodbIT {
     @Test
     void testNotFound() {
         assertThrows(NotFoundException.class, () -> this.hotelMainPersistenceMongodb.findByName("algo"));
+    }
+
+    @Test
+    void testDelete (){
+        this.hotelMainPersistenceMongodb.delete("mengfeiHotel");
+        assertThrows(NotFoundException.class, () -> this.hotelMainPersistenceMongodb.findByName("mengfeiHotel"));
     }
 
 }

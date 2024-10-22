@@ -23,4 +23,10 @@ public class HotelMainResource {
     public HotelMain findByName(@PathVariable String name) {
         return this.hotelMainService.findByName(name);
     }
+
+    @DeleteMapping(NAMES)
+    public void delete(@PathVariable String name) {
+        this.hotelMainService.delete(name);
+    }
+
 }
