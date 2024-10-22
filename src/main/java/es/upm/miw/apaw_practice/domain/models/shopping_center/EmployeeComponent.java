@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.domain.models.shopping_center;
 
-import java.time.LocalDate;
 import java.util.stream.Stream;
 
 public abstract class EmployeeComponent {

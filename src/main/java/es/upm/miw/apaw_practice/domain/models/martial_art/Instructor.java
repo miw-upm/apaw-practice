@@ -19,6 +19,51 @@ public class Instructor {
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
     }
+    // Método estático para iniciar el proceso de construcción
+    public static InstructorBuilders.Dni builder() {
+        return new Builder();
+    }
+
+    // Builder interno con pasos definidos a través de interfaces
+    public static class Builder implements InstructorBuilders.Dni, InstructorBuilders.FullName, InstructorBuilders.PhoneNumber, InstructorBuilders.BirthDate, InstructorBuilders.Optionals {
+
+        private final Instructor instructor;
+
+        public Builder() {
+            this.instructor = new Instructor();
+        }
+
+        @Override
+        public InstructorBuilders.FullName dni(String dni) {
+            this.instructor.dni = dni;
+            return this;
+        }
+
+        @Override
+        public InstructorBuilders.PhoneNumber fullName(String fullName) {
+            this.instructor.fullName = fullName;
+            return this;
+        }
+
+
+        @Override
+        public InstructorBuilders.BirthDate phoneNumber(Integer phoneNumber) {
+            this.instructor.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        @Override
+        public InstructorBuilders.Optionals birthDate(LocalDateTime birthDate) {
+            this.instructor.birthDate = birthDate;
+            return this;
+        }
+
+        @Override
+        public Instructor build() {
+            return this.instructor;
+        }
+    }
+
 
     public String getDni() {
         return dni;

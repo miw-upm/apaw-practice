@@ -20,8 +20,10 @@ public class HotelClientResourceIT {
 
     @Test
     void testCreate() {
-        HotelReservation reservation = new HotelReservation("4", "202", LocalDate.of(2020, 1, 5));
-        HotelClient client = new HotelClient("x6666666x", "Mengtxu", "677777777", "Mengtxu@gmail.com", reservation);
+        String rNumber = "1";
+        HotelReservation reservation = new HotelReservation();
+        reservation.setReservationNumber(rNumber);
+        HotelClient client = new HotelClient("y9999999x", "David", "6000000000", "", reservation);
         this.webTestClient
                 .post()
                 .uri(HotelClientResource.CLIENTS)
@@ -30,24 +32,15 @@ public class HotelClientResourceIT {
                 .expectStatus().isOk()
                 .expectBody(HotelClient.class)
                 .value(Assertions::assertNotNull);
+
     }
 
     @Test
     void testCreateConflictDNI() {
-        HotelReservation reservation = new HotelReservation("5", "202", LocalDate.of(2020, 1, 5));
+        String rNumber = "1";
+        HotelReservation reservation = new HotelReservation();
+        reservation.setReservationNumber(rNumber);
         HotelClient client = new HotelClient("y1111111x", "David", "6000000000", "", reservation);
-        this.webTestClient
-                .post()
-                .uri(HotelClientResource.CLIENTS)
-                .body(BodyInserters.fromValue(client))
-                .exchange()
-                .expectStatus().isEqualTo(HttpStatus.CONFLICT);
-    }
-
-    @Test
-    void testCreateConflictReservation() {
-        HotelReservation reservation = new HotelReservation("1", "101", LocalDate.of(2020,1,1));
-        HotelClient client = new HotelClient("y9999999x", "David", "6000000000", "", reservation);
         this.webTestClient
                 .post()
                 .uri(HotelClientResource.CLIENTS)

@@ -5,11 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping(ExpenseBillResource.EXPENSE_BILLS)
 public class ExpenseBillResource {
     static final String EXPENSE_BILLS = "/company/expense-bills";
     static final String ID_ID = "/{id}";
+
 
     private final ExpenseBillService expenseBillService;
 
@@ -21,6 +24,7 @@ public class ExpenseBillResource {
     @DeleteMapping(ID_ID)
     public ResponseEntity<Void> deleteExpenseBill(@PathVariable String id) {
         this.expenseBillService.delete(id);
-        return ResponseEntity.noContent().build(); // 返回204 NO_CONTENT
+        return ResponseEntity.noContent().build();
     }
+
 }

@@ -20,6 +20,10 @@ public class Menu {
         this.rating = rating;
     }
 
+    public static MenuBuilders.Name builder() {
+        return new Builder();
+    }
+
     public String getName() {
         return name;
     }
@@ -73,5 +77,44 @@ public class Menu {
                 ", categories=" + categories +
                 ", rating=" + rating +
                 '}';
+    }
+
+    public static class Builder implements MenuBuilders.Name, MenuBuilders.Description, MenuBuilders.Rating,
+            MenuBuilders.Optionals {
+
+        private final Menu menu;
+
+        public Builder() {
+            this.menu = new Menu();
+        }
+
+        @Override
+        public MenuBuilders.Description name(String name) {
+            menu.name = name;
+            return this;
+        }
+
+        @Override
+        public MenuBuilders.Rating description(String description) {
+            menu.description = description;
+            return this;
+        }
+
+        @Override
+        public MenuBuilders.Optionals rating(Double rating) {
+            menu.rating = rating;
+            return this;
+        }
+
+        @Override
+        public MenuBuilders.Optionals categories(List<MenuCategory> categories) {
+            menu.categories = categories;
+            return this;
+        }
+
+        @Override
+        public Menu build() {
+            return this.menu;
+        }
     }
 }

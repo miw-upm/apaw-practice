@@ -26,11 +26,13 @@ public class DepartmentPersistenceMongodb implements DepartmentPersistence {
         if (departments.isEmpty()) {
             throw new NotFoundException("Department name: " + departmentName);
         }
-        // 假设只更新第一个匹配的部门
+
         DepartmentEntity departmentEntity = departments.get(0);
         departmentEntity.setEmployeeCount(employeeCount);
         return this.departmentRepository.save(departmentEntity).toDepartment();
     }
+
+
 }
 
 
