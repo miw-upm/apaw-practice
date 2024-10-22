@@ -31,4 +31,14 @@ public class HotelMainResourceIT {
                     assertEquals("966666666",hotel.getPhone());
                 });
     }
+
+    @Test
+    void testDelete() {
+        this.webTestClient
+                .delete()
+                .uri(HOTELS + NAMES, "mengfeiHotel")
+                .exchange()
+                .expectStatus().isOk();
+    }
+
 }

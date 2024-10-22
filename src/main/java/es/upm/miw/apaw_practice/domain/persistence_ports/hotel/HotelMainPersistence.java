@@ -8,4 +8,6 @@ public interface HotelMainPersistence {
 
     HotelMain findByName(String name);
 
+    void delete(String name);
+
 }

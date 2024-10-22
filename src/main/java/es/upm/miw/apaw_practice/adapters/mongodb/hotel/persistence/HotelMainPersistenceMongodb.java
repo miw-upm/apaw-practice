@@ -12,16 +12,21 @@ public class HotelMainPersistenceMongodb implements HotelMainPersistence{
 
     private final HotelMainRepository hotelMainRepository;
 
-        @Autowired
-        public HotelMainPersistenceMongodb(HotelMainRepository hotelMainRepository) {
-            this.hotelMainRepository = hotelMainRepository;
-        }
+    @Autowired
+    public HotelMainPersistenceMongodb(HotelMainRepository hotelMainRepository) {
+        this.hotelMainRepository = hotelMainRepository;
+    }
 
-        @Override
-        public HotelMain findByName(String name) {
-            return this.hotelMainRepository.findByName(name)
-                    .orElseThrow(() -> new NotFoundException(" HotelMain name: " + name))
-                    .toHotel();
-        }
+    @Override
+    public HotelMain findByName(String name) {
+        return this.hotelMainRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException(" HotelMain name: " + name))
+                .toHotel();
+    }
+
+    @Override
+    public void delete(String name) {
+        this.hotelMainRepository.deleteByName(name);
+    }
 }
 
