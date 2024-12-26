@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelReservationEntity;
+import org.springframework.beans.BeanUtils;
+
 import java.time.LocalDate;
 
 public class HotelReservation {
@@ -15,17 +18,23 @@ public class HotelReservation {
         this.reservationDate = reservationDate;
     }
 
-    public String getReservationNumber() { return this.reservationNumber; }
+    public String getReservationNumber() { return reservationNumber; }
 
     public void setReservationNumber(String reservationNumber) { this.reservationNumber = reservationNumber;}
 
-    public String getRoomNumber() { return this.roomNumber; }
+    public String getRoomNumber() { return roomNumber; }
 
     public void setRoomNumber(String roomNumber) { this.roomNumber = roomNumber; }
 
-    public LocalDate getReservationDate() { return this.reservationDate; }
+    public LocalDate getReservationDate() { return reservationDate; }
 
     public void setReservationDate(LocalDate reservationDate) { this.reservationDate = reservationDate; }
+
+    public HotelReservationEntity toReservationEntity() {
+        HotelReservationEntity reservationEntity = new HotelReservationEntity();
+        BeanUtils.copyProperties(this, reservationEntity);
+        return reservationEntity;
+    }
 
     @Override
     public String toString() {

@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class HotelClientEntity {
+public class  HotelClientEntity {
 
     @Id
     private String id;

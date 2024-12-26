@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelRoomEntity;
+import org.springframework.beans.BeanUtils;
+
 import java.math.BigDecimal;
 
 public class HotelRoom {
@@ -50,6 +53,13 @@ public class HotelRoom {
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
     }
+
+    public HotelRoomEntity toRoomEntity() {
+        HotelRoomEntity roomEntity = new HotelRoomEntity();
+        BeanUtils.copyProperties(this, roomEntity);
+        return roomEntity;
+    }
+
 
     @Override
     public String toString() {
