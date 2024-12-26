@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelClientEntity;
+import org.springframework.beans.BeanUtils;
+
 public class HotelClient {
     private String identityDocument;
     private String name;
@@ -54,6 +57,11 @@ public class HotelClient {
 
     public void setReservation(HotelReservation hotelReservation) { this.hotelReservation = hotelReservation; }
 
+    public static HotelClientEntity toClientEntity(HotelClient client) {
+        HotelClientEntity clientEntity = new HotelClientEntity();
+        BeanUtils.copyProperties(client, clientEntity);
+        return clientEntity;
+    }
     @Override
     public String toString() {
         return "HotelClientRepository{" +

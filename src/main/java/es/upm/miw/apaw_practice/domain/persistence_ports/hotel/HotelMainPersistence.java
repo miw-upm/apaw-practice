@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.persistence_ports.hotel;
 
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -10,4 +11,5 @@ public interface HotelMainPersistence {
 
     void delete(String name);
 
+    void updateRoom(String name, String roomNumber, HotelRoom room);
 }
