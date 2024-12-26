@@ -45,8 +45,8 @@ public class HotelMainPersistenceMongodb implements HotelMainPersistence{
         hotelRoom.setPrice(room.getPrice());
         hotelRoom.setType(room.getType());
         hotelRoom.setReserved(room.isReserved());
-        HotelMainEntity hotelEntity = hotel.toHotelEntity();
-        hotelMainRepository.save(hotelEntity);
+        //HotelMainEntity hotelEntity = hotel.toHotelEntity();
+        //hotelMainRepository.save(hotelEntity);
     }
 
 }
