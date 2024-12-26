@@ -8,17 +8,17 @@ public class HotelClient {
     private String name;
     private String phone;
     private String email;
-    private HotelReservation hotelReservation;
+    private HotelReservation reservation;
 
     public HotelClient(){
 
     }
-    public HotelClient(String identityDocument, String name, String phone, String email, HotelReservation hotelReservation){
+    public HotelClient(String identityDocument, String name, String phone, String email, HotelReservation reservation){
         this.identityDocument = identityDocument;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.hotelReservation = hotelReservation;
+        this.reservation = reservation;
     }
 
     public String getIdentityDocument() {
@@ -53,13 +53,14 @@ public class HotelClient {
         this.email = email;
     }
 
-    public HotelReservation getReservation() { return this.hotelReservation; }
+    public HotelReservation getReservation() { return this.reservation; }
 
-    public void setReservation(HotelReservation hotelReservation) { this.hotelReservation = hotelReservation; }
+    public void setReservation(HotelReservation hotelReservation) { this.reservation = reservation; }
 
-    public static HotelClientEntity toClientEntity(HotelClient client) {
+    public HotelClientEntity toClientEntity() {
         HotelClientEntity clientEntity = new HotelClientEntity();
-        BeanUtils.copyProperties(client, clientEntity);
+        clientEntity.setReservation(this.reservation.toReservationEntity());
+        BeanUtils.copyProperties(this, clientEntity,"reservation");
         return clientEntity;
     }
     @Override
@@ -69,7 +70,7 @@ public class HotelClient {
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", HotelReservation=" + hotelReservation +
+                ", HotelReservation=" + reservation +
                 '}';
     }
 }

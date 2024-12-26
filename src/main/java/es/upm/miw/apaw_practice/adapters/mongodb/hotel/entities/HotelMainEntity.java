@@ -86,7 +86,7 @@ public class HotelMainEntity {
                 .map(HotelRoomEntity::toRoom)
                 .collect(Collectors.toList());
         hotel.setRooms(rooms);
-        BeanUtils.copyProperties(this, hotel);
+        BeanUtils.copyProperties(this, hotel, "rooms", "clients");
 
         return hotel;
     }

@@ -54,9 +54,9 @@ public class HotelRoom {
         this.reserved = reserved;
     }
 
-    public static HotelRoomEntity toRoomEntity(HotelRoom room) {
+    public HotelRoomEntity toRoomEntity() {
         HotelRoomEntity roomEntity = new HotelRoomEntity();
-        BeanUtils.copyProperties(room, roomEntity);
+        BeanUtils.copyProperties(this, roomEntity);
         return roomEntity;
     }
 
