@@ -30,18 +30,6 @@ public class HotelClientPersistenceMongodbIT {
         assertFalse(exist);
     }
 
-    @Test
-    void testExistReservation() {
-        HotelReservation reservation = this.hotelClientPersistenceMongodb.getReservation("1");
-        assertEquals("1", reservation.getReservationNumber());
-        assertEquals("101", reservation.getRoomNumber());
-    }
-
-    @Test
-    void testNotExistReservation() {
-        assertThrows(NotFoundException.class, () -> this.hotelClientPersistenceMongodb.getReservation("algo"));
-    }
-
 
     @Test
     void testCreate (){

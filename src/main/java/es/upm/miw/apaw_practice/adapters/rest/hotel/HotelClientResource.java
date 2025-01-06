@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(HotelClientResource.CLIENTS)
 public class HotelClientResource {
-    static final String CLIENTS = "/hotel/clients";
+    static final String CLIENTS = "/client/clients";
+
     private final HotelClientService hotelClientService;
 
     @Autowired

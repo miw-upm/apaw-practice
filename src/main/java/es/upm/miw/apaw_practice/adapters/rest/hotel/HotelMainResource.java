@@ -2,8 +2,6 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
-import es.upm.miw.apaw_practice.domain.models.shopping_center.Employee;
-import es.upm.miw.apaw_practice.domain.models.shopping_center.Shop;
 import es.upm.miw.apaw_practice.domain.services.hotel.HotelMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
