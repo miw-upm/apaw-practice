@@ -2,14 +2,20 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
 
-import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelMainResource.HOTELS;
-import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelMainResource.NAMES;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelMainResource.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @RestTestConfig
 public class HotelMainResourceIT {
@@ -40,5 +46,35 @@ public class HotelMainResourceIT {
                 .exchange()
                 .expectStatus().isOk();
     }
+    @Test
+    void testUpdateRoom() {
+        HotelRoom room = new HotelRoom("101", "doble", new BigDecimal("40.00"), false);
+        HotelMain updatedHotel = this.webTestClient
+                .put()
+                .uri(HOTELS + NAMES + ROOMS + NUMBERS, "mengfeiHotel", "101")
+                .body(BodyInserters.fromValue(room))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(HotelMain.class)
+                .returnResult()
+                .getResponseBody();
+        HotelRoom roomUpdated = updatedHotel.getRooms().stream()
+                .filter(r -> r.getNumber().equals("101"))
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("Room not found: " + "101"));
 
+        assertEquals("doble", roomUpdated.getType());
+        assertEquals(new BigDecimal("40.00"), room.getPrice());
+        assertFalse(roomUpdated.isReserved());
+    }
+    @Test
+    void testUpdateRoomNotFound() {
+        HotelRoom room = new HotelRoom("120", "doble", new BigDecimal("40.00"), false);
+        this.webTestClient
+                .put()
+                .uri(HOTELS + NAMES + ROOMS + NUMBERS, "mengfeiHotel", "101")
+                .body(BodyInserters.fromValue(room))
+                .exchange()
+                .expectStatus().isNotFound();
+    }
 }

@@ -51,6 +51,14 @@ public class HotelMainEntity {
         return phone;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -71,23 +79,27 @@ public class HotelMainEntity {
         this.rooms = rooms;
     }
 
-    public List<HotelClientEntity> getClients() { return this.clients; }
+    public List<HotelClientEntity> getClients() {
+        return this.clients;
+    }
 
-    public void setClients(List<HotelClientEntity> clients) { this.clients = clients; }
+    public void setClients(List<HotelClientEntity> clients) {
+        this.clients = clients;
+    }
 
 
     public HotelMain toHotel() {
         HotelMain hotel = new HotelMain();
-        List<HotelClient> clients = this.clients.stream()
-                .map(HotelClientEntity::toClient)
-                .collect(Collectors.toList());
-        hotel.setClients(clients);
+        BeanUtils.copyProperties(this, hotel, "rooms", "clients", "id");
+        hotel.setId(this.id);
         List<HotelRoom> rooms = this.rooms.stream()
                 .map(HotelRoomEntity::toRoom)
-                .collect(Collectors.toList());
+                .toList();
         hotel.setRooms(rooms);
-        BeanUtils.copyProperties(this, hotel, "rooms", "clients");
-
+        List<HotelClient> clients = this.clients.stream()
+                .map(HotelClientEntity::toClient)
+                .toList();
+        hotel.setClients(clients);
         return hotel;
     }
 

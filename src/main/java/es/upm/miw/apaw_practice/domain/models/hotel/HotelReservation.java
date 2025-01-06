@@ -6,8 +6,18 @@ import org.springframework.beans.BeanUtils;
 import java.time.LocalDate;
 
 public class HotelReservation {
+    private String id;
     private String reservationNumber;
     private String roomNumber;
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
     private LocalDate reservationDate;
 
     public HotelReservation(){}
@@ -32,7 +42,8 @@ public class HotelReservation {
 
     public HotelReservationEntity toReservationEntity() {
         HotelReservationEntity reservationEntity = new HotelReservationEntity();
-        BeanUtils.copyProperties(this, reservationEntity);
+        BeanUtils.copyProperties(this, reservationEntity, "id");
+        reservationEntity.setId(this.id);
         return reservationEntity;
     }
 

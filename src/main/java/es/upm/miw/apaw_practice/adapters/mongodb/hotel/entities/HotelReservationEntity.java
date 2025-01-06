@@ -17,6 +17,14 @@ public class HotelReservationEntity {
     private String roomNumber;
     private LocalDate reservationDate;
 
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
     public HotelReservationEntity(){}
 
     public HotelReservationEntity(String reservationNumber, String roomNumber, LocalDate reservationDate){
@@ -41,7 +49,8 @@ public class HotelReservationEntity {
 
     public HotelReservation toReservation() {
         HotelReservation reservation = new HotelReservation();
-        BeanUtils.copyProperties(this, reservation);
+        BeanUtils.copyProperties(this, reservation, "id");
+        reservation.setId(this.id);
         return reservation;
     }
 

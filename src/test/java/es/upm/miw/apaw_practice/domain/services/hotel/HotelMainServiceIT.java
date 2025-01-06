@@ -3,12 +3,17 @@ package es.upm.miw.apaw_practice.domain.services.hotel;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @TestConfig
 public class HotelMainServiceIT {
@@ -26,6 +31,23 @@ public class HotelMainServiceIT {
     void delete(){
         this.hotelMainService.delete("mengfeiHotel");
         assertThrows(NotFoundException.class, () -> this.hotelMainService.findByName("mengfeiHotel"));
+    }
+    @Test
+    void updateRoom() {
+        HotelMain hotelMain = this.hotelMainService.findByName("xiangHotel");
+        String roomNumber = "101";
+        HotelRoom room = new HotelRoom("101", "doble", new BigDecimal("40.00"), false);
+        HotelMain hotelUpdatedRoom = this.hotelMainService.updateRoom("xiangHotel","101", room);
+        HotelRoom updatedRoom = hotelUpdatedRoom.getRooms()
+                .stream()
+                .filter(roomToFind -> room.getNumber().equals(roomNumber))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Room number not found: " + roomNumber));
+        assertEquals("xiangHotel",hotelMain.getName());
+        assertEquals("101",updatedRoom.getNumber());
+        assertEquals("doble",updatedRoom.getType());
+        assertTrue(updatedRoom.getPrice().compareTo(new BigDecimal("40.00")) == 0);
+        assertFalse(updatedRoom.isReserved());
     }
 
 }

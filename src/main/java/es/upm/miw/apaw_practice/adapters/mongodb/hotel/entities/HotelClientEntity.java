@@ -65,18 +65,24 @@ public class  HotelClientEntity {
         this.email = email;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
     public HotelReservationEntity getReservation() { return this.reservation; }
 
     public void setReservation(final HotelReservationEntity reservation) { this.reservation = reservation; }
 
     public HotelClient toClient() {
-        String reservationNumber = this.getReservation().getReservationNumber();
-        String roomNumber = this.getReservation().getRoomNumber();
-        LocalDate reservationDate = this.getReservation().getReservationDate();
-        HotelReservation reservation = new HotelReservation(reservationNumber, roomNumber, reservationDate);
-        HotelClient client= new HotelClient();
-        BeanUtils.copyProperties(this, client);
+        HotelReservation reservation = this.getReservation().toReservation();
+        HotelClient client = new HotelClient();
+        BeanUtils.copyProperties(this, client, "reservation", "id");
         client.setReservation(reservation);
+        client.setId(this.id);
         return client;
     }
     @Override

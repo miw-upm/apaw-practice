@@ -1,17 +1,23 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
+import es.upm.miw.apaw_practice.domain.models.shopping_center.Employee;
+import es.upm.miw.apaw_practice.domain.models.shopping_center.Shop;
 import es.upm.miw.apaw_practice.domain.services.hotel.HotelMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(HotelMainResource.HOTELS)
 public class HotelMainResource {
 
     static final String HOTELS = "/hotel/hotels";
-    static final String NAMES= "/{name}";
-
+    static final String NAMES = "/{name}";
+    static final String ROOMS = "/rooms";
+    static final String NUMBERS = "/{number}";
     private final HotelMainService hotelMainService;
 
     @Autowired
@@ -29,4 +35,8 @@ public class HotelMainResource {
         this.hotelMainService.delete(name);
     }
 
+    @PutMapping(NAMES + ROOMS + NUMBERS)
+    public HotelMain updateRoom(@PathVariable String name, @PathVariable String number, @RequestBody HotelRoom room) {
+        return this.hotelMainService.updateRoom(name, number, room);
+    }
 }

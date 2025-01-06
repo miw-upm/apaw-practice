@@ -1,12 +1,18 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persitencia;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelMainEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelRoomEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence.HotelMainPersistenceMongodb;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
+import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +28,7 @@ public class HotelMainPersistenceMongodbIT {
         assertEquals("xiangHotel", hotelMain.getName());
         assertEquals("966666666",hotelMain.getPhone());
     }
+
     @Test
     void testNotFound() {
         assertThrows(NotFoundException.class, () -> this.hotelMainPersistenceMongodb.findByName("algo"));
@@ -31,6 +38,25 @@ public class HotelMainPersistenceMongodbIT {
     void testDelete (){
         this.hotelMainPersistenceMongodb.delete("mengfeiHotel");
         assertThrows(NotFoundException.class, () -> this.hotelMainPersistenceMongodb.findByName("mengfeiHotel"));
+    }
+
+    @Test
+    void testUpdateRoom(){
+        HotelMain hotelMain = this.hotelMainPersistenceMongodb.findByName("xiangHotel");
+        String roomNumber = "101";
+        HotelRoom room = new HotelRoom("101", "doble", new BigDecimal("40.00"), false);
+        HotelMain hotelUpdatedRoom = this.hotelMainPersistenceMongodb.updateRoom("xiangHotel","101", room);
+        HotelRoom updatedRoom = hotelUpdatedRoom.getRooms()
+                .stream()
+                .filter(roomToFind -> room.getNumber().equals(roomNumber))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Room number not found: " + roomNumber));
+        assertEquals("xiangHotel",hotelMain.getName());
+        assertEquals("101",updatedRoom.getNumber());
+        assertEquals("doble",updatedRoom.getType());
+        assertTrue(updatedRoom.getPrice().compareTo(new BigDecimal("40.00")) == 0);
+        assertFalse(updatedRoom.isReserved());
+
     }
 
 }

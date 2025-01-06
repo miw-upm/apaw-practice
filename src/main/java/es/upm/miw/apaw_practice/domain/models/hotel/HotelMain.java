@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HotelMain {
+    private String id;
     private String name;
     private String address;
     private String phone;
@@ -55,23 +56,33 @@ public class HotelMain {
         return rooms;
     }
 
-    public void setRooms(List<HotelRoom> hotelRooms) { this.rooms = rooms; }
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
+    public void setRooms(List<HotelRoom> rooms) { this.rooms = rooms; }
 
     public List<HotelClient> getClients() { return this.clients; }
 
-    public void setClients(List<HotelClient> HotelClients) { this.clients = clients; }
+    public void setClients(List<HotelClient> clients) { this.clients = clients; }
+
 
     public HotelMainEntity toHotelEntity() {
         HotelMainEntity hotelEntity = new HotelMainEntity();
+        BeanUtils.copyProperties(this, hotelEntity, "rooms", "clients", "id");
+        hotelEntity.setId(this.id);
         List<HotelClientEntity> clients = this.clients.stream()
                 .map(HotelClient::toClientEntity)
-                .collect(Collectors.toList());
+                .toList();
         hotelEntity.setClients(clients);
         List<HotelRoomEntity> rooms = this.rooms.stream()
                 .map(HotelRoom::toRoomEntity)
-                .collect(Collectors.toList());
+                .toList();
         hotelEntity.setRooms(rooms);
-        BeanUtils.copyProperties(this, hotelEntity, "rooms", "clients");
         return hotelEntity;
     }
     @Override
