@@ -4,6 +4,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelClientEntit
 import org.springframework.beans.BeanUtils;
 
 public class HotelClient {
+    private String id;
     private String identityDocument;
     private String name;
     private String phone;
@@ -45,6 +46,14 @@ public class HotelClient {
         this.phone = phone;
     }
 
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -59,8 +68,9 @@ public class HotelClient {
 
     public HotelClientEntity toClientEntity() {
         HotelClientEntity clientEntity = new HotelClientEntity();
+        BeanUtils.copyProperties(this, clientEntity,"reservation", "id");
         clientEntity.setReservation(this.hotelReservation.toReservationEntity());
-        BeanUtils.copyProperties(this, clientEntity,"reservation");
+        clientEntity.setId(this.id);
         return clientEntity;
     }
     @Override

@@ -6,10 +6,19 @@ import org.springframework.beans.BeanUtils;
 import java.math.BigDecimal;
 
 public class HotelRoom {
+    private String id;
     private String number;
     private String type;
     private BigDecimal price;
     private Boolean reserved;
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
 
     public HotelRoom(){
 
@@ -56,7 +65,8 @@ public class HotelRoom {
 
     public HotelRoomEntity toRoomEntity() {
         HotelRoomEntity roomEntity = new HotelRoomEntity();
-        BeanUtils.copyProperties(this, roomEntity);
+        BeanUtils.copyProperties(this, roomEntity, "id");
+        roomEntity.setId(this.id);
         return roomEntity;
     }
 
