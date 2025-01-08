@@ -5,7 +5,6 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelReservationPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 
 @Service

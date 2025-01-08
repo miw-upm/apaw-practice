@@ -4,7 +4,6 @@
     import org.springframework.beans.BeanUtils;
     import org.springframework.data.annotation.Id;
     import org.springframework.data.mongodb.core.index.Indexed;
-
     import java.math.BigDecimal;
     import java.util.UUID;
 

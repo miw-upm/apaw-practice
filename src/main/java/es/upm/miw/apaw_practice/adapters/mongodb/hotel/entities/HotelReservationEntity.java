@@ -5,7 +5,6 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-
 import java.time.LocalDate;
 import java.util.UUID;
 

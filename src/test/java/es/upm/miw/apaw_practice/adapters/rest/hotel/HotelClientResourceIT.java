@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-import java.time.LocalDate;
-
 @RestTestConfig
 public class HotelClientResourceIT {
 

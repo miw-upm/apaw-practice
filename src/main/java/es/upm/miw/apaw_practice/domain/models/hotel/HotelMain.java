@@ -4,9 +4,8 @@ import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelClientEntit
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelMainEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelRoomEntity;
 import org.springframework.beans.BeanUtils;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class HotelMain {
     private String id;

@@ -2,17 +2,11 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence;
 
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelClientRepository;
-
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelReservationRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelClientEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelMainEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelReservationEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
-import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelClientPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
