@@ -6,8 +6,6 @@ import es.upm.miw.apaw_practice.domain.services.hotel.HotelMainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(HotelMainResource.HOTELS)
 public class HotelMainResource {

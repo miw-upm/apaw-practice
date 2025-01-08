@@ -1,13 +1,11 @@
 package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
+
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import es.upm.miw.apaw_practice.domain.models.hotel.PatchReservationRequest;
 import es.upm.miw.apaw_practice.domain.services.hotel.HotelReservationService;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping(HotelReservationResource.RESERVATIONS)

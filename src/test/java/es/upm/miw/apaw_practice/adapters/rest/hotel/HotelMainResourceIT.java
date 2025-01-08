@@ -8,11 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelMainResource.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

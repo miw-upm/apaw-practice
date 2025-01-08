@@ -1,18 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persitencia;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelMainEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelRoomEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence.HotelMainPersistenceMongodb;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
 import java.math.BigDecimal;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 

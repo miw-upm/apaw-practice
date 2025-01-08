@@ -1,14 +1,9 @@
 package es.upm.miw.apaw_practice.domain.services.hotel;
 
 import es.upm.miw.apaw_practice.TestConfig;
-import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
