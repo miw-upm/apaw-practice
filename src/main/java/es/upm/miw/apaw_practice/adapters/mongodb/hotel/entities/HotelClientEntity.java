@@ -78,9 +78,8 @@ public class  HotelClientEntity {
     public HotelClient toClient() {
         HotelReservation reservation = this.getReservation().toReservation();
         HotelClient client = new HotelClient();
-        BeanUtils.copyProperties(this, client, "reservation", "id");
+        BeanUtils.copyProperties(this, client, "reservation");
         client.setReservation(reservation);
-        client.setId(this.id);
         return client;
     }
     @Override

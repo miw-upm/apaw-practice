@@ -1,14 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelClientEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelMainEntity;
-import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelRoomEntity;
-import org.springframework.beans.BeanUtils;
 import java.util.List;
 
-
 public class HotelMain {
-    private String id;
     private String name;
     private String address;
     private String phone;
@@ -55,35 +49,12 @@ public class HotelMain {
         return rooms;
     }
 
-    public String getId() {
-        return this.id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
-    }
-
     public void setRooms(List<HotelRoom> rooms) { this.rooms = rooms; }
 
     public List<HotelClient> getClients() { return this.clients; }
 
     public void setClients(List<HotelClient> clients) { this.clients = clients; }
 
-
-    public HotelMainEntity toHotelEntity() {
-        HotelMainEntity hotelEntity = new HotelMainEntity();
-        BeanUtils.copyProperties(this, hotelEntity, "rooms", "clients", "id");
-        hotelEntity.setId(this.id);
-        List<HotelClientEntity> clients = this.clients.stream()
-                .map(HotelClient::toClientEntity)
-                .toList();
-        hotelEntity.setClients(clients);
-        List<HotelRoomEntity> rooms = this.rooms.stream()
-                .map(HotelRoom::toRoomEntity)
-                .toList();
-        hotelEntity.setRooms(rooms);
-        return hotelEntity;
-    }
     @Override
     public String toString() {
         return "HotelMain{" +

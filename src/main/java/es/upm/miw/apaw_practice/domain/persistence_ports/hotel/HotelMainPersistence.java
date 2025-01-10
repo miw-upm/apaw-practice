@@ -5,7 +5,6 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 public interface HotelMainPersistence {
 

@@ -20,7 +20,6 @@ public class HotelMainEntity {
     private String name;
     private String address;
     private String phone;
-    @DBRef
     private List<HotelRoomEntity> rooms;
     @DBRef
     private List<HotelClientEntity> clients;
@@ -48,14 +47,6 @@ public class HotelMainEntity {
 
     public String getPhone() {
         return phone;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -89,8 +80,7 @@ public class HotelMainEntity {
 
     public HotelMain toHotel() {
         HotelMain hotel = new HotelMain();
-        BeanUtils.copyProperties(this, hotel, "rooms", "clients", "id");
-        hotel.setId(this.id);
+        BeanUtils.copyProperties(this, hotel, "rooms", "clients");
         List<HotelRoom> rooms = this.rooms.stream()
                 .map(HotelRoomEntity::toRoom)
                 .toList();
