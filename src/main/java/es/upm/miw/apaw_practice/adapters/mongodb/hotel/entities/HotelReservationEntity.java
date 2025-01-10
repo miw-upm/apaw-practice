@@ -1,6 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
-
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -16,15 +15,9 @@ public class HotelReservationEntity {
     private String roomNumber;
     private LocalDate reservationDate;
 
-    public String getId() {
-        return this.id;
-    }
+    public HotelReservationEntity(){
 
-    public void setId(final String id) {
-        this.id = id;
     }
-
-    public HotelReservationEntity(){}
 
     public HotelReservationEntity(String reservationNumber, String roomNumber, LocalDate reservationDate){
         this.reservationNumber = reservationNumber;
@@ -48,8 +41,7 @@ public class HotelReservationEntity {
 
     public HotelReservation toReservation() {
         HotelReservation reservation = new HotelReservation();
-        BeanUtils.copyProperties(this, reservation, "id");
-        reservation.setId(this.id);
+        BeanUtils.copyProperties(this, reservation);
         return reservation;
     }
 

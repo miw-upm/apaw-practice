@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelMainRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelMainEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelRoomEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.shopping_center.entities.ShopEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
@@ -38,16 +39,15 @@ public class HotelMainPersistenceMongodb implements HotelMainPersistence{
 
     @Override
     public HotelMain updateRoom(String name, String number, HotelRoom room){
-        HotelMain hotel = findByName(name);
-        HotelRoom hotelRoom = hotel.getRooms().stream()
+        HotelMainEntity hotelEntity = this.hotelMainRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException(" HotelMain name: " + name));
+        HotelRoomEntity hotelRoomEntity = hotelEntity.getRooms().stream()
                 .filter(roomToFind -> room.getNumber().equals(number))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("Room number not found: " + number));
-        hotelRoom.setNumber(room.getNumber());
-        hotelRoom.setPrice(room.getPrice());
-        hotelRoom.setType(room.getType());
-        hotelRoom.setReserved(room.isReserved());
-        HotelMainEntity hotelEntity = hotel.toHotelEntity();
+        hotelRoomEntity.setPrice(room.getPrice());
+        hotelRoomEntity.setType(room.getType());
+        hotelRoomEntity.setReserved(room.isReserved());
         return hotelMainRepository.save(hotelEntity).toHotel();
     }
 

@@ -60,18 +60,9 @@
             this.reserved = reserved;
         }
 
-        public String getId() {
-            return this.id;
-        }
-
-        public void setId(final String id) {
-            this.id = id;
-        }
-
         public HotelRoom toRoom() {
                 HotelRoom room = new HotelRoom();
-                BeanUtils.copyProperties(this, room, "id");
-                room.setId(this.id);
+                BeanUtils.copyProperties(this, room);
                 return room;
         }
 
