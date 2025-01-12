@@ -9,6 +9,6 @@ import java.time.LocalDate;
 @Repository
 public interface HotelReservationPersistence {
 
-    HotelReservation patchReservation(String reservationNumber, String roomNumber, LocalDate reservationDate, HotelClient client);
+    HotelReservation patchReservation(String reservationNumber, HotelReservation reservation);
 
 }

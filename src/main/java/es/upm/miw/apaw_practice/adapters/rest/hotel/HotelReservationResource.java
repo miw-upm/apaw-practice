@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
 
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
-import es.upm.miw.apaw_practice.domain.models.hotel.PatchReservationRequest;
 import es.upm.miw.apaw_practice.domain.services.hotel.HotelReservationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +19,8 @@ public class HotelReservationResource {
     }
 
     @PatchMapping(NUMBERS)
-    public HotelReservation patchReservetion(@PathVariable String reservationNumber, @RequestBody PatchReservationRequest request) {
+    public HotelReservation patchReservetion(@PathVariable String reservationNumber, @RequestBody HotelReservation reservation) {
 
-        return this.hotelReservationService.patchReservation(reservationNumber, request.getRoomNumber(), request.getReservationDate(), request.getClient());
+        return this.hotelReservationService.patchReservation(reservationNumber, reservation);
     }
 }

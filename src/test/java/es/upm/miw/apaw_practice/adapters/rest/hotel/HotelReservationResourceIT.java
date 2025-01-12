@@ -3,7 +3,6 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
-import es.upm.miw.apaw_practice.domain.models.hotel.PatchReservationRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -24,15 +23,12 @@ public class HotelReservationResourceIT {
         String roomNumber = "666";
         LocalDate date = null;
         HotelClient client = null;
-        PatchReservationRequest request = new PatchReservationRequest();
-        request.setReservationDate(date);
-        request.setRoomNumber(roomNumber);
-        request.setClient(client);
+        HotelReservation reservation = new HotelReservation("1", roomNumber, date, client);
         LocalDate nonModifiedDate = LocalDate.of(2020,1,1);
         HotelReservation updatedReservation= this.webTestClient
                 .patch()
                 .uri(RESERVATIONS + NUMBERS, "1")
-                .body(BodyInserters.fromValue(request))
+                .body(BodyInserters.fromValue(reservation))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(HotelReservation.class)
@@ -48,14 +44,11 @@ public class HotelReservationResourceIT {
         String roomNumber = null;
         LocalDate date = LocalDate.of(1999,1,1);
         HotelClient client = null;
-        PatchReservationRequest request = new PatchReservationRequest();
-        request.setReservationDate(date);
-        request.setRoomNumber(roomNumber);
-        request.setClient(client);
+        HotelReservation reservation = new HotelReservation("2", roomNumber, date, client);
         HotelReservation updatedReservation= this.webTestClient
                 .patch()
                 .uri(RESERVATIONS + NUMBERS, "2")
-                .body(BodyInserters.fromValue(request))
+                .body(BodyInserters.fromValue(reservation))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(HotelReservation.class)
@@ -71,15 +64,12 @@ public class HotelReservationResourceIT {
         String roomNumber = null;
         LocalDate date = null;
         HotelClient client = new HotelClient("x6666666x", "Alex", "666666666", "test@gmail.com");
-        PatchReservationRequest request = new PatchReservationRequest();
-        request.setReservationDate(date);
-        request.setRoomNumber(roomNumber);
-        request.setClient(client);
+        HotelReservation reservation = new HotelReservation("3", roomNumber, date, client);
         LocalDate nonModifiedDate = LocalDate.of(2020,10,12);
         HotelReservation updatedReservation= this.webTestClient
                 .patch()
                 .uri(RESERVATIONS + NUMBERS, "3")
-                .body(BodyInserters.fromValue(request))
+                .body(BodyInserters.fromValue(reservation))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(HotelReservation.class)
@@ -99,11 +89,11 @@ public class HotelReservationResourceIT {
         String roomNumber = "666";
         LocalDate date = LocalDate.of(1999,1,1);
         HotelClient client = new HotelClient("x6666666x", "Alex", "666666666", "");
-        PatchReservationRequest request = new PatchReservationRequest();
+        HotelReservation reservation = new HotelReservation("4", roomNumber, date, client);
         this.webTestClient
                 .patch()
                 .uri(RESERVATIONS + NUMBERS, "4")
-                .body(BodyInserters.fromValue(request))
+                .body(BodyInserters.fromValue(reservation))
                 .exchange()
                 .expectStatus().isNotFound();
     }

@@ -16,6 +16,6 @@ public class HotelReservationService {
     public HotelReservationService (HotelReservationPersistence hotelReservationPersistence) {
         this.hotelReservationPersistence = hotelReservationPersistence;
     }
-    public HotelReservation patchReservation(String reservationNumber, String roomNumber, LocalDate reservationDate, HotelClient client){
-        return this.hotelReservationPersistence.patchReservation(reservationNumber, roomNumber, reservationDate, client); }
+    public HotelReservation patchReservation(String reservationNumber, HotelReservation reservation){
+        return this.hotelReservationPersistence.patchReservation(reservationNumber, reservation); }
 }
