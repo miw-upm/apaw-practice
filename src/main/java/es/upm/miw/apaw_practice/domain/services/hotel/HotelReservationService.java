@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.services.hotel;
 
 
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelReservationPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,6 @@ public class HotelReservationService {
     public HotelReservationService (HotelReservationPersistence hotelReservationPersistence) {
         this.hotelReservationPersistence = hotelReservationPersistence;
     }
-    public HotelReservation patchReservation(String reservationNumber, String roomNumber, LocalDate reservationDate){
-        return this.hotelReservationPersistence.patchReservation(reservationNumber, roomNumber, reservationDate); }
+    public HotelReservation patchReservation(String reservationNumber, String roomNumber, LocalDate reservationDate, HotelClient client){
+        return this.hotelReservationPersistence.patchReservation(reservationNumber, roomNumber, reservationDate, client); }
 }

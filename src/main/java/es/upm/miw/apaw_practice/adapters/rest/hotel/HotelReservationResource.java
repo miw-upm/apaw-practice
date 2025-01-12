@@ -22,6 +22,6 @@ public class HotelReservationResource {
     @PatchMapping(NUMBERS)
     public HotelReservation patchReservetion(@PathVariable String reservationNumber, @RequestBody PatchReservationRequest request) {
 
-        return this.hotelReservationService.patchReservation(reservationNumber, request.getRoomNumber(), request.getReservationDate());
+        return this.hotelReservationService.patchReservation(reservationNumber, request.getRoomNumber(), request.getReservationDate(), request.getClient());
     }
 }

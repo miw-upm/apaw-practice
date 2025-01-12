@@ -6,13 +6,15 @@ public class HotelReservation {
     private String reservationNumber;
     private String roomNumber;
     private LocalDate reservationDate;
+    private HotelClient client;
 
     public HotelReservation(){}
 
-    public HotelReservation(String reservationNumber, String roomNumber, LocalDate reservationDate){
+    public HotelReservation(String reservationNumber, String roomNumber, LocalDate reservationDate, HotelClient client){
         this.reservationNumber = reservationNumber;
         this.roomNumber = roomNumber;
         this.reservationDate = reservationDate;
+        this.client = client;
     }
 
     public String getReservationNumber() { return reservationNumber; }
@@ -27,6 +29,9 @@ public class HotelReservation {
 
     public void setReservationDate(LocalDate reservationDate) { this.reservationDate = reservationDate; }
 
+    public HotelClient getClient() { return this.client; }
+
+    public void setClient(final HotelClient client) { this.client = client; }
 
     @Override
     public String toString() {

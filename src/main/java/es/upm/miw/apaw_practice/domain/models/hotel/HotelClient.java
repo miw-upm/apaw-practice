@@ -5,18 +5,16 @@ public class HotelClient {
     private String name;
     private String phone;
     private String email;
-    private HotelReservation reservation;
 
     public HotelClient(){
 
     }
 
-    public HotelClient(String identityDocument, String name, String phone, String email, HotelReservation reservation){
+    public HotelClient(String identityDocument, String name, String phone, String email){
         this.identityDocument = identityDocument;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.reservation = reservation;
     }
 
     public String getIdentityDocument() {
@@ -51,19 +49,13 @@ public class HotelClient {
         this.email = email;
     }
 
-    public HotelReservation getReservation() { return reservation; }
-
-    public void setReservation(HotelReservation reservation) { this.reservation = reservation; }
-
-
     @Override
     public String toString() {
         return "HotelClientRepository{" +
                 "identityDocument='" + identityDocument + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", HotelReservation=" + reservation +
+                ", email='" + email +
                 '}';
     }
 }
