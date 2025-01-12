@@ -21,7 +21,8 @@ public class HotelReservationPersistenceMongodbIT {
         String roomNumber = "202";
         LocalDate date = null;
         HotelClient client = null;
-        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("1", roomNumber, date, client);
+        HotelReservation reservation = new HotelReservation("1", roomNumber, date, client);
+        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("1", reservation);
         LocalDate nonModifiedDate = LocalDate.of(2020,1,1);
         assertEquals("202", reservationPatched.getRoomNumber());
         assertEquals(nonModifiedDate, reservationPatched.getReservationDate());
@@ -32,7 +33,8 @@ public class HotelReservationPersistenceMongodbIT {
         String roomNumber = null;
         LocalDate date = LocalDate.of(1999,1,1);
         HotelClient client = null;
-        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("2", roomNumber, date, client);
+        HotelReservation reservation = new HotelReservation("2", roomNumber, date, client);
+        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("2", reservation);
         assertEquals("202", reservationPatched.getRoomNumber());
         assertEquals(date, reservationPatched.getReservationDate());
     }
@@ -42,7 +44,8 @@ public class HotelReservationPersistenceMongodbIT {
         LocalDate date = null;
         LocalDate nonModifiedDate = LocalDate.of(2020,10,12);
         HotelClient client = new HotelClient("x6666666x", "Alex", "666666666", "test@gmail.com");
-        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("3", roomNumber, date, client);
+        HotelReservation reservation = new HotelReservation("3", roomNumber, date, client);
+        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("3", reservation);
         assertEquals("303", reservationPatched.getRoomNumber());
         assertEquals(nonModifiedDate, reservationPatched.getReservationDate());
         assertEquals("x6666666x", reservationPatched.getClient().getIdentityDocument());

@@ -23,17 +23,20 @@ public class HotelReservationPersistenceMongodb implements HotelReservationPersi
     }
 
     @Override
-    public HotelReservation patchReservation(String reservationNumber, String roomNumber, LocalDate reservationDate, HotelClient client){
+    public HotelReservation patchReservation(String reservationNumber, HotelReservation reservation){
+        String roomNumber = reservation.getRoomNumber();
+        LocalDate reservationDate = reservation.getReservationDate();
+        HotelClient client = reservation.getClient();
         HotelReservationEntity reservationEntity = this.hotelReservationRepository
                 .findByReservationNumber(reservationNumber)
                 .orElseThrow(() -> new NotFoundException(" HotelReservation reservationNumber: " + reservationNumber));
-        if(roomNumber != null ) {
+        if(reservation.getRoomNumber() != null ) {
             reservationEntity.setRoomNumber(roomNumber);
         }
-        if(reservationDate != null) {
+        if(reservation.getReservationDate() != null) {
             reservationEntity.setReservationDate(reservationDate);
         }
-        if(client != null) {
+        if(reservation.getClient() != null) {
             HotelClientEntity clientEntity = new HotelClientEntity(client.getIdentityDocument(),
                     client.getName(),
                     client.getPhone(),
