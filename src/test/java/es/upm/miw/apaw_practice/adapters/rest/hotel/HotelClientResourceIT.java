@@ -2,7 +2,6 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,7 @@ public class HotelClientResourceIT {
 
     @Test
     void testCreate() {
-        String rNumber = "1";
-        HotelReservation reservation = new HotelReservation();
-        reservation.setReservationNumber(rNumber);
-        HotelClient client = new HotelClient("y9999999x", "David", "6000000000", "", reservation);
+        HotelClient client = new HotelClient("y9999999x", "David", "6000000000", "");
         this.webTestClient
                 .post()
                 .uri(HotelClientResource.CLIENTS)
@@ -35,10 +31,7 @@ public class HotelClientResourceIT {
 
     @Test
     void testCreateConflictDNI() {
-        String rNumber = "1";
-        HotelReservation reservation = new HotelReservation();
-        reservation.setReservationNumber(rNumber);
-        HotelClient client = new HotelClient("y1111111x", "David", "6000000000", "", reservation);
+        HotelClient client = new HotelClient("y1111111x", "David", "6000000000", "");
         this.webTestClient
                 .post()
                 .uri(HotelClientResource.CLIENTS)

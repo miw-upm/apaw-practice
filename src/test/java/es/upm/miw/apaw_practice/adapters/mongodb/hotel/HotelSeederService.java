@@ -31,19 +31,19 @@ public class HotelSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Hotel Initial Load -----------");
 
-        HotelReservationEntity[] reservations = {
-                new HotelReservationEntity("1", "101", LocalDate.of(2020,1,1)),
-                new HotelReservationEntity("2", "202", LocalDate.of(2020,12,22)),
-                new HotelReservationEntity("3", "303", LocalDate.of(2020,10,12))
-        };
-        this.hotelReservationRepository.saveAll(Arrays.asList(reservations));
-
         HotelClientEntity[] clients = {
-                new HotelClientEntity("y1111111x", "David", "600000000", "", reservations[0]),
-                new HotelClientEntity("y2222222x", "Mengtxu", "612345678", "", reservations[1]),
-                new HotelClientEntity("y3333333x", "Wuli", "687654321", "", reservations[2])
+                new HotelClientEntity("y1111111x", "David", "600000000", ""),
+                new HotelClientEntity("y2222222x", "Mengtxu", "612345678", ""),
+                new HotelClientEntity("y3333333x", "Wuli", "687654321", "")
         };
         this.hotelClientRepository.saveAll(Arrays.asList(clients));
+
+        HotelReservationEntity[] reservations = {
+                new HotelReservationEntity("1", "101", LocalDate.of(2020,1,1), clients[0]),
+                new HotelReservationEntity("2", "202", LocalDate.of(2020,12,22), clients[1]),
+                new HotelReservationEntity("3", "303", LocalDate.of(2020,10,12), clients[2])
+        };
+        this.hotelReservationRepository.saveAll(Arrays.asList(reservations));
 
         HotelRoomEntity[] rooms = {
                 new HotelRoomEntity("101", "single", new BigDecimal("75.00"), true),

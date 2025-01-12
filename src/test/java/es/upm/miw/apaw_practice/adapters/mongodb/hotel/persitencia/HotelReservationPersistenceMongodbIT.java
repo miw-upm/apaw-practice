@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persitencia;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence.HotelReservationPersistenceMongodb;
+import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class HotelReservationPersistenceMongodbIT {
     void testPatchReservationRoom(){
         String roomNumber = "202";
         LocalDate date = null;
-        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("1", roomNumber, date);
+        HotelClient client = null;
+        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("1", roomNumber, date, client);
         LocalDate nonModifiedDate = LocalDate.of(2020,1,1);
         assertEquals("202", reservationPatched.getRoomNumber());
         assertEquals(nonModifiedDate, reservationPatched.getReservationDate());
@@ -29,16 +31,24 @@ public class HotelReservationPersistenceMongodbIT {
     void testPatchReservationDate(){
         String roomNumber = null;
         LocalDate date = LocalDate.of(1999,1,1);
-        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("2", roomNumber, date);
+        HotelClient client = null;
+        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("2", roomNumber, date, client);
         assertEquals("202", reservationPatched.getRoomNumber());
         assertEquals(date, reservationPatched.getReservationDate());
     }
     @Test
-    void testPatchReservationRoomDate(){
-        String roomNumber = "666";
-        LocalDate date = LocalDate.of(1999,1,1);
-        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("3", roomNumber, date);
-        assertEquals("666", reservationPatched.getRoomNumber());
-        assertEquals(date, reservationPatched.getReservationDate());
+    void testPatchReservationClient(){
+        String roomNumber = null;
+        LocalDate date = null;
+        LocalDate nonModifiedDate = LocalDate.of(2020,10,12);
+        HotelClient client = new HotelClient("x6666666x", "Alex", "666666666", "test@gmail.com");
+        HotelReservation reservationPatched = this.hotelReservationPersistenceMongodb.patchReservation("3", roomNumber, date, client);
+        assertEquals("303", reservationPatched.getRoomNumber());
+        assertEquals(nonModifiedDate, reservationPatched.getReservationDate());
+        assertEquals("x6666666x", reservationPatched.getClient().getIdentityDocument());
+        assertEquals("Alex", reservationPatched.getClient().getName());
+        assertEquals("666666666", reservationPatched.getClient().getPhone());
+        assertEquals("test@gmail.com", reservationPatched.getClient().getEmail());
     }
+
 }

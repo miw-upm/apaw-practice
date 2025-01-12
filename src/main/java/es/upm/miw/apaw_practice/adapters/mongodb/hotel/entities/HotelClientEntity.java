@@ -2,11 +2,9 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities;
 
 
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
-import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import java.util.UUID;
 
 public class  HotelClientEntity {
@@ -18,17 +16,15 @@ public class  HotelClientEntity {
     private String name;
     private String phone;
     private String email;
-    @DBRef
-    private HotelReservationEntity reservation;
 
     public HotelClientEntity(){
 
     }
-    public HotelClientEntity(String identityDocument, String name, String phone, String email, HotelReservationEntity reservation){
+    public HotelClientEntity(String identityDocument, String name, String phone, String email){
         this.identityDocument = identityDocument;
         this.name = name;
         this.phone = phone;
-        this.reservation = reservation;
+        this.email = email;
         this.id = UUID.randomUUID().toString();
     }
     public String getIdentityDocument() {
@@ -71,15 +67,9 @@ public class  HotelClientEntity {
         this.id = id;
     }
 
-    public HotelReservationEntity getReservation() { return this.reservation; }
-
-    public void setReservation(final HotelReservationEntity reservation) { this.reservation = reservation; }
-
     public HotelClient toClient() {
-        HotelReservation reservation = this.getReservation().toReservation();
         HotelClient client = new HotelClient();
-        BeanUtils.copyProperties(this, client, "reservation");
-        client.setReservation(reservation);
+        BeanUtils.copyProperties(this, client);
         return client;
     }
     @Override
@@ -88,8 +78,7 @@ public class  HotelClientEntity {
                 "identityDocument='" + identityDocument + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", reservation=" + reservation +
+                ", email='" + email +
                 '}';
     }
 }
