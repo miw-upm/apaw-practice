@@ -1,0 +1,22 @@
+# Monta solo el API y reutiliza el contenedor de bases de datos
+services:
+  app:
+    build: .
+    container_name: apaw-practice
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      # host.docker.internal: ruta al localhost de la máquina anfitriona
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:mongo@host.docker.internal:27017/apaw?authSource=admin
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    external: true
+
+#> docker compose up --build -d
+#  http://localhost:8080/swagger-ui.html
+#> docker exec -it mongo-server mongosh "mongodb://mongo:mongo@localhost:27017/apaw?authSource=admin"
+
