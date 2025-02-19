@@ -1,7 +1,7 @@
 name: CD - GitHub Docker Packages & Deploy Render
 on:
   push:
-    branches: [curso25]
+    branches: [master]
 env:
   REGISTRY: ghcr.io # GitHub Container Registry (GHCR)
   REPOSITORY: ${{ github.repository }}
