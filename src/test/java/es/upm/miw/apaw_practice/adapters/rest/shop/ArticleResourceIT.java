@@ -65,7 +65,7 @@ class ArticleResourceIT {
 
     @Test
     void testUpdatePricesNotFound() {
-        List<ArticlePriceUpdating> articlePriceUpdatingList = Arrays.asList(
+        List<ArticlePriceUpdating> articlePriceUpdatingList = List.of(
                 new ArticlePriceUpdating("0", BigDecimal.ONE)
         );
         this.webTestClient

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static es.upm.miw.apaw_practice.adapters.rest.system.SystemResource.SYSTEM;
 import static es.upm.miw.apaw_practice.adapters.rest.system.SystemResource.VERSION_BADGE;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,7 +18,7 @@ class SystemResourceIT {
     @Test
     void testReadVersionBadge() {
         this.webTestClient
-                .get().uri(SYSTEM + VERSION_BADGE)
+                .get().uri(VERSION_BADGE)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(byte[].class)
@@ -30,13 +29,13 @@ class SystemResourceIT {
     @Test
     void testReadAppInfo() {
         this.webTestClient
-                .get().uri(SYSTEM + SystemResource.APP_INFO)
+                .get().uri(SystemResource.APP_INFO)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(AppInfoDto.class)
                 .value(Assertions::assertNotNull)
                 .value(appInfo -> {
-                    assertNotNull(appInfo.getApplication());
+                    assertNotNull(appInfo.getArtifact());
                     assertNotNull(appInfo.getVersion());
                     assertNotNull(appInfo.getBuild());
                     assertNotNull(appInfo.getProfile());

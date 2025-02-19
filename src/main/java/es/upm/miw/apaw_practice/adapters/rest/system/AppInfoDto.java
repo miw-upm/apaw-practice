@@ -2,7 +2,7 @@ package es.upm.miw.apaw_practice.adapters.rest.system;
 
 public class AppInfoDto {
 
-    private String application;
+    private String artifact;
     private String version;
     private String build;
     private String profile;
@@ -11,33 +11,33 @@ public class AppInfoDto {
         // Empty for the framework
     }
 
-    public AppInfoDto(String application, String version, String build, String profile) {
-        this.application = application;
+    public AppInfoDto(String artifact, String version, String build, String profile) {
+        this.artifact = artifact;
         this.version = version;
         this.build = build;
         this.profile = profile;
     }
 
-    public String getApplication() {
-        return application;
+    public String getArtifact() {
+        return artifact;
     }
 
     public String getVersion() {
-        return version;
+        return this.version;
     }
 
     public String getBuild() {
-        return build;
+        return this.build;
     }
 
     public String getProfile() {
-        return profile;
+        return this.profile;
     }
 
     @Override
     public String toString() {
         return "AppInfoDto{" +
-                "application='" + application + '\'' +
+                "artifact='" + artifact + '\'' +
                 ", version='" + version + '\'' +
                 ", build='" + build + '\'' +
                 ", profile='" + profile + '\'' +
