@@ -43,5 +43,5 @@ jobs:
           docker push $REGISTRY/$REPOSITORY:latest
 #      - name: Deploy on Render
 #        run: |
-#          curl --fail -X POST "https://api.render.com/deploy/${{ secrets.DEPLOY_HOOK_TOKEN }}" || { echo "Deployment failed"; exit 1; }
+#          curl --fail -X POST "https://api.render.com/deploy/${{ secrets.RENDER_DEPLOY_HOOK_TOKEN }}" || { echo "Deployment failed"; exit 1; }
 #          echo "Deployment succeeded"
