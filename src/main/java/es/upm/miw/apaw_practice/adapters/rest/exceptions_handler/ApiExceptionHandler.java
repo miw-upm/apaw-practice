@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.reactive.resource.NoResourceFoundException;
+import org.springframework.web.server.ResponseStatusException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -19,6 +21,18 @@ public class ApiExceptionHandler {
     @ResponseBody
     public ErrorMessage notFoundRequest(Exception exception) {
         return new ErrorMessage(exception);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({
+            NoResourceFoundException.class,
+            ResponseStatusException.class
+    })
+    @ResponseBody
+    public ErrorMessage noResourceFoundRequest(Exception exception) {
+        return new ErrorMessage(new NotFoundException(
+                "Ruta no encontrada. Prueba con: **/actuator/info o **/swagger-ui.html o **/v3/api-docs")
+        );
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
