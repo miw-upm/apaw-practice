@@ -13,4 +13,3 @@ services:
 #> docker compose up --build -d
 #  http://localhost:8080/swagger-ui.html
 #> docker exec -it mongo-server mongosh "mongodb://mongo:mongo@localhost:27017/apaw?authSource=admin"
-
