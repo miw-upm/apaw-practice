@@ -1,0 +1,7 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: "mongodb://mongo:mongo@localhost:27017/apaw?authSource=admin"

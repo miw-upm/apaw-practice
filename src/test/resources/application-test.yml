@@ -1,0 +1,9 @@
+logging:
+  level:
+    es.upm.miw: DEBUG
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 5.0.14
