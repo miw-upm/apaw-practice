@@ -2,7 +2,7 @@ name: CD - GitHub Docker Packages & Deploy Render
 on:
   push:
     branches:
-      - curso25
+      - curso25m
 
 env:
   REPOSITORY: ${{ github.repository }} # <user>/<repo>
