@@ -1,4 +1,4 @@
-package es.upm.miw.apawpractice.adapters.rest.exceptions_handler;
+package es.upm.miw.apawpractice.adapters.rest.exceptionshandler;
 
 import es.upm.miw.apawpractice.domain.exceptions.BadRequestException;
 import es.upm.miw.apawpractice.domain.exceptions.ConflictException;

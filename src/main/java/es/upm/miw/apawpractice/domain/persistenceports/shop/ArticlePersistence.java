@@ -1,4 +1,4 @@
-package es.upm.miw.apawpractice.domain.persistence_ports.shop;
+package es.upm.miw.apawpractice.domain.persistenceports.shop;
 
 import es.upm.miw.apawpractice.domain.models.shop.Article;
 import org.springframework.stereotype.Repository;

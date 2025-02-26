@@ -3,7 +3,7 @@ package es.upm.miw.apawpractice.domain.services.shop;
 import es.upm.miw.apawpractice.domain.exceptions.ConflictException;
 import es.upm.miw.apawpractice.domain.models.shop.Article;
 import es.upm.miw.apawpractice.domain.models.shop.ArticlePriceUpdating;
-import es.upm.miw.apawpractice.domain.persistence_ports.shop.ArticlePersistence;
+import es.upm.miw.apawpractice.domain.persistenceports.shop.ArticlePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -6,7 +6,7 @@ import es.upm.miw.apawpractice.adapters.mongodb.shop.entities.ArticleItemEntity;
 import es.upm.miw.apawpractice.adapters.mongodb.shop.entities.ShoppingCartEntity;
 import es.upm.miw.apawpractice.domain.exceptions.NotFoundException;
 import es.upm.miw.apawpractice.domain.models.shop.ShoppingCart;
-import es.upm.miw.apawpractice.domain.persistence_ports.shop.ShoppingCartPersistence;
+import es.upm.miw.apawpractice.domain.persistenceports.shop.ShoppingCartPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

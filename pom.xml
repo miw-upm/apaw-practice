@@ -69,10 +69,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-test</artifactId>
-        </dependency>
         <!-- Actuator -->
         <!-- http://localhost:8080/actuator/info   -->
         <!-- http://localhost:8080/actuator/health -->

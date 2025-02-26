@@ -4,7 +4,7 @@ import es.upm.miw.apawpractice.adapters.mongodb.shop.daos.ArticleRepository;
 import es.upm.miw.apawpractice.adapters.mongodb.shop.entities.ArticleEntity;
 import es.upm.miw.apawpractice.domain.exceptions.NotFoundException;
 import es.upm.miw.apawpractice.domain.models.shop.Article;
-import es.upm.miw.apawpractice.domain.persistence_ports.shop.ArticlePersistence;
+import es.upm.miw.apawpractice.domain.persistenceports.shop.ArticlePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
