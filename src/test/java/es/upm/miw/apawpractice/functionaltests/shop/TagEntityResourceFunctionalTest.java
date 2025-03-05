@@ -68,7 +68,7 @@ class TagEntityResourceFunctionalTest {
 
     @Test
     void testFindByArticlesInShoppingCarts() {
-        String url = this.baseUrl + SEARCH + "?q=shopping-carts:in";
+        String url = this.baseUrl + IN_SHOPPING_CARTS;
 
         ResponseEntity<Tag[]> response = restTemplate.getForEntity(url, Tag[].class);
 
@@ -81,12 +81,4 @@ class TagEntityResourceFunctionalTest {
         assertFalse(tagList.contains("tag4"));
     }
 
-    @Test
-    void testFindByArticlesInShoppingCartsBadRequest() {
-        String url = this.baseUrl + SEARCH + "?q=shopping-carts:kk";
-
-        ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
 }

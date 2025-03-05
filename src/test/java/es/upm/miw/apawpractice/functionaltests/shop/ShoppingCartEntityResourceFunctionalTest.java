@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RestTestConfig
@@ -57,13 +56,14 @@ class ShoppingCartEntityResourceFunctionalTest {
 
     @Test
     void testFindByPriceGreaterThan() {
-        String url = this.baseUrl + ShoppingCartResource.SEARCH + "?q=price:5.0";
+        String url = this.baseUrl + ShoppingCartResource.SEARCH + "?price={price}";
 
-        ResponseEntity<ShoppingCart[]> response = restTemplate.getForEntity(url, ShoppingCart[].class);
+        ResponseEntity<ShoppingCart[]> response = restTemplate.getForEntity(url, ShoppingCart[].class, 5.0);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotEmpty();
-        assertEquals("user2", response.getBody()[0].getUser());
+        assertTrue(Arrays.stream(response.getBody())
+                .anyMatch(item -> "user2".equals(item.getUser())));
         assertTrue(response.getBody().length > 0);
     }
 }

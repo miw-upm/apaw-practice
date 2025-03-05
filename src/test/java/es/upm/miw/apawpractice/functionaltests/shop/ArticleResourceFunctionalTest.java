@@ -3,13 +3,14 @@ package es.upm.miw.apawpractice.functionaltests.shop;
 import es.upm.miw.apawpractice.adapters.rest.shop.ArticleResource;
 import es.upm.miw.apawpractice.domain.models.shop.Article;
 import es.upm.miw.apawpractice.domain.models.shop.ArticlePriceUpdating;
-import es.upm.miw.apawpractice.functionaltests.RestTestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -17,7 +18,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RestTestConfig
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 class ArticleResourceFunctionalTest {
 
     @LocalServerPort
@@ -79,19 +81,20 @@ class ArticleResourceFunctionalTest {
 
     @Test
     void testSearchByProviderAndPriceGreaterThan() {
-        String url = this.baseUrl + ArticleResource.SEARCH + "?q=provider:prov 1;price:1.02";
-        ResponseEntity<Article[]> response = restTemplate.getForEntity(url, Article[].class);
+        String url = this.baseUrl + ArticleResource.SEARCH + "?provider={provider}&price={price}";
+        ResponseEntity<Article[]> response = restTemplate.getForEntity(url, Article[].class, "prov 1", "1.02");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotEmpty();
-        assertThat(response.getBody()[0].getProvider()).isEqualTo("prov 1");
-        assertThat(new BigDecimal("1.02")).isLessThan(response.getBody()[0].getPrice());
+        assertThat(Arrays.stream(response.getBody()).map(Article::getProvider).allMatch("prov 1"::equals)).isTrue();
+        Arrays.stream(response.getBody())
+                .forEach(item -> assertThat(item.getPrice()).isGreaterThan(new BigDecimal("1.02")));
     }
 
     @Test
     void testSearchByProviderAndPriceGreaterThanBadRequest() {
-        String url = baseUrl + ArticleResource.SEARCH + "?q=kk:prov 1;price:1.02";
-        ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class);
+        String url = baseUrl + ArticleResource.SEARCH + "?provider={provider}";
+        ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class, "prov 1");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }

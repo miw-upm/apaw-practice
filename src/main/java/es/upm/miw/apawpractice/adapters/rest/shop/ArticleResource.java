@@ -1,6 +1,5 @@
 package es.upm.miw.apawpractice.adapters.rest.shop;
 
-import es.upm.miw.apawpractice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apawpractice.domain.models.shop.Article;
 import es.upm.miw.apawpractice.domain.models.shop.ArticlePriceUpdating;
 import es.upm.miw.apawpractice.domain.services.shop.ArticleService;
@@ -37,9 +36,7 @@ public class ArticleResource {
     }
 
     @GetMapping(SEARCH)
-    public Stream<Article> findByProviderAndPriceGreaterThan(@RequestParam String q) { // q=provider:prov1;price:1.3
-        String provider = new LexicalAnalyzer().extractWithAssure(q, "provider");
-        BigDecimal price = new LexicalAnalyzer().extractWithAssure(q, "price", BigDecimal::new);
+    public Stream<Article> findByProviderAndPriceGreaterThan(@RequestParam String provider, @RequestParam BigDecimal price) {
         return this.articleService.findByProviderAndPriceGreaterThan(provider, price);
     }
 

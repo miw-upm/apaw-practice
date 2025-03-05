@@ -1,6 +1,5 @@
 package es.upm.miw.apawpractice.adapters.rest.shop;
 
-import es.upm.miw.apawpractice.adapters.rest.LexicalAnalyzer;
 import es.upm.miw.apawpractice.domain.models.shop.ArticleItem;
 import es.upm.miw.apawpractice.domain.models.shop.ShoppingCart;
 import es.upm.miw.apawpractice.domain.services.shop.ShoppingCartService;
@@ -33,8 +32,7 @@ public class ShoppingCartResource {
     }
 
     @GetMapping(SEARCH)
-    public Stream<ShoppingCart> findByPriceGreaterThan(@RequestParam String q) {
-        BigDecimal price = new LexicalAnalyzer().extractWithAssure(q, "price", BigDecimal::new);
+    public Stream<ShoppingCart> findByPriceGreaterThan(@RequestParam BigDecimal price) {
         return this.shoppingCartService.findByPriceGreaterThan(price)
                 .map(ShoppingCart::ofIdUser);
     }
