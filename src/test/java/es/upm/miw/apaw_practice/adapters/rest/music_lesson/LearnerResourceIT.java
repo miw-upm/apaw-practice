@@ -43,7 +43,7 @@ public class LearnerResourceIT {
 
     this.webTestClient
         .put()
-        .uri(LearnerResource.LEARNERS + LearnerResource.IDENTITY_DOCUMENT_ID + LearnerResource.LESSONS, "C1234567")
+        .uri(LearnerResource.LEARNERS + LearnerResource.IDENTITY_DOCUMENT_ID + LearnerResource.LESSONS, "Z1254521")
         .body(BodyInserters.fromValue(lessons))
         .exchange()
         .expectStatus().isOk()

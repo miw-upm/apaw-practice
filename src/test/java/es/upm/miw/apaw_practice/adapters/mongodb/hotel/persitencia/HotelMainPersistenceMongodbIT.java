@@ -56,6 +56,12 @@ public class HotelMainPersistenceMongodbIT {
         assertFalse(updatedRoom.isReserved());
 
     }
-
+    @Test
+    void testFindNonRepeatedRoomNumberByType() {
+        String type = "dual";
+        List<String> roomNumberList = this.hotelMainPersistenceMongodb.findNonRepeatedRoomNumberByType(type).collect(Collectors.toList());
+        assertNotNull(roomNumberList);
+        assertTrue(roomNumberList.containsAll(Arrays.asList("202","303")));
+    }
 }
 
