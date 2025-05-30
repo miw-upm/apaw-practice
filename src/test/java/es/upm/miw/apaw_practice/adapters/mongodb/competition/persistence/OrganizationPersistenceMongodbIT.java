@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.competition.persistence;
 
 import es.upm.miw.apaw_practice.TestConfig;
+import es.upm.miw.apaw_practice.adapters.mongodb.competition.CompetitionSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.competition.entities.OrganizationEntity;
 import es.upm.miw.apaw_practice.domain.models.competition.Organization;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,9 @@ class OrganizationPersistenceMongodbIT {
 
     @Autowired
     private OrganizationPersistenceMongodb organizationPersistenceMongodb;
+
+    @Autowired
+    private CompetitionSeederService competitionSeederService;
 
     @Test
     void testReadById() {
@@ -56,6 +60,8 @@ class OrganizationPersistenceMongodbIT {
 
     @Test
     void testSumSalaryPlayerTeamsByNameOrganization() {
+        this.competitionSeederService.deleteAll();
+        this.competitionSeederService.seedDatabase();
         String nameOrganization = "FEMAFUSA";
         BigDecimal sumSalary = this.organizationPersistenceMongodb.sumSalaryPlayerTeamsByNameOrganization(nameOrganization);
         assertEquals(new BigDecimal("28.41"), sumSalary);
