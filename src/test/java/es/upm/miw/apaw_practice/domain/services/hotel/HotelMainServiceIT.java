@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -46,6 +49,14 @@ public class HotelMainServiceIT {
         assertEquals("doble",updatedRoom.getType());
         assertTrue(updatedRoom.getPrice().compareTo(new BigDecimal("40.00")) == 0);
         assertFalse(updatedRoom.isReserved());
+    }
+
+    @Test
+    void testFindNonRepeatedRoomNumberByType() {
+        String type = "dual";
+        List<String> roomNumberList = this.hotelMainService.findNonRepeatedRoomNumberByType(type).collect(Collectors.toList());
+        assertNotNull(roomNumberList);
+        assertTrue(roomNumberList.containsAll(Arrays.asList("202","303")));
     }
 
 }
