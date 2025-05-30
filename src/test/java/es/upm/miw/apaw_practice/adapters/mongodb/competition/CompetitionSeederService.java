@@ -39,13 +39,15 @@ public class CompetitionSeederService {
                 new PlayerTeamEntity(90.93, 195.21, new BigDecimal("4.22")),
                 new PlayerTeamEntity(76.09, 175.33, new BigDecimal("3.95")),
                 new PlayerTeamEntity(79.43, 154.99, new BigDecimal("2.08")),
-                new PlayerTeamEntity(86.89, 185.24, new BigDecimal("10.10"))
+                new PlayerTeamEntity(86.89, 185.24, new BigDecimal("10.10")),
+                new PlayerTeamEntity(84.19, 166.66, new BigDecimal("11.10"))
         };
         this.playerTeamRepository.saveAll(Arrays.asList(playerTeams));
         TeamCompetitionEntity[] teamCompetitions = {
                 new TeamCompetitionEntity("Atlético de Madrid", 37, "Diego Pablo Simeone", List.of(playerTeams[0], playerTeams[1], playerTeams[2])),
                 new TeamCompetitionEntity("Club Deportivo Sigüenza", 3, "Diego Delgado Pérez", List.of(playerTeams[4], playerTeams[5])),
-                new TeamCompetitionEntity("Cabeza de mula FC", 1, "Pablo Carabaña Lozano", List.of(playerTeams[3]))
+                new TeamCompetitionEntity("Cabeza de mula FC", 1, "Pablo Carabaña Lozano", List.of(playerTeams[3])),
+                new TeamCompetitionEntity("Club nuevo", 1, "Pablo Carabaña Lozano", List.of(playerTeams[6]))
         };
         this.teamCompetitionRepository.saveAll(Arrays.asList(teamCompetitions));
         OrganizationEntity[] organizations = {

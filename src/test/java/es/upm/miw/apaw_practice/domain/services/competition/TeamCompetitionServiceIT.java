@@ -28,7 +28,7 @@ class TeamCompetitionServiceIT {
 
     @Test
     void testUpdateTeamCompetitionPlayerTeams() {
-        Optional<TeamCompetitionEntity> teamCompetitionEntity = this.teamCompetitionRepository.findByNameTeamCompetition("Atlético de Madrid");
+        Optional<TeamCompetitionEntity> teamCompetitionEntity = this.teamCompetitionRepository.findByNameTeamCompetition("Club nuevo");
         assertTrue(teamCompetitionEntity.isPresent());
 
         PlayerTeam playerTeam = new PlayerTeam();
@@ -41,7 +41,7 @@ class TeamCompetitionServiceIT {
         this.teamCompetitionService.updateTeamCompetitionPlayerTeams(teamCompetitionEntity.get().getId(), playerTeams);
 
         Optional<TeamCompetitionEntity> updatedTeamCompetitionEntity =
-                this.teamCompetitionRepository.findByNameTeamCompetition("Atlético de Madrid");
+                this.teamCompetitionRepository.findByNameTeamCompetition("Club nuevo");
         assertTrue(updatedTeamCompetitionEntity.isPresent());
 
         TeamCompetitionEntity updatedEntity = updatedTeamCompetitionEntity.get();
