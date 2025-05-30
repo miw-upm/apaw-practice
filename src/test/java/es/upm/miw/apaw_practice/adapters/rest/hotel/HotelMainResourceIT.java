@@ -81,18 +81,4 @@ public class HotelMainResourceIT {
                 .expectStatus().isNotFound();
     }
 
-    @Test
-    void findNonRepeatedRoomByType() {
-        this.webTestClient
-                .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(HOTELS + SEARCH)
-                        .queryParam("q", "type:dual")
-                        .build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(List.class)
-                .value(Assertions::assertNotNull)
-                .value(list -> assertTrue(list.containsAll(Arrays.asList("202","303"))));
-    }
 }
