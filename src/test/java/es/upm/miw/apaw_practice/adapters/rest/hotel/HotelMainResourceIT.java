@@ -3,15 +3,22 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
+import es.upm.miw.apaw_practice.domain.models.shop.Tag;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelMainResource.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 public class HotelMainResourceIT {
@@ -72,5 +79,20 @@ public class HotelMainResourceIT {
                 .body(BodyInserters.fromValue(room))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void findNonRepeatedRoomByType() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(HOTELS + SEARCH)
+                        .queryParam("q", "type:dual")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(Assertions::assertNotNull)
+                .value(list -> assertTrue(list.containsAll(Arrays.asList("202","303"))));
     }
 }

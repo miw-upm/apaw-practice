@@ -8,6 +8,9 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,5 +56,12 @@ public class HotelMainPersistenceMongodbIT {
         assertFalse(updatedRoom.isReserved());
 
     }
-
+    @Test
+    void testFindNonRepeatedRoomNumberByType() {
+        String type = "dual";
+        List<String> roomNumberList = this.hotelMainPersistenceMongodb.findNonRepeatedRoomNumberByType(type).collect(Collectors.toList());
+        assertNotNull(roomNumberList);
+        assertTrue(roomNumberList.containsAll(Arrays.asList("202","303")));
+    }
 }
+

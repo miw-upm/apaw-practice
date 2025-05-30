@@ -6,6 +6,9 @@ import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelMainPersiste
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 @Service
 public class HotelMainService {
 
@@ -18,8 +21,9 @@ public class HotelMainService {
 
     public HotelMain findByName(String name) { return this.hotelMainPersistence.findByName(name); }
 
+    public void delete(String name) { this.hotelMainPersistence.delete(name); }
 
-    public void delete(String name){ this.hotelMainPersistence.delete(name); }
+    public HotelMain updateRoom(String name, String number, HotelRoom room) { return this.hotelMainPersistence.updateRoom(name, number, room); }
 
-    public HotelMain updateRoom(String name, String number, HotelRoom room){ return this.hotelMainPersistence.updateRoom(name, number, room); }
+    public Stream<String> findNonRepeatedRoomNumberByType(String type) { return this.hotelMainPersistence.findNonRepeatedRoomNumberByType(type); }
 }

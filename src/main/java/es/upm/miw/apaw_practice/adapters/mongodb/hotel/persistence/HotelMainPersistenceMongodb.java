@@ -3,12 +3,18 @@ package es.upm.miw.apaw_practice.adapters.mongodb.hotel.persistence;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.daos.HotelMainRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelMainEntity;
 import es.upm.miw.apaw_practice.adapters.mongodb.hotel.entities.HotelRoomEntity;
+import es.upm.miw.apaw_practice.adapters.mongodb.hotel_retired.entities.RoomEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelMain;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelRoom;
+import es.upm.miw.apaw_practice.domain.models.hotel_retired.Room;
 import es.upm.miw.apaw_practice.domain.persistence_ports.hotel.HotelMainPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository("hotelMainPersistence")
 public class HotelMainPersistenceMongodb implements HotelMainPersistence{
@@ -47,5 +53,12 @@ public class HotelMainPersistenceMongodb implements HotelMainPersistence{
         return hotelMainRepository.save(hotelEntity).toHotel();
     }
 
+    public Stream<String> findNonRepeatedRoomNumberByType(String type){
+        Stream<String> roomNumberList = this.hotelMainRepository.findAll().stream()
+                .flatMap(hotel -> hotel.getRooms().stream())
+                .filter(room -> room.getType().equals(type))
+                .map(HotelRoomEntity::getNumber).distinct();
+        return roomNumberList;
+    }
 }
 
