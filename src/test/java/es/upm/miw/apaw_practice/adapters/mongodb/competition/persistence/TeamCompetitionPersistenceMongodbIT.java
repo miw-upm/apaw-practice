@@ -29,7 +29,7 @@ class TeamCompetitionPersistenceMongodbIT {
     @Test
     void testUpdate() {
         Optional<TeamCompetition> teamCompetition = this.teamCompetitionPersistenceMongodb.readAll()
-                .filter(tc -> "Atlético de Madrid".equals(tc.getNameTeamCompetition()))
+                .filter(tc -> "Cabeza de mula FC".equals(tc.getNameTeamCompetition()))
                 .findFirst();
         assertTrue(teamCompetition.isPresent());
         List<PlayerTeam> playerTeams = teamCompetition.get().getPlayerTeams();
@@ -44,7 +44,7 @@ class TeamCompetitionPersistenceMongodbIT {
         this.teamCompetitionPersistenceMongodb.update(teamCompetition.get());
 
         Optional<TeamCompetition> newTeamCompetition = this.teamCompetitionPersistenceMongodb.readAll()
-                .filter(tc -> "Atlético de Madrid".equals(tc.getNameTeamCompetition()))
+                .filter(tc -> "Cabeza de mula FC".equals(tc.getNameTeamCompetition()))
                 .findFirst();
         assertTrue(newTeamCompetition.isPresent());
         assertEquals(teamCompetition.get().getNameTeamCompetition(), newTeamCompetition.get().getNameTeamCompetition());
