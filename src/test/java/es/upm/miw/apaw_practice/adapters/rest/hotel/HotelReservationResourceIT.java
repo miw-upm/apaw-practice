@@ -3,14 +3,23 @@ package es.upm.miw.apaw_practice.adapters.rest.hotel;
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+
+import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelMainResource.HOTELS;
+import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelMainResource.SEARCH;
 import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelReservationResource.NUMBERS;
 import static es.upm.miw.apaw_practice.adapters.rest.hotel.HotelReservationResource.RESERVATIONS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RestTestConfig
 public class HotelReservationResourceIT {
@@ -92,9 +101,25 @@ public class HotelReservationResourceIT {
         HotelReservation reservation = new HotelReservation("4", roomNumber, date, client);
         this.webTestClient
                 .patch()
-                .uri(RESERVATIONS + NUMBERS, "4")
+                .uri(RESERVATIONS + NUMBERS, "8")
                 .body(BodyInserters.fromValue(reservation))
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+    @Test
+
+    void testfindSumTotalPriceByReservationDate() {
+        LocalDate date = LocalDate.of(2023, 10, 12);
+        this.webTestClient
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(RESERVATIONS + SEARCH)
+                        .queryParam("q", "date:" + date.toString())
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(Assertions::assertNotNull)
+                .value(sum -> assertEquals(new BigDecimal("200.00"),sum));
     }
 }

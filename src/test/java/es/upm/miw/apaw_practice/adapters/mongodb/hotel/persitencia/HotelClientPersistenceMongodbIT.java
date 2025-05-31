@@ -21,7 +21,7 @@ public class HotelClientPersistenceMongodbIT {
 
     @Test
     void testNotExistDNI() {
-        boolean exist = this.hotelClientPersistenceMongodb.existDNI("y4444444x");
+        boolean exist = this.hotelClientPersistenceMongodb.existDNI("y8888888x");
         assertFalse(exist);
     }
 

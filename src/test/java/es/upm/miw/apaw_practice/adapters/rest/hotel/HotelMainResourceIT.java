@@ -82,7 +82,7 @@ public class HotelMainResourceIT {
     }
 
     @Test
-    void findNonRepeatedRoomByType() {
+    void testFindNonRepeatedRoomByType() {
         this.webTestClient
                 .get()
                 .uri(uriBuilder -> uriBuilder

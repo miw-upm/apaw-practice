@@ -5,6 +5,8 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,6 +28,7 @@ public class HotelReservationServiceIT {
         assertEquals(nonModifiedDate, reservationPatched.getReservationDate());
         assertEquals("David", reservationPatched.getClient().getName());
     }
+
 
     @Test
     void testPatchReservationDate(){
@@ -52,5 +55,11 @@ public class HotelReservationServiceIT {
         assertEquals("Alex", reservationPatched.getClient().getName());
         assertEquals("666666666", reservationPatched.getClient().getPhone());
         assertEquals("test@gmail.com", reservationPatched.getClient().getEmail());
+    }
+
+    @Test
+    void testFindSumTotalPriceByReservationDate() {
+        LocalDate date = LocalDate.of(2023,10,12);
+        assertEquals(new BigDecimal("200.00"),hotelReservationService.findSumTotalPriceByReservationDate(date));
     }
 }
