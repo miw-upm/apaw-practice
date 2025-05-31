@@ -112,5 +112,23 @@ class HotelMainTest {
         assertTrue(phones.contains("911111111"));
         assertTrue(phones.contains("911234567"));
     }
+
+    @Test
+    void testGetRooms() {
+        List<HotelRoom> rooms = this.root.getRooms().toList();
+        assertEquals(3, rooms.size());
+        assertTrue(rooms.stream().anyMatch(room -> room.getNumber().equals("303")));
+        assertTrue(rooms.stream().anyMatch(room -> room.getNumber().equals("202")));
+        assertTrue(rooms.stream().anyMatch(room -> room.getNumber().equals("101")));
+    }
+
+    @Test
+    void testGetClients() {
+        List<HotelClient> clients = this.root.getClients().toList();
+        assertEquals(3, clients.size());
+        assertTrue(clients.stream().anyMatch(client -> client.getIdentityDocument().equals("x1231232j")));
+        assertTrue(clients.stream().anyMatch(client -> client.getIdentityDocument().equals("x1233215j")));
+        assertTrue(clients.stream().anyMatch(client -> client.getIdentityDocument().equals("y9991232z")));
+    }
 }
 
