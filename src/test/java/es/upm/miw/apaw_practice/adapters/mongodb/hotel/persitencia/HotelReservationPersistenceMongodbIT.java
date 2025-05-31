@@ -6,6 +6,8 @@ import es.upm.miw.apaw_practice.domain.models.hotel.HotelClient;
 import es.upm.miw.apaw_practice.domain.models.hotel.HotelReservation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +19,7 @@ public class HotelReservationPersistenceMongodbIT {
     HotelReservationPersistenceMongodb hotelReservationPersistenceMongodb;
 
     @Test
-    void testPatchReservationRoom(){
+    void testPatchReservationRoom() {
         String roomNumber = "202";
         LocalDate date = null;
         HotelClient client = null;
@@ -29,7 +31,7 @@ public class HotelReservationPersistenceMongodbIT {
     }
 
     @Test
-    void testPatchReservationDate(){
+    void testPatchReservationDate() {
         String roomNumber = null;
         LocalDate date = LocalDate.of(1999,1,1);
         HotelClient client = null;
@@ -38,8 +40,9 @@ public class HotelReservationPersistenceMongodbIT {
         assertEquals("202", reservationPatched.getRoomNumber());
         assertEquals(date, reservationPatched.getReservationDate());
     }
+
     @Test
-    void testPatchReservationClient(){
+    void testPatchReservationClient() {
         String roomNumber = null;
         LocalDate date = null;
         LocalDate nonModifiedDate = LocalDate.of(2020,10,12);
@@ -52,6 +55,12 @@ public class HotelReservationPersistenceMongodbIT {
         assertEquals("Alex", reservationPatched.getClient().getName());
         assertEquals("666666666", reservationPatched.getClient().getPhone());
         assertEquals("test@gmail.com", reservationPatched.getClient().getEmail());
+    }
+
+    @Test
+    void testFindSumTotalPriceByReservationDate() {
+        LocalDate date = LocalDate.of(2023,10,12);
+        assertEquals(new BigDecimal("200.00"),hotelReservationPersistenceMongodb.findSumTotalPriceByReservationDate(date));
     }
 
 }
