@@ -1,5 +1,8 @@
 package es.upm.miw.apaw_practice.domain.models.hotel;
 
+import es.upm.miw.apaw_practice.domain.models.shopping_center.Employee;
+import es.upm.miw.apaw_practice.domain.models.shopping_center.EmployeeBuilders;
+
 import java.math.BigDecimal;
 
 public class HotelRoom {
@@ -17,6 +20,10 @@ public class HotelRoom {
     this.type = type;
     this.price = price;
     this.reserved = reserved;
+    }
+
+    public static HotelRoomBuilders.Number builder() {
+        return new Builder();
     }
 
     public String getNumber() {
@@ -59,5 +66,43 @@ public class HotelRoom {
                 ", price=" + price +
                 ", reserved=" + reserved +
                 '}';
+    }
+
+    public static class Builder implements HotelRoomBuilders.Number, HotelRoomBuilders.Type, HotelRoomBuilders.Price ,HotelRoomBuilders.Optionals {
+
+        private final HotelRoom room;
+
+        public Builder() {
+            this.room = new HotelRoom();
+        }
+
+        @Override
+        public HotelRoomBuilders.Type number(String number) {
+            this.room.number = number;
+            return this;
+        }
+
+        @Override
+        public HotelRoomBuilders.Price type(String type) {
+            this.room.type = type;
+            return this;
+        }
+
+        @Override
+            public HotelRoomBuilders.Optionals price(BigDecimal price) {
+            this.room.price = price;
+            return this;
+        }
+
+        @Override
+        public HotelRoomBuilders.Optionals reserved(boolean reserved) {
+            this.room.reserved = reserved;
+            return this;
+        }
+
+        @Override
+        public HotelRoom build() {
+            return this.room;
+        }
     }
 }
