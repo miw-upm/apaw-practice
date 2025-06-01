@@ -1,16 +1,16 @@
 package es.upm.miw.apaw_practice.domain.models.music_festival;
 
-public class Artist {
+public class ConcertArtist {
 
     private String name;
     private String nationality;
     private double rating;
 
-    public Artist() {
+    public ConcertArtist() {
         //empty for framework
     }
 
-    public Artist(String name, String nationality, double rating) {
+    public ConcertArtist(String name, String nationality, double rating) {
         this.name = name;
         this.nationality = nationality;
         this.rating = rating;
@@ -42,7 +42,7 @@ public class Artist {
 
     @Override
     public String toString() {
-        return "Artist{" +
+        return "ConcertArtist{" +
                 "name='" + name + '\'' +
                 ", nationality='" + nationality + '\'' +
                 ", rating=" + rating +
