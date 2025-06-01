@@ -40,11 +40,11 @@ public class MusicFestivalEntity {
         this.budget = musicFestival.getBudget();
     }
 
-    public MusicFestival toDomain() {
+    public MusicFestival toMusicFestival() {
         MusicFestival musicFestival = new MusicFestival();
         BeanUtils.copyProperties(this, musicFestival, "concerts");
         musicFestival.setConcerts(this.concerts != null
-                ? this.concerts.stream().map(ConcertEntity::toDomain).toList()
+                ? this.concerts.stream().map(ConcertEntity::toConcert).toList()
                 : null);
         return musicFestival;
     }

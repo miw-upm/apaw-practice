@@ -32,7 +32,7 @@ public class StageEntity {
         this.openTime = openTime;
     }
 
-    public Stage toDomain() {
+    public Stage toStage() {
         Stage stage = new Stage();
         BeanUtils.copyProperties(this, stage);
         return stage;

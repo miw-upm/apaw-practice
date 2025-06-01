@@ -35,12 +35,12 @@ public class ConcertEntity {
         this.artists = artists;
     }
 
-    public Concert toDomain() {
+    public Concert toConcert() {
         Concert concert = new Concert();
         BeanUtils.copyProperties(this, concert, "stage", "artists");
-        concert.setStage(this.stage != null ? this.stage.toDomain() : null);
+        concert.setStage(this.stage != null ? this.stage.toStage() : null);
         concert.setArtists(this.artists != null
-                ? this.artists.stream().map(ConcertArtistEntity::toDomain).toList()
+                ? this.artists.stream().map(ConcertArtistEntity::toConcertArtist).toList()
                 : null);
         return concert;
     }

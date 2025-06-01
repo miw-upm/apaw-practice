@@ -29,7 +29,7 @@ public class ConcertArtistEntity {
         this.rating = rating;
     }
 
-    public ConcertArtist toDomain() {
+    public ConcertArtist toConcertArtist() {
         ConcertArtist artist = new ConcertArtist();
         BeanUtils.copyProperties(this, artist);
         return artist;
