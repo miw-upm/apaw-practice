@@ -26,6 +26,7 @@ import es.upm.miw.apaw_practice.adapters.mongodb.wushu_sport.WushuSportSeederSer
 import es.upm.miw.apaw_practice.adapters.mongodb.veterinary_clinic.VeterinaryClinicSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.movies.MoviesSeederService;
 import es.upm.miw.apaw_practice.adapters.mongodb.company.CompanySeederService;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.MusicFestivalSeederService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,7 @@ public class DatabaseSeederService {
     private final ECommerceSeederService eCommerceSeederService;
     private final MartialArtSeederService martialArtSeederService;
     private final CompanySeederService companySeederService;
+    private final MusicFestivalSeederService musicFestivalSeederService;
 
     @Autowired
     public DatabaseSeederService(
@@ -86,7 +88,8 @@ public class DatabaseSeederService {
             GunStoreSeederService gunStoreSeederService,
             ECommerceSeederService eCommerceSeederService,
             MartialArtSeederService martialArtSeederService,
-            CompanySeederService companySeederService
+            CompanySeederService companySeederService,
+            MusicFestivalSeederService musicFestivalSeederService
     ) {
         this.shopSeederService = shopSeederService;
         this.hospitalSeederService = hospitalSeederService;
@@ -114,6 +117,7 @@ public class DatabaseSeederService {
         this.martialArtSeederService = martialArtSeederService;
         this.eCommerceSeederService = eCommerceSeederService;
         this.companySeederService = companySeederService;
+        this.musicFestivalSeederService = musicFestivalSeederService;
 
       this.seedDatabase();
     }
@@ -145,6 +149,7 @@ public class DatabaseSeederService {
         martialArtSeederService.seedDatabase() ;
         eCommerceSeederService.seedDatabase();
         companySeederService.seedDatabase();
+        musicFestivalSeederService.seedDatabase();
     }
 
     public void deleteAll() {
@@ -174,6 +179,7 @@ public class DatabaseSeederService {
         martialArtSeederService.deleteAll();
         martialArtSeederService.deleteAll();
         companySeederService.deleteAll();
+        musicFestivalSeederService.deleteAll();
         this.seedDatabase();
     }
 
