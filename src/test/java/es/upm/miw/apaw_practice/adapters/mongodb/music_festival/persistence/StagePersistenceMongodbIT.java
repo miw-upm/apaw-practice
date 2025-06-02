@@ -1,10 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.music_festival.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -18,6 +18,18 @@ class StagePersistenceMongodbIT {
 
     @Autowired
     private StagePersistenceMongodb stagePersistence;
+
+    @Test
+    void testDelete() {
+        String name = "TestStage2";
+        assertDoesNotThrow(() -> this.stagePersistence.delete(name));
+    }
+
+    @Test
+    void testDeleteNotFound() {
+        String name = "TestStageNotFound";
+        assertThrows(NotFoundException.class,() -> this.stagePersistence.delete(name));
+    }
 
     @Test
     void testReadByName() {

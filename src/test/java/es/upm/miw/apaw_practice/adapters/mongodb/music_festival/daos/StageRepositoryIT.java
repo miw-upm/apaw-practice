@@ -38,4 +38,5 @@ class StageRepositoryIT {
     void testFindByNameNotFound() {
         assertTrue(this.stageRepository.findByName("Unknown").isEmpty());
     }
+
 }
