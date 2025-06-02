@@ -19,6 +19,18 @@ class StageRepositoryIT {
     private StageRepository stageRepository;
 
     @Test
+    void testDeleteByName() {
+        String name = "testDeleteByName";
+        StageEntity stage = new StageEntity(name, "Test", 1, LocalDateTime.now());
+        this.stageRepository.save(stage);
+        assertTrue(this.stageRepository.findByName(name).isPresent());
+
+        this.stageRepository.deleteByName(name);
+
+        assertTrue(this.stageRepository.findByName(name).isEmpty());
+    }
+
+    @Test
     void testFindByName() {
         Optional<StageEntity> stageEntityOptional = this.stageRepository.findByName("MainStage");
         assertTrue(stageEntityOptional.isPresent());
