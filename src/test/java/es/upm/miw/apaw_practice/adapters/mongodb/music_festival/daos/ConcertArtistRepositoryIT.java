@@ -1,6 +1,9 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.music_festival.daos;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.entities.ConcertArtistEntity;
@@ -15,7 +18,7 @@ class ConcertArtistRepositoryIT {
 
     @Test
     void testFindByName() {
-        String name = "DJ Luna";
+        String name = "DJ Moon";
         Optional<ConcertArtistEntity> artistOptional = this.concertArtistRepository.findByName(name);
         assertTrue(artistOptional.isPresent());
         ConcertArtistEntity artist = artistOptional.get();
@@ -23,7 +26,7 @@ class ConcertArtistRepositoryIT {
         assertAll(
                 () -> assertNotNull(artist.getId()),
                 () -> assertEquals(name, artist.getName()),
-                () -> assertEquals("Española", artist.getNationality()),
+                () -> assertEquals("Spanish", artist.getNationality()),
                 () -> assertEquals(4.2, artist.getRating()),
                 () -> assertTrue(artist.toString().contains(artistDummy.getName()))
         );

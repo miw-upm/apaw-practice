@@ -1,10 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.music_festival.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.daos.ConcertArtistRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.entities.ConcertArtistEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.music_festival.ConcertArtist;
 import es.upm.miw.apaw_practice.domain.persistence_ports.music_festival.ConcertArtistPersistence;
+import java.util.stream.Stream;
 import org.springframework.stereotype.Repository;
+
 
 @Repository("concertArtistPersistence")
 public class ConcertArtistPersistenceMongodb implements ConcertArtistPersistence {
@@ -19,5 +22,12 @@ public class ConcertArtistPersistenceMongodb implements ConcertArtistPersistence
         return this.concertArtistRepository.findByName(artistName)
                 .orElseThrow(() -> new NotFoundException("ConcertArtist name:"+artistName))
                 .toConcertArtist();
+    }
+
+    @Override
+    public Stream<ConcertArtist> findByNationality(String nationality) {
+        return this.concertArtistRepository.findAll().stream()
+                .filter(artistEntity -> artistEntity.getNationality().contains(nationality))
+                .map(ConcertArtistEntity::toConcertArtist);
     }
 }

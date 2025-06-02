@@ -1,6 +1,10 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.music_festival.persistence;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import es.upm.miw.apaw_practice.TestConfig;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
@@ -44,7 +48,7 @@ class MusicFestivalPersistenceMongodbIT {
                 () -> assertTrue(concert.toString().contains(concertDummy.getCode())),
                 () -> assertEquals("MainStage", concert.getStage().getName()),
                 () -> assertEquals(3, concert.getArtists().size()),
-                () -> assertEquals("Los Fabulosos", concert.getArtists().get(0).getName())
+                () -> assertEquals("The Fabulous", concert.getArtists().get(0).getName())
         );
     }
 
