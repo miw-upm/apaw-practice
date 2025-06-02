@@ -44,7 +44,7 @@ class MusicFestivalPersistenceMongodbIT {
                 () -> assertTrue(concert.toString().contains(concertDummy.getCode())),
                 () -> assertEquals("MainStage", concert.getStage().getName()),
                 () -> assertEquals(3, concert.getArtists().size()),
-                () -> assertEquals("Los Fabulosos", concert.getArtists().get(0).getName())
+                () -> assertEquals("The Fabulous", concert.getArtists().get(0).getName())
         );
     }
 

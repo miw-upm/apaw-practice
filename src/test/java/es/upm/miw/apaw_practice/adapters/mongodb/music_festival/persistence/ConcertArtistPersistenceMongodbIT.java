@@ -20,7 +20,7 @@ class ConcertArtistPersistenceMongodbIT {
         var artistDummy = new ConcertArtist(name, null, 0.0);
         assertAll(
                 () -> assertEquals(name, artist.getName()),
-                () -> assertEquals("Argentina", artist.getNationality()),
+                () -> assertEquals("Argentinian", artist.getNationality()),
                 () -> assertEquals(4.7, artist.getRating()),
                 () -> assertTrue(artist.toString().contains(artistDummy.getName()))
         );

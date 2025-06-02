@@ -22,10 +22,10 @@ class StagePersistenceMongodbIT {
         var stageDummy = new Stage(name, null, 0 , null);
         assertAll(
                 () -> assertEquals(name, stage.getName()),
-                () -> assertEquals("Parque Central", stage.getLocation()),
+                () -> assertEquals("Central Park", stage.getLocation()),
                 () -> assertEquals(10000, stage.getCapacity()),
                 () -> assertTrue(stage.toString().contains(stageDummy.getName())),
-                () -> assertEquals(LocalDateTime.of(2025, 5, 10, 14, 0), stage.getOpenTime())
+                () -> assertEquals(LocalDateTime.of(2025, 5, 15, 14, 0), stage.getOpenTime())
         );
     }
     @Test

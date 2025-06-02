@@ -24,9 +24,9 @@ class StageRepositoryIT {
         assertAll(
                 () -> assertNotNull(stageEntity.getId()),
                 () -> assertEquals("MainStage", stageEntity.getName()),
-                () -> assertEquals("Parque Central", stageEntity.getLocation()),
+                () -> assertEquals("Central Park", stageEntity.getLocation()),
                 () -> assertEquals(10000, stageEntity.getCapacity()),
-                () -> assertEquals(LocalDateTime.of(2025, 5, 10, 14, 0), stageEntity.getOpenTime()),
+                () -> assertEquals(LocalDateTime.of(2025, 5, 15, 14, 0), stageEntity.getOpenTime()),
                 () -> assertEquals(stageEntity.hashCode(), Objects.hashCode(stageEntity.getName())),
                 () -> assertTrue(stageEntity.toString().contains(stageEntity.getName()))
         );

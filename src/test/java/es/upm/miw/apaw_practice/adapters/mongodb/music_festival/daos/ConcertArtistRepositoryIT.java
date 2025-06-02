@@ -15,7 +15,7 @@ class ConcertArtistRepositoryIT {
 
     @Test
     void testFindByName() {
-        String name = "DJ Luna";
+        String name = "DJ Moon";
         Optional<ConcertArtistEntity> artistOptional = this.concertArtistRepository.findByName(name);
         assertTrue(artistOptional.isPresent());
         ConcertArtistEntity artist = artistOptional.get();
@@ -23,7 +23,7 @@ class ConcertArtistRepositoryIT {
         assertAll(
                 () -> assertNotNull(artist.getId()),
                 () -> assertEquals(name, artist.getName()),
-                () -> assertEquals("Española", artist.getNationality()),
+                () -> assertEquals("Spanish", artist.getNationality()),
                 () -> assertEquals(4.2, artist.getRating()),
                 () -> assertTrue(artist.toString().contains(artistDummy.getName()))
         );
