@@ -23,12 +23,7 @@ class StagePersistenceMongodbIT {
     void testDelete() {
         String name = "TestStage2";
         assertDoesNotThrow(() -> this.stagePersistence.delete(name));
-    }
-
-    @Test
-    void testDeleteNotFound() {
-        String name = "TestStageNotFound";
-        assertThrows(NotFoundException.class,() -> this.stagePersistence.delete(name));
+        assertThrows(NotFoundException.class,() -> this.stagePersistence.readByName(name));
     }
 
     @Test

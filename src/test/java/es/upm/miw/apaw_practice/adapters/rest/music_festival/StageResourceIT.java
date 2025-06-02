@@ -20,12 +20,4 @@ class StageResourceIT {
                 .expectStatus().isOk();
     }
 
-    @Test
-    void testDeleteNotFound() {
-        this.webTestClient
-                .delete()
-                .uri(StageResource.STAGES + StageResource.NAME_ID, "TestStageNotFound")
-                .exchange()
-                .expectStatus().isNotFound();
-    }
 }

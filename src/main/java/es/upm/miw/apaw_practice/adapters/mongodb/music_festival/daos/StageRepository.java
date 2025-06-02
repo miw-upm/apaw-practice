@@ -6,5 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface StageRepository extends MongoRepository<StageEntity, String> {
+    void deleteByName(String name);
+
     Optional<StageEntity> findByName(String id);
 }

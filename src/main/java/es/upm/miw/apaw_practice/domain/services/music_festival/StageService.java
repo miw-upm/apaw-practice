@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.music_festival;
 
+import es.upm.miw.apaw_practice.domain.models.music_festival.Stage;
 import es.upm.miw.apaw_practice.domain.persistence_ports.music_festival.StagePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,9 @@ public class StageService {
 
     public void delete(String name) {
         this.stagePersistence.delete(name);
+    }
+
+    public Stage read(String name) {
+        return this.stagePersistence.readByName(name);
     }
 }
