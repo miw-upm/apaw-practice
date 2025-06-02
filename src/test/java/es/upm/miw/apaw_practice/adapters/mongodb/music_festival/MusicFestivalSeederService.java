@@ -53,7 +53,8 @@ public class MusicFestivalSeederService {
                 new StageEntity("EDMStage", "Night Plaza", 8000, LocalDateTime.of(2025, 8, 14, 18, 0)),
                 new StageEntity("ArenaStage", "Main Arena", 12000, LocalDateTime.of(2025, 7, 22, 14, 0)),
                 new StageEntity("SideStage", "West End", 5000, LocalDateTime.of(2025, 7, 23, 15, 0)),
-                new StageEntity("TentStage", "Big Top Tent", 6000, LocalDateTime.of(2025, 7, 24, 16, 0))
+                new StageEntity("TestStage1", "TestStage1", 6000, LocalDateTime.of(2025, 7, 24, 16, 0)),
+                new StageEntity("TestStage2", "TestStage2", 1000, LocalDateTime.of(2025, 6, 9, 18, 30))
         );
         return this.stageRepository.saveAll(stages);
     }
@@ -83,8 +84,7 @@ public class MusicFestivalSeederService {
                 new ConcertEntity("CON008", LocalDate.of(2025, 8, 13), BigDecimal.valueOf(64.50), false, stages.get(7), Arrays.asList(artists.get(2), artists.get(4), artists.get(7))),
                 new ConcertEntity("CON009", LocalDate.of(2025, 8, 14), BigDecimal.valueOf(59.00), true, stages.get(8), Arrays.asList(artists.get(0), artists.get(1), artists.get(7))),
                 new ConcertEntity("CON010", LocalDate.of(2025, 7, 22), BigDecimal.valueOf(72.00), false, stages.get(9), Arrays.asList(artists.get(0), artists.get(4), artists.get(7))),
-                new ConcertEntity("CON011", LocalDate.of(2025, 7, 23), BigDecimal.valueOf(68.50), false, stages.get(10), Arrays.asList(artists.get(1), artists.get(2), artists.get(5))),
-                new ConcertEntity("CON012", LocalDate.of(2025, 7, 24), BigDecimal.valueOf(75.00), false, stages.get(11), Arrays.asList(artists.get(1), artists.get(3), artists.get(6)))
+                new ConcertEntity("CON011", LocalDate.of(2025, 7, 23), BigDecimal.valueOf(68.50), false, stages.get(10), Arrays.asList(artists.get(1), artists.get(2), artists.get(5)))
         );
     }
 
@@ -94,7 +94,7 @@ public class MusicFestivalSeederService {
                 new MusicFestivalEntity("SummerBeat", LocalDateTime.of(2025, 6, 1, 9, 0), BigDecimal.valueOf(180000), Arrays.asList(concerts.get(1), concerts.get(2))),
                 new MusicFestivalEntity("AutumnRock", LocalDateTime.of(2025, 9, 1, 11, 0), BigDecimal.valueOf(150000), Arrays.asList(concerts.get(3), concerts.get(4))),
                 new MusicFestivalEntity("MultiGenreFest", LocalDateTime.of(2025, 8, 12, 14, 0), BigDecimal.valueOf(300000), Arrays.asList(concerts.get(5), concerts.get(6), concerts.get(7))),
-                new MusicFestivalEntity("MegaFestival", LocalDateTime.of(2025, 7, 22, 16, 0), BigDecimal.valueOf(500000), Arrays.asList(concerts.get(8), concerts.get(9), concerts.get(10)))
+                new MusicFestivalEntity("MegaFestival", LocalDateTime.of(2025, 7, 22, 16, 0), BigDecimal.valueOf(500000), Arrays.asList(concerts.get(8), concerts.get(9)))
         );
         this.musicFestivalRepository.saveAll(festivals);
     }
