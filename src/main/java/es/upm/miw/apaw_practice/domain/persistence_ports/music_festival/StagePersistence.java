@@ -5,7 +5,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StagePersistence {
-    Stage readByName(String name);
+
+    Stage create(Stage stage);
 
     void delete(String name);
+
+    boolean existName(String name);
+
+    Stage readByName(String name);
+
 }

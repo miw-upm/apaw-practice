@@ -1,5 +1,6 @@
 package es.upm.miw.apaw_practice.domain.services.music_festival;
 
+import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.models.music_festival.Stage;
 import es.upm.miw.apaw_practice.domain.persistence_ports.music_festival.StagePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,22 @@ public class StageService {
         this.stagePersistence = stagePersistence;
     }
 
+    public Stage create(Stage stage) {
+        this.assertStageNameNotExist(stage.getName());
+        return this.stagePersistence.create(stage);
+    }
+
     public void delete(String name) {
         this.stagePersistence.delete(name);
     }
 
     public Stage read(String name) {
         return this.stagePersistence.readByName(name);
+    }
+
+    private void assertStageNameNotExist(String name) {
+        if (this.stagePersistence.existName(name)) {
+            throw new ConflictException("Stage name already exists : " + name);
+        }
     }
 }

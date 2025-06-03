@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.domain.models.music_festival;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Stage {
 
@@ -18,6 +19,12 @@ public class Stage {
         this.location = location;
         this.capacity = capacity;
         this.openTime = openTime;
+    }
+
+    public void doDefault() {
+        if (Objects.isNull(openTime)) {
+            this.openTime = LocalDateTime.now();
+        }
     }
 
     public String getName() {
