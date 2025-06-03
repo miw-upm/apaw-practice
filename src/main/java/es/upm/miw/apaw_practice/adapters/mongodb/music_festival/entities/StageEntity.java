@@ -24,6 +24,11 @@ public class StageEntity {
         // empty for framework
     }
 
+    public StageEntity(Stage stage) {
+        BeanUtils.copyProperties(stage, this);
+        this.id = UUID.randomUUID().toString();
+    }
+
     public StageEntity(String name, String location, int capacity, LocalDateTime openTime) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
@@ -56,6 +61,22 @@ public class StageEntity {
 
     public LocalDateTime getOpenTime() {
         return openTime;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setOpenTime(LocalDateTime openTime) {
+        this.openTime = openTime;
     }
 
     @Override

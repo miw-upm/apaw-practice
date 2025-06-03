@@ -3,6 +3,7 @@ package es.upm.miw.apaw_practice.adapters.mongodb.music_festival.persistence;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -18,6 +19,16 @@ class StagePersistenceMongodbIT {
 
     @Autowired
     private StagePersistenceMongodb stagePersistence;
+
+    @Test
+    void testCreate() {
+        Stage stage = new Stage("PersistStage", "Loc", 2000, LocalDateTime.now());
+        Stage stageSaved = this.stagePersistence.create(stage);
+        assertEquals("PersistStage", stageSaved.getName());
+        assertEquals("Loc", stageSaved.getLocation());
+        assertEquals(2000, stage.getCapacity());
+        assertNotNull(stage.getOpenTime());
+    }
 
     @Test
     void testDelete() {
@@ -39,6 +50,7 @@ class StagePersistenceMongodbIT {
                 () -> assertEquals(LocalDateTime.of(2025, 5, 15, 14, 0), stage.getOpenTime())
         );
     }
+
     @Test
     void testReadByNameNotFound() {
         assertThrows(NotFoundException.class, () -> this.stagePersistence.readByName("Unknown"));

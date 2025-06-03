@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.music_festival.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.daos.StageRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.entities.StageEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.music_festival.Stage;
 import es.upm.miw.apaw_practice.domain.persistence_ports.music_festival.StagePersistence;
@@ -15,14 +16,29 @@ public class StagePersistenceMongodb implements StagePersistence {
     }
 
     @Override
+    public Stage create(Stage stage) {
+        return this.stageRepository
+                .save(new StageEntity(stage))
+                .toStage();
+    }
+
+    @Override
     public void delete(String name) {
         this.stageRepository.deleteByName(name);
     }
 
     @Override
+    public boolean existName(String name) {
+        return this.stageRepository
+                .findByName(name)
+                .isPresent();
+    }
+
+    @Override
     public Stage readByName(String name) {
         return this.stageRepository.findByName(name)
-                .orElseThrow(() -> new NotFoundException("Stage name:" + name)).toStage();
+                .orElseThrow(() -> new NotFoundException("Stage name:" + name))
+                .toStage();
     }
 
 }
