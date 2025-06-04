@@ -5,5 +5,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MusicFestivalPersistence {
+
     MusicFestival readByName(String name);
+
+    MusicFestival update(String name, MusicFestival musicFestival);
 }
