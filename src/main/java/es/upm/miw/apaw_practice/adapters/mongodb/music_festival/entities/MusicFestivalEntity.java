@@ -65,6 +65,10 @@ public class MusicFestivalEntity {
         return budget;
     }
 
+    public void setBudget(BigDecimal budget) {
+        this.budget = budget;
+    }
+
     public List<ConcertEntity> getConcerts() {
         return concerts;
     }

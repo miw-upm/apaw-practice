@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.music_festival.persistence;
 
 import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.daos.MusicFestivalRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.entities.MusicFestivalEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.music_festival.MusicFestival;
 import es.upm.miw.apaw_practice.domain.persistence_ports.music_festival.MusicFestivalPersistence;
@@ -18,6 +19,17 @@ public class MusicFestivalPersistenceMongodb implements MusicFestivalPersistence
     public MusicFestival readByName(String name) {
         return this.musicFestivalRepository.findByName(name)
                 .orElseThrow(() -> new NotFoundException("MusicFestival name:"+name))
+                .toMusicFestival();
+    }
+
+    @Override
+    public MusicFestival update(String name, MusicFestival musicFestival) {
+        MusicFestivalEntity musicFestivalEntity = this.musicFestivalRepository
+                .findByName(name)
+                .orElseThrow(() -> new NotFoundException("MusicFestival name:" + name));
+        musicFestivalEntity.setBudget(musicFestival.getBudget());
+        return this.musicFestivalRepository
+                .save(musicFestivalEntity)
                 .toMusicFestival();
     }
 }
