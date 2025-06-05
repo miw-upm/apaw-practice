@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class ConcertEntity {
 
-    private String code;
     private LocalDate date;
     private BigDecimal ticketPrice;
     private boolean isSoldOut;
@@ -25,9 +24,8 @@ public class ConcertEntity {
         // empty for framework
     }
 
-    public ConcertEntity(String code, LocalDate date, BigDecimal ticketPrice, boolean isSoldOut,
+    public ConcertEntity(LocalDate date, BigDecimal ticketPrice, boolean isSoldOut,
                          StageEntity stage, List<ConcertArtistEntity> artists) {
-        this.code = code;
         this.date = date;
         this.ticketPrice = ticketPrice;
         this.isSoldOut = isSoldOut;
@@ -43,10 +41,6 @@ public class ConcertEntity {
                 ? this.artists.stream().map(ConcertArtistEntity::toConcertArtist).toList()
                 : null);
         return concert;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public LocalDate getDate() {
@@ -79,7 +73,10 @@ public class ConcertEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.code);
+        return Objects.hash(
+                this.date,
+                this.stage != null ? this.stage.getName() : null
+        );
     }
 
     @Override
@@ -90,14 +87,16 @@ public class ConcertEntity {
         if (!(object instanceof ConcertEntity other)) {
             return false;
         }
-        return Objects.equals(this.code, other.code);
+        return Objects.equals(this.date, other.date)
+                && Objects.equals(
+                this.stage != null ? this.stage.getName() : null,
+                other.stage != null ? other.stage.getName() : null);
     }
 
     @Override
     public String toString() {
         return "ConcertEntity{" +
-                " concertCode='" + code + '\'' +
-                ", date=" + date +
+                " date=" + date +
                 ", ticketPrice=" + ticketPrice +
                 ", isSoldOut=" + isSoldOut +
                 ", stage=" + stage +
