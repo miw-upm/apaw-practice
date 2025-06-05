@@ -45,7 +45,7 @@ class StageServiceIT {
 
     @Test
     void testFindByName() {
-        String name = "TestStage1";
+        String name = "MainStage";
         Stage stage = this.stageService.read(name);
         assertEquals(name, stage.getName());
     }

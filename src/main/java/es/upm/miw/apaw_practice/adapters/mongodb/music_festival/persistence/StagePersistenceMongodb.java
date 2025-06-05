@@ -5,12 +5,14 @@ import es.upm.miw.apaw_practice.adapters.mongodb.music_festival.entities.StageEn
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.music_festival.Stage;
 import es.upm.miw.apaw_practice.domain.persistence_ports.music_festival.StagePersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository("stagePersistence")
 public class StagePersistenceMongodb implements StagePersistence {
     private final StageRepository stageRepository;
 
+    @Autowired
     public StagePersistenceMongodb(StageRepository stageRepository) {
         this.stageRepository = stageRepository;
     }
