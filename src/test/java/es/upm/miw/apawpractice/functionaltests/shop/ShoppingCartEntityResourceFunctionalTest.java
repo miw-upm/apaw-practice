@@ -4,13 +4,14 @@ import es.upm.miw.apawpractice.adapters.rest.shop.ShoppingCartResource;
 import es.upm.miw.apawpractice.domain.models.shop.Article;
 import es.upm.miw.apawpractice.domain.models.shop.ArticleItem;
 import es.upm.miw.apawpractice.domain.models.shop.ShoppingCart;
-import es.upm.miw.apawpractice.functionaltests.RestTestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -19,7 +20,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RestTestConfig
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 class ShoppingCartEntityResourceFunctionalTest {
 
     @LocalServerPort
@@ -63,7 +65,7 @@ class ShoppingCartEntityResourceFunctionalTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotEmpty();
         assertTrue(Arrays.stream(response.getBody())
-                .anyMatch(item -> "user2".equals(item.getUser())));
+                .anyMatch(item -> "user2" .equals(item.getUser())));
         assertTrue(response.getBody().length > 0);
     }
 }

@@ -1,17 +1,19 @@
 package es.upm.miw.apawpractice.domain.services.shop;
 
-import es.upm.miw.apawpractice.TestConfig;
 import es.upm.miw.apawpractice.domain.models.shop.ArticlePriceUpdating;
 import es.upm.miw.apawpractice.domain.persistenceports.shop.ArticlePersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestConfig
+@SpringBootTest
+@ActiveProfiles("test")
 class ArticleServiceIT {
 
     @Autowired

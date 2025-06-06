@@ -1,16 +1,18 @@
 package es.upm.miw.apawpractice.adapters.mongodb.shop.persistence;
 
-import es.upm.miw.apawpractice.TestConfig;
 import es.upm.miw.apawpractice.domain.exceptions.NotFoundException;
 import es.upm.miw.apawpractice.domain.models.shop.Article;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestConfig
+@SpringBootTest
+@ActiveProfiles("test")
 class ArticlePersistenceMongodbIT {
 
     @Autowired

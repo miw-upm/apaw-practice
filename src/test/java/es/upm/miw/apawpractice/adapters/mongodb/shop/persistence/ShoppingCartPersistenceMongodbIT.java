@@ -1,12 +1,13 @@
 package es.upm.miw.apawpractice.adapters.mongodb.shop.persistence;
 
-import es.upm.miw.apawpractice.TestConfig;
 import es.upm.miw.apawpractice.adapters.mongodb.shop.ShopSeederService;
 import es.upm.miw.apawpractice.domain.models.shop.Article;
 import es.upm.miw.apawpractice.domain.models.shop.ArticleItem;
 import es.upm.miw.apawpractice.domain.models.shop.ShoppingCart;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestConfig
+@SpringBootTest
+@ActiveProfiles("test")
 class ShoppingCartPersistenceMongodbIT {
 
     @Autowired
@@ -26,7 +28,7 @@ class ShoppingCartPersistenceMongodbIT {
     @Test
     void testReadById() {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> "user1".equals(cart.getUser()))
+                .filter(cart -> "user1" .equals(cart.getUser()))
                 .findFirst();
         assertTrue(shoppingCart.isPresent());
         assertNotNull(shoppingCart.get().getId());
@@ -36,7 +38,7 @@ class ShoppingCartPersistenceMongodbIT {
     @Test
     void testUpdate() {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> "user1".equals(cart.getUser()))
+                .filter(cart -> "user1" .equals(cart.getUser()))
                 .findFirst();
         assertTrue(shoppingCart.isPresent());
         List<ArticleItem> articleItems = shoppingCart.get().getArticleItems();
@@ -45,7 +47,7 @@ class ShoppingCartPersistenceMongodbIT {
         articleItems.add(new ArticleItem(article, 3, BigDecimal.ZERO));
         this.shoppingCartPersistenceMongodb.update(shoppingCart.get());
         Optional<ShoppingCart> newShoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> "user1".equals(cart.getUser()))
+                .filter(cart -> "user1" .equals(cart.getUser()))
                 .findFirst();
         assertTrue(newShoppingCart.isPresent());
         assertEquals(shoppingCart.get().getCreationDate(), newShoppingCart.get().getCreationDate());
