@@ -29,6 +29,17 @@ class MusicFestivalServiceIT {
     @Autowired
     private MusicFestivalPersistence musicFestivalPersistence;
 
+    @ParameterizedTest
+    @MethodSource("stageNameProvider")
+    void testFindDistinctMusicFestivalNamesByStageName(String stageName, List<String> expectedNames) {
+        List<String> festivalNames = this.musicFestivalService
+                .findDistinctMusicFestivalNamesByStageName(stageName)
+                .map(MusicFestival::getName)
+                .toList();
+        assertEquals(festivalNames.stream().distinct().count(), festivalNames.size());
+        assertTrue(festivalNames.containsAll(expectedNames));
+    }
+
     @Test
     void testUpdateBudgets() {
         List<MusicFestivalBudgetUpdating> updatingList = List.of(
@@ -213,6 +224,15 @@ class MusicFestivalServiceIT {
                 Arguments.of(List.of(),"list empty"));
     }
 
+    private static Stream<Arguments> stageNameProvider() {
+        return Stream.of(
+                Arguments.of("MainStage", List.of("SpringFest", "SummerBeat")),
+                Arguments.of("DanceFloor", List.of("AutumnRock")),
+                Arguments.of("ArenaStage", List.of("MegaFestival")),
+                Arguments.of("UnknownStage", List.of())
+        );
+    }
+
     private static Stream<Arguments> stageProvider() {
         Stage stage = new Stage();
         stage.setName("");
@@ -221,4 +241,5 @@ class MusicFestivalServiceIT {
                 Arguments.of(new Stage(),"stage without name"),
                 Arguments.of(stage,"stage with name empty"));
     }
+
 }

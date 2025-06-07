@@ -29,6 +29,13 @@ public class MusicFestivalService {
         this.concertArtistPersistence = concertArtistPersistence;
     }
 
+    public Stream<MusicFestival> findDistinctMusicFestivalNamesByStageName(String stageName) {
+        return this.musicFestivalPersistence.readAll()
+                .filter(festival -> festival.getConcerts().stream()
+                        .anyMatch(concert -> stageName.equals(concert.getStage().getName())))
+                .distinct();
+    }
+
     public void updateBudgets(Stream<MusicFestivalBudgetUpdating> budgetUpdatingList) {
         budgetUpdatingList.map(budgetUpdating -> {
                     MusicFestival festival = this.musicFestivalPersistence.readByName(budgetUpdating.getName());

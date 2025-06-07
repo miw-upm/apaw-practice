@@ -2,6 +2,7 @@ package es.upm.miw.apaw_practice.adapters.rest.music_festival;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.music_festival.Stage;
@@ -73,7 +74,10 @@ class StageResourceIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Stage.class)
-                .value(stage -> assertEquals(expectedCapacity, stage.getCapacity()));
+                .value(stage -> assertEquals(expectedCapacity, stage.getCapacity()))
+                .value(stage -> assertNull(stage.getName()))
+                .value(stage -> assertNull(stage.getOpenTime()))
+                .value(stage -> assertNull(stage.getLocation()));
     }
 
 }
