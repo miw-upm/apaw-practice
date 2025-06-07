@@ -21,6 +21,12 @@ public class Stage {
         this.openTime = openTime;
     }
 
+    public static Stage ofCapacity(Stage stage) {
+        Stage stageDto = new Stage();
+        stageDto.setCapacity(stage.getCapacity());
+        return stageDto;
+    }
+
     public void doDefault() {
         if (Objects.isNull(openTime)) {
             this.openTime = LocalDateTime.now();

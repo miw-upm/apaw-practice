@@ -48,7 +48,7 @@ class MusicFestivalServiceIT {
 
     @ParameterizedTest(name = "update concerts artists missing when {1}")
     @MethodSource("artistsProvider")
-    void testUpdateConcertsArtitsMissing(List<ConcertArtist> artists, String title) {
+    void testUpdateConcertsArtistsMissing(List<ConcertArtist> artists, String title) {
         Concert concert = new Concert();
         concert.setDate(LocalDate.of(2025, 5, 15));
         concert.setTicketPrice(BigDecimal.valueOf(30.0));

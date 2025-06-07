@@ -82,7 +82,7 @@ public class MusicFestivalSeederService {
                 new ConcertEntity(LocalDate.of(2025, 9, 10), BigDecimal.valueOf(65.00), false, stages.get(2), Arrays.asList(artists.get(2), artists.get(4), artists.get(5))),
                 new ConcertEntity(LocalDate.of(2025, 9, 11), BigDecimal.valueOf(66.00), true, stages.get(2), Arrays.asList(artists.get(0), artists.get(2), artists.get(7))),
                 new ConcertEntity(LocalDate.of(2025, 8, 12), BigDecimal.valueOf(62.00), false, stages.get(6), Arrays.asList(artists.get(3), artists.get(5), artists.get(6))),
-                new ConcertEntity(LocalDate.of(2025, 8, 13), BigDecimal.valueOf(64.50), false, stages.get(7), Arrays.asList(artists.get(2), artists.get(4), artists.get(7))),
+                new ConcertEntity(LocalDate.of(2025, 8, 13), BigDecimal.valueOf(64.50), false, stages.get(7), Arrays.asList(artists.get(4), artists.get(7))),
                 new ConcertEntity(LocalDate.of(2025, 8, 14), BigDecimal.valueOf(59.00), true, stages.get(8), Arrays.asList(artists.get(0), artists.get(1), artists.get(7))),
                 new ConcertEntity(LocalDate.of(2025, 7, 22), BigDecimal.valueOf(72.00), false, stages.get(9), Arrays.asList(artists.get(0), artists.get(4), artists.get(7))),
                 new ConcertEntity(LocalDate.of(2025, 7, 23), BigDecimal.valueOf(68.50), false, stages.get(10), Arrays.asList(artists.get(1), artists.get(2), artists.get(5)))
