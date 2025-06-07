@@ -39,6 +39,12 @@ public class MusicFestivalPersistenceMongodb implements MusicFestivalPersistence
     }
 
     @Override
+    public MusicFestival readByName(String name) {
+        return findMusicFestivalEntityByName(name)
+                .toMusicFestival();
+    }
+
+    @Override
     public MusicFestival update(MusicFestival musicFestival) {
         MusicFestivalEntity musicFestivalEntity = findMusicFestivalEntityByName(musicFestival.getName());
         List<ConcertEntity> concertEntities = musicFestival.getConcerts().stream()
@@ -54,12 +60,6 @@ public class MusicFestivalPersistenceMongodb implements MusicFestivalPersistence
                 }).toList();
         musicFestivalEntity.setConcerts(concertEntities);
         return this.musicFestivalRepository.save(musicFestivalEntity).toMusicFestival();
-    }
-
-    @Override
-    public MusicFestival readByName(String name) {
-        return findMusicFestivalEntityByName(name)
-                .toMusicFestival();
     }
 
     @Override

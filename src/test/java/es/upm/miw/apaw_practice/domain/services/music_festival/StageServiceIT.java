@@ -11,6 +11,8 @@ import es.upm.miw.apaw_practice.domain.exceptions.ConflictException;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.music_festival.Stage;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @TestConfig
@@ -48,5 +50,15 @@ class StageServiceIT {
         String name = "MainStage";
         Stage stage = this.stageService.read(name);
         assertEquals(name, stage.getName());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Test,10000",
+            "ElectroBand,31000"
+    })
+    void testFindCapacitySumByConcertArtist(String concertArtistName, int expectedCapacity)  {
+        Stage stage = this.stageService.findCapacitySumByConcertArtist(concertArtistName);
+        assertEquals(expectedCapacity, stage.getCapacity());
     }
 }

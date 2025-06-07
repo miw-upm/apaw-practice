@@ -1,15 +1,18 @@
 package es.upm.miw.apaw_practice.adapters.rest.music_festival;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
 import es.upm.miw.apaw_practice.domain.models.music_festival.Stage;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @RestTestConfig
 class StageResourceIT {
@@ -53,6 +56,24 @@ class StageResourceIT {
                 .uri(StageResource.STAGES + StageResource.NAME_ID, "TestStage1")
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Test,10000",
+            "ElectroBand,31000"
+    })
+    void testFindCapacitySumByConcertArtist(String artist, int expectedCapacity)  {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(StageResource.STAGES + StageResource.SEARCH)
+                                .queryParam("q", "artist:"+artist)
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Stage.class)
+                .value(stage -> assertEquals(expectedCapacity, stage.getCapacity()));
     }
 
 }

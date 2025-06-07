@@ -15,4 +15,5 @@ public interface MusicFestivalPersistence {
     MusicFestival update(MusicFestival musicFestival);
 
     MusicFestival updateBudget(String name, BigDecimal budget);
+
 }
