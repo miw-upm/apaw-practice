@@ -60,5 +60,8 @@ class StageServiceIT {
     void testFindCapacitySumByConcertArtist(String concertArtistName, int expectedCapacity)  {
         Stage stage = this.stageService.findCapacitySumByConcertArtist(concertArtistName);
         assertEquals(expectedCapacity, stage.getCapacity());
+        assertNull(stage.getName());
+        assertNull(stage.getLocation());
+        assertNull(stage.getOpenTime());
     }
 }

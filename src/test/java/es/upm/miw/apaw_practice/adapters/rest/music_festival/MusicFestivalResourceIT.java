@@ -1,6 +1,7 @@
 package es.upm.miw.apaw_practice.adapters.rest.music_festival;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import es.upm.miw.apaw_practice.adapters.rest.RestTestConfig;
@@ -20,6 +21,29 @@ class MusicFestivalResourceIT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Test
+    void testFindDistinctMusicFestivalNamesByStageName() {
+        this.webTestClient
+                .get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(MusicFestivalResource.FESTIVALS + MusicFestivalResource.SEARCH)
+                                .queryParam("q", "stage:MainStage")
+                                .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(MusicFestival.class)
+                .value(festivals -> {
+                    List<String> names = festivals.stream()
+                            .map(MusicFestival::getName)
+                            .toList();
+                    assertTrue(names.contains("SpringFest"));
+                    assertTrue(names.contains("SummerBeat"));
+                    assertEquals(names.stream().distinct().count(), names.size());
+                    assertNull(festivals.get(0).getBudget());
+                    assertNull(festivals.get(0).getCreationDate());
+                });
+    }
 
     @Test
     void testUpdateBudgets() {
@@ -191,7 +215,7 @@ class MusicFestivalResourceIT {
                 .value(festival -> {
                     assertEquals(2, festival.getConcerts().size());
                     List<String> stageNames = festival.getConcerts().stream()
-                            .map(c -> c.getStage().getName())
+                            .map(concert -> concert.getStage().getName())
                             .toList();
                     assertTrue(stageNames.contains("SecondStage"));
                     assertTrue(stageNames.contains("ArenaStage"));
