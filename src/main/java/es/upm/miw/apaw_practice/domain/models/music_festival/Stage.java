@@ -21,6 +21,11 @@ public class Stage {
         this.openTime = openTime;
     }
 
+    public static StageBuilders.Name<Stage> builder() {
+        return new Builder();
+    }
+
+
     public static Stage ofCapacity(Stage stage) {
         Stage stageDto = new Stage();
         stageDto.setCapacity(stage.getCapacity());
@@ -73,5 +78,45 @@ public class Stage {
                 ", capacity=" + capacity +
                 ", openTime=" + openTime +
                 '}';
+    }
+
+    public static class Builder implements StageBuilders.Name<Stage>, StageBuilders.Location<Stage>,
+            StageBuilders.Capacity<Stage>, StageBuilders.Optionals<Stage> {
+        private final Stage stage;
+
+        public Builder() {
+            this.stage = new Stage();
+        }
+
+        @Override
+        public StageBuilders.Location<Stage> name(String name) {
+            this.stage.name = name;
+            return this;
+        }
+
+        @Override
+        public StageBuilders.Capacity<Stage> location(String location) {
+            this.stage.location = location;
+            return this;
+        }
+
+        @Override
+        public StageBuilders.Optionals<Stage> capacity(int capacity) {
+            this.stage.capacity = capacity;
+            return this;
+        }
+
+        @Override
+        public StageBuilders.Optionals<Stage> openTime(LocalDateTime openTime) {
+            this.stage.openTime = openTime;
+            return this;
+        }
+
+        @Override
+        public Stage build() {
+            return this.stage;
+        }
+
+
     }
 }
