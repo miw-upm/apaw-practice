@@ -39,4 +39,15 @@ public class MovieResource {
                 movieService.create(MovieDtoMapper.toDomain(movieDto))
         );
     }
+    @PutMapping("/{title}")
+    public MovieDto update(@PathVariable String title, @RequestBody MovieDto movieDto) {
+        return MovieDtoMapper.toDto(
+                movieService.update(title, MovieDtoMapper.toDomain(movieDto))
+        );
+    }
+
+    @DeleteMapping("/{title}")
+    public void delete(@PathVariable String title) {
+        movieService.delete(title);
+    }
 }
