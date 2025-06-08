@@ -1,11 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.rest.cinema;
 
-import es.upm.miw.apaw_practice.domain.models.cinema.Screening;
+import es.upm.miw.apaw_practice.adapters.rest.cinema.dto.ScreeningDto;
+import es.upm.miw.apaw_practice.adapters.rest.cinema.dto.ScreeningDtoMapper;
 import es.upm.miw.apaw_practice.domain.services.cinema.ScreeningService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cinema/screenings")
@@ -19,17 +21,22 @@ public class ScreeningResource {
     }
 
     @GetMapping
-    public List<Screening> getAll() {
-        return screeningService.findAll();
+    public List<ScreeningDto> getAll() {
+        return screeningService.findAll()
+                .stream()
+                .map(ScreeningDtoMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{screeningTime}")
-    public Screening getByScreeningTime(@PathVariable String screeningTime) {
-        return screeningService.findByScreeningTime(screeningTime);
+    public ScreeningDto getByScreeningTime(@PathVariable String screeningTime) {
+        return ScreeningDtoMapper.toDto(screeningService.findByScreeningTime(screeningTime));
     }
 
     @PostMapping
-    public Screening create(@RequestBody Screening screening) {
-        return screeningService.create(screening);
+    public ScreeningDto create(@RequestBody ScreeningDto screeningDto) {
+        return ScreeningDtoMapper.toDto(
+                screeningService.create(ScreeningDtoMapper.toDomain(screeningDto))
+        );
     }
 }

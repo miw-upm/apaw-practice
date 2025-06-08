@@ -1,11 +1,13 @@
 package es.upm.miw.apaw_practice.adapters.rest.cinema;
 
-import es.upm.miw.apaw_practice.domain.models.cinema.Movie;
+import es.upm.miw.apaw_practice.adapters.rest.cinema.dto.MovieDto;
+import es.upm.miw.apaw_practice.adapters.rest.cinema.dto.MovieDtoMapper;
 import es.upm.miw.apaw_practice.domain.services.cinema.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cinema/movies")
@@ -19,17 +21,22 @@ public class MovieResource {
     }
 
     @GetMapping
-    public List<Movie> getAll() {
-        return movieService.findAll();
+    public List<MovieDto> getAll() {
+        return movieService.findAll()
+                .stream()
+                .map(MovieDtoMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{title}")
-    public Movie getByTitle(@PathVariable String title) {
-        return movieService.findByTitle(title);
+    public MovieDto getByTitle(@PathVariable String title) {
+        return MovieDtoMapper.toDto(movieService.findByTitle(title));
     }
 
     @PostMapping
-    public Movie create(@RequestBody Movie movie) {
-        return movieService.create(movie);
+    public MovieDto create(@RequestBody MovieDto movieDto) {
+        return MovieDtoMapper.toDto(
+                movieService.create(MovieDtoMapper.toDomain(movieDto))
+        );
     }
 }
