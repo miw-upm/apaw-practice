@@ -1,4 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos;
 
-public class MovieRepository {
+public interface MovieRepository {
+    // TODO: Add repository methods
 }

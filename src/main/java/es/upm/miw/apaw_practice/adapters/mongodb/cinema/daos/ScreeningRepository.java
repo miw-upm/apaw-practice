@@ -1,4 +1,5 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos;
 
-public class ScreeningRepository {
+public interface ScreeningRepository {
+    // TODO: Add repository methods
 }
