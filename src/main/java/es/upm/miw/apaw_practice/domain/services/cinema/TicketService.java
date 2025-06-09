@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("ticketServiceCinema")
 public class TicketService {
 
     private final TicketPersistence ticketPersistence;

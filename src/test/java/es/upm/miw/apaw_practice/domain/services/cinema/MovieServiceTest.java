@@ -25,9 +25,10 @@ class MovieServiceTest {
         movie.setTitle(title);
         movie.setDirectorId("d1");
 
-        Director director = new Director.Builder("00000000X")
-                .birthdate(LocalDate.now().minusYears(60))
-                .style("Action")
+        Director director = new Director.Builder()
+                .id("director-1")
+                .name("Nombre")
+                .birthdate("1970-07-30")
                 .build();
         director.setId("d1");
 

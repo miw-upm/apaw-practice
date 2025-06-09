@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Document(collection = "tickets")
 public class TicketEntity {
@@ -15,12 +16,19 @@ public class TicketEntity {
     private String seat;
     private BigDecimal price;
 
+    private LocalDateTime purchaseDate;
+    private Boolean vip;
+    private BigDecimal totalPrice;
+
     public TicketEntity() {}
 
-    public TicketEntity(String screeningId, String seat, BigDecimal price) {
+    public TicketEntity(String screeningId, String seat, BigDecimal price, LocalDateTime purchaseDate, Boolean vip, BigDecimal totalPrice) {
         this.screeningId = screeningId;
         this.seat = seat;
         this.price = price;
+        this.purchaseDate = purchaseDate;
+        this.vip = vip;
+        this.totalPrice = totalPrice;
     }
 
     public static TicketEntity fromTicket(Ticket ticket) {
@@ -41,6 +49,9 @@ public class TicketEntity {
         this.screeningId = ticket.getScreeningId();
         this.seat = ticket.getSeat();
         this.price = ticket.getPrice();
+        this.purchaseDate = ticket.getPurchaseDate();
+        this.vip = ticket.getVip();
+        this.totalPrice = ticket.getTotalPrice();
     }
 
     // Getters y setters
@@ -52,4 +63,10 @@ public class TicketEntity {
     public void setSeat(String seat) { this.seat = seat; }
     public BigDecimal getPrice() { return price; }
     public void setPrice(BigDecimal price) { this.price = price; }
+    public LocalDateTime getPurchaseDate() { return purchaseDate; }
+    public void setPurchaseDate(LocalDateTime purchaseDate) { this.purchaseDate = purchaseDate; }
+    public Boolean getVip() { return vip; }
+    public void setVip(Boolean vip) { this.vip = vip; }
+    public BigDecimal getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(BigDecimal totalPrice) { this.totalPrice = totalPrice; }
 }

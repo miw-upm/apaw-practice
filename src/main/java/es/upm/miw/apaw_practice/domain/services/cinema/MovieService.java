@@ -14,7 +14,7 @@ import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("movieServiceCinema")
 public class MovieService {
 
     private final MoviePersistence moviePersistence;

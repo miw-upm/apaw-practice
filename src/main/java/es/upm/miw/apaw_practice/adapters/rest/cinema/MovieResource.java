@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("movieResourceCinema")
 @RequestMapping(MovieResource.MOVIES)
 public class MovieResource {
     public static final String MOVIES = "/cinema/movies";

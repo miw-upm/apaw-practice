@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.persistence;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.MovieRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.CinemaMovieRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.MovieEntity;
 import es.upm.miw.apaw_practice.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw_practice.domain.models.cinema.Movie;
@@ -15,16 +15,16 @@ import java.util.stream.Collectors;
 @Repository("moviePersistence")
 public class MoviePersistenceMongodb implements MoviePersistence {
 
-    private final MovieRepository movieRepository;
+    private final CinemaMovieRepository cinemaMovieRepository;
 
     @Autowired
-    public MoviePersistenceMongodb(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
+    public MoviePersistenceMongodb(CinemaMovieRepository cinemaMovieRepository) {
+        this.cinemaMovieRepository = cinemaMovieRepository;
     }
 
     @Override
     public List<Movie> findAll() {
-        return this.movieRepository.findAll()
+        return this.cinemaMovieRepository.findAll()
                 .stream()
                 .map(MovieEntity::toMovie)
                 .collect(Collectors.toList());
@@ -32,34 +32,34 @@ public class MoviePersistenceMongodb implements MoviePersistence {
 
     @Override
     public Optional<Movie> findByTitle(String title) {
-        return this.movieRepository.findByTitle(title)
+        return this.cinemaMovieRepository.findByTitle(title)
                 .map(MovieEntity::toMovie);
     }
 
     @Override
     public Optional<Movie> findById(String id) {
-        return this.movieRepository.findById(id)
+        return this.cinemaMovieRepository.findById(id)
                 .map(MovieEntity::toMovie);
     }
 
     @Override
     public Movie create(Movie movie) {
         MovieEntity entity = MovieEntity.fromMovie(movie);
-        return this.movieRepository.save(entity).toMovie();
+        return this.cinemaMovieRepository.save(entity).toMovie();
     }
 
     @Override
     public Movie update(String title, Movie movie) {
-        MovieEntity entity = this.movieRepository.findByTitle(title)
+        MovieEntity entity = this.cinemaMovieRepository.findByTitle(title)
                 .orElseThrow(() -> new NotFoundException("Movie title: " + title));
         entity.updateFromMovie(movie);
-        return this.movieRepository.save(entity).toMovie();
+        return this.cinemaMovieRepository.save(entity).toMovie();
     }
 
     @Override
     public void delete(String title) {
-        MovieEntity entity = this.movieRepository.findByTitle(title)
+        MovieEntity entity = this.cinemaMovieRepository.findByTitle(title)
                 .orElseThrow(() -> new NotFoundException("Movie title: " + title));
-        this.movieRepository.delete(entity);
+        this.cinemaMovieRepository.delete(entity);
     }
 }

@@ -1,6 +1,6 @@
 package es.upm.miw.apaw_practice.adapters.mongodb.cinema.persistence;
 
-import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.TicketRepository;
+import es.upm.miw.apaw_practice.adapters.mongodb.cinema.daos.CinemaTicketRepository;
 import es.upm.miw.apaw_practice.adapters.mongodb.cinema.entities.TicketEntity;
 import es.upm.miw.apaw_practice.domain.models.cinema.Ticket;
 import es.upm.miw.apaw_practice.domain.persistence_ports.cinema.TicketPersistence;
@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Repository("ticketPersistence")
+@Repository("ticketPersistenceCinema")
 public class TicketPersistenceMongodb implements TicketPersistence {
 
-    private final TicketRepository ticketRepository;
+    private final CinemaTicketRepository ticketRepository;
 
     @Autowired
-    public TicketPersistenceMongodb(TicketRepository ticketRepository) {
+    public TicketPersistenceMongodb(CinemaTicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
     }
 

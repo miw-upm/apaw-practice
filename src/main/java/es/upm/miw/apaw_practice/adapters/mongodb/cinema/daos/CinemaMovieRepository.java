@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface MovieRepository extends MongoRepository<MovieEntity, String> {
+public interface CinemaMovieRepository extends MongoRepository<MovieEntity, String> {
     Optional<MovieEntity> findByTitle(String title);
 }

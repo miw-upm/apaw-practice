@@ -36,7 +36,7 @@ public class MovieComposite extends MovieComponent {
         return children.stream().anyMatch(MovieComponent::isThreeDFormat);
     }
 
-    public List<MovieComponent> getChildren() {
-        return children;
+    public int numberOfChildren() {
+        return children.size();
     }
 }

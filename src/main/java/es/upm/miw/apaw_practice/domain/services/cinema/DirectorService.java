@@ -53,7 +53,7 @@ public class DirectorService {
         directorPersistence.delete(dni);
     }
 
-    // Método especial según tus tests:
+    // Método busqueda 1 para lo tests:
     public BigDecimal sumTotalPriceByDirectorDni(String dni) {
         // Suma el precio de los tickets de películas dirigidas por el director con ese dni
         List<Movie> movies = moviePersistence.findAll();
