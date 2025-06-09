@@ -43,7 +43,7 @@ class MovieServiceTest {
         s2.setThreeDFormat(false);
 
         when(moviePersistence.findByTitle(title)).thenReturn(Optional.of(movie));
-        when(directorPersistence.findAll()).thenReturn(List.of(director));
+        when(directorPersistence.findByDni("d1")).thenReturn(Optional.of(director));
         when(screeningPersistence.findAll()).thenReturn(List.of(s1, s2));
 
         MovieService service = new MovieService(moviePersistence, directorPersistence, screeningPersistence);
