@@ -49,8 +49,8 @@ public class ScreeningService {
     public void delete(String id) {
         screeningPersistence.delete(id);
     }
+status
 
-    
     public List<Integer> findAvailableSeatsByDirectorStyle(String style) {
         // 1. Buscar directores con el 'style' dado
         List<Director> directors = directorPersistence.findAll().stream()
