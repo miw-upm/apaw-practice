@@ -1,18 +1,16 @@
 package es.upm.miw.apaw_practice.adapters.rest.cinema;
 
-import es.upm.miw.apaw_practice.adapters.rest.cinema.dto.TicketDto;
-import es.upm.miw.apaw_practice.adapters.rest.cinema.dto.TicketDtoMapper;
 import es.upm.miw.apaw_practice.domain.models.cinema.Ticket;
 import es.upm.miw.apaw_practice.domain.services.cinema.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/cinema/tickets")
+@RequestMapping(TicketResource.TICKETS)
 public class TicketResource {
+    public static final String TICKETS = "/cinema/tickets";
 
     private final TicketService ticketService;
 
@@ -22,22 +20,28 @@ public class TicketResource {
     }
 
     @GetMapping
-    public List<TicketDto> getAll() {
-        return ticketService.findAll()
-                .stream()
-                .map(TicketDtoMapper::toDto)
-                .collect(Collectors.toList());
+    public List<Ticket> findAll() {
+        return this.ticketService.findAll();
     }
 
-    @GetMapping("/{purchaseDate}")
-    public TicketDto getByPurchaseDate(@PathVariable String purchaseDate) {
-        Ticket ticket = ticketService.findByPurchaseDate(purchaseDate);
-        return TicketDtoMapper.toDto(ticket);
+    @GetMapping("/{id}")
+    public Ticket findById(@PathVariable String id) {
+        return this.ticketService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket id: " + id + " not found"));
     }
 
     @PostMapping
-    public TicketDto create(@RequestBody TicketDto ticketDto) {
-        Ticket ticket = TicketDtoMapper.toDomain(ticketDto);
-        return TicketDtoMapper.toDto(ticketService.create(ticket));
+    public Ticket create(@RequestBody Ticket ticket) {
+        return this.ticketService.create(ticket);
+    }
+
+    @PutMapping("/{id}")
+    public Ticket update(@PathVariable String id, @RequestBody Ticket ticket) {
+        return this.ticketService.update(id, ticket);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        this.ticketService.delete(id);
     }
 }

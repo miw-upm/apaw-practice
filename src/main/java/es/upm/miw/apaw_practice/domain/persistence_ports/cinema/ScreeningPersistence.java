@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public interface ScreeningPersistence {
     List<Screening> findAll();
-    Optional<Screening> findByScreeningTime(String screeningTime);
-    Screening save(Screening screening);
-    // Agrega aquí otros métodos según tus necesidades
+    Optional<Screening> findById(String id);
+    Screening create(Screening screening);
+    Screening update(String id, Screening screening);
+    void delete(String id);
 }

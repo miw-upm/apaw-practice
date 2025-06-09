@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public interface TicketPersistence {
     List<Ticket> findAll();
-    Optional<Ticket> findByPurchaseDate(String purchaseDate);
-    Ticket save(Ticket ticket);
-    // Agrega aquí otros métodos según tus necesidades
+    Optional<Ticket> findById(String id);
+    Ticket create(Ticket ticket);
+    Ticket update(String id, Ticket ticket);
+    void delete(String id);
 }

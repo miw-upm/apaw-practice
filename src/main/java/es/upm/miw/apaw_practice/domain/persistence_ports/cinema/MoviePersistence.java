@@ -7,7 +7,14 @@ import java.util.Optional;
 
 public interface MoviePersistence {
     List<Movie> findAll();
+
     Optional<Movie> findByTitle(String title);
-    Movie save(Movie movie);
-    // Agrega aquí otros métodos según tus necesidades
+
+    Optional<Movie> findById(String id); // <-- Añade este método
+
+    Movie create(Movie movie);
+
+    Movie update(String title, Movie movie);
+
+    void delete(String title);
 }

@@ -1,17 +1,16 @@
 package es.upm.miw.apaw_practice.adapters.rest.cinema;
 
-import es.upm.miw.apaw_practice.adapters.rest.cinema.dto.MovieDto;
-import es.upm.miw.apaw_practice.adapters.rest.cinema.dto.MovieDtoMapper;
+import es.upm.miw.apaw_practice.domain.models.cinema.Movie;
 import es.upm.miw.apaw_practice.domain.services.cinema.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/cinema/movies")
+@RequestMapping(MovieResource.MOVIES)
 public class MovieResource {
+    public static final String MOVIES = "/cinema/movies";
 
     private final MovieService movieService;
 
@@ -21,29 +20,23 @@ public class MovieResource {
     }
 
     @GetMapping
-    public List<MovieDto> getAll() {
-        return movieService.findAll()
-                .stream()
-                .map(MovieDtoMapper::toDto)
-                .collect(Collectors.toList());
+    public List<Movie> findAll() {
+        return movieService.findAll();
     }
 
     @GetMapping("/{title}")
-    public MovieDto getByTitle(@PathVariable String title) {
-        return MovieDtoMapper.toDto(movieService.findByTitle(title));
+    public Movie findByTitle(@PathVariable String title) {
+        return movieService.findByTitle(title);
     }
 
     @PostMapping
-    public MovieDto create(@RequestBody MovieDto movieDto) {
-        return MovieDtoMapper.toDto(
-                movieService.create(MovieDtoMapper.toDomain(movieDto))
-        );
+    public Movie create(@RequestBody Movie movie) {
+        return movieService.create(movie);
     }
+
     @PutMapping("/{title}")
-    public MovieDto update(@PathVariable String title, @RequestBody MovieDto movieDto) {
-        return MovieDtoMapper.toDto(
-                movieService.update(title, MovieDtoMapper.toDomain(movieDto))
-        );
+    public Movie update(@PathVariable String title, @RequestBody Movie movie) {
+        return movieService.update(title, movie);
     }
 
     @DeleteMapping("/{title}")

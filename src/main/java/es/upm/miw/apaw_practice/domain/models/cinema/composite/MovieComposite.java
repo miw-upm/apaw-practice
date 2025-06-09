@@ -1,46 +1,42 @@
-package es.upm.miw.apaw_practice.domain.models.cinema.composite;
+package es.upm.miw.apaw_practice.domain.models.cinema;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+// Composite, agrupación de películas
 public class MovieComposite extends MovieComponent {
-    private final List<MovieComponent> children;
+    private final List<MovieComponent> children = new ArrayList<>();
 
-    public MovieComposite() {
-        this.children = new ArrayList<>();
+    @Override
+    public void add(MovieComponent movieComponent) {
+        children.add(movieComponent);
     }
 
     @Override
-    public void add(MovieComponent component) {
-        this.children.add(component);
+    public void remove(MovieComponent movieComponent) {
+        children.remove(movieComponent);
     }
 
     @Override
-    public void remove(MovieComponent component) {
-        this.children.remove(component);
-    }
-
-    @Override
-    public List<MovieComponent> getChildren() {
-        return Collections.unmodifiableList(children);
+    public MovieComponent getChild(int index) {
+        return children.get(index);
     }
 
     @Override
     public String getTitle() {
-        // Ejemplo: devuelve títulos concatenados
         return children.stream()
                 .map(MovieComponent::getTitle)
-                .reduce((a, b) -> a + ", " + b)
+                .reduce((a, b) -> a + " & " + b)
                 .orElse("");
     }
 
     @Override
-    public String getDescription() {
-        // Ejemplo: devuelve descripciones concatenadas
-        return children.stream()
-                .map(MovieComponent::getDescription)
-                .reduce((a, b) -> a + "; " + b)
-                .orElse("");
+    public boolean isThreeDFormat() {
+        // true si al menos una es 3D
+        return children.stream().anyMatch(MovieComponent::isThreeDFormat);
+    }
+
+    public List<MovieComponent> getChildren() {
+        return children;
     }
 }

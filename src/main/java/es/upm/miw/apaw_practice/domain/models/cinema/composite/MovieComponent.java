@@ -1,20 +1,17 @@
-package es.upm.miw.apaw_practice.domain.models.cinema.composite;
+package es.upm.miw.apaw_practice.domain.models.cinema;
 
-import java.util.List;
 
 public abstract class MovieComponent {
-    public void add(MovieComponent component) {
+    public void add(MovieComponent movieComponent) {
         throw new UnsupportedOperationException("Operation not supported");
     }
-
-    public void remove(MovieComponent component) {
+    public void remove(MovieComponent movieComponent) {
         throw new UnsupportedOperationException("Operation not supported");
     }
-
-    public List<MovieComponent> getChildren() {
+    public MovieComponent getChild(int index) {
         throw new UnsupportedOperationException("Operation not supported");
     }
 
     public abstract String getTitle();
-    public abstract String getDescription();
+    public abstract boolean isThreeDFormat();
 }

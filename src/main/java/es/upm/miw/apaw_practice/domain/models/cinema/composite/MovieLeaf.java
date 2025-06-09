@@ -1,21 +1,22 @@
-package es.upm.miw.apaw_practice.domain.models.cinema.composite;
+package es.upm.miw.apaw_practice.domain.models.cinema;
 
-import es.upm.miw.apaw_practice.domain.models.cinema.Movie;
-
+// Hoja, película individual
 public class MovieLeaf extends MovieComponent {
-    private final Movie movie;
+    private final String title;
+    private final boolean threeDFormat;
 
-    public MovieLeaf(Movie movie) {
-        this.movie = movie;
+    public MovieLeaf(String title, boolean threeDFormat) {
+        this.title = title;
+        this.threeDFormat = threeDFormat;
     }
 
     @Override
     public String getTitle() {
-        return movie.getTitle();
+        return title;
     }
 
     @Override
-    public String getDescription() {
-        return movie.getDescription();
+    public boolean isThreeDFormat() {
+        return threeDFormat;
     }
 }

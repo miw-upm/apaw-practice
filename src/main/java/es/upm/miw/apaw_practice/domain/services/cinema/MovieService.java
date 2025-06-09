@@ -1,88 +1,81 @@
 package es.upm.miw.apaw_practice.domain.services.cinema;
 
 import es.upm.miw.apaw_practice.domain.models.cinema.Movie;
+import es.upm.miw.apaw_practice.domain.models.cinema.Director;
+import es.upm.miw.apaw_practice.domain.models.cinema.Screening;
 import es.upm.miw.apaw_practice.domain.persistence_ports.cinema.MoviePersistence;
+import es.upm.miw.apaw_practice.domain.persistence_ports.cinema.DirectorPersistence;
+import es.upm.miw.apaw_practice.domain.persistence_ports.cinema.ScreeningPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class MovieService {
 
     private final MoviePersistence moviePersistence;
+    private final DirectorPersistence directorPersistence;
+    private final ScreeningPersistence screeningPersistence;
 
     @Autowired
-    public MovieService(MoviePersistence moviePersistence) {
+    public MovieService(MoviePersistence moviePersistence,
+                        DirectorPersistence directorPersistence,
+                        ScreeningPersistence screeningPersistence) {
         this.moviePersistence = moviePersistence;
+        this.directorPersistence = directorPersistence;
+        this.screeningPersistence = screeningPersistence;
     }
 
-    /**
-     * List all movies.
-     */
+    // Métodos CRUD estándar:
     public List<Movie> findAll() {
         return moviePersistence.findAll();
     }
 
-    /**
-     * Find a movie by its title.
-     * @throws NotFoundException if movie is not found
-     */
     public Movie findByTitle(String title) {
-        return moviePersistence.findByTitle(title)
-                .orElseThrow(() -> new NotFoundException("Movie not found: " + title));
+        return moviePersistence.findByTitle(title).orElse(null);
     }
 
-    /**
-     * Create a new movie.
-     */
     public Movie create(Movie movie) {
-        return moviePersistence.save(movie);
+        return moviePersistence.create(movie);
     }
 
-    /**
-     * Update all fields of a movie except its title.
-     * @throws NotFoundException if movie is not found
-     */
-    public Movie update(String title, Movie newMovie) {
-        Movie movie = this.findByTitle(title);
-        // No actualices el título ya que es el identificador natural
-        if (newMovie.getReleaseDate() != null) {
-            movie.setReleaseDate(newMovie.getReleaseDate());
-        }
-        if (newMovie.getDescription() != null) {
-            movie.setDescription(newMovie.getDescription());
-        }
-        // ...otros campos si los tienes
-        return moviePersistence.save(movie);
+    public Movie update(String title, Movie movie) {
+        return moviePersistence.update(title, movie);
     }
 
-    /**
-     * Delete a movie by its title.
-     * @throws NotFoundException if movie is not found
-     */
     public void delete(String title) {
-        Movie movie = this.findByTitle(title);
-        moviePersistence.delete(movie);
+        moviePersistence.delete(title);
     }
 
-    /**
-     * Update selected fields of a movie (PATCH).
-     * @throws NotFoundException if movie is not found
-     */
-    public Movie updatePartial(String title, Map<String, Object> updates) {
-        Movie movie = this.findByTitle(title);
-        updates.forEach((key, value) -> {
-            switch (key) {
-                case "description":
-                    if (value != null) movie.setDescription((String) value);
-                    break;
-                // otros campos aquí
-                default:
-                    throw new IllegalArgumentException("Unknown field for patch: " + key);
-            }
-        });
-        return moviePersistence.save(movie);
+    // Búsqueda 2: Dado el title de una Movie, obtener el número de screenings en 3D donde el Director es mayor de 50 años
+    public int count3DScreeningsByMovieWithDirectorOver50(String title) {
+        // 1. Buscar la película por título
+        Movie movie = moviePersistence.findByTitle(title).orElse(null);
+        if (movie == null) {
+            return 0;
+        }
+
+        // 2. Buscar el director y calcular la edad
+        Optional<Director> directorOpt = directorPersistence.findByDni(movie.getDirectorId());
+        if (directorOpt.isEmpty()) {
+            return 0;
+        }
+        Director director = directorOpt.get();
+        LocalDate birthdate = LocalDate.parse(director.getBirthdate());
+        if (Period.between(birthdate, LocalDate.now()).getYears() <= 50) {
+            return 0;
+        }
+
+        // 3. Contar screenings en 3D de esa película
+        List<Screening> screenings = screeningPersistence.findAll();
+        // Asegúrate de comparar el id de la película (o el campo correcto según tu modelo)
+        return (int) screenings.stream()
+                .filter(s -> s.getMovieId().equals(movie.getId()))
+                .filter(Screening::getThreeDFormat)
+                .count();
     }
 }

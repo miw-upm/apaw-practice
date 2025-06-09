@@ -7,4 +7,7 @@ public class NotFoundException extends RuntimeException {
         super(DESCRIPTION + ". " + detail);
     }
 
+    public NotFoundException() {
+        super(DESCRIPTION);
+    }
 }

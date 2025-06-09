@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface DirectorPersistence {
     List<Director> findAll();
     Optional<Director> findByDni(String dni);
-    Director save(Director director);
-    // Agrega aquí otros métodos según tus necesidades
+    Optional<Director> findById(String id); // <-- Añade esto
+    Director create(Director director);
+    Director update(String dni, Director director);
+    void delete(String dni);
 }

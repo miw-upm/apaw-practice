@@ -21,12 +21,19 @@ public class ScreeningService {
         return screeningPersistence.findAll();
     }
 
-    public Screening findByScreeningTime(String screeningTime) {
-        return screeningPersistence.findByScreeningTime(screeningTime)
-                .orElseThrow(() -> new RuntimeException("Screening not found: " + screeningTime));
+    public Screening findById(String id) {
+        return screeningPersistence.findById(id).orElse(null);
     }
 
     public Screening create(Screening screening) {
-        return screeningPersistence.save(screening);
+        return screeningPersistence.create(screening);
+    }
+
+    public Screening update(String id, Screening screening) {
+        return screeningPersistence.update(id, screening);
+    }
+
+    public void delete(String id) {
+        screeningPersistence.delete(id);
     }
 }

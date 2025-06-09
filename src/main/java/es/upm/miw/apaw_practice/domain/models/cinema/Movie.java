@@ -1,64 +1,30 @@
 package es.upm.miw.apaw_practice.domain.models.cinema;
 
-import java.time.LocalDate;
-import java.util.List;
-
 public class Movie {
+    private String id; // único
     private String title;
-    private LocalDate releaseDate;
+    private String releaseDate; // formato ISO
     private String description;
-    private List<Screening> screenings;
-    private Director director;
+    private String directorId;
 
-    public Movie() {
-        // Default constructor
-    }
+    public Movie() {}
 
-    public Movie(String title, LocalDate releaseDate, String description, List<Screening> screenings, Director director) {
+    public Movie(String id, String title, String releaseDate, String description, String directorId) {
+        this.id = id;
         this.title = title;
         this.releaseDate = releaseDate;
         this.description = description;
-        this.screenings = screenings;
-        this.director = director;
+        this.directorId = directorId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(LocalDate releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Screening> getScreenings() {
-        return screenings;
-    }
-
-    public void setScreenings(List<Screening> screenings) {
-        this.screenings = screenings;
-    }
-
-    public Director getDirector() {
-        return director;
-    }
-
-    public void setDirector(Director director) {
-        this.director = director;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public String getReleaseDate() { return releaseDate; }
+    public void setReleaseDate(String releaseDate) { this.releaseDate = releaseDate; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    public String getDirectorId() { return directorId; }
+    public void setDirectorId(String directorId) { this.directorId = directorId; }
 }
