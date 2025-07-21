@@ -2,28 +2,44 @@ name: CI
 on:
   push:
     branches:
-      - curso25
+      - develop
+      - release-*
 
 jobs:
   devops:
-    name: Test - Unit & Integration & SonarCloud Scan & Slack WebHook
-    runs-on: ubuntu-22.04 # macos-latest macos-11 windows-2019 ubuntu-20.04
+    name: Tests & CodeQL & SonarCloud
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+
     steps:
-      - name: Checkout repository
+      - name: ⬇️ Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Java
+      - name: ☕ Set up Java
         uses: actions/setup-java@v4
         with:
-          distribution: zulu
+          distribution: temurin
           java-version: 21
+          cache: maven
 
-      - name: Build & Unit & IT & FT
-        run: mvn -B clean verify
+      - name: 🏷️ Extract artifact from pom
+        run: echo "ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)" >> $GITHUB_ENV
 
-      - name: Notify Slack on failure
+      - name: 🛡️ Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: java
+          queries: security-extended
+
+      - name: ✅ Run Unit & Integration Test & Functional Test
+        run: mvn -B verify
+
+      - name: 🔔 Notify Slack on failure
         if: failure()
         uses: 8398a7/action-slack@v3
         with:
@@ -32,14 +48,17 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Sonar
-        if: success() # always() failure() success()
+      - name: 🔍 CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:java"
+
+      - name: 📊 Sonar Analysis
+        run: >
+          mvn -B sonar:sonar 
+          -Dsonar.projectKey=miw-upm-github_${{ env.ARTIFACT }}
+          -Dsonar.organization=miw-upm-github 
+          -Dsonar.host.url=https://sonarcloud.io 
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: >
-          mvn -B verify -DskipTests sonar:sonar
-          -Dsonar.projectKey=es.upm.miw:apaw-practice
-          -Dsonar.organization=miw-upm-github
-          -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.login=$SONAR_TOKEN
