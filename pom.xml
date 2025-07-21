@@ -53,6 +53,8 @@
         <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
         <!-- coverage report -->
         <jacoco.version>0.8.13</jacoco.version>
+        <!-- Official Plugin Sonar -->
+        <sonar-maven-plugin-version>5.1.0.4751</sonar-maven-plugin-version>
         <!-- mongodb -->
         <de.flapdoodle.embed.mongo.spring3x.version>4.20.0</de.flapdoodle.embed.mongo.spring3x.version>
         <!-- OpenAPI -->
@@ -115,7 +117,21 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
+            <!-- sonar plugin -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar-maven-plugin-version}</version>
+            </plugin>
+            <!-- coverage report -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
