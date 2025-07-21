@@ -174,7 +174,7 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>**/*FunctionalTest.java</include>
+                                <include>**/*FT.java</include>
                             </includes>
                         </configuration>
                     </execution>

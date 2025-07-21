@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class TagEntityResourceFunctionalTest {
+class TagEntityResourceFT {
 
     @LocalServerPort
     private int port;
