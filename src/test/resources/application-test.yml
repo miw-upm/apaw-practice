@@ -6,4 +6,4 @@ de:
   flapdoodle:
     mongodb:
       embedded:
-        version: 5.0.14
+        version: 7.0.16
