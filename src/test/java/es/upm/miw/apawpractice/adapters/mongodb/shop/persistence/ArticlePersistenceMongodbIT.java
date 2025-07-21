@@ -35,8 +35,8 @@ class ArticlePersistenceMongodbIT {
 
     @Test
     void testCreateAndRead() {
-        Article article =
-                new Article("6661001", "art per", new BigDecimal("3.00"), "prov per");
+        Article article = Article.builder().barcode("6661001").summary("art per").price(new BigDecimal("3.00"))
+                .provider("prov per").build();
         this.articlePersistence.create(article);
         Article articleBD = this.articlePersistence.read("6661001");
         assertEquals("art per", articleBD.getSummary());
@@ -46,8 +46,8 @@ class ArticlePersistenceMongodbIT {
 
     @Test
     void testCreateAndUpdate() {
-        Article articleCreation =
-                new Article("6661002", "art per", new BigDecimal("3.00"), "prov per");
+        Article articleCreation = Article.builder().barcode("6661002").summary("art per")
+                .price(new BigDecimal("3.00")).provider("prov per").build();
         Article articleBD = this.articlePersistence.create(articleCreation);
         articleBD.setPrice(BigDecimal.TEN);
         this.articlePersistence.update("6661002", articleBD);

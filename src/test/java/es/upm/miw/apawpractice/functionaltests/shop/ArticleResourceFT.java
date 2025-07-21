@@ -40,7 +40,7 @@ class ArticleResourceFT {
 
     @Test
     void testCreate() {
-        Article article = new Article("666004", "art rest", new BigDecimal("3.00"), null);
+        Article article = Article.builder().barcode("666004").summary("art rest").price(new BigDecimal("3.00")).build();
         HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
         ResponseEntity<Article> response = restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, Article.class);
 
@@ -50,8 +50,7 @@ class ArticleResourceFT {
 
     @Test
     void testCreateConflict() {
-        Article article =
-                new Article("84001", "repeated", new BigDecimal("3.00"), null);
+        Article article = Article.builder().barcode("84001").summary("repeated").price(new BigDecimal("3.00")).build();
         HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
         ResponseEntity<String> response = restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);

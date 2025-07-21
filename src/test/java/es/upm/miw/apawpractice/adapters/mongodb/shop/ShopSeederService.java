@@ -29,11 +29,11 @@ public class ShopSeederService {
     public void seedDatabase() {
         LogManager.getLogger(this.getClass()).warn("------- Shop Initial Load -----------");
         ArticleEntity[] articles = {
-                new ArticleEntity(new Article("84001", "art 001", new BigDecimal("1.23"), "prov 1")),
-                new ArticleEntity(new Article("84002", "art 002", new BigDecimal("0.27"), "prov 2")),
-                new ArticleEntity(new Article("84003", "art 003", new BigDecimal("12.13"), "prov 3")),
-                new ArticleEntity(new Article("84004", "art 004", new BigDecimal("4.00"), "prov 4")),
-                new ArticleEntity(new Article("84005", "art 005", new BigDecimal("0.45"), "prov 5"))
+                ArticleEntity.builder().barcode("84001").summary("art 001").price(new BigDecimal("1.23")).provider("prov 1").build(),
+                ArticleEntity.builder().barcode("84002").summary("art 002").price(new BigDecimal("0.27")).provider("prov 2").build(),
+                ArticleEntity.builder().barcode("84003").summary("art 003").price(new BigDecimal("12.13")).provider("prov 3").build(),
+                ArticleEntity.builder().barcode("84004").summary("art 004").price(new BigDecimal("4.00")).provider("prov 4").build(),
+                ArticleEntity.builder().barcode("84005").summary("art 005").price(new BigDecimal("0.45")).provider("prov 5").build()
         };
         this.articleRepository.saveAll(Arrays.asList(articles));
         TagEntity[] tags = {

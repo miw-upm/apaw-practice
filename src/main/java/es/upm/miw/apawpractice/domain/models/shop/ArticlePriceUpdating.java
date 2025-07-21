@@ -1,42 +1,17 @@
 package es.upm.miw.apawpractice.domain.models.shop;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ArticlePriceUpdating {
-
     private String barcode;
     private BigDecimal price;
-
-    public ArticlePriceUpdating() {
-        //empty for framework
-    }
-
-    public ArticlePriceUpdating(String barcode, BigDecimal price) {
-        this.barcode = barcode;
-        this.price = price;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "ArticlePriceUpdating{" +
-                "barcode=" + barcode +
-                ", price=" + price +
-                '}';
-    }
 }

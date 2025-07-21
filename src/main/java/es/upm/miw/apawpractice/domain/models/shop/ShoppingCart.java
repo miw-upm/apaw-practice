@@ -1,18 +1,24 @@
 package es.upm.miw.apawpractice.domain.models.shop;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShoppingCart {
     private String id;
     private LocalDateTime creationDate;
-    private List<ArticleItem> articleItems;
+    private List<ArticleItem> articleItems = new ArrayList<>();
     private String user;
     private String address;
-
-    public ShoppingCart() {
-        //empty from framework
-    }
 
     public static ShoppingCart ofIdUser(ShoppingCart shoppingCart) {
         ShoppingCart shoppingCartDto = new ShoppingCart();
@@ -21,64 +27,4 @@ public class ShoppingCart {
         return shoppingCartDto;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public List<ArticleItem> getArticleItems() {
-        return articleItems;
-    }
-
-    public void setArticleItems(List<ArticleItem> articleItems) {
-        this.articleItems = articleItems;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @Override
-    public int hashCode() {
-        return this.id.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return this == obj || obj != null && getClass() == obj.getClass() && (id.equals(((ShoppingCart) obj).id));
-    }
-
-    @Override
-    public String toString() {
-        return "ShoppingCartEntity{" +
-                "id='" + id + '\'' +
-                ", creationDate=" + creationDate +
-                ", articleItems=" + articleItems +
-                ", user='" + user + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }

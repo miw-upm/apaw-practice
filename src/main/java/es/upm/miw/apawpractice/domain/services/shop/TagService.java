@@ -39,7 +39,7 @@ public class TagService {
                 .map(ArticleItem::getArticle)
                 .map(Article::getBarcode)
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
         return this.tagPersistence.readAll()
                 .filter(tag -> tag.getArticles().stream()
                         .map(Article::getBarcode)

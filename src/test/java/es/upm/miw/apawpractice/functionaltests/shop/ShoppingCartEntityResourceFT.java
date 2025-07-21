@@ -43,8 +43,10 @@ class ShoppingCartEntityResourceFT {
     @Test
     void testUpdate() {
         String url = this.baseUrl + ShoppingCartResource.ID_ID + ShoppingCartResource.ARTICLE_ITEMS;
-        Article article1 = new Article("84002", "art 002", new BigDecimal("0.27"), "prov 2");
-        Article article2 = new Article("84003", "art 003", new BigDecimal("12.13"), "prov 3");
+        Article article1 = Article.builder().barcode("84002").summary("art 002").price(new BigDecimal("0.27"))
+                .provider("prov 2").build();
+        Article article2 = Article.builder().barcode("84003").summary("art 003").price(new BigDecimal("12.13"))
+                .provider("prov 3").build();
         List<ArticleItem> articleItemArray = Arrays.asList(
                 new ArticleItem(article1, 2, BigDecimal.ONE),
                 new ArticleItem(article2, 3, BigDecimal.TEN)
