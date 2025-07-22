@@ -14,9 +14,6 @@ import java.util.stream.Stream;
 @RequestMapping(ArticleResource.ARTICLES)
 public class ArticleResource {
     public static final String ARTICLES = "/shop/articles";
-
-    public static final String SEARCH = "/search";
-
     private final ArticleService articleService;
 
     @Autowired
@@ -35,7 +32,7 @@ public class ArticleResource {
         this.articleService.updatePrices(articlePriceUpdatingList.stream());
     }
 
-    @GetMapping(SEARCH)
+    @GetMapping
     public Stream<Article> findByProviderAndPriceGreaterThan(@RequestParam String provider, @RequestParam BigDecimal price) {
         return this.articleService.findByProviderAndPriceGreaterThan(provider, price);
     }

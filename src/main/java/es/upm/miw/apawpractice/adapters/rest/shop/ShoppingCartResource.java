@@ -17,7 +17,6 @@ public class ShoppingCartResource {
 
     public static final String ID_ID = "/{id}";
     public static final String ARTICLE_ITEMS = "/article-items";
-    public static final String SEARCH = "/search";
 
     private final ShoppingCartService shoppingCartService;
 
@@ -31,7 +30,7 @@ public class ShoppingCartResource {
         return this.shoppingCartService.updateArticleItems(id, articleItemList);
     }
 
-    @GetMapping(SEARCH)
+    @GetMapping
     public Stream<ShoppingCart> findByPriceGreaterThan(@RequestParam BigDecimal price) {
         return this.shoppingCartService.findByPriceGreaterThan(price)
                 .map(ShoppingCart::ofIdUser);

@@ -80,7 +80,7 @@ class ArticleResourceFT {
 
     @Test
     void testSearchByProviderAndPriceGreaterThan() {
-        String url = this.baseUrl + ArticleResource.SEARCH + "?provider={provider}&price={price}";
+        String url = this.baseUrl + "?provider={provider}&price={price}";
         ResponseEntity<Article[]> response = restTemplate.getForEntity(url, Article[].class, "prov 1", "1.02");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -92,7 +92,7 @@ class ArticleResourceFT {
 
     @Test
     void testSearchByProviderAndPriceGreaterThanBadRequest() {
-        String url = baseUrl + ArticleResource.SEARCH + "?provider={provider}";
+        String url = baseUrl + "?provider={provider}";
         ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class, "prov 1");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);

@@ -60,7 +60,7 @@ class ShoppingCartEntityResourceFT {
 
     @Test
     void testFindByPriceGreaterThan() {
-        String url = this.baseUrl + ShoppingCartResource.SEARCH + "?price={price}";
+        String url = this.baseUrl + "?price={price}";
 
         ResponseEntity<ShoppingCart[]> response = restTemplate.getForEntity(url, ShoppingCart[].class, 5.0);
 
