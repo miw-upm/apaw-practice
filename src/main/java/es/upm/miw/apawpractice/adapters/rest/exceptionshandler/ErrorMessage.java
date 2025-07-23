@@ -1,5 +1,10 @@
 package es.upm.miw.apawpractice.adapters.rest.exceptionshandler;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
 public class ErrorMessage {
 
     private final String error;
@@ -11,19 +16,4 @@ public class ErrorMessage {
         this.message = exception.getMessage();
     }
 
-    public String getError() {
-        return error;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    @Override
-    public String toString() {
-        return "ErrorMessage{" +
-                "error='" + error + '\'' +
-                ", message='" + message + '\'' +
-                '}';
-    }
 }

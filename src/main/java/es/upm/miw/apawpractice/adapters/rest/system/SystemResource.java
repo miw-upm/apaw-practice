@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping(SystemResource.SYSTEM)
 public class SystemResource {
@@ -53,13 +55,17 @@ public class SystemResource {
                 middleLabel, label, middleLabel, label, middleValue, value, middleValue, value);
     }
 
+    @GetMapping(value = APP_INFO)
+    public String applicationInfo() {
+        return """
+                {"version":"%s::%s::%s"} (%s)
+                """.formatted(this.artifact, this.version, this.build, LocalDateTime.now());
+    }
+
     @GetMapping(value = VERSION_BADGE, produces = {"image/svg+xml"})
-    public byte[] generateBadge() { // http://localhost:8080/system/badge
+    public byte[] generateBadge() {
         return this.generateBadge("Render", "v" + version).getBytes();
     }
 
-    @GetMapping(value = APP_INFO)
-    public AppInfoDto applicationInfo() {
-        return new AppInfoDto(this.artifact, this.version, this.build, this.profile);
-    }
+
 }
