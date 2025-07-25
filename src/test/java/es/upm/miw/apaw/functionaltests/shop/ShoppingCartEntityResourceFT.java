@@ -68,7 +68,7 @@ class ShoppingCartEntityResourceFT {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotEmpty();
         assertTrue(Arrays.stream(response.getBody())
-                .anyMatch(item -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005").equals(item.getUser().getId())));
+                .anyMatch(item -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001").equals(item.getUser().getId())));
         assertTrue(response.getBody().length > 0);
     }
 }

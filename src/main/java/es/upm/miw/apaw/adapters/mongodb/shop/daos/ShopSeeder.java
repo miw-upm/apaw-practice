@@ -1,33 +1,38 @@
-package es.upm.miw.apaw.adapters.mongodb.shop;
+package es.upm.miw.apaw.adapters.mongodb.shop.daos;
 
-import es.upm.miw.apaw.adapters.mongodb.shop.daos.ArticleRepository;
-import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShoppingCartRepository;
-import es.upm.miw.apaw.adapters.mongodb.shop.daos.TagRepository;
 import es.upm.miw.apaw.adapters.mongodb.shop.entities.ArticleEntity;
 import es.upm.miw.apaw.adapters.mongodb.shop.entities.ArticleItemEntity;
 import es.upm.miw.apaw.adapters.mongodb.shop.entities.ShoppingCartEntity;
 import es.upm.miw.apaw.adapters.mongodb.shop.entities.TagEntity;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@Service
-public class ShopSeederService {
+@Repository
+@Profile({"dev", "test"})
+@Log4j2
+public class ShopSeeder {
+
+    private final ArticleRepository articleRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
+    private final TagRepository tagRepository;
 
     @Autowired
-    private ArticleRepository articleRepository;
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
-    @Autowired
-    private TagRepository tagRepository;
+    public ShopSeeder(ArticleRepository articleRepository, TagRepository tagRepository, ShoppingCartRepository shoppingCartRepository) {
+        this.articleRepository = articleRepository;
+        this.tagRepository = tagRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
+    }
 
     public void seedDatabase() {
-        LogManager.getLogger(this.getClass()).warn("------- Shop Initial Load -----------");
+        log.warn("------- Shop Initial Load -----------");
         ArticleEntity[] articles = {
                 ArticleEntity.builder().barcode("84001").summary("art 001").price(new BigDecimal("1.23")).provider("prov 1").build(),
                 ArticleEntity.builder().barcode("84002").summary("art 002").price(new BigDecimal("0.27")).provider("prov 2").build(),
@@ -50,10 +55,11 @@ public class ShopSeederService {
                 new ArticleItemEntity(articles[2], 4, BigDecimal.ONE)
         };
         ShoppingCartEntity[] carts = {
-                new ShoppingCartEntity(Arrays.asList(articleItems[0], articleItems[1]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"), "address 1"),
-                new ShoppingCartEntity(Arrays.asList(articleItems[2], articleItems[3]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"), "address 2")
+                new ShoppingCartEntity(Arrays.asList(articleItems[0], articleItems[1]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"), "address 1"),
+                new ShoppingCartEntity(Arrays.asList(articleItems[2], articleItems[3]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"), "address 2")
         };
         this.shoppingCartRepository.saveAll(Arrays.asList(carts));
+        log.warn("        ------- shop");
     }
 
     public void deleteAll() {
