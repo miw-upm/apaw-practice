@@ -6,7 +6,7 @@ on:
       - release-*
 
 jobs:
-  devops:
+  ci:
     name: Tests & CodeQL & SonarCloud
     runs-on: ubuntu-22.04
     permissions:
@@ -36,7 +36,7 @@ jobs:
           languages: java
           queries: security-extended
 
-      - name: ✅ Run Unit & Integration Test & Functional Test
+      - name: ✅ Run Unit Test & Integration Test & Functional Test
         run: mvn -B verify
 
       - name: 🔔 Notify Slack on failure
