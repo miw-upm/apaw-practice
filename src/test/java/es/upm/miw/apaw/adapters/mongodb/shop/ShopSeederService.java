@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ShopSeederService {
@@ -49,8 +50,8 @@ public class ShopSeederService {
                 new ArticleItemEntity(articles[2], 4, BigDecimal.ONE)
         };
         ShoppingCartEntity[] carts = {
-                new ShoppingCartEntity(Arrays.asList(articleItems[0], articleItems[1]), "user1", "address 1"),
-                new ShoppingCartEntity(Arrays.asList(articleItems[2], articleItems[3]), "user2", "address 2")
+                new ShoppingCartEntity(Arrays.asList(articleItems[0], articleItems[1]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"), "address 1"),
+                new ShoppingCartEntity(Arrays.asList(articleItems[2], articleItems[3]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"), "address 2")
         };
         this.shoppingCartRepository.saveAll(Arrays.asList(carts));
     }

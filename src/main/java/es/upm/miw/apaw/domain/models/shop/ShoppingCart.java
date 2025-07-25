@@ -17,7 +17,7 @@ public class ShoppingCart {
     private String id;
     private LocalDateTime creationDate;
     private List<ArticleItem> articleItems = new ArrayList<>();
-    private String user;
+    private UserDto user;
     private String address;
 
     public static ShoppingCart ofIdUser(ShoppingCart shoppingCart) {

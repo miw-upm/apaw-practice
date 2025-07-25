@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +29,7 @@ class ShoppingCartPersistenceMongodbIT {
     @Test
     void testReadById() {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> "user1" .equals(cart.getUser()))
+                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004").equals(cart.getUser().getId()))
                 .findFirst();
         assertTrue(shoppingCart.isPresent());
         assertNotNull(shoppingCart.get().getId());
@@ -38,7 +39,7 @@ class ShoppingCartPersistenceMongodbIT {
     @Test
     void testUpdate() {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> "user1" .equals(cart.getUser()))
+                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004").equals(cart.getUser().getId()))
                 .findFirst();
         assertTrue(shoppingCart.isPresent());
         Article article = Article.builder().barcode("84003").summary("art 003").price(new BigDecimal("12.13"))
@@ -46,7 +47,7 @@ class ShoppingCartPersistenceMongodbIT {
         shoppingCart.get().setArticleItems(List.of(new ArticleItem(article, 3, BigDecimal.ZERO)));
         this.shoppingCartPersistenceMongodb.update(shoppingCart.get());
         Optional<ShoppingCart> newShoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> "user1" .equals(cart.getUser()))
+                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004").equals(cart.getUser().getId()))
                 .findFirst();
         assertTrue(newShoppingCart.isPresent());
         assertEquals(shoppingCart.get().getCreationDate(), newShoppingCart.get().getCreationDate());

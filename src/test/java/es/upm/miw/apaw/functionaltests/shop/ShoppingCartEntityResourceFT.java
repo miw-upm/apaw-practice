@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -67,7 +68,7 @@ class ShoppingCartEntityResourceFT {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotEmpty();
         assertTrue(Arrays.stream(response.getBody())
-                .anyMatch(item -> "user2" .equals(item.getUser())));
+                .anyMatch(item -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005").equals(item.getUser().getId())));
         assertTrue(response.getBody().length > 0);
     }
 }

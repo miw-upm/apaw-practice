@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.shop.entities;
 
 import es.upm.miw.apaw.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw.domain.models.shop.ShoppingCart;
+import es.upm.miw.apaw.domain.models.shop.UserDto;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -23,10 +24,10 @@ public class ShoppingCartEntity {
     private String id;
     private LocalDateTime creationDate;
     private List<ArticleItemEntity> articleItemEntities;
-    private String user;
+    private UUID user;
     private String address;
 
-    public ShoppingCartEntity(List<ArticleItemEntity> articleItemEntities, String user, String address) {
+    public ShoppingCartEntity(List<ArticleItemEntity> articleItemEntities, UUID user, String address) {
         this.id = UUID.randomUUID().toString();
         this.creationDate = LocalDateTime.now();
         this.articleItemEntities = articleItemEntities;
@@ -36,7 +37,8 @@ public class ShoppingCartEntity {
 
     public ShoppingCart toShoppingCart() {
         ShoppingCart shoppingCart = new ShoppingCart();
-        BeanUtils.copyProperties(this, shoppingCart, "articleItemEntities");
+        BeanUtils.copyProperties(this, shoppingCart, "user", "articleItemEntities");
+        shoppingCart.setUser(UserDto.builder().id(user).build());
         List<ArticleItem> articleItems = this.articleItemEntities.stream()
                 .map(ArticleItemEntity::toArticleItem)
                 .toList();
