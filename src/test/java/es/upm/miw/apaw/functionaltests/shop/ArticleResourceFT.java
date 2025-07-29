@@ -49,7 +49,7 @@ class ArticleResourceFT {
     }
 
     @Test
-    void testCreateConflict() {
+    void testCreateBarcodeConflict() {
         Article article = Article.builder().barcode("84001").summary("repeated").price(new BigDecimal("3.00")).build();
         HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
         ResponseEntity<String> response = restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, String.class);
@@ -57,15 +57,25 @@ class ArticleResourceFT {
     }
 
     @Test
-    void testUpdatePrices() {
-        List<ArticlePriceUpdating> articlePriceUpdatingList = Arrays.asList(
-                new ArticlePriceUpdating("84001", new BigDecimal("1.23")),
-                new ArticlePriceUpdating("84002", new BigDecimal("0.27"))
-        );
-        HttpEntity<List<ArticlePriceUpdating>> request = new HttpEntity<>(articlePriceUpdatingList, this.headers);
+    void testCreateBadRequest() {
+        Article article = Article.builder().barcode("84001").summary("repeated").build();
+        HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
+        ResponseEntity<String> response = restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 
-        ResponseEntity<Void> response = restTemplate.exchange(baseUrl, HttpMethod.PATCH, request, Void.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    @Test
+    void testUpdatePrices() {
+        Article article = Article.builder().barcode("666005").summary("art rest").price(new BigDecimal("3.00")).build();
+        HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
+        restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, Article.class);
+        List<ArticlePriceUpdating> articlePriceUpdatingList = List.of(
+                new ArticlePriceUpdating("666005", new BigDecimal("3.33"))
+        );
+        HttpEntity<List<ArticlePriceUpdating>> request2 = new HttpEntity<>(articlePriceUpdatingList, this.headers);
+
+        ResponseEntity<Article> response2 = restTemplate.exchange(baseUrl, HttpMethod.PATCH, request2, Article.class);
+        assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test

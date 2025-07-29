@@ -21,24 +21,23 @@ import java.util.UUID;
 public class ShoppingCartEntity {
     @EqualsAndHashCode.Include
     @Id
-    private String id;
+    private UUID id;
     private LocalDateTime creationDate;
     private List<ArticleItemEntity> articleItemEntities;
-    private UUID user;
-    private String address;
+    private UUID userId;
 
-    public ShoppingCartEntity(List<ArticleItemEntity> articleItemEntities, UUID user, String address) {
-        this.id = UUID.randomUUID().toString();
-        this.creationDate = LocalDateTime.now();
-        this.articleItemEntities = articleItemEntities;
-        this.user = user;
-        this.address = address;
+    public ShoppingCartEntity(ShoppingCart shoppingCart) {
+        BeanUtils.copyProperties(shoppingCart, this, "user", "articleItem");
+        this.userId = shoppingCart.getUser().getId();
+        this.articleItemEntities = shoppingCart.getArticleItems().stream()
+                .map(ArticleItemEntity::new)
+                .toList();
     }
 
     public ShoppingCart toShoppingCart() {
         ShoppingCart shoppingCart = new ShoppingCart();
         BeanUtils.copyProperties(this, shoppingCart, "user", "articleItemEntities");
-        shoppingCart.setUser(UserDto.builder().id(user).build());
+        shoppingCart.setUser(UserDto.builder().id(userId).build());
         List<ArticleItem> articleItems = this.articleItemEntities.stream()
                 .map(ArticleItemEntity::toArticleItem)
                 .toList();

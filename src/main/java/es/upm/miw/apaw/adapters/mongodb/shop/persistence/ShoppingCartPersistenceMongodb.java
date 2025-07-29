@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Repository("shoppingCartPersistence")
@@ -35,7 +35,7 @@ public class ShoppingCartPersistenceMongodb implements ShoppingCartPersistence {
     }
 
     @Override
-    public ShoppingCart readById(String id) {
+    public ShoppingCart readById(UUID id) {
         return this.shoppingCartRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("ShoppingCart id:" + id))
@@ -56,9 +56,14 @@ public class ShoppingCartPersistenceMongodb implements ShoppingCartPersistence {
                         articleItem.getAmount(),
                         articleItem.getDiscount())
 
-                ).collect(Collectors.toList());
+                ).toList();
         shoppingCartEntity.setArticleItemEntities(articleItemEntities);
         return this.shoppingCartRepository.save(shoppingCartEntity).toShoppingCart();
+    }
+
+    @Override
+    public ShoppingCart create(ShoppingCart shoppingCart) {
+        return null;
     }
 
 }

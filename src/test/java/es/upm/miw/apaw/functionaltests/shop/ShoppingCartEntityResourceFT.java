@@ -54,7 +54,8 @@ class ShoppingCartEntityResourceFT {
         );
 
         HttpEntity<List<ArticleItem>> request = new HttpEntity<>(articleItemArray, headers);
-        ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.PUT, request, Void.class, "kk");
+        ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.PUT, request, Void.class,
+                "ffffffff-ffff-ffff-ffff-ffffffff0000");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
@@ -68,7 +69,7 @@ class ShoppingCartEntityResourceFT {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotEmpty();
         assertTrue(Arrays.stream(response.getBody())
-                .anyMatch(item -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001").equals(item.getUser().getId())));
+                .anyMatch(item -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001").equals(item.getId())));
         assertTrue(response.getBody().length > 0);
     }
 }

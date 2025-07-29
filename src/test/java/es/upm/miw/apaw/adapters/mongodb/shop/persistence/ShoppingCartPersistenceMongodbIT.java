@@ -29,7 +29,7 @@ class ShoppingCartPersistenceMongodbIT {
     @Test
     void testReadById() {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000").equals(cart.getUser().getId()))
+                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003").equals(cart.getUser().getId()))
                 .findFirst();
         assertTrue(shoppingCart.isPresent());
         assertNotNull(shoppingCart.get().getId());
@@ -39,7 +39,7 @@ class ShoppingCartPersistenceMongodbIT {
     @Test
     void testUpdate() {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000").equals(cart.getUser().getId()))
+                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003").equals(cart.getUser().getId()))
                 .findFirst();
         assertTrue(shoppingCart.isPresent());
         Article article = Article.builder().barcode("84003").summary("art 003").price(new BigDecimal("12.13"))
@@ -47,7 +47,7 @@ class ShoppingCartPersistenceMongodbIT {
         shoppingCart.get().setArticleItems(List.of(new ArticleItem(article, 3, BigDecimal.ZERO)));
         this.shoppingCartPersistenceMongodb.update(shoppingCart.get());
         Optional<ShoppingCart> newShoppingCart = this.shoppingCartPersistenceMongodb.readAll()
-                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000").equals(cart.getUser().getId()))
+                .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003").equals(cart.getUser().getId()))
                 .findFirst();
         assertTrue(newShoppingCart.isPresent());
         assertEquals(shoppingCart.get().getCreationDate(), newShoppingCart.get().getCreationDate());

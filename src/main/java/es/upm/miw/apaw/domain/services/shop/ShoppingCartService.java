@@ -4,12 +4,15 @@ import es.upm.miw.apaw.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw.domain.models.shop.ShoppingCart;
 import es.upm.miw.apaw.domain.persistenceports.shop.ArticlePersistence;
 import es.upm.miw.apaw.domain.persistenceports.shop.ShoppingCartPersistence;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
@@ -24,7 +27,7 @@ public class ShoppingCartService {
         this.articlePersistence = articlePersistence;
     }
 
-    public ShoppingCart updateArticleItems(String id, List<ArticleItem> articleItemList) {
+    public ShoppingCart updateArticleItems(UUID id, List<ArticleItem> articleItemList) {
         ShoppingCart shoppingCart = this.shoppingCartPersistence.readById(id);
         shoppingCart.setArticleItems(articleItemList);
         return this.shoppingCartPersistence.update(shoppingCart);
@@ -48,5 +51,12 @@ public class ShoppingCartService {
     public Stream<ShoppingCart> findByPriceGreaterThan(BigDecimal price) {
         return this.shoppingCartPersistence.readAll()
                 .filter(shoppingCart -> price.compareTo(this.total(shoppingCart)) < 0);
+    }
+
+    public ShoppingCart create(@Valid ShoppingCart shoppingCart) {
+        shoppingCart.setId(UUID.randomUUID());
+        shoppingCart.setCreationDate(LocalDateTime.now());
+        //TODO leer el user del APAW-USER, de momento lo damos por bueno
+        return this.shoppingCartPersistence.create(shoppingCart);
     }
 }

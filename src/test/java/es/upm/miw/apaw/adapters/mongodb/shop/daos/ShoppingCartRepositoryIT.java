@@ -22,8 +22,7 @@ class ShoppingCartRepositoryIT {
     void testCreateAndRead() {
         assertTrue(this.shoppingCartRepository.findAll().stream()
                 .anyMatch(cart ->
-                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000").equals(cart.getUser()) &&
-                                "address 1" .equals(cart.getAddress()) &&
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003").equals(cart.getUserId()) &&
                                 cart.getId() != null &&
                                 cart.getCreationDate() != null &&
                                 cart.getCreationDate().isBefore(LocalDateTime.now()) &&

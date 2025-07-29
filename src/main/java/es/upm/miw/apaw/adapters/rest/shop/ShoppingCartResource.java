@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @RestController
@@ -27,7 +28,7 @@ public class ShoppingCartResource {
     }
 
     @PutMapping(ID_ID + ARTICLE_ITEMS)
-    public ShoppingCart updateArticleItems(@Valid @PathVariable String id, @RequestBody List<ArticleItem> articleItemList) {
+    public ShoppingCart updateArticleItems(@Valid @PathVariable UUID id, @RequestBody List<ArticleItem> articleItemList) {
         return this.shoppingCartService.updateArticleItems(id, articleItemList);
     }
 
@@ -35,5 +36,10 @@ public class ShoppingCartResource {
     public Stream<ShoppingCart> findByPriceGreaterThan(@RequestParam BigDecimal price) {
         return this.shoppingCartService.findByPriceGreaterThan(price)
                 .map(ShoppingCart::ofIdUser);
+    }
+
+    @PostMapping
+    public ShoppingCart create(@Valid @RequestBody ShoppingCart shoppingCart) {
+        return this.shoppingCartService.create(shoppingCart);
     }
 }

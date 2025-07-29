@@ -5,12 +5,12 @@ import es.upm.miw.apaw.adapters.mongodb.shop.entities.ArticleItemEntity;
 import es.upm.miw.apaw.adapters.mongodb.shop.entities.ShoppingCartEntity;
 import es.upm.miw.apaw.adapters.mongodb.shop.entities.TagEntity;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -55,8 +55,8 @@ public class ShopSeeder {
                 new ArticleItemEntity(articles[2], 4, BigDecimal.ONE)
         };
         ShoppingCartEntity[] carts = {
-                new ShoppingCartEntity(Arrays.asList(articleItems[0], articleItems[1]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"), "address 1"),
-                new ShoppingCartEntity(Arrays.asList(articleItems[2], articleItems[3]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"), "address 2")
+                new ShoppingCartEntity(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"), LocalDateTime.now(), Arrays.asList(articleItems[0], articleItems[1]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")),
+                new ShoppingCartEntity(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"), LocalDateTime.now(), Arrays.asList(articleItems[2], articleItems[3]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
         };
         this.shoppingCartRepository.saveAll(Arrays.asList(carts));
         log.warn("        ------- shop");
