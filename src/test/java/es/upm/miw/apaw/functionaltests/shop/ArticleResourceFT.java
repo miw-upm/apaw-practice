@@ -40,7 +40,7 @@ class ArticleResourceFT {
 
     @Test
     void testCreate() {
-        Article article = Article.builder().barcode("666004").summary("art rest").price(new BigDecimal("3.00")).build();
+        Article article = Article.builder().barcode("666004").summary("art restclients").price(new BigDecimal("3.00")).build();
         HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
         ResponseEntity<Article> response = restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, Article.class);
 
@@ -66,7 +66,7 @@ class ArticleResourceFT {
 
     @Test
     void testUpdatePrices() {
-        Article article = Article.builder().barcode("666005").summary("art rest").price(new BigDecimal("3.00")).build();
+        Article article = Article.builder().barcode("666005").summary("art restclients").price(new BigDecimal("3.00")).build();
         HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
         restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, Article.class);
         List<ArticlePriceUpdating> articlePriceUpdatingList = List.of(

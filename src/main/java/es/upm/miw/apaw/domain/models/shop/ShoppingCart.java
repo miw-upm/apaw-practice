@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.models.shop;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,8 +26,6 @@ public class ShoppingCart {
     private UserDto user;
 
     public static ShoppingCart ofIdUser(ShoppingCart shoppingCart) {
-        System.out.println(">>>>>" +
-                shoppingCart);
         ShoppingCart shoppingCartDto = new ShoppingCart();
         shoppingCartDto.setId(shoppingCart.getId());
         shoppingCartDto.setUser(shoppingCart.getUser());

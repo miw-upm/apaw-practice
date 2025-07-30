@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.shop;
+package es.upm.miw.apaw.domain.models;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

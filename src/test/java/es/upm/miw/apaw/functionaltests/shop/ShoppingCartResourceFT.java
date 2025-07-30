@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class ShoppingCartEntityResourceFT {
+class ShoppingCartResourceFT {
 
     @LocalServerPort
     private int port;

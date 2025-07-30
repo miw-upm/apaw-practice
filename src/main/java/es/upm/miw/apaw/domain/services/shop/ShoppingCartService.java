@@ -1,9 +1,11 @@
 package es.upm.miw.apaw.domain.services.shop;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw.domain.models.shop.ShoppingCart;
 import es.upm.miw.apaw.domain.persistenceports.shop.ArticlePersistence;
 import es.upm.miw.apaw.domain.persistenceports.shop.ShoppingCartPersistence;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,13 @@ public class ShoppingCartService {
 
     private final ShoppingCartPersistence shoppingCartPersistence;
     private final ArticlePersistence articlePersistence;
+    private final UserRestClient userRestClient;
 
     @Autowired
-    public ShoppingCartService(ShoppingCartPersistence shoppingCartPersistence, ArticlePersistence articlePersistence) {
+    public ShoppingCartService(ShoppingCartPersistence shoppingCartPersistence, ArticlePersistence articlePersistence, UserRestClient userRestClient) {
         this.shoppingCartPersistence = shoppingCartPersistence;
         this.articlePersistence = articlePersistence;
+        this.userRestClient = userRestClient;
     }
 
     public ShoppingCart updateArticleItems(UUID id, List<ArticleItem> articleItemList) {
@@ -56,7 +60,10 @@ public class ShoppingCartService {
     public ShoppingCart create(@Valid ShoppingCart shoppingCart) {
         shoppingCart.setId(UUID.randomUUID());
         shoppingCart.setCreationDate(LocalDateTime.now());
-        //TODO leer el user del APAW-USER, de momento lo damos por bueno
-        return this.shoppingCartPersistence.create(shoppingCart);
+        UserDto userDto = this.userRestClient.readById(shoppingCart.getUser().getId());
+        shoppingCart.setUser(userDto);
+        ShoppingCart shoppingCartDb = this.shoppingCartPersistence.create(shoppingCart);
+        shoppingCartDb.setUser(userDto);
+        return shoppingCartDb;
     }
 }

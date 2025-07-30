@@ -63,7 +63,18 @@ public class ShoppingCartPersistenceMongodb implements ShoppingCartPersistence {
 
     @Override
     public ShoppingCart create(ShoppingCart shoppingCart) {
-        return null;
+        ShoppingCartEntity shoppingCartEntity = new ShoppingCartEntity(shoppingCart);
+        shoppingCartEntity.setArticleItemEntities(shoppingCart.getArticleItems().stream()
+                .map(articleItem -> {
+                    ArticleItemEntity articleItemEntity = new ArticleItemEntity(articleItem);
+                    articleItemEntity.setArticleEntity(this.articleRepository
+                            .findByBarcode(articleItem.getArticle().getBarcode())
+                            .orElseThrow(() -> new NotFoundException("Article barcode: " + articleItem.getArticle().getBarcode())));
+                    return articleItemEntity;
+                })
+                .toList()
+        );
+        return this.shoppingCartRepository.save(shoppingCartEntity).toShoppingCart();
     }
 
 }

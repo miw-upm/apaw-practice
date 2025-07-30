@@ -1,8 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.shop.entities;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw.domain.models.shop.ShoppingCart;
-import es.upm.miw.apaw.domain.models.shop.UserDto;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -27,7 +27,7 @@ public class ShoppingCartEntity {
     private UUID userId;
 
     public ShoppingCartEntity(ShoppingCart shoppingCart) {
-        BeanUtils.copyProperties(shoppingCart, this, "user", "articleItem");
+        BeanUtils.copyProperties(shoppingCart, this, "user", "articleItems");
         this.userId = shoppingCart.getUser().getId();
         this.articleItemEntities = shoppingCart.getArticleItems().stream()
                 .map(ArticleItemEntity::new)
