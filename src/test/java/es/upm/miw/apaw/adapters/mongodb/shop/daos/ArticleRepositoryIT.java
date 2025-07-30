@@ -8,6 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,9 +23,9 @@ class ArticleRepositoryIT {
     void testFindByBarcode() {
         assertTrue(this.articleRepository.findByBarcode("84003").isPresent());
         ArticleEntity article = this.articleRepository.findByBarcode("84003").get();
-        assertEquals("art 003", article.getSummary());
-        assertEquals(0, new BigDecimal("12.13").compareTo(article.getPrice()));
-        assertEquals("prov 3", article.getProvider());
+        assertThat(article.getSummary()).isEqualTo("art 003");
+        assertThat(article.getPrice()).isEqualByComparingTo("12.13");
+        assertThat(article.getProvider()).isEqualTo("prov 3");
     }
 
 }

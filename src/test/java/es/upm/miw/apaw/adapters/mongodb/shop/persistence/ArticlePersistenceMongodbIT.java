@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -39,9 +40,9 @@ class ArticlePersistenceMongodbIT {
                 .provider("prov per").build();
         this.articlePersistence.create(article);
         Article articleBD = this.articlePersistence.read("6661001");
-        assertEquals("art per", articleBD.getSummary());
-        assertEquals(0, new BigDecimal("3.00").compareTo(articleBD.getPrice()));
-        assertEquals("prov per", articleBD.getProvider());
+        assertThat(articleBD.getSummary()).isEqualTo("art per");
+        assertThat(articleBD.getPrice()).isEqualByComparingTo("3.00");
+        assertThat(articleBD.getProvider()).isEqualTo("prov per");
     }
 
     @Test
@@ -52,7 +53,7 @@ class ArticlePersistenceMongodbIT {
         articleBD.setPrice(BigDecimal.TEN);
         this.articlePersistence.update("6661002", articleBD);
         articleBD = this.articlePersistence.read("6661002");
-        assertEquals(0, BigDecimal.TEN.compareTo(articleBD.getPrice()));
+        assertThat(articleBD.getPrice()).isEqualByComparingTo("10.00");
     }
 
 }

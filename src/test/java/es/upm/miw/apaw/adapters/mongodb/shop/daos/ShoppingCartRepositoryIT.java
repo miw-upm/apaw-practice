@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -20,16 +21,23 @@ class ShoppingCartRepositoryIT {
 
     @Test
     void testCreateAndRead() {
-        assertTrue(this.shoppingCartRepository.findAll().stream()
-                .anyMatch(cart ->
-                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003").equals(cart.getUserId()) &&
-                                cart.getId() != null &&
-                                cart.getCreationDate() != null &&
-                                cart.getCreationDate().isBefore(LocalDateTime.now()) &&
-                                2 == cart.getArticleItemEntities().size() &&
-                                "84001" .equals(cart.getArticleItemEntities().getFirst().getArticleEntity().getBarcode()) &&
-                                1 == cart.getArticleItemEntities().getFirst().getAmount() &&
-                                0 == BigDecimal.ZERO.compareTo(cart.getArticleItemEntities().getFirst().getDiscount())
-                ));
+        assertThat(this.shoppingCartRepository.findAll())
+                .anySatisfy(cart -> {
+                    assertThat(cart.getUserId())
+                            .isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"));
+                    assertThat(cart.getId()).isNotNull();
+                    assertThat(cart.getCreationDate())
+                            .isNotNull()
+                            .isBefore(LocalDateTime.now());
+                    assertThat(cart.getArticleItemEntities())
+                            .hasSize(2);
+                    assertThat(cart.getArticleItemEntities().getFirst().getArticleEntity().getBarcode())
+                            .isEqualTo("84001");
+                    assertThat(cart.getArticleItemEntities().getFirst().getAmount())
+                            .isEqualTo(1);
+                    assertThat(cart.getArticleItemEntities().getFirst().getDiscount())
+                            .isZero();
+                });
+
     }
 }

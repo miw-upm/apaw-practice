@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,13 +24,12 @@ class TagRepositoryIT {
     void testCreateAndRead() {
         assertTrue(this.tagRepository.findByName("tag2").isPresent());
         TagEntity tag = this.tagRepository.findByName("tag2").get();
-        assertEquals("tag2", tag.getName());
-        assertEquals("tag 2", tag.getDescription());
-        assertTrue(tag.getArticleEntities().stream()
-                .map(ArticleEntity::getBarcode)
-                .toList()
-                .containsAll(Arrays.asList("84001", "84004")));
-        assertTrue(tag.getFavourite());
+        assertThat(tag.getName()).isEqualTo("tag2");
+        assertThat(tag.getDescription()).isEqualTo("tag 2");
+        assertThat(tag.getArticleEntities())
+                .extracting(ArticleEntity::getBarcode)
+                .containsExactlyInAnyOrder("84001", "84004");
+        assertThat(tag.getFavourite()).isTrue();
 
     }
 }

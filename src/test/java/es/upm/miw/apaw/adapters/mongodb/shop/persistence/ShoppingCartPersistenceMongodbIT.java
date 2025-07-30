@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -31,9 +32,9 @@ class ShoppingCartPersistenceMongodbIT {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartPersistenceMongodb.readAll()
                 .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003").equals(cart.getUser().getId()))
                 .findFirst();
-        assertTrue(shoppingCart.isPresent());
-        assertNotNull(shoppingCart.get().getId());
-        assertNotNull(shoppingCart.get().getCreationDate());
+        assertThat(shoppingCart).isPresent();
+        assertThat(shoppingCart.get().getId()).isNotNull();
+        assertThat(shoppingCart.get().getCreationDate()).isNotNull();
     }
 
     @Test
@@ -41,7 +42,7 @@ class ShoppingCartPersistenceMongodbIT {
         Optional<ShoppingCart> shoppingCart = this.shoppingCartPersistenceMongodb.readAll()
                 .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003").equals(cart.getUser().getId()))
                 .findFirst();
-        assertTrue(shoppingCart.isPresent());
+        assertThat(shoppingCart).isPresent();
         Article article = Article.builder().barcode("84003").summary("art 003").price(new BigDecimal("12.13"))
                 .provider("prov 3").build();
         shoppingCart.get().setArticleItems(List.of(new ArticleItem(article, 3, BigDecimal.ZERO)));
@@ -49,10 +50,10 @@ class ShoppingCartPersistenceMongodbIT {
         Optional<ShoppingCart> newShoppingCart = this.shoppingCartPersistenceMongodb.readAll()
                 .filter(cart -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003").equals(cart.getUser().getId()))
                 .findFirst();
-        assertTrue(newShoppingCart.isPresent());
-        assertEquals(shoppingCart.get().getCreationDate(), newShoppingCart.get().getCreationDate());
-        assertEquals(1, newShoppingCart.get().getArticleItems().size());
-        assertEquals("84003", newShoppingCart.get().getArticleItems().getFirst().getArticle().getBarcode());
+        assertThat(newShoppingCart).isPresent();
+        assertThat(shoppingCart.get().getCreationDate()).isEqualTo(newShoppingCart.get().getCreationDate());
+        assertThat(newShoppingCart.get().getArticleItems()).hasSize(1);
+        assertThat(newShoppingCart.get().getArticleItems().getFirst().getArticle().getBarcode()).isEqualTo("84003");
         shopSeeder.deleteAll();
         shopSeeder.seedDatabase();
     }

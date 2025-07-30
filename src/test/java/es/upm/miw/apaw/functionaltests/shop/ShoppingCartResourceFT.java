@@ -67,9 +67,8 @@ class ShoppingCartResourceFT {
         ResponseEntity<ShoppingCart[]> response = restTemplate.getForEntity(url, ShoppingCart[].class, 5.0);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotEmpty();
-        assertTrue(Arrays.stream(response.getBody())
-                .anyMatch(item -> UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001").equals(item.getId())));
-        assertTrue(response.getBody().length > 0);
+        assertThat(response.getBody())
+                .extracting(ShoppingCart::getId)
+                .contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"));
     }
 }

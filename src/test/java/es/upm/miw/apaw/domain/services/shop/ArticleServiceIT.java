@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -29,8 +30,10 @@ class ArticleServiceIT {
                 new ArticlePriceUpdating("84003", BigDecimal.TEN)
         );
         this.articleService.updatePrices(articlePriceUpdatingList.stream());
-        assertEquals(0, BigDecimal.ONE.compareTo(this.articlePersistence.read("84002").getPrice()));
-        assertEquals(0, BigDecimal.TEN.compareTo(this.articlePersistence.read("84003").getPrice()));
+        assertThat(this.articlePersistence.read("84002").getPrice())
+                .isEqualByComparingTo(BigDecimal.ONE);
+        assertThat(this.articlePersistence.read("84003").getPrice())
+                .isEqualByComparingTo(BigDecimal.TEN);
         articlePriceUpdatingList = List.of(
                 new ArticlePriceUpdating("84002", new BigDecimal("0.27")),
                 new ArticlePriceUpdating("84003", new BigDecimal("12.13"))

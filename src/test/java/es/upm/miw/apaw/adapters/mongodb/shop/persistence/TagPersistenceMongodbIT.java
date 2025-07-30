@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,13 +23,13 @@ class TagPersistenceMongodbIT {
     @Test
     void testReadByName() {
         Tag tag = this.tagPersistence.readByName("tag2");
-        assertEquals("tag 2", tag.getDescription());
-        assertTrue(tag.getFavourite());
-        assertEquals(2, tag.getArticles().size());
-        assertTrue(tag.getArticles().stream()
-                .map(Article::getBarcode)
-                .toList()
-                .containsAll(List.of("84001", "84004")));
+        assertThat(tag.getDescription()).isEqualTo("tag 2");
+        assertThat(tag.getFavourite()).isTrue();
+        assertThat(tag.getArticles()).hasSize(2);
+        assertThat(tag.getArticles())
+                .extracting(Article::getBarcode)
+                .containsExactlyInAnyOrder("84001", "84004");
+
     }
 
 }

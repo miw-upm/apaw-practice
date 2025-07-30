@@ -43,11 +43,11 @@ class TagEntityResourceFT {
         ResponseEntity<Tag> response = restTemplate.getForEntity(url, Tag.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertNotNull(response.getBody());
-        assertEquals("tag 3", response.getBody().getDescription());
-        assertEquals(1, response.getBody().getArticles().size());
-        assertEquals("84002", response.getBody().getArticles().getFirst().getBarcode());
-        assertFalse(response.getBody().getFavourite());
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getDescription()).isEqualTo("tag 3");
+        assertThat(response.getBody().getArticles()).hasSize(1);
+        assertThat(response.getBody().getArticles().getFirst().getBarcode()).isEqualTo("84002");
+        assertThat(response.getBody().getFavourite()).isFalse();
     }
 
     @Test
@@ -75,12 +75,13 @@ class TagEntityResourceFT {
         ResponseEntity<Tag[]> response = restTemplate.getForEntity(url, Tag[].class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertNotNull(response.getBody());
+        assertThat(response.getBody()).isNotNull();
         List<String> tagList = Arrays.stream(response.getBody())
                 .map(Tag::getName)
                 .toList();
-        assertTrue(tagList.containsAll(Arrays.asList("tag1", "tag2", "tag3")));
-        assertFalse(tagList.contains("tag4"));
+        assertThat(tagList)
+                .containsExactlyInAnyOrder("tag1", "tag2", "tag3")
+                .doesNotContain("tag4");
     }
 
 }
