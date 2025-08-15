@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.adapters.rest.shop;
+package es.upm.miw.apaw.adapters.resources.shop;
 
 import es.upm.miw.apaw.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw.domain.models.shop.ShoppingCart;

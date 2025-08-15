@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.functionaltests.shop;
 
-import es.upm.miw.apaw.adapters.rest.shop.ShoppingCartResource;
+import es.upm.miw.apaw.adapters.resources.shop.ShoppingCartResource;
 import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw.domain.models.shop.ShoppingCart;

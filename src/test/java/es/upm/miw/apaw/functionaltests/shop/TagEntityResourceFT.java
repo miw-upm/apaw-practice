@@ -15,9 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Arrays;
 import java.util.List;
 
-import static es.upm.miw.apaw.adapters.rest.shop.TagResource.*;
+import static es.upm.miw.apaw.adapters.resources.shop.TagResource.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")

@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.adapters.rest.exceptionshandler;
+package es.upm.miw.apaw.adapters.resources.exceptionshandler;
 
 import lombok.Getter;
 import lombok.ToString;

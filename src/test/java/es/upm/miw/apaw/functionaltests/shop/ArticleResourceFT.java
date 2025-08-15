@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.functionaltests.shop;
 
-import es.upm.miw.apaw.adapters.rest.shop.ArticleResource;
+import es.upm.miw.apaw.adapters.resources.shop.ArticleResource;
 import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.models.shop.ArticlePriceUpdating;
 import org.junit.jupiter.api.BeforeEach;
