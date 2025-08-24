@@ -19,7 +19,7 @@ import java.util.UUID;
 @Document
 public class TagEntity {
     @Id
-    private String id;
+    private UUID id;
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
     private String name;
@@ -27,14 +27,6 @@ public class TagEntity {
     @DBRef
     private List<ArticleEntity> articleEntities;
     private Boolean favourite;
-
-    public TagEntity(String name, String description, List<ArticleEntity> articleEntities, Boolean favourite) {
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.description = description;
-        this.articleEntities = articleEntities;
-        this.favourite = favourite;
-    }
 
     public Tag toTag() {
         List<Article> articles = this.articleEntities.stream()

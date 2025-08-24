@@ -19,7 +19,7 @@ import java.util.UUID;
 @Document
 public class ArticleEntity {
     @Id
-    private String id;
+    private UUID id;
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
     private String barcode;
@@ -30,7 +30,7 @@ public class ArticleEntity {
 
     public ArticleEntity(Article article) {
         BeanUtils.copyProperties(article, this);
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
     }
 
     public void fromArticle(Article article) {

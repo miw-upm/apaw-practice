@@ -34,29 +34,42 @@ public class ShopSeeder {
     public void seedDatabase() {
         log.warn("------- Shop Initial Load -----------");
         ArticleEntity[] articles = {
-                ArticleEntity.builder().barcode("84001").summary("art 001").price(new BigDecimal("1.23")).provider("prov 1").build(),
-                ArticleEntity.builder().barcode("84002").summary("art 002").price(new BigDecimal("0.27")).provider("prov 2").build(),
-                ArticleEntity.builder().barcode("84003").summary("art 003").price(new BigDecimal("12.13")).provider("prov 3").build(),
-                ArticleEntity.builder().barcode("84004").summary("art 004").price(new BigDecimal("4.00")).provider("prov 4").build(),
-                ArticleEntity.builder().barcode("84005").summary("art 005").price(new BigDecimal("0.45")).provider("prov 5").build()
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .barcode("84001").summary("art 001").price(new BigDecimal("1.23")).provider("prov 1").build(),
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .barcode("84002").summary("art 002").price(new BigDecimal("0.27")).provider("prov 2").build(),
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                        .barcode("84003").summary("art 003").price(new BigDecimal("12.13")).provider("prov 3").build(),
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                        .barcode("84004").summary("art 004").price(new BigDecimal("4.00")).provider("prov 4").build(),
+                ArticleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
+                        .barcode("84005").summary("art 005").price(new BigDecimal("0.45")).provider("prov 5").build()
         };
         this.articleRepository.saveAll(Arrays.asList(articles));
         TagEntity[] tags = {
-                new TagEntity("tag1", "tag 1", List.of(articles[0], articles[1]), false),
-                new TagEntity("tag2", "tag 2", List.of(articles[0], articles[3]), true),
-                new TagEntity("tag3", "tag 3", List.of(articles[1]), false),
-                new TagEntity("tag4", "tag 4", List.of(articles[4]), false)
+                TagEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0010")).name("tag1")
+                        .description("tag 1").articleEntities(List.of(articles[0], articles[1])).favourite(false).build(),
+                TagEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0011")).name("tag2")
+                        .description("tag 2").articleEntities(List.of(articles[0], articles[3])).favourite(true).build(),
+                TagEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0012")).name("tag3")
+                        .description("tag 3").articleEntities(List.of(articles[1])).favourite(false).build(),
+                TagEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0013")).name("tag4")
+                        .description("tag 4").articleEntities(List.of(articles[4])).favourite(false).build()
         };
         this.tagRepository.saveAll(Arrays.asList(tags));
         ArticleItemEntity[] articleItems = {
-                new ArticleItemEntity(articles[0], 1, BigDecimal.ZERO),
-                new ArticleItemEntity(articles[1], 2, BigDecimal.TEN),
-                new ArticleItemEntity(articles[1], 3, BigDecimal.ZERO),
-                new ArticleItemEntity(articles[2], 4, BigDecimal.ONE)
+                ArticleItemEntity.builder().articleEntity(articles[0]).amount(1).discount(BigDecimal.ZERO).build(),
+                ArticleItemEntity.builder().articleEntity(articles[1]).amount(2).discount(BigDecimal.TEN).build(),
+                ArticleItemEntity.builder().articleEntity(articles[1]).amount(3).discount(BigDecimal.ZERO).build(),
+                ArticleItemEntity.builder().articleEntity(articles[2]).amount(4).discount(BigDecimal.ONE).build()
         };
         ShoppingCartEntity[] carts = {
-                new ShoppingCartEntity(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"), LocalDateTime.now(), Arrays.asList(articleItems[0], articleItems[1]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")),
-                new ShoppingCartEntity(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"), LocalDateTime.now(), Arrays.asList(articleItems[2], articleItems[3]), UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                ShoppingCartEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
+                        .creationDate(LocalDateTime.now()).articleItemEntities(Arrays.asList(articleItems[0], articleItems[1]))
+                        .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")).build(),
+                ShoppingCartEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0021"))
+                        .creationDate(LocalDateTime.now()).articleItemEntities(Arrays.asList(articleItems[2], articleItems[3]))
+                        .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")).build()
         };
         this.shoppingCartRepository.saveAll(Arrays.asList(carts));
         log.warn("        ------- shop");

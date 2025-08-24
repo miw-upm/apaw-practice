@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -69,6 +68,6 @@ class ShoppingCartResourceFT {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody())
                 .extracting(ShoppingCart::getId)
-                .contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"));
+                .contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0021"));
     }
 }
