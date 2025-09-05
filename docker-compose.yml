@@ -2,7 +2,7 @@
 services:
   apaw-practice:
     build: .
-    container_name: apaw-practice:latest
+    image: apaw-practice:latest
     restart: always
     ports:
       - "8080:8080"
