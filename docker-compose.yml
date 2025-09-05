@@ -16,4 +16,3 @@ networks:
     external: true
 
 #> docker compose up --build -d
-
