@@ -38,7 +38,7 @@ public class ArticlePersistenceMongodb implements ArticlePersistence {
 
     @Override
     public Stream<Article> findByProviderAndPriceGreaterThan(String provider, BigDecimal price) {
-        return this.articleRepository.findByProviderAndPriceGreaterThan(provider,price).stream()
+        return this.articleRepository.findByProviderAndPriceGreaterThan(provider, price).stream()
                 .map(ArticleEntity::toArticle);
     }
 

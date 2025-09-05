@@ -10,5 +10,6 @@ import java.util.UUID;
 
 public interface ArticleRepository extends MongoRepository<ArticleEntity, UUID> {
     Optional<ArticleEntity> findByBarcode(String barcode);
+
     List<ArticleEntity> findByProviderAndPriceGreaterThan(String provider, BigDecimal price);
 }
