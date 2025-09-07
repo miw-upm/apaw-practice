@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class SystemResource {
     public static final String SYSTEM = "/";
     public static final String VERSION_BADGE = "/version-badge";
-    public static final String APP_INFO = "/app-info";
 
     private static final int TEXT_MARGIN = 12;
     private static final int CHARACTER_WIDTH = 6;
@@ -55,7 +54,7 @@ public class SystemResource {
                 middleLabel, label, middleLabel, label, middleValue, value, middleValue, value);
     }
 
-    @GetMapping(value = APP_INFO)
+    @GetMapping
     public String applicationInfo() {
         return """
                 {"version":"%s::%s::%s"} (%s)

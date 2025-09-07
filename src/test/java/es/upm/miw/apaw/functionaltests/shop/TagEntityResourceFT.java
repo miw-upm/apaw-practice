@@ -1,86 +1,73 @@
 package es.upm.miw.apaw.functionaltests.shop;
 
 import es.upm.miw.apaw.domain.models.shop.Tag;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static es.upm.miw.apaw.adapters.resources.shop.TagResource.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWebTestClient
 @ActiveProfiles("test")
 class TagEntityResourceFT {
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    private String baseUrl;
-
-    @BeforeEach
-    void setUp() {
-        baseUrl = "http://localhost:" + port + TAGS;
-    }
+    private WebTestClient webTestClient;
 
     @Test
     void testRead() {
-        String url = this.baseUrl + NAME_ID.replace("{name}", "tag3");
-
-        ResponseEntity<Tag> response = restTemplate.getForEntity(url, Tag.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getDescription()).isEqualTo("tag 3");
-        assertThat(response.getBody().getArticles()).hasSize(1);
-        assertThat(response.getBody().getArticles().getFirst().getBarcode()).isEqualTo("84002");
-        assertThat(response.getBody().getFavourite()).isFalse();
+        webTestClient.get()
+                .uri(TAGS + NAME_ID, "tag3")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Tag.class)
+                .value(tag -> {
+                    assertThat(tag).isNotNull();
+                    assertThat(tag.getDescription()).isEqualTo("tag 3");
+                    assertThat(tag.getArticles()).hasSize(1);
+                    assertThat(tag.getArticles().getFirst().getBarcode()).isEqualTo("84002");
+                    assertThat(tag.getFavourite()).isFalse();
+                });
     }
 
     @Test
     void testReadNotFound() {
-        String url = this.baseUrl + NAME_ID.replace("{name}", "kk");
-
-        ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        webTestClient.get()
+                .uri(TAGS + NAME_ID, "kk")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
     void testDelete() {
-        String url = this.baseUrl + NAME_ID.replace("{name}", "kk");
-
-        ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.DELETE, null, Void.class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        webTestClient.delete()
+                .uri(TAGS + NAME_ID, "kk")
+                .exchange()
+                .expectStatus().isOk();
     }
 
     @Test
     void testFindByArticlesInShoppingCarts() {
-        String url = this.baseUrl + IN_SHOPPING_CARTS;
-
-        ResponseEntity<Tag[]> response = restTemplate.getForEntity(url, Tag[].class);
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
-        List<String> tagList = Arrays.stream(response.getBody())
-                .map(Tag::getName)
-                .toList();
-        assertThat(tagList)
-                .containsExactlyInAnyOrder("tag1", "tag2", "tag3")
-                .doesNotContain("tag4");
+        webTestClient.get()
+                .uri(TAGS + IN_SHOPPING_CARTS)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Tag.class)
+                .value(tags -> {
+                    assertThat(tags).isNotNull();
+                    List<String> tagList = tags.stream()
+                            .map(Tag::getName)
+                            .toList();
+                    assertThat(tagList)
+                            .containsExactlyInAnyOrder("tag1", "tag2", "tag3")
+                            .doesNotContain("tag4");
+                });
     }
-
 }

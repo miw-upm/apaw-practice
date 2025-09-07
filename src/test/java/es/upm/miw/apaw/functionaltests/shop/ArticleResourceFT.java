@@ -3,108 +3,148 @@ package es.upm.miw.apaw.functionaltests.shop;
 import es.upm.miw.apaw.adapters.resources.shop.ArticleResource;
 import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.models.shop.ArticlePriceUpdating;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWebTestClient
 @ActiveProfiles("test")
 class ArticleResourceFT {
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    private String baseUrl;
-    private HttpHeaders headers;
-
-    @BeforeEach
-    void setUp() {
-        baseUrl = "http://localhost:" + port + ArticleResource.ARTICLES;
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-    }
+    private WebTestClient webTestClient;
 
     @Test
     void testCreate() {
-        Article article = Article.builder().barcode("666004").summary("art restclients").price(new BigDecimal("3.00")).build();
-        HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
-        ResponseEntity<Article> response = restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, Article.class);
+        Article article = Article.builder()
+                .barcode("666004")
+                .summary("art restclients")
+                .price(new BigDecimal("3.00"))
+                .build();
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
+        webTestClient.post()
+                .uri(ArticleResource.ARTICLES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(article)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Article.class)
+                .value(created -> assertThat(created).isNotNull());
     }
 
     @Test
     void testCreateBarcodeConflict() {
-        Article article = Article.builder().barcode("84001").summary("repeated").price(new BigDecimal("3.00")).build();
-        HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
-        ResponseEntity<String> response = restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+        Article article = Article.builder()
+                .barcode("84001")
+                .summary("repeated")
+                .price(new BigDecimal("3.00"))
+                .build();
+
+        webTestClient.post()
+                .uri(ArticleResource.ARTICLES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(article)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
 
     @Test
     void testCreateBadRequest() {
-        Article article = Article.builder().barcode("84001").summary("repeated").build();
-        HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
-        ResponseEntity<String> response = restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        Article article = Article.builder()
+                .barcode("84001")
+                .summary("repeated") // falta price
+                .build();
+
+        webTestClient.post()
+                .uri(ArticleResource.ARTICLES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(article)
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
     @Test
     void testUpdatePrices() {
-        Article article = Article.builder().barcode("666005").summary("art restclients").price(new BigDecimal("3.00")).build();
-        HttpEntity<Article> request = new HttpEntity<>(article, this.headers);
-        restTemplate.exchange(this.baseUrl, HttpMethod.POST, request, Article.class);
-        List<ArticlePriceUpdating> articlePriceUpdatingList = List.of(
+        Article article = Article.builder()
+                .barcode("666005")
+                .summary("art restclients")
+                .price(new BigDecimal("3.00"))
+                .build();
+
+        webTestClient.post()
+                .uri(ArticleResource.ARTICLES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(article)
+                .exchange()
+                .expectStatus().isOk();
+
+        List<ArticlePriceUpdating> updates = List.of(
                 new ArticlePriceUpdating("666005", new BigDecimal("3.33"))
         );
-        HttpEntity<List<ArticlePriceUpdating>> request2 = new HttpEntity<>(articlePriceUpdatingList, this.headers);
 
-        ResponseEntity<Article> response2 = restTemplate.exchange(baseUrl, HttpMethod.PATCH, request2, Article.class);
-        assertThat(response2.getStatusCode()).isEqualTo(HttpStatus.OK);
+        webTestClient.patch()
+                .uri(ArticleResource.ARTICLES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updates)
+                .exchange()
+                .expectStatus().isOk();
     }
 
     @Test
     void testUpdatePricesNotFound() {
-        List<ArticlePriceUpdating> articlePriceUpdatingList =
-                List.of(new ArticlePriceUpdating("0", BigDecimal.ONE)
-                );
-        HttpEntity<List<ArticlePriceUpdating>> request = new HttpEntity<>(articlePriceUpdatingList, headers);
-        ResponseEntity<Void> response = restTemplate.exchange(this.baseUrl, HttpMethod.PATCH, request, Void.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        List<ArticlePriceUpdating> updates = List.of(
+                new ArticlePriceUpdating("0", BigDecimal.ONE)
+        );
+
+        webTestClient.patch()
+                .uri(ArticleResource.ARTICLES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updates)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
     void testSearchByProviderAndPriceGreaterThan() {
-        String url = this.baseUrl + "?provider={provider}&price={price}";
-        ResponseEntity<Article[]> response = restTemplate.getForEntity(url, Article[].class, "prov 1", "1.02");
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotEmpty();
-        assertThat(Arrays.stream(response.getBody()).map(Article::getProvider).allMatch("prov 1"::equals)).isTrue();
-        Arrays.stream(response.getBody())
-                .forEach(item -> assertThat(item.getPrice()).isGreaterThan(new BigDecimal("1.02")));
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ArticleResource.ARTICLES)
+                        .queryParam("provider", "prov 1")
+                        .queryParam("price", "1.02")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Article.class)
+                .value(articles -> {
+                    assertThat(articles).isNotEmpty();
+                    assertThat(articles)
+                            .extracting(Article::getProvider)
+                            .allMatch("prov 1"::equals);
+                    assertThat(articles)
+                            .extracting(Article::getPrice)
+                            .allMatch(price -> price.compareTo(new BigDecimal("1.02")) > 0);
+                });
     }
 
     @Test
     void testSearchByProviderAndPriceGreaterThanBadRequest() {
-        String url = baseUrl + "?provider={provider}";
-        ResponseEntity<Void> response = restTemplate.getForEntity(url, Void.class, "prov 1");
-
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ArticleResource.ARTICLES)
+                        .queryParam("provider", "prov 1")
+                        .build())
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 }
