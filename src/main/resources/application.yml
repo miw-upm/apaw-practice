@@ -30,3 +30,7 @@ management:
   info:
     env:
       enabled: true
+
+miw:
+  apaw:
+    user: "http://localhost:8081/users"
