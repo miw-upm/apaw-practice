@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.functionaltests.shop;
 
 import es.upm.miw.apaw.adapters.resources.shop.ShoppingCartResource;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw.domain.models.shop.ShoppingCart;
@@ -26,6 +27,36 @@ class ShoppingCartResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Test
+    void testCreate() {
+        ArticleItem articleItem = ArticleItem.builder().article(
+                Article.builder().barcode("84001").build()).amount(100).discount(BigDecimal.ZERO).build();
+        ShoppingCart shoppingCart = ShoppingCart.builder()
+                .articleItems(List.of(articleItem))
+                .user(UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")).build())
+                .build();
+
+        webTestClient.post()
+                .uri(ShoppingCartResource.SHOPPING_CARTS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(shoppingCart)
+                .exchange()
+                .expectStatus().isOk();
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ShoppingCartResource.SHOPPING_CARTS)
+                        .queryParam("price", 100.0)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(ShoppingCart.class)
+                .value(carts -> assertThat(carts)
+                        .extracting(ShoppingCart::getUser)
+                        .extracting(UserDto::getId)
+                        .contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")));
+    }
 
     @Test
     void testUpdate() {

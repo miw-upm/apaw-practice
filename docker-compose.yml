@@ -8,6 +8,7 @@ services:
       - "8080:8080"
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongo:mongo@host.docker.internal:27017/apawdb?authSource=admin
+      MIW_APAW_USER: http://host.docker.internal:8081/users
     networks:
       - apawnet
 

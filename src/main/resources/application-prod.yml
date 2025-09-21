@@ -1,7 +1,0 @@
-server:
-  port: 10000
-
-spring:
-  data:
-    mongodb:
-      uri: ${MONGODB_URI}

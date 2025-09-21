@@ -27,9 +27,6 @@ jobs:
           java-version: 21
           cache: maven
 
-      - name: 🏷️ Extract artifact from pom
-        run: echo "ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)" >> $GITHUB_ENV
-
       - name: 🛡️ Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
@@ -53,12 +50,16 @@ jobs:
         with:
           category: "/language:java"
 
+      # Organización de la cuenta de Sonar: miw-upm-github
+      - name: 🏷️ Extract artifact from pom & Sonar Organization
+        run: |
+          echo "ORGANIZATION=miw-upm-github" >> $GITHUB_ENV
+          echo "ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)" >> $GITHUB_ENV
+
       - name: 📊 Sonar Analysis
         run: >
-          mvn -B sonar:sonar 
-          -Dsonar.projectKey=miw-upm-github_${{ env.ARTIFACT }}
-          -Dsonar.organization=miw-upm-github 
+          mvn -B sonar:sonar
+          -Dsonar.projectKey=${{ env.ORGANIZATION }}_${{ env.ARTIFACT }}
+          -Dsonar.organization=${{ env.ORGANIZATION }}
           -Dsonar.host.url=https://sonarcloud.io 
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
