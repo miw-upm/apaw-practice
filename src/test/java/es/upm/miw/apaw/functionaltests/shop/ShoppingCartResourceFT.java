@@ -5,12 +5,15 @@ import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.models.shop.ArticleItem;
 import es.upm.miw.apaw.domain.models.shop.ShoppingCart;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
@@ -19,6 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -28,8 +32,15 @@ class ShoppingCartResourceFT {
     @Autowired
     private WebTestClient webTestClient;
 
+    @MockitoBean
+    private UserRestClient userRestClient;
+
     @Test
     void testCreate() {
+        BDDMockito.given(this.userRestClient.readById(any(UUID.class)))
+                .willAnswer(invocation ->
+                        UserDto.builder().id(invocation.getArgument(0)).mobile("123456789").firstName("mock").build());
+
         ArticleItem articleItem = ArticleItem.builder().article(
                 Article.builder().barcode("84001").build()).amount(100).discount(BigDecimal.ZERO).build();
         ShoppingCart shoppingCart = ShoppingCart.builder()
