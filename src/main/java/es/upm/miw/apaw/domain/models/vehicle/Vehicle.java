@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.vehicule;
+package es.upm.miw.apaw.domain.models.vehicle;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import jakarta.validation.constraints.NotBlank;
