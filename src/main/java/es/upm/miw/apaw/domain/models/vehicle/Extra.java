@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.vehicule;
+package es.upm.miw.apaw.domain.models.vehicle;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,16 +7,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Documentation {
+public class Extra {
     @NotNull
-    private Long idDocument;
+    private Long idExtra;
     @NotNull
     @NotBlank
-    private String name;
+    private String description;
     @NotNull
-    private Boolean validate;
+    private BigDecimal price;
 }
