@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 public class Teacher {
     @NotNull
     @NotBlank
-    private String dni;
+    private String identificationCode;
     private String specialization;
+    private String fullName;
     private Boolean isTenured;
 }
