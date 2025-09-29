@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.airport;
+package es.upm.miw.apaw.domain.models.apiary;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,16 +7,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardingGate {
+public class Hive {
     @NotNull
     @NotBlank
-    private String gateNumber;
+    private Integer code;
+    private String type;
     @NotNull
-    @NotBlank
-    private String terminal;
-    private Boolean opened;
+    private Boolean queen;
+    private LocalDate installationDate;
+    private Product product;
 }
