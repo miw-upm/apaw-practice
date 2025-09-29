@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import es.upm.miw.apaw.domain.models.clinic.Doctor;
 
 import java.util.UUID;
 
