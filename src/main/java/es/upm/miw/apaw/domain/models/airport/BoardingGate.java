@@ -18,5 +18,5 @@ public class BoardingGate {
     @NotNull
     @NotBlank
     private String terminal;
-    private Boolean isOpen;
+    private Boolean opened;
 }
