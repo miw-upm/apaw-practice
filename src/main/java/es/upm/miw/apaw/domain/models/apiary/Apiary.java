@@ -20,6 +20,6 @@ public class Apiary {
     private String cadastralRef;
     private String location;
     @NotNull
-    private String REGA;
+    private String rega;
     private List<Hive> hives;
 }
