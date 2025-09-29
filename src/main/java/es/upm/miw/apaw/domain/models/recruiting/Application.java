@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.models.recruiting;
 
 import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class Application {
     private UUID id;
     @NotNull
     @NotBlank
-    private String status;
+    private Status status;
     @NotNull
     @NotBlank
     private LocalDate date;
