@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.airport.entities;
 
-import es.upm.miw.apaw.domain.models.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +28,6 @@ public class FlightEntity {
     private BoardingGateEntity boardingGate;
     @DBRef
     private PlaneEntity plane;
-    private List<UserDto> passengers;
-    private UserDto pilot;
+    private List<UUID> passengersIds;
+    private UUID pilotId;
 }
