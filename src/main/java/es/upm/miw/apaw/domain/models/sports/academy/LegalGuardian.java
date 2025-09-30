@@ -14,5 +14,5 @@ public class LegalGuardian {
     @NotNull
     private UserDto user;
     @NotNull
-    private Athlete[] athletes[];
+    private Athlete athlete;
 }

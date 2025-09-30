@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.time.LocalDate;
+
 public class Athlete {
     @NotNull
     private Gender gender;
@@ -15,7 +17,11 @@ public class Athlete {
     @Positive
     private double weight;
     @NotNull
+    private LocalDate birthDate;
+    @NotNull
     private UserDto user;
     @NotNull
-    private LegalGuardian legalGuardian;
+    private LegalGuardian[] legalGuardian;
+    @NotNull
+    private SportModality[] sportModalities;
 }
