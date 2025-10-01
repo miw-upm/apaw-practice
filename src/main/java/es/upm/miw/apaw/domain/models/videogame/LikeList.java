@@ -23,6 +23,7 @@ public class LikeList {
     private UUID listID;
     @NotNull
     private Boolean isPublic;
+    private Integer likesCount;
     @NotNull
     private UserDto user;
     @NotEmpty

@@ -19,7 +19,8 @@ public class Genre {
     @NotBlank
     private String genreName;
     private String description;
-    private float popularity;
+    private Float popularity;
+    private Integer ageRestriction;
     @NotBlank
     private List<Videogame> gameList;
 }

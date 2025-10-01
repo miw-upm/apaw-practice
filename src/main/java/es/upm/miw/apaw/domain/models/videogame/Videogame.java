@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class Videogame {
     private String name;
     private Integer maxPlayers;
     private Boolean online;
+    private LocalDate releaseDate;
     @NotNull
     private Company company;
     @NotNull
