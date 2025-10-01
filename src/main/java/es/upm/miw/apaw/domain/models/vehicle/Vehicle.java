@@ -26,6 +26,7 @@ public class Vehicle {
     @NotBlank
     private String model;
     private LocalDate registrationDate;
+    @NotNull
     private Engine engine;
     @NotNull
     private List<Documentation> documentations;
