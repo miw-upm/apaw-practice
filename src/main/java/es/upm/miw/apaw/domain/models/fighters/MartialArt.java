@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.vehicle;
+package es.upm.miw.apaw.domain.models.fighters;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,14 +7,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class Documentation {
-    @NotNull
+public class MartialArt {
     @NotBlank
-    private String name;
+    private String discipline;
+    private String origin;
+    private String description;
     @NotNull
-    private Boolean validate;
+    private boolean striking;
+    @NotNull
+    private boolean grappling;
 }

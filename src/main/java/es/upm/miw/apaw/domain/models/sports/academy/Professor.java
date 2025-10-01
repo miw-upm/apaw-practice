@@ -13,4 +13,6 @@ public class Professor {
     private String licenseNumber;
     @NotNull
     private UserDto user;
+    @NotNull
+    private SportModality sportModality;
 }

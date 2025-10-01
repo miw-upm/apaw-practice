@@ -1,25 +1,25 @@
-package es.upm.miw.apaw.domain.models.vehicle;
+package es.upm.miw.apaw.domain.models.fighters;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.UUID;
 
-import java.math.BigDecimal;
-
-@Builder
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
-public class Extra {
+public class Coach {
     @NotNull
+    private UUID coachNumber;
     @NotBlank
-    private String category;
-    @NotNull
+    private String fullName;
     @NotBlank
-    private String description;
-    @NotNull
-    private BigDecimal price;
+    private String academy;
+    @Min(0)
+    private int experienceYears;
 }

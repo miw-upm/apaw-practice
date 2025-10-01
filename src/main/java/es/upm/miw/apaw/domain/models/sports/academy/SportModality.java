@@ -20,10 +20,6 @@ public class SportModality {
     @NotNull
     private boolean isActive;
     @NotNull
-    private Place place;
-    @NotNull
-    private Time time;
-    @NotNull
     private Professor professor;
     @NotNull
     private Athlete[] athletes;
