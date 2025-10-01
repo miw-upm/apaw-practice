@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Documentation {
     @NotNull
-    private Long idDocument;
-    @NotNull
     @NotBlank
     private String name;
     @NotNull
