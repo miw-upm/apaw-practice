@@ -25,4 +25,6 @@ public class BankAccount {
     private List<UserDto> accountHolders;
     @NotNull
     private BigDecimal balance;
+    private CreditCard creditCardAssociated;
+    private List<Loan> loansApplied;
 }
