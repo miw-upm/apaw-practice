@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Builder
@@ -17,7 +20,9 @@ public class MartialArt {
     private String origin;
     private String description;
     @NotNull
-    private boolean striking;
+    private Boolean striking;
     @NotNull
-    private boolean grappling;
+    private Boolean grappling;
+    @Builder.Default
+    private List<Fighter> fighters = new ArrayList<>();
 }
