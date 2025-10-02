@@ -17,5 +17,5 @@ public class Teacher {
     private String identificationCode;
     private String specialization;
     private String fullName;
-    private Boolean isTenured;
+    private Boolean tenured;
 }
