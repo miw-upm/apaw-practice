@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -21,5 +24,7 @@ public class Coach {
     @NotBlank
     private String academy;
     @Min(0)
-    private int experienceYears;
+    private Integer experienceYears;
+    @Builder.Default
+    private List<Fighter> fighters = new ArrayList<>();
 }

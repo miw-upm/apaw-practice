@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.clothingstore;
+package es.upm.miw.apaw.domain.models.recipes;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,21 +7,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Store {
+public class Ingredient {
     @NotNull
-    private UUID storeId;
-
     @NotBlank
-    private String name;
-
-    @NotBlank
-    private String address;
+    private String label;
+    private String measurementUnit;
+    private Double quantity;
+    private BigDecimal marketPrice;
 }
-

@@ -8,10 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
+@Builder
 public class Fighter {
     @NotBlank
     private String nickname;
@@ -26,7 +29,13 @@ public class Fighter {
     @NotNull
     private Double height;
     @Min(0)
-    private int wins;
+    private Integer wins;
     @Min(0)
-    private int losses;
+    private Integer losses;
+    @NotNull
+    private Coach coach;
+    @Builder.Default
+    private List<MartialArt> martialArts = new ArrayList<>();
+    @Builder.Default
+    private List<Rating> ratings = new ArrayList<>();
 }
