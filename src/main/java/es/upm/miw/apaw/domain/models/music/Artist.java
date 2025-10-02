@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,15 +17,11 @@ import java.util.List;
 public class Artist {
     @NotNull
     @NotBlank
-    private String stageName;         // clave única
-
+    private String stageName;
     private LocalDate activeSince;
-
     private Long monthlyListeners;
-
     @NotNull
     private UserDto linkedUser;
-
     @NotNull
-    private List<Song> artistSongs;   // composición 1..*
+    private List<Song> artistSongs;
 }

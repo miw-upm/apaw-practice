@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 public class Style {
     @NotNull
     @NotBlank
-    private String styleName;         // clave única
-
+    private String styleName;
     private Integer popularityIndex;
-
     private String mood;
 }
