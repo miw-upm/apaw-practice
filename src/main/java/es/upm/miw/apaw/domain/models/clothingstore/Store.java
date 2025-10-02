@@ -7,27 +7,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+
 import java.util.UUID;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Store {
-
     @NotNull
     private UUID storeId;
 
-    @NotNull
     @NotBlank
     private String name;
 
+    @NotBlank
     private String address;
-
-    /** aggregation: 1..n */
-    private List<Garment> garments;
-
-    /** composition: 1..n */
-    private List<Order> orders;
 }
+
