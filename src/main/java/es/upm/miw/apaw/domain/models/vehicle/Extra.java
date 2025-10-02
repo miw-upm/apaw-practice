@@ -15,7 +15,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Extra {
     @NotNull
-    private Long idExtra;
+    @NotBlank
+    private String category;
     @NotNull
     @NotBlank
     private String description;
