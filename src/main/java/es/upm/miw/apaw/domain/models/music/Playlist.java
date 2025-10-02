@@ -7,9 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Builder
 @Data
@@ -17,7 +15,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Playlist {
     @NotNull
-    private UUID playlistId;
+    @NotBlank
+    private String playlistCode;
 
     @NotNull
     @NotBlank

@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Builder
@@ -16,7 +15,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Song {
     @NotNull
-    private UUID songId;
+    @NotBlank
+    private String isrc;
 
     @NotNull
     @NotBlank
@@ -25,5 +25,5 @@ public class Song {
     private Integer durationSeconds;
 
     @NotNull
-    private Style songStyle; // agregación n..1
+    private Style songStyle;          // agregación n..1
 }
