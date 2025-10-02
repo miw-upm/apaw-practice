@@ -21,4 +21,6 @@ public class AttendeeEntity {
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
     private String emailAddress;
+
+    private UUID user;
 }
