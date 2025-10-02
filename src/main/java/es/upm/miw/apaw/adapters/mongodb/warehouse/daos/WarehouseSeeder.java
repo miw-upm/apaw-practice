@@ -1,5 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.daos;
-
+/*
 import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.InventoryEntity;
 import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.ProductItemEntity;
 import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.MovementOrderEntity;
@@ -42,9 +42,9 @@ public class WarehouseSeeder {
         this.orderDetailRepository = orderDetailRepository;
     }
 
-    /**
-     * Inicializa las colecciones con datos de prueba (idéntico al ApiarySeeder).
-     */
+
+     // Inicializa las colecciones con datos de prueba (idéntico al ApiarySeeder).
+
     public void seedDatabase() {
         log.warn("------- Warehouse Initial Load -----------");
 
@@ -115,3 +115,4 @@ public class WarehouseSeeder {
     }
 
 }
+*/
