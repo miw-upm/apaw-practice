@@ -4,6 +4,7 @@ import es.upm.miw.apaw.adapters.mongodb.airport.daos.AirportSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
+import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.WarehouseSeeder;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,16 @@ public class DatabaseSeeder {
     private final AirportSeeder airportSeeder;
     private final VehicleSeeder vehicleSeeder;
     private final ApiarySeeder apiarySeeder;
+    private final WarehouseSeeder warehouseSeeder;
 
 
     @Autowired
-    public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder) {
+    public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder, WarehouseSeeder warehouseSeeder) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
         this.vehicleSeeder = vehicleSeeder;
         this.apiarySeeder = apiarySeeder;
+        this.warehouseSeeder = warehouseSeeder;
         this.seedDatabase();
     }
 
@@ -35,6 +38,7 @@ public class DatabaseSeeder {
         this.airportSeeder.seedDatabase();
         this.vehicleSeeder.seedDatabase();
         this.apiarySeeder.seedDatabase();
+        this.warehouseSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -42,6 +46,7 @@ public class DatabaseSeeder {
         this.airportSeeder.deleteAll();
         this.vehicleSeeder.deleteAll();
         this.apiarySeeder.deleteAll();
+        this.warehouseSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
