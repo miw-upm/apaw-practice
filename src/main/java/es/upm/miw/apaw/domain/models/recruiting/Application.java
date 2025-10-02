@@ -27,6 +27,7 @@ public class Application {
     @NotNull
     @NotBlank
     private LocalDate date;
+    private Boolean isReferral;
 
     // Mandatory Aggregation with one UserDto
     @NotNull
