@@ -21,6 +21,7 @@ public class DatabaseSeeder {
     private final ApiarySeeder apiarySeeder;
 
 
+
     @Autowired
     public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder) {
         this.shopSeeder = shopSeeder;
