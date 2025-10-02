@@ -17,13 +17,8 @@ import java.util.List;
 public class Ingredient {
     @NotNull
     @NotBlank
-    private String catalogCode;
-    @NotNull
-    @NotBlank
     private String label;
     private String measurementUnit;
     private Double quantity;
-    private Double energyKcal;
     private BigDecimal marketPrice;
-    private List<RecipeIngredient> recipeIngredients;
 }

@@ -20,11 +20,8 @@ public class Recipe {
     @NotNull
     @NotBlank
     private String title;
-    private String description;
     private String instructions;
     private Integer servings;
     private Boolean glutenFree;
-    private Origin origin;
-    private List<Menu> menus;
     private List<RecipeIngredient> recipeIngredients;
 }

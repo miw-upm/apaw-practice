@@ -22,11 +22,9 @@ public class Menu {
     private Long internalCode;
     @NotNull
     private LocalDate startDate;
-    private LocalDate endDate;
     @NotNull
     @NotEmpty
     private String type;
-    private String notes;
-    private UserDto user;
+    private List<UserDto> users;
     private List<Recipe> recipes;
 }
