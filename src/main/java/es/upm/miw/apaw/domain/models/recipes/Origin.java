@@ -20,6 +20,6 @@ public class Origin {
     @NotNull
     @NotBlank
     private String countryName;
-    private String culturalRegion;
+    private String region;
     private List<Recipe> recipes;
 }
