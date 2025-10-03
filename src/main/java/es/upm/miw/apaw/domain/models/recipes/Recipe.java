@@ -19,8 +19,8 @@ public class Recipe {
     private String referenceNumber;
     @NotNull
     @NotBlank
-    private String recipeTitle;
+    private String title;
     private String instructions;
     private Integer servings;
-    private List<RecipeItem> recipeItems;
+    private List<RecipeItem> items;
 }
