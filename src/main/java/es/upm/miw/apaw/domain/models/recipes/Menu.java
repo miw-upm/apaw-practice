@@ -25,6 +25,6 @@ public class Menu {
     @NotNull
     @NotEmpty
     private String type;
-    private List<UserDto> users;
+    private UserDto user;
     private List<Recipe> recipes;
 }

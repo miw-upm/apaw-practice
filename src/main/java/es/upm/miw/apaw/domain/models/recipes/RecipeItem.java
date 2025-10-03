@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeIngredient {
-    private Recipe recipe;
+public class RecipeItem {
     private Ingredient ingredient;
-    private Double usedQuantity;
+    private Double quantity;
+    private String specifications;
+    private Boolean optional;
+
 }
