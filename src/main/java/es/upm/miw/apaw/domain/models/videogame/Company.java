@@ -19,8 +19,9 @@ public class Company {
 
     @NotNull
     @NotBlank
-    private String companyName;
+    private String denomination;
     private LocalDate foundationDate;
     private String sector;
+    private List<Videogame> videoGames;
 }
 

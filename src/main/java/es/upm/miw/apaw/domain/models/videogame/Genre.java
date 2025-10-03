@@ -17,7 +17,7 @@ import java.util.List;
 public class Genre {
     @NotNull
     @NotBlank
-    private String genreName;
+    private String type;
     private String description;
     private Float popularity;
     private Integer ageRestriction;
