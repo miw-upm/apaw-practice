@@ -19,13 +19,15 @@ public class ApplicationEntity {
     @Id
     private UUID id;
     private Status status;
-    private LocalDate date;
+    private LocalDate created;
     private boolean referral;
 
-    // Reference to the ID
+    // Reference to User by id
     private UUID user;
-    // Reference to the ID
+
+    // Reference to Position by id
     private UUID position;
+
     //Embedded in the application (Composition)
     private List<MeetingEntity> meetingList;
 }
