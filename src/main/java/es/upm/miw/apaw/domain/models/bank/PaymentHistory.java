@@ -24,6 +24,4 @@ public class PaymentHistory {
     private LocalDateTime paymentDate;
     @NotNull
     private Boolean paid;
-    @NotNull
-    private CreditCard transactionCard;
 }

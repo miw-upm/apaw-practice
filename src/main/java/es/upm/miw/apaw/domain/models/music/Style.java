@@ -7,20 +7,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Style {
     @NotNull
-    private UUID styleId;
-
-    @NotNull
     @NotBlank
-    private String styleName;
-
-    private LocalDateTime updatedAt;
+    private String genre;
+    private Integer popularityIndex;
+    private String mood;
 }

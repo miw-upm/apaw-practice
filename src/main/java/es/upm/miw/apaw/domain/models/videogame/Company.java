@@ -22,7 +22,5 @@ public class Company {
     private String companyName;
     private LocalDate foundationDate;
     private String sector;
-    @NotEmpty
-    private List<Videogame> gameReleased;
 }
 
