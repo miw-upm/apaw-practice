@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @Data
@@ -24,7 +25,6 @@ public class CreditCard {
     private Integer cvv;
     @NotNull
     private BigDecimal cardLimit;
-    @NotNull
-    private BankAccount linkedAccount;
+    private List<PaymentHistory> paymentHistoryList;
 
 }
