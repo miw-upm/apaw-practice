@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -16,13 +16,15 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Invoice {
 
-    @NotNull
-    private UUID invoiceId;
-
     @NotBlank
     private String number;
 
     @NotNull
     private LocalDate issuedAt;
-}
 
+    @NotNull
+    private BigDecimal tax;
+
+    @NotNull
+    private LocalDate dueDate;
+}

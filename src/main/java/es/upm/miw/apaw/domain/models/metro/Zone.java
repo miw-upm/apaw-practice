@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.recipes;
+package es.upm.miw.apaw.domain.models.metro;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,19 +7,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Origin {
-    @NotNull
+public class Zone {
+
     @NotBlank
-    private String isoCode;
+    private String zoneType;
+
     @NotNull
-    @NotBlank
-    private String countryName;
-    private String region;
-    private List<Recipe> recipes;
+    private BigDecimal ticketPrice;
+
+    // Relationships
+    private List<TrainStation> trainStations; // Zone has 0..* TrainStations
 }

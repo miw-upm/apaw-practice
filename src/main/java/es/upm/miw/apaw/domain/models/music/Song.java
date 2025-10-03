@@ -17,8 +17,8 @@ public class Song {
     private String isrc;
     @NotNull
     @NotBlank
-    private String songTitle;
+    private String title;
     private Integer durationSeconds;
     @NotNull
-    private Style songStyle;
+    private Style style;
 }

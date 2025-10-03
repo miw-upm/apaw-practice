@@ -15,9 +15,6 @@ import java.util.UUID;
 public class Representative {
 
     @NotNull
-    private UUID representativeId;
-
-    @NotNull
     private LocalDateTime assignmentDate;
 
     @NotNull

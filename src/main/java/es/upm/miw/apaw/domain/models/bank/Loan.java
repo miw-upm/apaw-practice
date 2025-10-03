@@ -24,6 +24,4 @@ public class Loan {
         private Double interestRate;
         @NotBlank
         private String loanStatus;
-        @NotNull
-        private BankAccount associatedAccount;
 }
