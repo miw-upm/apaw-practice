@@ -14,13 +14,11 @@ import java.util.UUID;
 public class IssueReply {
 
     @NotNull
-    private UUID complaintId;
-
-    @NotNull
     private String complaintDescription;
 
     @NotNull
     private LocalDateTime complaintDate;
 
+    @NotNull
     private BigDecimal complaintClaimAmount;
 }
