@@ -14,20 +14,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TrainLine {
-
     @NotNull
-    private Integer lineNumber;
+    private Integer number;
 
     @NotBlank
-    private String lineColor;
+    private String color;
 
     @NotNull
-    private Integer stationsNum;
+    private Integer numStations;
 
     @NotNull
     private Boolean circular;
 
     // Relationships
     private List<Train> trains;              // TrainLine has 0..* Trains
-    private List<TrainStation> trainStations; // TrainLine belongs to 0..* TrainStations
 }

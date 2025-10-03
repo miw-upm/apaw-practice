@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -14,18 +16,14 @@ import lombok.NoArgsConstructor;
 public class Train {
 
     @NotBlank
-    private String trainId;
+    private UUID id;
 
     @NotNull
-    private Integer trainVagonsNum;
+    private Integer numCars;
 
     @NotNull
     private Boolean operational;
 
     @NotNull
     private Double maxSpeed;
-
-    // Relationships
-    private TrainLine trainLine;       // belongs to 1 TrainLine
-    private TrainStation trainStation; // belongs to 0..1 TrainStation
 }
