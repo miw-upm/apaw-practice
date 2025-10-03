@@ -13,6 +13,4 @@ public class LegalGuardian {
     private RelationShip relationShip;
     @NotNull
     private UserDto user;
-    @NotNull
-    private Athlete athlete;
 }
