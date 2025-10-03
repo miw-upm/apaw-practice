@@ -21,6 +21,9 @@ public class Menu {
     @NotBlank
     private Long internalCode;
     @NotNull
+    @NotBlank
+    private String caption;
+    @NotNull
     private LocalDate startDate;
     @NotNull
     @NotEmpty
