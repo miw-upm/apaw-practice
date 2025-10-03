@@ -45,25 +45,25 @@ public class AirportSeeder {
         BoardingGateEntity[] boardingGates = {
                 BoardingGateEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
-                        .gateNumber("A01")
+                        .number("A01")
                         .terminal("T1")
                         .opened(true)
                         .build(),
                 BoardingGateEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
-                        .gateNumber("B02")
+                        .number("B02")
                         .terminal("T2")
                         .opened(false)
                         .build(),
                 BoardingGateEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
-                        .gateNumber("C03")
+                        .number("C03")
                         .terminal("T3")
                         .opened(false)
                         .build(),
                 BoardingGateEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
-                        .gateNumber("A02")
+                        .number("A02")
                         .terminal("T1")
                         .opened(true)
                         .build(),
@@ -131,7 +131,7 @@ public class AirportSeeder {
         // 4) Flights (referencian gate y plane por @DBRef)
         FlightEntity[] flights = {
                 FlightEntity.builder()
-                        .flightNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"))
                         .departureTime(LocalDateTime.now().plusDays(1).withHour(9).withMinute(30))
                         .arrivalTime(LocalDateTime.now().plusDays(1).withHour(11).withMinute(15))
                         .destination("BCN")
@@ -141,7 +141,7 @@ public class AirportSeeder {
                         .pilotId(pilots[1])
                         .build(),
                 FlightEntity.builder()
-                        .flightNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3001"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3001"))
                         .departureTime(LocalDateTime.now().plusDays(2).withHour(12).withMinute(20))
                         .arrivalTime(LocalDateTime.now().plusDays(2).withHour(14).withMinute(55))
                         .destination("MAD")
@@ -151,7 +151,7 @@ public class AirportSeeder {
                         .pilotId(pilots[2])
                         .build(),
                 FlightEntity.builder()
-                        .flightNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3002"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3002"))
                         .departureTime(LocalDateTime.now().plusDays(3).withHour(18).withMinute(15))
                         .arrivalTime(LocalDateTime.now().plusDays(3).withHour(20).withMinute(35))
                         .destination("PMI")
@@ -161,7 +161,7 @@ public class AirportSeeder {
                         .pilotId(pilots[3])
                         .build(),
                 FlightEntity.builder()
-                        .flightNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3003"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3003"))
                         .departureTime(LocalDateTime.now().plusDays(4).withHour(7).withMinute(35))
                         .arrivalTime(LocalDateTime.now().plusDays(4).withHour(10).withMinute(10))
                         .destination("LIS")
@@ -171,7 +171,7 @@ public class AirportSeeder {
                         .pilotId(pilots[0])
                         .build(),
                 FlightEntity.builder()
-                        .flightNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3004"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3004"))
                         .departureTime(LocalDateTime.now().plusDays(5).withHour(6).withMinute(45))
                         .arrivalTime(LocalDateTime.now().plusDays(5).withHour(8).withMinute(55))
                         .destination("CDG")
@@ -181,7 +181,7 @@ public class AirportSeeder {
                         .pilotId(pilots[0])
                         .build(),
                 FlightEntity.builder()
-                        .flightNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3005"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3005"))
                         .departureTime(LocalDateTime.now().plusDays(6).withHour(13).withMinute(10))
                         .arrivalTime(LocalDateTime.now().plusDays(6).withHour(15).withMinute(30))
                         .destination("AMS")
@@ -191,7 +191,7 @@ public class AirportSeeder {
                         .pilotId(pilots[1])
                         .build(),
                 FlightEntity.builder()
-                        .flightNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3006"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3006"))
                         .departureTime(LocalDateTime.now().plusDays(7).withHour(16).withMinute(40))
                         .arrivalTime(LocalDateTime.now().plusDays(7).withHour(19).withMinute(5))
                         .destination("FRA")
@@ -201,7 +201,7 @@ public class AirportSeeder {
                         .pilotId(pilots[2])
                         .build(),
                 FlightEntity.builder()
-                        .flightNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3007"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3007"))
                         .departureTime(LocalDateTime.now().plusDays(8).withHour(10).withMinute(5))
                         .arrivalTime(LocalDateTime.now().plusDays(8).withHour(12).withMinute(45))
                         .destination("LHR")

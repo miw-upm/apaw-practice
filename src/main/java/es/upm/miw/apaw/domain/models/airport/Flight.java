@@ -19,7 +19,7 @@ import java.util.UUID;
 public class Flight {
     @NotNull
     @NotBlank
-    private UUID flightNumber;
+    private UUID id;
     @NotNull
     private LocalDateTime departureTime;
     @NotNull
