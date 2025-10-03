@@ -17,11 +17,11 @@ import java.util.UUID;
 public class Loan {
 
         @NotNull
-        private UUID loanId;
+        private UUID id;
         @NotNull
-        private BigDecimal loanAmount;
+        private BigDecimal quantity;
         @NotNull
         private Double interestRate;
         @NotBlank
-        private String loanStatus;
+        private String condition;
 }
