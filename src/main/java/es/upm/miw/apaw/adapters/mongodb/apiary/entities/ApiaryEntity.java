@@ -29,7 +29,6 @@ public class ApiaryEntity {
     private String location;
     private String rega;
 
-    @DBRef
     private List<HiveEntity> hiveEntities;
 
     public ApiaryEntity(Apiary apiary) {
