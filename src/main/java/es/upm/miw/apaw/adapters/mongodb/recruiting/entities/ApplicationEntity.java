@@ -1,12 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.entities;
 
-import es.upm.miw.apaw.domain.models.UserDto;
-import es.upm.miw.apaw.domain.models.recruiting.Meeting;
-import es.upm.miw.apaw.domain.models.recruiting.Position;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -24,10 +20,12 @@ public class ApplicationEntity {
     private UUID id;
     private Status status;
     private LocalDate date;
-    private boolean isReferral;
+    private boolean referral;
 
+    // Reference to the ID
     private UUID user;
+    // Reference to the ID
     private UUID position;
-    @DBRef
+    //Embedded in the application (Composition)
     private List<MeetingEntity> meetingList;
 }
