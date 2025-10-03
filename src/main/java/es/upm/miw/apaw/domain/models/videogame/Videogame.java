@@ -21,8 +21,6 @@ public class Videogame {
     private Boolean online;
     private LocalDate releaseDate;
     @NotNull
-    private Company company;
-    @NotNull
     private Genre genre;
 
 }
