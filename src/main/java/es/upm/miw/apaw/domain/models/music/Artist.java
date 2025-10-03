@@ -17,11 +17,11 @@ import java.util.List;
 public class Artist {
     @NotNull
     @NotBlank
-    private String stageName;
+    private String name;
     private LocalDate activeSince;
     private Long monthlyListeners;
     @NotNull
-    private UserDto linkedUser;
+    private UserDto user;
     @NotNull
-    private List<Song> artistSongs;
+    private List<Song> songs;
 }
