@@ -14,16 +14,16 @@ import java.util.UUID;
 public class StudentCouncil {
 
     @NotNull
-    private UUID councilId;
+    private UUID id;
 
     @NotNull
-    private String councilName;
+    private String council;
 
     @NotNull
-    private String councilLocation;
+    private String site;
 
     @NotNull
-    private BigDecimal councilBudget;
+    private BigDecimal resources;
 
     private List<Representative> representatives;
 }
