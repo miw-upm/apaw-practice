@@ -6,10 +6,13 @@ import es.upm.miw.apaw.domain.models.fighters.Rating;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Document
 @Data
 @NoArgsConstructor
@@ -17,8 +20,11 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FighterEntity {
+    private static final String[] IGNORE_PROPERTIES = {"coach", "martialArts", "ratings"};
     @Id
+    private UUID id;
     @EqualsAndHashCode.Include
+    @Indexed(unique = true)
     private String nickname;
     private String name;
     private String lastName;
@@ -32,7 +38,19 @@ public class FighterEntity {
     private List<RatingEntity> ratingsEntities = new ArrayList<>();
 
     public FighterEntity(Fighter fighter) {
-        BeanUtils.copyProperties(fighter, this,"coach","martialArts", "ratings");
+        BeanUtils.copyProperties(fighter, this,IGNORE_PROPERTIES);
+        this.id = UUID.randomUUID();
+        this.coach = new CoachEntity(fighter.getCoach());
+        this.martialArtsEntities = fighter.getMartialArts().stream()
+                .map(MartialArtEntity::new)
+                .toList();
+        this.ratingsEntities = fighter.getRatings().stream()
+                .map(RatingEntity::new)
+                .toList();
+    }
+
+    public void fromFighter(Fighter fighter) {
+        BeanUtils.copyProperties(fighter, this,IGNORE_PROPERTIES);
         this.coach = new CoachEntity(fighter.getCoach());
         this.martialArtsEntities = fighter.getMartialArts().stream()
                 .map(MartialArtEntity::new)
@@ -44,7 +62,7 @@ public class FighterEntity {
 
     public Fighter toFighter() {
         Fighter fighter = new Fighter();
-        BeanUtils.copyProperties(this, fighter,"coach","martialArts", "ratings");
+        BeanUtils.copyProperties(this, fighter,IGNORE_PROPERTIES);
         fighter.setCoach(this.coach.toCoach());
         List<MartialArt> martialArts = this.martialArtsEntities.stream()
                 .map(MartialArtEntity::toMartialArt)

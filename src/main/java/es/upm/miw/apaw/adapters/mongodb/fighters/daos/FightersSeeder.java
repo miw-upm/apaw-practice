@@ -30,35 +30,35 @@ public class FightersSeeder {
 
         // ==== COACHES ====
         CoachEntity coach1 = CoachEntity.builder()
-                .coachNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                 .fullName("John Smith")
                 .academy("Nova Gym")
                 .experienceYears(12)
                 .build();
 
         CoachEntity coach2 = CoachEntity.builder()
-                .coachNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                 .fullName("Carlos Mendes")
                 .academy("Gracie Team")
                 .experienceYears(20)
                 .build();
 
         CoachEntity coach3 = CoachEntity.builder()
-                .coachNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                 .fullName("Yuki Tanaka")
                 .academy("Tokyo Dojo")
                 .experienceYears(15)
                 .build();
 
         CoachEntity coach4 = CoachEntity.builder()
-                .coachNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                 .fullName("Mike Thompson")
                 .academy("Iron Fist Gym")
                 .experienceYears(0)
                 .build();
 
         CoachEntity coach5 = CoachEntity.builder()
-                .coachNumber(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
                 .fullName("Elena Petrova")
                 .academy("Moscow Combat Club")
                 .experienceYears(8)
@@ -68,6 +68,7 @@ public class FightersSeeder {
 
         // ==== MARTIAL ARTS ====
         MartialArtEntity mma = MartialArtEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2000"))
                 .discipline("MMA")
                 .origin("USA")
                 .description("Mixed Martial Arts. You can use all martial arts disciplines")
@@ -76,6 +77,7 @@ public class FightersSeeder {
                 .build();
 
         MartialArtEntity muayThai = MartialArtEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2001"))
                 .discipline("Muay Thai")
                 .origin("Thailand")
                 .description("Thai kickboxing. The art of the eight limbs")
@@ -85,6 +87,7 @@ public class FightersSeeder {
 
         String brazil = "Brazil";
         MartialArtEntity bjj = MartialArtEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2002"))
                 .discipline("BJJ")
                 .origin(brazil)
                 .description("Brazilian Jiu-Jitsu")
@@ -93,6 +96,7 @@ public class FightersSeeder {
                 .build();
 
         MartialArtEntity boxing = MartialArtEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2003"))
                 .discipline("Boxing")
                 .origin("England")
                 .description("The sweet science of punching and footwork")
@@ -101,6 +105,7 @@ public class FightersSeeder {
                 .build();
 
         MartialArtEntity taekwondo = MartialArtEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2004"))
                 .discipline("Taekwondo")
                 .origin("Korea")
                 .description("Korean martial art focusing on high kicks and fast movements")
@@ -109,6 +114,7 @@ public class FightersSeeder {
                 .build();
 
         MartialArtEntity kravMaga = MartialArtEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2005"))
                 .discipline("Krav Maga")
                 .origin("Israel")
                 .description("Self-defense system focused on real-world situations")
@@ -117,6 +123,7 @@ public class FightersSeeder {
                 .build();
 
         MartialArtEntity karate = MartialArtEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2006"))
                 .discipline("Karate")
                 .origin("Japan")
                 .description("Japanese martial art emphasizing punches, kicks, and discipline")
@@ -125,6 +132,7 @@ public class FightersSeeder {
                 .build();
 
         MartialArtEntity k1 = MartialArtEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2007"))
                 .discipline("K1")
                 .origin("Japan")
                 .description("Kickboxing style combining karate, Muay Thai, and boxing techniques")
@@ -136,47 +144,48 @@ public class FightersSeeder {
 
         // ==== RATINGS ====
         RatingEntity rating1 = RatingEntity.builder()
-                .idRating(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100"))
                 .score(5)
                 .comment("Excellent fighter!")
                 .createdAt(LocalDateTime.now())
-                .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
+                .userId(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
                 .build();
 
         RatingEntity rating2 = RatingEntity.builder()
-                .idRating(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101"))
                 .score(4)
                 .comment("Strong performance")
                 .createdAt(LocalDateTime.now().minusDays(2))
-                .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
+                .userId(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
                 .build();
 
         RatingEntity rating3 = RatingEntity.builder()
-                .idRating(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0102"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0102"))
                 .score(3)
                 .comment("Needs better cardio")
                 .createdAt(LocalDateTime.now().minusDays(5))
-                .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1002"))
+                .userId(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1002"))
                 .build();
 
         RatingEntity rating4 = RatingEntity.builder()
-                .idRating(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0103"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0103"))
                 .score(5)
                 .comment("Incredible striking!")
                 .createdAt(LocalDateTime.now().minusDays(1))
-                .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1003"))
+                .userId(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1003"))
                 .build();
 
         RatingEntity rating5 = RatingEntity.builder()
-                .idRating(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0104"))
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0104"))
                 .score(2)
                 .comment("Poor ground defense")
                 .createdAt(LocalDateTime.now().minusDays(3))
-                .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1004"))
+                .userId(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1004"))
                 .build();
 
         // ==== FIGHTERS ====
         FighterEntity fighter1 = FighterEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"))
                 .nickname("Spider")
                 .name("Anderson")
                 .lastName("Silva")
@@ -191,6 +200,7 @@ public class FightersSeeder {
                 .build();
 
         FighterEntity fighter2 = FighterEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3001"))
                 .nickname("Notorious")
                 .name("Conor")
                 .lastName("McGregor")
@@ -205,6 +215,7 @@ public class FightersSeeder {
                 .build();
 
         FighterEntity fighter3 = FighterEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3002"))
                 .nickname("The Dragon")
                 .name("Lyoto")
                 .lastName("Machida")
@@ -219,6 +230,7 @@ public class FightersSeeder {
                 .build();
 
         FighterEntity fighter4 = FighterEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3003"))
                 .nickname("Iron")
                 .name("Mike")
                 .lastName("Tyson")
@@ -228,11 +240,12 @@ public class FightersSeeder {
                 .losses(6)
                 .country("USA")
                 .coach(coach4)
-                .martialArtsEntities(List.of(boxing))
-                .ratingsEntities(List.of()) // Sin ratings
+                .martialArtsEntities(List.of(boxing)) // 1 arte
+                .ratingsEntities(List.of()) // sin ratings
                 .build();
 
         FighterEntity fighter5 = FighterEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3004"))
                 .nickname("The Eagle")
                 .name("Khabib")
                 .lastName("Nurmagomedov")
@@ -242,11 +255,12 @@ public class FightersSeeder {
                 .losses(0)
                 .country("Russia")
                 .coach(coach5)
-                .martialArtsEntities(List.of(mma, bjj, karate))
+                .martialArtsEntities(List.of(mma, bjj, karate)) // 3 artes
                 .ratingsEntities(List.of(rating1, rating5))
                 .build();
 
         FighterEntity fighter6 = FighterEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3005"))
                 .nickname("Rookie")
                 .name("Alex")
                 .lastName("Lopez")
@@ -256,11 +270,12 @@ public class FightersSeeder {
                 .losses(0)
                 .country("Mexico")
                 .coach(coach4)
-                .martialArtsEntities(List.of(taekwondo))
-                .ratingsEntities(List.of())
+                .martialArtsEntities(List.of(taekwondo)) // 1 arte
+                .ratingsEntities(List.of()) // sin ratings
                 .build();
 
         FighterEntity fighter7 = FighterEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3006"))
                 .nickname("Shadow")
                 .name("Maria")
                 .lastName("Kuznetsova")
@@ -270,13 +285,19 @@ public class FightersSeeder {
                 .losses(3)
                 .country("Russia")
                 .coach(coach5)
-                .martialArtsEntities(List.of(k1, boxing, muayThai))
+                .martialArtsEntities(List.of(k1, boxing, muayThai)) // 3 artes
                 .ratingsEntities(List.of(rating4))
                 .build();
 
-        this.fighterRepository.saveAll(List.of(fighter1, fighter2, fighter3, fighter4, fighter5, fighter6, fighter7));
+        this.fighterRepository.saveAll(List.of(
+                fighter1, fighter2, fighter3, fighter4, fighter5, fighter6, fighter7
+        ));
 
         log.warn("        ------- fighters, coaches, martial arts seeded successfully");
+    }
+
+    private static UUID u(String value) {
+        return UUID.fromString(value);
     }
 
     public void deleteAll() {

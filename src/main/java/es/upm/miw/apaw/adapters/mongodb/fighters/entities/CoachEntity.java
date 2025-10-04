@@ -17,14 +17,14 @@ import java.util.UUID;
 public class CoachEntity {
     @Id
     @EqualsAndHashCode.Include
-    private UUID coachNumber;
+    private UUID id;
     private String fullName;
     private String academy;
     private Integer experienceYears;
 
     public CoachEntity(Coach coach) {
         BeanUtils.copyProperties(coach, this);
-        this.coachNumber = UUID.randomUUID();
+        this.id = UUID.randomUUID();
     }
 
     public void fromCoach(Coach coach){

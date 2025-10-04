@@ -25,6 +25,4 @@ public class Coach {
     private String academy;
     @Min(0)
     private Integer experienceYears;
-    @Builder.Default
-    private List<Fighter> fighters = new ArrayList<>();
 }

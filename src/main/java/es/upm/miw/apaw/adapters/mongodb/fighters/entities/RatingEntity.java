@@ -19,14 +19,14 @@ import java.util.UUID;
 public class RatingEntity {
     @Id
     @EqualsAndHashCode.Include
-    private UUID idRating;
+    private UUID id;
     private Integer score;
     private String comment;
     private LocalDateTime createdAt;
     private UUID userId;
     public RatingEntity(Rating rating) {
         BeanUtils.copyProperties(rating, this);
-        this.idRating = UUID.randomUUID();
+        this.id = UUID.randomUUID();
         this.userId = rating.getUser().getId();
     }
 
