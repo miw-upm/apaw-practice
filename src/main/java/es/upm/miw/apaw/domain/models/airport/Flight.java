@@ -21,9 +21,13 @@ public class Flight {
     @NotBlank
     private UUID id;
     @NotNull
+    @NotBlank
     private LocalDateTime departureTime;
     @NotNull
+    @NotBlank
     private LocalDateTime arrivalTime;
+    @NotNull
+    @NotBlank
     private String destination;
 
     private BoardingGate boardingGate;
