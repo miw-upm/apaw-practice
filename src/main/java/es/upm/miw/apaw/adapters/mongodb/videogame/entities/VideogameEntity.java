@@ -1,11 +1,9 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.entities;
 
-import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDate;

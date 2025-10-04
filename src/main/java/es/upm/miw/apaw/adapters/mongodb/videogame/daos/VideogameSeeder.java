@@ -25,10 +25,11 @@ public class VideogameSeeder {
         this.companyRepository = companyRepository;
         this.likeListRepository = likeListRepository;
     }
+
     public void seedDatabase() {
         log.warn("------- Shop Initial Load -----------");
 
-        GenreEntity[] genres ={
+        GenreEntity[] genres = {
                 GenreEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                         .type("action").description("Accion").ageRestriction(10).build(),
                 GenreEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
@@ -42,14 +43,14 @@ public class VideogameSeeder {
         };
         this.genreRepository.saveAll(Arrays.asList(genres));
 
-        VideogameEntity[] videogames ={
+        VideogameEntity[] videogames = {
                 VideogameEntity.builder().genreEntity(genres[0]).name("game0").online(false).releaseDate(LocalDate.now()).maxPlayers(10).build(),
                 VideogameEntity.builder().genreEntity(genres[1]).name("game1").online(true).releaseDate(LocalDate.now()).maxPlayers(1).build(),
                 VideogameEntity.builder().genreEntity(genres[2]).name("game2").online(true).releaseDate(LocalDate.now()).maxPlayers(2).build(),
                 VideogameEntity.builder().genreEntity(genres[1]).name("game3").online(true).releaseDate(LocalDate.now()).maxPlayers(2).build(),
                 VideogameEntity.builder().genreEntity(genres[0]).name("game4").online(false).releaseDate(LocalDate.now()).maxPlayers(10).build(),
 
-    };
+        };
         CompanyEntity[] companies = {
                 CompanyEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0010"))
                         .denomination("company0").foundationDate(LocalDate.now()).sector("sector0")
@@ -64,10 +65,10 @@ public class VideogameSeeder {
 
         LikeListEntity[] likeLists = {
                 LikeListEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
-                        .likesCount(0).shared(true).gamesLikedEntity(Arrays.asList(videogames[0],videogames[1]))
+                        .likesCount(0).shared(true).gamesLikedEntity(Arrays.asList(videogames[0], videogames[1]))
                         .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")).build(),
                 LikeListEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0021"))
-                        .likesCount(10).shared(false).gamesLikedEntity(Arrays.asList(videogames[0],videogames[2]))
+                        .likesCount(10).shared(false).gamesLikedEntity(Arrays.asList(videogames[0], videogames[2]))
                         .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")).build(),
                 LikeListEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0022"))
                         .likesCount(5).shared(true)
@@ -75,6 +76,7 @@ public class VideogameSeeder {
         };
         this.likeListRepository.saveAll(Arrays.asList(likeLists));
     }
+
     public void deleteAll() {
         this.likeListRepository.deleteAll();
         this.companyRepository.deleteAll();
