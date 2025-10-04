@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "sports_academy_legal_guardians")
 public class LegalGuardianEntity {
     @Id
     private UUID userDtoId;

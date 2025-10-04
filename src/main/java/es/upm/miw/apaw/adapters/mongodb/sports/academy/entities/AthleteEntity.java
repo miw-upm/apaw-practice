@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.models.sports.academy.SportModality;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "sports_academy_athletes")
 public class AthleteEntity {
     @Id
     private UUID userDtoId;
@@ -25,7 +26,9 @@ public class AthleteEntity {
     private double height;
     private double weight;
     private LocalDate birthDate;
+    @DBRef
     private List<SportModalityEntity> sportModalities;
+    @DBRef
     private List<LegalGuardianEntity> legalGuardians;
 
     public AthleteEntity(Athlete athlete) {

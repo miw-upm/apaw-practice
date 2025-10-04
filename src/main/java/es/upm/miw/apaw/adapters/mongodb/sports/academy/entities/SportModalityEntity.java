@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "sports_academy_sport_modalities")
 public class SportModalityEntity {
     @Id
     private UUID sportId;
@@ -25,7 +26,9 @@ public class SportModalityEntity {
     private int level;
     private int targetAudience;
     private boolean active;
+    @DBRef
     private List<AthleteEntity> athletes;
+    @DBRef
     private ProfessorEntity professor;
 
     public SportModalityEntity(SportModality sportModality) {

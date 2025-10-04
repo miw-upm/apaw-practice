@@ -48,6 +48,7 @@ public class SportsAcademySeeder {
                         .relationShip(RelationShip.AUNT.getValue())
                         .build(),
                 LegalGuardianEntity.builder()
+                        .userDtoId(UUID.randomUUID())
                         .secondMobile("+34712036811")
                         .relationShip(RelationShip.AUNT.getValue())
                         .build(),
@@ -111,16 +112,19 @@ public class SportsAcademySeeder {
 
             SportModalityEntity[] sportModalities = {
                     SportModalityEntity.builder()
+                        .sportId(UUID.randomUUID())
                         .title("Tennis")
                         .professor(professors[0])
                         .athletes(java.util.Arrays.asList(athletes))
                         .build(),
                     SportModalityEntity.builder()
+                        .sportId(UUID.randomUUID())
                         .title("Swimming")
                         .professor(professors[1])
                         .athletes(java.util.Arrays.asList(athletes))
                         .build(),
                     SportModalityEntity.builder()
+                        .sportId(UUID.randomUUID())
                         .title("Soccer")
                         .professor(professors[2])
                         .athletes(java.util.Arrays.asList(athletes))
