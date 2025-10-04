@@ -16,8 +16,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation {
-    private UUID idReservation;
-    private LocalDateTime reservationDate;
+    private UUID id;
+    private LocalDateTime bookingDate;
     private BigDecimal totalCost;
     private Boolean confirmed;
     @NotNull

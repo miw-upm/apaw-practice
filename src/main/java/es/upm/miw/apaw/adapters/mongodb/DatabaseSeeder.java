@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.mongodb;
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.AirportSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
+import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.StudentCouncilSeeder;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.SportsAcademySeeder;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
@@ -24,9 +25,11 @@ public class DatabaseSeeder {
     private final VehicleSeeder vehicleSeeder;
     private final ApiarySeeder apiarySeeder;
     private final RecruitingSeeder recruitingSeeder;
+    private final StudentCouncilSeeder studentCouncilSeeder;
     private final WinerySeeder winerySeeder;
     private final UniversitySeeder universitySeeder;
     private final SportsAcademySeeder sportsAcademySeeder;
+
 
     @Autowired
     public DatabaseSeeder(
@@ -35,6 +38,7 @@ public class DatabaseSeeder {
             VehicleSeeder vehicleSeeder,
             ApiarySeeder apiarySeeder,
             RecruitingSeeder recruitingSeeder,
+            StudentCouncilSeeder studentCouncilSeeder,
             WinerySeeder winerySeeder,
             UniversitySeeder universitySeeder,
             SportsAcademySeeder sportsAcademySeeder
@@ -44,6 +48,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder = vehicleSeeder;
         this.apiarySeeder = apiarySeeder;
         this.recruitingSeeder = recruitingSeeder;
+        this.studentCouncilSeeder =  studentCouncilSeeder;
         this.winerySeeder = winerySeeder;
         this.universitySeeder = universitySeeder;
         this.sportsAcademySeeder = sportsAcademySeeder;
@@ -56,6 +61,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder.seedDatabase();
         this.apiarySeeder.seedDatabase();
         this.recruitingSeeder.seedDatabase();
+        this.studentCouncilSeeder.seedDatabase();
         this.winerySeeder.seedDatabase();
         this.universitySeeder.seedDatabase();
         this.sportsAcademySeeder.seedDatabase();
@@ -67,6 +73,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder.deleteAll();
         this.apiarySeeder.deleteAll();
         this.recruitingSeeder.deleteAll();
+        this.studentCouncilSeeder.deleteAll();
         this.winerySeeder.deleteAll();
         this.universitySeeder.deleteAll();
         this.sportsAcademySeeder.deleteAll();
