@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb;
 
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.AirportSeeder;
+import es.upm.miw.apaw.adapters.mongodb.fighters.daos.FightersSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.StudentCouncilSeeder;
@@ -29,7 +30,7 @@ public class DatabaseSeeder {
     private final WinerySeeder winerySeeder;
     private final UniversitySeeder universitySeeder;
     private final SportsAcademySeeder sportsAcademySeeder;
-
+    private final FightersSeeder fightersSeeder;
 
     @Autowired
     public DatabaseSeeder(
@@ -41,7 +42,8 @@ public class DatabaseSeeder {
             StudentCouncilSeeder studentCouncilSeeder,
             WinerySeeder winerySeeder,
             UniversitySeeder universitySeeder,
-            SportsAcademySeeder sportsAcademySeeder
+            SportsAcademySeeder sportsAcademySeeder,
+            FightersSeeder fightersSeeder
             ) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
@@ -52,6 +54,7 @@ public class DatabaseSeeder {
         this.winerySeeder = winerySeeder;
         this.universitySeeder = universitySeeder;
         this.sportsAcademySeeder = sportsAcademySeeder;
+        this.fightersSeeder = fightersSeeder;
         this.seedDatabase();
     }
 
@@ -61,6 +64,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder.seedDatabase();
         this.apiarySeeder.seedDatabase();
         this.recruitingSeeder.seedDatabase();
+        this.fightersSeeder.seedDatabase();
         this.studentCouncilSeeder.seedDatabase();
         this.winerySeeder.seedDatabase();
         this.universitySeeder.seedDatabase();
@@ -73,6 +77,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder.deleteAll();
         this.apiarySeeder.deleteAll();
         this.recruitingSeeder.deleteAll();
+        this.fightersSeeder.deleteAll();
         this.studentCouncilSeeder.deleteAll();
         this.winerySeeder.deleteAll();
         this.universitySeeder.deleteAll();
