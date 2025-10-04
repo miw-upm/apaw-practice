@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.domain.models.videogame;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +18,12 @@ public class Company {
 
     @NotNull
     @NotBlank
-    private String companyName;
+    private String denomination;
+    @NotNull
     private LocalDate foundationDate;
+    @NotNull
+    @NotBlank
     private String sector;
+    private List<Videogame> videoGames;
 }
 

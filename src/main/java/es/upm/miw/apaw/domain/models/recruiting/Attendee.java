@@ -13,8 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Attendee {
-    private String firstName;
-    private String lastName;
+    @NotNull
+    @NotBlank
+    private String fullName;
+    @NotNull
+    @NotBlank
+    private String phoneNumber;
     @NotNull
     @NotBlank
     private String emailAddress;

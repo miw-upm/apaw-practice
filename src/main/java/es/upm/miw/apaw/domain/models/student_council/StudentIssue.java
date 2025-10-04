@@ -14,19 +14,19 @@ import java.util.UUID;
 public class StudentIssue {
 
     @NotNull
-    private UUID issueId;
+    private UUID id;
 
     @NotNull
-    private String issueDescription;
+    private String statement;
 
     @NotNull
-    private LocalDateTime issueDate;
+    private LocalDateTime reportDate;
 
     @NotNull
-    private Boolean issueResolved;
+    private Boolean closed;
 
     @NotNull
-    private Integer issuePriority;
+    private Integer urgency;
 
     private List<IssueReply> replies;
 }
