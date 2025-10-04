@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Store {
 
     @NotNull
-    private UUID storeId;
+    private UUID id;
 
     @NotBlank
     private String name;

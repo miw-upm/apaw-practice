@@ -18,7 +18,7 @@ import java.util.List;
 public class Order {
 
     @NotNull
-    private LocalDate orderDate;
+    private LocalDate date;
 
     @NotNull
     private BigDecimal total;
