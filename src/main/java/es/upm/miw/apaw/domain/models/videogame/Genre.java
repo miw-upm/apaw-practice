@@ -20,6 +20,7 @@ public class Genre {
     private String type;
     private String description;
     private Float popularity;
+    @NotNull
     private Integer ageRestriction;
 
 }

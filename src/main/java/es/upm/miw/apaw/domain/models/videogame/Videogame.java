@@ -17,8 +17,11 @@ public class Videogame {
     @NotNull
     @NotBlank
     private String name;
+    @NotNull
     private Integer maxPlayers;
+    @NotNull
     private Boolean online;
+    @NotNull
     private LocalDate releaseDate;
     @NotNull
     private Genre genre;
