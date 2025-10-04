@@ -20,7 +20,7 @@ public class BankAccount {
     @NotBlank
     private String accountNumber;
     @NotBlank
-    private String accountStatus;
+    private String status;
     @NotEmpty
     private List<UserDto> accountHolders;
     @NotNull
