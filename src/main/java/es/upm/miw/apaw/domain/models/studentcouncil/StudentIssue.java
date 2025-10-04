@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.student_council;
+package es.upm.miw.apaw.domain.models.studentcouncil;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
