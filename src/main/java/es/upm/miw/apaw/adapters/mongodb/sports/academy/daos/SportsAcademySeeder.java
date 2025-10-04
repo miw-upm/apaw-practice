@@ -23,17 +23,17 @@ import java.util.UUID;
 @Log4j2
 public class SportsAcademySeeder {
 
-    private final IAthleteRepository athleteRepository;
+    private final AthleteRepository athleteRepository;
     private final ISportModalityRepository sportModalityRepository;
-    private final ILegalGuardianRepository legalGuardianRepository;
-    private final IProfessorRepository professorRepository;
+    private final LegalGuardianRepository legalGuardianRepository;
+    private final ProfessorRepository professorRepository;
 
     @Autowired
     public SportsAcademySeeder(
-            IAthleteRepository athleteRepository,
+            AthleteRepository athleteRepository,
             ISportModalityRepository sportModalityRepository,
-            ILegalGuardianRepository legalGuardianRepository,
-            IProfessorRepository professorRepository) {
+            LegalGuardianRepository legalGuardianRepository,
+            ProfessorRepository professorRepository) {
         this.athleteRepository = athleteRepository;
         this.sportModalityRepository = sportModalityRepository;
         this.legalGuardianRepository = legalGuardianRepository;
@@ -107,19 +107,19 @@ public class SportsAcademySeeder {
 
             SportModalityEntity[] sportModalities = {
                     SportModalityEntity.builder()
-                        .sportId(UUID.randomUUID())
+                        .sportId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006"))
                         .title("Tennis")
                         .level(Level.BEGINNER.getValue())
                         .targetAudience(TargetAudience.KIDS.getValue())
-                        .professor(professors[0])
+                        .professorId(professors[0].getUserDtoId())
                         .athletes(java.util.Arrays.asList(athletes))
                         .build(),
                     SportModalityEntity.builder()
-                        .sportId(UUID.randomUUID())
+                        .sportId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007"))
                         .title("Swimming")
                         .level(Level.INTERMEDIATE.getValue())
                         .targetAudience(TargetAudience.TEENAGERS.getValue())
-                        .professor(professors[1])
+                        .professorId(professors[1].getUserDtoId())
                         .athletes(java.util.Arrays.asList(athletes))
                         .build()
             };
