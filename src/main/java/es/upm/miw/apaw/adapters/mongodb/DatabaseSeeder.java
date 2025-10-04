@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.mongodb;
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.AirportSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
+import es.upm.miw.apaw.adapters.mongodb.student_council.daos.StudentCouncilSeeder;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 
@@ -21,14 +22,16 @@ public class DatabaseSeeder {
     private final VehicleSeeder vehicleSeeder;
     private final ApiarySeeder apiarySeeder;
     private final RecruitingSeeder recruitingSeeder;
+    private final StudentCouncilSeeder studentCouncilSeeder;
 
     @Autowired
-    public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder, RecruitingSeeder recruitingSeeder) {
+    public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder, RecruitingSeeder recruitingSeeder, StudentCouncilSeeder studentCouncilSeeder) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
         this.vehicleSeeder = vehicleSeeder;
         this.apiarySeeder = apiarySeeder;
         this.recruitingSeeder = recruitingSeeder;
+        this.studentCouncilSeeder =  studentCouncilSeeder;
         this.seedDatabase();
     }
 
@@ -38,6 +41,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder.seedDatabase();
         this.apiarySeeder.seedDatabase();
         this.recruitingSeeder.seedDatabase();
+        this.studentCouncilSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -46,6 +50,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder.deleteAll();
         this.apiarySeeder.deleteAll();
         this.recruitingSeeder.deleteAll();
+        this.studentCouncilSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
