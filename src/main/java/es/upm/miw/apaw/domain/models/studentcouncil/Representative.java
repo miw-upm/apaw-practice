@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.student_council;
+package es.upm.miw.apaw.domain.models.studentcouncil;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import jakarta.validation.constraints.NotNull;
@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Builder
