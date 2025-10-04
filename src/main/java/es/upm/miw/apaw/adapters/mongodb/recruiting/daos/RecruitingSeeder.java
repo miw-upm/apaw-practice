@@ -201,7 +201,7 @@ public class RecruitingSeeder {
                         .status(Status.Rejected)
                         .created(LocalDate.now().minusDays(7))
                         .referral(false)
-                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                         .position(positions[3].getId())
                         .meetingList(Collections.singletonList(meetings[6]))
                         .build()
