@@ -17,8 +17,11 @@ import java.util.UUID;
 public class PositionEntity {
     @Id
     private UUID id;
+
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
+    private int reference;
+
     private String name;
     private String description;
     private BigDecimal annualSalary;

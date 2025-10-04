@@ -42,6 +42,7 @@ public class RecruitingSeeder {
         PositionEntity[] positions = {
                 PositionEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
+                        .reference(1001)
                         .name("ABAP developer")
                         .description("ABAP developer for HR. At least 5 years of experience in OO and payroll implementation.")
                         .annualSalary(new BigDecimal("52000.00"))
@@ -50,6 +51,7 @@ public class RecruitingSeeder {
                         .build(),
                 PositionEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
+                        .reference(1002)
                         .name("CPI consultant")
                         .description("Integration Services consultant. At least 3 year of experiences in CPI development and configuration.")
                         .annualSalary(new BigDecimal("48000.00"))
@@ -58,6 +60,7 @@ public class RecruitingSeeder {
                         .build(),
                 PositionEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1002"))
+                        .reference(1003)
                         .name("Integration Consultant for HCM")
                         .description("End-to-end consultant for integrations with SAP HCM. At least 8 years of experience in SAP HCM projects.")
                         .annualSalary(new BigDecimal("56000.00"))
@@ -66,6 +69,7 @@ public class RecruitingSeeder {
                         .build(),
                 PositionEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1003"))
+                        .reference(1004)
                         .name("Technical Lead for SAP HCM")
                         .description("Lead in implementation for SAP Successfactors and SAP HCM. At least 10 years of experience as technical Leader.")
                         .annualSalary(new BigDecimal("68000.00"))
@@ -175,7 +179,7 @@ public class RecruitingSeeder {
                         .created(LocalDate.now())
                         .referral(true)
                         .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                        .position(positions[0].getId())
+                        .positionEntity(positions[0])
                         .meetingList(Arrays.asList(meetings[0],meetings[1]))
                         .build(),
                 ApplicationEntity.builder()
@@ -184,7 +188,7 @@ public class RecruitingSeeder {
                         .created(LocalDate.now().minusDays(5))
                         .referral(false)
                         .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
-                        .position(positions[1].getId())
+                        .positionEntity(positions[1])
                         .meetingList(Collections.singletonList(meetings[2]))
                         .build(),
                 ApplicationEntity.builder()
@@ -193,7 +197,7 @@ public class RecruitingSeeder {
                         .created(LocalDate.now().minusDays(4))
                         .referral(false)
                         .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
-                        .position(positions[2].getId())
+                        .positionEntity(positions[2])
                         .meetingList(Arrays.asList(meetings[3],meetings[4],meetings[5]))
                         .build(),
                 ApplicationEntity.builder()
@@ -202,7 +206,7 @@ public class RecruitingSeeder {
                         .created(LocalDate.now().minusDays(7))
                         .referral(false)
                         .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                        .position(positions[3].getId())
+                        .positionEntity(positions[3])
                         .meetingList(Collections.singletonList(meetings[6]))
                         .build()
         };
