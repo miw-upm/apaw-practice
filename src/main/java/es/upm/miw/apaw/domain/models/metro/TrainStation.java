@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.models.metro;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -34,4 +35,5 @@ public class TrainStation {
     // Relationships
     private List<TrainLine> trainLines;  // 0..* TrainLine belongs to TrainStation
     private Zone zone;                   // belongs to one Zone
+    private List<UserDto> users;
 }
