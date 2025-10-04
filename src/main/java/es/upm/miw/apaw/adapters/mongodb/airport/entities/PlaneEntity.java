@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.airport.entities;
 
 import es.upm.miw.apaw.domain.models.airport.Plane;
-import es.upm.miw.apaw.domain.models.shop.Article;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;

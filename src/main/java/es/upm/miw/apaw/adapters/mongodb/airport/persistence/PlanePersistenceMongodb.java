@@ -23,4 +23,11 @@ public class PlanePersistenceMongodb implements PlanePersistence {
                 .save(new PlaneEntity(plane))
                 .toPlane();
     }
+
+    @Override
+    public boolean existRegistrationNumber(String registrationNumber) {
+        return this.planeRepository
+                .findByRegistrationNumber(registrationNumber)
+                .isPresent();
+    }
 }
