@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.domain.models.warehouse;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -14,21 +16,22 @@ import java.util.UUID;
 
 public class MovementOrder {
 
-    @NotNull
-    private UUID idMovementOrder;
-
-    //@NotNull USER ID
     private UUID id;
 
     @NotNull
     private LocalDateTime registrationDate;
 
+    @NotBlank
     private String typeOrder;
+
     private String partnerName;
     private String partnerAddress;
 
-    @NotNull
-    private Boolean isCompleted;
+    @NotBlank
+    @NotEmpty
+    private List<OrderDetail> orderDetails;
 
-    //private List<OrderDetail> orderDetails;
+    @NotNull
+    private Boolean completedOrder;
+
 }
