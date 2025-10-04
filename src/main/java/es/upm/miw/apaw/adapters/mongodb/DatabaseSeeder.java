@@ -5,6 +5,7 @@ import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
+import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import lombok.extern.log4j.Log4j2;
@@ -23,15 +24,17 @@ public class DatabaseSeeder {
     private final ApiarySeeder apiarySeeder;
     private final RecruitingSeeder recruitingSeeder;
     private final WinerySeeder winerySeeder;
+    private final UniversitySeeder universitySeeder;
 
     @Autowired
-    public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder, RecruitingSeeder recruitingSeeder, WinerySeeder winerySeeder) {
+    public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder, RecruitingSeeder recruitingSeeder, WinerySeeder winerySeeder, UniversitySeeder universitySeeder) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
         this.vehicleSeeder = vehicleSeeder;
         this.apiarySeeder = apiarySeeder;
         this.recruitingSeeder = recruitingSeeder;
         this.winerySeeder = winerySeeder;
+        this.universitySeeder = universitySeeder;
         this.seedDatabase();
     }
 
@@ -42,6 +45,7 @@ public class DatabaseSeeder {
         this.apiarySeeder.seedDatabase();
         this.recruitingSeeder.seedDatabase();
         this.winerySeeder.seedDatabase();
+        this.universitySeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -51,6 +55,7 @@ public class DatabaseSeeder {
         this.apiarySeeder.deleteAll();
         this.recruitingSeeder.deleteAll();
         this.winerySeeder.deleteAll();
+        this.universitySeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
