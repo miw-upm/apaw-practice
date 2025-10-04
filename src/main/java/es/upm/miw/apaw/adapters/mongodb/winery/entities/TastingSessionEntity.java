@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 
 @Builder
@@ -22,7 +23,7 @@ import java.util.List;
 public class TastingSessionEntity {
     @EqualsAndHashCode.Include
     @Id
-    private Long idSession;
+    private UUID id;
     private LocalDate date;
     private Integer capacity;
     private String location;
