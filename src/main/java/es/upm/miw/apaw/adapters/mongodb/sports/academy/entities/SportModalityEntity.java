@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.entities;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
+import es.upm.miw.apaw.domain.models.sports.academy.Professor;
 import es.upm.miw.apaw.domain.models.sports.academy.SportModality;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Level;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.TargetAudience;
@@ -30,15 +32,14 @@ public class SportModalityEntity {
     private boolean active;
     @DBRef
     private List<AthleteEntity> athletes;
-    @DBRef
-    private ProfessorEntity professor;
+    private UUID professorId;
 
     public SportModalityEntity(SportModality sportModality) {
         BeanUtils.copyProperties(sportModality, this);
         athletes = sportModality.getAthletes().stream()
                 .map(AthleteEntity::new)
                 .toList();
-        professor.fromProfessor(sportModality.getProfessor());
+        professorId = sportModality.getProfessor().getUser().getId();
         targetAudience = sportModality.getTargetAudience().getValue();
         level = sportModality.getLevel().getValue();
     }
@@ -48,7 +49,7 @@ public class SportModalityEntity {
         athletes = sportModality.getAthletes().stream()
                 .map(AthleteEntity::new)
                 .toList();
-        professor.fromProfessor(sportModality.getProfessor());
+        professorId = sportModality.getProfessor().getUser().getId();
         targetAudience = sportModality.getTargetAudience().getValue();
         level = sportModality.getLevel().getValue();
     }
@@ -60,7 +61,9 @@ public class SportModalityEntity {
                 .map(AthleteEntity::toAthlete)
                 .toList();
         sportModality.setAthletes(athleteList);
-        sportModality.setProfessor(this.professor.toProfessor());
+        sportModality.setProfessor(Professor.builder()
+                .user(UserDto.builder().id(this.professorId).build())
+                .build());
         sportModality.setTargetAudience(TargetAudience.values()[this.targetAudience]);
         sportModality.setLevel(Level.values()[this.level]);
         return sportModality;

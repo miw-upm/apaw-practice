@@ -16,9 +16,10 @@ import java.math.BigDecimal;
 public class Position {
     @NotNull
     @NotBlank
-    private String name;
+    private int reference;
     @NotNull
     @NotBlank
+    private String name;
     private String description;
     @NotNull
     @NotBlank
