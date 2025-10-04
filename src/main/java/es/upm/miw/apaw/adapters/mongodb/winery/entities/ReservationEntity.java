@@ -21,24 +21,24 @@ import java.util.UUID;
 public class ReservationEntity {
     @EqualsAndHashCode.Include
     @Id
-    private UUID idReservation;
-    private LocalDateTime reservationDate;
+    private UUID id;
+    private LocalDateTime bookingDate;
     private BigDecimal totalCost;
     private Boolean confirmed;
     private UUID userId;
-    private Long tastingSessionId;
+    private UUID tastingSessionId;
 
     public ReservationEntity(Reservation reservation) {
         BeanUtils.copyProperties(reservation, this, "user", "tastingSession");
         this.userId = reservation.getUser().getId();
-        this.tastingSessionId = reservation.getTastingSession().getIdSession();
+        this.tastingSessionId = reservation.getTastingSession().getId();
     }
 
     public Reservation toReservation() {
         Reservation reservation = new Reservation();
         BeanUtils.copyProperties(this, reservation, "user", "tastingSession");
         reservation.setUser(UserDto.builder().id(userId).build());
-        reservation.setTastingSession(TastingSession.builder().idSession(tastingSessionId).build());
+        reservation.setTastingSession(TastingSession.builder().id(tastingSessionId).build());
         return reservation;
     }
 }
