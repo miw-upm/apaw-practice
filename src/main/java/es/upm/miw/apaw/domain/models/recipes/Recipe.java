@@ -22,6 +22,5 @@ public class Recipe {
     private String title;
     private String instructions;
     private Integer servings;
-    private Boolean glutenFree;
-    private List<RecipeIngredient> recipeIngredients;
+    private List<RecipeItem> items;
 }

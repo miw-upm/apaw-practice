@@ -1,25 +1,23 @@
-package es.upm.miw.apaw.domain.models.videogame;
+package es.upm.miw.apaw.domain.models.metro;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Genre {
-    @NotNull
+public class Zone {
+
     @NotBlank
     private String type;
-    private String description;
-    private Float popularity;
-    private Integer ageRestriction;
 
+    @NotNull
+    private BigDecimal ticketPrice;
 }

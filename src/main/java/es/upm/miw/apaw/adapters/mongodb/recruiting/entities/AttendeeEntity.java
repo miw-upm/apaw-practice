@@ -16,11 +16,16 @@ import java.util.UUID;
 public class AttendeeEntity {
     @Id
     private UUID id;
-    private String firstName;
-    private String lastName;
+    @EqualsAndHashCode.Include
+    @Indexed(unique = true)
+    private String fullName;
+    @EqualsAndHashCode.Include
+    @Indexed(unique = true)
+    private String phoneNumber;
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
     private String emailAddress;
 
+    // Reference to User by id
     private UUID user;
 }

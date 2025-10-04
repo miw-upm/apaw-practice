@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.recipes;
+package es.upm.miw.apaw.domain.models.metro;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,17 +9,23 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Origin {
+public class TrainLine {
     @NotNull
+    private Integer number;
+
     @NotBlank
-    private String isoCode;
+    private String color;
+
     @NotNull
-    @NotBlank
-    private String countryName;
-    private String region;
-    private List<Recipe> recipes;
+    private Integer numStations;
+
+    @NotNull
+    private Boolean circular;
+
+    // Relationships
+    private List<Train> trains;              // TrainLine has 0..* Trains
 }

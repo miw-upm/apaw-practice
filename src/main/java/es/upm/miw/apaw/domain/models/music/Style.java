@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Style {
     @NotNull
     @NotBlank
-    private String styleName;
+    private String genre;
     private Integer popularityIndex;
     private String mood;
 }

@@ -15,16 +15,13 @@ import java.util.UUID;
 public class Representative {
 
     @NotNull
-    private UUID representativeId;
+    private LocalDateTime joinDate;
 
     @NotNull
-    private LocalDateTime assignmentDate;
+    private String responsibility;
 
     @NotNull
-    private String representativeRole;
+    private UserDto representative;
 
-    @NotNull
-    private UserDto user;
-
-    private List<StudentIssue> issues;
+    private List<StudentIssue> topics;
 }
