@@ -41,7 +41,7 @@ public class RecruitingSeeder {
         // 1) Position
         PositionEntity[] positions = {
                 PositionEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
                         .name("ABAP developer")
                         .description("ABAP developer for HR. At least 5 years of experience in OO and payroll implementation.")
                         .annualSalary(new BigDecimal("52000.00"))
@@ -49,7 +49,7 @@ public class RecruitingSeeder {
                         .numVacancies(3)
                         .build(),
                 PositionEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
                         .name("CPI consultant")
                         .description("Integration Services consultant. At least 3 year of experiences in CPI development and configuration.")
                         .annualSalary(new BigDecimal("48000.00"))
@@ -57,7 +57,7 @@ public class RecruitingSeeder {
                         .numVacancies(3)
                         .build(),
                 PositionEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1002"))
                         .name("Integration Consultant for HCM")
                         .description("End-to-end consultant for integrations with SAP HCM. At least 8 years of experience in SAP HCM projects.")
                         .annualSalary(new BigDecimal("56000.00"))
@@ -65,7 +65,7 @@ public class RecruitingSeeder {
                         .numVacancies(2)
                         .build(),
                 PositionEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1003"))
                         .name("Technical Lead for SAP HCM")
                         .description("Lead in implementation for SAP Successfactors and SAP HCM. At least 10 years of experience as technical Leader.")
                         .annualSalary(new BigDecimal("68000.00"))
@@ -82,18 +82,21 @@ public class RecruitingSeeder {
                         .fullName("Markus Urbanietz")
                         .phoneNumber("+4112345123")
                         .emailAddress("markus.urbanietz@test.com")
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
                         .build(),
                 AttendeeEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0011"))
                         .fullName("Beate Magnie")
                         .phoneNumber("+4143645789")
                         .emailAddress("beate.magnie@test.com")
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
                         .build(),
                 AttendeeEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0012"))
                         .fullName("Javier Oliver")
                         .phoneNumber("+3443445689")
                         .emailAddress("javier.oliver@test.com")
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                         .build(),
                 AttendeeEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0013"))
@@ -112,6 +115,7 @@ public class RecruitingSeeder {
                         .fullName("Andrea Schulz")
                         .phoneNumber("+4165889667")
                         .emailAddress("andrea.schulz@test.com")
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
                         .build(),
         };
         this.attendeeRepository.saveAll(Arrays.asList(attendees));
@@ -170,6 +174,7 @@ public class RecruitingSeeder {
                         .status(Status.Open)
                         .created(LocalDate.now())
                         .referral(true)
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                         .position(positions[0].getId())
                         .meetingList(Arrays.asList(meetings[0],meetings[1]))
                         .build(),
@@ -178,6 +183,7 @@ public class RecruitingSeeder {
                         .status(Status.In_process)
                         .created(LocalDate.now().minusDays(5))
                         .referral(false)
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .position(positions[1].getId())
                         .meetingList(Collections.singletonList(meetings[2]))
                         .build(),
@@ -186,6 +192,7 @@ public class RecruitingSeeder {
                         .status(Status.Hired)
                         .created(LocalDate.now().minusDays(4))
                         .referral(false)
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                         .position(positions[2].getId())
                         .meetingList(Arrays.asList(meetings[3],meetings[4],meetings[5]))
                         .build(),
@@ -194,6 +201,7 @@ public class RecruitingSeeder {
                         .status(Status.Rejected)
                         .created(LocalDate.now().minusDays(7))
                         .referral(false)
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                         .position(positions[3].getId())
                         .meetingList(Collections.singletonList(meetings[6]))
                         .build()
