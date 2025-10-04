@@ -7,14 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
+import java.util.UUID;
+
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class EvaluationEntity {
-    private Long idEvaluation;
     private Integer score;
     private String comment;
+    private Boolean recommended;
 
     public EvaluationEntity(Evaluation evaluation) {
         BeanUtils.copyProperties(evaluation, this);
