@@ -26,7 +26,7 @@ public class Application {
     private Status status;
     @NotNull
     @NotBlank
-    private LocalDate date;
+    private LocalDate created;
     private Boolean referral;
 
     // Mandatory Aggregation with one UserDto

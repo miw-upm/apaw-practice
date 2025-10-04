@@ -17,9 +17,9 @@ import java.util.UUID;
 public class PaymentHistory {
 
     @NotNull
-    private UUID historyId;
+    private UUID id;
     @NotNull
-    private BigDecimal paymentAmount;
+    private BigDecimal amount;
     @NotNull
     private LocalDateTime paymentDate;
     @NotNull

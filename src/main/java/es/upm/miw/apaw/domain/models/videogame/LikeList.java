@@ -20,13 +20,13 @@ import java.util.UUID;
 public class LikeList {
     @NotNull
     @NotBlank
-    private UUID listID;
+    private UUID id;
     @NotNull
-    private Boolean isPublic;
+    private Boolean shared;
     private Integer likesCount;
     @NotNull
     private UserDto user;
-    @NotEmpty
+
     private List<Videogame> gamesLiked;
 
 }

@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.adapters.mongodb.recruiting.entities;
+package es.upm.miw.apaw.adapters.mongodb.university.entities;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -13,19 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Document
-public class AttendeeEntity {
+public class TeacherEntity {
     @Id
     private UUID id;
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
+    private String identificationCode;
+    private String specialization;
     private String fullName;
-    @EqualsAndHashCode.Include
-    @Indexed(unique = true)
-    private String phoneNumber;
-    @EqualsAndHashCode.Include
-    @Indexed(unique = true)
-    private String emailAddress;
-
-    // Reference to User by id
-    private UUID user;
+    private Boolean tenured;
 }
