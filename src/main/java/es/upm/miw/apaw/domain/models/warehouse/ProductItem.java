@@ -15,16 +15,13 @@ import java.util.UUID;
 public class ProductItem {
 
     @NotNull
-    private UUID idProductItem;
-
     @NotBlank
-    private String barcodeProductItem;
+    private String barcode;
 
-    @NotBlank
-    private String nameProductItem;
+    private String appoint;
 
     @NotNull
-    private BigDecimal priceProductItem;
+    private BigDecimal cost;
 
     @NotBlank
     private String unitOfMeasure;
