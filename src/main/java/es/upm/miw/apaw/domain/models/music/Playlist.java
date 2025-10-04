@@ -15,11 +15,11 @@ import java.util.List;
 public class Playlist {
     @NotNull
     @NotBlank
-    private String playlistCode;
+    private String code;
     @NotNull
     @NotBlank
-    private String playlistTitle;
-    private Boolean isPublic;
+    private String label;
+    private Boolean opened;
     @NotNull
-    private List<Song> playlistSongs;
+    private List<Song> songs;
 }

@@ -20,6 +20,8 @@ public class Airline {
     @NotNull
     @NotBlank
     private String code;
+    @NotNull
+    @NotBlank
     private String country;
 
     private List<Flight> flights;

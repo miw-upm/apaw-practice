@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class BoardingGate {
     @NotNull
     @NotBlank
-    private String gateNumber;
+    private String number;
     @NotNull
     @NotBlank
     private String terminal;

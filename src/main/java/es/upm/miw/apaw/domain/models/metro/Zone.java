@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Builder
 @Data
@@ -17,11 +16,8 @@ import java.util.List;
 public class Zone {
 
     @NotBlank
-    private String zoneType;
+    private String type;
 
     @NotNull
     private BigDecimal ticketPrice;
-
-    // Relationships
-    private List<TrainStation> trainStations; // Zone has 0..* TrainStations
 }

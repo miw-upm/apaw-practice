@@ -19,7 +19,7 @@ import java.util.UUID;
 @Document
 public class FlightEntity {
     @Id
-    private UUID flightNumber;
+    private UUID id;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
     private String destination;
