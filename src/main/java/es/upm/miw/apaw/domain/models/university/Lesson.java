@@ -15,8 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Lesson {
     @NotNull
-    private UUID id;
-    @NotNull
     private LocalDateTime startDate;
     private String classroom;
     private Integer duration;
