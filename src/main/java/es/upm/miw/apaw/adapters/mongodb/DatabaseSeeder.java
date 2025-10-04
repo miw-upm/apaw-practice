@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb;
 
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.AirportSeeder;
+import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
 import es.upm.miw.apaw.adapters.mongodb.fighters.daos.FightersSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
@@ -30,6 +31,7 @@ public class DatabaseSeeder {
     private final WinerySeeder winerySeeder;
     private final UniversitySeeder universitySeeder;
     private final SportsAcademySeeder sportsAcademySeeder;
+    private final BankSeeder bankSeeder;
     private final FightersSeeder fightersSeeder;
 
     @Autowired
@@ -43,7 +45,8 @@ public class DatabaseSeeder {
             WinerySeeder winerySeeder,
             UniversitySeeder universitySeeder,
             SportsAcademySeeder sportsAcademySeeder,
-            FightersSeeder fightersSeeder
+            FightersSeeder fightersSeeder,
+            BankSeeder bankSeeder
             ) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
@@ -55,6 +58,7 @@ public class DatabaseSeeder {
         this.universitySeeder = universitySeeder;
         this.sportsAcademySeeder = sportsAcademySeeder;
         this.fightersSeeder = fightersSeeder;
+        this.bankSeeder = bankSeeder;
         this.seedDatabase();
     }
 
@@ -69,6 +73,7 @@ public class DatabaseSeeder {
         this.winerySeeder.seedDatabase();
         this.universitySeeder.seedDatabase();
         this.sportsAcademySeeder.seedDatabase();
+        this.bankSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -82,6 +87,7 @@ public class DatabaseSeeder {
         this.winerySeeder.deleteAll();
         this.universitySeeder.deleteAll();
         this.sportsAcademySeeder.deleteAll();
+        this.bankSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
