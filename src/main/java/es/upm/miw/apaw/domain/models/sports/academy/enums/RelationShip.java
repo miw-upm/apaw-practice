@@ -4,14 +4,14 @@ import lombok.Getter;
 
 @Getter
 public enum RelationShip {
-    FATHER(1),
-    MOTHER(2),
-    SIBLING(3),
-    UNCLE(4),
-    AUNT(5),
-    GRAND_FATHER(6),
-    GRAND_MOTHER(7),
-    OTHER(8);
+    FATHER(0),
+    MOTHER(1),
+    SIBLING(2),
+    UNCLE(3),
+    AUNT(4),
+    GRAND_FATHER(5),
+    GRAND_MOTHER(6),
+    OTHER(7);
 
     private final int value;
 

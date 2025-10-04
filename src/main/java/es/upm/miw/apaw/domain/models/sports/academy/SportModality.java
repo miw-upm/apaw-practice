@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class SportModality {
     @NotNull
-    private UUID id;
+    private UUID sportId;
     @NotNull
     @NotBlank
     private String title;

@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ILegalGuardianRepository extends MongoRepository<LegalGuardianEntity, UUID> {
+public interface LegalGuardianRepository extends MongoRepository<LegalGuardianEntity, UUID> {
     Optional<LegalGuardianEntity> findByUserDtoId(UUID userDtoId);
 }
