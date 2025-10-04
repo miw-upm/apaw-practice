@@ -20,7 +20,7 @@ public class CreditCard {
     @NotBlank
     private String cardNumber;
     @NotNull
-    private LocalDate cardExpirationDate;
+    private LocalDate expirationDate;
     @NotNull
     private Integer cvv;
     @NotNull

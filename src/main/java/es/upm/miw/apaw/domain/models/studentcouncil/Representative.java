@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.student_council;
+package es.upm.miw.apaw.domain.models.studentcouncil;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import jakarta.validation.constraints.NotNull;
@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -15,13 +14,13 @@ import java.util.UUID;
 public class Representative {
 
     @NotNull
-    private LocalDateTime assignmentDate;
+    private LocalDateTime joinDate;
 
     @NotNull
-    private String representativeRole;
+    private String responsibility;
 
     @NotNull
-    private UserDto user;
+    private UserDto representative;
 
-    private List<StudentIssue> issues;
+    private List<StudentIssue> topics;
 }
