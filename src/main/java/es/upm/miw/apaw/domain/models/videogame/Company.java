@@ -20,7 +20,10 @@ public class Company {
     @NotNull
     @NotBlank
     private String denomination;
+    @NotNull
     private LocalDate foundationDate;
+    @NotNull
+    @NotBlank
     private String sector;
     private List<Videogame> videoGames;
 }
