@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Builder
 @Data
@@ -17,7 +18,7 @@ import java.math.BigDecimal;
 public class WineEntity {
     @EqualsAndHashCode.Include
     @Id
-    private Long idWine;
+    private UUID id;
     private String name;
     private Integer year;
     private Double alcoholPercentage;

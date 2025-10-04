@@ -2,6 +2,8 @@ package es.upm.miw.apaw.adapters.mongodb.sports.academy.entities;
 
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.models.sports.academy.SportModality;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.Level;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.TargetAudience;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +39,8 @@ public class SportModalityEntity {
                 .map(AthleteEntity::new)
                 .toList();
         professor.fromProfessor(sportModality.getProfessor());
+        targetAudience = sportModality.getTargetAudience().getValue();
+        level = sportModality.getLevel().getValue();
     }
 
     public void fromSportModality(SportModality sportModality) {
@@ -45,6 +49,8 @@ public class SportModalityEntity {
                 .map(AthleteEntity::new)
                 .toList();
         professor.fromProfessor(sportModality.getProfessor());
+        targetAudience = sportModality.getTargetAudience().getValue();
+        level = sportModality.getLevel().getValue();
     }
 
     public SportModality toSportModality() {
@@ -55,6 +61,8 @@ public class SportModalityEntity {
                 .toList();
         sportModality.setAthletes(athleteList);
         sportModality.setProfessor(this.professor.toProfessor());
+        sportModality.setTargetAudience(TargetAudience.values()[this.targetAudience]);
+        sportModality.setLevel(Level.values()[this.level]);
         return sportModality;
     }
 }
