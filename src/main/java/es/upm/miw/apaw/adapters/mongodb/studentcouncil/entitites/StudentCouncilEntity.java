@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.adapters.mongodb.student_council.entitites;
+package es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

@@ -1,6 +1,5 @@
-package es.upm.miw.apaw.adapters.mongodb.student_council.entitites;
+package es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites;
 
-import es.upm.miw.apaw.domain.models.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,8 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -17,12 +16,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Document
-public class RepresentativeEntity {
+public class IssueReplyEntity {
     @Id
     private UUID id;
 
-    private LocalDateTime joinDate;
-    private String responsibility;
-    private UserDto representative;
-    private List<StudentIssueEntity> topics;
+    private String reason;
+    private LocalDateTime createDate;
+    private BigDecimal compensation;
 }

@@ -1,9 +1,9 @@
-package es.upm.miw.apaw.adapters.mongodb.student_council.daos;
+package es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos;
 
-import es.upm.miw.apaw.adapters.mongodb.student_council.entitites.IssueReplyEntity;
-import es.upm.miw.apaw.adapters.mongodb.student_council.entitites.RepresentativeEntity;
-import es.upm.miw.apaw.adapters.mongodb.student_council.entitites.StudentCouncilEntity;
-import es.upm.miw.apaw.adapters.mongodb.student_council.entitites.StudentIssueEntity;
+import es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites.IssueReplyEntity;
+import es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites.RepresentativeEntity;
+import es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites.StudentCouncilEntity;
+import es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites.StudentIssueEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

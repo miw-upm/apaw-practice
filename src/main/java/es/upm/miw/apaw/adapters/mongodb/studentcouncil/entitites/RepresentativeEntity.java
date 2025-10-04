@@ -1,6 +1,6 @@
-package es.upm.miw.apaw.adapters.mongodb.student_council.entitites;
+package es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites;
 
-
+import es.upm.miw.apaw.domain.models.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,15 +17,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Document
-public class StudentIssueEntity {
-
+public class RepresentativeEntity {
     @Id
     private UUID id;
 
-    private String statement;
-    private LocalDateTime reportDate;
-    private Boolean closed;
-    private Integer urgency;
-
-    private List<IssueReplyEntity> replies;
+    private LocalDateTime joinDate;
+    private String responsibility;
+    private UserDto representative;
+    private List<StudentIssueEntity> topics;
 }
