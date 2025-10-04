@@ -4,9 +4,18 @@ import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Athlete {
     @NotNull
     private Gender gender;
@@ -21,7 +30,7 @@ public class Athlete {
     @NotNull
     private UserDto user;
     @NotNull
-    private LegalGuardian[] legalGuardian;
+    private List<LegalGuardian> legalGuardians;
     @NotNull
-    private SportModality[] sportModalities;
+    private List<SportModality> sportModalities;
 }

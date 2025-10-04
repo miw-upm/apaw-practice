@@ -2,13 +2,10 @@ package es.upm.miw.apaw.domain.models.videogame;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Builder
 @Data
@@ -20,6 +17,7 @@ public class Genre {
     private String type;
     private String description;
     private Float popularity;
+    @NotNull
     private Integer ageRestriction;
 
 }
