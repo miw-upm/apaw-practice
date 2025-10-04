@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.mongodb.recruiting.entities;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -25,9 +26,10 @@ public class ApplicationEntity {
     // Reference to User by id
     private UUID user;
 
-    // Reference to Position by id
-    private UUID position;
+    // Reference to Position
+    @DBRef
+    private PositionEntity positionEntity;
 
-    //Embedded in the application (Composition)
+    // Embedded in the application (Composition)
     private List<MeetingEntity> meetingList;
 }
