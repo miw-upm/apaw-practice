@@ -15,7 +15,7 @@ import java.util.UUID;
 public class BoardingGateEntity {
     @Id
     private UUID id;
-    private String gateNumber;
+    private String number;
     private String terminal;
     private Boolean opened;
 }

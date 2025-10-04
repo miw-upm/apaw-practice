@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Garment {
 
     @NotNull
-    private UUID garmentId;
+    private UUID id;
 
     @NotBlank
     private String size;
