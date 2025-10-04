@@ -11,6 +11,7 @@ import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 
+import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class DatabaseSeeder {
     private final WinerySeeder winerySeeder;
     private final UniversitySeeder universitySeeder;
     private final SportsAcademySeeder sportsAcademySeeder;
+    private final VideogameSeeder videogameSeeder;
     private final BankSeeder bankSeeder;
     private final FightersSeeder fightersSeeder;
 
@@ -45,6 +47,7 @@ public class DatabaseSeeder {
             WinerySeeder winerySeeder,
             UniversitySeeder universitySeeder,
             SportsAcademySeeder sportsAcademySeeder,
+            VideogameSeeder videogameSeeder,
             FightersSeeder fightersSeeder,
             BankSeeder bankSeeder
             ) {
@@ -57,6 +60,7 @@ public class DatabaseSeeder {
         this.winerySeeder = winerySeeder;
         this.universitySeeder = universitySeeder;
         this.sportsAcademySeeder = sportsAcademySeeder;
+        this.videogameSeeder = videogameSeeder;
         this.fightersSeeder = fightersSeeder;
         this.bankSeeder = bankSeeder;
         this.seedDatabase();
@@ -73,6 +77,7 @@ public class DatabaseSeeder {
         this.winerySeeder.seedDatabase();
         this.universitySeeder.seedDatabase();
         this.sportsAcademySeeder.seedDatabase();
+        this.videogameSeeder.seedDatabase();
         this.bankSeeder.seedDatabase();
     }
 
@@ -87,6 +92,7 @@ public class DatabaseSeeder {
         this.winerySeeder.deleteAll();
         this.universitySeeder.deleteAll();
         this.sportsAcademySeeder.deleteAll();
+        this.videogameSeeder.deleteAll();
         this.bankSeeder.deleteAll();
     }
 
