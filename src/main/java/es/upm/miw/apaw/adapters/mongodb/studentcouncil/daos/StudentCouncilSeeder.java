@@ -41,14 +41,14 @@ public class StudentCouncilSeeder {
 
         IssueReplyEntity reply1 = IssueReplyEntity.builder()
                 .id(UUID.fromString("bbbbbbbb-bbbb-cccc-dddd-eeeeffff0000"))
-                .reason("Budget request rejected")
+                .reason("Reply1")
                 .createDate(LocalDateTime.now().minusDays(3))
                 .compensation(new BigDecimal("0.00"))
                 .build();
 
         IssueReplyEntity reply2 = IssueReplyEntity.builder()
                 .id(UUID.fromString("bbbbbbbb-bbbb-cccc-dddd-eeeeffff0001"))
-                .reason("Event approved with reduced budget")
+                .reason("Reply2")
                 .createDate(LocalDateTime.now().minusDays(1))
                 .compensation(new BigDecimal("200.00"))
                 .build();
@@ -58,7 +58,7 @@ public class StudentCouncilSeeder {
 
         StudentIssueEntity issue1 = StudentIssueEntity.builder()
                 .id(UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0000"))
-                .statement("Need new projectors in classroom A")
+                .statement("Problem1")
                 .reportDate(LocalDateTime.now().minusDays(10))
                 .closed(false)
                 .urgency(2)
@@ -67,7 +67,7 @@ public class StudentCouncilSeeder {
 
         StudentIssueEntity issue2 = StudentIssueEntity.builder()
                 .id(UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0001"))
-                .statement("Request for cultural event funding")
+                .statement("Problem2")
                 .reportDate(LocalDateTime.now().minusDays(5))
                 .closed(true)
                 .urgency(1)
@@ -96,7 +96,7 @@ public class StudentCouncilSeeder {
 
         StudentCouncilEntity council = StudentCouncilEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                .council("Engineering Council")
+                .council("Council1")
                 .site("Building A")
                 .resources(new BigDecimal("50000.00"))
                 .representatives(Arrays.asList(rep1, rep2))
