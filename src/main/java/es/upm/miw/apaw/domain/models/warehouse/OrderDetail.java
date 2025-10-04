@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Builder
 @Data
@@ -14,19 +13,12 @@ import java.util.UUID;
 
 public class OrderDetail {
 
-    @NotNull
-    private UUID idOrderDetail;
 
-    @NotNull
-    private UUID idMovementOrder;
-
-    @NotNull
-    private UUID idProductItem;
+    private ProductItem productItem;
 
     @NotNull
     private Integer qtyRequested;
 
-    @NotNull
     private Integer qtyMoved;
 
     private BigDecimal unitCost;
