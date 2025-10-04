@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Coach {
     @NotNull
-    private UUID coachNumber;
+    private UUID id;
     @NotBlank
     private String fullName;
     @NotBlank
