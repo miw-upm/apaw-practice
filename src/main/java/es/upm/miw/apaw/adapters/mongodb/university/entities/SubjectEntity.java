@@ -1,8 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.university.entities;
 
-import es.upm.miw.apaw.domain.models.university.Subject;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;

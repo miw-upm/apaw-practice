@@ -1,11 +1,9 @@
 package es.upm.miw.apaw.adapters.mongodb.university.entities;
 
-import es.upm.miw.apaw.domain.models.UserDto;
-import es.upm.miw.apaw.domain.models.university.Enrollment;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -26,6 +24,7 @@ public class EnrollmentEntity {
     private String code;
     private String semester;
     private LocalDateTime enrollmentDate;
+    @DBRef
     private List<SubjectAssignmentEntity> subjectAssignmentEntities;
     private UUID studentId;
 }

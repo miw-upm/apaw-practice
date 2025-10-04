@@ -5,6 +5,7 @@ import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
+import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,16 @@ public class DatabaseSeeder {
     private final VehicleSeeder vehicleSeeder;
     private final ApiarySeeder apiarySeeder;
     private final RecruitingSeeder recruitingSeeder;
+    private final UniversitySeeder universitySeeder;
 
     @Autowired
-    public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder, RecruitingSeeder recruitingSeeder) {
+    public DatabaseSeeder(ShopSeeder shopSeeder, AirportSeeder airportSeeder, VehicleSeeder vehicleSeeder, ApiarySeeder apiarySeeder, RecruitingSeeder recruitingSeeder, UniversitySeeder universitySeeder) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
         this.vehicleSeeder = vehicleSeeder;
         this.apiarySeeder = apiarySeeder;
         this.recruitingSeeder = recruitingSeeder;
+        this.universitySeeder = universitySeeder;
         this.seedDatabase();
     }
 
@@ -38,6 +41,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder.seedDatabase();
         this.apiarySeeder.seedDatabase();
         this.recruitingSeeder.seedDatabase();
+        this.universitySeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -46,6 +50,7 @@ public class DatabaseSeeder {
         this.vehicleSeeder.deleteAll();
         this.apiarySeeder.deleteAll();
         this.recruitingSeeder.deleteAll();
+        this.universitySeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
