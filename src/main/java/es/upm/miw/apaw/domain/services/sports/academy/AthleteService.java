@@ -26,6 +26,14 @@ public class AthleteService {
         var athlete = this.athletePersistence.getById(id);
         UserDto userDto = this.userRestClient.readById(id);
         athlete.setUser(userDto);
+        athlete.getLegalGuardians().forEach(legalGuardian -> {
+            UserDto userGuardianDto = this.userRestClient.readById(legalGuardian.getUser().getId());
+            legalGuardian.setUser(userGuardianDto);
+        });
+        athlete.getSportModalities().forEach(sportModality -> {
+            UserDto professor = this.userRestClient.readById(sportModality.getProfessor().getUser().getId());
+            sportModality.getProfessor().setUser(professor);
+        });
         return athlete;
     }
 }
