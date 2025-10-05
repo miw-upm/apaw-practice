@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
 import java.math.BigDecimal;
 import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,7 +28,7 @@ class BankAccountRepositoryIT {
 
     @Test
     void testDeleteByAccountNumber(){
-        assertTrue(this.bankAccountRepository.findByAccountNumber("ES2800000000000000000002").isPresent());
-        assertThat(this.bankAccountRepository.deleteByAccountNumber("ES2800000000000000000002")).isEqualTo(1);
+        assertTrue(this.bankAccountRepository.findByAccountNumber("ES2800000000000000000003").isPresent());
+        assertThat(this.bankAccountRepository.deleteByAccountNumber("ES2800000000000000000003")).isEqualTo(1);
     }
 }
