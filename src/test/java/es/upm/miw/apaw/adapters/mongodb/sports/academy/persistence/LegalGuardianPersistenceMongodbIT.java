@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class LegalGuardianPersistenceMongodbIT {
+class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyIT {
 
     @Autowired
     private LegalGuardianPersistenceMongodb legalGuardianPersistence;
