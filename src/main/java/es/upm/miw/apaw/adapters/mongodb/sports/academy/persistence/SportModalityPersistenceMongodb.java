@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ISportModalityRepository;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.SportModalityRepository;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.SportModalityEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.sports.academy.SportModality;
@@ -16,10 +16,10 @@ import java.util.stream.Stream;
 @Repository("sportModalityPersistence")
 public class SportModalityPersistenceMongodb implements ISportModalityPersistence {
 
-    private final ISportModalityRepository sportModalityRepository;
+    private final SportModalityRepository sportModalityRepository;
 
     @Autowired
-    public SportModalityPersistenceMongodb(ISportModalityRepository sportModalityRepository) {
+    public SportModalityPersistenceMongodb(SportModalityRepository sportModalityRepository) {
         this.sportModalityRepository = sportModalityRepository;
     }
 
