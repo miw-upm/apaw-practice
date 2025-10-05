@@ -3,7 +3,6 @@ import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.bank.BankAccount;
 import es.upm.miw.apaw.domain.models.bank.Loan;
 import lombok.*;
-import org.apache.catalina.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -45,6 +44,7 @@ public class BankAccountEntity {
                 .toList();
         bankAccount.setAccountHolders(users);
         bankAccount.setLoansApplied(loans);
+        bankAccount.setCreditCardAssociated(this.creditCardAssociated.toCreditCard());
         return bankAccount;
     }
 
