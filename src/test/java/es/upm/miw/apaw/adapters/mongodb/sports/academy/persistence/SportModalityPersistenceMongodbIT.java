@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.models.sports.academy.Professor;
 import es.upm.miw.apaw.domain.models.sports.academy.SportModality;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Level;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.TargetAudience;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class SportModalityPersistenceMongodbIT {
+class SportModalityPersistenceMongodbIT extends BaseSportsAcademyIT {
 
     @Autowired
     private SportModalityPersistenceMongodb sportModalityPersistence;

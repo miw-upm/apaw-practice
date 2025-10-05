@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.UUID;
 
-public interface ISportModalityRepository extends MongoRepository<SportModalityEntity, UUID> {
+public interface SportModalityRepository extends MongoRepository<SportModalityEntity, UUID> {
 }
