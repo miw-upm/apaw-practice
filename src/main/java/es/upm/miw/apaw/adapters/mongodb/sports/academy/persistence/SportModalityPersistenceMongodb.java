@@ -43,7 +43,7 @@ public class SportModalityPersistenceMongodb implements ISportModalityPersistenc
     @Override
     public SportModality update(UUID id, SportModality sportModality) {
         SportModalityEntity sportModalityEntity = this.sportModalityRepository
-                .findBySportId(id)
+                .findById(id)
                 .orElseThrow(() -> new NotFoundException("Sport Modality id: " + id));
         sportModalityEntity.fromSportModality(sportModality);
         return this.sportModalityRepository
@@ -54,7 +54,7 @@ public class SportModalityPersistenceMongodb implements ISportModalityPersistenc
     @Override
     public SportModality getById(UUID id) {
         return this.sportModalityRepository
-                .findBySportId(id)
+                .findById(id)
                 .orElseThrow(() -> new NotFoundException("Sport Modality id: " + id))
                 .toSportModality();
     }

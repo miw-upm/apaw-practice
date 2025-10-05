@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,46 +37,42 @@ class SportModalityPersistenceMongodbIT {
     void testCreateAndGetById() {
         var professor = this.professorPersistence.getById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
         var sportModality = SportModality.builder()
-                .sportId(UUID.randomUUID())
+                .id(UUID.randomUUID())
                 .title("Tennis")
                 .level(Level.BEGINNER)
                 .targetAudience(TargetAudience.KIDS)
                 .professor(professor)
-                .athletes(new ArrayList<>())
                 .build();
         SportModality sportModalityBD = this.sportModalityPersistence.create(sportModality);
-        assertThat(sportModalityBD.getSportId()).isEqualTo(sportModality.getSportId());
+        assertThat(sportModalityBD.getId()).isEqualTo(sportModality.getId());
         assertThat(sportModalityBD.getTitle()).isEqualTo("Tennis");
         assertThat(sportModalityBD.getLevel()).isEqualTo(Level.BEGINNER);
         assertThat(sportModalityBD.getTargetAudience()).isEqualTo(TargetAudience.KIDS);
         assertThat(sportModalityBD.getProfessor().getUser().getId()).isEqualTo(sportModality.getProfessor().getUser().getId());
         assertThat(sportModalityBD.getProfessor().getSpecialization()).isEqualTo(sportModality.getProfessor().getSpecialization());
         assertThat(sportModalityBD.getProfessor().getLicenseNumber()).isEqualTo(sportModality.getProfessor().getLicenseNumber());
-        assertTrue(sportModalityBD.getAthletes().isEmpty());
     }
 
     @Test
     void testCreateAndUpdate() {
         var professor = this.professorPersistence.getById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
         var sportModality = SportModality.builder()
-                .sportId(UUID.randomUUID())
+                .id(UUID.randomUUID())
                 .title("Tennis")
                 .level(Level.BEGINNER)
                 .targetAudience(TargetAudience.KIDS)
                 .professor(professor)
-                .athletes(new ArrayList<>())
                 .build();
         SportModality sportModalityBD = this.sportModalityPersistence.create(sportModality);
         sportModalityBD.setTitle("Karate");
-        sportModalityBD = this.sportModalityPersistence.update(sportModality.getSportId(), sportModalityBD);
+        sportModalityBD = this.sportModalityPersistence.update(sportModality.getId(), sportModalityBD);
         assertThat(sportModalityBD.getTitle()).isEqualTo("Karate");
-        assertThat(sportModalityBD.getSportId()).isEqualTo(sportModality.getSportId());
+        assertThat(sportModalityBD.getId()).isEqualTo(sportModality.getId());
         assertThat(sportModalityBD.getLevel()).isEqualTo(Level.BEGINNER);
         assertThat(sportModalityBD.getTargetAudience()).isEqualTo(TargetAudience.KIDS);
         assertThat(sportModalityBD.getProfessor().getUser().getId()).isEqualTo(sportModality.getProfessor().getUser().getId());
         assertThat(sportModalityBD.getProfessor().getSpecialization()).isEqualTo(sportModality.getProfessor().getSpecialization());
         assertThat(sportModalityBD.getProfessor().getLicenseNumber()).isEqualTo(sportModality.getProfessor().getLicenseNumber());
-        assertTrue(sportModalityBD.getAthletes().isEmpty());
     }
 
     @Test
@@ -108,7 +103,7 @@ class SportModalityPersistenceMongodbIT {
     void testUpdateNotFound() {
         var id = UUID.randomUUID();
         var sportModality = SportModality.builder()
-                .sportId(id)
+                .id(id)
                 .title("Tennis")
                 .level(Level.BEGINNER)
                 .targetAudience(TargetAudience.KIDS)
@@ -121,7 +116,6 @@ class SportModalityPersistenceMongodbIT {
                         .licenseNumber("ABC123")
                         .specialization("Tennis")
                         .build())
-                .athletes(new ArrayList<>())
                 .build();
         assertThrows(NotFoundException.class, () -> this.sportModalityPersistence.update(id, sportModality));
     }
