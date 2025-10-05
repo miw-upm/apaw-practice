@@ -7,6 +7,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static es.upm.miw.apaw.adapters.resources.bank.BankAccountResource.*;
+import static es.upm.miw.apaw.adapters.resources.shop.TagResource.NAME_ID;
+import static es.upm.miw.apaw.adapters.resources.shop.TagResource.TAGS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -25,5 +27,13 @@ class BankAccountResourceFT {
                 .expectStatus().isOk()
                 .expectBody(String.class)
                 .value(resul -> assertEquals("active",resul));
+    }
+
+    @Test
+    void testDelete() {
+        webTestClient.delete()
+                .uri(BANK_ACCOUNTS + ACCOUNT_NUMBER, "ES2800000000000000000001")
+                .exchange()
+                .expectStatus().isOk();
     }
 }

@@ -1,4 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.bank.entities;
+import es.upm.miw.apaw.domain.models.bank.Loan;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -19,4 +20,7 @@ public class LoanEntity {
     private Double interestRate;
     private String condition;
 
+    public Loan toLoan(){
+        return new Loan(id,quantity,interestRate,condition);
+    }
 }
