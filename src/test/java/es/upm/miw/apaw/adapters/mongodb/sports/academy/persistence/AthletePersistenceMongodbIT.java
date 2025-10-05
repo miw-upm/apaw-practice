@@ -24,7 +24,10 @@ class AthletePersistenceMongodbIT {
     private AthletePersistenceMongodb athletePersistenceMongodb;
 
     @Test
-    void testGetByIdNotFound() { assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.getById(UUID.randomUUID()));}
+    void testGetByIdNotFound() {
+        var id = UUID.randomUUID();
+        assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.getById(id));
+    }
 
     @Test
     void testCreateAndGetById() {
@@ -92,8 +95,9 @@ class AthletePersistenceMongodbIT {
 
     @Test
     void testUpdateNotFound() {
+        var id = UUID.randomUUID();
         Athlete athlete = Athlete.builder()
-                .user(UserDto.builder().id(UUID.randomUUID()).build())
+                .user(UserDto.builder().id(id).build())
                 .gender(Gender.MALE)
                 .height(1.78)
                 .weight(72)
@@ -101,6 +105,6 @@ class AthletePersistenceMongodbIT {
                 .legalGuardians(new ArrayList<>())
                 .sportModalities(new ArrayList<>())
                 .build();
-        assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.update(athlete.getUser().getId(), athlete));
+        assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.update(id, athlete));
     }
 }

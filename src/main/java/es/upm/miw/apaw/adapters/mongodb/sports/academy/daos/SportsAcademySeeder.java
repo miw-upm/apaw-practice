@@ -111,7 +111,7 @@ public class SportsAcademySeeder {
                         .title("Tennis")
                         .level(Level.BEGINNER.getValue())
                         .targetAudience(TargetAudience.KIDS.getValue())
-                        .professorId(professors[0].getUserDtoId())
+                        .professor(professors[0])
                         .athletes(java.util.Arrays.asList(athletes))
                         .build(),
                     SportModalityEntity.builder()
@@ -119,7 +119,7 @@ public class SportsAcademySeeder {
                         .title("Swimming")
                         .level(Level.INTERMEDIATE.getValue())
                         .targetAudience(TargetAudience.TEENAGERS.getValue())
-                        .professorId(professors[1].getUserDtoId())
+                        .professor(professors[1])
                         .athletes(java.util.Arrays.asList(athletes))
                         .build()
             };

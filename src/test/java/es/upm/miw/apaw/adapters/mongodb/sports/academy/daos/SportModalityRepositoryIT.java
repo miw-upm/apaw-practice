@@ -28,6 +28,6 @@ class SportModalityRepositoryIT {
         assertThat(sportModality.getTargetAudience()).isZero();
         assertThat(sportModality.isActive()).isFalse();
         assertThat(sportModality.getAthletes()).hasSize(2);
-        assertThat(sportModality.getProfessorId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
+        assertThat(sportModality.getProfessor().getUserDtoId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
     }
 }
