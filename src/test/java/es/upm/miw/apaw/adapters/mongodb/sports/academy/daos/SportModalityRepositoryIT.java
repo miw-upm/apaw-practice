@@ -19,15 +19,15 @@ class SportModalityRepositoryIT {
 
     @Test
     void testFindBySportId() {
-        assertTrue(this.sportModalityRepository.findBySportId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006")).isPresent());
-        var sportModality = this.sportModalityRepository.findBySportId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006")).get();
+        assertTrue(this.sportModalityRepository.findBySportId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007")).isPresent());
+        var sportModality = this.sportModalityRepository.findBySportId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007")).get();
         assertThat(sportModality).isNotNull();
-        assertThat(sportModality.getSportId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006"));
-        assertThat(sportModality.getTitle()).isEqualTo("Tennis");
-        assertThat(sportModality.getLevel()).isZero();
-        assertThat(sportModality.getTargetAudience()).isZero();
+        assertThat(sportModality.getSportId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007"));
+        assertThat(sportModality.getTitle()).isEqualTo("Swimming");
+        assertThat(sportModality.getLevel()).isEqualTo(1);
+        assertThat(sportModality.getTargetAudience()).isEqualTo(2);
         assertThat(sportModality.isActive()).isFalse();
         assertThat(sportModality.getAthletes()).hasSize(2);
-        assertThat(sportModality.getProfessorId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
+        assertThat(sportModality.getProfessor().getUserDtoId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"));
     }
 }

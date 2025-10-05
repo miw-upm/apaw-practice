@@ -23,7 +23,8 @@ class LegalGuardianPersistenceMongodbIT {
 
     @Test
     void testGetByIdNotFound() {
-        assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.getById(UUID.randomUUID()));
+        var id = UUID.randomUUID();
+        assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.getById(id));
     }
 
     @Test
@@ -80,11 +81,12 @@ class LegalGuardianPersistenceMongodbIT {
 
     @Test
     void testUpdateNotFound() {
+        var id = UUID.randomUUID();
         LegalGuardian legalGuardian = LegalGuardian.builder()
-                .user(UserDto.builder().id(UUID.randomUUID()).build())
+                .user(UserDto.builder().id(id).build())
                 .secondMobile("+34711036888")
                 .relationShip(RelationShip.AUNT)
                 .build();
-        assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.update(legalGuardian.getUser().getId(), legalGuardian));
+        assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.update(id, legalGuardian));
     }
 }
