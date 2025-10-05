@@ -27,4 +27,10 @@ class BankAccountRepositoryIT {
         assertThat(bankAccount.getStatus()).isEqualTo("active");
         assertThat(bankAccount.getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff6000"));
     }
+
+    @Test
+    void testDeleteByAccountNumber(){
+        assertTrue(this.bankAccountRepository.findByAccountNumber("ES2800000000000000000002").isPresent());
+        assertThat(this.bankAccountRepository.deleteByAccountNumber("ES2800000000000000000002")).isEqualTo(1);
+    }
 }

@@ -1,10 +1,7 @@
 package es.upm.miw.apaw.adapters.resources.bank;
 import es.upm.miw.apaw.domain.services.bank.BankAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -24,5 +21,10 @@ public class BankAccountResource {
     @GetMapping(ACCOUNT_NUMBER+STATUS)
     public String readStatusByAccountNumber(@PathVariable("account-number") String accountNumber) {
         return this.bankAccountService.readStatusByAccountNumber(accountNumber);
+    }
+
+    @DeleteMapping(ACCOUNT_NUMBER)
+    public void delete(@PathVariable("account-number") String accountNumber){
+        this.bankAccountService.delete(accountNumber);
     }
 }
