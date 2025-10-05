@@ -22,7 +22,8 @@ class ProfessorPersistenceMongodbIT {
 
     @Test
     void testGetByAllNotFound() {
-        assertThrows(NotFoundException.class, () -> this.professorPersistence.getById(UUID.randomUUID()));
+        var id = UUID.randomUUID();
+        assertThrows(NotFoundException.class, () -> this.professorPersistence.getById(id));
     }
 
     @Test
@@ -79,11 +80,12 @@ class ProfessorPersistenceMongodbIT {
 
     @Test
     void testUpdateNotFound() {
+        var id = UUID.randomUUID();
         Professor professor = Professor.builder()
-                .user(UserDto.builder().id(UUID.randomUUID()).build())
+                .user(UserDto.builder().id(id).build())
                 .specialization("Tennis")
                 .licenseNumber("ABC123")
                 .build();
-        assertThrows(NotFoundException.class, () -> this.professorPersistence.update(professor.getUser().getId(), professor));
+        assertThrows(NotFoundException.class, () -> this.professorPersistence.update(id, professor));
     }
 }
