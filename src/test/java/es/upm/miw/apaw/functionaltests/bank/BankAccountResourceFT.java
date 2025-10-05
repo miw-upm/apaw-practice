@@ -1,4 +1,6 @@
 package es.upm.miw.apaw.functionaltests.bank;
+import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
+import es.upm.miw.apaw.domain.models.bank.CreditCard;
 import es.upm.miw.apaw.domain.models.bank.Loan;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import javax.smartcardio.Card;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.UUID;
 
 import static es.upm.miw.apaw.adapters.resources.bank.BankAccountResource.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,6 +66,35 @@ class BankAccountResourceFT {
                     assertThat(loans.getFirst().getQuantity()).isEqualTo(new BigDecimal("10000"));
                     assertThat(loans.getFirst().getCondition()).isEqualTo("active");
                     assertThat(loans.getFirst().getInterestRate()).isEqualTo(0.07);
+                });
+    }
+
+    @Test
+    void testUpdateCreditCard(){
+        CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Arrays.asList(PaymentHistoryEntity.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
+                .amount(new BigDecimal("9.99"))
+                .paymentDate(LocalDateTime.now())
+                .paid(true)
+                .build().toPaymentHistory())).cvv(123).build();
+
+        webTestClient.put()
+                .uri(BANK_ACCOUNTS+ACCOUNT_NUMBER+CREDIT_CARDS,"ES2800000000000000000000")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(creditCard)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(CreditCard.class)
+                .value(card -> {
+                    assertThat(card).isNotNull();
+                    assertThat(card.getCardNumber()).isEqualTo("1111222233334444");
+                    assertThat(card.getCardLimit()).isEqualTo("1000");
+                    assertThat(card.getCvv()).isEqualTo(123);
+                    assertThat(card.getExpirationDate()).isEqualTo(LocalDate.of(2040,12,31));
+                    assertThat(card.getPaymentHistoryList()).hasSize(1);
+                    assertThat(card.getPaymentHistoryList().getFirst().getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"));
+                    assertThat(card.getPaymentHistoryList().getFirst().getAmount()).isEqualTo(new BigDecimal("9.99"));
+                    assertThat(card.getPaymentHistoryList().getFirst().getPaid()).isTrue();
                 });
     }
 }
