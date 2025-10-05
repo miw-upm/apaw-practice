@@ -27,4 +27,8 @@ public class SportModalityService {
     public SportModality getById(UUID id) {
         return this.sportModalityPersistence.getById(id);
     }
+
+    public  void delete(UUID id) {
+        this.sportModalityPersistence.delete(id);
+    }
 }

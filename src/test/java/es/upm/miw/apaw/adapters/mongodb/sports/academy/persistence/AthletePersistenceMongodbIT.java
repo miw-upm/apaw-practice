@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class AthletePersistenceMongodbIT {
+class AthletePersistenceMongodbIT extends BaseSportsAcademyIT {
 
     @Autowired
     private AthletePersistenceMongodb athletePersistenceMongodb;
