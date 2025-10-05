@@ -32,13 +32,12 @@ class SportMobilityServiceIT {
     void testGetById(){
         UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007");
         var sportModality = this.sportModalityService.getById(id);
-        assertThat(sportModality.getSportId()).isEqualTo(id);
+        assertThat(sportModality.getId()).isEqualTo(id);
         assertThat(sportModality.getTitle()).isEqualTo("Swimming");
         assertThat(sportModality.isActive()).isFalse();
         assertThat(sportModality.getLevel()).isEqualTo(Level.INTERMEDIATE);
         assertThat(sportModality.getTargetAudience()).isEqualTo(TargetAudience.TEENAGERS);
         assertThat(sportModality.getProfessor().getUser().getId())
                 .isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"));
-        assertThat(sportModality.getAthletes()).hasSize(2);
     }
 }

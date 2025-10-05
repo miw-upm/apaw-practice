@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,12 +30,11 @@ class SportMobilityServiceTest {
     void testUpdateActivation(){
         UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007");
         SportModality sportModality = SportModality.builder()
-                .sportId(id)
+                .id(id)
                 .title("Swimming")
                 .level(Level.INTERMEDIATE)
                 .targetAudience(TargetAudience.TEENAGERS)
                 .professor(new Professor())
-                .athletes(new ArrayList<>())
                 .active(false)
                 .build();
         when(sportModalityPersistence.getById(id)).thenReturn(sportModality);
@@ -50,22 +48,20 @@ class SportMobilityServiceTest {
     void testGetById() {
         UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006");
         SportModality sportModality = SportModality.builder()
-                .sportId(id)
+                .id(id)
                 .title("Swimming")
                 .level(Level.INTERMEDIATE)
                 .targetAudience(TargetAudience.TEENAGERS)
                 .professor(new Professor())
-                .athletes(new ArrayList<>())
                 .active(false)
                 .build();
         when(sportModalityPersistence.getById(id)).thenReturn(sportModality);
         sportModality = this.sportModalityService.getById(id);
-        assertThat(sportModality.getSportId()).isEqualTo(id);
+        assertThat(sportModality.getId()).isEqualTo(id);
         assertThat(sportModality.getTitle()).isEqualTo("Swimming");
         assertThat(sportModality.isActive()).isFalse();
         assertThat(sportModality.getLevel()).isEqualTo(Level.INTERMEDIATE);
         assertThat(sportModality.getTargetAudience()).isEqualTo(TargetAudience.TEENAGERS);
         assertThat(sportModality.getProfessor()).isInstanceOf(Professor.class);
-        assertThat(sportModality.getAthletes()).isEmpty();
     }
 }

@@ -44,7 +44,7 @@ class AthleteServiceIT {
         assertThat(athlete.getBirthDate()).isEqualTo(LocalDate.of(2000, 6, 20));
         assertThat(athlete.getHeight()).isEqualTo(1.78);
         assertThat(athlete.getWeight()).isEqualTo(72.0);
-        assertThat(athlete.getSportModalities()).isEmpty();
+        assertThat(athlete.getSportModalities()).hasSize(2);
         assertThat(athlete.getLegalGuardians()).hasSize(1);
     }
 }

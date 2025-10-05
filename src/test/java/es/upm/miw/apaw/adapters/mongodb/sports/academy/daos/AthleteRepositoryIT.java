@@ -32,6 +32,6 @@ class AthleteRepositoryIT {
         assertThat(athlete.getBirthDate()).isEqualTo(LocalDate.of(2000, 6, 20));
         assertThat(athlete.getLegalGuardians()).hasSize(1);
         assertThat(athlete.getLegalGuardians().getFirst().getUserDtoId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"));
-        assertThat(athlete.getSportModalities()).isEmpty();
+        assertThat(athlete.getSportModalities()).hasSize(2);
     }
 }
