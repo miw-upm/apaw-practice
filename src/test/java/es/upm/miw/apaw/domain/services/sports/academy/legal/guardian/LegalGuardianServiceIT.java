@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.sports.academy.legal.guardian;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import es.upm.miw.apaw.domain.services.sports.academy.LegalGuardianService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class LegalGuardianServiceIT {
+class LegalGuardianServiceIT extends BaseSportsAcademyIT {
 
     @Autowired
     private LegalGuardianService legalGuardianService;

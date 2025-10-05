@@ -16,6 +16,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -63,5 +64,21 @@ class SportMobilityServiceTest {
         assertThat(sportModality.getLevel()).isEqualTo(Level.INTERMEDIATE);
         assertThat(sportModality.getTargetAudience()).isEqualTo(TargetAudience.TEENAGERS);
         assertThat(sportModality.getProfessor()).isInstanceOf(Professor.class);
+    }
+
+    @Test
+    void testDelete(){
+        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007");
+        SportModality sportModality = SportModality.builder()
+                .id(id)
+                .title("Swimming")
+                .level(Level.INTERMEDIATE)
+                .targetAudience(TargetAudience.TEENAGERS)
+                .professor(new Professor())
+                .active(false)
+                .build();
+        when(sportModalityPersistence.getById(id)).thenReturn(sportModality);
+        this.sportModalityService.delete(id);
+        verify(sportModalityPersistence).delete(id);
     }
 }

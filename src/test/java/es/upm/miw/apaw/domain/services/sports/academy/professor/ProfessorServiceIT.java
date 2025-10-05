@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.sports.academy.professor;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import es.upm.miw.apaw.domain.services.sports.academy.ProfessorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ProfessorServiceIT {
+class ProfessorServiceIT extends BaseSportsAcademyIT {
 
     @Autowired
     private ProfessorService professorService;

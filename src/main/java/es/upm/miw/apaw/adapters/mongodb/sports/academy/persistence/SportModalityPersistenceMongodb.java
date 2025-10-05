@@ -58,4 +58,12 @@ public class SportModalityPersistenceMongodb implements ISportModalityPersistenc
                 .orElseThrow(() -> new NotFoundException("Sport Modality id: " + id))
                 .toSportModality();
     }
+
+    @Override
+    public void delete(UUID id) {
+        SportModalityEntity sportModalityEntity = this.sportModalityRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Sport Modality id: " + id));
+        this.sportModalityRepository.delete(sportModalityEntity);
+    }
 }

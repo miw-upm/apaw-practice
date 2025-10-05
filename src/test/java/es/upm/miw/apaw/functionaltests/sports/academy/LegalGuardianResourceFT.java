@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-class LegalGuardianResourceFT {
+class LegalGuardianResourceFT extends BaseSportsAcademyFT {
     
     @Autowired
     private WebTestClient webTestClient;

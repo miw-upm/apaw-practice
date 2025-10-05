@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ProfessorPersistenceMongodbIT {
+class ProfessorPersistenceMongodbIT extends BaseSportsAcademyIT {
 
     @Autowired
     private ProfessorPersistenceMongodb professorPersistence;

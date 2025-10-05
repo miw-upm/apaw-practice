@@ -15,7 +15,7 @@ import java.util.UUID;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-class SportMobilityResourceFT {
+class SportMobilityResourceFT extends BaseSportsAcademyFT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -28,6 +28,15 @@ class SportMobilityResourceFT {
                 .uri(SportModalityResource.SPORT_MODALITIES + SportModalityResource.ID_ID, id.toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(dto)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void testDelete(){
+        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007");
+        webTestClient.delete()
+                .uri(SportModalityResource.SPORT_MODALITIES + SportModalityResource.ID_ID, id.toString())
                 .exchange()
                 .expectStatus().isOk();
     }

@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import es.upm.miw.apaw.domain.services.sports.academy.AthleteService;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class AthleteServiceIT {
+class AthleteServiceIT extends BaseSportsAcademyIT {
 
     @Autowired
     private AthleteService athleteService;

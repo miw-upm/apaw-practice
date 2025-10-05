@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-class ProfessorResourceFT {
+class ProfessorResourceFT extends BaseSportsAcademyFT {
 
     @Autowired
     private WebTestClient webTestClient;
