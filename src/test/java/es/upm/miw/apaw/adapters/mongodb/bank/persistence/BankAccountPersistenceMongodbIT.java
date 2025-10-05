@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.assertj.core.api.Assertions.*;
 
@@ -23,5 +24,11 @@ class BankAccountPersistenceMongodbIT {
     @Test
     void testReadStatusByAccountNumber(){
         assertThat(this.bankAccountPersistenceMongodb.readStatusByAccountNumber("ES2800000000000000000000")).isEqualTo("active");
+    }
+
+    @Test
+    void testDelete(){
+        this.bankAccountPersistenceMongodb.delete("ES2800000000000000000001");
+        assertThrows(NotFoundException.class, () -> this.bankAccountPersistenceMongodb.findByAccountNumber("ES2800000000000000000001"));
     }
 }

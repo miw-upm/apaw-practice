@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface BankAccountRepository extends MongoRepository<BankAccountEntity, UUID> {
     Optional<BankAccountEntity> findByAccountNumber(String accountNumber);
+    int deleteByAccountNumber(String accountNumber);
 }

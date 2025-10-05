@@ -1,4 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.bank.entities;
+import es.upm.miw.apaw.domain.models.bank.PaymentHistory;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,4 +22,8 @@ public class PaymentHistoryEntity {
     private BigDecimal amount;
     private LocalDateTime paymentDate;
     private Boolean paid;
+
+    public PaymentHistory toPaymentHistory(){
+        return new PaymentHistory(id,amount,paymentDate,paid);
+    }
 }
