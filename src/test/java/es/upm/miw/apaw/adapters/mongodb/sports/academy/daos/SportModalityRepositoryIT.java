@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class SportModalityRepositoryIT {
 
     @Autowired
-    private ISportModalityRepository sportModalityRepository;
+    private SportModalityRepository sportModalityRepository;
 
     @Test
     void testFindBySportId() {
