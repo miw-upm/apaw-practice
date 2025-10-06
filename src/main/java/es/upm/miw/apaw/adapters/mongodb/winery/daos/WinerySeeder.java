@@ -51,13 +51,14 @@ public class WinerySeeder {
         };
         this.wineRepository.saveAll(Arrays.asList(wines));
 
-        // Evaluations (creadas directamente en TastingSessions)
+        // Evaluations (created in TastingSessions)
         EvaluationEntity eval1 = EvaluationEntity.builder()
-                .score(5).comment("Excellent balance")
-                .recommended(false).build();
-        EvaluationEntity eval2 = EvaluationEntity.builder()
-                .score(4).comment("Fruity and smooth")
+                .score(5).comment("Great organization and excellent wine selection")
                 .recommended(true).build();
+
+        EvaluationEntity eval2 = EvaluationEntity.builder()
+                .score(2).comment("Poor organization, the session started late and felt rushed")
+                .recommended(false).build();
 
         // TastingSessions
         TastingSessionEntity[] sessions = {
@@ -81,14 +82,14 @@ public class WinerySeeder {
                         .totalCost(new BigDecimal("40.00"))
                         .confirmed(true)
                         .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
-                        .tastingSessionId(sessions[0].getId())
+                        .tastingSessionEntity(sessions[0])
                         .build(),
                 ReservationEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
                         .bookingDate(LocalDateTime.now().plusDays(2))
                         .totalCost(new BigDecimal("20.00"))
                         .confirmed(false)
                         .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
-                        .tastingSessionId(sessions[1].getId())
+                        .tastingSessionEntity(sessions[1])
                         .build()
         };
         this.reservationRepository.saveAll(Arrays.asList(reservations));

@@ -1,9 +1,12 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.IAthleteRepository;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.AthleteRepository;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.AthleteEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
+import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.persistenceports.sports.academy.IAthletePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,10 +19,10 @@ import java.util.stream.Stream;
 @Repository("athletePersistence")
 public class AthletePersistenceMongodb implements IAthletePersistence {
 
-    private final IAthleteRepository athleteRepository;
+    private final AthleteRepository athleteRepository;
 
     @Autowired
-    public AthletePersistenceMongodb(IAthleteRepository athleteRepository) {
+    public AthletePersistenceMongodb(AthleteRepository athleteRepository) {
         this.athleteRepository = athleteRepository;
     }
 

@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -30,6 +29,4 @@ public class SportModality {
     private boolean active;
     @NotNull
     private Professor professor;
-    @NotNull
-    private List<Athlete> athletes;
 }

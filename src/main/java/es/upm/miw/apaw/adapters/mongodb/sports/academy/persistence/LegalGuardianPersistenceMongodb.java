@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ILegalGuardianRepository;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.LegalGuardianRepository;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.LegalGuardianEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
@@ -16,10 +16,10 @@ import java.util.stream.Stream;
 @Repository("legalGuardianPersistence")
 public class LegalGuardianPersistenceMongodb implements ILegalGuardianPersistence {
 
-    private final ILegalGuardianRepository legalGuardianRepository;
+    private final LegalGuardianRepository legalGuardianRepository;
 
     @Autowired
-    public LegalGuardianPersistenceMongodb(ILegalGuardianRepository legalGuardianRepository) {
+    public LegalGuardianPersistenceMongodb(LegalGuardianRepository legalGuardianRepository) {
         this.legalGuardianRepository = legalGuardianRepository;
     }
 

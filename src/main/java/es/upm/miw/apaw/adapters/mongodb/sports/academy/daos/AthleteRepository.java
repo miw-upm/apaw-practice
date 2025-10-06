@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface IAthleteRepository extends MongoRepository<AthleteEntity, UUID> {
+public interface AthleteRepository extends MongoRepository<AthleteEntity, UUID> {
     Optional<AthleteEntity> findByUserDtoId(UUID userDtoId);
 }
