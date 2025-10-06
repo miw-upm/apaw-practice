@@ -24,9 +24,11 @@ public class SalePersistenceMongodb implements SalePersistence {
 
     @Override
     public Sale create(Sale sale) {
+        SaleEntity saleEntity = new SaleEntity(sale);
         return this.saleRepository
-                .save(new SaleEntity(sale))
-                .toSale();    }
+                .save(saleEntity)
+                .toSale();
+    }
 
     @Override
     public boolean existIdSale(int idSale) {
@@ -35,4 +37,3 @@ public class SalePersistenceMongodb implements SalePersistence {
                 .isPresent();
     }
 }
-
