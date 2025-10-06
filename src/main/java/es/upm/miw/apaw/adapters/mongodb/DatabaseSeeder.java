@@ -8,6 +8,7 @@ import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.SportsAcademySeeder;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
+import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
 
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import lombok.extern.log4j.Log4j2;
@@ -29,6 +30,7 @@ public class DatabaseSeeder {
     private final WinerySeeder winerySeeder;
     private final UniversitySeeder universitySeeder;
     private final SportsAcademySeeder sportsAcademySeeder;
+    private final RecipesSeeder recipesSeeder;
 
 
     @Autowired
@@ -41,7 +43,8 @@ public class DatabaseSeeder {
             StudentCouncilSeeder studentCouncilSeeder,
             WinerySeeder winerySeeder,
             UniversitySeeder universitySeeder,
-            SportsAcademySeeder sportsAcademySeeder
+            SportsAcademySeeder sportsAcademySeeder,
+            RecipesSeeder recipesSeeder
             ) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
@@ -52,6 +55,7 @@ public class DatabaseSeeder {
         this.winerySeeder = winerySeeder;
         this.universitySeeder = universitySeeder;
         this.sportsAcademySeeder = sportsAcademySeeder;
+        this.recipesSeeder = recipesSeeder;
         this.seedDatabase();
     }
 
@@ -65,6 +69,7 @@ public class DatabaseSeeder {
         this.winerySeeder.seedDatabase();
         this.universitySeeder.seedDatabase();
         this.sportsAcademySeeder.seedDatabase();
+        this.recipesSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -77,6 +82,7 @@ public class DatabaseSeeder {
         this.winerySeeder.deleteAll();
         this.universitySeeder.deleteAll();
         this.sportsAcademySeeder.deleteAll();
+        this.recipesSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
