@@ -13,4 +13,6 @@ public interface ISportModalityPersistence {
     SportModality update(UUID id, SportModality sportModality);
 
     SportModality getById(UUID id);
+
+    void delete(UUID id);
 }

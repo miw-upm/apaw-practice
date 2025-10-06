@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.IProfessorRepository;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ProfessorRepository;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.ProfessorEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
@@ -15,10 +15,10 @@ import java.util.stream.Stream;
 
 @Repository("professorPersistence")
 public class ProfessorPersistenceMongodb implements IProfessorPersistence {
-    private final IProfessorRepository professorRepository;
+    private final ProfessorRepository professorRepository;
 
     @Autowired
-    public ProfessorPersistenceMongodb(IProfessorRepository professorRepository) {
+    public ProfessorPersistenceMongodb(ProfessorRepository professorRepository) {
         this.professorRepository = professorRepository;
     }
 

@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Rating {
     @NotNull
-    private UUID idRating;
+    private UUID id;
     @NotNull
     @Min(0)
     @Max(5)
