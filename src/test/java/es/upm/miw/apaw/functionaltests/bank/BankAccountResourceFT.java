@@ -61,7 +61,7 @@ class BankAccountResourceFT {
                 .expectBodyList(Loan.class)
                 .value(loans -> {
                     assertThat(loans).isNotEmpty();
-                    assertThat(loans.size()).isEqualTo(1);
+                    assertThat(loans).hasSize(1);
                     assertThat(loans.getFirst().getId()).isNotNull();
                     assertThat(loans.getFirst().getQuantity()).isEqualTo(new BigDecimal("10000"));
                     assertThat(loans.getFirst().getCondition()).isEqualTo("active");
