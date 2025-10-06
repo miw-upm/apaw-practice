@@ -11,6 +11,4 @@ public interface SalePersistence {
     Sale create(Sale sale);
 
     boolean existIdSale(int idSale);
-
-
 }
