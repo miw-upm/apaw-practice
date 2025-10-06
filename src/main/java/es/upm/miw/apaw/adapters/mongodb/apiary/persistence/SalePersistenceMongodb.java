@@ -37,4 +37,3 @@ public class SalePersistenceMongodb implements SalePersistence {
                 .isPresent();
     }
 }
-
