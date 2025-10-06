@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-@Repository("airportPersistence")
+@Repository("flightPersistence")
 public class FlightPersistenceMongodb implements FlightPersistence {
 
     private final FlightRepository flightRepository;

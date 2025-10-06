@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.airport.entities;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.airport.Flight;
 import es.upm.miw.apaw.domain.models.airport.Plane;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,13 @@ public class FlightEntity {
     public Flight toFlight() {
         Flight flight = new Flight();
         BeanUtils.copyProperties(this, flight);
+        flight.setBoardingGate(this.boardingGate.toBoardingGate());
+        flight.setPlane(this.plane.toPlane());
+        flight.setPassengers(this.getPassengersIds().stream()
+                .map(id -> UserDto.builder().id(id).build())
+                .toList()
+        );
+        flight.setPilot(UserDto.builder().id(this.getPilotId()).build());
         return flight;
     }
 }
