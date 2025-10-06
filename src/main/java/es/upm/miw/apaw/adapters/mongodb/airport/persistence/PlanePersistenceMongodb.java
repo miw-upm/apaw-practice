@@ -7,7 +7,7 @@ import es.upm.miw.apaw.domain.persistenceports.airport.PlanePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("airportPersistence")
+@Repository("planePersistence")
 public class PlanePersistenceMongodb implements PlanePersistence {
 
     private final PlaneRepository planeRepository;

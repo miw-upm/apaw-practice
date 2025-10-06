@@ -23,5 +23,5 @@ public class RecipeEntity {
     private String title;
     private String instructions;
     private Integer servings;
-    private List<RecipeItemEntity> itemsEntities;
+    private List<RecipeItemEntity> itemEntities;
 }

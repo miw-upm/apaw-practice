@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.apiary;
 
 import es.upm.miw.apaw.domain.models.apiary.Product;
 import es.upm.miw.apaw.domain.persistenceports.apiary.ProductPersistence;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,11 @@ public class ProductService {
         this.productPersistence = productPersistence;
     }
 
-    public Product updatePrice(String barcode, BigDecimal newPrice) {
-        Product product = this.productPersistence.readByBarCode(barcode);
-        product.setPrice(newPrice);
+    public Product update(Product product) {
         return this.productPersistence.update(product);
+    }
+
+    public Product updatePrice(String barcode, BigDecimal newPrice) {
+        return this.productPersistence.updatePrice(barcode, newPrice);
     }
 }

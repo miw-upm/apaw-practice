@@ -8,6 +8,8 @@ import es.upm.miw.apaw.domain.persistenceports.apiary.ProductPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+
 @Repository("productPersistence")
 public class ProductPersistenceMongodb implements ProductPersistence {
     private final ProductRepository productRepository;
@@ -18,8 +20,9 @@ public class ProductPersistenceMongodb implements ProductPersistence {
     }
 
     @Override
-    public Product readByBarCode(String barcode) {
-        return this.productRepository.findByBarcode(barcode)
+    public Product read(String barcode) {
+        return this.productRepository
+                .findByBarcode(barcode)
                 .orElseThrow(() -> new NotFoundException("Product barcode: " + barcode))
                 .toProduct();
     }
@@ -29,5 +32,14 @@ public class ProductPersistenceMongodb implements ProductPersistence {
         ProductEntity productEntity = new ProductEntity(product);
         this.productRepository.save(productEntity);
         return product;
+    }
+
+    @Override
+    public Product updatePrice(String barcode, BigDecimal newPrice) {
+        ProductEntity productEntity = this.productRepository.findByBarcode(barcode)
+                .orElseThrow(() -> new NotFoundException("Product barcode: " + barcode));
+        productEntity.setPrice(newPrice);
+        this.productRepository.save(productEntity);
+        return productEntity.toProduct();
     }
 }
