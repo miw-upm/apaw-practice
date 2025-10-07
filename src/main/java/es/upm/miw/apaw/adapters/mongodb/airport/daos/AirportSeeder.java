@@ -77,7 +77,7 @@ public class AirportSeeder {
                         .registrationNumber("EC-MAD")
                         .model("A320neo")
                         .seatCount(186)
-                        .createdAt(LocalDateTime.now().minusMonths(3))
+                        .createdAt(LocalDateTime.of(2024,1, 1, 12, 0))
                         .manufacturer("Airbus")
                         .build(),
                 PlaneEntity.builder()
@@ -85,7 +85,7 @@ public class AirportSeeder {
                         .registrationNumber("EC-BCN")
                         .model("B737-8")
                         .seatCount(189)
-                        .createdAt(LocalDateTime.now().minusYears(1))
+                        .createdAt(LocalDateTime.of(2024,4, 1, 12, 0))
                         .manufacturer("Boeing")
                         .build(),
                 PlaneEntity.builder()
@@ -93,7 +93,7 @@ public class AirportSeeder {
                         .registrationNumber("EC-VAL")
                         .model("A350-900")
                         .seatCount(331)
-                        .createdAt(LocalDateTime.now().minusYears(2))
+                        .createdAt(LocalDateTime.of(2024,7, 1, 12, 0))
                         .manufacturer("Airbus")
                         .build(),
                 PlaneEntity.builder()
@@ -101,7 +101,7 @@ public class AirportSeeder {
                         .registrationNumber("EC-SVQ")
                         .model("B787-9 Dreamliner")
                         .seatCount(296)
-                        .createdAt(LocalDateTime.now().minusMonths(8))
+                        .createdAt(LocalDateTime.of(2025,1, 1, 12, 0))
                         .manufacturer("Boeing")
                         .build()
         };
@@ -110,30 +110,47 @@ public class AirportSeeder {
 
         // 3) Users (pilot + passengers) — usas tu UserDto del dominio
         UUID[] pilots = {
-                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2000"),
-                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2001"),
-                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2002"),
-                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff2003"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"),
         };
 
-        List<List<UUID>> passengerLists = new ArrayList<>();
 
-        for (int j = 0; j < 8; j++) {
-            List<UUID> list = new ArrayList<>();
-            for (int i = 0; i < 100; i++) {
-                String suffix = String.format("%012x", j * 100 + i); // 12 dígitos hex
-                String uuidStr = "aaaaaaaa-bbbb-cccc-dddd-" + suffix;
-                list.add(UUID.fromString(uuidStr));
-            }
-            passengerLists.add(list);
-        }
+
+        List<UUID> passegers0 = new ArrayList<>(List.of(
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")
+        ));
+        List<UUID> passegers1 = new ArrayList<>(List.of(
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004")
+        ));
+        List<UUID> passegers2 = new ArrayList<>(List.of(
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005")
+        ));
+        List<UUID> passegers3 = new ArrayList<>(List.of(
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"),
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005")
+        ));
+        List<List<UUID>> passengerLists = new ArrayList<>(List.of(
+                passegers0,
+                passegers1,
+                passegers2,
+                passegers3
+        ));
 
         // 4) Flights (referencian gate y plane por @DBRef)
         FlightEntity[] flights = {
                 FlightEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"))
-                        .departureTime(LocalDateTime.now().plusDays(1).withHour(9).withMinute(30))
-                        .arrivalTime(LocalDateTime.now().plusDays(1).withHour(11).withMinute(15))
+                        .departureTime(LocalDateTime.of(2025,10, 5, 12, 0))
+                        .arrivalTime(LocalDateTime.of(2025,10, 5, 16, 0))
                         .destination("BCN")
                         .boardingGate(boardingGates[0])
                         .plane(planes[2])
@@ -170,46 +187,6 @@ public class AirportSeeder {
                         .passengersIds(passengerLists.get(3))
                         .pilotId(pilots[0])
                         .build(),
-                FlightEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3004"))
-                        .departureTime(LocalDateTime.now().plusDays(5).withHour(6).withMinute(45))
-                        .arrivalTime(LocalDateTime.now().plusDays(5).withHour(8).withMinute(55))
-                        .destination("CDG")
-                        .boardingGate(boardingGates[0])
-                        .plane(planes[3])
-                        .passengersIds(passengerLists.get(4))
-                        .pilotId(pilots[0])
-                        .build(),
-                FlightEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3005"))
-                        .departureTime(LocalDateTime.now().plusDays(6).withHour(13).withMinute(10))
-                        .arrivalTime(LocalDateTime.now().plusDays(6).withHour(15).withMinute(30))
-                        .destination("AMS")
-                        .boardingGate(boardingGates[1])
-                        .plane(planes[0])
-                        .passengersIds(passengerLists.get(5))
-                        .pilotId(pilots[1])
-                        .build(),
-                FlightEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3006"))
-                        .departureTime(LocalDateTime.now().plusDays(7).withHour(16).withMinute(40))
-                        .arrivalTime(LocalDateTime.now().plusDays(7).withHour(19).withMinute(5))
-                        .destination("FRA")
-                        .boardingGate(boardingGates[2])
-                        .plane(planes[1])
-                        .passengersIds(passengerLists.get(6))
-                        .pilotId(pilots[2])
-                        .build(),
-                FlightEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3007"))
-                        .departureTime(LocalDateTime.now().plusDays(8).withHour(10).withMinute(5))
-                        .arrivalTime(LocalDateTime.now().plusDays(8).withHour(12).withMinute(45))
-                        .destination("LHR")
-                        .boardingGate(boardingGates[3])
-                        .plane(planes[2])
-                        .passengersIds(passengerLists.get(7))
-                        .pilotId(pilots[3])
-                        .build()
         };
         this.flightRepository.saveAll(Arrays.asList(flights));
 
@@ -221,28 +198,28 @@ public class AirportSeeder {
                         .name("UPM Airlines")
                         .code("UP")
                         .country("ES")
-                        .flights(List.of(flights[0], flights[1]))
+                        .flights(List.of())
                         .build(),
                 AirlineEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4001"))
                         .name("Iberia Express")
                         .code("IB")
                         .country("ES")
-                        .flights(List.of(flights[2], flights[3]))
+                        .flights(List.of(flights[0], flights[1]))
                         .build(),
                 AirlineEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4002"))
                         .name("Air Europa")
                         .code("UX")
                         .country("ES")
-                        .flights(List.of(flights[4], flights[5], flights[6]))
+                        .flights(List.of(flights[2]))
                         .build(),
                 AirlineEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4003"))
                         .name("Vueling")
                         .code("VY")
                         .country("ES")
-                        .flights(List.of(flights[7]))
+                        .flights(List.of(flights[3]))
                         .build()
         };
         this.airlineRepository.saveAll(Arrays.asList(airlines));
