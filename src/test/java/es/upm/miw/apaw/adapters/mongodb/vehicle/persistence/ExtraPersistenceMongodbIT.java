@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.vehicle.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.ExtraRepository;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
+import es.upm.miw.apaw.adapters.mongodb.vehicle.entities.ExtraEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.vehicle.Extra;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,6 +49,29 @@ class ExtraPersistenceMongodbIT {
         assertThatThrownBy(() -> this.extraPersistenceMongodb.readByCategoryAndDescription("Fake", "No existe"))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Extra not found with category: Fake and description: No existe");
+    }
+
+    @Test
+    void testUpdate() {
+        Extra extra = this.extraPersistenceMongodb.readByCategoryAndDescription("Safety", "Automatic Emergency Braking (AEB)");
+        extra.setPrice(new BigDecimal("199.99"));
+
+        Extra updated = this.extraPersistenceMongodb.update(extra);
+
+        assertThat(updated.getPrice()).isEqualByComparingTo("199.99");
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        Extra fake = Extra.builder()
+                .category("FakeCat")
+                .description("FakeDesc")
+                .price(new BigDecimal("10.00"))
+                .build();
+
+        assertThatThrownBy(() -> this.extraPersistenceMongodb.update(fake))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("Extra not found");
     }
 
     @Test

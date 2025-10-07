@@ -1,10 +1,12 @@
 package es.upm.miw.apaw.adapters.resources.vehicle;
 
+import es.upm.miw.apaw.domain.models.vehicle.Extra;
 import es.upm.miw.apaw.domain.services.vehicle.ExtraService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,6 +20,11 @@ public class ExtraResource {
     @Autowired
     public ExtraResource(ExtraService extraService) {
         this.extraService = extraService;
+    }
+
+    @PatchMapping
+    public void updatePrices(@Valid @RequestBody List<Extra> extra) {
+        this.extraService.updatePrices(extra.stream());
     }
 
     @DeleteMapping(EXTRA_ID)
