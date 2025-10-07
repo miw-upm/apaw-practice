@@ -49,4 +49,8 @@ public class ApplicationEntity {
                                 .toList())
                 .build();
     }
+
+    public boolean getReferral() {
+      return this.referral;
+    }
 }
