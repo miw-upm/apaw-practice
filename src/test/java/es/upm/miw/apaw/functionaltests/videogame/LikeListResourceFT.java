@@ -25,7 +25,7 @@ public class LikeListResourceFT {
     @Test
     void testReadSharedById() {
         webTestClient.get()
-                .uri(LIKE_LISTS+ID_ID+SHARED, UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
+                .uri(LIKE_LISTS + ID_ID + SHARED, UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Boolean.class)

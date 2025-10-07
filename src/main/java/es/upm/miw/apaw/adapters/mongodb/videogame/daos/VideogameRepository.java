@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.UUID;
 
-public interface VideogameRepository extends MongoRepository<VideogameEntity, UUID>{
+public interface VideogameRepository extends MongoRepository<VideogameEntity, UUID> {
 }

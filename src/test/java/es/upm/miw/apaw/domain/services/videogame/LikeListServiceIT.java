@@ -21,7 +21,7 @@ public class LikeListServiceIT {
     private LikeListPersistence likeListPersistence;
 
     @Test
-    void testReadSharedById(){
+    void testReadSharedById() {
         assertTrue(this.likeListService.readSharedById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020")));
     }
 }
