@@ -5,8 +5,10 @@ import es.upm.miw.apaw.domain.models.winery.Evaluation;
 import es.upm.miw.apaw.domain.models.winery.TastingSession;
 import es.upm.miw.apaw.domain.models.winery.Wine;
 import es.upm.miw.apaw.domain.persistenceports.winery.TastingSessionPersistence;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -79,5 +81,47 @@ public class TastingSessionServiceTest {
         assertThatThrownBy(() -> this.tastingSessionService.read(sessionId))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining(sessionId.toString());
+    }
+
+    @Test
+    void testUpdateEvaluations() {
+        UUID sessionId = UUID.randomUUID();
+
+        List<Evaluation> originalEvaluations = List.of(
+                new Evaluation(5, "Good", true),
+                new Evaluation(2, "Not nice", false)
+        );
+
+        List<Evaluation> newEvaluations = List.of(
+                new Evaluation(10, "Excellent", true),
+                new Evaluation(7, "Nice experience", true)
+        );
+
+        TastingSession tastingSession = TastingSession.builder()
+                .id(sessionId)
+                .date(LocalDate.now())
+                .capacity(20)
+                .location("Test Cellar")
+                .wines(List.of())
+                .evaluations(originalEvaluations)
+                .build();
+
+        BDDMockito.given(this.tastingSessionPersistence.readById(sessionId))
+                .willReturn(tastingSession);
+
+        BDDMockito.given(this.tastingSessionPersistence.update(Mockito.any(TastingSession.class)))
+                .willAnswer(invocation -> invocation.getArgument(0));
+
+        TastingSession updated = this.tastingSessionService.updateEvaluations(sessionId, newEvaluations);
+
+        assertThat(updated).isNotNull();
+        assertThat(updated.getId()).isEqualTo(sessionId);
+        assertThat(updated.getEvaluations()).hasSize(2);
+        assertThat(updated.getEvaluations())
+                .extracting(Evaluation::getScore, Evaluation::getComment, Evaluation::getRecommended)
+                .containsExactly(
+                        Tuple.tuple(10, "Excellent", true),
+                        Tuple.tuple(7, "Nice experience", true)
+                );
     }
 }
