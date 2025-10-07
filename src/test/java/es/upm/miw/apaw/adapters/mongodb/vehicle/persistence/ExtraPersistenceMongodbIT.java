@@ -47,7 +47,7 @@ class ExtraPersistenceMongodbIT {
     void testReadByCategoryAndDescriptionNotFound() {
         assertThatThrownBy(() -> this.extraPersistenceMongodb.readByCategoryAndDescription("Fake", "No existe"))
                 .isInstanceOf(NotFoundException.class)
-                .hasMessageContaining("Extra not found with category");
+                .hasMessageContaining("Extra not found with category: Fake and description: No existe");
     }
 
     @Test
