@@ -10,8 +10,9 @@ import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.SportsAcademySeeder;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
-
+import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
+
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class DatabaseSeeder {
     private final VideogameSeeder videogameSeeder;
     private final BankSeeder bankSeeder;
     private final FightersSeeder fightersSeeder;
+    private final RecipesSeeder recipesSeeder;
+
 
     @Autowired
     public DatabaseSeeder(
@@ -49,7 +52,8 @@ public class DatabaseSeeder {
             SportsAcademySeeder sportsAcademySeeder,
             VideogameSeeder videogameSeeder,
             FightersSeeder fightersSeeder,
-            BankSeeder bankSeeder
+            BankSeeder bankSeeder,
+            RecipesSeeder recipesSeeder
             ) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
@@ -63,6 +67,7 @@ public class DatabaseSeeder {
         this.videogameSeeder = videogameSeeder;
         this.fightersSeeder = fightersSeeder;
         this.bankSeeder = bankSeeder;
+        this.recipesSeeder = recipesSeeder;
         this.seedDatabase();
     }
 
@@ -72,13 +77,14 @@ public class DatabaseSeeder {
         this.vehicleSeeder.seedDatabase();
         this.apiarySeeder.seedDatabase();
         this.recruitingSeeder.seedDatabase();
-        this.fightersSeeder.seedDatabase();
         this.studentCouncilSeeder.seedDatabase();
         this.winerySeeder.seedDatabase();
         this.universitySeeder.seedDatabase();
         this.sportsAcademySeeder.seedDatabase();
         this.videogameSeeder.seedDatabase();
+        this.fightersSeeder.seedDatabase();
         this.bankSeeder.seedDatabase();
+        this.recipesSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -87,13 +93,14 @@ public class DatabaseSeeder {
         this.vehicleSeeder.deleteAll();
         this.apiarySeeder.deleteAll();
         this.recruitingSeeder.deleteAll();
-        this.fightersSeeder.deleteAll();
         this.studentCouncilSeeder.deleteAll();
         this.winerySeeder.deleteAll();
         this.universitySeeder.deleteAll();
         this.sportsAcademySeeder.deleteAll();
         this.videogameSeeder.deleteAll();
+        this.fightersSeeder.deleteAll();
         this.bankSeeder.deleteAll();
+        this.recipesSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {

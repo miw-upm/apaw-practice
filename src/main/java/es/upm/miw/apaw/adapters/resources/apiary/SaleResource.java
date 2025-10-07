@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.resources.apiary;
 
-import es.upm.miw.apaw.adapters.resources.apiary.SaleResource;
 import es.upm.miw.apaw.domain.models.apiary.Sale;
 import es.upm.miw.apaw.domain.services.apiary.SaleService;
 import jakarta.validation.Valid;

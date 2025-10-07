@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.daos;
 
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ProfessorRepositoryIT {
+class ProfessorRepositoryIT extends BaseSportsAcademyIT {
 
     @Autowired
     private ProfessorRepository professorRepository;

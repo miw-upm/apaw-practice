@@ -23,14 +23,14 @@ import java.util.UUID;
 public class SportsAcademySeeder {
 
     private final AthleteRepository athleteRepository;
-    private final ISportModalityRepository sportModalityRepository;
+    private final SportModalityRepository sportModalityRepository;
     private final LegalGuardianRepository legalGuardianRepository;
     private final ProfessorRepository professorRepository;
 
     @Autowired
     public SportsAcademySeeder(
             AthleteRepository athleteRepository,
-            ISportModalityRepository sportModalityRepository,
+            SportModalityRepository sportModalityRepository,
             LegalGuardianRepository legalGuardianRepository,
             ProfessorRepository professorRepository) {
         this.athleteRepository = athleteRepository;

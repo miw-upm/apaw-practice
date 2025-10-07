@@ -25,4 +25,9 @@ public class SportModalityResource {
     public void addAthlete(@Valid @PathVariable UUID id, @RequestBody UpdateSportMobilityActivation updateSportMobilityActivation) {
         this.sportModalityService.updateActivation(id, updateSportMobilityActivation);
     }
+
+    @DeleteMapping(ID_ID)
+    public void delete(@Valid @PathVariable UUID id) {
+        this.sportModalityService.delete(id);
+    }
 }

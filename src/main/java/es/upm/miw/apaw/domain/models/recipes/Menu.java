@@ -24,9 +24,8 @@ public class Menu {
     @NotBlank
     private String caption;
     @NotNull
+    @NotBlank
     private LocalDate startDate;
-    @NotNull
-    @NotEmpty
     private String type;
     private UserDto user;
     private List<Recipe> recipes;
