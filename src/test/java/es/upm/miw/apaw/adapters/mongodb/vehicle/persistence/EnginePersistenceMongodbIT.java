@@ -54,4 +54,31 @@ class EnginePersistenceMongodbIT {
         assertThat(this.engineRepository.findByCodeEngine("VMIVDS000VIS99999")).isPresent();
     }
 
+    @Test
+    void testUpdate() {
+        Engine existing = this.engineRepository.findByCodeEngine("VMIVDS000VIS00001")
+                .map(EngineEntity -> EngineEntity.toEngine())
+                .orElseThrow();
+
+        existing.setType("Híbrido");
+        existing.setDisplacement(1900.00);
+
+        Engine updated = this.enginePersistenceMongodb.update(existing);
+
+        assertThat(updated.getType()).isEqualTo("Híbrido");
+        assertThat(updated.getDisplacement()).isEqualTo(1900.00);
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        Engine fakeEngine = Engine.builder()
+                .codeEngine("NOT_EXIST")
+                .type("Diesel")
+                .displacement(1600.0)
+                .build();
+
+        assertThatThrownBy(() -> this.enginePersistenceMongodb.update(fakeEngine))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("Code engine: NOT_EXIST not found.");
+    }
 }

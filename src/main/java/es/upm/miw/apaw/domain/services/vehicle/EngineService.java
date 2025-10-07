@@ -27,4 +27,10 @@ public class EngineService {
         }
     }
 
+    public Engine update(String codeEngine, Engine engine) {
+        if (!engine.getCodeEngine().equals(codeEngine)) {
+            throw new ConflictException("The engine code of the URI (" + codeEngine + ") is not the same as that of the body (" + engine.getCodeEngine() + ").");
+        }
+        return this.enginePersistence.update(engine);
+    }
 }

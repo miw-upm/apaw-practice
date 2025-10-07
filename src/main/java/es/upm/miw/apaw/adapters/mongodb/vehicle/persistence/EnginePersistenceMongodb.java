@@ -26,6 +26,16 @@ public class EnginePersistenceMongodb implements EnginePersistence {
     }
 
     @Override
+    public Engine update(Engine engine) {
+        EngineEntity engineEntity = this.engineRepository
+                .findByCodeEngine(engine.getCodeEngine())
+                .orElseThrow(() -> new NotFoundException("Code engine: " + engine.getCodeEngine() + " not found."));
+        engineEntity.setType(engine.getType());
+        engineEntity.setDisplacement(engine.getDisplacement());
+        return this.engineRepository.save(engineEntity).toEngine();
+    }
+
+    @Override
     public Engine create(Engine engine) {
         EngineEntity engineEntity = new EngineEntity(engine);
         return this.engineRepository.save(engineEntity).toEngine();

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(EngineResource.ENGINES)
 public class EngineResource {
     public static final String ENGINES = "/vehicle/engines";
+    public static final String CODE_ENGINE_ID = "/{codeEngine}";
 
     private final EngineService engineService;
 
@@ -23,4 +24,8 @@ public class EngineResource {
         return this.engineService.create(engine);
     }
 
+    @PutMapping(CODE_ENGINE_ID)
+    public Engine update(@Valid @PathVariable String codeEngine, @Valid @RequestBody Engine engine) {
+        return this.engineService.update(codeEngine, engine);
+    }
 }

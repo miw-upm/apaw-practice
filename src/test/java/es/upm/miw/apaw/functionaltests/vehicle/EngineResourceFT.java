@@ -75,4 +75,40 @@ class EngineResourceFT {
                 .expectStatus().isBadRequest();
     }
 
+    @Test
+    void testUpdate() {
+        Engine engine = Engine.builder()
+                .codeEngine("VMIVDS000VIS00000")
+                .type("Diesel Updated")
+                .displacement(1800.0)
+                .build();
+
+        webTestClient.put()
+                .uri(EngineResource.ENGINES + EngineResource.CODE_ENGINE_ID, "VMIVDS000VIS00000")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(engine)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Engine.class)
+                .value(updated -> {
+                    assertThat(updated.getCodeEngine()).isEqualTo("VMIVDS000VIS00000");
+                    assertThat(updated.getType()).contains("Updated");
+                });
+    }
+
+    @Test
+    void testUpdateConflict() {
+        Engine engine = Engine.builder()
+                .codeEngine("OtherCode")
+                .type("Diesel")
+                .displacement(1800.0)
+                .build();
+
+        webTestClient.put()
+                .uri(EngineResource.ENGINES + EngineResource.CODE_ENGINE_ID, "VMIVDS000VIS00000")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(engine)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.CONFLICT);
+    }
 }
