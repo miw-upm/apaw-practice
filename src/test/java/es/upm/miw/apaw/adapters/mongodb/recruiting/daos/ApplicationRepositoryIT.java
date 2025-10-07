@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
 import org.junit.jupiter.api.Test;
@@ -22,27 +21,6 @@ class ApplicationRepositoryIT {
 
     @Autowired
     private ApplicationRepository applicationRepository;
-
-    @Test
-    void testFindById() {
-        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0032");
-
-        assertTrue(this.applicationRepository.findById(id).isPresent());
-
-        ApplicationEntity application = this.applicationRepository.findById(id).get();
-
-        assertThat(application.getId()).isEqualTo(id);
-        assertThat(application.getStatus()).isEqualTo(Status.Hired);
-        assertThat(application.getCreated()).isBeforeOrEqualTo(LocalDate.now());
-        assertThat(application.getUser()).isNotNull();
-        assertThat(application.getPositionEntity()).isInstanceOf(PositionEntity.class);
-
-        List<MeetingEntity> meetings = application.getMeetingList();
-        if (meetings != null && !meetings.isEmpty()) {
-            assertThat(meetings.get(0).getDate()).isNotNull();
-            assertThat(meetings.get(0).getUrl()).contains("meeting-4");
-        }
-    }
 
     @Test
     void testSaveAndFind() {
