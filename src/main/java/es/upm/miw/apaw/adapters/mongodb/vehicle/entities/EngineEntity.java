@@ -23,4 +23,15 @@ public class EngineEntity {
     private String codeEngine;
     private String type;
     private Double displacement;
+
+    public EngineEntity(Engine engine) {
+        this.id = UUID.randomUUID();
+        BeanUtils.copyProperties(engine, this);
+    }
+
+    public Engine toEngine() {
+        Engine engine = new Engine();
+        BeanUtils.copyProperties(this, engine);
+        return engine;
+    }
 }
