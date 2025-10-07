@@ -27,7 +27,12 @@ public class PaymentHistoryEntity {
     public PaymentHistoryEntity(PaymentHistory paymentHistory){
         BeanUtils.copyProperties(paymentHistory, this);
     }
+
     public PaymentHistory toPaymentHistory(){
         return new PaymentHistory(id,amount,paymentDate,paid);
+    }
+
+    public void fromPaymentHistory(PaymentHistory paymentHistory){
+        BeanUtils.copyProperties(paymentHistory, this);
     }
 }

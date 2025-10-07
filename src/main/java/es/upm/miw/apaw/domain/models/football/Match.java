@@ -1,10 +1,14 @@
 package es.upm.miw.apaw.domain.models.football;
 
+import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Match
-{
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Match {
     private Long matchId;
     private LocalDateTime dateTime;
     private Integer homeGoals;

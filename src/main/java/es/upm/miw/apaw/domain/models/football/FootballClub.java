@@ -15,7 +15,6 @@ public class FootballClub {
     private BigDecimal budget;
     private LocalDate founded;
 
-    // Relationships
     private List<FootballPlayer> players;
     private Stadium stadium;
 }

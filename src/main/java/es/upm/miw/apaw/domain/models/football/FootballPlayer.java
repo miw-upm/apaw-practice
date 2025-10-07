@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.models.football;
 
+
 import lombok.*;
 import java.time.LocalDate;
 
@@ -12,7 +13,4 @@ public class FootballPlayer {
     private String nickname;
     private LocalDate birthDate;
     private Integer goalsScored;
-
-    // Relationship
-    private FootballClub club;
 }
