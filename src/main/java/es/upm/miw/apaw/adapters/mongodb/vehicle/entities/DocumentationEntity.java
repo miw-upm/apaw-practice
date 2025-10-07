@@ -11,4 +11,10 @@ import org.springframework.beans.BeanUtils;
 public class DocumentationEntity {
     private String name;
     private Boolean validate;
+
+    public Documentation toDocumentation() {
+        Documentation documentation = new Documentation();
+        BeanUtils.copyProperties(this, documentation);
+        return documentation;
+    }
 }

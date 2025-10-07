@@ -26,4 +26,10 @@ public class ExtraEntity {
     @Indexed(unique = true)
     private String description;
     private BigDecimal price;
+
+    public Extra toExtra() {
+        Extra extra = new Extra();
+        BeanUtils.copyProperties(this, extra);
+        return extra;
+    }
 }
