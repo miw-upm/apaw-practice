@@ -69,6 +69,39 @@ class PositionResourceFT {
     }
 
     @Test
+    void testCreatePositionNoReference() {
+        Position position = Position.builder()
+                .name("SAP HCM Consultant")
+                .description("Develop and solution provider in SAP HCM technologies.")
+                .annualSalary(new BigDecimal("55000"))
+                .bonusSalary(new BigDecimal("9000"))
+                .numVacancies(3)
+                .build();
+
+        webTestClient.post()
+                .uri(PositionResource.POSITIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(position)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(Position.class)
+                .value(createdPosition -> {
+                    assertThat(createdPosition.getReference()).isGreaterThan(0);
+                    assertThat(createdPosition.getName()).isEqualTo("SAP HCM Consultant");
+                    assertThat(createdPosition.getDescription()).contains("SAP");
+                    assertThat(createdPosition.getAnnualSalary()).isEqualByComparingTo("55000");
+                    assertThat(createdPosition.getBonusSalary()).isEqualByComparingTo("9000");
+                    assertThat(createdPosition.getNumVacancies()).isEqualTo(3);
+                });
+
+        // Verify persisted entity in MongoDB
+        List<PositionEntity> positions = positionRepository.findAll();
+        assertThat(positions).hasSize(1);
+        assertThat(positions.get(0).getName()).isEqualTo("SAP HCM Consultant");
+    }
+
+    @Test
     void testCreatePositionBadRequest() {
         // Missing required fields (name and annualSalary)
         Position invalidPosition = Position.builder()
