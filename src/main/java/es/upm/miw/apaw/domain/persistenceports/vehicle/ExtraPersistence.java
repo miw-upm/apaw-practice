@@ -10,6 +10,8 @@ public interface ExtraPersistence {
 
     Extra readByCategoryAndDescription(String category, String description);
 
+    Extra update(Extra extra);
+
     void delete(UUID id);
 
 }
