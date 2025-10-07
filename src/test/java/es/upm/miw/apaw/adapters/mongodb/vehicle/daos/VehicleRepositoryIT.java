@@ -18,21 +18,21 @@ class VehicleRepositoryIT {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-//    @Test
-//    void testFindAllAndRead() {
-//        assertThat(this.vehicleRepository.findAll())
-//                .isNotEmpty()
-//                .anySatisfy(vehicle -> {
-//                    assertThat(vehicle.getPlate()).isNotNull();
-//                    assertThat(vehicle.getBrand()).isIn("Peugeot", "Honda", "BMW", "Benelli", "Yamaha");
-//                    assertThat(vehicle.getModel()).isNotEmpty();
-//                    assertThat(vehicle.getRegistrationDate()).isBeforeOrEqualTo(LocalDate.now());
-//                    assertThat(vehicle.getEngineEntity()).isNotNull();
-//                    assertThat(vehicle.getDocumentationEntities()).isNotEmpty();
-//                });
-//
-//        VehicleEntity vehicle = this.vehicleRepository.findAll().getFirst();
-//        assertThat(vehicle.getId()).isNotNull();
-//        assertThat(vehicle.getOwner()).isInstanceOf(UUID.class);
-//    }
+    @Test
+    void testFindAllAndRead() {
+        assertThat(this.vehicleRepository.findAll())
+                .isNotEmpty()
+                .anySatisfy(vehicle -> {
+                    assertThat(vehicle.getPlate()).isNotNull();
+                    assertThat(vehicle.getBrand()).isIn("Peugeot", "Honda", "BMW", "Benelli", "Yamaha");
+                    assertThat(vehicle.getModel()).isNotEmpty();
+                    assertThat(vehicle.getRegistrationDate()).isBeforeOrEqualTo(LocalDate.now());
+                    assertThat(vehicle.getEngineEntity()).isNotNull();
+                    assertThat(vehicle.getDocumentationEntities()).isNotEmpty();
+                });
+
+        VehicleEntity vehicle = this.vehicleRepository.findAll().getFirst();
+        assertThat(vehicle.getId()).isNotNull();
+        assertThat(vehicle.getOwner()).isInstanceOf(UUID.class);
+    }
 }

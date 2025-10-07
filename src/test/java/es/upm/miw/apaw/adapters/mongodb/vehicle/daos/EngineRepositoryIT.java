@@ -17,25 +17,25 @@ class EngineRepositoryIT {
     @Autowired
     private EngineRepository engineRepository;
 
-//    @Test
-//    void testFindAll() {
-//        assertThat(this.engineRepository.findAll())
-//                .isNotEmpty()
-//                .anySatisfy(engine -> {
-//                    assertThat(engine.getId()).isInstanceOf(UUID.class);
-//                    assertThat(engine.getCodeEngine()).startsWith("VMIVDS000VIS");
-//                    assertThat(engine.getType()).isIn("Diesel", "Gasolina");
-//                    assertThat(engine.getDisplacement()).isGreaterThan(0);
-//                });
-//    }
-//
-//    @Test
-//    void testFindByCodeEngine() {
-//        String code = "VMIVDS000VIS00000";
-//        assertThat(this.engineRepository.findByCodeEngine(code))
-//                .isPresent()
-//                .get()
-//                .extracting(EngineEntity::getCodeEngine)
-//                .isEqualTo(code);
-//    }
+    @Test
+    void testFindAll() {
+        assertThat(this.engineRepository.findAll())
+                .isNotEmpty()
+                .anySatisfy(engine -> {
+                    assertThat(engine.getId()).isInstanceOf(UUID.class);
+                    assertThat(engine.getCodeEngine()).startsWith("VMIVDS000VIS");
+                    assertThat(engine.getType()).isIn("Diesel", "Gasolina");
+                    assertThat(engine.getDisplacement()).isGreaterThan(0);
+                });
+    }
+
+    @Test
+    void testFindByCodeEngine() {
+        String code = "VMIVDS000VIS00000";
+        assertThat(this.engineRepository.findByCodeEngine(code))
+                .isPresent()
+                .get()
+                .extracting(EngineEntity::getCodeEngine)
+                .isEqualTo(code);
+    }
 }
