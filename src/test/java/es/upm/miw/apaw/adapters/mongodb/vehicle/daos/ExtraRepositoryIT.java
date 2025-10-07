@@ -29,15 +29,15 @@ class ExtraRepositoryIT {
                 });
     }
 
-//    @Test
-//    void testFindByCategoryAndDescription() {
-//        String category = "Safety";
-//        String description = "Automatic Emergency Braking (AEB)";
-//
-//        assertThat(this.extraRepository.findByCategoryAndDescription(category, description))
-//                .isPresent()
-//                .get()
-//                .extracting(ExtraEntity::getCategory)
-//                .isEqualTo(category);
-//    }
+    @Test
+    void testFindByCategoryAndDescription() {
+        String category = "Safety";
+        String description = "Automatic Emergency Braking (AEB)";
+
+        assertThat(this.extraRepository.findByCategoryAndDescription(category, description))
+                .isPresent()
+                .get()
+                .extracting(ExtraEntity::getCategory)
+                .isEqualTo(category);
+    }
 }
