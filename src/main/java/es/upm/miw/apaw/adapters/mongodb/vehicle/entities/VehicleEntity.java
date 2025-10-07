@@ -36,4 +36,23 @@ public class VehicleEntity {
     @DBRef
     private List<ExtraEntity> extraEntities;
     private UUID owner;
+
+    public Vehicle toVehicle() {
+        Vehicle vehicle = new Vehicle();
+        BeanUtils.copyProperties(this, vehicle,
+                "owner", "engineEntity", "documentationEntities", "extraEntities");
+        vehicle.setEngine(this.engineEntity.toEngine());
+        vehicle.setDocumentations(
+                this.documentationEntities.stream()
+                        .map(DocumentationEntity::toDocumentation)
+                        .toList()
+        );
+        vehicle.setExtras(
+                this.extraEntities.stream()
+                        .map(ExtraEntity::toExtra)
+                        .toList()
+        );
+        vehicle.setOwner(UserDto.builder().id(owner).build());
+        return vehicle;
+    }
 }
