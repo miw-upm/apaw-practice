@@ -52,6 +52,35 @@ class EngineServiceIT {
 
         assertThatThrownBy(() -> this.engineService.create(engine))
                 .isInstanceOf(ConflictException.class)
-                .hasMessageContaining("Code engine exist");
+                .hasMessageContaining("Code engine exist: VMIVDS000VIS12345");
+    }
+
+    @Test
+    void testUpdateOk() {
+        Engine engine = Engine.builder()
+                .codeEngine("VMIVDS000VIS00001")
+                .type("Diesel")
+                .displacement(1800.00)
+                .build();
+
+        BDDMockito.given(this.enginePersistence.update(any(Engine.class))).willReturn(engine);
+
+        Engine updated = this.engineService.update("VMIVDS000VIS00001", engine);
+
+        assertThat(updated.getCodeEngine()).isEqualTo("VMIVDS000VIS00001");
+        assertThat(updated.getType()).isEqualTo("Diesel");
+    }
+
+    @Test
+    void testUpdateConflictUriBodyMismatch() {
+        Engine engine = Engine.builder()
+                .codeEngine("CODE_BODY")
+                .type("Diesel")
+                .displacement(1800.00)
+                .build();
+
+        assertThatThrownBy(() -> this.engineService.update("CODE_URI", engine))
+                .isInstanceOf(ConflictException.class)
+                .hasMessageContaining("The engine code of the URI (CODE_URI) is not the same as that of the body (CODE_BODY).");
     }
 }

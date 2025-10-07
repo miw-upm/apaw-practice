@@ -8,5 +8,7 @@ public interface EnginePersistence {
 
     boolean existCodeEngine(String codeEngine);
 
+    Engine update(Engine engine);
+
     Engine create(Engine engine);
 }
