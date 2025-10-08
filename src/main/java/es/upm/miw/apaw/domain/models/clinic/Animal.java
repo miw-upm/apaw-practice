@@ -1,24 +1,22 @@
 package es.upm.miw.apaw.domain.models.clinic;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.UUID;
-
-@Data
-@NoArgsConstructor
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Animal {
-    private UUID animalId;
+
+    // Clave de negocio principal (microchipNumber)
+    private Long microchipNumber;
+
+    // Atributos de Animal
     private String petName;
     private Double weightKilos;
+    private Boolean vaccinated;
 
-    public Animal(String petName, Double weightKilos) {
-        this.animalId = UUID.randomUUID();
-        this.petName = petName;
-        this.weightKilos = weightKilos;
-    }
+    // Relación n..1 con Doctor (usando la clave licenseNumber)
+    private Long doctorLicenseNumber;
 }

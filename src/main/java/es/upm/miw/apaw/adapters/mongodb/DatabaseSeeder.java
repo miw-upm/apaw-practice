@@ -14,7 +14,7 @@ import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.WarehouseSeeder;
-
+import es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +42,7 @@ public class DatabaseSeeder {
     private final FightersSeeder fightersSeeder;
     private final RecipesSeeder recipesSeeder;
     private final WarehouseSeeder warehouseSeeder;
+    private final ClinicSeeder clinicSeeder; // ¡Tu propiedad!
 
 
     @Autowired
@@ -60,8 +61,9 @@ public class DatabaseSeeder {
             FightersSeeder fightersSeeder,
             BankSeeder bankSeeder,
             RecipesSeeder recipesSeeder,
-            WarehouseSeeder warehouseSeeder
-            ) {
+            WarehouseSeeder warehouseSeeder,
+            ClinicSeeder clinicSeeder // ¡Tu parámetro!
+    ) {
 
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
@@ -78,6 +80,7 @@ public class DatabaseSeeder {
         this.bankSeeder = bankSeeder;
         this.recipesSeeder = recipesSeeder;
         this.warehouseSeeder = warehouseSeeder;
+        this.clinicSeeder = clinicSeeder; // ¡Tu asignación!
         this.seedDatabase();
 
     }
@@ -98,6 +101,7 @@ public class DatabaseSeeder {
         this.bankSeeder.seedDatabase();
         this.recipesSeeder.seedDatabase();
         this.warehouseSeeder.seedDatabase();
+        this.clinicSeeder.seedDatabase(); // ¡Tu llamada!
     }
 
     public void deleteAll() {
@@ -116,6 +120,7 @@ public class DatabaseSeeder {
         this.bankSeeder.deleteAll();
         this.recipesSeeder.deleteAll();
         this.warehouseSeeder.deleteAll();
+        this.clinicSeeder.deleteAll(); // ¡Tu llamada!
     }
 
     public void reSeedDatabase() {
