@@ -12,8 +12,10 @@ import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
-
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
+import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.WarehouseSeeder;
+
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -37,6 +39,7 @@ public class DatabaseSeeder {
     private final BankSeeder bankSeeder;
     private final FightersSeeder fightersSeeder;
     private final RecipesSeeder recipesSeeder;
+    private final WarehouseSeeder warehouseSeeder;
 
 
     @Autowired
@@ -53,7 +56,8 @@ public class DatabaseSeeder {
             VideogameSeeder videogameSeeder,
             FightersSeeder fightersSeeder,
             BankSeeder bankSeeder,
-            RecipesSeeder recipesSeeder
+            RecipesSeeder recipesSeeder,
+            WarehouseSeeder warehouseSeeder
             ) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
@@ -68,6 +72,7 @@ public class DatabaseSeeder {
         this.fightersSeeder = fightersSeeder;
         this.bankSeeder = bankSeeder;
         this.recipesSeeder = recipesSeeder;
+        this.warehouseSeeder = warehouseSeeder;
         this.seedDatabase();
     }
 
@@ -85,6 +90,7 @@ public class DatabaseSeeder {
         this.fightersSeeder.seedDatabase();
         this.bankSeeder.seedDatabase();
         this.recipesSeeder.seedDatabase();
+        this.warehouseSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -101,6 +107,7 @@ public class DatabaseSeeder {
         this.fightersSeeder.deleteAll();
         this.bankSeeder.deleteAll();
         this.recipesSeeder.deleteAll();
+        this.warehouseSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
