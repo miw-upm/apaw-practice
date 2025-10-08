@@ -16,4 +16,8 @@ public class AttendeeService {
     public Attendee read(String emailAddress) {
         return this.attendeePersistence.readByEmailAddress(emailAddress);
     }
+
+    public void delete(String emailAddress) {
+        this.attendeePersistence.delete(emailAddress);
+    }
 }
