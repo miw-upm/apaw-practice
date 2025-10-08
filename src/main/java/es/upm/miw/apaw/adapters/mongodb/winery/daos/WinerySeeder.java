@@ -39,29 +39,35 @@ public class WinerySeeder {
 
         // Wines
         WineEntity[] wines = {
-                WineEntity.builder().idWine(1L).name("Cabernet Sauvignon").year(2020)
+                WineEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .name("Cabernet Sauvignon").year(2020)
                         .alcoholPercentage(13.5).price(new BigDecimal("25.50")).build(),
-                WineEntity.builder().idWine(2L).name("Merlot").year(2019)
+                WineEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                        .name("Merlot").year(2019)
                         .alcoholPercentage(14.0).price(new BigDecimal("18.90")).build(),
-                WineEntity.builder().idWine(3L).name("Chardonnay").year(2021)
+                WineEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                        .name("Chardonnay").year(2021)
                         .alcoholPercentage(12.5).price(new BigDecimal("15.75")).build()
         };
         this.wineRepository.saveAll(Arrays.asList(wines));
 
-        // Evaluations (creadas directamente en TastingSessions)
+        // Evaluations (created in TastingSessions)
         EvaluationEntity eval1 = EvaluationEntity.builder()
-                .idEvaluation(1L).score(5).comment("Excellent balance").build();
+                .score(5).comment("Great organization and excellent wine selection")
+                .recommended(true).build();
+
         EvaluationEntity eval2 = EvaluationEntity.builder()
-                .idEvaluation(2L).score(4).comment("Fruity and smooth").build();
+                .score(2).comment("Poor organization, the session started late and felt rushed")
+                .recommended(false).build();
 
         // TastingSessions
         TastingSessionEntity[] sessions = {
-                TastingSessionEntity.builder().idSession(100L).date(LocalDate.now().plusDays(5))
+                TastingSessionEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100")).date(LocalDate.now().plusDays(5))
                         .capacity(20).location("Main Hall")
                         .wineEntities(List.of(wines[0], wines[1]))
                         .evaluationEntities(List.of(eval1))
                         .build(),
-                TastingSessionEntity.builder().idSession(101L).date(LocalDate.now().plusDays(10))
+                TastingSessionEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101")).date(LocalDate.now().plusDays(10))
                         .capacity(15).location("Garden Room")
                         .wineEntities(List.of(wines[2]))
                         .evaluationEntities(List.of(eval2))
@@ -71,19 +77,19 @@ public class WinerySeeder {
 
         // Reservations
         ReservationEntity[] reservations = {
-                ReservationEntity.builder().idReservation(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100"))
-                        .reservationDate(LocalDateTime.now().plusDays(1))
+                ReservationEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
+                        .bookingDate(LocalDateTime.now().plusDays(1))
                         .totalCost(new BigDecimal("40.00"))
                         .confirmed(true)
                         .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
-                        .tastingSessionId(sessions[0].getIdSession())
+                        .tastingSessionEntity(sessions[0])
                         .build(),
-                ReservationEntity.builder().idReservation(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101"))
-                        .reservationDate(LocalDateTime.now().plusDays(2))
+                ReservationEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
+                        .bookingDate(LocalDateTime.now().plusDays(2))
                         .totalCost(new BigDecimal("20.00"))
                         .confirmed(false)
                         .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
-                        .tastingSessionId(sessions[1].getIdSession())
+                        .tastingSessionEntity(sessions[1])
                         .build()
         };
         this.reservationRepository.saveAll(Arrays.asList(reservations));
