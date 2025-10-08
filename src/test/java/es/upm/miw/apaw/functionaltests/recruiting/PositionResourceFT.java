@@ -65,7 +65,7 @@ class PositionResourceFT {
         // Verify persisted entity in MongoDB
         List<PositionEntity> positions = positionRepository.findAll();
         assertThat(positions).hasSize(1);
-        assertThat(positions.get(0).getName()).isEqualTo("Backend Developer");
+        assertThat(positions.getFirst().getName()).isEqualTo("Backend Developer");
     }
 
     @Test
@@ -98,7 +98,7 @@ class PositionResourceFT {
         // Verify persisted entity in MongoDB
         List<PositionEntity> positions = positionRepository.findAll();
         assertThat(positions).hasSize(1);
-        assertThat(positions.get(0).getName()).isEqualTo("SAP HCM Consultant");
+        assertThat(positions.getFirst().getName()).isEqualTo("SAP HCM Consultant");
     }
 
     @Test
