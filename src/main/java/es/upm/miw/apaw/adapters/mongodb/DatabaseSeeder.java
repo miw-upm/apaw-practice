@@ -13,6 +13,7 @@ import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
+import es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -35,6 +36,7 @@ public class DatabaseSeeder {
     private final VideogameSeeder videogameSeeder;
     private final BankSeeder bankSeeder;
     private final FightersSeeder fightersSeeder;
+    private final ClinicSeeder clinicSeeder;
 
     @Autowired
     public DatabaseSeeder(
@@ -49,7 +51,8 @@ public class DatabaseSeeder {
             SportsAcademySeeder sportsAcademySeeder,
             VideogameSeeder videogameSeeder,
             FightersSeeder fightersSeeder,
-            BankSeeder bankSeeder
+            BankSeeder bankSeeder,
+            ClinicSeeder clinicSeeder
             ) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
@@ -63,6 +66,7 @@ public class DatabaseSeeder {
         this.videogameSeeder = videogameSeeder;
         this.fightersSeeder = fightersSeeder;
         this.bankSeeder = bankSeeder;
+        this.clinicSeeder = clinicSeeder;
         this.seedDatabase();
     }
 
@@ -79,6 +83,7 @@ public class DatabaseSeeder {
         this.sportsAcademySeeder.seedDatabase();
         this.videogameSeeder.seedDatabase();
         this.bankSeeder.seedDatabase();
+        this.clinicSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -94,6 +99,7 @@ public class DatabaseSeeder {
         this.sportsAcademySeeder.deleteAll();
         this.videogameSeeder.deleteAll();
         this.bankSeeder.deleteAll();
+        this.clinicSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
