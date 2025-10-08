@@ -38,9 +38,9 @@ public class MovementOrderEntity {
 
     private UUID userId;
 
+
     public MovementOrderEntity(MovementOrder movementOrder) {
         BeanUtils.copyProperties(movementOrder, this, "user", "orderDetails");
-
         this.userId = movementOrder.getUser().getId();
 
         if (movementOrder.getOrderDetails() != null) {
@@ -49,19 +49,15 @@ public class MovementOrderEntity {
                     .toList();
         }
 
-        this.id = (movementOrder.getId() != null)
-                ? movementOrder.getId()
-                : UUID.randomUUID();
+        this.id = (movementOrder.getId() != null) ? movementOrder.getId() : UUID.randomUUID();
     }
 
     public MovementOrder toMovementOrder() {
         MovementOrder movementOrder = new MovementOrder();
         BeanUtils.copyProperties(this, movementOrder, "user", "orderDetailEntities");
 
-        // Reconstruye el UserDto usando el userId
         movementOrder.setUser(UserDto.builder().id(userId).build());
 
-        // Convierte las entidades OrderDetailEntity → OrderDetail
         if (this.orderDetailEntities != null) {
             List<OrderDetail> orderDetails = this.orderDetailEntities.stream()
                     .map(OrderDetailEntity::toOrderDetail)
@@ -71,5 +67,6 @@ public class MovementOrderEntity {
 
         return movementOrder;
     }
+
 
 }

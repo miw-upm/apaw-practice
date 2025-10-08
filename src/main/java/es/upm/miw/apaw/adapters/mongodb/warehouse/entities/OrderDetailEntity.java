@@ -32,7 +32,7 @@ public class OrderDetailEntity {
 
     public OrderDetailEntity(OrderDetail orderDetail) {
         BeanUtils.copyProperties(orderDetail, this, "productItemEntity");
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID(); // siempre genera uno nuevo
 
         if (orderDetail.getProductItem() != null) {
             this.productItemEntity = new ProductItemEntity(orderDetail.getProductItem());
