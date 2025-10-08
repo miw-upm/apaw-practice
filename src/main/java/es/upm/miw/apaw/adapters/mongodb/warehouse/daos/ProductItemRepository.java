@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ProductItemRepository extends MongoRepository<ProductItemEntity, UUID> {
-
-    Optional<ProductItemEntity> findByBarcodeProductItem(String barcodeProductItem);
+public interface ProductItemRepository {
 
 }
