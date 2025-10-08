@@ -22,6 +22,7 @@ public class SalePersistenceMongodb implements SalePersistence {
         this.saleRepository.deleteByIdSale(idSale);
     }
 
+
     @Override
     public Sale create(Sale sale) {
         SaleEntity saleEntity = new SaleEntity(sale);
