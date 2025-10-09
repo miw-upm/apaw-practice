@@ -24,4 +24,8 @@ public class BoardingGate {
     @NotBlank
     private String terminal;
     private Boolean opened;
+
+    public void update(BoardingGate boardingGate) {
+
+    }
 }
