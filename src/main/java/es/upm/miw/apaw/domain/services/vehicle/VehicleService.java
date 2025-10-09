@@ -25,4 +25,8 @@ public class VehicleService {
     public List<String> findExtraCategoriesByDocumentationName(String documentationName) {
         return this.vehiclePersistence.findExtraCategoriesByDocumentationName(documentationName);
     }
+
+    public List<String> findUserMobilesByEngineType(String engineType) {
+        return this.vehiclePersistence.findUserMobilesByEngineType(engineType);
+    }
 }
