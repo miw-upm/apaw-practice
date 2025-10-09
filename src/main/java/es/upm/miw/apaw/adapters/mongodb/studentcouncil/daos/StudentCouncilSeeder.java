@@ -78,18 +78,18 @@ public class StudentCouncilSeeder {
 
 
         RepresentativeEntity rep1 = RepresentativeEntity.builder()
-                .id(UUID.fromString("dddddddd-bbbb-cccc-dddd-eeeeffff0000"))
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                 .joinDate(LocalDateTime.now().minusYears(1))
                 .responsibility("President")
-                .representativeId(UUID.fromString("dddddddd-bbbb-cccc-dddd-eeeeffff0000"))
+                .representativeId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                 .topics(Arrays.asList(issue1, issue2))
                 .build();
 
         RepresentativeEntity rep2 = RepresentativeEntity.builder()
-                .id(UUID.fromString("dddddddd-bbbb-cccc-dddd-eeeeffff0001"))
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                 .joinDate(LocalDateTime.now().minusMonths(6))
                 .responsibility("Treasurer")
-                .representativeId(UUID.fromString("dddddddd-bbbb-cccc-dddd-eeeeffff0001"))
+                .representativeId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                 .topics(Collections.singletonList(issue1))
                 .build();
 
