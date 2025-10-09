@@ -87,7 +87,7 @@ class VehicleResourceFT {
                 });
     }
 
-    //@Test
+    @Test
     void testFindUserMobilesByEngineType() {
         // It is important to simulate userRestClient.
         // The first test I did was with apaw-user running on local and they executed successfully, but GitHub Actions cannot access the apaw-user URL.
