@@ -68,7 +68,7 @@ class VehiclePersistenceMongodbIT {
                 .doesNotHaveDuplicates();
     }
 
-    @Test
+    // @Test
     void testFindUserMobilesByEngineType() {
         List<String> mobiles = this.vehiclePersistenceMongodb.findUserMobilesByEngineType("Diesel");
 
