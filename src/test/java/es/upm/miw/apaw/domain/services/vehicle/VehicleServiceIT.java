@@ -54,4 +54,16 @@ class VehicleServiceIT {
                     assertThat(vehicle.getRegistrationDate()).isBeforeOrEqualTo(LocalDate.now());
                 });
     }
+
+    @Test
+    void testFindExtraCategoriesByDocumentationName() {
+        BDDMockito.given(this.vehiclePersistence.findExtraCategoriesByDocumentationName("ITV"))
+                .willReturn(List.of("Safety"));
+        List<String> categories = this.vehicleService.findExtraCategoriesByDocumentationName("ITV");
+
+        assertThat(categories)
+                .isNotEmpty()
+                .containsExactly("Safety")
+                .doesNotHaveDuplicates();
+    }
 }

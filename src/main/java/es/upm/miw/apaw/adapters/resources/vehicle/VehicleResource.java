@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(VehicleResource.VEHICLES)
 public class VehicleResource {
     public static final String VEHICLES = "/vehicle/vehicles";
+    public static final String SEARCH = "/searches";
+    public static final String EXTRA_CATEGORIES = "/extra/categories";
 
     private final VehicleService vehicleService;
 
@@ -25,5 +28,11 @@ public class VehicleResource {
     @GetMapping
     public Stream<Vehicle> findByBrand(@RequestParam String brand) {
         return this.vehicleService.findByBrand(brand);
+    }
+
+    // Search 1 -> issue#1250
+    @GetMapping(SEARCH + EXTRA_CATEGORIES)
+    public List<String> findExtraCategoriesByDocumentationName(@RequestParam String documentationName) {
+        return this.vehicleService.findExtraCategoriesByDocumentationName(documentationName);
     }
 }

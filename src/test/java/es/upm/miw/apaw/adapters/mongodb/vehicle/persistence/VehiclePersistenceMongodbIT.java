@@ -50,4 +50,21 @@ class VehiclePersistenceMongodbIT {
         List<Vehicle> vehicles = this.vehiclePersistenceMongodb.readByBrand("Honda").collect(Collectors.toList());
         assertThat(vehicles).isNotEmpty();
     }
+
+    @Test
+    void testFindExtraCategoriesByDocumentationName() {
+        List<String> categories = this.vehiclePersistenceMongodb.findExtraCategoriesByDocumentationName("ITV");
+
+        assertThat(categories)
+                .isNotEmpty()
+                .containsExactly("Safety", "Comfort", "Appearance")
+                .doesNotHaveDuplicates();
+
+        List<String> categories2 = this.vehiclePersistenceMongodb.findExtraCategoriesByDocumentationName("Insurance policy");
+
+        assertThat(categories2)
+                .isNotEmpty()
+                .containsExactly("Safety")
+                .doesNotHaveDuplicates();
+    }
 }

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -22,23 +21,23 @@ class VehicleResourceFT {
     @Autowired
     private WebTestClient webTestClient;
 
-//    @Test
-//    void testFindByBrand() {
-//        webTestClient.get()
-//                .uri(uriBuilder -> uriBuilder
-//                        .path(VehicleResource.VEHICLES)
-//                        .queryParam("brand", "Peugeot")
-//                        .build())
-//                .exchange()
-//                .expectStatus().isOk()
-//                .expectBodyList(Vehicle.class)
-//                .value(vehicles -> {
-//                    assertThat(vehicles).isNotEmpty();
-//                    assertThat(vehicles)
-//                            .extracting(Vehicle::getBrand)
-//                            .allMatch("Peugeot"::equals);
-//                });
-//    }
+    @Test
+    void testFindByBrand() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(VehicleResource.VEHICLES)
+                        .queryParam("brand", "Benelli")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Vehicle.class)
+                .value(vehicles -> {
+                    assertThat(vehicles).isNotEmpty();
+                    assertThat(vehicles)
+                            .extracting(Vehicle::getBrand)
+                            .allMatch("Benelli"::equals);
+                });
+    }
 
     @Test
     void testFindByBrandNotFound() {
@@ -59,5 +58,23 @@ class VehicleResourceFT {
                 .uri(VehicleResource.VEHICLES)
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testFindExtraCategoriesByDocumentationName() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(VehicleResource.VEHICLES + VehicleResource.SEARCH + VehicleResource.EXTRA_CATEGORIES)
+                        .queryParam("documentationName", "TestDocument")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(extraCategories -> {
+                    assertThat(extraCategories).hasSize(1);
+                    String jsonList = extraCategories.getFirst();
+                    List<String> parsed = List.of("Appearance");
+                    assertThat(jsonList).contains("Appearance");
+                });
     }
 }
