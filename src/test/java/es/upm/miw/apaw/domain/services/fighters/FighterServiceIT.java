@@ -4,15 +4,19 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.fighters.Fighter;
 import es.upm.miw.apaw.domain.models.fighters.Rating;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -20,6 +24,8 @@ class FighterServiceIT {
 
     @Autowired
     private FighterService fighterService;
+    @MockitoBean
+    private UserRestClient userRestClient;
 
 
     private UserDto seededUser0() {
@@ -55,6 +61,15 @@ class FighterServiceIT {
 
     @Test
     void testCreateRating_ok() {
+        BDDMockito.given(this.userRestClient.readById(any(UUID.class)))
+                .willAnswer(invocation ->
+                        UserDto.builder()
+                                .id(invocation.getArgument(0))
+                                .mobile("123456789")
+                                .firstName("mock")
+                                .build()
+                );
+
         String nickname = "Spider";
         UserDto user = seededUser0();
         Rating toCreate = rating(4, "Muy técnico", user);
@@ -69,8 +84,8 @@ class FighterServiceIT {
 
         assertThat(created.getUser()).isNotNull();
         assertThat(created.getUser().getId()).isEqualTo(user.getId());
-        assertThat(created.getUser().getMobile()).isEqualTo(user.getMobile());
-        assertThat(created.getUser().getFirstName()).isEqualTo(user.getFirstName());
+        assertThat(created.getUser().getMobile()).isEqualTo("123456789");
+        assertThat(created.getUser().getFirstName()).isEqualTo("mock");
     }
 
     @Test
