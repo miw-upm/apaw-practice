@@ -48,7 +48,6 @@ public class MovementOrderEntity {
                     .map(OrderDetailEntity::new)
                     .toList();
         }
-
         this.id = (movementOrder.getId() != null) ? movementOrder.getId() : UUID.randomUUID();
     }
 
@@ -64,9 +63,18 @@ public class MovementOrderEntity {
                     .toList();
             movementOrder.setOrderDetails(orderDetails);
         }
-
         return movementOrder;
     }
 
+    public void fromMovementOrder(MovementOrder movementOrder) {
+        BeanUtils.copyProperties(movementOrder, this, "user", "orderDetails");
+
+        if (movementOrder.getOrderDetails() != null) {
+            this.orderDetailEntities = movementOrder.getOrderDetails().stream()
+                    .map(OrderDetailEntity::new)
+                    .toList();
+        }
+        this.userId = movementOrder.getUser() != null ? movementOrder.getUser().getId() : null;
+    }
 
 }
