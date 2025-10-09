@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.entities;
 
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.models.recruiting.Application;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -32,4 +34,23 @@ public class ApplicationEntity {
 
     // Embedded in the application (Composition)
     private List<MeetingEntity> meetingList;
+
+    public Application toApplication() {
+        return Application.builder()
+                .id(this.id)
+                .status(this.status)
+                .created(this.created)
+                .referral(this.referral)
+                .user(UserDto.builder().id(user).build())
+                .position(positionEntity != null ? positionEntity.toPosition() : null)
+                .meetingList(this.meetingList == null ? null :
+                        this.meetingList.stream()
+                                .map(MeetingEntity::toMeeting)
+                                .toList())
+                .build();
+    }
+
+    public boolean getReferral() {
+      return this.referral;
+    }
 }

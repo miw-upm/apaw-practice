@@ -57,7 +57,6 @@ class PositionServiceTest {
         Position result = positionPersistenceMongodb.create(position);
 
         // Assert
-        System.out.println("✅ Reference auto generated (there are existing records): " + result.getReference());
         assertEquals(6, result.getReference()); // 5 + 1
         verify(positionRepository).findTopByOrderByReferenceDesc();
         verify(positionRepository).save(any(PositionEntity.class));
@@ -74,7 +73,6 @@ class PositionServiceTest {
         Position result = positionPersistenceMongodb.create(position);
 
         // Assert
-        System.out.println("✅ Reference auto generated (without any previous records): " + result.getReference());
         assertEquals(1, result.getReference()); // Starts in 1
         verify(positionRepository).findTopByOrderByReferenceDesc();
         verify(positionRepository).save(any(PositionEntity.class));

@@ -6,4 +6,5 @@ public interface AttendeePersistence {
 
     Attendee readByEmailAddress(String emailAddress);
 
+    void delete(String emailAddress);
 }
