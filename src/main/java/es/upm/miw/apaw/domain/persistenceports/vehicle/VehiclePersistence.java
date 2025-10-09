@@ -12,4 +12,6 @@ public interface VehiclePersistence {
     Stream<Vehicle> readByBrand(String brand);
 
     List<String> findExtraCategoriesByDocumentationName(String documentationName);
+
+    List<String> findUserMobilesByEngineType(String engineType);
 }

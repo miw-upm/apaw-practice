@@ -17,6 +17,7 @@ public class VehicleResource {
     public static final String VEHICLES = "/vehicle/vehicles";
     public static final String SEARCH = "/searches";
     public static final String EXTRA_CATEGORIES = "/extra/categories";
+    public static final String USER_MOBILES = "/user/mobiles";
 
     private final VehicleService vehicleService;
 
@@ -34,5 +35,11 @@ public class VehicleResource {
     @GetMapping(SEARCH + EXTRA_CATEGORIES)
     public List<String> findExtraCategoriesByDocumentationName(@RequestParam String documentationName) {
         return this.vehicleService.findExtraCategoriesByDocumentationName(documentationName);
+    }
+
+    // Search 2 -> issue#1251
+    @GetMapping(SEARCH + USER_MOBILES)
+    public List<String> findUserMobilesByEngineType(@RequestParam String engineType) {
+        return this.vehicleService.findUserMobilesByEngineType(engineType);
     }
 }

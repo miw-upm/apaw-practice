@@ -77,4 +77,22 @@ class VehicleResourceFT {
                     assertThat(jsonList).contains("Appearance");
                 });
     }
+
+    @Test
+    void testFindUserMobilesByEngineType() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(VehicleResource.VEHICLES + VehicleResource.SEARCH + VehicleResource.USER_MOBILES)
+                        .queryParam("engineType", "Diesel")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(extraCategories -> {
+                    assertThat(extraCategories).hasSize(1);
+                    String jsonList = extraCategories.getFirst();
+                    List<String> parsed = List.of("666000660", "666000661");
+                    assertThat(jsonList).contains("666000660").contains("666000661");
+                });
+    }
 }

@@ -66,4 +66,16 @@ class VehicleServiceIT {
                 .containsExactly("Safety")
                 .doesNotHaveDuplicates();
     }
+
+    @Test
+    void testFindUserMobilesByEngineType() {
+        BDDMockito.given(this.vehiclePersistence.findUserMobilesByEngineType("Diesel"))
+                .willReturn(List.of("666000666"));
+        List<String> mobiles = this.vehicleService.findUserMobilesByEngineType("Diesel");
+
+        assertThat(mobiles)
+                .isNotEmpty()
+                .containsExactly("666000666")
+                .doesNotHaveDuplicates();
+    }
 }
