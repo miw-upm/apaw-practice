@@ -23,6 +23,6 @@ public class RepresentativeEntity {
 
     private LocalDateTime joinDate;
     private String responsibility;
-    private UserDto representative;
+    private UUID representativeId;
     private List<StudentIssueEntity> topics;
 }
