@@ -67,4 +67,14 @@ public class ProductItemEntity {
         );
     }
 
+    public void fromProductItem(ProductItem productItem) {
+        BeanUtils.copyProperties(productItem, this, "locationEntities");
+
+        if (productItem.getLocations() != null) {
+            this.locationEntities = productItem.getLocations().stream()
+                    .map(LocationEntity::new)
+                    .toList();
+        }
+    }
+
 }
