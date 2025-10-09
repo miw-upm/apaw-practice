@@ -83,7 +83,8 @@ public class VehicleSeeder {
                 DocumentationEntity.builder().name("Insurance policy").validate(true).build(),
                 DocumentationEntity.builder().name("ITV").validate(false).build(),
                 DocumentationEntity.builder().name("Driving licence").validate(false).build(),
-                DocumentationEntity.builder().name("Insurance policy").validate(false).build()
+                DocumentationEntity.builder().name("Insurance policy").validate(false).build(),
+                DocumentationEntity.builder().name("TestDocument").validate(false).build()
         };
 
         VehicleEntity[] vehicleItems = {
@@ -97,56 +98,56 @@ public class VehicleSeeder {
                 VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .plate("0001FGG").brand("Peugeot").model("407 sw").registrationDate(LocalDate.of(2006, 02,01))
                         .engineEntity(engineItems[3])
-                        .documentationEntities(Arrays.asList(documentationItems[3], documentationItems[4], documentationItems[5]))
+                        .documentationEntities(Arrays.asList(documentationItems[3], documentationItems[4]))
                         .extraEntities(Arrays.asList(extraItems[2], extraItems[3]))
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .build(),
                 VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                         .plate("0000DHP").brand("Peugeot").model("206 sw").registrationDate(LocalDate.of(2005, 03,01))
                         .engineEntity(engineItems[0])
-                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[1], documentationItems[2]))
+                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[1]))
                         .extraEntities(Arrays.asList(extraItems[2]))
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                         .build(),
                 VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                         .plate("0001DHP").brand("Peugeot").model("206 sw").registrationDate(LocalDate.of(2006, 04,01))
                         .engineEntity(engineItems[1])
-                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[1], documentationItems[2]))
+                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[1]))
                         .extraEntities(Collections.emptyList())
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .build(),
                 VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
                         .plate("0000BBB").brand("Yamaha").model("TMAX").registrationDate(LocalDate.of(2001, 07,01))
                         .engineEntity(engineItems[4])
-                        .documentationEntities(Arrays.asList(documentationItems[3], documentationItems[1], documentationItems[2]))
+                        .documentationEntities(Arrays.asList(documentationItems[3], documentationItems[1]))
                         .extraEntities(Collections.emptyList())
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                         .build(),
                 VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
                         .plate("0000LDS").brand("Benelli").model("TRK 502 X").registrationDate(LocalDate.of(2020, 01,01))
                         .engineEntity(engineItems[5])
-                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[1], documentationItems[5]))
+                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[1], documentationItems[6]))
                         .extraEntities(Arrays.asList(extraItems[9]))
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                         .build(),
                 VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006"))
                         .plate("0000LHS").brand("Honda").model("CMX500 Rebel").registrationDate(LocalDate.of(2020, 07,01))
                         .engineEntity(engineItems[5])
-                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[1], documentationItems[5]))
+                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[1]))
                         .extraEntities(Collections.emptyList())
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
                         .build(),
                 VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007"))
                         .plate("0000MMM").brand("Honda").model("Africa Twin CRF1100L").registrationDate(LocalDate.of(2023, 12,31))
                         .engineEntity(engineItems[6])
-                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[3], documentationItems[2]))
+                        .documentationEntities(Arrays.asList(documentationItems[4]))
                         .extraEntities(Arrays.asList(extraItems[0], extraItems[1], extraItems[6], extraItems[9]))
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                         .build(),
                 VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0008"))
                         .plate("0001MMM").brand("BMW").model("GS 1250").registrationDate(LocalDate.of(2023, 12,31))
                         .engineEntity(engineItems[7])
-                        .documentationEntities(Arrays.asList(documentationItems[0], documentationItems[3], documentationItems[2]))
+                        .documentationEntities(Arrays.asList(documentationItems[4]))
                         .extraEntities(Arrays.asList(extraItems[0], extraItems[1], extraItems[4], extraItems[5], extraItems[6], extraItems[9]))
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
                         .build(),
