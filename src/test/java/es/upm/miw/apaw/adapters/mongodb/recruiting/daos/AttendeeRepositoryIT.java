@@ -18,6 +18,9 @@ class AttendeeRepositoryIT {
     @Autowired
     private AttendeeRepository attendeeRepository;
 
+    @Autowired
+    private RecruitingSeeder recruitingSeeder;
+
     @Test
     void testFindByEmailAddress() {
         assertTrue(this.attendeeRepository.findByEmailAddress("markus.urbanietz@test.com").isPresent());
@@ -26,5 +29,14 @@ class AttendeeRepositoryIT {
         assertThat(attendee.getFullName()).isEqualTo("Markus Urbanietz");
         assertThat(attendee.getPhoneNumber()).isEqualTo("+4112345123");
         assertThat(attendee.getUser()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
+    }
+
+    @Test
+    void testDeleteByEmailAddress() {
+        String email = "markus.urbanietz@test.com";
+
+        assertTrue(attendeeRepository.findByEmailAddress(email).isPresent());
+        attendeeRepository.delete(attendeeRepository.findByEmailAddress(email).get());
+        assertThat(attendeeRepository.findByEmailAddress(email)).isEmpty();
     }
 }

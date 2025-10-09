@@ -3,11 +3,15 @@ package es.upm.miw.apaw.adapters.mongodb.recruiting.persistance;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.ApplicationRepository;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.AttendeeRepository;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recruiting.Attendee;
 import es.upm.miw.apaw.domain.persistenceports.recruiting.AttendeePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository("attendeePersistence")
 public class AttendeePersistenceMongodb implements AttendeePersistence {
@@ -31,20 +35,22 @@ public class AttendeePersistenceMongodb implements AttendeePersistence {
 
     @Override
     public void delete(String emailAddress) {
-        // Search for the applications which contains the Attendee
-        ApplicationEntity applicationEntity = this.applicationRepository.findAll().stream()
-                .filter(app -> app.getMeetingList().stream()
-                        .anyMatch(meeting -> meeting.getAttendees().stream()
-                                .anyMatch(att -> att.getEmailAddress().equals(emailAddress))))
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException("Attendee email: " + emailAddress));
+        AttendeeEntity attendee = attendeeRepository.findByEmailAddress(emailAddress)
+                .orElseThrow(() -> new NotFoundException("No existing Email Address: " + emailAddress));
 
-        // Delete the attende for each meeting
-        applicationEntity.getMeetingList().forEach(meeting ->
-                meeting.getAttendees().removeIf(att -> att.getEmailAddress().equals(emailAddress))
-        );
+        // Read all the application and delete the attendee from the meetings
+        List<ApplicationEntity> applications = applicationRepository.findAll();
 
-        // Save the changes in the DB
-        this.applicationRepository.save(applicationEntity);
+        for (ApplicationEntity app : applications) {
+            for (MeetingEntity meeting : app.getMeetingList()) {
+                meeting.getAttendees().removeIf(att ->
+                        att != null && emailAddress.equals(att.getEmailAddress())
+                );
+            }
+            applicationRepository.save(app);
+        }
+
+        // Remove the attendee from the global repository
+        attendeeRepository.delete(attendee);
     }
 }

@@ -22,13 +22,13 @@ public class PositionEntity {
 
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
-    private int reference;
+    private Integer reference;
 
     private String name;
     private String description;
     private BigDecimal annualSalary;
     private BigDecimal bonusSalary;
-    private Integer numVacancies;
+    private int numVacancies;
 
     public PositionEntity(Position position) {
         BeanUtils.copyProperties(position, this);

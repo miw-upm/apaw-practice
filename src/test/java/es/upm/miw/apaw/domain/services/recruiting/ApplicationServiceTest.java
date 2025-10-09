@@ -3,9 +3,11 @@ package es.upm.miw.apaw.domain.services.recruiting;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
 import es.upm.miw.apaw.domain.models.recruiting.Meeting;
 import es.upm.miw.apaw.domain.persistenceports.recruiting.ApplicationPersistence;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +21,9 @@ class ApplicationServiceTest {
     @Mock
     private ApplicationPersistence applicationPersistence;
 
+    @MockitoBean
+    private UserRestClient userRestClient;
+
     @InjectMocks
     private ApplicationService applicationService;
 
@@ -29,6 +34,7 @@ class ApplicationServiceTest {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
+
         applicationId = UUID.randomUUID();
         meetingList = List.of(
                 new Meeting(LocalDateTime.now(), "https://meet.test", List.of())

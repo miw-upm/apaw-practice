@@ -13,16 +13,16 @@ import java.util.UUID;
 @AllArgsConstructor
 public class StudentIssue {
 
-    @NotNull
+
     private UUID id;
 
     @NotNull
     private String statement;
 
-    @NotNull
+
     private LocalDateTime reportDate;
 
-    @NotNull
+
     private Boolean closed;
 
     @NotNull

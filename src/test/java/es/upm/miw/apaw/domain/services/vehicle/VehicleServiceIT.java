@@ -54,4 +54,28 @@ class VehicleServiceIT {
                     assertThat(vehicle.getRegistrationDate()).isBeforeOrEqualTo(LocalDate.now());
                 });
     }
+
+    @Test
+    void testFindExtraCategoriesByDocumentationName() {
+        BDDMockito.given(this.vehiclePersistence.findExtraCategoriesByDocumentationName("ITV"))
+                .willReturn(List.of("Safety"));
+        List<String> categories = this.vehicleService.findExtraCategoriesByDocumentationName("ITV");
+
+        assertThat(categories)
+                .isNotEmpty()
+                .containsExactly("Safety")
+                .doesNotHaveDuplicates();
+    }
+
+    @Test
+    void testFindUserMobilesByEngineType() {
+        BDDMockito.given(this.vehiclePersistence.findUserMobilesByEngineType("Diesel"))
+                .willReturn(List.of("666000666"));
+        List<String> mobiles = this.vehicleService.findUserMobilesByEngineType("Diesel");
+
+        assertThat(mobiles)
+                .isNotEmpty()
+                .containsExactly("666000666")
+                .doesNotHaveDuplicates();
+    }
 }

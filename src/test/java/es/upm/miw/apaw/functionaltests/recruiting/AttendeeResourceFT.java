@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,13 +38,15 @@ class AttendeeResourceFT {
         savedEntity = attendeeRepository.save(
                 AttendeeEntity.builder()
                         .id(UUID.randomUUID())
-                        .emailAddress("john.doe@example.com")
-                        .fullName("John Doe")
+                        .emailAddress("steve.vai@example.com")
+                        .fullName("Steve Vai")
                         .phoneNumber("600123456")
                         .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                         .build()
         );
     }
+
+    // READ endpoint tests //////////////////////////////////////////////////////////////
 
     @Test
     void testReadAttendeeByEmail() {
@@ -56,7 +59,7 @@ class AttendeeResourceFT {
                 .expectBody(Attendee.class)
                 .value(attendee -> {
                     assertThat(attendee.getEmailAddress()).isEqualTo(savedEntity.getEmailAddress());
-                    assertThat(attendee.getFullName()).isEqualTo("John Doe");
+                    assertThat(attendee.getFullName()).isEqualTo("Steve Vai");
                     assertThat(attendee.getPhoneNumber()).isEqualTo("600123456");
                     assertThat(attendee.getUser()).isNotNull();
                     assertThat(attendee.getUser().getId()).isEqualTo(savedEntity.getUser());
@@ -68,6 +71,27 @@ class AttendeeResourceFT {
         webTestClient.get()
                 .uri(AttendeeResource.ATTENDEES + "/{email}", "not.exists@example.com")
                 .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    // DELETE endpoint tests ////////////////////////////////////////////////////////////
+
+    @Test
+    void testDeleteAttendeeByEmail() {
+        webTestClient.delete()
+                .uri(AttendeeResource.ATTENDEES + "/{email}", savedEntity.getEmailAddress())
+                .exchange()
+                .expectStatus().isNoContent();  // 204 No Content
+
+        Optional<AttendeeEntity> deleted = attendeeRepository.findByEmailAddress(savedEntity.getEmailAddress());
+        assertThat(deleted).isEmpty();
+    }
+
+    @Test
+    void testDeleteAttendeeByEmailNotFound() {
+        webTestClient.delete()
+                .uri(AttendeeResource.ATTENDEES + "/{email}", "unknown@example.com")
                 .exchange()
                 .expectStatus().isNotFound();
     }

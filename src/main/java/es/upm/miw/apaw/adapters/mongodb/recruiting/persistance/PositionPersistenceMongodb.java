@@ -32,4 +32,30 @@ public class PositionPersistenceMongodb implements PositionPersistence {
                 .save(new PositionEntity(position))
                 .toPosition();
     }
+
+    @Override
+    public Position read(Integer reference) {
+        PositionEntity positionEntity = this.positionRepository.findAll().stream()
+                .filter(p -> p.getReference().equals(reference))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Position with reference " + reference + " not found"));
+        return positionEntity.toPosition();
+    }
+
+    @Override
+    public void update(Integer reference, Position position) {
+        PositionEntity positionEntity = this.positionRepository.findAll().stream()
+                .filter(p -> p.getReference().equals(reference))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Position with reference " + reference + " not found"));
+
+        // Updates the modifiable fields
+        positionEntity.setName(position.getName());
+        positionEntity.setDescription(position.getDescription());
+        positionEntity.setAnnualSalary(position.getAnnualSalary());
+        positionEntity.setBonusSalary(position.getBonusSalary());
+        positionEntity.setNumVacancies(position.getNumVacancies());
+
+        this.positionRepository.save(positionEntity);
+    }
 }
