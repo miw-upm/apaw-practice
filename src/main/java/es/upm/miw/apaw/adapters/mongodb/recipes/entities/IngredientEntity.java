@@ -14,7 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Document
-
 public class IngredientEntity {
     @Id
     private UUID id;

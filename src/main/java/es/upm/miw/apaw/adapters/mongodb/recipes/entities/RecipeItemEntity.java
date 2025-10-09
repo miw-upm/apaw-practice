@@ -6,12 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class RecipeItemEntity {
     @DBRef
     private IngredientEntity ingredientEntity;

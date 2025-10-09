@@ -1,0 +1,31 @@
+package es.upm.miw.apaw.adapters.mongodb.sports.academy.daos;
+
+import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@SpringBootTest
+@ActiveProfiles("test")
+class LegalGuardianRepositoryIT extends BaseSportsAcademyIT {
+
+    @Autowired
+    private LegalGuardianRepository legalGuardianRepository;
+
+    @Test
+    void testFindByUserDtoId(){
+        assertTrue(this.legalGuardianRepository.findByUserDtoId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).isPresent());
+        var legalGuardian = this.legalGuardianRepository.findByUserDtoId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).get();
+        assertThat(legalGuardian).isNotNull();
+        assertThat(legalGuardian.getUserDtoId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"));
+        assertThat(legalGuardian.getRelationShip()).isEqualTo(RelationShip.AUNT.getValue());
+        assertThat(legalGuardian.getSecondMobile()).isEqualTo("+34711036811");
+    }
+}

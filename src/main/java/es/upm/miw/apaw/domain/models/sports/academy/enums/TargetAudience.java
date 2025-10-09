@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum TargetAudience {
-    KIDS(1),
-    TWEENS(2),
-    TEENAGERS(3);
+    KIDS(0),
+    TWEENS(1),
+    TEENAGERS(2);
 
     private final int value;
 
