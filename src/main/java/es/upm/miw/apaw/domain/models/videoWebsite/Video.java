@@ -23,9 +23,6 @@ public class Video {
     private String title;
     private String description;
     private LocalDate UploadDate;
-    @NotNull
     private VideoStatus videoStatus;
-    @NotNull
-    private List<Comment> comments;
 
 }

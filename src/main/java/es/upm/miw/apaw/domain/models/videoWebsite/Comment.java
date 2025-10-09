@@ -15,10 +15,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
+    private UUID id;
     @NotBlank
     private String content;
     private LocalDateTime postTime;
 
-    @NotNull
     private WebAccount commenter;
+    private Video video;
 }
