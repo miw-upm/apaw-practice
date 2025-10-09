@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.models.warehouse;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -27,11 +28,20 @@ public class MovementOrder {
     private String partnerName;
     private String partnerAddress;
 
-    @NotBlank
     @NotEmpty
     private List<OrderDetail> orderDetails;
 
     @NotNull
     private Boolean completedOrder;
+
+    @NotNull
+    private UserDto user;
+
+    public static MovementOrder ofIdUser(MovementOrder movementOrder) {
+        MovementOrder dto = new MovementOrder();
+        dto.setId(movementOrder.getId());
+        dto.setUser(movementOrder.getUser());
+        return dto;
+    }
 
 }
