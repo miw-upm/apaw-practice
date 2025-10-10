@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-
 @Repository
 @Profile({"dev", "test"})
 @Log4j2
@@ -36,61 +35,140 @@ public class ApiarySeeder {
     public void seedDatabase() {
         log.warn("------- Apiary Initial Load -----------");
 
-        // 1. Crear productos
-        ProductEntity[] products = {
-                ProductEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                        .barcode("P001").product("Miel de Romero").price(new BigDecimal("8.00")).build(),
-                ProductEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
-                        .barcode("P002").product("Miel de Tomillo").price(new BigDecimal("7.00")).build(),
-                ProductEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
-                        .barcode("P003").product("Cera de Abeja").price(new BigDecimal("3.50")).build()
+        // ===== APIARIO 1 =====
+        ProductEntity[] products1 = {
+                ProductEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .barcode("P001")
+                        .product("Miel de Romero")
+                        .price(new BigDecimal("8.00"))
+                        .build(),
+                ProductEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .barcode("P002")
+                        .product("Miel de Tomillo")
+                        .price(new BigDecimal("7.00"))
+                        .build(),
+                ProductEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                        .barcode("P003")
+                        .product("Cera de Abeja")
+                        .price(new BigDecimal("3.50"))
+                        .build()
         };
-        this.productRepository.saveAll(Arrays.asList(products));
+        productRepository.saveAll(Arrays.asList(products1));
 
-
-        // 2. Crear ventas asociadas a productos
-        SaleEntity[] sales = {
-                SaleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0010"))
-                        .idSale(1).paymentForm(1).shippingAddress("Calle Mayor 10, Madrid")
-                        .amount(new BigDecimal("11.50")).productEntities(List.of(products[0], products[2])).build(),
-                SaleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0011"))
-                        .idSale(2).paymentForm(2).shippingAddress("Av. Andalucía 25, Sevilla")
-                        .amount(new BigDecimal("7.00")).productEntities(List.of(products[1])).build()
+        SaleEntity[] sales1 = {
+                SaleEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0010"))
+                        .idSale(1)
+                        .paymentForm(1)
+                        .shippingAddress("Calle Mayor 10, Madrid")
+                        .amount(new BigDecimal("11.50"))
+                        .productEntities(List.of(products1[0], products1[2]))
+                        .build(),
+                SaleEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0011"))
+                        .idSale(2)
+                        .paymentForm(2)
+                        .shippingAddress("Av. Andalucía 25, Sevilla")
+                        .amount(new BigDecimal("7.00"))
+                        .productEntities(List.of(products1[1]))
+                        .build()
         };
-        this.saleRepository.saveAll(Arrays.asList(sales));
+        saleRepository.saveAll(Arrays.asList(sales1));
 
-        //3. Crear Colmenas
-        HiveEntity[] hives = {
+        HiveEntity[] hives1 = {
                 HiveEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100"))
-                        .code(101).type("Langstroth").queen(true).installationDate(LocalDate.of(2020,5,20))
-                        .productEntity(products[0]).build(),
+                        .code(101)
+                        .type("Langstroth")
+                        .queen(true)
+                        .installationDate(LocalDate.of(2020, 5, 20))
+                        .productEntity(products1[0])
+                        .build(),
                 HiveEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101"))
-                        .code(102).type("Layens").queen(false).installationDate(LocalDate.of(2021,3,15))
-                        .productEntity(products[2]).build(),
+                        .code(102)
+                        .type("Layens")
+                        .queen(false)
+                        .installationDate(LocalDate.of(2021, 3, 15))
+                        .productEntity(products1[2])
+                        .build(),
         };
 
-        // 4. Crear apiario
-        ApiaryEntity apiary = ApiaryEntity.builder()
+        ApiaryEntity apiary1 = ApiaryEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
                 .cadastralRef("0000000-00000000-0001-XX")
                 .location("Burgos")
                 .rega("REGA00001")
-                .hiveEntities(Arrays.asList(hives))
+                .hiveEntities(Arrays.asList(hives1))
                 .build();
-        this.apiaryRepository.save(apiary);
+        apiaryRepository.save(apiary1);
 
+        // ===== APIARIO 2 =====
+        ProductEntity[] products2 = {
+                ProductEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                        .barcode("P004")
+                        .product("Miel de Azahar")
+                        .price(new BigDecimal("9.00"))
+                        .build(),
+                ProductEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
+                        .barcode("P005")
+                        .product("Polen")
+                        .price(new BigDecimal("5.50"))
+                        .build()
+        };
+        productRepository.saveAll(Arrays.asList(products2));
+
+        SaleEntity[] sales2 = {
+                SaleEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
+                        .idSale(3)
+                        .paymentForm(1)
+                        .shippingAddress("Calle Toledo 15, Toledo")
+                        .amount(new BigDecimal("14.50"))
+                        .productEntities(List.of(products2[0], products2[1]))
+                        .build()
+        };
+        saleRepository.saveAll(Arrays.asList(sales2));
+
+        HiveEntity[] hives2 = {
+                HiveEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0102"))
+                        .code(103)
+                        .type("Top-Bar")
+                        .queen(true)
+                        .installationDate(LocalDate.of(2022, 4, 10))
+                        .productEntity(products2[0])
+                        .build(),
+                HiveEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0103"))
+                        .code(104)
+                        .type("Langstroth")
+                        .queen(false)
+                        .installationDate(LocalDate.of(2023, 1, 5))
+                        .productEntity(products2[1])
+                        .build(),
+        };
+
+        ApiaryEntity apiary2 = ApiaryEntity.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1001"))
+                .cadastralRef("0000000-00000000-0002-YY")
+                .location("Toledo")
+                .rega("REGA00002")
+                .hiveEntities(Arrays.asList(hives2))
+                .build();
+        apiaryRepository.save(apiary2);
 
         log.warn("------- Apiary seeding completed -----------");
     }
 
     public void deleteAll() {
-        this.saleRepository.deleteAll();
-        this.productRepository.deleteAll();
-        this.apiaryRepository.deleteAll();
-
-
-
+        saleRepository.deleteAll();
+        productRepository.deleteAll();
+        apiaryRepository.deleteAll();
     }
 }

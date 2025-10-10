@@ -1,5 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.bank.entities;
+import es.upm.miw.apaw.domain.models.bank.CreditCard;
+import es.upm.miw.apaw.domain.models.bank.PaymentHistory;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -23,6 +26,24 @@ public class CreditCardEntity {
     private BigDecimal cardLimit;
     @DBRef
     private List<PaymentHistoryEntity> paymentHistoryList;
+
+    public CreditCardEntity (CreditCard creditCard){
+        BeanUtils.copyProperties(creditCard, this);
+        this.paymentHistoryList = creditCard.getPaymentHistoryList()
+                .stream()
+                .map(PaymentHistoryEntity::new)
+                .toList();
+    }
+
+    public CreditCard toCreditCard(){
+
+        List<PaymentHistory> paymentHistories = this.paymentHistoryList
+                .stream()
+                .map(PaymentHistoryEntity::toPaymentHistory)
+                .toList();
+
+        return new CreditCard(cardNumber,expirationDate,cvv,cardLimit,paymentHistories);
+    }
 
 }
 

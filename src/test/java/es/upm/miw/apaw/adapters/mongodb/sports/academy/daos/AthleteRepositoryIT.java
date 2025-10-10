@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.sports.academy.daos;
 
 
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class AthleteRepositoryIT {
+class AthleteRepositoryIT extends BaseSportsAcademyIT {
 
     @Autowired
     private AthleteRepository athleteRepository;
@@ -32,6 +33,6 @@ class AthleteRepositoryIT {
         assertThat(athlete.getBirthDate()).isEqualTo(LocalDate.of(2000, 6, 20));
         assertThat(athlete.getLegalGuardians()).hasSize(1);
         assertThat(athlete.getLegalGuardians().getFirst().getUserDtoId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"));
-        assertThat(athlete.getSportModalities()).isEmpty();
+        assertThat(athlete.getSportModalities()).hasSize(2);
     }
 }

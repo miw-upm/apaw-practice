@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,13 +19,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class AthletePersistenceMongodbIT {
+class AthletePersistenceMongodbIT extends BaseSportsAcademyIT {
 
     @Autowired
     private AthletePersistenceMongodb athletePersistenceMongodb;
 
     @Test
-    void testGetByIdNotFound() { assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.getById(UUID.randomUUID()));}
+    void testGetByIdNotFound() {
+        var id = UUID.randomUUID();
+        assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.getById(id));
+    }
 
     @Test
     void testCreateAndGetById() {
@@ -92,8 +96,9 @@ class AthletePersistenceMongodbIT {
 
     @Test
     void testUpdateNotFound() {
+        var id = UUID.randomUUID();
         Athlete athlete = Athlete.builder()
-                .user(UserDto.builder().id(UUID.randomUUID()).build())
+                .user(UserDto.builder().id(id).build())
                 .gender(Gender.MALE)
                 .height(1.78)
                 .weight(72)
@@ -101,6 +106,6 @@ class AthletePersistenceMongodbIT {
                 .legalGuardians(new ArrayList<>())
                 .sportModalities(new ArrayList<>())
                 .build();
-        assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.update(athlete.getUser().getId(), athlete));
+        assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.update(id, athlete));
     }
 }

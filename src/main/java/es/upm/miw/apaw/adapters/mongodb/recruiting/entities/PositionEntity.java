@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.entities;
 
+import es.upm.miw.apaw.domain.models.recruiting.Position;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,11 +22,22 @@ public class PositionEntity {
 
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
-    private int reference;
+    private Integer reference;
 
     private String name;
     private String description;
     private BigDecimal annualSalary;
     private BigDecimal bonusSalary;
-    private Integer numVacancies;
+    private int numVacancies;
+
+    public PositionEntity(Position position) {
+        BeanUtils.copyProperties(position, this);
+        this.id = UUID.randomUUID();
+    }
+
+    public Position toPosition() {
+        Position position = new Position();
+        BeanUtils.copyProperties(this, position);
+        return position;
+    }
 }

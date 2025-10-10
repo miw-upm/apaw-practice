@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,14 +16,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ProfessorPersistenceMongodbIT {
+class ProfessorPersistenceMongodbIT extends BaseSportsAcademyIT {
 
     @Autowired
     private ProfessorPersistenceMongodb professorPersistence;
 
     @Test
     void testGetByAllNotFound() {
-        assertThrows(NotFoundException.class, () -> this.professorPersistence.getById(UUID.randomUUID()));
+        var id = UUID.randomUUID();
+        assertThrows(NotFoundException.class, () -> this.professorPersistence.getById(id));
     }
 
     @Test
@@ -79,11 +81,12 @@ class ProfessorPersistenceMongodbIT {
 
     @Test
     void testUpdateNotFound() {
+        var id = UUID.randomUUID();
         Professor professor = Professor.builder()
-                .user(UserDto.builder().id(UUID.randomUUID()).build())
+                .user(UserDto.builder().id(id).build())
                 .specialization("Tennis")
                 .licenseNumber("ABC123")
                 .build();
-        assertThrows(NotFoundException.class, () -> this.professorPersistence.update(professor.getUser().getId(), professor));
+        assertThrows(NotFoundException.class, () -> this.professorPersistence.update(id, professor));
     }
 }

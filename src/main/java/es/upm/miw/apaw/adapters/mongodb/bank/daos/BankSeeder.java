@@ -65,6 +65,18 @@ public class BankSeeder {
                         .amount(new BigDecimal("49.99"))
                         .paymentDate(LocalDateTime.now())
                         .paid(true)
+                        .build(),
+                PaymentHistoryEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff6000"))
+                        .amount(new BigDecimal("59.99"))
+                        .paymentDate(LocalDateTime.now())
+                        .paid(false)
+                        .build(),
+                PaymentHistoryEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7000"))
+                        .amount(new BigDecimal("69.99"))
+                        .paymentDate(LocalDateTime.now())
+                        .paid(false)
                         .build()
         };
         this.paymentHistoryRepository.saveAll(Arrays.asList(paymentHistories));
@@ -87,6 +99,22 @@ public class BankSeeder {
                         .accountHolders(List.of(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")))
                         .creditCardAssociated(CreditCardEntity.builder().cardNumber("1111222233334445").expirationDate(LocalDate.of(2028,1,1)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Arrays.asList(paymentHistories[2], paymentHistories[3],paymentHistories[4])).cvv(456).build())
                         .loansApplied(Arrays.asList(LoanEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0200")).quantity(new BigDecimal("20000")).interestRate(0.07).condition(ACTIVE).build(),LoanEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0300")).quantity(new BigDecimal("50000")).interestRate(0.07).condition(ACTIVE).build()))
+                        .build(),
+                BankAccountEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff8000"))
+                        .accountNumber("ES2800000000000000000002")
+                        .balance(new BigDecimal("6666.66"))
+                        .status(ACTIVE)
+                        .accountHolders(List.of(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")))
+                        .creditCardAssociated(CreditCardEntity.builder().cardNumber("1111222233334446").expirationDate(LocalDate.of(2028,8,8)).cardLimit(new BigDecimal("2000")).paymentHistoryList(Collections.singletonList(paymentHistories[5])).cvv(789).build())
+                        .build(),
+                BankAccountEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9000"))
+                        .accountNumber("ES2800000000000000000003")
+                        .balance(new BigDecimal("7777.77"))
+                        .status(ACTIVE)
+                        .accountHolders(List.of(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")))
+                        .creditCardAssociated(CreditCardEntity.builder().cardNumber("1111222233334447").expirationDate(LocalDate.of(2029,8,8)).cardLimit(new BigDecimal("2000")).paymentHistoryList(Collections.singletonList(paymentHistories[6])).cvv(910).build())
                         .build()
         };
         this.bankAccountRepository.saveAll(Arrays.asList(bankAccountEntities));

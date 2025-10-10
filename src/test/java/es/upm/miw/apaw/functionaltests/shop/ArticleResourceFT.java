@@ -148,3 +148,4 @@ class ArticleResourceFT {
                 .expectStatus().isBadRequest();
     }
 }
+

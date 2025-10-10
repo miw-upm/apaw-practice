@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -24,14 +23,14 @@ import java.util.UUID;
 public class SportsAcademySeeder {
 
     private final AthleteRepository athleteRepository;
-    private final ISportModalityRepository sportModalityRepository;
+    private final SportModalityRepository sportModalityRepository;
     private final LegalGuardianRepository legalGuardianRepository;
     private final ProfessorRepository professorRepository;
 
     @Autowired
     public SportsAcademySeeder(
             AthleteRepository athleteRepository,
-            ISportModalityRepository sportModalityRepository,
+            SportModalityRepository sportModalityRepository,
             LegalGuardianRepository legalGuardianRepository,
             ProfessorRepository professorRepository) {
         this.athleteRepository = athleteRepository;
@@ -67,29 +66,6 @@ public class SportsAcademySeeder {
 
             this.legalGuardianRepository.saveAll(java.util.Arrays.asList(legalGuardians));
 
-            AthleteEntity[] athletes = {
-                AthleteEntity.builder()
-                        .userDtoId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
-                        .gender(Gender.MALE.getValue())
-                        .height(1.78)
-                        .weight(72)
-                        .birthDate(LocalDate.of(2000, 6, 20))
-                        .legalGuardians(Collections.singletonList(legalGuardians[0]))
-                        .sportModalities(new ArrayList<>())
-                        .build(),
-                AthleteEntity.builder()
-                        .userDtoId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
-                        .gender(Gender.FEMALE.getValue())
-                        .height(165)
-                        .weight(56)
-                        .birthDate(LocalDate.of(2003, 6, 20))
-                        .legalGuardians(Collections.singletonList(legalGuardians[1]))
-                        .sportModalities(new ArrayList<>())
-                        .build()
-            };
-
-            this.athleteRepository.saveAll(java.util.Arrays.asList(athletes));
-
             ProfessorEntity[] professors = {
                     ProfessorEntity.builder()
                         .userDtoId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
@@ -107,24 +83,45 @@ public class SportsAcademySeeder {
 
             SportModalityEntity[] sportModalities = {
                     SportModalityEntity.builder()
-                        .sportId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006"))
                         .title("Tennis")
                         .level(Level.BEGINNER.getValue())
                         .targetAudience(TargetAudience.KIDS.getValue())
-                        .professorId(professors[0].getUserDtoId())
-                        .athletes(java.util.Arrays.asList(athletes))
+                        .professor(professors[0])
                         .build(),
                     SportModalityEntity.builder()
-                        .sportId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007"))
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007"))
                         .title("Swimming")
                         .level(Level.INTERMEDIATE.getValue())
                         .targetAudience(TargetAudience.TEENAGERS.getValue())
-                        .professorId(professors[1].getUserDtoId())
-                        .athletes(java.util.Arrays.asList(athletes))
+                        .professor(professors[1])
                         .build()
             };
 
             this.sportModalityRepository.saveAll(java.util.Arrays.asList(sportModalities));
+
+            AthleteEntity[] athletes = {
+                    AthleteEntity.builder()
+                            .userDtoId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                            .gender(Gender.MALE.getValue())
+                            .height(1.78)
+                            .weight(72)
+                            .birthDate(LocalDate.of(2000, 6, 20))
+                            .legalGuardians(Collections.singletonList(legalGuardians[0]))
+                            .sportModalities(java.util.Arrays.asList(sportModalities))
+                            .build(),
+                    AthleteEntity.builder()
+                            .userDtoId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                            .gender(Gender.FEMALE.getValue())
+                            .height(165)
+                            .weight(56)
+                            .birthDate(LocalDate.of(2003, 6, 20))
+                            .legalGuardians(Collections.singletonList(legalGuardians[1]))
+                            .sportModalities(java.util.Arrays.asList(sportModalities))
+                            .build()
+            };
+
+            this.athleteRepository.saveAll(java.util.Arrays.asList(athletes));
 
             log.info("------- Finished Sports Academy Initial Load -----------");
         }

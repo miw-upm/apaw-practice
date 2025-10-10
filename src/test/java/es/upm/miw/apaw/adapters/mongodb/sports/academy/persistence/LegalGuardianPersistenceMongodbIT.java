@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
+import es.upm.miw.apaw.BaseSportsAcademyIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,14 +17,15 @@ import java.util.UUID;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class LegalGuardianPersistenceMongodbIT {
+class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyIT {
 
     @Autowired
     private LegalGuardianPersistenceMongodb legalGuardianPersistence;
 
     @Test
     void testGetByIdNotFound() {
-        assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.getById(UUID.randomUUID()));
+        var id = UUID.randomUUID();
+        assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.getById(id));
     }
 
     @Test
@@ -80,11 +82,12 @@ class LegalGuardianPersistenceMongodbIT {
 
     @Test
     void testUpdateNotFound() {
+        var id = UUID.randomUUID();
         LegalGuardian legalGuardian = LegalGuardian.builder()
-                .user(UserDto.builder().id(UUID.randomUUID()).build())
+                .user(UserDto.builder().id(id).build())
                 .secondMobile("+34711036888")
                 .relationShip(RelationShip.AUNT)
                 .build();
-        assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.update(legalGuardian.getUser().getId(), legalGuardian));
+        assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.update(id, legalGuardian));
     }
 }

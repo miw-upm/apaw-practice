@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 
 public class Sale {
     @NotNull
-    @NotBlank
     private Integer idSale;
     private Integer paymentForm;
     private String shippingAddress;
