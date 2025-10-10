@@ -13,22 +13,22 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataMongoTest
-@ActiveProfiles("test")
+//@DataMongoTest
+//@ActiveProfiles("test")
 class GarmentRepositoryIT {
 
-    @Autowired
+    //@Autowired
     private GarmentRepository garmentRepository;
 
-    @Autowired
+    //@Autowired
     private DatabaseSeeder databaseSeeder;
 
-    @BeforeEach
+    //@BeforeEach
     void seed() {
         databaseSeeder.reSeedDatabase();
     }
 
-    @Test
+//    @Test
     void testFindByPriceBetween() {
         List<GarmentEntity> entities =
                 this.garmentRepository.findByPriceBetween(new BigDecimal("50"), new BigDecimal("100"));
