@@ -24,5 +24,4 @@ public class ApplicationService {
         application.setMeetingList(meetingList);
         return this.applicationPersistence.update(application);
     }
-
 }

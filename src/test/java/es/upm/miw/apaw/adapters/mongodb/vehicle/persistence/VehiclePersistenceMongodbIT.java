@@ -13,7 +13,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,10 +32,10 @@ class VehiclePersistenceMongodbIT {
 
     @Test
     void testReadByBrand() {
-        List<Vehicle> vehicles = this.vehiclePersistenceMongodb.readByBrand("Peugeot").collect(Collectors.toList());
+        List<Vehicle> vehicles = this.vehiclePersistenceMongodb.readByBrand("Peugeot").toList();
 
-        assertThat(vehicles).isNotEmpty();
         assertThat(vehicles)
+                .isNotEmpty()
                 .allSatisfy(vehicle -> {
                     assertThat(vehicle.getBrand()).isEqualTo("Peugeot");
                     assertThat(vehicle.getPlate()).startsWith("000");
@@ -47,7 +46,7 @@ class VehiclePersistenceMongodbIT {
 
     @Test
     void testReadByBrand_NoResults() {
-        List<Vehicle> vehicles = this.vehiclePersistenceMongodb.readByBrand("Ferrari").collect(Collectors.toList());
+        List<Vehicle> vehicles = this.vehiclePersistenceMongodb.readByBrand("Ferrari").toList();
         assertThat(vehicles).isEmpty();
     }
 
@@ -56,7 +55,7 @@ class VehiclePersistenceMongodbIT {
         vehicleSeeder.deleteAll();
         vehicleSeeder.seedDatabase();
 
-        List<Vehicle> vehicles = this.vehiclePersistenceMongodb.readByBrand("Honda").collect(Collectors.toList());
+        List<Vehicle> vehicles = this.vehiclePersistenceMongodb.readByBrand("Honda").toList();
         assertThat(vehicles).isNotEmpty();
     }
 
@@ -86,5 +85,9 @@ class VehiclePersistenceMongodbIT {
                     UserDto.builder().id(invocation.getArgument(0)).mobile("123456789").firstName("mock").build());
 
         List<String> mobiles = this.vehiclePersistenceMongodb.findUserMobilesByEngineType("Diesel");
+        assertThat(mobiles)
+                .isNotEmpty()
+                .containsExactly("123456789")
+                .doesNotHaveDuplicates();
     }
 }

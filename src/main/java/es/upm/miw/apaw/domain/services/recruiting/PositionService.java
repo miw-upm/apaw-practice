@@ -30,4 +30,8 @@ public class PositionService {
             })
             .forEach( position -> this.positionPersistence.update(position.getReference(), position));
     }
+
+    public Position read(int reference) {
+        return positionPersistence.read(reference);
+    }
 }

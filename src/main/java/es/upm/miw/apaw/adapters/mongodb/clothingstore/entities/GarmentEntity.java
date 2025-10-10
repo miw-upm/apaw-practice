@@ -5,6 +5,8 @@ import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -22,7 +24,10 @@ public class GarmentEntity {
     private UUID id;
 
     private String size;
+
+    @Field(targetType = FieldType.DECIMAL128)
     private BigDecimal price;
+
     private Boolean onSale;
 
     public GarmentEntity(Garment garment) {
