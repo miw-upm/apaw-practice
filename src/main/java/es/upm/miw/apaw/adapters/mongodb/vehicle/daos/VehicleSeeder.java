@@ -96,13 +96,13 @@ public class VehicleSeeder {
         this.extraRepository.saveAll(Arrays.asList(extraItems));
 
         DocumentationEntity[] documentationItems = {
-                DocumentationEntity.builder().name("ITV").validate(true).build(),
-                DocumentationEntity.builder().name("Driving licence").validate(true).build(),
-                DocumentationEntity.builder().name("Insurance policy").validate(true).build(),
-                DocumentationEntity.builder().name("ITV").validate(false).build(),
-                DocumentationEntity.builder().name("Driving licence").validate(false).build(),
-                DocumentationEntity.builder().name("Insurance policy").validate(false).build(),
-                DocumentationEntity.builder().name("TestDocument").validate(false).build()
+                DocumentationEntity.builder().name("ITV").validate(true).issued(LocalDate.of(2025,10,10)).build(),
+                DocumentationEntity.builder().name("Driving licence").validate(true).issued(LocalDate.of(2025,10,10)).build(),
+                DocumentationEntity.builder().name("Insurance policy").validate(true).issued(LocalDate.of(2025,10,10)).build(),
+                DocumentationEntity.builder().name("ITV").validate(false).issued(LocalDate.of(2025,10,10)).build(),
+                DocumentationEntity.builder().name("Driving licence").validate(false).issued(LocalDate.of(2025,10,10)).build(),
+                DocumentationEntity.builder().name("Insurance policy").validate(false).issued(LocalDate.of(2025,10,10)).build(),
+                DocumentationEntity.builder().name("TestDocument").validate(false).issued(LocalDate.of(2025,10,10)).build()
         };
 
         VehicleEntity[] vehicleItems = {
