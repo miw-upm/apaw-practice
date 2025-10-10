@@ -4,8 +4,7 @@
 
 ### Estado del código
 [![DevOps](https://github.com/miw-upm/apaw-practice/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/miw-upm/apaw-practice/actions/workflows/continuous-integration.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=es.upm.miw%3Aapaw-practice&metric=alert_status)](https://sonarcloud.io/dashboard?id=es.upm.miw%3Aapaw-practice)
-
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=miw-upm-github_apaw-practice&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=miw-upm-github_apaw-practice)
 ### Tecnologías necesarias
 `Java` `Maven` `GitHub` `GitHub Actions` `Sonarcloud` `Slack` `Spring-Boot` `GitHub Packages` `Docker` `OpenAPI` `MongoDB`
 
