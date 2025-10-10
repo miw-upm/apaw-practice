@@ -14,6 +14,7 @@ import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.WarehouseSeeder;
+import es.upm.miw.apaw.adapters.mongodb.metro.daos.MetroSeeder;
 
 
 import lombok.extern.log4j.Log4j2;
@@ -40,6 +41,7 @@ public class DatabaseSeeder {
     private final FightersSeeder fightersSeeder;
     private final RecipesSeeder recipesSeeder;
     private final WarehouseSeeder warehouseSeeder;
+    private final MetroSeeder metroSeeder;
 
 
     @Autowired
@@ -57,7 +59,8 @@ public class DatabaseSeeder {
             FightersSeeder fightersSeeder,
             BankSeeder bankSeeder,
             RecipesSeeder recipesSeeder,
-            WarehouseSeeder warehouseSeeder
+            WarehouseSeeder warehouseSeeder,
+            MetroSeeder metroSeeder
             ) {
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
@@ -73,6 +76,7 @@ public class DatabaseSeeder {
         this.bankSeeder = bankSeeder;
         this.recipesSeeder = recipesSeeder;
         this.warehouseSeeder = warehouseSeeder;
+        this.metroSeeder = metroSeeder;
         this.seedDatabase();
     }
 
@@ -91,6 +95,7 @@ public class DatabaseSeeder {
         this.bankSeeder.seedDatabase();
         this.recipesSeeder.seedDatabase();
         this.warehouseSeeder.seedDatabase();
+        this.metroSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -108,6 +113,7 @@ public class DatabaseSeeder {
         this.bankSeeder.deleteAll();
         this.recipesSeeder.deleteAll();
         this.warehouseSeeder.deleteAll();
+        this.metroSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
