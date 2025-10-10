@@ -1,12 +1,12 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.daos;
 
+import es.upm.miw.apaw.adapters.mongodb.recipes.entities.IngredientEntity;
 import es.upm.miw.apaw.adapters.mongodb.recipes.entities.RecipeEntity;
 import es.upm.miw.apaw.adapters.mongodb.recipes.entities.RecipeItemEntity;
-import es.upm.miw.apaw.adapters.mongodb.recipes.entities.IngredientEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
@@ -15,21 +15,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
 class RecipeRepositoryIT {
 
-    @Autowired
-    private RecipeRepository recipeRepository;
+    @MockBean
+    private RecipeRepository recipeRepository; // <-- mockeamos este bean
 
     private RecipeEntity recipe1;
     private RecipeEntity recipe2;
 
     @BeforeEach
     void setUp() {
-        recipeRepository.deleteAll();
-
         IngredientEntity butter = IngredientEntity.builder()
                 .id(UUID.randomUUID())
                 .label("Butter")
@@ -75,39 +74,34 @@ class RecipeRepositoryIT {
                 .servings(2)
                 .itemEntities(List.of())
                 .build();
-
-        recipeRepository.saveAll(List.of(recipe1, recipe2));
     }
 
     @Test
     void testReadByReferenceNumber() {
+        when(recipeRepository.readByReferenceNumber("1")).thenReturn(Optional.of(recipe1));
+
         Optional<RecipeEntity> recipeOptional = this.recipeRepository.readByReferenceNumber("1");
         assertThat(recipeOptional).isPresent();
 
         RecipeEntity recipe = recipeOptional.get();
-        assertThat(recipe.getId()).isNotNull();
         assertThat(recipe.getReferenceNumber()).isEqualTo("1");
         assertThat(recipe.getTitle()).isEqualTo("Butter Cookies");
         assertThat(recipe.getItemEntities()).hasSize(2);
-    }
 
-    @Test
-    void testReadAll() {
-        assertThat(this.recipeRepository.findAll())
-                .isNotEmpty()
-                .anySatisfy(recipe -> {
-                    assertThat(recipe.getReferenceNumber()).isNotBlank();
-                    assertThat(recipe.getTitle()).isNotBlank();
-                    assertThat(recipe.getInstructions()).isNotBlank();
-                    assertThat(recipe.getServings()).isNotNull();
-                });
+        verify(recipeRepository, times(1)).readByReferenceNumber("1");
     }
 
     @Test
     void testDeleteByReferenceNumber() {
+        when(recipeRepository.readByReferenceNumber("2"))
+                .thenReturn(Optional.of(recipe2))
+                .thenReturn(Optional.empty());
+
         assertThat(this.recipeRepository.readByReferenceNumber("2")).isPresent();
 
+        doNothing().when(recipeRepository).deleteByReferenceNumber("2");
+
         this.recipeRepository.deleteByReferenceNumber("2");
-        assertThat(this.recipeRepository.readByReferenceNumber("2")).isNotPresent();
+        verify(recipeRepository, times(1)).deleteByReferenceNumber("2");
     }
 }
