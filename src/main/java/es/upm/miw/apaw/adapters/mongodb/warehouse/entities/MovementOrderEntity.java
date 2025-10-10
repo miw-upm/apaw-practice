@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Builder
@@ -41,28 +42,33 @@ public class MovementOrderEntity {
 
     public MovementOrderEntity(MovementOrder movementOrder) {
         BeanUtils.copyProperties(movementOrder, this, "user", "orderDetails");
-        this.userId = movementOrder.getUser().getId();
+
+        this.id = movementOrder.getId() != null ? movementOrder.getId() : UUID.randomUUID();
+        this.userId = movementOrder.getUser() != null ? movementOrder.getUser().getId() : null;
 
         if (movementOrder.getOrderDetails() != null) {
             this.orderDetailEntities = movementOrder.getOrderDetails().stream()
                     .map(OrderDetailEntity::new)
                     .toList();
         }
-        this.id = (movementOrder.getId() != null) ? movementOrder.getId() : UUID.randomUUID();
     }
 
     public MovementOrder toMovementOrder() {
         MovementOrder movementOrder = new MovementOrder();
-        BeanUtils.copyProperties(this, movementOrder, "user", "orderDetailEntities");
+        BeanUtils.copyProperties(this, movementOrder, "orderDetailEntities", "userId");
 
-        movementOrder.setUser(UserDto.builder().id(userId).build());
+        movementOrder.setId(this.id); // ✅ ahora sí se mapea
+        movementOrder.setUser(UserDto.builder().id(this.userId).build());
 
         if (this.orderDetailEntities != null) {
-            List<OrderDetail> orderDetails = this.orderDetailEntities.stream()
-                    .map(OrderDetailEntity::toOrderDetail)
-                    .toList();
-            movementOrder.setOrderDetails(orderDetails);
+            movementOrder.setOrderDetails(
+                    this.orderDetailEntities.stream()
+                            .filter(Objects::nonNull) // ✅ evita NPE si algún OrderDetailEntity es null
+                            .map(OrderDetailEntity::toOrderDetail)
+                            .toList()
+            );
         }
+
         return movementOrder;
     }
 
