@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class ShoppingCartServiceIT {
+class ShoppingCartServiceIT {
 
     @Autowired
     private ShoppingCartService shoppingCartService;

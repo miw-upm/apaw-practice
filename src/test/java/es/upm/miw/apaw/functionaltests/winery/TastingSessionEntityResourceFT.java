@@ -1,14 +1,19 @@
 package es.upm.miw.apaw.functionaltests.winery;
 
+import es.upm.miw.apaw.adapters.resources.winery.TastingSessionResource;
+import es.upm.miw.apaw.domain.models.winery.Evaluation;
 import es.upm.miw.apaw.domain.models.winery.TastingSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.adapters.resources.winery.TastingSessionResource.ID;
@@ -40,4 +45,21 @@ public class TastingSessionEntityResourceFT {
                     assertThat(tastingSession.getEvaluations()).hasSize(1);
                 });
     }
+
+    @Test
+    void testUpdate() {
+        List<Evaluation> evaluationList = Arrays.asList(
+                new Evaluation(8, "Good wines and better service", true),
+                new Evaluation(2, "Bad organization", false)
+        );
+
+        webTestClient.put()
+                .uri(TastingSessionResource.TASTING_SESSIONS + TastingSessionResource.ID + TastingSessionResource.EVALUATIONS,
+                        "ffffffff-ffff-ffff-ffff-ffffffff0000")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(evaluationList)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
 }
