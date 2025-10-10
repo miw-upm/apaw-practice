@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.entities;
 
 import es.upm.miw.apaw.domain.models.warehouse.OrderDetail;
+import es.upm.miw.apaw.domain.models.warehouse.ProductItem;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -28,24 +30,26 @@ public class OrderDetailEntity {
     private BigDecimal  unitCost;
 
     @DBRef
+    @NotNull
     private ProductItemEntity productItemEntity;
 
     public OrderDetailEntity(OrderDetail orderDetail) {
         BeanUtils.copyProperties(orderDetail, this, "productItemEntity");
-        this.id = UUID.randomUUID(); // siempre genera uno nuevo
-
-        if (orderDetail.getProductItem() != null) {
-            this.productItemEntity = new ProductItemEntity(orderDetail.getProductItem());
-        }
+        this.id = UUID.randomUUID();
+        this.productItemEntity = new ProductItemEntity(orderDetail.getProductItem());
     }
 
     public OrderDetail toOrderDetail() {
-        return new OrderDetail(
-                this.qtyRequested,
-                this.qtyMoved,
-                this.unitCost,
-                this.productItemEntity != null ? this.productItemEntity.toProductItem() : null
-        );
-    }
+        ProductItem productItem = null;
+        if (this.productItemEntity != null) {
+            productItem = this.productItemEntity.toProductItem();
+        }
 
+        return OrderDetail.builder()
+                .qtyRequested(this.qtyRequested)
+                .qtyMoved(this.qtyMoved)
+                .unitCost(this.unitCost)
+                .productItem(productItem)
+                .build();
+    }
 }

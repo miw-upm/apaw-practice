@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 @RequestMapping(LocationResource.LOCATIONS)
 public class LocationResource {
 
-    static final String LOCATIONS = "/warehouse/locations";
+    public static final String LOCATIONS = "/warehouse/locations";
 
     private final LocationService locationService;
 
