@@ -46,8 +46,8 @@ class VehicleServiceIT {
 
         List<Vehicle> result = this.vehicleService.findByBrand("Peugeot").toList();
 
-        assertThat(result).hasSize(2);
         assertThat(result)
+                .hasSize(2)
                 .allSatisfy(vehicle -> {
                     assertThat(vehicle.getBrand()).isEqualTo("Peugeot");
                     assertThat(vehicle.getPlate()).startsWith("000");
