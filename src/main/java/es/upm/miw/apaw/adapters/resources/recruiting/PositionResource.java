@@ -27,7 +27,7 @@ public class PositionResource {
     }
 
     @PatchMapping
-    public void updateNumVacancies(List<PositionNumVacanciesUpdating> positionNumVacanciesUpdating) {
+    public void updateNumVacancies(@Valid @RequestBody List<PositionNumVacanciesUpdating> positionNumVacanciesUpdating) {
         this.positionService.updateNumVacancies(positionNumVacanciesUpdating.stream());
     }
 }

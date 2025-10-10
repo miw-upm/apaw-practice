@@ -31,13 +31,13 @@ import static org.mockito.ArgumentMatchers.any;
 class AttendeeServiceTest {
 
     @Autowired
+    private AttendeeService attendeeService;
+
+    @Autowired
     private AttendeeRepository attendeeRepository;
 
     @Autowired
     private ApplicationRepository applicationRepository;
-
-    @Autowired
-    private AttendeeService attendeeService;
 
     @MockitoBean
     private UserRestClient userRestClient;
