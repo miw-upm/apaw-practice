@@ -57,13 +57,13 @@ public class MovementOrderEntity {
         MovementOrder movementOrder = new MovementOrder();
         BeanUtils.copyProperties(this, movementOrder, "orderDetailEntities", "userId");
 
-        movementOrder.setId(this.id); // ✅ ahora sí se mapea
+        movementOrder.setId(this.id);
         movementOrder.setUser(UserDto.builder().id(this.userId).build());
 
         if (this.orderDetailEntities != null) {
             movementOrder.setOrderDetails(
                     this.orderDetailEntities.stream()
-                            .filter(Objects::nonNull) // ✅ evita NPE si algún OrderDetailEntity es null
+                            .filter(Objects::nonNull)
                             .map(OrderDetailEntity::toOrderDetail)
                             .toList()
             );

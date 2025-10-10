@@ -29,7 +29,7 @@ class LocationResourceFT {
                 .expectBodyList(Location.class)
                 .value(locations -> {
                     assertThat(locations).isNotNull();
-                    assertThat(locations).hasSize(3); // según tu WarehouseSeeder
+                    assertThat(locations).hasSize(3);
                     assertThat(locations)
                             .extracting(Location::getPosition)
                             .containsExactlyInAnyOrder("Z1-A", "Z2-C", "Y1-F");
