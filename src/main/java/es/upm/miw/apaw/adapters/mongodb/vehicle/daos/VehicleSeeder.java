@@ -151,6 +151,13 @@ public class VehicleSeeder {
                         .extraEntities(Arrays.asList(extraItems[0], extraItems[1], extraItems[4], extraItems[5], extraItems[6], extraItems[9]))
                         .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
                         .build(),
+                VehicleEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0009"))
+                        .plate("0000NNN").brand("No").model("Engine").registrationDate(LocalDate.of(2025, 10,9))
+                        .engineEntity(null)
+                        .documentationEntities(Arrays.asList())
+                        .extraEntities(Collections.emptyList())
+                        .owner(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
+                        .build(),
         };
         this.vehicleRepository.saveAll(Arrays.asList(vehicleItems));
         log.warn("------- Vehicle Finish initial Load -----------");
