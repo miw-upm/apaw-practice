@@ -18,6 +18,8 @@ public class AirlineResourceFT {
 
     @Test
     void testDelete() {
-        webTestClient.delete().uri(AirlineResource.AIRLINES + "/Iberia Express").exchange().expectStatus().isOk();
+        webTestClient.delete().uri(AirlineResource.AIRLINES + "/Iberia Express")
+                .exchange()
+                .expectStatus().isOk();
     }
 }
