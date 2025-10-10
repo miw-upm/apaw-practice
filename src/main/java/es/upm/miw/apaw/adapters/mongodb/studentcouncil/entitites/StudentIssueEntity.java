@@ -42,5 +42,4 @@ public class StudentIssueEntity {
                         this.replies.stream().map(IssueReplyEntity::toIssueReply).toList())
                 .build();
     }
-
 }

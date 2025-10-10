@@ -32,4 +32,5 @@ public class IssueReplyEntity {
                 .compensation(this.compensation)
                 .build();
     }
+
 }
