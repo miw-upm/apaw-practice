@@ -53,6 +53,8 @@ public class VideogameSeeder {
                 VideogameEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0104")).genreEntity(genres[4]).name("game4").online(false).releaseDate(LocalDate.now()).maxPlayers(10).build(),
 
         };
+        this.videogameRepository.saveAll(Arrays.asList(videogames));
+
         CompanyEntity[] companies = {
                 CompanyEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0010"))
                         .denomination("company0").foundationDate(LocalDate.now()).sector("sector0")
