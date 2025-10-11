@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
@@ -50,6 +52,28 @@ public class WinePersistenceMongodbIT {
         this.winePersistenceMongodb.delete(wineId);
 
         assertThrows(NotFoundException.class, () -> this.winePersistenceMongodb.readById(wineId));
+    }
+
+    @Test
+    void testUpdate() {
+        Wine wine = this.winePersistenceMongodb.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"));
+        wine.setPrice(new BigDecimal("76.90"));
+
+        Wine updated = this.winePersistenceMongodb.update(wine);
+
+        assertThat(updated.getPrice()).isEqualByComparingTo("76.90");
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        Wine fake = Wine.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0007"))
+                .price(new BigDecimal("43.70"))
+                .build();
+
+        assertThatThrownBy(() -> this.winePersistenceMongodb.update(fake))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("Wine id:");
     }
 
 }

@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.services.winery.WineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,4 +32,7 @@ public class WineResource {
     public void delete(@PathVariable UUID id) {
         this.wineService.delete(id);
     }
+
+    @PatchMapping
+    public void updatePrices(@RequestBody List<Wine> wineList) { this.wineService.updatePrices(wineList.stream()); }
 }
