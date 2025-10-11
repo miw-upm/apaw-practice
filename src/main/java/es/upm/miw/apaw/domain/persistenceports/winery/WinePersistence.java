@@ -12,4 +12,5 @@ public interface WinePersistence {
 
     void delete(UUID id);
 
+    Wine update(Wine wine);
 }
