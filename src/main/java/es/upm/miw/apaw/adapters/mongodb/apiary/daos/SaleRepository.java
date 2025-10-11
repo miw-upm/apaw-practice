@@ -11,9 +11,5 @@ import java.util.UUID;
 public interface SaleRepository extends MongoRepository<SaleEntity, UUID> {
     Optional<SaleEntity> findByIdSale(int idSale);
 
-    List<SaleEntity> findByPaymentForm(Integer paymentForm);
-
-    List<SaleEntity> findByShippingAddress(String shippingAddress);
-
-    int deleteByIdSale(int idSale);
+    void deleteByIdSale(int idSale);
 }

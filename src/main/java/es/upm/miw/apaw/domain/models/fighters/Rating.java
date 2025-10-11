@@ -17,17 +17,13 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 public class Rating {
-    @NotNull
     private UUID id;
     @NotNull
     @Min(0)
     @Max(5)
     private Integer score;
     private String comment;
-    @NotNull
     private LocalDateTime createdAt;
-    @NotNull
-    private Fighter fighter;
     @NotNull
     private UserDto user;
 }
