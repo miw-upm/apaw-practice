@@ -1,7 +1,9 @@
 package es.upm.miw.apaw.adapters.mongodb.winery.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.winery.Wine;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,13 +21,22 @@ public class WinePersistenceMongodbIT {
     @Autowired
     private WinePersistenceMongodb winePersistenceMongodb;
 
+    @Autowired
+    private WinerySeeder winerySeeder;
+
+    @BeforeEach
+    void resetDb(){
+        winerySeeder.deleteAll();
+        winerySeeder.seedDatabase();
+    }
+
     @Test
     void testReadById() {
-        Wine wine = this.winePersistenceMongodb.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"));
-        assertThat(wine.getName()).isEqualTo("Chardonnay");
-        assertThat(wine.getYear()).isEqualTo(2021);
-        assertThat(wine.getPrice()).isEqualByComparingTo("15.75");
-        assertThat(wine.getAlcoholPercentage()).isEqualTo(12.5);
+        Wine wine = this.winePersistenceMongodb.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"));
+        assertThat(wine.getName()).isEqualTo("Cabernet Sauvignon");
+        assertThat(wine.getYear()).isEqualTo(2020);
+        assertThat(wine.getPrice()).isEqualByComparingTo("25.50");
+        assertThat(wine.getAlcoholPercentage()).isEqualTo(13.5);
     }
 
     @Test

@@ -33,7 +33,7 @@ public class WineRepositoryIT {
 
     @Test
     void testDelete() {
-        UUID wineId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
+        UUID wineId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003");
 
         assertTrue(this.wineRepository.findById(wineId).isPresent());
         this.wineRepository.deleteById(wineId);
