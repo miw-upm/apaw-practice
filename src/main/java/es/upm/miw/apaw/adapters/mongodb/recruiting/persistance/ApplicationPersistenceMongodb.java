@@ -3,12 +3,14 @@ package es.upm.miw.apaw.adapters.mongodb.recruiting.persistance;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.ApplicationRepository;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
 import es.upm.miw.apaw.domain.persistenceports.recruiting.ApplicationPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,5 +53,18 @@ public class ApplicationPersistenceMongodb implements ApplicationPersistence {
 
         ApplicationEntity saved = this.applicationRepository.save(applicationEntity);
         return saved.toApplication();
+    }
+
+    @Override
+    public BigDecimal findAccumulatedAnnualSalary(String fullName) {
+        List<ApplicationEntity> applications = applicationRepository.findAll();
+
+        return applications.stream()
+                .filter(app -> app.getMeetingList().stream()
+                        .flatMap(meeting -> meeting.getAttendees().stream())
+                        .anyMatch( attendee -> attendee.getFullName().equalsIgnoreCase(fullName)))
+                .map(ApplicationEntity::getPositionEntity)
+                .map(PositionEntity::getAnnualSalary)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
