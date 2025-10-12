@@ -37,4 +37,23 @@ class StudentIssueServiceIT {
         assertThat(created.getUrgency()).isEqualTo(3);
         assertThat(created.getReplies()).isEmpty();
     }
+
+    @Test
+    void testUpdateStudentIssueService() {
+        UUID id = UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0001");
+
+        StudentIssue update = StudentIssue.builder()
+                .statement("Problem2 updated via service")
+                .closed(false)
+                .urgency(7)
+                .build();
+
+        StudentIssue result = studentIssueService.updateStudentIssue(id, update);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(id);
+        assertThat(result.getStatement()).isEqualTo("Problem2 updated via service");
+        assertThat(result.getClosed()).isFalse();
+        assertThat(result.getUrgency()).isEqualTo(7);
+    }
 }
