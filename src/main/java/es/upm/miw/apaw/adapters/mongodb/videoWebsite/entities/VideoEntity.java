@@ -1,0 +1,40 @@
+package es.upm.miw.apaw.adapters.mongodb.videoWebsite.entities;
+
+import es.upm.miw.apaw.domain.models.videoWebsite.Video;
+import es.upm.miw.apaw.domain.models.videoWebsite.enums.VideoStatus;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Document
+public class VideoEntity {
+    @EqualsAndHashCode.Include
+    @Id
+    private UUID id;
+    private String title;
+    private String description;
+    private LocalDateTime uploadDate;
+    private VideoStatus videoStatus;
+
+    public VideoEntity(Video video) {
+        BeanUtils.copyProperties(video, this);
+    }
+
+    public Video toVideo() {
+        return new Video(this.id, this.title, this.description, this.uploadDate, this.videoStatus);
+    }
+}

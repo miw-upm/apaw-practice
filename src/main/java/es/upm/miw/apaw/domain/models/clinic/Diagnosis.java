@@ -1,28 +1,22 @@
 package es.upm.miw.apaw.domain.models.clinic;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Data
-@NoArgsConstructor
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Diagnosis {
-    private UUID diagnosisId;
+
+    // Clave de negocio principal (code)
+    private String code;
+
+    // Atributos de Diagnosis
     private String diagnosisName;
     private LocalDateTime diagnosisDate;
 
-    private UUID animalId;
-
-    public Diagnosis(String diagnosisName, UUID animalId) {
-        this.diagnosisId = UUID.randomUUID();
-        this.diagnosisName = diagnosisName;
-        this.diagnosisDate = LocalDateTime.now();
-        this.animalId = animalId;
-    }
+    // Relación n..1 con Animal (usando la clave microchipNumber)
+    private Long animalMicrochipNumber;
 }

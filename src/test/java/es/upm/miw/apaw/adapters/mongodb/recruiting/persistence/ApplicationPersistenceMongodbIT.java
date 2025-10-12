@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
-import java.util.Comparator;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,18 +33,25 @@ class ApplicationPersistenceMongodbIT {
     @Autowired
     private RecruitingSeeder recruitingSeeder;
 
-    private UUID existingId;
-
     @BeforeEach
-    void setUp() {
+    void resetDb() {
         recruitingSeeder.deleteAll();
         recruitingSeeder.seedDatabase();
+    }
 
-        existingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
+    @Test
+    void testReadAll() {
+        List<Application> allApps = applicationPersistence.readAll();
+
+        assertThat(allApps)
+                .isNotEmpty()
+                .size().isEqualTo(5);
     }
 
     @Test
     void testReadByIdSuccess() {
+        UUID existingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
+
         Application application = applicationPersistence.readById(existingId);
 
         assertThat(application).isNotNull();
@@ -62,6 +68,7 @@ class ApplicationPersistenceMongodbIT {
 
     @Test
     void testUpdateApplicationMeetingList() {
+        UUID existingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
 
         Application application = applicationPersistence.readById(existingId);
 
@@ -102,21 +109,30 @@ class ApplicationPersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> applicationPersistence.update(fakeApp));
     }
 
-    @Test
-    void testReadAllApplicationsAreOrderedByCreationDate() {
-        List<ApplicationEntity> allApps = applicationRepository.findAll()
-                .stream()
-                .sorted(Comparator.comparing(ApplicationEntity::getCreated).reversed())
-                .toList();
+    // Testing Search 1 #1269
 
-        assertThat(allApps)
-                .isNotEmpty()
-                .extracting(ApplicationEntity::getCreated)
-                .containsExactly(
-                        LocalDate.now(),
-                        LocalDate.now().minusDays(4),
-                        LocalDate.now().minusDays(5),
-                        LocalDate.now().minusDays(7)
-                );
+    @Test
+    void testFindAccumulatedAnnualSalary1() {
+        String attendeeName = "Markus Urbanietz";
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalaryByFullName(attendeeName))
+                .isEqualByComparingTo(new BigDecimal("176000.00"));
+    }
+
+    @Test
+    void testFindAccumulatedAnnualSalaryZero() {
+        String attendeeName = "Karolyn Sanz";
+        // No meeting -> 0
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalaryByFullName(attendeeName))
+                .isEqualByComparingTo(new BigDecimal("0.00"));
+    }
+
+    @Test
+    void testFindAccumulatedAnnualSalaryNotFound() {
+        String attendeeName = "Not-in Seeder";
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalaryByFullName(attendeeName))
+                .isEqualByComparingTo(new BigDecimal("0.00"));
     }
 }
