@@ -130,7 +130,7 @@ public class RecruitingSeeder {
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
                         .date(LocalDateTime.of(2025, 10, 6, 14, 30, 0))
                         .url("url-for-meeting-1")
-                        .attendees(Arrays.asList(attendees[0], attendees[1], attendees[3]))
+                        .attendees(Arrays.asList(attendees[0], attendees[1], attendees[5]))
                         .build(),
                 MeetingEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0021"))
@@ -154,7 +154,7 @@ public class RecruitingSeeder {
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0024"))
                         .date(LocalDateTime.of(2025, 10, 9, 15, 15, 0))
                         .url("url-for-meeting-5")
-                        .attendees(Arrays.asList(attendees[3], attendees[4]))
+                        .attendees(Arrays.asList(attendees[1], attendees[4]))
                         .build(),
                 MeetingEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0025"))

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 public class WineService {
@@ -25,4 +26,12 @@ public class WineService {
         this.winePersistence.delete(id);
     }
 
+    public void updatePrices(Stream<Wine> winesList) {
+        winesList.map(wineNewPrice -> {
+            Wine wine = this.winePersistence.readById(wineNewPrice.getId());
+            wine.setPrice(wineNewPrice.getPrice());
+            return wine;
+        })
+                .forEach(this.winePersistence::update);
+    }
 }

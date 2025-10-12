@@ -8,14 +8,11 @@ import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.recruiting.Attendee;
-import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,11 +21,10 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class AttendeeServiceTest {
+class AttendeeServiceIT {
 
     @Autowired
     private AttendeeService attendeeService;
@@ -39,19 +35,12 @@ class AttendeeServiceTest {
     @Autowired
     private ApplicationRepository applicationRepository;
 
-    @MockitoBean
-    private UserRestClient userRestClient;
-
     private static final String EMAIL = "bob.dylan@test.com";
 
     @BeforeEach
     void setUp() {
         applicationRepository.deleteAll();
         attendeeRepository.deleteAll();
-
-        BDDMockito.given(this.userRestClient.readById(any(UUID.class)))
-                .willAnswer(invocation ->
-                        UserDto.builder().id(invocation.getArgument(0)).mobile("123456789").firstName("mock").build());
 
         AttendeeEntity attendeeEntity = AttendeeEntity.builder()
                 .id(UUID.randomUUID())

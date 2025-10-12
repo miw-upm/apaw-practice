@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
@@ -118,5 +119,42 @@ class ApplicationPersistenceMongodbIT {
                         LocalDate.now().minusDays(5),
                         LocalDate.now().minusDays(7)
                 );
+    }
+
+    // Testing Search 1 #1269
+
+    @Test
+    void testFindAccumulatedAnnualSalary1() {
+        String attendeeName = "Markus Urbanietz";
+        // Meeting 20, 22 & 26 -> Application 30, 31 & 33 -> Position 00 01 & 03
+        // 52.000 + 48.000 + 68.000 = 168.000
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalary(attendeeName))
+                .isEqualByComparingTo(new BigDecimal("168000.00"));
+    }
+
+    @Test
+    void testFindAccumulatedAnnualSalary2() {
+        String attendeeName = "Beate Magnie";
+        // Meeting 20, 21 & 23 -> Application (20, 21: 30) & 32 -> Position 00 & 02
+        // 52.000 + 56.000  = 108.000
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalary(attendeeName))
+                .isEqualByComparingTo(new BigDecimal("108000.00"));
+    }
+
+    @Test
+    void testFindAccumulatedAnnualSalary_zero_result() {
+        String attendeeName = "Karolyn Sanz";
+        // No meeting -> 0
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalary(attendeeName)).isEqualByComparingTo(new BigDecimal("0.00"));
+    }
+
+    @Test
+    void testFindAccumulatedAnnualSalaryNotFound() {
+        String attendeeName = "Ander Herrera - not in Seeder";
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalary(attendeeName)).isEqualByComparingTo(new BigDecimal("0.00"));
     }
 }
