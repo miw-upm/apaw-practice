@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.entities;
 
+import es.upm.miw.apaw.adapters.mongodb.shop.entities.ArticleItemEntity;
 import es.upm.miw.apaw.domain.models.recipes.Recipe;
 
 import lombok.*;
@@ -27,6 +28,14 @@ public class RecipeEntity {
     private String instructions;
     private Integer servings;
     private List<RecipeItemEntity> itemEntities;
+
+    public RecipeEntity(Recipe recipe) {
+        this.id = UUID.randomUUID();
+        BeanUtils.copyProperties(recipe, this, "itemEntities");
+        this.itemEntities = recipe.getItems().stream()
+                .map(RecipeItemEntity::new)
+                .toList();
+    }
 
     public Recipe toRecipe() {
         Recipe recipe = new Recipe();
