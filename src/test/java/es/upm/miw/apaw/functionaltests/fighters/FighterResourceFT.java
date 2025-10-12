@@ -121,7 +121,7 @@ class FighterResourceFT {
         UserDto bodyUser = user0FromSeeder();
 
         Rating body = new Rating();
-        body.setScore(7); // > 5
+        body.setScore(7);
         body.setComment("fuera de rango");
         body.setUser(bodyUser);
 
@@ -153,6 +153,39 @@ class FighterResourceFT {
                 .uri(FIGHTERS + NICK_ID + RATINGS, "no-existe")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(body)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDeleteRating_whenExists_returns204_andRemoves() {
+        String nickname = "Spider";
+        UUID ratingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+
+        this.webTestClient.delete()
+                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, ratingId)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+
+    @Test
+    void testDeleteRating_whenNotExistsInFighter_returns404() {
+        String nickname = "The Dragon";
+        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
+
+        this.webTestClient.delete()
+                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, notExisting)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDeleteRating_whenFighterHasNoRatings_returns404() {
+        String nickname = "Iron";
+        UUID anyId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
+
+        this.webTestClient.delete()
+                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, anyId)
                 .exchange()
                 .expectStatus().isNotFound();
     }
