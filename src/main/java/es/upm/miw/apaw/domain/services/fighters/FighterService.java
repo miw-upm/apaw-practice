@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Service
 public class FighterService {
-
     private final FighterPersistence fighterPersistence;
     private final UserRestClient userRestClient;
 
@@ -43,5 +42,12 @@ public class FighterService {
 
     public void deleteRatings(String nickname, UUID ratingId) {
         this.fighterPersistence.deleteRating(nickname, ratingId);
+    }
+
+    public Fighter updateWins(String nickname, Integer wins) {
+        if (wins == null || wins < 0) {
+            throw new IllegalArgumentException("wins must be >= 0");
+        }
+        return this.fighterPersistence.updateWins(nickname, wins);
     }
 }

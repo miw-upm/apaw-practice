@@ -20,7 +20,6 @@ class FighterPersistenceMongodbIT {
 
     @Autowired
     private FighterPersistenceMongodb fighterPersistence;
-
     @Test
     void testReadByNickname_ok() {
         Fighter fighter = this.fighterPersistence.readByNickname("Spider");
@@ -87,5 +86,20 @@ class FighterPersistenceMongodbIT {
 
         assertThrows(NotFoundException.class,
                 () -> fighterPersistence.deleteRating(nickname, notExisting));
+    }
+
+
+    @Test
+    void testUpdateWinsOk() {
+        Fighter out = this.fighterPersistence.updateWins("Spider", 88);
+        assertThat(out.getWins()).isEqualTo(88);
+
+        Fighter reRead = this.fighterPersistence.readByNickname("Spider");
+        assertThat(reRead.getWins()).isEqualTo(88);
+    }
+
+    @Test
+    void testUpdateWinsNotFound() {
+        assertThrows(NotFoundException.class, () -> this.fighterPersistence.updateWins("No Existe", 10));
     }
 }

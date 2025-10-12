@@ -65,4 +65,12 @@ public class FighterPersistenceMongodb implements FighterPersistence {
         fighter.setRatingsEntities(ratings);
         this.fighterRepository.save(fighter);
     }
+
+    @Override
+    public Fighter updateWins(String nickname, int wins) {
+        FighterEntity entity = this.fighterRepository.findByNickname(nickname)
+                .orElseThrow(() -> new NotFoundException(fighterNickname + nickname));
+        entity.setWins(wins);
+        return this.fighterRepository.save(entity).toFighter();
+    }
 }

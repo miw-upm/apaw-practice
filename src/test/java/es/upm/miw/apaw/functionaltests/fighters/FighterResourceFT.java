@@ -24,7 +24,6 @@ import static org.mockito.ArgumentMatchers.any;
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
 class FighterResourceFT {
-
     @Autowired
     private WebTestClient webTestClient;
     @MockitoBean
@@ -36,7 +35,6 @@ class FighterResourceFT {
                 .firstName("user0")
                 .build();
     }
-
     @Test
     void testReadByNickname_ok() {
         webTestClient.get()
@@ -188,6 +186,44 @@ class FighterResourceFT {
                 .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, anyId)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testPatchWinsOk() {
+        int newWins = 99;
+
+        webTestClient.patch()
+                .uri(FIGHTERS + NICK_ID + WINS, "Spider")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(newWins)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Fighter.class)
+                .value(f -> {
+                    assertThat(f).isNotNull();
+                    assertThat(f.getNickname()).isEqualTo("Spider");
+                    assertThat(f.getWins()).isEqualTo(newWins);
+                });
+    }
+
+    @Test
+    void testPatchWinsNotFound() {
+        webTestClient.patch()
+                .uri(FIGHTERS + NICK_ID + WINS, "No Existe")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(10)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testPatchWinsBadRequest() {
+        webTestClient.patch()
+                .uri(FIGHTERS + NICK_ID + WINS, "Spider")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(-1)
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
 }
