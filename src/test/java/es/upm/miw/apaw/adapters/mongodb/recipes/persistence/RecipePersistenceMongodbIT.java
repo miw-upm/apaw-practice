@@ -1,8 +1,11 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
+import es.upm.miw.apaw.adapters.mongodb.recipes.entities.IngredientEntity;
+import es.upm.miw.apaw.adapters.mongodb.recipes.daos.IngredientRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recipes.Recipe;
+import es.upm.miw.apaw.domain.models.recipes.RecipeItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
