@@ -1,9 +1,11 @@
 package es.upm.miw.apaw.functionaltests.recruiting;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.PositionRepository;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
 import es.upm.miw.apaw.adapters.resources.recruiting.PositionResource;
 import es.upm.miw.apaw.domain.models.recruiting.Position;
+import es.upm.miw.apaw.domain.models.recruiting.PositionNumVacanciesUpdating;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,12 @@ class PositionResourceFT {
     @Autowired
     private PositionRepository positionRepository;
 
+    @Autowired
+    private RecruitingSeeder recruitingSeeder;
+
     @BeforeEach
     void setUp() {
-        positionRepository.deleteAll();
+        recruitingSeeder.deleteAll();
     }
 
     @Test
@@ -103,6 +108,8 @@ class PositionResourceFT {
 
     @Test
     void testCreatePositionBadRequest() {
+        recruitingSeeder.seedDatabase();
+
         // Missing required fields (name and annualSalary)
         Position invalidPosition = Position.builder()
                 .reference(2)
@@ -115,5 +122,90 @@ class PositionResourceFT {
                 .bodyValue(invalidPosition)
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testUpdateNumVacanciesExistingPosition() {
+        recruitingSeeder.seedDatabase();
+
+        List<PositionEntity> before = positionRepository.findAll();
+        assertThat(before).isNotEmpty();
+
+        PositionEntity abapDeveloper = before.stream()
+                .filter(p -> p.getReference().equals(1001))
+                .findFirst()
+                .orElseThrow();
+
+        assertThat(abapDeveloper.getName()).isEqualTo("ABAP developer");
+        assertThat(abapDeveloper.getNumVacancies()).isEqualTo(3);
+
+        // Updating number of vacancies from 3 to 6
+        List<PositionNumVacanciesUpdating> updates = List.of(
+                PositionNumVacanciesUpdating.builder()
+                        .reference(1001)
+                        .numVacancies(6)
+                        .build()
+        );
+
+        webTestClient.patch()
+                .uri(PositionResource.POSITIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updates)
+                .exchange()
+                .expectStatus().isOk();
+
+        PositionEntity updated = positionRepository.findById(abapDeveloper.getId()).orElseThrow();
+
+        assertThat(updated.getNumVacancies()).isEqualTo(6);
+        assertThat(updated.getName()).isEqualTo("ABAP developer");
+    }
+
+    @Test
+    void testUpdateMultiplePositionsFromSeeder() {
+        recruitingSeeder.seedDatabase();
+
+        List<PositionEntity> positionsBefore = positionRepository.findAll();
+        assertThat(positionsBefore).isNotEmpty();
+
+        PositionEntity abapDev = positionsBefore.stream()
+                .filter(p -> p.getReference().equals(1001))
+                .findFirst()
+                .orElseThrow();
+
+        PositionEntity cpiConsultant = positionsBefore.stream()
+                .filter(p -> p.getReference().equals(1002))
+                .findFirst()
+                .orElseThrow();
+
+        assertThat(abapDev.getNumVacancies()).isEqualTo(3);
+        assertThat(cpiConsultant.getNumVacancies()).isEqualTo(3);
+
+        List<PositionNumVacanciesUpdating> updates = List.of(
+                PositionNumVacanciesUpdating.builder()
+                        .reference(1001)
+                        .numVacancies(5)
+                        .build(),
+                PositionNumVacanciesUpdating.builder()
+                        .reference(1002)
+                        .numVacancies(2)
+                        .build()
+        );
+
+        webTestClient.patch()
+                .uri(PositionResource.POSITIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updates)
+                .exchange()
+                .expectStatus().isOk();
+
+        // --- Assert ---
+        PositionEntity updatedAbap = positionRepository.findById(abapDev.getId()).orElseThrow();
+        PositionEntity updatedCpi = positionRepository.findById(cpiConsultant.getId()).orElseThrow();
+
+        assertThat(updatedAbap.getNumVacancies()).isEqualTo(5);
+        assertThat(updatedCpi.getNumVacancies()).isEqualTo(2);
+
+        assertThat(updatedAbap.getName()).isEqualTo("ABAP developer");
+        assertThat(updatedCpi.getName()).isEqualTo("CPI consultant");
     }
 }

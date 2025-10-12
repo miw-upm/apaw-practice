@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.persistenceports.recruiting.ApplicationPersistence
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,4 +26,7 @@ public class ApplicationService {
         return this.applicationPersistence.update(application);
     }
 
+    public BigDecimal findAccumulatedAnnualSalary(String fullName) {
+        return this.applicationPersistence.findAccumulatedAnnualSalary(fullName);
+    }
 }

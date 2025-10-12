@@ -72,7 +72,7 @@ public class ShopSeeder {
                         .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")).build()
         };
         this.shoppingCartRepository.saveAll(Arrays.asList(carts));
-        log.warn("------- Clothingstore Initial Load Completed -----------");
+        log.warn("------- shop");
     }
 
     public void deleteAll() {

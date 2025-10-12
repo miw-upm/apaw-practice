@@ -1,93 +1,115 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.PositionRepository;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.PositionPersistenceMongodb;
 import es.upm.miw.apaw.domain.models.recruiting.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class PositionPersistenceMongodbIT {
 
-    @Mock
+    @Autowired
+    private PositionPersistenceMongodb positionPersistenceMongodb;
+
+    @Autowired
     private PositionRepository positionRepository;
 
-    @InjectMocks
-    private PositionPersistenceMongodb positionPersistenceMongodb;
+    @Autowired
+    private RecruitingSeeder recruitingSeeder;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        recruitingSeeder.deleteAll();
+        recruitingSeeder.seedDatabase();
     }
 
     @Test
-    void testCreate_WithExistingPositions_ShouldIncrementReference() {
-        // Creating some data test
-        PositionEntity existing = PositionEntity.builder()
-                .id(UUID.randomUUID())
-                .reference(5)
-                .name("Senior Developer")
-                .annualSalary(new BigDecimal("60000"))
-                .numVacancies(1)
-                .build();
-
-        when(positionRepository.findTopByOrderByReferenceDesc()).thenReturn(Optional.of(existing));
-
-        // Mock: save returns the same converted object
-        ArgumentCaptor<PositionEntity> captor = ArgumentCaptor.forClass(PositionEntity.class);
-        when(positionRepository.save(any(PositionEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
-
-        // New position without reference (max++ must be chosen)
+    void testCreate_NewPosition_ShouldAutoIncrementReference() {
         Position newPosition = Position.builder()
                 .name("New Backend Developer")
-                .description("API developer")
+                .description("Responsible for APIs")
                 .annualSalary(new BigDecimal("50000"))
                 .bonusSalary(new BigDecimal("3000"))
                 .numVacancies(2)
                 .build();
 
-        // Act
         Position saved = positionPersistenceMongodb.create(newPosition);
 
-        // Assert
-        verify(positionRepository).findTopByOrderByReferenceDesc();
-        verify(positionRepository).save(captor.capture());
+        // Seeder created references from 1001 to 1004 → next must be 1005
+        assertThat(saved.getReference()).isEqualTo(1005);
+        assertThat(saved.getName()).isEqualTo("New Backend Developer");
 
-        PositionEntity savedEntity = captor.getValue();
-        assertEquals(6, savedEntity.getReference()); // 5 + 1
-        assertEquals(6, saved.getReference());
-        assertEquals("New Backend Developer", saved.getName());
+        List<PositionEntity> allPositions = positionRepository.findAll();
+        assertThat(allPositions).anyMatch(p -> p.getReference() == 1005 && p.getName().equals("New Backend Developer"));
     }
 
     @Test
-    void testCreate_WhenNoExistingPositions_ShouldStartWithReference1() {
-        // Mock: no records in the DB
-        when(positionRepository.findTopByOrderByReferenceDesc()).thenReturn(Optional.empty());
-        when(positionRepository.save(any(PositionEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
+    void testRead_ExistingReference_ShouldReturnPosition() {
+        Position position = positionPersistenceMongodb.read(1002);
 
-        Position newPosition = Position.builder()
-                .name("First Position")
-                .annualSalary(new BigDecimal("40000"))
-                .numVacancies(1)
+        assertThat(position.getReference()).isEqualTo(1002);
+        assertThat(position.getName()).isEqualTo("CPI consultant");
+    }
+
+    @Test
+    void testRead_NonExistingReference_ShouldThrow() {
+        assertThrows(RuntimeException.class, () -> positionPersistenceMongodb.read(9999));
+    }
+
+    @Test
+    void testUpdate_ExistingPosition_ShouldChangeFields() {
+        Position updatedData = Position.builder()
+                .name("Updated CPI Consultant")
+                .description("Updated description")
+                .annualSalary(new BigDecimal("50000"))
+                .bonusSalary(new BigDecimal("5000"))
+                .numVacancies(4)
                 .build();
 
-        Position saved = positionPersistenceMongodb.create(newPosition);
+        positionPersistenceMongodb.update(1002, updatedData);
 
-        verify(positionRepository).findTopByOrderByReferenceDesc();
-        verify(positionRepository).save(any(PositionEntity.class));
+        PositionEntity entity = positionRepository.findAll().stream()
+                .filter(p -> p.getReference() == 1002)
+                .findFirst()
+                .orElseThrow();
 
-        assertEquals(1, saved.getReference());
-        assertEquals("First Position", saved.getName());
+        assertThat(entity.getName()).isEqualTo("Updated CPI Consultant");
+        assertThat(entity.getDescription()).isEqualTo("Updated description");
+        assertThat(entity.getAnnualSalary()).isEqualByComparingTo(new BigDecimal("50000"));
+        assertThat(entity.getBonusSalary()).isEqualByComparingTo(new BigDecimal("5000"));
+        assertThat(entity.getNumVacancies()).isEqualTo(4);
+    }
+
+    @Test
+    void testUpdate_NonExistingPosition_ShouldThrow() {
+        Position updatedData = Position.builder()
+                .name("Nonexistent")
+                .build();
+
+        assertThrows(RuntimeException.class, () -> positionPersistenceMongodb.update(9999, updatedData));
+    }
+
+    @Test
+    void testFindAll_PositionsAreOrderedByReference() {
+        // Read all positions from repository
+        List<PositionEntity> allPositions = positionRepository.findAll();
+
+        // Check the correct order
+        assertThat(allPositions)
+                .extracting(PositionEntity::getReference)
+                .containsExactly(1001, 1002, 1003, 1004);
     }
 }

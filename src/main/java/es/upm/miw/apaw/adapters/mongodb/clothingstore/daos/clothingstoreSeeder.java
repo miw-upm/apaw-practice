@@ -70,7 +70,7 @@ public class clothingstoreSeeder {
             this.storeRepository.save(store);
         }
 
-        System.out.println("------- Clothingstore Initial Load Completed -----------");
+        log.warn("------- Clothingstore Initial Load Completed -----------");
     }
 
     public void deleteAll() {

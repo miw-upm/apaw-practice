@@ -2,134 +2,167 @@ package es.upm.miw.apaw.adapters.mongodb.recruiting.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.ApplicationRepository;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.AttendeeRepository;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.AttendeePersistenceMongodb;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recruiting.Attendee;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.AttendeePersistenceMongodb;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class AttendeePersistenceMongodbIT {
 
-    @Mock
+    @Autowired
     private AttendeeRepository attendeeRepository;
 
-    @Mock
+    @Autowired
+    private AttendeePersistenceMongodb attendeePersistence;
+
+    @Autowired
     private ApplicationRepository applicationRepository;
 
-    @InjectMocks
-    private AttendeePersistenceMongodb attendeePersistenceMongodb;
-
-    private AttendeeEntity attendeeEntity;
-    private ApplicationEntity applicationEntity;
-    private UUID userId;
-    private static final String EMAIL = "test@example.com";
+    @Autowired
+    private RecruitingSeeder recruitingSeeder;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-
-        userId = UUID.randomUUID();
-
-        attendeeEntity = AttendeeEntity.builder()
-                .id(UUID.randomUUID())
-                .emailAddress(EMAIL)
-                .fullName("Test User")
-                .phoneNumber("123456789")
-                .user(userId)
-                .build();
-
-        MeetingEntity meetingEntity = MeetingEntity.builder()
-                .id(UUID.randomUUID())
-                .date(LocalDateTime.now())
-                .url("https://meeting.test.com")
-                .attendees(new ArrayList<>(List.of(attendeeEntity)))
-                .build();
-
-        applicationEntity = ApplicationEntity.builder()
-                .id(UUID.randomUUID())
-                .meetingList(new ArrayList<>(List.of(meetingEntity)))
-                .build();
+        recruitingSeeder.deleteAll();
+        recruitingSeeder.seedDatabase();
     }
 
     @Test
     void testReadByEmailAddressFound() {
-        when(attendeeRepository.findByEmailAddress(EMAIL)).thenReturn(Optional.of(attendeeEntity));
 
-        Attendee attendee = attendeePersistenceMongodb.readByEmailAddress(EMAIL);
+        String email = "markus.urbanietz@test.com";
 
-        assertNotNull(attendee);
-        assertEquals(EMAIL, attendee.getEmailAddress());
-        assertEquals("Test User", attendee.getFullName());
-        assertEquals("123456789", attendee.getPhoneNumber());
-        assertNotNull(attendee.getUser());
-        assertEquals(userId, attendee.getUser().getId());
+        Attendee attendee = attendeePersistence.readByEmailAddress(email);
 
-        verify(attendeeRepository, times(1)).findByEmailAddress(EMAIL);
+        assertThat(attendee).isNotNull();
+        assertThat(attendee.getEmailAddress()).isEqualTo(email);
+        assertThat(attendee.getFullName()).isEqualTo("Markus Urbanietz");
+        assertThat(attendee.getPhoneNumber()).isEqualTo("+4112345123");
+        assertThat(attendee.getUser()).isNotNull();
+        assertThat(attendee.getUser().getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
     }
 
     @Test
     void testReadByEmailAddressNotFound() {
         String email = "notfound@example.com";
-        when(attendeeRepository.findByEmailAddress(email)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(
                 NotFoundException.class,
-                () -> attendeePersistenceMongodb.readByEmailAddress(email)
+                () -> attendeePersistence.readByEmailAddress(email)
         );
 
-        assertTrue(exception.getMessage().contains("No existing Email Address: " + email));
-        verify(attendeeRepository, times(1)).findByEmailAddress(email);
+        assertThat(exception.getMessage()).contains("No existing Email Address: " + email);
     }
 
+
     @Test
-    void testDeleteAttendeeFoundInMeeting() {
-        // Attendee exists and is referenced inside applicationEntity.meetingList
-        when(attendeeRepository.findByEmailAddress(EMAIL)).thenReturn(Optional.of(attendeeEntity));
-        when(applicationRepository.findAll()).thenReturn(List.of(applicationEntity));
-        when(applicationRepository.save(any(ApplicationEntity.class))).thenReturn(applicationEntity);
+    void testDeleteAttendeeFoundInMeetings() {
+        String email = "beate.magnie@test.com";
 
-        attendeePersistenceMongodb.delete(EMAIL);
+        assertThat(attendeeRepository.findByEmailAddress(email)).isPresent();
 
-        verify(attendeeRepository, times(1)).findByEmailAddress(EMAIL);
-        verify(applicationRepository, times(1)).findAll();
-        verify(applicationRepository, times(1)).save(applicationEntity);
-        verify(attendeeRepository, times(1)).delete(attendeeEntity);
+        long countBefore = attendeeRepository.count();
+        List<ApplicationEntity> appsBefore = applicationRepository.findAll();
+        long totalMeetingsWithAttendee = appsBefore.stream()
+                .flatMap(app -> app.getMeetingList().stream())
+                .filter(meeting -> meeting.getAttendees().stream()
+                        .anyMatch(a -> email.equals(a.getEmailAddress())))
+                .count();
 
-        assertTrue(applicationEntity.getMeetingList().get(0).getAttendees().isEmpty());
+        assertThat(totalMeetingsWithAttendee).isGreaterThan(0);
+
+        attendeePersistence.delete(email);
+
+        Optional<AttendeeEntity> attendeeOpt = attendeeRepository.findByEmailAddress(email);
+        assertThat(attendeeOpt).isEmpty();
+
+        // Check attendee has been deleted from the meetings
+        List<ApplicationEntity> appsAfter = applicationRepository.findAll();
+        boolean stillPresent = appsAfter.stream()
+                .flatMap(app -> app.getMeetingList().stream())
+                .anyMatch(meeting -> meeting.getAttendees().stream()
+                        .anyMatch(a -> email.equals(a.getEmailAddress())));
+        assertThat(stillPresent).isFalse();
+
+        assertThat(attendeeRepository.count()).isEqualTo(countBefore - 1);
     }
 
     @Test
     void testDeleteAttendeeNotInAnyMeeting() {
-        when(attendeeRepository.findByEmailAddress(EMAIL)).thenReturn(Optional.of(attendeeEntity));
+        String email = "karolyn.sanz@test.com";
 
-        ApplicationEntity appWithoutAttendee = ApplicationEntity.builder()
-                .id(UUID.randomUUID())
-                .meetingList(new ArrayList<>()) // Without any meeting
-                .build();
+        assertThat(attendeeRepository.findByEmailAddress(email)).isPresent();
 
-        when(applicationRepository.findAll()).thenReturn(List.of(appWithoutAttendee));
-        when(applicationRepository.save(any(ApplicationEntity.class))).thenReturn(appWithoutAttendee);
+        long countBefore = attendeeRepository.count();
 
-        attendeePersistenceMongodb.delete(EMAIL);
+        attendeePersistence.delete(email);
 
-        verify(attendeeRepository, times(1)).findByEmailAddress(EMAIL);
-        verify(applicationRepository, times(1)).findAll();
-        verify(applicationRepository, times(1)).save(appWithoutAttendee);
-        verify(attendeeRepository, times(1)).delete(attendeeEntity);
+        assertThat(attendeeRepository.findByEmailAddress(email)).isEmpty();
+
+        boolean presentInMeetings = applicationRepository.findAll().stream()
+                .flatMap(app -> app.getMeetingList().stream())
+                .anyMatch(m -> m.getAttendees().stream()
+                        .anyMatch(a -> email.equals(a.getEmailAddress())));
+        assertThat(presentInMeetings).isFalse();
+
+        assertThat(attendeeRepository.count()).isEqualTo(countBefore - 1);
+    }
+
+    @Test
+    void testDeleteAttendeeNotFoundThrowsException() {
+        String email = "not.existent@test.com";
+        assertThrows(NotFoundException.class, () -> attendeePersistence.delete(email));
+    }
+
+    @Test
+    void testDeleteAttendeeRemovesFromMultipleMeetings() {
+
+        String email = "beate.magnie@test.com";
+
+        long meetingsBefore = applicationRepository.findAll().stream()
+                .flatMap(app -> app.getMeetingList().stream())
+                .filter(meeting -> meeting.getAttendees().stream()
+                        .anyMatch(a -> email.equals(a.getEmailAddress())))
+                .count();
+
+        assertThat(meetingsBefore).isGreaterThan(1);
+
+        attendeePersistence.delete(email);
+
+        long meetingsAfter = applicationRepository.findAll().stream()
+                .flatMap(app -> app.getMeetingList().stream())
+                .filter(meeting -> meeting.getAttendees().stream()
+                        .anyMatch(a -> email.equals(a.getEmailAddress())))
+                .count();
+
+        assertThat(meetingsAfter).isZero();
+    }
+
+    @Test
+    void testDeleteAttendeeCleansReferencesButKeepsApplications() {
+        String email = "markus.urbanietz@test.com";
+
+        List<ApplicationEntity> before = applicationRepository.findAll();
+        int totalApplications = before.size();
+
+        attendeePersistence.delete(email);
+
+        List<ApplicationEntity> after = applicationRepository.findAll();
+        assertThat(after).hasSize(totalApplications); // Applications must never been deleted
     }
 }

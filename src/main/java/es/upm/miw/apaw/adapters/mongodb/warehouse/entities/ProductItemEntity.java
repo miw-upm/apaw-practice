@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Builder
@@ -50,21 +51,31 @@ public class ProductItemEntity {
     }
 
     public ProductItem toProductItem() {
-
         List<Location> locationList = (this.locationEntities != null)
                 ? this.locationEntities.stream()
+                .filter(Objects::nonNull)
                 .map(LocationEntity::toLocation)
                 .toList()
                 : List.of();
 
-        return new ProductItem(
-                this.id,
-                this.barcode,
-                this.appoint,
-                this.cost,
-                this.unitOfMeasure,
-                locationList
-        );
+        return ProductItem.builder()
+                .id(this.id)
+                .barcode(this.barcode)
+                .appoint(this.appoint)
+                .cost(this.cost)
+                .unitOfMeasure(this.unitOfMeasure)
+                .locations(locationList)
+                .build();
+    }
+
+    public void fromProductItem(ProductItem productItem) {
+        BeanUtils.copyProperties(productItem, this, "locationEntities");
+
+        if (productItem.getLocations() != null) {
+            this.locationEntities = productItem.getLocations().stream()
+                    .map(LocationEntity::new)
+                    .toList();
+        }
     }
 
 }

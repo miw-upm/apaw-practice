@@ -46,4 +46,8 @@ public class LocationEntity {
         return location;
     }
 
+    public void fromLocation(Location location) {
+        BeanUtils.copyProperties(location, this);
+    }
+
 }

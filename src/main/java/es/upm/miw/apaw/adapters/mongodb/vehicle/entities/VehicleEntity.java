@@ -1,8 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.vehicle.entities;
 
 import es.upm.miw.apaw.domain.models.UserDto;
-import es.upm.miw.apaw.domain.models.vehicle.Documentation;
-import es.upm.miw.apaw.domain.models.vehicle.Extra;
 import es.upm.miw.apaw.domain.models.vehicle.Vehicle;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
