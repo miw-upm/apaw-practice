@@ -1,17 +1,11 @@
 package es.upm.miw.apaw.domain.services.recruiting;
 
-import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.AttendeeRepository;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.AttendeePersistenceMongodb;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recruiting.Attendee;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -21,41 +15,52 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AttendeeServiceTest {
 
     @Autowired
-    private AttendeeRepository attendeeRepository;
+    private AttendeeService attendeeService;
 
-    @Autowired
-    private AttendeePersistenceMongodb attendeePersistenceMongodb;
-
-    private AttendeeEntity storedEntity;
-
-    @BeforeEach
-    void setUp() {
-        attendeeRepository.deleteAll();
-
-        storedEntity = attendeeRepository.save(
-                AttendeeEntity.builder()
-                        .id(UUID.randomUUID())
-                        .emailAddress("maria.smith@example.com")
-                        .fullName("Maria Smith")
-                        .phoneNumber("611223344")
-                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                        .build()
-        );
-    }
+    // --- GET testing ------------------------------------------------------------------
 
     @Test
     void testReadByEmailAddressFound() {
-        Attendee attendee = attendeePersistenceMongodb.readByEmailAddress("maria.smith@example.com");
+        String email = "markus.urbanietz@test.com";
+
+        Attendee attendee = attendeeService.read(email);
 
         assertThat(attendee).isNotNull();
-        assertThat(attendee.getEmailAddress()).isEqualTo("maria.smith@example.com");
-        assertThat(attendee.getFullName()).isEqualTo("Maria Smith");
-        assertThat(attendee.getUser().getId()).isEqualTo(storedEntity.getUser());
+        assertThat(attendee.getEmailAddress()).isEqualTo(email);
+        assertThat(attendee.getFullName()).isEqualTo("Markus Urbanietz");
+        assertThat(attendee.getPhoneNumber()).isEqualTo("+4112345123");
+        assertThat(attendee.getUser()).isNotNull();
     }
 
     @Test
     void testReadByEmailAddressNotFound() {
         assertThrows(NotFoundException.class,
-                () -> attendeePersistenceMongodb.readByEmailAddress("unknown@example.com"));
+                () -> attendeeService.read("unknown@example.com"));
+    }
+
+    // --- DELETE testing ---------------------------------------------------------------
+
+    @Test
+    void testDeleteAttendeeWithMeetings() {
+        String email = "andrea.schulz@test.com"; // Active in meetings (meeting-3, meeting-6)
+
+        attendeeService.delete(email);
+
+        assertThrows(NotFoundException.class, () -> attendeeService.read(email));
+    }
+
+    @Test
+    void testDeleteAttendeeWithoutMeetings() {
+        String email = "karolyn.sanz@test.com"; // No active in meetings at all
+
+        attendeeService.delete(email);
+
+        assertThrows(NotFoundException.class, () -> attendeeService.read(email));
+    }
+
+    @Test
+    void testDeleteAttendeeNotFound() {
+        assertThrows(NotFoundException.class,
+                () -> attendeeService.delete("unknown@example.com"));
     }
 }

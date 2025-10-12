@@ -2,16 +2,16 @@ package es.upm.miw.apaw.adapters.mongodb.recruiting.persistance;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.ApplicationRepository;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
 import es.upm.miw.apaw.domain.persistenceports.recruiting.ApplicationPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Repository("applicationPersistence")
@@ -33,33 +33,45 @@ public class ApplicationPersistenceMongodb implements ApplicationPersistence {
     }
 
     @Override
+    public List<Application> readAll() {
+        return this.applicationRepository.findAll().stream()
+                .map(ApplicationEntity::toApplication).toList();
+    }
+
+    @Override
     public Application update(Application application) {
         ApplicationEntity applicationEntity = this.applicationRepository
                 .findById(application.getId())
                 .orElseThrow(() -> new NotFoundException("Application id:" + application.getId()));
 
-        applicationEntity.setMeetingList(
-                application.getMeetingList() == null ? null :
-                        application.getMeetingList().stream()
-                                .map(meeting -> MeetingEntity.builder()
-                                        .date(meeting.getDate())
-                                        .url(meeting.getUrl())
-                                        .attendees(meeting.getAttendees().stream()
-                                                .map(attendee -> AttendeeEntity.builder()
-                                                        .emailAddress(attendee.getEmailAddress())
-                                                        .fullName(attendee.getFullName())
-                                                        .phoneNumber(attendee.getPhoneNumber())
-                                                        .user(Optional.ofNullable(attendee.getUser())
-                                                                .map(UserDto::getId)
-                                                                .orElse(null))
-                                                        .build())
-                                                .toList())
-                                        .build())
-                                .toList()
-        );
+        if (application.getMeetingList() != null) {
+            List<MeetingEntity> meetingEntities = application.getMeetingList().stream()
+                    .map(meeting -> MeetingEntity.builder()
+                            .id(UUID.randomUUID())
+                            .date(meeting.getDate())
+                            .url(meeting.getUrl())
+                            .attendees(null)
+                            .build())
+                    .toList();
+
+            applicationEntity.setMeetingList(meetingEntities);
+        }
 
         ApplicationEntity saved = this.applicationRepository.save(applicationEntity);
         return saved.toApplication();
     }
 
+    // Search 1 #1269
+    @Override
+    public BigDecimal findAccumulatedAnnualSalary(String fullName) {
+        List<ApplicationEntity> applications = applicationRepository.findAll();
+
+        return applications.stream()
+                .filter(app -> app.getMeetingList().stream()
+                        .flatMap(meeting -> meeting.getAttendees().stream())
+                        .anyMatch( attendee -> attendee.getFullName().equalsIgnoreCase(fullName)))
+                .map(ApplicationEntity::getPositionEntity)
+                .map(PositionEntity::getAnnualSalary)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }

@@ -1,79 +1,67 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.AttendeeRepository;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.AttendeePersistenceMongodb;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recruiting.Attendee;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.AttendeePersistenceMongodb;
+import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class AttendeePersistenceMongodbIT {
 
-    @Mock
+    @Autowired
+    private AttendeePersistenceMongodb attendeePersistence;
+
+    @Autowired
     private AttendeeRepository attendeeRepository;
 
-    @InjectMocks
-    private AttendeePersistenceMongodb attendeePersistenceMongodb;
+    @Test
+    void testReadByEmail() {
+        String email = "markus.urbanietz@test.com";
 
-    private AttendeeEntity attendeeEntity;
-    private UUID userId;
-    private static final String EMAIL = "test@example.com";
+        Attendee attendee = attendeePersistence.readByEmailAddress(email);
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        userId = UUID.randomUUID();
-        attendeeEntity = AttendeeEntity.builder()
-                .id(UUID.randomUUID())
-                .emailAddress(EMAIL)
-                .fullName("Test User")
-                .phoneNumber("123456789")
-                .user(userId)
-                .build();
+        assertThat(attendee).isNotNull();
+        assertThat(attendee.getEmailAddress()).isEqualTo(email);
+        assertThat(attendee.getFullName()).isEqualTo("Markus Urbanietz");
+        assertThat(attendee.getPhoneNumber()).isEqualTo("+4112345123");
+        assertThat(attendee.getUser()).isNotNull();
+        assertThat(attendee.getUser().getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
     }
 
     @Test
-    void testReadByEmailAddressFound() {
-        // given
-        when(attendeeRepository.findByEmailAddress(EMAIL)).thenReturn(Optional.of(attendeeEntity));
-
-        // when
-        Attendee attendee = attendeePersistenceMongodb.readByEmailAddress(EMAIL);
-
-        // then
-        assertNotNull(attendee);
-        assertEquals(EMAIL, attendee.getEmailAddress());
-        assertEquals("Test User", attendee.getFullName());
-        assertEquals("123456789", attendee.getPhoneNumber());
-        assertNotNull(attendee.getUser());
-        assertEquals(userId, attendee.getUser().getId());
-
-        verify(attendeeRepository, times(1)).findByEmailAddress(EMAIL);
-    }
-
-    @Test
-    void testReadByEmailAddressNotFound() {
-        // given
+    void testReadByEmailNotFound() {
         String email = "notfound@example.com";
-        when(attendeeRepository.findByEmailAddress(email)).thenReturn(Optional.empty());
 
-        // when & then
-        NotFoundException exception = assertThrows(
-                NotFoundException.class,
-                () -> attendeePersistenceMongodb.readByEmailAddress(email)
-        );
+        NotFoundException exception = assertThrows(NotFoundException.class,
+                () -> attendeePersistence.readByEmailAddress(email));
+        assertThat(exception.getMessage()).contains("No existing Email Address: " + email);
+    }
 
-        assertTrue(exception.getMessage().contains("No existing Email Address: " + email));
-        verify(attendeeRepository, times(1)).findByEmailAddress(email);
+
+    @Test
+    void testDeleteAttendee() {
+        String email = "beate.magnie@test.com";
+
+        assertThat(attendeePersistence.readByEmailAddress(email).getEmailAddress()).isEqualTo(email);
+        attendeePersistence.delete(email);
+        NotFoundException exception = assertThrows(NotFoundException.class,
+                () -> attendeePersistence.readByEmailAddress(email));
+        assertThat(exception.getMessage()).contains("No existing Email Address: " + email);
+    }
+
+    @Test
+    void testDeleteAttendeeNotFound() {
+        String email = "not.existent@test.com";
+        assertThrows(NotFoundException.class, () -> attendeePersistence.delete(email));
     }
 }

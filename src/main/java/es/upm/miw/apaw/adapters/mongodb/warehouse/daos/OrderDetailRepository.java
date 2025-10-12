@@ -6,4 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.UUID;
 
 public interface OrderDetailRepository extends MongoRepository<OrderDetailEntity, UUID> {
+
 }

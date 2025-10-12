@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.vehicle.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.EngineRepository;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
+import es.upm.miw.apaw.adapters.mongodb.vehicle.entities.EngineEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.vehicle.Engine;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -57,7 +56,7 @@ class EnginePersistenceMongodbIT {
     @Test
     void testUpdate() {
         Engine existing = this.engineRepository.findByCodeEngine("VMIVDS000VIS00001")
-                .map(EngineEntity -> EngineEntity.toEngine())
+                .map(EngineEntity::toEngine)
                 .orElseThrow();
 
         existing.setType("Híbrido");

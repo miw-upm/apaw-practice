@@ -1,54 +1,148 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.ApplicationRepository;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.ApplicationPersistenceMongodb;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class ApplicationPersistenceMongodbIT {
 
-    @Mock
-    private ApplicationRepository applicationRepository;
-
-    @InjectMocks
+    @Autowired
     private ApplicationPersistenceMongodb applicationPersistence;
 
-    private UUID id;
-    private ApplicationEntity entity;
+    @Autowired
+    private ApplicationRepository applicationRepository;
+
+    @Autowired
+    private RecruitingSeeder recruitingSeeder;
 
     @BeforeEach
-    void setup() {
-        MockitoAnnotations.openMocks(this);
-        id = UUID.randomUUID();
-        entity = ApplicationEntity.builder().id(id).build();
+    void resetDb() {
+        recruitingSeeder.deleteAll();
+        recruitingSeeder.seedDatabase();
+    }
+
+    @Test
+    void testReadAll() {
+        List<Application> allApps = applicationPersistence.readAll();
+
+        assertThat(allApps)
+                .isNotEmpty()
+                .size().isEqualTo(4);
     }
 
     @Test
     void testReadByIdSuccess() {
-        when(applicationRepository.findById(id)).thenReturn(Optional.of(entity));
+        UUID existingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
 
-        Application app = applicationPersistence.readById(id);
+        Application application = applicationPersistence.readById(existingId);
 
-        assertNotNull(app);
-        assertEquals(id, app.getId());
-        verify(applicationRepository).findById(id);
+        assertThat(application).isNotNull();
+        assertThat(application.getId()).isEqualTo(existingId);
+        assertThat(application.getMeetingList()).isNotEmpty();
     }
 
     @Test
     void testReadByIdNotFound() {
-        when(applicationRepository.findById(id)).thenReturn(Optional.empty());
+        UUID randomId = UUID.randomUUID();
 
-        assertThrows(NotFoundException.class, () -> applicationPersistence.readById(id));
-        verify(applicationRepository).findById(id);
+        assertThrows(NotFoundException.class, () -> applicationPersistence.readById(randomId));
+    }
+
+    @Test
+    void testUpdateApplicationMeetingList() {
+        UUID existingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
+
+        Application application = applicationPersistence.readById(existingId);
+
+        ApplicationEntity entityInDb = applicationRepository.findById(existingId).orElseThrow();
+        List<MeetingEntity> meetingsInDb = entityInDb.getMeetingList();
+
+        assertThat(meetingsInDb)
+                .isNotEmpty()
+                .allMatch(meeting -> meeting.getId() != null);
+
+        // Change the URL for the meetings of the application
+        List<String> updatedUrls = meetingsInDb.stream()
+                .map(m -> "updated-url-" + m.getId())
+                .toList();
+
+        for (int i = 0; i < application.getMeetingList().size(); i++) {
+            application.getMeetingList().get(i).setUrl(updatedUrls.get(i));
+        }
+
+        // Save the changes by Update
+        Application updated = applicationPersistence.update(application);
+
+        // Verifications
+        assertThat(updated.getMeetingList())
+                .isNotEmpty()
+                .allMatch(meeting -> meeting.getUrl().startsWith("updated-url-"));
+
+        ApplicationEntity reloaded = applicationRepository.findById(existingId).orElseThrow();
+        assertThat(reloaded.getMeetingList())
+                .isNotEmpty()
+                .allMatch(meeting -> meeting.getUrl().startsWith("updated-url-"));
+    }
+
+    @Test
+    void testUpdateNonExistingApplicationThrows() {
+        Application fakeApp = Application.builder().id(UUID.randomUUID()).build();
+
+        assertThrows(NotFoundException.class, () -> applicationPersistence.update(fakeApp));
+    }
+
+    // Testing Search 1 #1269
+
+    @Test
+    void testFindAccumulatedAnnualSalary1() {
+        String attendeeName = "Markus Urbanietz";
+        // Meeting 20, 22 & 26 -> Application 30, 31 & 33 -> Position 00 01 & 03
+        // 52.000 + 48.000 + 68.000 = 168.000
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalary(attendeeName))
+                .isEqualByComparingTo(new BigDecimal("168000.00"));
+    }
+
+    @Test
+    void testFindAccumulatedAnnualSalary2() {
+        String attendeeName = "Beate Magnie";
+        // Meeting 20, 21 & 23 -> Application (20, 21: 30) & 32 -> Position 00 & 02
+        // 52.000 + 56.000  = 108.000
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalary(attendeeName))
+                .isEqualByComparingTo(new BigDecimal("108000.00"));
+    }
+
+    @Test
+    void testFindAccumulatedAnnualSalary_zero_result() {
+        String attendeeName = "Karolyn Sanz";
+        // No meeting -> 0
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalary(attendeeName)).isEqualByComparingTo(new BigDecimal("0.00"));
+    }
+
+    @Test
+    void testFindAccumulatedAnnualSalaryNotFound() {
+        String attendeeName = "Ander Herrera - not in Seeder";
+
+        assertThat(applicationPersistence.findAccumulatedAnnualSalary(attendeeName)).isEqualByComparingTo(new BigDecimal("0.00"));
     }
 }

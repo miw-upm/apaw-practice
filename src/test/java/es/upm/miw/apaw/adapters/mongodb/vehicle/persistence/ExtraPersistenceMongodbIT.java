@@ -2,7 +2,6 @@ package es.upm.miw.apaw.adapters.mongodb.vehicle.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.ExtraRepository;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
-import es.upm.miw.apaw.adapters.mongodb.vehicle.entities.ExtraEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.vehicle.Extra;
 import org.junit.jupiter.api.BeforeEach;

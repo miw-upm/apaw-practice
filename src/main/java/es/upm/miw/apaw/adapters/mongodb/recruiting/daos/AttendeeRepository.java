@@ -9,5 +9,4 @@ import java.util.UUID;
 public interface AttendeeRepository extends MongoRepository<AttendeeEntity, UUID> {
 
     Optional<AttendeeEntity> findByEmailAddress(String emailAddress);
-
 }

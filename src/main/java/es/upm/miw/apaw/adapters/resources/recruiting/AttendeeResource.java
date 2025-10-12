@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.resources.recruiting;
 import es.upm.miw.apaw.domain.models.recruiting.Attendee;
 import es.upm.miw.apaw.domain.services.recruiting.AttendeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,7 +26,8 @@ public class AttendeeResource {
         return this.attendeeService.read(emailAddress);
     }
 
-    @DeleteMapping("/{emailAddress}")
+    @DeleteMapping(EMAIL_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String emailAddress) {
         this.attendeeService.delete(emailAddress);
     }

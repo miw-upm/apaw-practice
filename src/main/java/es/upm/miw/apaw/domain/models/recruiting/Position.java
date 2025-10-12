@@ -14,15 +14,18 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Position {
-    @NotNull
-    private int reference;
+
+    private Integer reference; // If it is empty, it will be auto calculated
+
     @NotNull
     @NotBlank
     private String name;
     private String description;
+
     @NotNull
     private BigDecimal annualSalary;
     private BigDecimal bonusSalary;
+
     @NotNull
-    private Integer numVacancies;
+    private int numVacancies;
 }
