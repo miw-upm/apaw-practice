@@ -38,4 +38,23 @@ class StudentIssuePersistenceMongodbIT {
         assertThat(created.getClosed()).isFalse();
         assertThat(created.getUrgency()).isEqualTo(2);
     }
+
+    @Test
+    void testUpdateStudentIssuePersistence() {
+        UUID id = UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0000");
+
+        StudentIssue update = StudentIssue.builder()
+                .statement("Persistence Updated Problem1")
+                .closed(true)
+                .urgency(10)
+                .build();
+
+        StudentIssue updated = studentIssuePersistence.update(id, update);
+
+        assertThat(updated).isNotNull();
+        assertThat(updated.getId()).isEqualTo(id);
+        assertThat(updated.getStatement()).isEqualTo("Persistence Updated Problem1");
+        assertThat(updated.getClosed()).isTrue();
+        assertThat(updated.getUrgency()).isEqualTo(10);
+    }
 }
