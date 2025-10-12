@@ -1,12 +1,13 @@
 package es.upm.miw.apaw.adapters.mongodb.clinic.entities;
 
+import es.upm.miw.apaw.domain.models.clinic.Doctor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import es.upm.miw.apaw.domain.models.clinic.Doctor;
 
 import java.util.UUID;
 
@@ -17,30 +18,30 @@ import java.util.UUID;
 @Document
 public class DoctorEntity {
 
-    // Identificador técnico de MongoDB
     @Id
-    private String id;
+    private String id; // <--- DEBE ESTAR
 
-    // Clave de negocio (copiada del Modelo Doctor)
+    @Indexed(unique = true)
     private Long licenseNumber;
 
     private String name;
     private String specialty;
-
-    // Clave foránea al usuario externo (UserDto)
     private UUID userId;
 
-    // Constructor para mapear el Modelo de Dominio (Doctor) a la Entidad (DoctorEntity)
+    // CONSTRUCTOR DE MAPEO (Doctor -> DoctorEntity)
     public DoctorEntity(Doctor doctor) {
+        this.id = doctor.getId();
         this.licenseNumber = doctor.getLicenseNumber();
         this.name = doctor.getName();
         this.specialty = doctor.getSpecialty();
         this.userId = doctor.getUserId();
     }
 
-    // Método para mapear la Entidad (DoctorEntity) de vuelta al Modelo de Dominio (Doctor)
+    // MÉTODO DE CONVERSIÓN (DoctorEntity -> Doctor)
+
     public Doctor toDoctor() {
         return Doctor.builder()
+                .id(this.id)
                 .licenseNumber(this.licenseNumber)
                 .name(this.name)
                 .specialty(this.specialty)

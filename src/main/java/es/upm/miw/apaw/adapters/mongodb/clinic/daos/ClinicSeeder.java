@@ -8,18 +8,20 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-import es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;
+import org.springframework.boot.CommandLineRunner; // La importación ya estaba bien.
+// Nota: La importación 'es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;' es redundante y puede eliminarse.
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
+// import java.util.List; // Ya no es necesaria si solo usas Arrays.asList()
 import java.util.UUID;
 
 @Repository
 @Profile({"dev", "test"})
 @Log4j2
-public class ClinicSeeder {
+// 1. Implementar la interfaz CommandLineRunner para la ejecución automática al inicio del test.
+public class ClinicSeeder implements CommandLineRunner {
 
     // Microchip numbers y Licencias usados para asegurar consistencia en las relaciones
     public static final Long MICROCHIP_CHISPA = 900000000000001L;
@@ -40,6 +42,13 @@ public class ClinicSeeder {
         this.animalRepository = animalRepository;
         this.diagnosisRepository = diagnosisRepository;
         this.treatmentRepository = treatmentRepository;
+    }
+
+    // 2. Implementar el método run(), que se ejecuta automáticamente.
+    @Override
+    public void run(String... args) {
+        this.deleteAll();
+        this.seedDatabase();
     }
 
     public void seedDatabase() {

@@ -1,22 +1,21 @@
 package es.upm.miw.apaw.domain.models.clinic;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Doctor {
 
-    // Clave de negocio principal (licenseNumber)
-    private Long licenseNumber;
+    private String id;
 
-    // Atributos de Doctor
+    private Long licenseNumber;
     private String name;
     private String specialty;
-
-    // Relación n..1 con UserDto (implementada con su ID)
     private UUID userId;
 }
