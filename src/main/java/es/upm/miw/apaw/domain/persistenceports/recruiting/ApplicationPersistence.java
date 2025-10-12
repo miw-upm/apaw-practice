@@ -16,5 +16,9 @@ public interface ApplicationPersistence {
 
     Application update(Application application);
 
-    BigDecimal findAccumulatedAnnualSalary(String fullName);
+    // First search: 1269
+    BigDecimal findAccumulatedAnnualSalaryByFullName(String fullName);
+
+    // Second search: 1270
+    List<String> findUniqueUrlsByPositionName(String name);
 }

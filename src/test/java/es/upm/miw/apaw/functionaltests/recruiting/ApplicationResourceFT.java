@@ -1,9 +1,11 @@
 package es.upm.miw.apaw.functionaltests.recruiting;
 
+import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.resources.recruiting.ApplicationResource;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
 import es.upm.miw.apaw.domain.models.recruiting.Meeting;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -27,6 +29,15 @@ class ApplicationResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Autowired
+    private RecruitingSeeder recruitingSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        recruitingSeeder.deleteAll();
+        recruitingSeeder.seedDatabase();
+    }
 
     // --- UPDATE endpoint test ---------------------------------------------------------
 
@@ -98,7 +109,7 @@ class ApplicationResourceFT {
     @Test
     void testUpdateMeetingsConflict() {
         // This Application is in status Rejected
-        UUID rejectedApplicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0033");
+        UUID rejectedApplicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0034");
 
         Meeting meeting = Meeting.builder()
                 .date(LocalDateTime.now().plusDays(1))
@@ -122,9 +133,9 @@ class ApplicationResourceFT {
     // TEST Search #1
 
     @Test
-    void testFindAccumulatedAnnualSalary() {
+    void testFindAccumulatedAnnualSalaryByFullName() {
         String fullName = "Markus Urbanietz";
-        BigDecimal expectedSalary = new BigDecimal("168000.00");
+        BigDecimal expectedSalary = new BigDecimal("176000.00");
 
         webTestClient.get()
                 .uri(uriBuilder -> uriBuilder

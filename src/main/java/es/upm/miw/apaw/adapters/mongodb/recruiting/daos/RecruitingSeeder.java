@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -24,14 +25,12 @@ public class RecruitingSeeder {
 
     private final PositionRepository positionRepository;
     private final ApplicationRepository applicationRepository;
-    private final MeetingRepository meetingRepository;
     private final AttendeeRepository attendeeRepository;
 
     @Autowired
-    public RecruitingSeeder(PositionRepository positionRepository, ApplicationRepository applicationRepository, MeetingRepository meetingRepository, AttendeeRepository attendeeRepository) {
+    public RecruitingSeeder(PositionRepository positionRepository, ApplicationRepository applicationRepository, AttendeeRepository attendeeRepository) {
         this.positionRepository = positionRepository;
         this.applicationRepository = applicationRepository;
-        this.meetingRepository = meetingRepository;
         this.attendeeRepository = attendeeRepository;
     }
 
@@ -74,6 +73,15 @@ public class RecruitingSeeder {
                         .description("Lead in implementation for SAP Successfactors and SAP HCM. At least 10 years of experience as technical Leader.")
                         .annualSalary(new BigDecimal("68000.00"))
                         .bonusSalary(new BigDecimal("8000.00"))
+                        .numVacancies(1)
+                        .build(),
+                PositionEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1004"))
+                        .reference(1005)
+                        .name("HCM Manager")
+                        .description("Manager for HCM department. At least 15 years of experience in the sector.")
+                        .annualSalary(new BigDecimal("87000.00"))
+                        .bonusSalary(new BigDecimal("25000.00"))
                         .numVacancies(1)
                         .build()
         };
@@ -124,54 +132,7 @@ public class RecruitingSeeder {
         };
         this.attendeeRepository.saveAll(Arrays.asList(attendees));
 
-        /* 3) Meeting */
-        MeetingEntity[] meetings = new MeetingEntity[]{
-                MeetingEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
-                        .date(LocalDateTime.of(2025, 10, 6, 14, 30, 0))
-                        .url("url-for-meeting-1")
-                        .attendees(Arrays.asList(attendees[0], attendees[1], attendees[5]))
-                        .build(),
-                MeetingEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0021"))
-                        .date(LocalDateTime.of(2025, 10, 10, 11, 30, 0))
-                        .url("url-for-meeting-2")
-                        .attendees(Arrays.asList(attendees[1], attendees[2], attendees[4]))
-                        .build(),
-                MeetingEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0022"))
-                        .date(LocalDateTime.of(2025, 10, 9, 10, 0, 0))
-                        .url("url-for-meeting-3")
-                        .attendees(Arrays.asList(attendees[0], attendees[5]))
-                        .build(),
-                MeetingEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0023"))
-                        .date(LocalDateTime.of(2025, 10, 14, 9, 0, 0))
-                        .url("url-for-meeting-4")
-                        .attendees(Collections.singletonList(attendees[1]))
-                        .build(),
-                MeetingEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0024"))
-                        .date(LocalDateTime.of(2025, 10, 9, 15, 15, 0))
-                        .url("url-for-meeting-5")
-                        .attendees(Arrays.asList(attendees[1], attendees[4]))
-                        .build(),
-                MeetingEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0025"))
-                        .date(LocalDateTime.of(2025, 10, 13, 12, 15, 0))
-                        .url("url-for-meeting-6")
-                        .attendees(Arrays.asList(attendees[2], attendees[5]))
-                        .build(),
-                MeetingEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0026"))
-                        .date(LocalDateTime.of(2025, 10, 15, 12, 30, 0))
-                        .url("//url-for-meeting-7")
-                        .attendees(Collections.singletonList(attendees[0]))
-                        .build()
-        };
-        this.meetingRepository.saveAll(Arrays.asList(meetings));
-
-        // 4) Application
+        // 3) Application
         ApplicationEntity[] applications = {
                 ApplicationEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030"))
@@ -180,8 +141,26 @@ public class RecruitingSeeder {
                         .referral(true)
                         .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                         .positionEntity(positions[0])
-                        .meetingList(Arrays.asList(meetings[0],meetings[1]))
-                        .build(),
+                        .meetingList(Arrays.asList(
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
+                                        .date(LocalDateTime.of(2025, 10, 6, 14, 30, 0))
+                                        .url("//url-for-meeting-1")
+                                        .attendees(Arrays.asList(attendees[0], attendees[1], attendees[5]))
+                                        .build(),
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0021"))
+                                        .date(LocalDateTime.of(2025, 10, 10, 11, 30, 0))
+                                        .url("//url-for-meeting-2")
+                                        .attendees(Arrays.asList(attendees[1], attendees[2], attendees[4]))
+                                        .build(),
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0022"))
+                                        .date(LocalDateTime.of(2025, 10, 9, 10, 0, 0))
+                                        .url("//url-for-meeting-3")
+                                        .attendees(Arrays.asList(attendees[0], attendees[5]))
+                                        .build()
+                        )).build(),
                 ApplicationEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0031"))
                         .status(Status.In_process)
@@ -189,7 +168,26 @@ public class RecruitingSeeder {
                         .referral(false)
                         .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .positionEntity(positions[1])
-                        .meetingList(Collections.singletonList(meetings[2]))
+                        .meetingList(Arrays.asList(
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0023"))
+                                        .date(LocalDateTime.of(2025, 10, 14, 9, 0, 0))
+                                        .url("//url-for-meeting-4")
+                                        .attendees(Collections.singletonList(attendees[1]))
+                                        .build(),
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0024"))
+                                        .date(LocalDateTime.of(2025, 10, 9, 15, 15, 0))
+                                        .url("//url-for-meeting-5")
+                                        .attendees(Arrays.asList(attendees[1], attendees[4]))
+                                        .build(),
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0025"))
+                                        .date(LocalDateTime.of(2025, 10, 13, 12, 15, 0))
+                                        .url("//url-for-meeting-6")
+                                        .attendees(Arrays.asList(attendees[2], attendees[5]))
+                                        .build()
+                        ))
                         .build(),
                 ApplicationEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0032"))
@@ -198,16 +196,51 @@ public class RecruitingSeeder {
                         .referral(false)
                         .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                         .positionEntity(positions[2])
-                        .meetingList(Arrays.asList(meetings[3],meetings[4],meetings[5]))
+                        .meetingList(Arrays.asList(
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0025"))
+                                        .date(LocalDateTime.of(2025, 10, 13, 12, 15, 0))
+                                        .url("//url-for-meeting-7")
+                                        .attendees(Arrays.asList(attendees[2], attendees[5]))
+                                        .build(),
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0026"))
+                                        .date(LocalDateTime.of(2025, 10, 15, 12, 30, 0))
+                                        .url("//url-for-meeting-8")
+                                        .attendees(Collections.singletonList(attendees[0]))
+                                        .build()
+                        ))
                         .build(),
                 ApplicationEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0033"))
+                        .status(Status.In_process)
+                        .created(LocalDate.now().minusDays(7))
+                        .referral(false)
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                        .positionEntity(positions[3])
+                        .meetingList(Arrays.asList(
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0027"))
+                                        .date(LocalDateTime.of(2025, 10, 16, 10, 0, 0))
+                                        .url("//url-for-meeting-9")
+                                        .attendees(Arrays.asList(attendees[2], attendees[5]))
+                                        .build(),
+                                MeetingEntity.builder()
+                                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0028"))
+                                        .date(LocalDateTime.of(2025, 10, 25, 9, 0, 0))
+                                        .url("//url-for-meeting-10")
+                                        .attendees(Collections.singletonList(attendees[0]))
+                                        .build()
+                        ))
+                        .build(),
+                ApplicationEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0034"))
                         .status(Status.Rejected)
                         .created(LocalDate.now().minusDays(7))
                         .referral(false)
-                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                        .positionEntity(positions[3])
-                        .meetingList(Collections.singletonList(meetings[6]))
+                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
+                        .positionEntity(positions[4])
+                        .meetingList(List.of())
                         .build()
         };
         this.applicationRepository.saveAll(Arrays.asList(applications));
@@ -215,10 +248,8 @@ public class RecruitingSeeder {
         log.warn("        ------- Recruiting");
     }
 
-
     public void deleteAll() {
         this.applicationRepository.deleteAll();
-        this.meetingRepository.deleteAll();
         this.attendeeRepository.deleteAll();
         this.positionRepository.deleteAll();
     }
