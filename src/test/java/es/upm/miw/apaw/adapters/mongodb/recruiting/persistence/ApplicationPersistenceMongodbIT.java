@@ -109,6 +109,8 @@ class ApplicationPersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> applicationPersistence.update(fakeApp));
     }
 
+    // --- SEARCHES endpoints test ------------------------------------------------------
+
     // Testing Search 1 #1269
 
     @Test
@@ -134,5 +136,30 @@ class ApplicationPersistenceMongodbIT {
 
         assertThat(applicationPersistence.findAccumulatedAnnualSalaryByFullName(attendeeName))
                 .isEqualByComparingTo(new BigDecimal("0.00"));
+    }
+
+    // Testing Search 2 #1270
+
+    @Test
+    void testFindUniqueURLByName() {
+        String positionName = "CPI Consultant";
+        List<String> urls = applicationPersistence.findUniqueUrlsByPositionName(positionName);
+        assertThat(urls).isNotEmpty()
+                .contains("//url-for-meeting-4", "//url-for-meeting-5", "//url-for-meeting-6")
+                .hasSize(3);
+    }
+
+    @Test
+    void testFindUniqueURLByNameNoURL() {
+        String positionName = "Manager HCM";
+        List<String> urls = applicationPersistence.findUniqueUrlsByPositionName(positionName);
+        assertThat(urls).isEmpty();
+    }
+
+    @Test
+    void testFindUniqueURLByNameNotFound() {
+        String positionName = "PositionNotFound";
+        List<String> urls = applicationPersistence.findUniqueUrlsByPositionName(positionName);
+        assertThat(urls).isEmpty();
     }
 }
