@@ -8,6 +8,8 @@ import es.upm.miw.apaw.domain.persistenceports.recruiting.PositionPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("positionPersistence")
 public class PositionPersistenceMongodb implements PositionPersistence {
 
@@ -34,6 +36,12 @@ public class PositionPersistenceMongodb implements PositionPersistence {
         return this.positionRepository
                 .save(new PositionEntity(position))
                 .toPosition();
+    }
+
+    @Override
+    public List<Position> readAll() {
+        return this.positionRepository.findAll()
+                .stream().map(PositionEntity::toPosition).toList();
     }
 
     @Override

@@ -33,8 +33,10 @@ class ApplicationServiceTest {
     @MockitoBean
     private ApplicationPersistence applicationPersistence;
 
+    // --- UPDATE testing ---------------------------------------------------------------
+
     @Test
-    void testUpdateMeetingsUsingSeederData() {
+    void testUpdateMeeting() {
         UUID applicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
 
         Application application = Application.builder()
@@ -81,5 +83,24 @@ class ApplicationServiceTest {
 
         verify(this.applicationPersistence, times(1)).readById(applicationId);
         verify(this.applicationPersistence, times(1)).update(any(Application.class));
+    }
+
+    // --- SEARCHES testing -------------------------------------------------------------
+
+    // Testing Search 1 #1269
+    @Test
+    void testFindAccumulatedAnnualSalary() {
+        String fullName = "Iker Álvarez";
+        BigDecimal accumulatedSalary = new BigDecimal("157000.00");
+
+        BDDMockito.given(this.applicationPersistence.findAccumulatedAnnualSalary(fullName)).willReturn(accumulatedSalary);
+
+        BigDecimal result = this.applicationService.findAccumulatedAnnualSalary(fullName);
+
+        assertThat(result)
+                .isNotNull()
+                .isEqualByComparingTo(accumulatedSalary);
+
+        verify(this.applicationPersistence, times(1)).findAccumulatedAnnualSalary(fullName);
     }
 }

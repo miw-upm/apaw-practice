@@ -19,7 +19,7 @@ public class ApplicationResource {
     public static final String ID_ID = "/{id}";
     public static final String MEETINGS = "/meetings";
     public static final String SEARCHES = "/searches";
-    public static final String ANNUALSALARY = "/annualsalary"; // First search: #1269
+    public static final String ANNUALSALARY = "/annualSalary"; // First search: #1269
 
     private final ApplicationService applicationService;
 
