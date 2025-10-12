@@ -31,7 +31,13 @@ public class ApplicationService {
         return this.applicationPersistence.update(application);
     }
 
-    public BigDecimal findAccumulatedAnnualSalary(String fullName) {
-        return this.applicationPersistence.findAccumulatedAnnualSalary(fullName);
+    // First search: 1269
+    public BigDecimal findAccumulatedAnnualSalaryByFullName(String fullName) {
+        return this.applicationPersistence.findAccumulatedAnnualSalaryByFullName(fullName);
+    }
+
+    // Second search: 1270
+    public List<String> findUniqueUrlsByPositionName(String name) {
+        return this.applicationPersistence.findUniqueUrlsByPositionName(name);
     }
 }

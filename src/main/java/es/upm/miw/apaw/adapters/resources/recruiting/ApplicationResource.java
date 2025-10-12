@@ -20,6 +20,7 @@ public class ApplicationResource {
     public static final String MEETINGS = "/meetings";
     public static final String SEARCHES = "/searches";
     public static final String ANNUALSALARY = "/annualSalary"; // First search: #1269
+    public static final String UNIQUEURLS = "/uniqueUrls";
 
     private final ApplicationService applicationService;
 
@@ -35,7 +36,13 @@ public class ApplicationResource {
 
     // First search: 1269
     @GetMapping(SEARCHES + ANNUALSALARY)
-    public BigDecimal findAccumulatedAnnualSalary(@RequestParam String fullName) {
-        return this.applicationService.findAccumulatedAnnualSalary(fullName);
+    public BigDecimal findAccumulatedAnnualSalaryByFullName(@RequestParam String fullName) {
+        return this.applicationService.findAccumulatedAnnualSalaryByFullName(fullName);
+    }
+
+    // Second search: 1270
+    @GetMapping(SEARCHES + UNIQUEURLS)
+    public List<String> findUniqueUrlsByPositionName(@RequestParam String name) {
+        return this.applicationService.findUniqueUrlsByPositionName(name);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Repository("applicationPersistence")
@@ -63,7 +64,7 @@ public class ApplicationPersistenceMongodb implements ApplicationPersistence {
 
     // Search 1 #1269
     @Override
-    public BigDecimal findAccumulatedAnnualSalary(String fullName) {
+    public BigDecimal findAccumulatedAnnualSalaryByFullName(String fullName) {
         List<ApplicationEntity> applications = applicationRepository.findAll();
 
         return applications.stream()
@@ -73,5 +74,19 @@ public class ApplicationPersistenceMongodb implements ApplicationPersistence {
                 .map(ApplicationEntity::getPositionEntity)
                 .map(PositionEntity::getAnnualSalary)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    // Search 2 #1270
+    @Override
+    public List<String> findUniqueUrlsByPositionName(String name) {
+        List<ApplicationEntity> applications = applicationRepository.findAll();
+
+        return applications.stream()
+                .filter(app -> app.getPositionEntity().getName().equalsIgnoreCase(name))
+                .flatMap(app -> app.getMeetingList().stream())
+                .map(MeetingEntity::getUrl)
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
     }
 }
