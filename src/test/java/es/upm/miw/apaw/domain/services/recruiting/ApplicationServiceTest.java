@@ -105,4 +105,28 @@ class ApplicationServiceTest {
         verify(this.applicationPersistence, times(1))
                 .findAccumulatedAnnualSalaryByFullName(fullName);
     }
+
+    // Testing Search 2 #1270
+
+    @Test
+    void testFindUniqueUrlsByPositionName() {
+        String name = "CPI consultant";
+        List<String> expectedUrls = List.of(
+                "//url-for-meeting-4",
+                "//url-for-meeting-5",
+                "//url-for-meeting-6"
+        );
+
+        BDDMockito.given(this.applicationPersistence.findUniqueUrlsByPositionName(name)).willReturn(expectedUrls);
+
+        List<String> result = this.applicationService.findUniqueUrlsByPositionName(name);
+
+        assertThat(result)
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(3)
+                .containsExactlyInAnyOrderElementsOf(expectedUrls);
+
+        verify(this.applicationPersistence, times(1)).findUniqueUrlsByPositionName(name);
+    }
 }
