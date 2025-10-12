@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.domain.services.fighters;
 
+import es.upm.miw.apaw.adapters.mongodb.fighters.daos.FighterRepository;
+import es.upm.miw.apaw.adapters.mongodb.fighters.entities.FighterEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.fighters.Fighter;
@@ -24,6 +26,10 @@ class FighterServiceIT {
 
     @Autowired
     private FighterService fighterService;
+
+    @Autowired
+    private FighterRepository fighterRepository;
+
     @MockitoBean
     private UserRestClient userRestClient;
 
@@ -59,6 +65,7 @@ class FighterServiceIT {
         assertThrows(NotFoundException.class, () -> this.fighterService.readByNickname("no-existe"));
     }
 
+    @Test
     void testCreateRating_ok() {
         BDDMockito.given(this.userRestClient.readById(any(UUID.class)))
                 .willAnswer(invocation ->
@@ -112,5 +119,27 @@ class FighterServiceIT {
 
         assertThrows(NotFoundException.class,
                 () -> this.fighterService.createRating("no-existe", toCreate));
+    }
+
+    @Test
+    void testDeleteRating() {
+        String nickname = "Spider";
+        UUID ratingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+
+        fighterService.deleteRatings(nickname, ratingId);
+
+        FighterEntity fighter = fighterRepository.findByNickname(nickname).orElseThrow();
+        boolean exists = fighter.getRatingsEntities() != null &&
+                fighter.getRatingsEntities().stream().anyMatch(r -> ratingId.equals(r.getId()));
+        assertThat(exists).isFalse();
+    }
+
+    @Test
+    void testDeleteRating_ratingNotFound() {
+        String nickname = "The Dragon";
+        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
+
+        assertThrows(NotFoundException.class,
+                () -> fighterService.deleteRatings(nickname, notExisting));
     }
 }
