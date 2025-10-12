@@ -10,5 +10,4 @@ import java.util.UUID;
 public interface ApplicationRepository extends MongoRepository<ApplicationEntity, UUID> {
     List<ApplicationEntity> findByStatus(Status status);
     List<ApplicationEntity> findByUser(UUID user);
-    List<ApplicationEntity> findAllByOrderByCreatedAsc();
 }

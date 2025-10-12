@@ -33,6 +33,12 @@ public class ApplicationPersistenceMongodb implements ApplicationPersistence {
     }
 
     @Override
+    public List<Application> readAll() {
+        return this.applicationRepository.findAll().stream()
+                .map(ApplicationEntity::toApplication).toList();
+    }
+
+    @Override
     public Application update(Application application) {
         ApplicationEntity applicationEntity = this.applicationRepository
                 .findById(application.getId())
@@ -55,6 +61,7 @@ public class ApplicationPersistenceMongodb implements ApplicationPersistence {
         return saved.toApplication();
     }
 
+    // Search 1 #1269
     @Override
     public BigDecimal findAccumulatedAnnualSalary(String fullName) {
         List<ApplicationEntity> applications = applicationRepository.findAll();

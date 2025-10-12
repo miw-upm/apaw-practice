@@ -1,7 +1,9 @@
 package es.upm.miw.apaw.domain.services.recruiting;
 
+import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
 import es.upm.miw.apaw.domain.models.recruiting.Meeting;
+import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
 import es.upm.miw.apaw.domain.persistenceports.recruiting.ApplicationPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class ApplicationService {
 
     public Application updateMeetings(UUID id, List<Meeting> meetingList) {
         Application application = this.applicationPersistence.readById(id);
+        if (application.getStatus() == Status.Rejected) {
+            throw new ConflictException("Cannot update meetings for a rejected application: " + id);
+        }
         application.setMeetingList(meetingList);
         return this.applicationPersistence.update(application);
     }

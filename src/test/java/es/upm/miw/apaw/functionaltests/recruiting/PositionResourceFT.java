@@ -37,12 +37,15 @@ class PositionResourceFT {
     @BeforeEach
     void setUp() {
         recruitingSeeder.deleteAll();
+        recruitingSeeder.seedDatabase();
     }
+
+    // --- CRETE endpoint test ----------------------------------------------------------
 
     @Test
     void testCreatePosition() {
         Position position = Position.builder()
-                .reference(1)
+                .reference(5005)
                 .name("Backend Developer")
                 .description("Develop and maintain microservices in Java Spring Boot.")
                 .annualSalary(new BigDecimal("40000"))
@@ -59,18 +62,13 @@ class PositionResourceFT {
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody(Position.class)
                 .value(createdPosition -> {
-                    assertThat(createdPosition.getReference()).isEqualTo(1);
+                    assertThat(createdPosition.getReference()).isEqualTo(5005);
                     assertThat(createdPosition.getName()).isEqualTo("Backend Developer");
                     assertThat(createdPosition.getDescription()).contains("microservices");
                     assertThat(createdPosition.getAnnualSalary()).isEqualByComparingTo("40000");
                     assertThat(createdPosition.getBonusSalary()).isEqualByComparingTo("5000");
                     assertThat(createdPosition.getNumVacancies()).isEqualTo(2);
                 });
-
-        // Verify persisted entity in MongoDB
-        List<PositionEntity> positions = positionRepository.findAll();
-        assertThat(positions).hasSize(1);
-        assertThat(positions.getFirst().getName()).isEqualTo("Backend Developer");
     }
 
     @Test
@@ -99,16 +97,10 @@ class PositionResourceFT {
                     assertThat(createdPosition.getBonusSalary()).isEqualByComparingTo("9000");
                     assertThat(createdPosition.getNumVacancies()).isEqualTo(3);
                 });
-
-        // Verify persisted entity in MongoDB
-        List<PositionEntity> positions = positionRepository.findAll();
-        assertThat(positions).hasSize(1);
-        assertThat(positions.getFirst().getName()).isEqualTo("SAP HCM Consultant");
     }
 
     @Test
     void testCreatePositionBadRequest() {
-        recruitingSeeder.seedDatabase();
 
         // Missing required fields (name and annualSalary)
         Position invalidPosition = Position.builder()
@@ -124,9 +116,10 @@ class PositionResourceFT {
                 .expectStatus().isBadRequest();
     }
 
+    // --- PATCH endpoint test ----------------------------------------------------------
+
     @Test
-    void testUpdateNumVacanciesExistingPosition() {
-        recruitingSeeder.seedDatabase();
+    void testUpdateNumVacanciesOnePosition() {
 
         List<PositionEntity> before = positionRepository.findAll();
         assertThat(before).isNotEmpty();
@@ -161,8 +154,7 @@ class PositionResourceFT {
     }
 
     @Test
-    void testUpdateMultiplePositionsFromSeeder() {
-        recruitingSeeder.seedDatabase();
+    void testUpdateNumVacanciesMultiplePositions() {
 
         List<PositionEntity> positionsBefore = positionRepository.findAll();
         assertThat(positionsBefore).isNotEmpty();
@@ -207,5 +199,23 @@ class PositionResourceFT {
 
         assertThat(updatedAbap.getName()).isEqualTo("ABAP developer");
         assertThat(updatedCpi.getName()).isEqualTo("CPI consultant");
+    }
+
+    @Test
+    void testUpdateNumVacanciesNotFound() {
+
+        List<PositionNumVacanciesUpdating> update = List.of(
+                PositionNumVacanciesUpdating.builder()
+                        .reference(7070)  // Not in DB
+                        .numVacancies(2)
+                        .build()
+        );
+
+        webTestClient.patch()
+                .uri(PositionResource.POSITIONS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(update)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

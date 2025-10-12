@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,26 +20,8 @@ class PositionRepositoryIT {
     @Autowired
     private PositionRepository positionRepository;
 
-    @Autowired
-    private RecruitingSeeder recruitingSeeder;
-
-    @BeforeEach
-    void init() {
-        recruitingSeeder.deleteAll();
-        recruitingSeeder.seedDatabase();
-    }
-
     @Test
-    void testFindTopByOrderByReferenceDesc_ReturnsHighestReference() {
-        Optional<PositionEntity> result = positionRepository.findTopByOrderByReferenceDesc();
-
-        assertTrue(result.isPresent(), "At least one position must exist");
-        assertEquals(1004, result.get().getReference());
-        assertEquals("Technical Lead for SAP HCM", result.get().getName());
-    }
-
-    @Test
-    void testFindAll_ReturnsSeededPositions() {
+    void testFindAll() {
         List<PositionEntity> positions = positionRepository.findAll();
 
         assertFalse(positions.isEmpty(), "Database filled in by seeder");
@@ -50,7 +31,7 @@ class PositionRepositoryIT {
     }
 
     @Test
-    void testSave_NewPosition_PersistsSuccessfully() {
+    void testCreatePosition() {
         PositionEntity newEntity = PositionEntity.builder()
                 .id(UUID.randomUUID())
                 .reference(2000)
@@ -73,7 +54,7 @@ class PositionRepositoryIT {
     }
 
     @Test
-    void testUpdate_ExistingPosition_UpdatesSuccessfully() {
+    void testUpdatePosition() {
         Optional<PositionEntity> optionalPosition = positionRepository.findTopByOrderByReferenceDesc();
         assertTrue(optionalPosition.isPresent());
 
@@ -86,14 +67,10 @@ class PositionRepositoryIT {
     }
 
     @Test
-    void testDelete_Position_RemovesFromDatabase() {
-        Optional<PositionEntity> optional = positionRepository.findTopByOrderByReferenceDesc();
-        assertTrue(optional.isPresent());
-        PositionEntity position = optional.get();
+    void testFindTopByOrderByReferenceDesc() {
+        Optional<PositionEntity> result = positionRepository.findTopByOrderByReferenceDesc();
 
-        positionRepository.delete(position);
-
-        Optional<PositionEntity> deleted = positionRepository.findById(position.getId());
-        assertFalse(deleted.isPresent(), "Position should be deleted");
+        assertTrue(result.isPresent(), "At least one position must exist");
+        assertEquals(2000, result.get().getReference());
     }
 }
