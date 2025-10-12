@@ -9,5 +9,5 @@ public interface FighterPersistence {
     Fighter readByNickname(String nickname);
     Rating createRating(String nickname, Rating rating);
     void deleteRating(String nickname, UUID id);
-    Fighter updateWins(String nickname, int wins);
+    Fighter updateWins(String nickname, Fighter wins);
 }

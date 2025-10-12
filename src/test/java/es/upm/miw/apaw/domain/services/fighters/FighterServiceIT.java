@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -145,20 +146,26 @@ class FighterServiceIT {
 
     @Test
     void testUpdateWins() {
-        Fighter updated = this.fighterService.updateWins("Spider", 77);
+        Fighter fighter = new Fighter();
+        fighter.setWins(77);
+        Fighter updated = this.fighterService.updateWins("Spider", fighter);
         assertThat(updated.getWins()).isEqualTo(77);
-        var fighter = this.fighterRepository.findByNickname("Spider")
+        var checkFighter = this.fighterRepository.findByNickname("Spider")
                 .orElseThrow(() -> new AssertionError("Spider no encontrado en BD"));
-        assertThat(fighter.getWins()).isEqualTo(77);
+        assertThat(checkFighter.getWins()).isEqualTo(77);
     }
 
     @Test
     void testUpdateWinsNotFound() {
-        assertThrows(NotFoundException.class, () -> this.fighterService.updateWins("NoExiste", 10));
+        Fighter fighter = new Fighter();
+        fighter.setWins(2);
+        assertThrows(NotFoundException.class, () -> this.fighterService.updateWins("NoExiste", fighter));
     }
 
     @Test
     void testUpdateWinsBadValue() {
-        assertThrows(IllegalArgumentException.class, () -> this.fighterService.updateWins("Spider", -5));
+        Fighter fighter = new Fighter();
+        fighter.setWins(-5);
+        assertThrows(ResponseStatusException.class, () -> this.fighterService.updateWins("Spider", fighter));
     }
 }
