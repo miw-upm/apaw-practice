@@ -56,4 +56,21 @@ class StudentIssueRepositoryIT {
         assertThat(found.getReplies()).extracting(IssueReplyEntity::getReason)
                 .containsExactlyInAnyOrder("Reply1", "Reply2");
     }
+
+    @Test
+    void testUpdateStudentIssueRepository() {
+        UUID id = UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0001");
+
+        StudentIssueEntity issue = studentIssueRepository.findById(id).orElseThrow();
+        issue.setStatement("Repo updated Problem2");
+        issue.setClosed(false);
+        issue.setUrgency(4);
+
+        studentIssueRepository.save(issue);
+
+        StudentIssueEntity updated = studentIssueRepository.findById(id).orElseThrow();
+        assertThat(updated.getStatement()).isEqualTo("Repo updated Problem2");
+        assertThat(updated.getClosed()).isFalse();
+        assertThat(updated.getUrgency()).isEqualTo(4);
+    }
 }

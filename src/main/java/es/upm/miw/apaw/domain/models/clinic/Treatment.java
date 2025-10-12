@@ -1,28 +1,22 @@
 package es.upm.miw.apaw.domain.models.clinic;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.math.BigDecimal;
-import java.util.UUID;
 
-@Data
-@NoArgsConstructor
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Treatment {
-    private UUID treatmentId;
+
+    // Clave de principal
+    private String treatmentCode;
+
+    // Atributos de Treatment
     private String procedureName;
     private BigDecimal totalCost;
 
-    private UUID diagnosisId;
-
-    public Treatment(String procedureName, BigDecimal totalCost, UUID diagnosisId) {
-        this.treatmentId = UUID.randomUUID();
-        this.procedureName = procedureName;
-        this.totalCost = totalCost;
-        this.diagnosisId = diagnosisId;
-    }
+    // Relación n..1 con Diagnosis
+    private String diagnosisCode;
 }
