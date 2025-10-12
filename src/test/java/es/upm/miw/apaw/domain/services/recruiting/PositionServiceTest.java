@@ -26,10 +26,10 @@ class PositionServiceTest {
     @MockitoBean
     private UserRestClient userRestClient;
 
-    // TESTS CREATE   ///////////////////////////////////////////////////////////////////
+    // --- CREATE testing ---------------------------------------------------------------
 
     @Test
-    void testCreatePosition_WithExplicitReference() {
+    void testCreateWithReference() {
         // Arrange
         Position newPosition = Position.builder()
                 .reference(2001)
@@ -51,7 +51,7 @@ class PositionServiceTest {
     }
 
     @Test
-    void testCreatePosition_WithoutReference() {
+    void testCreateWithoutReference() {
         // Arrange
         Position newPosition = Position.builder()
                 .name("SAP HCM Consultant")
@@ -71,10 +71,10 @@ class PositionServiceTest {
         assertEquals(3, created.getNumVacancies());
     }
 
-    // TESTS PATCH   ////////////////////////////////////////////////////////////////////
+    // --- PATCH testing ----------------------------------------------------------------
 
     @Test
-    void testUpdateNumVacancies_SinglePosition() {
+    void testPatchOnePosition() {
         // Arrange
         PositionNumVacanciesUpdating updateDTO = PositionNumVacanciesUpdating.builder()
                 .reference(1001)
@@ -84,14 +84,14 @@ class PositionServiceTest {
         // Act
         positionService.updateNumVacancies(Stream.of(updateDTO));
 
-        // Assert: leer la posición actualizada
+        // Assert
         Position updated = positionService.read(1001);
         assertEquals(6, updated.getNumVacancies());
         assertEquals("ABAP developer", updated.getName());
     }
 
     @Test
-    void testUpdateNumVacancies_MultiplePositions() {
+    void testPatchMultiplePositions() {
         // Arrange
         List<PositionNumVacanciesUpdating> updatesList = List.of(
                 PositionNumVacanciesUpdating.builder().reference(1001).numVacancies(5).build(),
@@ -101,7 +101,7 @@ class PositionServiceTest {
         // Act
         positionService.updateNumVacancies(updatesList.stream());
 
-        // Assert: leer posiciones actualizadas
+        // Assert
         Position updatedAbap = positionService.read(1001);
         Position updatedCpi = positionService.read(1002);
 
@@ -112,7 +112,7 @@ class PositionServiceTest {
     }
 
     @Test
-    void testUpdateNumVacancies_PositionNotFound() {
+    void testPatchPositionNotFound() {
         // Arrange
         PositionNumVacanciesUpdating updateDTO = PositionNumVacanciesUpdating.builder()
                 .reference(9999)
@@ -125,9 +125,32 @@ class PositionServiceTest {
         NotFoundException exception = assertThrows(NotFoundException.class, () ->
                 positionService.updateNumVacancies(updatesStream)
         );
-
         assertEquals(
                 "Not Found Exception (404). Position with reference 9999 not found",
+                exception.getMessage()
+        );
+    }
+
+    // --- READ testing -----------------------------------------------------------------
+
+    @Test
+    void testReadByReference() {
+
+        Position position = positionService.read(1004);
+
+        // Assert
+        assertEquals(1, position.getNumVacancies());
+        assertEquals("Technical Lead for SAP HCM", position.getName());
+    }
+
+    @Test
+    void testReadByReferenceNotFound() {
+        // Assert
+        NotFoundException exception = assertThrows(NotFoundException.class, () ->
+                positionService.read(90123)
+        );
+        assertEquals(
+                "Not Found Exception (404). Position with reference 90123 not found",
                 exception.getMessage()
         );
     }

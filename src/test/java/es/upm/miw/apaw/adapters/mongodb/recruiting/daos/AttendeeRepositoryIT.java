@@ -18,9 +18,6 @@ class AttendeeRepositoryIT {
     @Autowired
     private AttendeeRepository attendeeRepository;
 
-    @Autowired
-    private RecruitingSeeder recruitingSeeder;
-
     @Test
     void testFindByEmailAddress() {
         assertTrue(this.attendeeRepository.findByEmailAddress("markus.urbanietz@test.com").isPresent());
@@ -33,7 +30,7 @@ class AttendeeRepositoryIT {
 
     @Test
     void testDeleteByEmailAddress() {
-        String email = "markus.urbanietz@test.com";
+        String email = "javier.oliver@test.com";
 
         assertTrue(attendeeRepository.findByEmailAddress(email).isPresent());
         attendeeRepository.delete(attendeeRepository.findByEmailAddress(email).get());
