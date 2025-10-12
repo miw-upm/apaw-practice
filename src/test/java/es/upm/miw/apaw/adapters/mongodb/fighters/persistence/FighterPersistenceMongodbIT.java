@@ -91,7 +91,9 @@ class FighterPersistenceMongodbIT {
 
     @Test
     void testUpdateWinsOk() {
-        Fighter out = this.fighterPersistence.updateWins("Spider", 88);
+        Fighter fighter = new Fighter();
+        fighter.setWins(88);
+        Fighter out = this.fighterPersistence.updateWins("Spider", fighter);
         assertThat(out.getWins()).isEqualTo(88);
 
         Fighter reRead = this.fighterPersistence.readByNickname("Spider");
@@ -100,6 +102,7 @@ class FighterPersistenceMongodbIT {
 
     @Test
     void testUpdateWinsNotFound() {
-        assertThrows(NotFoundException.class, () -> this.fighterPersistence.updateWins("No Existe", 10));
+        Fighter fighter = new Fighter();
+        assertThrows(NotFoundException.class, () -> this.fighterPersistence.updateWins("No Existe", fighter));
     }
 }

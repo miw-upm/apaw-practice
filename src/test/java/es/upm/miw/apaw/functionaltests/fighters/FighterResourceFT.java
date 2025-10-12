@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.functionaltests.fighters;
 
 import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.models.fighters.Coach;
 import es.upm.miw.apaw.domain.models.fighters.Fighter;
 import es.upm.miw.apaw.domain.models.fighters.Rating;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
@@ -28,6 +29,7 @@ class FighterResourceFT {
     private WebTestClient webTestClient;
     @MockitoBean
     private UserRestClient userRestClient;
+
     private static UserDto user0FromSeeder() {
         return UserDto.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
@@ -190,38 +192,71 @@ class FighterResourceFT {
 
     @Test
     void testPatchWinsOk() {
-        int newWins = 99;
+        Coach coach = Coach.builder()
+                .fullName("Carlos Mendes")
+                .academy("Gracie Team")
+                .experienceYears(20)
+                .build();
+        Fighter fighter = Fighter.builder()
+                .nickname("Spider")
+                .name("Anderson")
+                .lastName("Silva")
+                .country("Brazil")
+                .weight(84.0)
+                .height(1.88)
+                .wins(99)
+                .losses(11)
+                .coach(coach)
+                .build();
 
         webTestClient.patch()
-                .uri(FIGHTERS + NICK_ID + WINS, "Spider")
+                .uri(FIGHTERS + NICK_ID, "Spider")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(newWins)
+                .bodyValue(fighter)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Fighter.class)
                 .value(f -> {
                     assertThat(f).isNotNull();
                     assertThat(f.getNickname()).isEqualTo("Spider");
-                    assertThat(f.getWins()).isEqualTo(newWins);
+                    assertThat(f.getWins()).isEqualTo(fighter.getWins());
                 });
     }
 
     @Test
     void testPatchWinsNotFound() {
+        Coach coach = Coach.builder()
+                .fullName("Carlos Mendes")
+                .academy("Gracie Team")
+                .experienceYears(20)
+                .build();
+        Fighter fighter = Fighter.builder()
+                .nickname("Spider")
+                .name("Anderson")
+                .lastName("Silva")
+                .country("Brazil")
+                .weight(84.0)
+                .height(1.88)
+                .wins(34)
+                .losses(11)
+                .coach(coach)
+                .build();
         webTestClient.patch()
-                .uri(FIGHTERS + NICK_ID + WINS, "No Existe")
+                .uri(FIGHTERS + NICK_ID, "No Existe")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(10)
+                .bodyValue(fighter)
                 .exchange()
                 .expectStatus().isNotFound();
     }
 
     @Test
     void testPatchWinsBadRequest() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(-1);
         webTestClient.patch()
-                .uri(FIGHTERS + NICK_ID + WINS, "Spider")
+                .uri(FIGHTERS + NICK_ID, "Spider")
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(-1)
+                .bodyValue(fighter)
                 .exchange()
                 .expectStatus().isBadRequest();
     }
