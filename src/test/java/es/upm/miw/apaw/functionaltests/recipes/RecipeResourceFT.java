@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.functionaltests.recipes;
 
 import es.upm.miw.apaw.adapters.resources.recipes.RecipeResource;
+import es.upm.miw.apaw.domain.models.recipes.Recipe;
 import es.upm.miw.apaw.domain.services.recipes.RecipeService;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -37,4 +38,31 @@ class RecipeResourceFT {
 
         BDDMockito.verify(recipeService).delete(referenceNumber);
     }
+
+    @Test
+    void testCreateRecipe() {
+        Recipe newRecipe = Recipe.builder()
+                .referenceNumber("8")
+                .title("Homemade Pancakes")
+                .instructions("Mix ingredients, cook on pan, and serve.")
+                .servings(6)
+                .build();
+
+        BDDMockito.given(this.recipeService.create(newRecipe)).willReturn(newRecipe);
+
+        webTestClient.post()
+                .uri(RecipeResource.RECIPES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(newRecipe)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.referenceNumber").isEqualTo("8")
+                .jsonPath("$.title").isEqualTo("Homemade Pancakes")
+                .jsonPath("$.servings").isEqualTo(6);
+
+        BDDMockito.verify(this.recipeService).create(newRecipe);
+    }
+
 }

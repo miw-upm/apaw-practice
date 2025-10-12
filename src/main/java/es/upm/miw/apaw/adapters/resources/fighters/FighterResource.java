@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 
 @RestController
 @RequestMapping(FighterResource.FIGHTERS)
@@ -16,6 +18,8 @@ public class FighterResource {
     public static final String FIGHTERS = "/fighters";
     public static final String NICK_ID = "/{nickname}";
     public static final String RATINGS = "/ratings";
+
+    public static final String RATING_ID = "/{ratingId}";
 
     private final FighterService fighterService;
 
@@ -34,5 +38,11 @@ public class FighterResource {
     public Rating createRating(@PathVariable String nickname,
                                @Valid @RequestBody Rating rating) {
         return this.fighterService.createRating(nickname, rating);
+    }
+
+    @DeleteMapping(NICK_ID + RATINGS + RATING_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteRatings(@PathVariable String nickname, @PathVariable UUID ratingId) {
+        this.fighterService.deleteRatings(nickname, ratingId);
     }
 }

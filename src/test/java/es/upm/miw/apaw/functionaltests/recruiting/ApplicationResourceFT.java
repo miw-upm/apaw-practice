@@ -1,10 +1,15 @@
 package es.upm.miw.apaw.functionaltests.recruiting;
 
+import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.resources.recruiting.ApplicationResource;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
 import es.upm.miw.apaw.domain.models.recruiting.Meeting;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,6 +33,15 @@ class ApplicationResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @Autowired
+    private RecruitingSeeder recruitingSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        recruitingSeeder.deleteAll();
+        recruitingSeeder.seedDatabase();
+    }
 
     // --- UPDATE endpoint test ---------------------------------------------------------
 
@@ -98,7 +113,7 @@ class ApplicationResourceFT {
     @Test
     void testUpdateMeetingsConflict() {
         // This Application is in status Rejected
-        UUID rejectedApplicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0033");
+        UUID rejectedApplicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0034");
 
         Meeting meeting = Meeting.builder()
                 .date(LocalDateTime.now().plusDays(1))
@@ -119,13 +134,19 @@ class ApplicationResourceFT {
 
     // --- SEARCHES endpoints test ------------------------------------------------------
 
-    // TEST Search #1
+    // Test Search 1 #1269
 
-    @Test
-    void testFindAccumulatedAnnualSalary() {
-        String fullName = "Markus Urbanietz";
-        BigDecimal expectedSalary = new BigDecimal("168000.00");
+    static Stream<Arguments> provideFullNamesAndSalaries() {
+        return Stream.of(
+                org.junit.jupiter.params.provider.Arguments.of("Markus Urbanietz", new BigDecimal("176000.00")),
+                org.junit.jupiter.params.provider.Arguments.of("Karolyn Sanz", new BigDecimal("0.00")),
+                org.junit.jupiter.params.provider.Arguments.of("NotAn Attendee", new BigDecimal("0.00"))
+        );
+    }
 
+    @ParameterizedTest(name = "Should return {1} as accumulated annual salary for {0}")
+    @MethodSource("provideFullNamesAndSalaries")
+    void testFindAccumulatedAnnualSalary(String fullName, BigDecimal expectedSalary) {
         webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path(ApplicationResource.APPLICATIONS + ApplicationResource.SEARCHES + ApplicationResource.ANNUALSALARY)
@@ -134,8 +155,62 @@ class ApplicationResourceFT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BigDecimal.class)
-                .value(salary -> {
-                    assertThat(salary).isEqualByComparingTo(expectedSalary);
+                .value(salary -> assertThat(salary).isEqualByComparingTo(expectedSalary));
+    }
+
+    // Test Search 2 #1270
+
+    @Test
+    void testFindUniqueURLByPositionName() {
+        String name = "Technical Lead for SAP HCM";
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApplicationResource.APPLICATIONS + ApplicationResource.SEARCHES + ApplicationResource.UNIQUEURLS)
+                        .queryParam("name", name)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(body -> {
+                    assertThat(body).isNotEmpty();
+                    String meet = body.getFirst();
+                    assertThat(meet).contains("//url-for-meeting-9");
+                    assertThat(meet).contains("//url-for-meeting-10");
+                });
+    }
+
+    @Test
+    void testFindUniqueURLByPositionNameNotMeetings() {
+        String name = "HCM Manager";
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApplicationResource.APPLICATIONS + ApplicationResource.SEARCHES + ApplicationResource.UNIQUEURLS)
+                        .queryParam("name", name)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(body -> {
+                    assertThat(body).contains("[]");
+                });
+    }
+
+    @Test
+    void testFindUniqueURLByPositionNameNotFound() {
+        String name = "PositionNotFound";
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApplicationResource.APPLICATIONS + ApplicationResource.SEARCHES + ApplicationResource.UNIQUEURLS)
+                        .queryParam("name", name)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(body -> {
+                    assertThat(body).contains("[]");
                 });
     }
 }

@@ -93,14 +93,40 @@ class ApplicationServiceTest {
         String fullName = "Iker Álvarez";
         BigDecimal accumulatedSalary = new BigDecimal("157000.00");
 
-        BDDMockito.given(this.applicationPersistence.findAccumulatedAnnualSalary(fullName)).willReturn(accumulatedSalary);
+        BDDMockito.given(this.applicationPersistence.findAccumulatedAnnualSalaryByFullName(fullName))
+                .willReturn(accumulatedSalary);
 
-        BigDecimal result = this.applicationService.findAccumulatedAnnualSalary(fullName);
+        BigDecimal result = this.applicationService.findAccumulatedAnnualSalaryByFullName(fullName);
 
         assertThat(result)
                 .isNotNull()
                 .isEqualByComparingTo(accumulatedSalary);
 
-        verify(this.applicationPersistence, times(1)).findAccumulatedAnnualSalary(fullName);
+        verify(this.applicationPersistence, times(1))
+                .findAccumulatedAnnualSalaryByFullName(fullName);
+    }
+
+    // Testing Search 2 #1270
+
+    @Test
+    void testFindUniqueUrlsByPositionName() {
+        String name = "CPI consultant";
+        List<String> expectedUrls = List.of(
+                "//url-for-meeting-4",
+                "//url-for-meeting-5",
+                "//url-for-meeting-6"
+        );
+
+        BDDMockito.given(this.applicationPersistence.findUniqueUrlsByPositionName(name)).willReturn(expectedUrls);
+
+        List<String> result = this.applicationService.findUniqueUrlsByPositionName(name);
+
+        assertThat(result)
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(3)
+                .containsExactlyInAnyOrderElementsOf(expectedUrls);
+
+        verify(this.applicationPersistence, times(1)).findUniqueUrlsByPositionName(name);
     }
 }

@@ -43,12 +43,12 @@ class PositionPersistenceMongodbIT {
 
         Position saved = positionPersistence.create(newPosition);
 
-        // Seeder created references from 1001 to 1004 → next must be 1005
-        assertThat(saved.getReference()).isEqualTo(1005);
+        // Seeder created references from 1001 to 1005 → next must be 1006
+        assertThat(saved.getReference()).isEqualTo(1006);
         assertThat(saved.getName()).isEqualTo("New Backend Developer");
 
         List<Position> allPositions = positionPersistence.readAll();
-        assertThat(allPositions).anyMatch(p -> p.getReference() == 1005 && p.getName().equals("New Backend Developer"));
+        assertThat(allPositions).anyMatch(p -> p.getReference() == 1006 && p.getName().equals("New Backend Developer"));
     }
 
     @Test

@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 class RecipeRepositoryIT {
 
     @MockBean
-    private RecipeRepository recipeRepository; // <-- mockeamos este bean
+    private RecipeRepository recipeRepository;
 
     private RecipeEntity recipe1;
     private RecipeEntity recipe2;

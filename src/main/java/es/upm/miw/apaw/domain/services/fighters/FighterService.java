@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class FighterService {
@@ -38,5 +39,9 @@ public class FighterService {
         Rating ratingDb = this.fighterPersistence.createRating(nickname, rating);
         ratingDb.setUser(userDto);
         return ratingDb;
+    }
+
+    public void deleteRatings(String nickname, UUID ratingId) {
+        this.fighterPersistence.deleteRating(nickname, ratingId);
     }
 }

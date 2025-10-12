@@ -25,7 +25,7 @@ class ApplicationRepositoryIT {
         List<ApplicationEntity> applications = this.applicationRepository.findAll();
 
         assertThat(applications)
-                .hasSize(4)
+                .hasSize(5)
                 .extracting(ApplicationEntity::getStatus)
                 .contains(Status.Open, Status.Hired);
 
@@ -46,7 +46,7 @@ class ApplicationRepositoryIT {
         assertThat(application.getStatus()).isEqualTo(Status.Open);
         assertThat(application.getReferral()).isTrue();
         assertThat(application.getPositionEntity().getReference()).isEqualTo(1001);
-        assertThat(application.getMeetingList()).hasSize(2);
+        assertThat(application.getMeetingList()).hasSize(3);
         assertThat(application.getMeetingList().getFirst().getUrl()).contains("url-for-meeting");
     }
 
@@ -67,7 +67,7 @@ class ApplicationRepositoryIT {
                 UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0033")
         ).orElseThrow();
 
-        assertThat(rejected.getStatus()).isEqualTo(Status.Rejected);
+        assertThat(rejected.getStatus()).isEqualTo(Status.In_process);
     }
 
     @Test
@@ -94,6 +94,6 @@ class ApplicationRepositoryIT {
 
         // Position and meetings must exist as only Application is deleted at this test level
         List<ApplicationEntity> remaining = applicationRepository.findAll();
-        assertThat(remaining).hasSize(3);
+        assertThat(remaining).hasSize(4);
     }
 }

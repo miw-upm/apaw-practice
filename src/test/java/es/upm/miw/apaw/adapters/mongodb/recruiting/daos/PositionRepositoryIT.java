@@ -25,7 +25,7 @@ class PositionRepositoryIT {
         List<PositionEntity> positions = positionRepository.findAll();
 
         assertFalse(positions.isEmpty(), "Database filled in by seeder");
-        assertEquals(4, positions.size(), "Position size");
+        assertEquals(5, positions.size(), "Position size");
 
         assertTrue(positions.stream().anyMatch(p -> p.getName().equals("ABAP developer")),"Position 'ABAP developer' must exists");
     }
