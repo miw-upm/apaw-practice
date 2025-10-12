@@ -142,4 +142,23 @@ class FighterServiceIT {
         assertThrows(NotFoundException.class,
                 () -> fighterService.deleteRatings(nickname, notExisting));
     }
+
+    @Test
+    void testUpdateWins() {
+        Fighter updated = this.fighterService.updateWins("Spider", 77);
+        assertThat(updated.getWins()).isEqualTo(77);
+        var fighter = this.fighterRepository.findByNickname("Spider")
+                .orElseThrow(() -> new AssertionError("Spider no encontrado en BD"));
+        assertThat(fighter.getWins()).isEqualTo(77);
+    }
+
+    @Test
+    void testUpdateWinsNotFound() {
+        assertThrows(NotFoundException.class, () -> this.fighterService.updateWins("NoExiste", 10));
+    }
+
+    @Test
+    void testUpdateWinsBadValue() {
+        assertThrows(IllegalArgumentException.class, () -> this.fighterService.updateWins("Spider", -5));
+    }
 }
