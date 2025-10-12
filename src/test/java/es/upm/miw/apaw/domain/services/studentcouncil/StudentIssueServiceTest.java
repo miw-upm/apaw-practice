@@ -46,7 +46,7 @@ class StudentIssueServiceTest {
 
     @Test
     void testUpdateStudentIssue() {
-        UUID id = UUID.randomUUID();
+        UUID id = UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0000");
         StudentIssue update = StudentIssue.builder()
                 .statement("Updated mock issue")
                 .closed(true)

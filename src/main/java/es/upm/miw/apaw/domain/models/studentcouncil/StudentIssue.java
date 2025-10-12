@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.models.studentcouncil;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -11,19 +12,21 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class StudentIssue {
 
-
+    @EqualsAndHashCode.Include
     private UUID id;
 
     @NotNull
+    @NotBlank
     private String statement;
-
 
     private LocalDateTime reportDate;
 
-
-    private Boolean closed;
+    @NotNull
+    @Builder.Default
+    private Boolean closed = false;
 
     @NotNull
     private Integer urgency;
