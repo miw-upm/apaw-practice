@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.fighters.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.fighters.entities.FighterEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,14 @@ class FighterRepositoryIT {
     @Autowired
     private FighterRepository fighterRepository;
 
+    @Autowired
+    private FightersSeeder fightersSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        fightersSeeder.deleteAll();
+        fightersSeeder.seedDatabase();
+    }
     @Test
     void testFindByNickname_ok() {
         Optional<FighterEntity> opt = this.fighterRepository.findByNickname("Spider");

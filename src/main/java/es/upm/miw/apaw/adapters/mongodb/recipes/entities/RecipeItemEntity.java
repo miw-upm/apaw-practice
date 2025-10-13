@@ -20,6 +20,10 @@ public class RecipeItemEntity {
     private String specifications;
     private Boolean optional;
 
+    public RecipeItemEntity(RecipeItem recipeItem) {
+        BeanUtils.copyProperties(recipeItem, this);
+    }
+
     public RecipeItem toRecipeItem() {
         RecipeItem recipeItem = new RecipeItem();
         BeanUtils.copyProperties(this, recipeItem, "ingredientEntity");

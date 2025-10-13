@@ -1,18 +1,14 @@
 package es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.videoWebsite.entities.*;
-import es.upm.miw.apaw.domain.models.videoWebsite.Video;
 import es.upm.miw.apaw.domain.models.videoWebsite.enums.AccountType;
 import es.upm.miw.apaw.domain.models.videoWebsite.enums.VideoStatus;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 

@@ -23,36 +23,35 @@ public class ProductItemPersistenceMongodb implements ProductItemPersistence {
 
     @Override
     public Stream<ProductItem> readAll() {
-        return this.productItemRepository.findAll().stream()
+        return this.productItemRepository
+                .findAll().stream()
                 .map(ProductItemEntity::toProductItem);
     }
 
     @Override
-    public ProductItem read(UUID id) {
-        return this.productItemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ProductItem id: " + id))
+    public ProductItem create(ProductItem productItem) {
+        return this.productItemRepository
+                .save(new ProductItemEntity(productItem))
                 .toProductItem();
     }
 
     @Override
-    public ProductItem create(ProductItem productItem) {
-        ProductItemEntity entity = new ProductItemEntity(productItem);
-        this.productItemRepository.save(entity);
-        return entity.toProductItem();
+    public ProductItem update(String barcode, ProductItem productItem) {
+        ProductItemEntity productItemEntity = this.productItemRepository
+                .findByBarcode(barcode)
+                .orElseThrow(() -> new NotFoundException("ProductItem barcode: " + barcode));
+        productItemEntity.fromProductItem(productItem);
+        return this.productItemRepository
+                .save(productItemEntity)
+                .toProductItem();
     }
 
     @Override
-    public ProductItem update(UUID id, ProductItem productItem) {
-        ProductItemEntity entity = this.productItemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ProductItem id: " + id));
-        entity.fromProductItem(productItem);
-        this.productItemRepository.save(entity);
-        return entity.toProductItem();
-    }
-
-    @Override
-    public void delete(UUID id) {
-        this.productItemRepository.deleteById(id);
+    public ProductItem read(String barcode) {
+        return this.productItemRepository
+                .findByBarcode(barcode)
+                .orElseThrow(() -> new NotFoundException("ProductItem not found: " + barcode))
+                .toProductItem();
     }
 
 }

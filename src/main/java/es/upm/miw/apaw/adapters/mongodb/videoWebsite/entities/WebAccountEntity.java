@@ -4,7 +4,6 @@ import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.videoWebsite.WatchList;
 import es.upm.miw.apaw.domain.models.videoWebsite.WebAccount;
 import es.upm.miw.apaw.domain.models.videoWebsite.enums.AccountType;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -12,7 +11,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
