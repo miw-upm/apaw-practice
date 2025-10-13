@@ -45,6 +45,9 @@ public class RepresentativePersistenceMongodb implements RepresentativePersisten
                 )
                 .map(rep -> {
                     UUID userId = rep.getRepresentativeId();
+                    if (userId == null) {
+                        return null;
+                    }
                     return userRestClient.readById(userId).getMobile();
                 })
                 .filter(Objects::nonNull)
