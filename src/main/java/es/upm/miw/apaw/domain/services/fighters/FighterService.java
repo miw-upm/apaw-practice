@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.fighters;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.fighters.Fighter;
+import es.upm.miw.apaw.domain.models.fighters.Coach;
 import es.upm.miw.apaw.domain.models.fighters.Rating;
 import es.upm.miw.apaw.domain.persistenceports.fighters.FighterPersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class FighterService {
@@ -51,5 +54,14 @@ public class FighterService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "wins must be >= 0");
         }
         return this.fighterPersistence.updateWins(nickname, wins);
+    }
+    public int findCoachExperienceYearsSumByRatingComment(String comment) {
+        return this.fighterPersistence.findByRatingComment(comment)
+                .map(Fighter::getCoach)
+                .filter(Objects::nonNull)
+                .filter(c -> c.getId() != null)
+                .distinct()
+                .mapToInt(Coach::getExperienceYears)
+                .sum();
     }
 }
