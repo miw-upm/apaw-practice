@@ -3,7 +3,10 @@ import es.upm.miw.apaw.domain.models.bank.BankAccount;
 import es.upm.miw.apaw.domain.models.bank.CreditCard;
 import es.upm.miw.apaw.domain.models.bank.Loan;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public interface BankAccountPersistence {
@@ -16,4 +19,6 @@ public interface BankAccountPersistence {
     List<Loan> applyANewLoanForABankAccount(String accountNumber, Loan loan);
     // PUT --> CreditCard
     CreditCard updateCreditCard(String accountNumber, CreditCard creditCard);
+    // Search 1
+    BigDecimal obtainTotalQuantity(UUID accountHolder);
 }

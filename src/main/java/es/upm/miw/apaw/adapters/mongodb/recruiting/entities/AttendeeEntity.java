@@ -35,4 +35,17 @@ public class AttendeeEntity {
                 .user(this.user != null ? UserDto.builder().id(this.user).build() : null)
                 .build();
     }
+
+    public static AttendeeEntity fromAttendee(Attendee attendee) {
+        if (attendee == null) {
+            return null;
+        }
+        return AttendeeEntity.builder()
+                .id(UUID.randomUUID())
+                .emailAddress(attendee.getEmailAddress())
+                .fullName(attendee.getFullName())
+                .phoneNumber(attendee.getPhoneNumber())
+                .user(attendee.getUser() != null ? attendee.getUser().getId() : null)
+                .build();
+    }
 }

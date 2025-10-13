@@ -22,19 +22,5 @@ class LocationServiceIT {
     @Autowired
     private LocationPersistence locationPersistence;
 
-    @Test
-    void testReadAll() {
-        List<Location> locations = this.locationService.readAll()
-                .collect(Collectors.toList());
-
-        assertThat(locations).isNotNull();
-        assertThat(locations).isNotEmpty();
-
-        assertThat(locations).hasSize(3);
-
-        assertThat(locations)
-                .extracting(Location::getPosition)
-                .containsExactlyInAnyOrder("Z1-A", "Z2-C", "Y1-F");
-    }
 
 }

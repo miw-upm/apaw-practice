@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.fighters.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.fighters.daos.FightersSeeder;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.fighters.Fighter;
@@ -20,7 +21,14 @@ class FighterPersistenceMongodbIT {
 
     @Autowired
     private FighterPersistenceMongodb fighterPersistence;
+    @Autowired
+    private FightersSeeder fightersSeeder;
 
+    @org.junit.jupiter.api.BeforeEach
+    void resetDb_persistence() {
+        fightersSeeder.deleteAll();
+        fightersSeeder.seedDatabase();
+    }
     @Test
     void testReadByNickname_ok() {
         Fighter fighter = this.fighterPersistence.readByNickname("Spider");
@@ -68,5 +76,57 @@ class FighterPersistenceMongodbIT {
 
         assertThrows(   NotFoundException.class,
                 () -> this.fighterPersistence.createRating("no-existe", rating));
+    }
+
+    @Test
+    void testDeleteRating_ok() {
+        String nickname = "Spider";
+        UUID ratingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+
+        fighterPersistence.deleteRating(nickname, ratingId);
+        Fighter fighter = fighterPersistence.readByNickname(nickname);
+        assertThat(fighter.getRatings().stream().anyMatch(r -> ratingId.equals(r.getId()))).isFalse();
+    }
+
+    @Test
+    void testDeleteRating_ratingNotFound() {
+        String nickname = "The Dragon";
+        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
+
+        assertThrows(NotFoundException.class,
+                () -> fighterPersistence.deleteRating(nickname, notExisting));
+    }
+
+
+    @Test
+    void testUpdateWinsOk() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(88);
+        Fighter out = this.fighterPersistence.updateWins("Spider", fighter);
+        assertThat(out.getWins()).isEqualTo(88);
+
+        Fighter reRead = this.fighterPersistence.readByNickname("Spider");
+        assertThat(reRead.getWins()).isEqualTo(88);
+    }
+
+    @Test
+    void testUpdateWinsNotFound() {
+        Fighter fighter = new Fighter();
+        assertThrows(NotFoundException.class, () -> this.fighterPersistence.updateWins("No Existe", fighter));
+    }
+    @Test
+    void testFindByRatingComment_ok_mapsToDomain() {
+        var nicknames = this.fighterPersistence.findByRatingComment("Incredible striking!")
+                .map(Fighter::getNickname)
+                .toList();
+        assertThat(nicknames).containsExactlyInAnyOrder("The Dragon", "Shadow", "The Eagle");
+    }
+
+    @Test
+    void testFindByRatingComment_notFound_emptyStream() {
+        var nicknames = this.fighterPersistence.findByRatingComment("does-not-exist")
+                .map(Fighter::getNickname)
+                .toList();
+        assertThat(nicknames).isEmpty();
     }
 }

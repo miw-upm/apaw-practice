@@ -17,6 +17,6 @@ public class WatchList {
     @NotBlank
     private String listName;
     private String description;
-    @NotNull
+
     private List<Video> savedVideos;
 }

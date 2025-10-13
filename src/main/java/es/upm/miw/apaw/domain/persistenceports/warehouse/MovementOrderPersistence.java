@@ -12,7 +12,6 @@ public interface MovementOrderPersistence {
     Stream<MovementOrder> readAll();
     MovementOrder read(UUID id);
     MovementOrder create(MovementOrder movementOrder);
-    MovementOrder update(UUID id, MovementOrder movementOrder);
-    void delete(UUID id);
+    MovementOrder update(MovementOrder movementOrder);
 
 }

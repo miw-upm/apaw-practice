@@ -43,4 +43,24 @@ class StudentIssueServiceTest {
 
         verify(studentIssuePersistence, times(1)).create(issue);
     }
+
+    @Test
+    void testUpdateStudentIssue() {
+        UUID id = UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0000");
+        StudentIssue update = StudentIssue.builder()
+                .statement("Updated mock issue")
+                .closed(true)
+                .urgency(5)
+                .build();
+
+        when(studentIssuePersistence.update(id, update)).thenReturn(update);
+
+        StudentIssue result = studentIssueService.updateStudentIssue(id, update);
+
+        assertThat(result.getStatement()).isEqualTo("Updated mock issue");
+        assertThat(result.getClosed()).isTrue();
+        assertThat(result.getUrgency()).isEqualTo(5);
+
+        verify(studentIssuePersistence).update(id, update);
+    }
 }

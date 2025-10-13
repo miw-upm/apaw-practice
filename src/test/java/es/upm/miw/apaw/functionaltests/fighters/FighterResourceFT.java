@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.functionaltests.fighters;
 
 import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.models.fighters.Coach;
 import es.upm.miw.apaw.domain.models.fighters.Fighter;
 import es.upm.miw.apaw.domain.models.fighters.Rating;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
@@ -24,11 +25,11 @@ import static org.mockito.ArgumentMatchers.any;
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
 class FighterResourceFT {
-
     @Autowired
     private WebTestClient webTestClient;
     @MockitoBean
     private UserRestClient userRestClient;
+
     private static UserDto user0FromSeeder() {
         return UserDto.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
@@ -36,7 +37,6 @@ class FighterResourceFT {
                 .firstName("user0")
                 .build();
     }
-
     @Test
     void testReadByNickname_ok() {
         webTestClient.get()
@@ -121,7 +121,7 @@ class FighterResourceFT {
         UserDto bodyUser = user0FromSeeder();
 
         Rating body = new Rating();
-        body.setScore(7); // > 5
+        body.setScore(7);
         body.setComment("fuera de rango");
         body.setUser(bodyUser);
 
@@ -155,6 +155,135 @@ class FighterResourceFT {
                 .bodyValue(body)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDeleteRating_whenExists_returns204_andRemoves() {
+        String nickname = "Spider";
+        UUID ratingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+
+        this.webTestClient.delete()
+                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, ratingId)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+
+    @Test
+    void testDeleteRating_whenNotExistsInFighter_returns404() {
+        String nickname = "The Dragon";
+        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
+
+        this.webTestClient.delete()
+                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, notExisting)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDeleteRating_whenFighterHasNoRatings_returns404() {
+        String nickname = "Iron";
+        UUID anyId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
+
+        this.webTestClient.delete()
+                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, anyId)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testPatchWinsOk() {
+        Coach coach = Coach.builder()
+                .fullName("Carlos Mendes")
+                .academy("Gracie Team")
+                .experienceYears(20)
+                .build();
+        Fighter fighter = Fighter.builder()
+                .nickname("Spider")
+                .name("Anderson")
+                .lastName("Silva")
+                .country("Brazil")
+                .weight(84.0)
+                .height(1.88)
+                .wins(99)
+                .losses(11)
+                .coach(coach)
+                .build();
+
+        webTestClient.patch()
+                .uri(FIGHTERS + NICK_ID, "Spider")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(fighter)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Fighter.class)
+                .value(f -> {
+                    assertThat(f).isNotNull();
+                    assertThat(f.getNickname()).isEqualTo("Spider");
+                    assertThat(f.getWins()).isEqualTo(fighter.getWins());
+                });
+    }
+
+    @Test
+    void testPatchWinsNotFound() {
+        Coach coach = Coach.builder()
+                .fullName("Carlos Mendes")
+                .academy("Gracie Team")
+                .experienceYears(20)
+                .build();
+        Fighter fighter = Fighter.builder()
+                .nickname("Spider")
+                .name("Anderson")
+                .lastName("Silva")
+                .country("Brazil")
+                .weight(84.0)
+                .height(1.88)
+                .wins(34)
+                .losses(11)
+                .coach(coach)
+                .build();
+        webTestClient.patch()
+                .uri(FIGHTERS + NICK_ID, "No Existe")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(fighter)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testPatchWinsBadRequest() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(-1);
+        webTestClient.patch()
+                .uri(FIGHTERS + NICK_ID, "Spider")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(fighter)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+    @Test
+    void testGetCoachExperienceSum_ok() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(FIGHTERS + "/coach-experience-sum")
+                        .queryParam("comment", "Incredible striking!")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.sum").isEqualTo(23);
+    }
+
+    @Test
+    void testGetCoachExperienceSum_zeroWhenNoMatches() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(FIGHTERS + "/coach-experience-sum")
+                        .queryParam("comment", "no such comment")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.sum").isEqualTo(0);
     }
 
 }

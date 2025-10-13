@@ -23,7 +23,7 @@ public class TastingSessionRepositoryIT {
     @Autowired
     private TastingSessionRepository tastingSessionRepository;
 
-    /*@Test
+    @Test
     void testRead() {
         assertTrue(this.tastingSessionRepository.findById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100")).isPresent());
         TastingSessionEntity tastingSession = this.tastingSessionRepository.findById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100")).get();
@@ -38,7 +38,7 @@ public class TastingSessionRepositoryIT {
                         UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")
                 );
         assertThat(tastingSession.getEvaluationEntities()).isNotEmpty();
-    }*/
+    }
 
     @Test
     void testUpdate() {

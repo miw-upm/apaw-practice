@@ -21,42 +21,36 @@ public class ProductItemPersistenceMongodbIT {
 
     @Test
     void testReadAll() {
-        List<ProductItem> items = this.productItemPersistence.readAll().toList();
-        assertThat(items).isNotEmpty();
+        List<ProductItem> productItems = this.productItemPersistence.readAll().toList();
+        assertThat(productItems).isNotEmpty();
+        assertThat(productItems)
+                .extracting(ProductItem::getBarcode)
+                .contains("PI-001", "PI-002", "PI-003");
     }
 
     @Test
-    void testReadById() {
-        UUID id = UUID.fromString("bbbb2222-3333-4444-5555-666677770001");
-        ProductItem productItem = this.productItemPersistence.read(id);
-        assertThat(productItem.getBarcode()).isEqualTo("PROD-9001");
-        assertThat(productItem.getAppoint()).contains("Motor hidráulico");
+    void testReadByBarcode() {
+        ProductItem productItem = this.productItemPersistence.read("PI-002");
+        assertThat(productItem.getBarcode()).isEqualTo("PI-002");
+        assertThat(productItem.getAppoint()).isEqualTo("Metal Bolt 15mm");
     }
 
     @Test
-    void testCreateAndDelete() {
-        ProductItem item = ProductItem.builder()
-                .id(UUID.randomUUID())
-                .barcode("TEST-ITEM")
-                .appoint("Pieza de prueba")
-                .cost(new BigDecimal("50.00"))
-                .unitOfMeasure("unit")
+    void testCreateAndUpdate() {
+        ProductItem newItem = ProductItem.builder()
+                .barcode("PI-999")
+                .appoint("Plastic Tube")
+                .cost(new BigDecimal("5.45"))
+                .unitOfMeasure("UNIT")
                 .build();
 
-        ProductItem created = this.productItemPersistence.create(item);
-        assertThat(created.getBarcode()).isEqualTo("TEST-ITEM");
+        ProductItem created = this.productItemPersistence.create(newItem);
+        assertThat(created.getBarcode()).isEqualTo("PI-999");
 
-        this.productItemPersistence.delete(created.getId());
-    }
-
-    @Test
-    void testUpdate() {
-        UUID id = UUID.fromString("bbbb2222-3333-4444-5555-666677770002");
-        ProductItem item = this.productItemPersistence.read(id);
-        item.setCost(new BigDecimal("199.99"));
-
-        ProductItem updated = this.productItemPersistence.update(id, item);
-        assertThat(updated.getCost()).isEqualByComparingTo(new BigDecimal("199.99"));
+        // Actualización
+        created.setCost(new BigDecimal("6.50"));
+        ProductItem updated = this.productItemPersistence.update("PI-999", created);
+        assertThat(updated.getCost()).isEqualByComparingTo("6.50");
     }
 
 }

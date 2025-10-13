@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.domain.services.fighters;
 
+import es.upm.miw.apaw.adapters.mongodb.fighters.daos.FighterRepository;
+import es.upm.miw.apaw.adapters.mongodb.fighters.entities.FighterEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.fighters.Fighter;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -24,6 +27,10 @@ class FighterServiceIT {
 
     @Autowired
     private FighterService fighterService;
+
+    @Autowired
+    private FighterRepository fighterRepository;
+
     @MockitoBean
     private UserRestClient userRestClient;
 
@@ -59,7 +66,7 @@ class FighterServiceIT {
         assertThrows(NotFoundException.class, () -> this.fighterService.readByNickname("no-existe"));
     }
 
-    // @Test  //Este test falla porque hay que utilizar mockbean para el acceso a apaw-user
+    @Test
     void testCreateRating_ok() {
         BDDMockito.given(this.userRestClient.readById(any(UUID.class)))
                 .willAnswer(invocation ->
@@ -113,5 +120,61 @@ class FighterServiceIT {
 
         assertThrows(NotFoundException.class,
                 () -> this.fighterService.createRating("no-existe", toCreate));
+    }
+
+    @Test
+    void testDeleteRating() {
+        String nickname = "Spider";
+        UUID ratingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+
+        fighterService.deleteRatings(nickname, ratingId);
+
+        FighterEntity fighter = fighterRepository.findByNickname(nickname).orElseThrow();
+        boolean exists = fighter.getRatingsEntities() != null &&
+                fighter.getRatingsEntities().stream().anyMatch(r -> ratingId.equals(r.getId()));
+        assertThat(exists).isFalse();
+    }
+
+    @Test
+    void testDeleteRating_ratingNotFound() {
+        String nickname = "The Dragon";
+        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
+
+        assertThrows(NotFoundException.class,
+                () -> fighterService.deleteRatings(nickname, notExisting));
+    }
+
+    @Test
+    void testUpdateWins() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(77);
+        Fighter updated = this.fighterService.updateWins("Spider", fighter);
+        assertThat(updated.getWins()).isEqualTo(77);
+        var checkFighter = this.fighterRepository.findByNickname("Spider")
+                .orElseThrow(() -> new AssertionError("Spider no encontrado en BD"));
+        assertThat(checkFighter.getWins()).isEqualTo(77);
+    }
+
+    @Test
+    void testUpdateWinsNotFound() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(2);
+        assertThrows(NotFoundException.class, () -> this.fighterService.updateWins("NoExiste", fighter));
+    }
+    @Test
+    void testUpdateWinsBadValue() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(-5);
+        assertThrows(ResponseStatusException.class, () -> this.fighterService.updateWins("Spider", fighter));
+    }
+    @Test
+    void testFindCoachExperienceYearsSumByRatingComment_incredibleStriking_distinctOk() {
+        int sum = this.fighterService.findCoachExperienceYearsSumByRatingComment("Incredible striking!");
+        assertThat(sum).isEqualTo(23);
+    }
+    @Test
+    void testFindCoachExperienceYearsSumByRatingComment_notFound_zero() {
+        int sum = this.fighterService.findCoachExperienceYearsSumByRatingComment("no such comment");
+        assertThat(sum).isZero();
     }
 }

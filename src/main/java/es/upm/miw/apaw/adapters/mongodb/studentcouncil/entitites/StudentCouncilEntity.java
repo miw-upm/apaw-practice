@@ -19,6 +19,7 @@ import java.util.UUID;
 public class StudentCouncilEntity {
 
     @Id
+    @EqualsAndHashCode.Include
     private UUID id;
 
     private String council;
