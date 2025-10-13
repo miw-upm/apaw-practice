@@ -18,7 +18,6 @@ public class FighterResource {
     public static final String FIGHTERS = "/fighters";
     public static final String NICK_ID = "/{nickname}";
     public static final String RATINGS = "/ratings";
-
     public static final String RATING_ID = "/{ratingId}";
 
     private final FighterService fighterService;
@@ -44,5 +43,10 @@ public class FighterResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteRatings(@PathVariable String nickname, @PathVariable UUID ratingId) {
         this.fighterService.deleteRatings(nickname, ratingId);
+    }
+
+    @PatchMapping(NICK_ID)
+    public Fighter updateWins(@PathVariable String nickname, @Valid @RequestBody Fighter wins) {
+        return this.fighterService.updateWins(nickname, wins);
     }
 }

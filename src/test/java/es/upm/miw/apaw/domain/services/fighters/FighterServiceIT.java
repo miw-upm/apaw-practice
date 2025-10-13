@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -141,5 +142,30 @@ class FighterServiceIT {
 
         assertThrows(NotFoundException.class,
                 () -> fighterService.deleteRatings(nickname, notExisting));
+    }
+
+    @Test
+    void testUpdateWins() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(77);
+        Fighter updated = this.fighterService.updateWins("Spider", fighter);
+        assertThat(updated.getWins()).isEqualTo(77);
+        var checkFighter = this.fighterRepository.findByNickname("Spider")
+                .orElseThrow(() -> new AssertionError("Spider no encontrado en BD"));
+        assertThat(checkFighter.getWins()).isEqualTo(77);
+    }
+
+    @Test
+    void testUpdateWinsNotFound() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(2);
+        assertThrows(NotFoundException.class, () -> this.fighterService.updateWins("NoExiste", fighter));
+    }
+
+    @Test
+    void testUpdateWinsBadValue() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(-5);
+        assertThrows(ResponseStatusException.class, () -> this.fighterService.updateWins("Spider", fighter));
     }
 }
