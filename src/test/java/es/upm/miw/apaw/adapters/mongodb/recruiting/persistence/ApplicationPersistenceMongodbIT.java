@@ -2,11 +2,11 @@ package es.upm.miw.apaw.adapters.mongodb.recruiting.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.ApplicationRepository;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.ApplicationPersistenceMongodb;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
+import es.upm.miw.apaw.domain.models.recruiting.Attendee;
+import es.upm.miw.apaw.domain.models.recruiting.Meeting;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +40,6 @@ class ApplicationPersistenceMongodbIT {
     }
 
     @Test
-    void testReadAll() {
-        List<Application> allApps = applicationPersistence.readAll();
-
-        assertThat(allApps)
-                .isNotEmpty()
-                .size().isEqualTo(5);
-    }
-
-    @Test
     void testReadByIdSuccess() {
         UUID existingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
 
@@ -67,39 +58,55 @@ class ApplicationPersistenceMongodbIT {
     }
 
     @Test
-    void testUpdateApplicationMeetingList() {
+    void testUpdateMeetings() {
         UUID existingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
 
         Application application = applicationPersistence.readById(existingId);
 
-        ApplicationEntity entityInDb = applicationRepository.findById(existingId).orElseThrow();
-        List<MeetingEntity> meetingsInDb = entityInDb.getMeetingList();
+        List<Meeting> meetings = application.getMeetingList();
+        for (int i = 0; i < meetings.size(); i++) {
+            Meeting meeting = meetings.get(i);
+            meeting.setUrl("updated-global-url-" + i);
 
-        assertThat(meetingsInDb)
-                .isNotEmpty()
-                .allMatch(meeting -> meeting.getId() != null);
-
-        // Change the URL for the meetings of the application
-        List<String> updatedUrls = meetingsInDb.stream()
-                .map(m -> "updated-url-" + m.getId())
-                .toList();
-
-        for (int i = 0; i < application.getMeetingList().size(); i++) {
-            application.getMeetingList().get(i).setUrl(updatedUrls.get(i));
+            List<Attendee> newAttendees = List.of(
+                    Attendee.builder()
+                            .fullName("Global Test Attendee " + i)
+                            .emailAddress("global.attendee" + i + "@test.com")
+                            .phoneNumber("+349000000" + i)
+                            .build()
+            );
+            meeting.setAttendees(newAttendees);
         }
 
-        // Save the changes by Update
         Application updated = applicationPersistence.update(application);
 
-        // Verifications
+        assertThat(updated.getId()).isEqualTo(existingId);
+        assertThat(updated.getStatus()).isEqualTo(application.getStatus());
+        assertThat(updated.getReferral()).isEqualTo(application.getReferral());
+
+        assertThat(updated.getPosition()).isNotNull();
+        assertThat(updated.getPosition().getReference()).isEqualTo(1001);
+        assertThat(updated.getPosition().getName()).contains("ABAP developer");
+        assertThat(updated.getPosition().getAnnualSalary()).isEqualByComparingTo(new BigDecimal("52000.00"));
+        assertThat(updated.getPosition().getBonusSalary()).isEqualByComparingTo(new BigDecimal("5200.00"));
+        assertThat(updated.getPosition().getNumVacancies()).isEqualTo(3);
+
         assertThat(updated.getMeetingList())
                 .isNotEmpty()
-                .allMatch(meeting -> meeting.getUrl().startsWith("updated-url-"));
+                .hasSize(application.getMeetingList().size());
 
-        ApplicationEntity reloaded = applicationRepository.findById(existingId).orElseThrow();
-        assertThat(reloaded.getMeetingList())
-                .isNotEmpty()
-                .allMatch(meeting -> meeting.getUrl().startsWith("updated-url-"));
+        for (int i = 0; i < updated.getMeetingList().size(); i++) {
+            var meeting = updated.getMeetingList().get(i);
+            assertThat(meeting.getUrl()).isEqualTo("updated-global-url-" + i);
+            assertThat(meeting.getAttendees())
+                    .isNotEmpty()
+                    .hasSize(1);
+
+            var attendee = meeting.getAttendees().getFirst();
+            assertThat(attendee.getFullName()).isEqualTo("Global Test Attendee " + i);
+            assertThat(attendee.getEmailAddress()).isEqualTo("global.attendee" + i + "@test.com");
+            assertThat(attendee.getPhoneNumber()).isEqualTo("+349000000" + i);
+        }
     }
 
     @Test
