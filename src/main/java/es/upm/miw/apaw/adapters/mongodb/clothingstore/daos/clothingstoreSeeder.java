@@ -29,12 +29,8 @@ public class clothingstoreSeeder {
         this.storeRepository = storeRepository;
     }
 
-    /** 在 DatabaseSeeder.reSeedDatabase() 中会先 deleteAll() 再调用本方法
-     *  因此这里不再判断 count()==0，直接插入固定基线数据 */
     public void seedDatabase() {
         log.warn("------- Clothingstore Initial Load -----------");
-
-        // 1) 先插入 Garment（固定两条，便于 FT/IT 用宽区间查到）
         GarmentEntity g1 = GarmentEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001"))
                 .size("M")
@@ -50,8 +46,6 @@ public class clothingstoreSeeder {
                 .build();
 
         this.garmentRepository.saveAll(List.of(g1, g2));
-
-        // 2) 为门店构造一个包含订单与发票的示例（弱连接引用上面的 garments）
         List<GarmentEntity> garments = this.garmentRepository.findAll();
 
         InvoiceEntity invoice = InvoiceEntity.builder()
@@ -85,8 +79,6 @@ public class clothingstoreSeeder {
 
         log.warn("------- Clothingstore Initial Load Completed -----------");
     }
-
-    /** 先删 Store（嵌入了 Order/Invoice），再删 Garment（被 Store 的弱连接引用） */
     public void deleteAll() {
         this.storeRepository.deleteAll();
         this.garmentRepository.deleteAll();

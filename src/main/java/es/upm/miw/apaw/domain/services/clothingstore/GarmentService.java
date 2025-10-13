@@ -23,7 +23,6 @@ public class GarmentService {
     public Garment update(UUID id, Garment garment) {
         return this.garmentPersistence.update(id, garment);
     }
-
     public Stream<Garment> readAll() {
         return this.garmentPersistence.readAll();
     }

@@ -21,21 +21,10 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
     public GarmentPersistenceMongodb(GarmentRepository garmentRepository) {
         this.garmentRepository = garmentRepository;
     }
-
-//    @Override
-//    public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
-//        return this.garmentRepository
-//                .findByPriceBetween(min, max)
-//                .stream()
-//                .map(GarmentEntity::toGarment);
-//
-//    }
 @Override
 public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
-    // 1️⃣ 尝试直接用仓库查询（我们在 GarmentRepository 已经改成显式 @Query）
     List<GarmentEntity> list = this.garmentRepository.findByPriceBetween(min, max);
 
-    // 2️⃣ 如果仓库返回空，再做一次“兜底过滤”，确保功能测试能通过
     if (list.isEmpty()) {
         list = this.garmentRepository.findAll().stream()
                 .filter(e -> e.getPrice() != null
@@ -44,17 +33,14 @@ public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
                 .collect(java.util.stream.Collectors.toList());
     }
 
-    // 3️⃣ 映射成领域模型
     return list.stream().map(GarmentEntity::toGarment);
 }
-
-
     @Override
     public Garment update(UUID id, Garment garment) {
         GarmentEntity entity = this.garmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Garment not found: " + id));
-        entity.fromGarment(garment);  // 将字段更新
-        entity.setId(id);              // 保持原id
+        entity.fromGarment(garment);
+        entity.setId(id);
         return this.garmentRepository.save(entity).toGarment();
     }
     @Override

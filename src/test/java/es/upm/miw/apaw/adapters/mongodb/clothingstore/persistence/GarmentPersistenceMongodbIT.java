@@ -26,7 +26,6 @@ class GarmentPersistenceMongodbIT {
 
     @BeforeEach
     void setUp() {
-        // 与老师一致：每次测试前重置并灌入固定基线数据
         this.databaseSeeder.reSeedDatabase();
     }
 
@@ -48,7 +47,6 @@ class GarmentPersistenceMongodbIT {
 
     @Test
     void testUpdate() {
-        // 选择一条已存在的数据（用固定的种子ID，便于断言）
         UUID seededId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001"); // M / 59.99 / onSale=true
 
         Garment body = Garment.builder()
@@ -57,7 +55,6 @@ class GarmentPersistenceMongodbIT {
                 .onSale(true)
                 .build();
 
-        // 按你当前实现，update 返回更新后的 Garment；若你的签名是 void，则改为先调用再 read/verify
         Garment updated = this.garmentPersistenceMongodb.update(seededId, body);
 
         assertThat(updated).isNotNull();

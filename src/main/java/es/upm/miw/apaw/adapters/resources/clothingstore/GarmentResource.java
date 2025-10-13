@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 @RequestMapping(GarmentResource.GARMENTS)
 public class GarmentResource {
 
-    /** 路径常量（FT 里也用它） */
     public static final String GARMENTS = "/clothingstore/garments";
 
     private final GarmentService garmentService;
@@ -33,11 +32,9 @@ public class GarmentResource {
         return this.garmentService.readAll();
     }
 
-    /** GET /clothingstore/garments?min=50&max=100 */
     @GetMapping
     public Stream<Garment> findByPriceBetween(@RequestParam BigDecimal min,
                                               @RequestParam BigDecimal max) {
-        // 只做查询，不做 400 校验
         System.out.println("[DEBUG] /garments?min=" + min + "&max=" + max);
 
         return this.garmentService.findByPriceBetween(min, max);
