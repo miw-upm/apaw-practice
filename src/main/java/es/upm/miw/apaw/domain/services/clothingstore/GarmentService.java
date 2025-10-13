@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.stream.Stream;
+import java.util.UUID;
 
 @Service
 public class GarmentService {
@@ -18,6 +19,13 @@ public class GarmentService {
 
     public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
         return this.garmentPersistence.findByPriceBetween(min, max);
+    }
+    public Garment update(UUID id, Garment garment) {
+        return this.garmentPersistence.update(id, garment);
+    }
+
+    public Stream<Garment> readAll() {
+        return this.garmentPersistence.readAll();
     }
 }
 

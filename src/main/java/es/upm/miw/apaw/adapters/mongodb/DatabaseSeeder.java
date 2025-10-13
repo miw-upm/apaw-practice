@@ -16,6 +16,7 @@ import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.WarehouseSeeder;
 
 
+import io.micrometer.core.instrument.Counter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -98,6 +99,7 @@ public class DatabaseSeeder {
         this.bankSeeder.seedDatabase();
         this.recipesSeeder.seedDatabase();
         this.warehouseSeeder.seedDatabase();
+
     }
 
     public void deleteAll() {
