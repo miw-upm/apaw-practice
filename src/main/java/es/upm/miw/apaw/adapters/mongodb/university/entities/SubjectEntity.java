@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.university.entities;
 
-import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.models.university.Subject;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
