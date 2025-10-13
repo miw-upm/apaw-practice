@@ -102,4 +102,10 @@ class BankAccountPersistenceMongodbIT {
         bankSeeder.deleteAll();
         bankSeeder.seedDatabase();
     }
+
+    @Test
+    void testObtainTotalQuantity(){
+        UUID accountHolder = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
+        assertEquals(new BigDecimal("100000"),this.bankAccountPersistenceMongodb.obtainTotalQuantity(accountHolder));
+    }
 }
