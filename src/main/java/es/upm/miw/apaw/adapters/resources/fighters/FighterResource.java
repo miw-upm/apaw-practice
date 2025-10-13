@@ -19,9 +19,8 @@ public class FighterResource {
     public static final String NICK_ID = "/{nickname}";
     public static final String RATINGS = "/ratings";
     public static final String RATING_ID = "/{ratingId}";
-
     private final FighterService fighterService;
-
+    public record SumDto(Integer sum) {}
     @Autowired
     public FighterResource(FighterService fighterService) {
         this.fighterService = fighterService;
@@ -48,5 +47,11 @@ public class FighterResource {
     @PatchMapping(NICK_ID)
     public Fighter updateWins(@PathVariable String nickname, @Valid @RequestBody Fighter wins) {
         return this.fighterService.updateWins(nickname, wins);
+    }
+
+    @GetMapping("/coach-experience-sum")
+    public SumDto findCoachExperienceYearsSumByRatingComment(@RequestParam String comment) {
+        int sum = this.fighterService.findCoachExperienceYearsSumByRatingComment(comment);
+        return new SumDto(sum);
     }
 }

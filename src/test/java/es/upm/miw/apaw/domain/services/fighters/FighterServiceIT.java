@@ -161,11 +161,20 @@ class FighterServiceIT {
         fighter.setWins(2);
         assertThrows(NotFoundException.class, () -> this.fighterService.updateWins("NoExiste", fighter));
     }
-
     @Test
     void testUpdateWinsBadValue() {
         Fighter fighter = new Fighter();
         fighter.setWins(-5);
         assertThrows(ResponseStatusException.class, () -> this.fighterService.updateWins("Spider", fighter));
+    }
+    @Test
+    void testFindCoachExperienceYearsSumByRatingComment_incredibleStriking_distinctOk() {
+        int sum = this.fighterService.findCoachExperienceYearsSumByRatingComment("Incredible striking!");
+        assertThat(sum).isEqualTo(23);
+    }
+    @Test
+    void testFindCoachExperienceYearsSumByRatingComment_notFound_zero() {
+        int sum = this.fighterService.findCoachExperienceYearsSumByRatingComment("no such comment");
+        assertThat(sum).isZero();
     }
 }
