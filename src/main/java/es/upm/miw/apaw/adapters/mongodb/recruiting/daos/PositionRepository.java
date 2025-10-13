@@ -7,6 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PositionRepository extends MongoRepository<PositionEntity, UUID> {
-
     Optional<PositionEntity> findTopByOrderByReferenceDesc();
 }

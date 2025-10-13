@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Builder
@@ -34,7 +35,8 @@ public class BankAccountEntity {
     public BankAccount toBankAccount() {
         BankAccount bankAccount = new BankAccount();
         BeanUtils.copyProperties(this, bankAccount, "accountHolders", "loansApplied","creditCardAssociated");
-        List<Loan> loans = this.loansApplied
+       List<Loan> loans = Optional.ofNullable(this.loansApplied)
+                .orElse(List.of())
                 .stream()
                 .map(LoanEntity::toLoan)
                 .toList();

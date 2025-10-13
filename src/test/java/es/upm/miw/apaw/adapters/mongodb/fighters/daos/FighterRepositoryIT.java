@@ -44,4 +44,17 @@ class FighterRepositoryIT {
     void testFindByNickname_notFound() {
         assertThat(this.fighterRepository.findByNickname("no-existe")).isEmpty();
     }
+    @Test
+    void testFindByRatingsEntitiesComment_ok_multipleFighters() {
+        var list = this.fighterRepository.findByRatingsEntitiesComment("Incredible striking!");
+        assertThat(list)
+                .extracting(FighterEntity::getNickname)
+                .containsExactlyInAnyOrder("The Dragon", "Shadow", "The Eagle"); // con rating6
+    }
+
+    @Test
+    void testFindByRatingsEntitiesComment_notFound_returnsEmpty() {
+        var list = this.fighterRepository.findByRatingsEntitiesComment("no-such-comment");
+        assertThat(list).isEmpty();
+    }
 }

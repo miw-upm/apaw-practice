@@ -182,6 +182,13 @@ public class FightersSeeder {
                 .createdAt(LocalDateTime.now().minusDays(3))
                 .userId(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1004"))
                 .build();
+        RatingEntity rating6 = RatingEntity.builder()
+                .id(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0105"))
+                .score(5)
+                .comment("Incredible striking!")
+                .createdAt(LocalDateTime.now().minusHours(6))
+                .userId(u("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1005"))
+                .build();
 
         // ==== FIGHTERS ====
         FighterEntity fighter1 = FighterEntity.builder()
@@ -255,8 +262,8 @@ public class FightersSeeder {
                 .losses(0)
                 .country("Russia")
                 .coach(coach5)
-                .martialArtsEntities(List.of(mma, bjj, karate)) // 3 artes
-                .ratingsEntities(List.of(rating1, rating5))
+                .martialArtsEntities(List.of(mma, bjj, karate))
+                .ratingsEntities(List.of(rating1, rating5, rating6))
                 .build();
 
         FighterEntity fighter6 = FighterEntity.builder()

@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.recruiting;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
+import es.upm.miw.apaw.domain.models.recruiting.Attendee;
 import es.upm.miw.apaw.domain.models.recruiting.Meeting;
 import es.upm.miw.apaw.domain.models.recruiting.Position;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
@@ -54,6 +55,7 @@ class ApplicationServiceTest {
                         .bonusSalary(new BigDecimal("5200.00"))
                         .numVacancies(3)
                         .build())
+                .meetingList(List.of())
                 .build();
 
         BDDMockito.given(this.applicationPersistence.readById(applicationId)).willReturn(application);
@@ -62,10 +64,34 @@ class ApplicationServiceTest {
                 Meeting.builder()
                         .date(LocalDateTime.of(2025, 10, 20, 9, 0))
                         .url("https://meet.company.com/new-meeting-1")
+                        .attendees(List.of(
+                                Attendee.builder()
+                                        .emailAddress("alice.johnson@test.com")
+                                        .fullName("Alice Johnson")
+                                        .phoneNumber("+34600111222")
+                                        .build(),
+                                Attendee.builder()
+                                        .emailAddress("alvaro.zamarro@test.com")
+                                        .fullName("Álvaro Zamarro")
+                                        .phoneNumber("+34612333444")
+                                        .build()
+                        ))
                         .build(),
                 Meeting.builder()
                         .date(LocalDateTime.of(2025, 10, 21, 11, 30))
                         .url("https://meet.company.com/new-meeting-2")
+                        .attendees(List.of(
+                                Attendee.builder()
+                                        .emailAddress("tarek.awwad@test.com")
+                                        .fullName("Tarek Awwad")
+                                        .phoneNumber("+41676768919")
+                                        .build(),
+                                Attendee.builder()
+                                        .emailAddress("micha.riechert@test.com")
+                                        .fullName("Micha Riechert")
+                                        .phoneNumber("+43699129878")
+                                        .build()
+                        ))
                         .build()
         );
 
@@ -80,6 +106,48 @@ class ApplicationServiceTest {
         assertThat(updated.getMeetingList().getFirst().getUrl())
                 .isEqualTo("https://meet.company.com/new-meeting-1");
         assertThat(updated.getPosition().getName()).isEqualTo("ABAP developer");
+
+        // Meetings assertions
+        assertThat(updated.getMeetingList())
+                .isNotNull()
+                .hasSize(2);
+
+        // Meeting 1
+        Meeting meeting1 = updated.getMeetingList().get(0);
+        assertThat(meeting1.getUrl()).isEqualTo("https://meet.company.com/new-meeting-1");
+        assertThat(meeting1.getDate()).isEqualTo(LocalDateTime.of(2025, 10, 20, 9, 0));
+        assertThat(meeting1.getAttendees())
+                .isNotNull()
+                .hasSize(2)
+                .extracting(Attendee::getEmailAddress)
+                .containsExactly("alice.johnson@test.com", "alvaro.zamarro@test.com");
+
+        // Meeting 1 - individual attendee checks
+        Attendee attendee1 = meeting1.getAttendees().getFirst();
+        assertThat(attendee1.getFullName()).isEqualTo("Alice Johnson");
+        assertThat(attendee1.getPhoneNumber()).isEqualTo("+34600111222");
+
+        Attendee attendee2 = meeting1.getAttendees().get(1);
+        assertThat(attendee2.getFullName()).isEqualTo("Álvaro Zamarro");
+        assertThat(attendee2.getPhoneNumber()).isEqualTo("+34612333444");
+
+        // Meeting 2
+        Meeting meeting2 = updated.getMeetingList().get(1);
+        assertThat(meeting2.getUrl()).isEqualTo("https://meet.company.com/new-meeting-2");
+        assertThat(meeting2.getDate()).isEqualTo(LocalDateTime.of(2025, 10, 21, 11, 30));
+        assertThat(meeting2.getAttendees())
+                .isNotNull()
+                .hasSize(2)
+                .extracting(Attendee::getEmailAddress)
+                .containsExactly("tarek.awwad@test.com", "micha.riechert@test.com");
+
+        Attendee attendee3 = meeting2.getAttendees().getFirst();
+        assertThat(attendee3.getFullName()).isEqualTo("Tarek Awwad");
+        assertThat(attendee3.getPhoneNumber()).isEqualTo("+41676768919");
+
+        Attendee attendee4 = meeting2.getAttendees().get(1);
+        assertThat(attendee4.getFullName()).isEqualTo("Micha Riechert");
+        assertThat(attendee4.getPhoneNumber()).isEqualTo("+43699129878");
 
         verify(this.applicationPersistence, times(1)).readById(applicationId);
         verify(this.applicationPersistence, times(1)).update(any(Application.class));
