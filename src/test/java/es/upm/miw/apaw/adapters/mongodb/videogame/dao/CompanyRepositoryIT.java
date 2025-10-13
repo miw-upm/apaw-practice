@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -21,7 +20,7 @@ public class CompanyRepositoryIT {
     private CompanyRepository companyRepository;
 
     @Test
-    void testFindById(){
+    void testFindById() {
 
         assertTrue(this.companyRepository.findById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0010")).isPresent());
         CompanyEntity company = this.companyRepository.findById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0010")).get();
@@ -30,8 +29,9 @@ public class CompanyRepositoryIT {
         assertThat(company.getFoundationDate()).isNotNull();
 
     }
+
     @Test
-    void testFindByDenomination(){
+    void testFindByDenomination() {
         assertTrue(this.companyRepository.findByDenomination("company0").isPresent());
         CompanyEntity company = this.companyRepository.findByDenomination("company0").get();
         assertThat(company.getDenomination()).isEqualTo("company0");

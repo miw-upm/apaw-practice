@@ -1,8 +1,6 @@
 package es.upm.miw.apaw.functionaltests.videogame;
 
-import es.upm.miw.apaw.adapters.resources.shop.ArticleResource;
 import es.upm.miw.apaw.adapters.resources.videogame.CompanyResource;
-import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.models.videogame.Company;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -43,7 +40,7 @@ public class CompanyResourceFT {
                 .expectBody(Company.class)
                 .value(createdCompany -> assertThat(createdCompany).isNotNull());
 
-        }
+    }
 
     void testCreateDenominationConflict() {
         Company company = Company.builder()

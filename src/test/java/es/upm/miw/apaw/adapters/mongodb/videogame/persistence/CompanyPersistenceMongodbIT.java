@@ -8,7 +8,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -23,7 +22,7 @@ public class CompanyPersistenceMongodbIT {
 
         LocalDate today = LocalDate.now();
         Company company = Company.builder()
-                .denomination("company0")
+                .denomination("company5")
                 .foundationDate(today)
                 .sector("sector0")
                 .build();
@@ -32,12 +31,12 @@ public class CompanyPersistenceMongodbIT {
         Company saved = companyPersistenceMongoDB.create(company);
 
         assertThat(saved).isNotNull();
-        assertThat(saved.getDenomination()).isEqualTo("company0");
+        assertThat(saved.getDenomination()).isEqualTo("company5");
         assertThat(saved.getSector()).isEqualTo("sector0");
         assertThat(saved.getFoundationDate()).isEqualTo(today);
 
 
-        assertThat(companyPersistenceMongoDB.existDenomination("company0"));
+        assertThat(companyPersistenceMongoDB.existDenomination("company5"));
     }
 
     void testExistDenomination() {

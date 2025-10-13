@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.domain.services.videogame;
 
-import es.upm.miw.apaw.domain.persistenceports.videogame.LikeListPersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
