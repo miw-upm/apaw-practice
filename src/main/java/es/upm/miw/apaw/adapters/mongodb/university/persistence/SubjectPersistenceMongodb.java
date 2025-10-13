@@ -4,7 +4,6 @@ import es.upm.miw.apaw.adapters.mongodb.university.daos.SubjectRepository;
 import es.upm.miw.apaw.adapters.mongodb.university.entities.SubjectEntity;
 import es.upm.miw.apaw.domain.models.university.Subject;
 import es.upm.miw.apaw.domain.persistenceports.university.SubjectPersistence;
-import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
