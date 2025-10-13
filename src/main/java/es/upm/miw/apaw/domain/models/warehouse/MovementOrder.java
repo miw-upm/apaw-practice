@@ -37,11 +37,4 @@ public class MovementOrder {
     @NotNull
     private UserDto user;
 
-    public static MovementOrder ofIdUser(MovementOrder movementOrder) {
-        MovementOrder dto = new MovementOrder();
-        dto.setId(movementOrder.getId());
-        dto.setUser(movementOrder.getUser());
-        return dto;
-    }
-
 }

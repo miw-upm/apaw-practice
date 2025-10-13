@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.daos;
 
-
 import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.LocationEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

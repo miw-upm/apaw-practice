@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -27,7 +26,5 @@ public class ProductItem {
 
     @NotBlank
     private String unitOfMeasure;
-
-    private List<Location> locations;
 
 }

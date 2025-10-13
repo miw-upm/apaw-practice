@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Data
@@ -15,12 +16,10 @@ public class Location {
 
     @NotNull
     private Integer currentStock;
-
     @NotBlank
     private String position;
-
     private LocalDateTime lastUpdateDate;
-
+    private List<ProductItem> productItems;
     @NotNull
     private Boolean availability;
 

@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.daos;
 
-
 import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.MovementOrderEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -12,7 +11,5 @@ public interface MovementOrderRepository extends MongoRepository<MovementOrderEn
     List<MovementOrderEntity> findByTypeOrder(String typeOrder);
 
     List<MovementOrderEntity> findByCompletedOrderTrue();
-
-    List<MovementOrderEntity> findByUserId(UUID userId);
 
 }

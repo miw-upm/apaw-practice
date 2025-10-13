@@ -24,36 +24,17 @@ class LocationPersistenceMongodbIT {
     void testReadAll() {
         List<Location> locations = this.locationPersistence.readAll().toList();
         assertThat(locations).isNotEmpty();
-        assertThat(locations.get(0).getPosition()).startsWith("Z");
+        assertThat(locations)
+                .extracting(Location::getPosition)
+                .contains("A-01-01", "B-02-03");
     }
 
     @Test
-    void testUpdate() {
-        UUID id = UUID.fromString("bbbb1111-2222-3333-4444-555566660001");
-        Location location = new Location(
-                999,
-                "Z1-A",
-                LocalDateTime.now(),
-                true                  // availability
-        );
-
-        Location updated = this.locationPersistence.update(id, location);
-        assertThat(updated.getCurrentStock()).isEqualTo(999);
-    }
-
-    @Test
-    void testUpdateNotFound() {
-        UUID randomId = UUID.randomUUID();
-        Location location = new Location(
-                20,
-                "Z1-X",
-                LocalDateTime.now(),
-                false
-        );
-
-        assertThrows(RuntimeException.class, () ->
-                this.locationPersistence.update(randomId, location)
-        );
+    void testReadByPosition() {
+        Location location = this.locationPersistence.readByPosition("A-01-01");
+        assertThat(location.getPosition()).isEqualTo("A-01-01");
+        assertThat(location.getAvailability()).isTrue();
+        assertThat(location.getProductItems()).hasSize(2);
     }
 
 }
