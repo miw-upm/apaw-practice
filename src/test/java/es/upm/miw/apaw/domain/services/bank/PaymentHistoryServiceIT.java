@@ -1,18 +1,12 @@
 package es.upm.miw.apaw.domain.services.bank;
 
-import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
 import es.upm.miw.apaw.domain.models.bank.PaymentHistoryUpdating;
 import es.upm.miw.apaw.domain.persistenceports.bank.PaymentHistoryPersistence;
-import es.upm.miw.apaw.domain.persistenceports.shop.ArticlePersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
