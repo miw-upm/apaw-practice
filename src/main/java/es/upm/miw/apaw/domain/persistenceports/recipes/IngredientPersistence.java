@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface IngredientPersistence {
 
     Ingredient readByLabel(String label);
+
+    Ingredient update(Ingredient ingredient);
 }
