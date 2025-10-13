@@ -26,7 +26,7 @@ public class CompanyResourceFT {
     void testCreate() {
 
         Company company = Company.builder()
-                .denomination("company0")
+                .denomination("company6")
                 .sector("sector0")
                 .foundationDate(LocalDate.now())
                 .build();
@@ -41,7 +41,7 @@ public class CompanyResourceFT {
                 .value(createdCompany -> assertThat(createdCompany).isNotNull());
 
     }
-
+@Test
     void testCreateDenominationConflict() {
         Company company = Company.builder()
                 .denomination("company0")
