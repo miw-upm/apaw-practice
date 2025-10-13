@@ -20,7 +20,6 @@ class FighterPersistenceMongodbIT {
 
     @Autowired
     private FighterPersistenceMongodb fighterPersistence;
-
     @Test
     void testReadByNickname_ok() {
         Fighter fighter = this.fighterPersistence.readByNickname("Spider");
@@ -68,5 +67,42 @@ class FighterPersistenceMongodbIT {
 
         assertThrows(   NotFoundException.class,
                 () -> this.fighterPersistence.createRating("no-existe", rating));
+    }
+
+    @Test
+    void testDeleteRating_ok() {
+        String nickname = "Spider";
+        UUID ratingId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+
+        fighterPersistence.deleteRating(nickname, ratingId);
+        Fighter fighter = fighterPersistence.readByNickname(nickname);
+        assertThat(fighter.getRatings().stream().anyMatch(r -> ratingId.equals(r.getId()))).isFalse();
+    }
+
+    @Test
+    void testDeleteRating_ratingNotFound() {
+        String nickname = "The Dragon";
+        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
+
+        assertThrows(NotFoundException.class,
+                () -> fighterPersistence.deleteRating(nickname, notExisting));
+    }
+
+
+    @Test
+    void testUpdateWinsOk() {
+        Fighter fighter = new Fighter();
+        fighter.setWins(88);
+        Fighter out = this.fighterPersistence.updateWins("Spider", fighter);
+        assertThat(out.getWins()).isEqualTo(88);
+
+        Fighter reRead = this.fighterPersistence.readByNickname("Spider");
+        assertThat(reRead.getWins()).isEqualTo(88);
+    }
+
+    @Test
+    void testUpdateWinsNotFound() {
+        Fighter fighter = new Fighter();
+        assertThrows(NotFoundException.class, () -> this.fighterPersistence.updateWins("No Existe", fighter));
     }
 }

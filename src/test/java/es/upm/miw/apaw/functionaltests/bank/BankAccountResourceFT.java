@@ -1,25 +1,28 @@
 package es.upm.miw.apaw.functionaltests.bank;
 import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.bank.CreditCard;
 import es.upm.miw.apaw.domain.models.bank.Loan;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import javax.smartcardio.Card;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.adapters.resources.bank.BankAccountResource.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -28,6 +31,9 @@ class BankAccountResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @MockitoBean
+    private UserRestClient userRestClient;
 
     @Test
     void testReadStatusByAccountNumber() {
@@ -71,7 +77,7 @@ class BankAccountResourceFT {
 
     @Test
     void testUpdateCreditCard(){
-        CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Arrays.asList(PaymentHistoryEntity.builder()
+        CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Collections.singletonList(PaymentHistoryEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
                 .amount(new BigDecimal("9.99"))
                 .paymentDate(LocalDateTime.now())
@@ -96,5 +102,21 @@ class BankAccountResourceFT {
                     assertThat(card.getPaymentHistoryList().getFirst().getAmount()).isEqualTo(new BigDecimal("9.99"));
                     assertThat(card.getPaymentHistoryList().getFirst().getPaid()).isTrue();
                 });
+    }
+
+    @Test
+    void testObtainTotalQuantityByMobile(){
+        BDDMockito.given(this.userRestClient.readByMobile(any(String.class)))
+                .willAnswer(invocation ->
+                        UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                                .mobile(invocation.getArgument(0))
+                                .firstName("mock").build());
+
+        webTestClient.get()
+                .uri(BANK_ACCOUNTS+MOBILE+TOTAL_QUANTITIES, "123123123")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(resul -> assertEquals(new BigDecimal("70000"),resul));
     }
 }
