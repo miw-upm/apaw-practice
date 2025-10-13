@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.recruiting.persistance;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.ApplicationRepository;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
@@ -34,12 +35,6 @@ public class ApplicationPersistenceMongodb implements ApplicationPersistence {
     }
 
     @Override
-    public List<Application> readAll() {
-        return this.applicationRepository.findAll().stream()
-                .map(ApplicationEntity::toApplication).toList();
-    }
-
-    @Override
     public Application update(Application application) {
         ApplicationEntity applicationEntity = this.applicationRepository
                 .findById(application.getId())
@@ -51,7 +46,12 @@ public class ApplicationPersistenceMongodb implements ApplicationPersistence {
                             .id(UUID.randomUUID())
                             .date(meeting.getDate())
                             .url(meeting.getUrl())
-                            .attendees(null)
+                            .attendees(
+                                    meeting.getAttendees() == null ? null :
+                                            meeting.getAttendees().stream()
+                                                    .map(AttendeeEntity::fromAttendee)
+                                                    .toList()
+                            )
                             .build())
                     .toList();
 

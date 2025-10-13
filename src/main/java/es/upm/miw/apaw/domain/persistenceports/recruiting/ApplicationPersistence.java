@@ -12,8 +12,6 @@ public interface ApplicationPersistence {
 
     Application readById(UUID id);
 
-    List<Application> readAll();
-
     Application update(Application application);
 
     // First search: 1269
