@@ -15,4 +15,6 @@ public interface RecipePersistence {
     Stream<Recipe> readAll();
 
     Recipe create(Recipe recipe);
+
+    Recipe update(Recipe recipe);
 }

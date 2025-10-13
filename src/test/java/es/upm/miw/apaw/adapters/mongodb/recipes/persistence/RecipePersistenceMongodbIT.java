@@ -1,11 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
-import es.upm.miw.apaw.adapters.mongodb.recipes.entities.IngredientEntity;
-import es.upm.miw.apaw.adapters.mongodb.recipes.daos.IngredientRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recipes.Recipe;
-import es.upm.miw.apaw.domain.models.recipes.RecipeItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +14,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -81,5 +76,39 @@ class RecipePersistenceMongodbIT {
         recipePersistenceMongodb.delete("2");
         assertThatThrownBy(() -> recipePersistenceMongodb.readByReferenceNumber("2"))
                 .isInstanceOf(NotFoundException.class);
+    }
+
+    @Test
+    void testUpdate() {
+        Optional<Recipe> optionalRecipe = this.recipePersistenceMongodb.readAll()
+                .filter(r -> "Butter Cookies".equals(r.getTitle()))
+                .findFirst();
+        assertThat(optionalRecipe).isPresent();
+
+        Recipe recipe = optionalRecipe.get();
+
+        recipe.getItems().getFirst().setQuantity(recipe.getItems().getFirst().getQuantity() + 50);
+        recipe.getItems().getFirst().setSpecifications(recipe.getItems().getFirst().getSpecifications() + " (updated)");
+
+        this.recipePersistenceMongodb.update(recipe);
+
+        Optional<Recipe> updatedOptional = this.recipePersistenceMongodb.readAll()
+                .filter(r -> "Butter Cookies".equals(r.getTitle()))
+                .findFirst();
+        assertThat(updatedOptional).isPresent();
+
+        Recipe updatedRecipe = updatedOptional.get();
+
+        assertThat(updatedRecipe.getReferenceNumber()).isEqualTo(recipe.getReferenceNumber());
+        assertThat(updatedRecipe.getServings()).isEqualTo(recipe.getServings());
+
+        assertThat(updatedRecipe.getItems()).hasSize(recipe.getItems().size());
+        assertThat(updatedRecipe.getItems().getFirst().getQuantity())
+                .isEqualTo(recipe.getItems().getFirst().getQuantity());
+        assertThat(updatedRecipe.getItems().getFirst().getSpecifications())
+                .isEqualTo(recipe.getItems().getFirst().getSpecifications());
+
+        recipesSeeder.deleteAll();
+        recipesSeeder.seedDatabase();
     }
 }
