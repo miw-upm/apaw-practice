@@ -20,14 +20,8 @@ public class VideoPersistenceMongodb implements VideoPersistence{
     public VideoPersistenceMongodb(VideoRepository videoRepository) {
         this.videoRepository = videoRepository;
     }
-//
-//    @Override
-//    public Video readById(UUID id) {
-//        return this.videoRepository.findById(id)
-//                .orElseThrow(() -> new NotFoundException(" ID name: " + id))
-//                .toVideo();
-//    }
 
+    @Override
     public Stream<Video> findByTitle(String title) {
         return this.videoRepository.findByTitle(title).stream()
                 .map(VideoEntity::toVideo);
