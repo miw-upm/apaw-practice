@@ -11,4 +11,5 @@ public interface BankAccountRepository extends MongoRepository<BankAccountEntity
     Optional<BankAccountEntity> findByAccountNumber(String accountNumber);
     int deleteByAccountNumber(String accountNumber);
     List<BankAccountEntity> findByAccountHolders(UUID id);
+    List<BankAccountEntity> findByLoansAppliedCondition(String condition);
 }

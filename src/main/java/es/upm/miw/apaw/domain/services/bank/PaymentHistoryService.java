@@ -2,7 +2,6 @@ package es.upm.miw.apaw.domain.services.bank;
 
 import es.upm.miw.apaw.domain.models.bank.PaymentHistory;
 import es.upm.miw.apaw.domain.models.bank.PaymentHistoryUpdating;
-import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.persistenceports.bank.PaymentHistoryPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
