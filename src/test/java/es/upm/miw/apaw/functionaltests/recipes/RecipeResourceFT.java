@@ -2,6 +2,7 @@ package es.upm.miw.apaw.functionaltests.recipes;
 
 import es.upm.miw.apaw.adapters.resources.recipes.RecipeResource;
 import es.upm.miw.apaw.domain.models.recipes.Recipe;
+import es.upm.miw.apaw.domain.models.recipes.RecipeItem;
 import es.upm.miw.apaw.domain.services.recipes.RecipeService;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -12,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -65,4 +68,47 @@ class RecipeResourceFT {
         BDDMockito.verify(this.recipeService).create(newRecipe);
     }
 
+    @Test
+    void testUpdateRecipeItems() {
+        String referenceNumber = "1";
+
+        RecipeItem item1 = RecipeItem.builder()
+                .quantity(200.0)
+                .specifications("Use fresh butter")
+                .optional(false)
+                .build();
+        RecipeItem item2 = RecipeItem.builder()
+                .quantity(100.0)
+                .specifications("Add chocolate chips")
+                .optional(true)
+                .build();
+
+        List<RecipeItem> updatedItems = List.of(item1, item2);
+
+        Recipe updatedRecipe = Recipe.builder()
+                .referenceNumber(referenceNumber)
+                .title("Butter Cookies")
+                .items(updatedItems)
+                .build();
+
+        BDDMockito.given(this.recipeService.updateItems(referenceNumber, updatedItems))
+                .willReturn(updatedRecipe);
+
+        webTestClient.put()
+                .uri(RecipeResource.RECIPES + "/" + referenceNumber + RecipeResource.RECIPE_ITEMS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updatedItems)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.referenceNumber").isEqualTo(referenceNumber)
+                .jsonPath("$.title").isEqualTo("Butter Cookies")
+                .jsonPath("$.items").isArray()
+                .jsonPath("$.items.length()").isEqualTo(2)
+                .jsonPath("$.items[0].specifications").isEqualTo("Use fresh butter")
+                .jsonPath("$.items[1].optional").isEqualTo(true);
+
+        BDDMockito.verify(this.recipeService).updateItems(referenceNumber, updatedItems);
+    }
 }
