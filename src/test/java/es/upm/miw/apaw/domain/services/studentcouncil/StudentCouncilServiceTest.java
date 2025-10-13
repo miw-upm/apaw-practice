@@ -41,4 +41,5 @@ class StudentCouncilServiceTest {
 
         assertThrows(NotFoundException.class, () -> service.updateResources(id, BigDecimal.TEN));
     }
+
 }
