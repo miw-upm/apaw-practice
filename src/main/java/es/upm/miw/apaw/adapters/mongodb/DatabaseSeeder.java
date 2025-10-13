@@ -11,12 +11,12 @@ import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
+import es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos.VideoWebSiteSeeder;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.WarehouseSeeder;
 
 
-import io.micrometer.core.instrument.Counter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -43,6 +43,7 @@ public class DatabaseSeeder {
     private final FightersSeeder fightersSeeder;
     private final RecipesSeeder recipesSeeder;
     private final WarehouseSeeder warehouseSeeder;
+    private final VideoWebSiteSeeder videoWebSiteSeeder;
 
 
     @Autowired
@@ -61,7 +62,8 @@ public class DatabaseSeeder {
             FightersSeeder fightersSeeder,
             BankSeeder bankSeeder,
             RecipesSeeder recipesSeeder,
-            WarehouseSeeder warehouseSeeder
+            WarehouseSeeder warehouseSeeder,
+            VideoWebSiteSeeder videoWebsiteSeeder
             ) {
 
         this.shopSeeder = shopSeeder;
@@ -79,6 +81,7 @@ public class DatabaseSeeder {
         this.bankSeeder = bankSeeder;
         this.recipesSeeder = recipesSeeder;
         this.warehouseSeeder = warehouseSeeder;
+        this.videoWebSiteSeeder = videoWebsiteSeeder;
         this.seedDatabase();
 
     }
@@ -99,7 +102,7 @@ public class DatabaseSeeder {
         this.bankSeeder.seedDatabase();
         this.recipesSeeder.seedDatabase();
         this.warehouseSeeder.seedDatabase();
-
+        this.videoWebSiteSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -118,6 +121,7 @@ public class DatabaseSeeder {
         this.bankSeeder.deleteAll();
         this.recipesSeeder.deleteAll();
         this.warehouseSeeder.deleteAll();
+        this.videoWebSiteSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {

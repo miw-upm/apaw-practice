@@ -6,13 +6,15 @@ import es.upm.miw.apaw.domain.models.fighters.Rating;
 import es.upm.miw.apaw.domain.persistenceports.fighters.FighterPersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class FighterService {
-
     private final FighterPersistence fighterPersistence;
     private final UserRestClient userRestClient;
 
@@ -38,5 +40,16 @@ public class FighterService {
         Rating ratingDb = this.fighterPersistence.createRating(nickname, rating);
         ratingDb.setUser(userDto);
         return ratingDb;
+    }
+
+    public void deleteRatings(String nickname, UUID ratingId) {
+        this.fighterPersistence.deleteRating(nickname, ratingId);
+    }
+
+    public Fighter updateWins(String nickname, Fighter wins) {
+        if (wins.getWins() == null || wins.getWins() < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "wins must be >= 0");
+        }
+        return this.fighterPersistence.updateWins(nickname, wins);
     }
 }

@@ -3,7 +3,6 @@ package es.upm.miw.apaw.adapters.mongodb.vehicle.persistence;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleRepository;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.entities.ExtraEntity;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.entities.VehicleEntity;
-import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.vehicle.Vehicle;
 import es.upm.miw.apaw.domain.persistenceports.vehicle.VehiclePersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;

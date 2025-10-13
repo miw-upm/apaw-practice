@@ -13,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -82,7 +81,6 @@ class VehicleResourceFT {
                 .value(extraCategories -> {
                     assertThat(extraCategories).hasSize(1);
                     String jsonList = extraCategories.getFirst();
-                    List<String> parsed = List.of("Appearance");
                     assertThat(jsonList).contains("Appearance");
                 });
     }
@@ -106,7 +104,6 @@ class VehicleResourceFT {
                 .value(extraCategories -> {
                     assertThat(extraCategories).hasSize(1);
                     String jsonList = extraCategories.getFirst();
-                    List<String> parsed = List.of("123456789");
                     assertThat(jsonList).contains("123456789");
                 });
     }

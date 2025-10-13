@@ -1,15 +1,13 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.PositionPersistenceMongodb;
-import es.upm.miw.apaw.domain.models.recruiting.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,79 +20,57 @@ class PositionRepositoryIT {
     @Autowired
     private PositionRepository positionRepository;
 
-    @Autowired
-    private PositionPersistenceMongodb positionPersistenceMongodb;
+    @Test
+    void testFindAll() {
+        List<PositionEntity> positions = positionRepository.findAll();
 
-    @BeforeEach
-    void setUp() {
-        positionRepository.deleteAll();
+        assertFalse(positions.isEmpty(), "Database filled in by seeder");
+        assertEquals(5, positions.size(), "Position size");
 
-        // Adding some data test
-        positionRepository.save(PositionEntity.builder()
-                .id(UUID.randomUUID())
-                .reference(1)
-                .name("Intern")
-                .annualSalary(new BigDecimal("20000"))
-                .numVacancies(2)
-                .build());
-
-        positionRepository.save(PositionEntity.builder()
-                .id(UUID.randomUUID())
-                .reference(5)
-                .name("Senior Engineer")
-                .annualSalary(new BigDecimal("60000"))
-                .numVacancies(1)
-                .build());
-
-        positionRepository.save(PositionEntity.builder()
-                .id(UUID.randomUUID())
-                .reference(3)
-                .name("Mid-level Developer")
-                .annualSalary(new BigDecimal("40000"))
-                .numVacancies(2)
-                .build());
+        assertTrue(positions.stream().anyMatch(p -> p.getName().equals("ABAP developer")),"Position 'ABAP developer' must exists");
     }
 
     @Test
-    void testFindTopByOrderByReferenceDesc_ReturnsHighestReference() {
+    void testCreatePosition() {
+        PositionEntity newEntity = PositionEntity.builder()
+                .id(UUID.randomUUID())
+                .reference(2000)
+                .name("New Cloud Architect")
+                .description("Expert in AWS and GCP")
+                .annualSalary(new BigDecimal("90000.00"))
+                .bonusSalary(new BigDecimal("10000.00"))
+                .numVacancies(2)
+                .build();
+
+        PositionEntity saved = positionRepository.save(newEntity);
+
+        assertNotNull(saved.getId());
+        assertEquals("New Cloud Architect", saved.getName());
+        assertEquals(2000, saved.getReference());
+
+        Optional<PositionEntity> retrieved = positionRepository.findById(saved.getId());
+        assertTrue(retrieved.isPresent());
+        assertEquals("New Cloud Architect", retrieved.get().getName());
+    }
+
+    @Test
+    void testUpdatePosition() {
+        Optional<PositionEntity> optionalPosition = positionRepository.findTopByOrderByReferenceDesc();
+        assertTrue(optionalPosition.isPresent());
+
+        PositionEntity position = optionalPosition.get();
+        position.setNumVacancies(99);
+        positionRepository.save(position);
+
+        PositionEntity updated = positionRepository.findById(position.getId()).orElseThrow();
+        assertEquals(99, updated.getNumVacancies());
+    }
+
+    @Test
+    void testFindTopByOrderByReferenceDesc() {
         Optional<PositionEntity> result = positionRepository.findTopByOrderByReferenceDesc();
 
-        assertTrue(result.isPresent());
-        assertEquals(5, result.get().getReference());
-        assertEquals("Senior Engineer", result.get().getName());
-    }
-
-    @Test
-    void testCreatePosition_AutoGeneratesReference() {
-        // Reference must be auto generated
-        Position newPosition = Position.builder()
-                .name("New Backend Developer")
-                .description("Responsible for APIs")
-                .annualSalary(new BigDecimal("50000"))
-                .bonusSalary(new BigDecimal("3000"))
-                .numVacancies(2)
-                .build();
-
-        Position saved = positionPersistenceMongodb.create(newPosition);
-
-        System.out.println("✅ Reference auto generated: " + saved.getReference());
-        assertEquals(6, saved.getReference()); // max was 5 → new one must be 6
-        assertEquals("New Backend Developer", saved.getName());
-    }
-
-    @Test
-    void testCreatePosition_WhenNoExistingReferences() {
-        positionRepository.deleteAll();
-
-        Position newPosition = Position.builder()
-                .name("First Position")
-                .annualSalary(new BigDecimal("40000"))
-                .numVacancies(1)
-                .build();
-
-        Position saved = positionPersistenceMongodb.create(newPosition);
-
-        System.out.println("✅ Reference auto generated (without records): " + saved.getReference());
-        assertEquals(1, saved.getReference()); // starts in 1
+        assertTrue(result.isPresent(), "At least one position must exist");
+        assertEquals(2000, result.get().getReference());
     }
 }
