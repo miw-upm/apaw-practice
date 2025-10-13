@@ -10,8 +10,12 @@ import es.upm.miw.apaw.domain.models.bank.Loan;
 import es.upm.miw.apaw.domain.persistenceports.bank.BankAccountPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository("bankAccountPersistence")
 public class BankAccountPersistenceMongodb implements BankAccountPersistence {
@@ -67,5 +71,20 @@ public class BankAccountPersistenceMongodb implements BankAccountPersistence {
         }
         bankAccount.setCreditCardAssociated(new CreditCardEntity(creditCard));
         return this.bankAccountRepository.save(bankAccount).toBankAccount().getCreditCardAssociated();
+    }
+
+    @Override
+    public BigDecimal obtainTotalQuantity(UUID accountHolder) {
+
+        List<BankAccount> bankAccounts = this.bankAccountRepository.findByAccountHolders(accountHolder).stream()
+                .map(BankAccountEntity::toBankAccount)
+                .toList();
+
+        return bankAccounts.stream()
+                .flatMap(bankAccount -> Optional.ofNullable(bankAccount.getLoansApplied())
+                        .orElse(List.of())
+                        .stream())
+                .map(Loan::getQuantity)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

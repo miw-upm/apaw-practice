@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 class BankAccountPersistenceMongodbIT {
 
-    CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Arrays.asList(PaymentHistoryEntity.builder()
+    CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Collections.singletonList(PaymentHistoryEntity.builder()
             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
             .amount(new BigDecimal("9.99"))
             .paymentDate(LocalDateTime.now())
@@ -101,5 +101,11 @@ class BankAccountPersistenceMongodbIT {
         assertThat(result.getCreditCardAssociated().getPaymentHistoryList().getFirst().getPaid()).isTrue();
         bankSeeder.deleteAll();
         bankSeeder.seedDatabase();
+    }
+
+    @Test
+    void testObtainTotalQuantity(){
+        UUID accountHolder = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
+        assertEquals(new BigDecimal("100000"),this.bankAccountPersistenceMongodb.obtainTotalQuantity(accountHolder));
     }
 }
