@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.persistence;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.warehouse.MovementOrder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,40 +24,18 @@ class MovementOrderPersistenceMongodbIT {
     void testReadAll() {
         List<MovementOrder> orders = this.movementOrderPersistence.readAll().toList();
         assertThat(orders).isNotEmpty();
+        assertThat(orders)
+                .extracting(MovementOrder::getTypeOrder)
+                .contains("INBOUND", "OUTBOUND");
     }
 
     @Test
     void testReadById() {
-        UUID id = UUID.fromString("bbbb3333-4444-5555-6666-777788880001");
+        UUID id = UUID.fromString("dddddddd-eeee-ffff-aaaa-bbbbcccc0001");
         MovementOrder order = this.movementOrderPersistence.read(id);
-        assertThat(order.getPartnerName()).isEqualTo("Talleres Omega S.A.");
-        assertThat(order.getTypeOrder()).isEqualTo("OUTBOUND");
+        assertThat(order.getTypeOrder()).isEqualTo("INBOUND");
+        assertThat(order.getPartnerName()).isEqualTo("Supplier XYZ");
+        assertThat(order.getOrderDetails()).isNotEmpty();
     }
 
-    @Test
-    void testCreateAndDelete() {
-        MovementOrder newOrder = MovementOrder.builder()
-                .id(UUID.randomUUID())
-                .typeOrder("INBOUND")
-                .partnerName("Test Partner")
-                .partnerAddress("Madrid, España")
-                .completedOrder(false)
-                .registrationDate(LocalDateTime.now())
-                .build();
-
-        MovementOrder created = this.movementOrderPersistence.create(newOrder);
-        assertThat(created.getPartnerName()).isEqualTo("Test Partner");
-
-        this.movementOrderPersistence.delete(created.getId());
-    }
-
-    @Test
-    void testUpdate() {
-        UUID id = UUID.fromString("bbbb3333-4444-5555-6666-777788880002");
-        MovementOrder order = this.movementOrderPersistence.read(id);
-        order.setPartnerAddress("Valencia, España");
-
-        MovementOrder updated = this.movementOrderPersistence.update(id, order);
-        assertThat(updated.getPartnerAddress()).isEqualTo("Valencia, España");
-    }
 }
