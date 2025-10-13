@@ -9,5 +9,5 @@ import java.util.UUID;
 public interface CompanyRepository extends MongoRepository<CompanyEntity, UUID> {
     Optional<CompanyEntity> findById(UUID id);
 
-    Optional<CompanyEntity> findByName(String name);
+    Optional<CompanyEntity> findByDenomination(String denomination);
 }

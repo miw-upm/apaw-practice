@@ -27,7 +27,7 @@ public class CompanyPersistenceMongoDB implements CompanyPersistence {
     @Override
     public boolean existDenomination(String denomination) {
         return this.companyRepository
-                .findByName(denomination)
+                .findByDenomination(denomination)
                 .isPresent();
     }
 

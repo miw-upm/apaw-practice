@@ -17,8 +17,6 @@ public class LikeListServiceIT {
     @Autowired
     private LikeListService likeListService;
 
-    @Autowired
-    private LikeListPersistence likeListPersistence;
 
     @Test
     void testReadSharedById() {
