@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Repository("fighterPersistence")
 public class FighterPersistenceMongodb implements FighterPersistence {
@@ -65,12 +66,16 @@ public class FighterPersistenceMongodb implements FighterPersistence {
         fighter.setRatingsEntities(ratings);
         this.fighterRepository.save(fighter);
     }
-
     @Override
     public Fighter updateWins(String nickname, Fighter wins) {
         FighterEntity entity = this.fighterRepository.findByNickname(nickname)
                 .orElseThrow(() -> new NotFoundException(fighterNickname + nickname));
         entity.setWins(wins.getWins());
         return this.fighterRepository.save(entity).toFighter();
+    }
+    @Override
+    public Stream<Fighter> findByRatingComment(String comment) {
+        return this.fighterRepository.findByRatingsEntitiesComment(comment).stream()
+                .map(FighterEntity::toFighter);
     }
 }
