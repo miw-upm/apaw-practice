@@ -1,15 +1,10 @@
 package es.upm.miw.apaw.domain.services.bank;
 import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
-import es.upm.miw.apaw.adapters.mongodb.bank.entities.BankAccountEntity;
-import es.upm.miw.apaw.adapters.mongodb.bank.entities.CreditCardEntity;
-import es.upm.miw.apaw.adapters.mongodb.bank.entities.LoanEntity;
 import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.bank.CreditCard;
 import es.upm.miw.apaw.domain.models.bank.Loan;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
