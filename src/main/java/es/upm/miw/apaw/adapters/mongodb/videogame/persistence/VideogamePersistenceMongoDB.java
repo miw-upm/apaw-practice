@@ -5,7 +5,7 @@ import es.upm.miw.apaw.domain.persistenceports.videogame.VideogamePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("videogameRepository")
+@Repository("videogamePersistence")
 public class VideogamePersistenceMongoDB implements VideogamePersistence {
 
     private final VideogameRepository videogameRepository;
