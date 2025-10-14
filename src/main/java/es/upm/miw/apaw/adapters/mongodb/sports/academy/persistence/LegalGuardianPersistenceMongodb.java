@@ -58,4 +58,11 @@ public class LegalGuardianPersistenceMongodb implements ILegalGuardianPersistenc
                 .orElseThrow(() -> new NotFoundException("Legal Guardian user dto id: " + id))
                 .toLegalGuardian();
     }
+
+    @Override
+    public Stream<LegalGuardian> getBySecondMobile(String secondMobile) {
+        return this.legalGuardianRepository
+                .findBySecondMobile(secondMobile)
+                .map(LegalGuardianEntity::toLegalGuardian);
+    }
 }

@@ -1,10 +1,11 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.LegalGuardianRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
-import es.upm.miw.apaw.BaseSportsAcademyIT;
+import es.upm.miw.apaw.BaseSportsAcademyTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyIT {
+class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyTests {
 
     @Autowired
     private LegalGuardianPersistenceMongodb legalGuardianPersistence;
@@ -29,7 +30,7 @@ class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyIT {
     }
 
     @Test
-    void testCreateAndGetById() {
+    void testCreateAndGetById(@Autowired LegalGuardianRepository legalGuardianRepository) {
         LegalGuardian legalGuardian = LegalGuardian.builder()
                 .user(UserDto.builder().id(UUID.randomUUID()).build())
                 .secondMobile("+34711036899")
@@ -40,10 +41,11 @@ class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyIT {
         assertThat(legalGuardianBD.getUser().getId()).isEqualTo(legalGuardian.getUser().getId());
         assertThat(legalGuardianBD.getSecondMobile()).isEqualTo("+34711036899");
         assertThat(legalGuardianBD.getRelationShip()).isEqualTo(RelationShip.AUNT);
+        legalGuardianRepository.deleteById(legalGuardian.getUser().getId());
     }
 
     @Test
-    void testCreateAndUpdate() {
+    void testCreateAndUpdate(@Autowired LegalGuardianRepository legalGuardianRepository) {
         LegalGuardian legalGuardian = LegalGuardian.builder()
                 .user(UserDto.builder().id(UUID.randomUUID()).build())
                 .secondMobile("+34711036888")
@@ -54,6 +56,7 @@ class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyIT {
         this.legalGuardianPersistence.update(legalGuardian.getUser().getId(), legalGuardianBD);
         legalGuardianBD = this.legalGuardianPersistence.getById(legalGuardian.getUser().getId());
         assertThat(legalGuardianBD.getSecondMobile()).isEqualTo("+34711036877");
+        legalGuardianRepository.deleteById(legalGuardian.getUser().getId());
     }
 
     @Test
@@ -89,5 +92,15 @@ class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyIT {
                 .relationShip(RelationShip.AUNT)
                 .build();
         assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.update(id, legalGuardian));
+    }
+
+    @Test
+    void testGetBySecondMobile(){
+        String secondMobile = legalGuardians[0].getSecondMobile();
+        var legalGuardians = this.legalGuardianPersistence.getBySecondMobile(secondMobile).toList();
+        assertFalse(legalGuardians.isEmpty());
+        assertThat(legalGuardians.getFirst().getSecondMobile()).isEqualTo(secondMobile);
+        assertThat(legalGuardians.getFirst().getRelationShip()).isEqualTo(RelationShip.AUNT);
+        assertThat(legalGuardians.getFirst().getUser().getId()).isEqualTo(this.legalGuardians[0].getUserDtoId());
     }
 }

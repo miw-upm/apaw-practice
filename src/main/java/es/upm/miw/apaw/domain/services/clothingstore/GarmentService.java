@@ -17,6 +17,9 @@ public class GarmentService {
         this.garmentPersistence = garmentPersistence;
     }
 
+    public Garment create(Garment garment) {
+        return this.garmentPersistence.create(garment);
+    }
     public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
         return this.garmentPersistence.findByPriceBetween(min, max);
     }
@@ -26,6 +29,8 @@ public class GarmentService {
     public Stream<Garment> readAll() {
         return this.garmentPersistence.readAll();
     }
+
+
 }
 
 

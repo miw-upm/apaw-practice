@@ -7,19 +7,23 @@ import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class AthleteService {
     private final IAthletePersistence athletePersistence;
     private final UserRestClient userRestClient;
+    private final LegalGuardianService legalGuardianService;
 
     @Autowired
     public AthleteService(
             IAthletePersistence athletePersistence,
-            UserRestClient userRestClient){
+            UserRestClient userRestClient,
+            LegalGuardianService legalGuardianService) {
         this.athletePersistence = athletePersistence;
         this.userRestClient = userRestClient;
+        this.legalGuardianService = legalGuardianService;
     }
 
     public Athlete getById(UUID id) {
@@ -35,5 +39,14 @@ public class AthleteService {
             sportModality.getProfessor().setUser(professor);
         });
         return athlete;
+    }
+
+    public List<String> getUniqueProfessorSpecializationsByLegalGuardian(String secondMobile){
+        return athletePersistence
+                .getByLegalGuardians(legalGuardianService.getBySecondMobile(secondMobile))
+                .flatMap(athlete -> athlete.getSportModalities().stream())
+                .map(sportModality -> sportModality.getProfessor().getSpecialization())
+                .distinct()
+                .toList();
     }
 }

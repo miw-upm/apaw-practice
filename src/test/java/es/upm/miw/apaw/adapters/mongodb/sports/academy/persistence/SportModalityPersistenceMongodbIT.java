@@ -1,12 +1,13 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.SportModalityRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
 import es.upm.miw.apaw.domain.models.sports.academy.SportModality;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Level;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.TargetAudience;
-import es.upm.miw.apaw.BaseSportsAcademyIT;
+import es.upm.miw.apaw.BaseSportsAcademyTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class SportModalityPersistenceMongodbIT extends BaseSportsAcademyIT {
+class SportModalityPersistenceMongodbIT extends BaseSportsAcademyTests {
 
     @Autowired
     private SportModalityPersistenceMongodb sportModalityPersistence;
@@ -35,7 +36,7 @@ class SportModalityPersistenceMongodbIT extends BaseSportsAcademyIT {
     }
 
     @Test
-    void testCreateAndGetById() {
+    void testCreateAndGetById(@Autowired SportModalityRepository sportModalityRepository) {
         var professor = this.professorPersistence.getById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
         var sportModality = SportModality.builder()
                 .id(UUID.randomUUID())
@@ -52,10 +53,11 @@ class SportModalityPersistenceMongodbIT extends BaseSportsAcademyIT {
         assertThat(sportModalityBD.getProfessor().getUser().getId()).isEqualTo(sportModality.getProfessor().getUser().getId());
         assertThat(sportModalityBD.getProfessor().getSpecialization()).isEqualTo(sportModality.getProfessor().getSpecialization());
         assertThat(sportModalityBD.getProfessor().getLicenseNumber()).isEqualTo(sportModality.getProfessor().getLicenseNumber());
+        sportModalityRepository.deleteById(sportModality.getId());
     }
 
     @Test
-    void testCreateAndUpdate() {
+    void testCreateAndUpdate(@Autowired SportModalityRepository sportModalityRepository) {
         var professor = this.professorPersistence.getById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
         var sportModality = SportModality.builder()
                 .id(UUID.randomUUID())
@@ -74,6 +76,7 @@ class SportModalityPersistenceMongodbIT extends BaseSportsAcademyIT {
         assertThat(sportModalityBD.getProfessor().getUser().getId()).isEqualTo(sportModality.getProfessor().getUser().getId());
         assertThat(sportModalityBD.getProfessor().getSpecialization()).isEqualTo(sportModality.getProfessor().getSpecialization());
         assertThat(sportModalityBD.getProfessor().getLicenseNumber()).isEqualTo(sportModality.getProfessor().getLicenseNumber());
+        sportModalityRepository.deleteById(sportModality.getId());
     }
 
     @Test
