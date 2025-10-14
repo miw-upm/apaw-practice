@@ -42,7 +42,7 @@ class LegalGuardianServiceTest {
     }
 
     @Test
-    void testGetBySecondMobile(){
+    void testGetBySecondMobile() {
         var secondMobile = "+5549988706208";
         LegalGuardian legalGuardian = LegalGuardian.builder()
                 .user(UserDto.builder().id(UUID.randomUUID()).build())
@@ -51,6 +51,20 @@ class LegalGuardianServiceTest {
                 .build();
         when(legalGuardianPersistence.getBySecondMobile(secondMobile)).thenReturn(Stream.of(legalGuardian));
         var legalGuardianList = this.legalGuardianService.getBySecondMobile(secondMobile).toList();
+        assertThat(legalGuardianList.size()).isEqualTo(1);
+        assertThat(legalGuardianList.getFirst()).isEqualTo(legalGuardian);
+    }
+
+    @Test
+    void testGetByRelationShip() {
+        var relationShip = RelationShip.FATHER;
+        LegalGuardian legalGuardian = LegalGuardian.builder()
+                .user(UserDto.builder().id(UUID.randomUUID()).build())
+                .relationShip(relationShip)
+                .secondMobile("+5549988706208")
+                .build();
+        when(legalGuardianPersistence.getByRelationShip(relationShip)).thenReturn(Stream.of(legalGuardian));
+        var legalGuardianList = this.legalGuardianService.getByRelationShip(relationShip).toList();
         assertThat(legalGuardianList.size()).isEqualTo(1);
         assertThat(legalGuardianList.getFirst()).isEqualTo(legalGuardian);
     }

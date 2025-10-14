@@ -10,4 +10,5 @@ import java.util.stream.Stream;
 public interface LegalGuardianRepository extends MongoRepository<LegalGuardianEntity, UUID> {
     Optional<LegalGuardianEntity> findByUserDtoId(UUID userDtoId);
     Stream<LegalGuardianEntity> findBySecondMobile(String secondMobile);
+    Stream<LegalGuardianEntity> findByRelationShip(int relationShip);
 }

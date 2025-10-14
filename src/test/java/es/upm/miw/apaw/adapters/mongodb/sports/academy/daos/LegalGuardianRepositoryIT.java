@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,5 +34,14 @@ class LegalGuardianRepositoryIT extends BaseSportsAcademyTests {
         assertThat(legalGuardians.getFirst().getUserDtoId()).isEqualTo(this.legalGuardians[0].getUserDtoId());
         assertThat(legalGuardians.getFirst().getRelationShip()).isEqualTo(RelationShip.AUNT.getValue());
         assertThat(legalGuardians.getFirst().getSecondMobile()).isEqualTo("34711036822");
+    }
+
+    @Test
+    void testFindByRelationShip() {
+        var legalGuardians = this.legalGuardianRepository.findByRelationShip(RelationShip.FATHER.getValue()).toList();
+        assertThat(legalGuardians).hasSize(1);
+        assertThat(legalGuardians.getFirst().getUserDtoId()).isEqualTo(this.legalGuardians[2].getUserDtoId());
+        assertThat(legalGuardians.getFirst().getRelationShip()).isEqualTo(RelationShip.FATHER.getValue());
+        assertThat(legalGuardians.getFirst().getSecondMobile()).isEqualTo("34712036844");
     }
 }

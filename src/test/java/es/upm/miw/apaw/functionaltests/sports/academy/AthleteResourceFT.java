@@ -6,7 +6,9 @@ import es.upm.miw.apaw.BaseSportsAcademyTests;
 import es.upm.miw.apaw.adapters.resources.sports.academy.AthleteResource;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.SportModalitiesLevelsPercentage;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.Level;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
@@ -17,10 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -118,4 +117,26 @@ class AthleteResourceFT extends BaseSportsAcademyTests {
                 .doesNotHaveDuplicates();
     }
 
+    @Test
+    void testGetPercentageOfSportModalityLevelsByLegalGuardian() throws Exception {
+        String relationShip = RelationShip.FATHER.name();
+        String responseBody = webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(AthleteResource.ATHLETES + AthleteResource.SPORT_MODALITY_LEVELS)
+                        .queryParam("relationShip", relationShip)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
+
+        List<SportModalitiesLevelsPercentage> result = objectMapper.readValue(responseBody, new TypeReference<>() {});
+
+        assertThat(result)
+                .isNotEmpty()
+                .contains(new SportModalitiesLevelsPercentage(Level.BEGINNER, 50.0),
+                        new SportModalitiesLevelsPercentage(Level.INTERMEDIATE, 50.0))
+                .doesNotHaveDuplicates();
+    }
 }
