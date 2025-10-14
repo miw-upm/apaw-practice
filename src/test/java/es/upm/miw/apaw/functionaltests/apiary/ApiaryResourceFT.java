@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -91,5 +93,33 @@ class ApiaryResourceFT {
                 .expectStatus().isOk()
                 .expectBody()
                 .jsonPath("$[0]").isEqualTo("Burgos");
+    }
+
+    @Test
+    void testSumProductPricesByRega_ReturnsCorrectSum() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApiaryResource.APIARIES + "/sum-price-by-rega")
+                        .queryParam("rega", "REGA00001")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .value(response -> assertThat(new BigDecimal(response)).isEqualByComparingTo(new BigDecimal("15.00")));
+    }
+
+    @Test
+    void testSumProductPricesByRega_ReturnsZeroWhenNotFound() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApiaryResource.APIARIES + "/sum-price-by-rega")
+                        .queryParam("rega", "REGA_NO_EXISTE")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .value(response -> assertThat(new BigDecimal(response)).isEqualByComparingTo(BigDecimal.ZERO));
     }
 }
