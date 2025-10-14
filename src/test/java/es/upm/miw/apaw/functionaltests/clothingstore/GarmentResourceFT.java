@@ -101,4 +101,40 @@ class GarmentResourceFT {
         assertThat(updated.getPrice()).isEqualByComparingTo("129.99");
         assertThat(updated.getOnSale()).isTrue();
     }
+    // es/upm/miw/apaw/functionaltests/clothingstore/GarmentResourceFT.java
+    @Test
+    void testCreate(){
+        Garment body = Garment.builder()
+                .size("S").price(new BigDecimal("19.99")).onSale(false).build();
+
+        Garment created = this.webTestClient.post()
+                .uri(GarmentResource.GARMENTS)
+                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .bodyValue(body)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Garment.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(created).isNotNull();
+        assertThat(created.getId()).isNotNull();
+        assertThat(created.getSize()).isEqualTo("S");
+        assertThat(created.getPrice()).isEqualByComparingTo("19.99");
+        assertThat(created.getOnSale()).isFalse();
+
+        List<Garment> query = this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(GarmentResource.GARMENTS)
+                        .queryParam("min","0").queryParam("max","20").build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Garment.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(query).isNotNull();
+        assertThat(query.stream().anyMatch(g -> g.getId().equals(created.getId()))).isTrue();
+    }
+
 }

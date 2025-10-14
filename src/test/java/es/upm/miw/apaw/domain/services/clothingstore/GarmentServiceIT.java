@@ -63,5 +63,20 @@ class GarmentServiceIT {
         assertThat(updated.getOnSale()).isEqualTo(changes.getOnSale());
         assertThat(updated.getSize()).isEqualTo(changes.getSize());
     }
+    @Test
+    void testCreate() {
+        Garment garment = Garment.builder()
+                .size("M")
+                .price(new BigDecimal("59.99"))
+                .onSale(false)
+                .build();
+
+        Garment created = garmentService.create(garment);
+
+        assertThat(created).isNotNull();
+        assertThat(created.getSize()).isEqualTo("M");
+        assertThat(created.getPrice()).isEqualByComparingTo("59.99");
+    }
+
 }
 
