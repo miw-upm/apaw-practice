@@ -3,19 +3,28 @@ package es.upm.miw.apaw.domain.services.apiary;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.SaleRepository;
 import es.upm.miw.apaw.adapters.mongodb.apiary.persistence.SalePersistenceMongodb;
 import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.models.apiary.Apiary;
+import es.upm.miw.apaw.domain.models.apiary.Hive;
+import es.upm.miw.apaw.domain.models.apiary.Product;
 import es.upm.miw.apaw.domain.models.apiary.Sale;
+import es.upm.miw.apaw.domain.persistenceports.apiary.ApiaryPersistence;
+import es.upm.miw.apaw.domain.persistenceports.apiary.SalePersistence;
 import es.upm.miw.apaw.domain.services.apiary.SaleService;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.mockito.Mockito.*;
@@ -35,6 +44,9 @@ class SaleServiceIT {
 
     @MockitoBean
     private UserRestClient userRestClient;
+
+    @MockitoBean
+    private ApiaryPersistence apiaryPersistence;
 
     private UserDto testUser;
 

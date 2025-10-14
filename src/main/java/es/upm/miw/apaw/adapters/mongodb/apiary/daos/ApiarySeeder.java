@@ -93,7 +93,7 @@ public class ApiarySeeder {
                         .type("Layens")
                         .queen(false)
                         .installationDate(LocalDate.of(2021, 3, 15))
-                        .productEntity(products1[2])
+                        .productEntity(products1[1])
                         .build(),
         };
 

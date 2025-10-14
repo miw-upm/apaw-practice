@@ -3,24 +3,29 @@ package es.upm.miw.apaw.domain.services.apiary;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.apiary.Sale;
+import es.upm.miw.apaw.domain.persistenceports.apiary.ApiaryPersistence;
 import es.upm.miw.apaw.domain.persistenceports.apiary.SalePersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 @Service
 public class SaleService {
 
     private final SalePersistence salePersistence;
+    private final ApiaryPersistence apiaryPersistence;
     private final UserRestClient userRestClient;
 
 
     @Autowired
-    public SaleService(SalePersistence salePersistence,UserRestClient userRestClient) {
+    public SaleService(SalePersistence salePersistence, UserRestClient userRestClient, ApiaryPersistence apiaryPersistence) {
         this.salePersistence = salePersistence;
+        this.apiaryPersistence = apiaryPersistence;
         this.userRestClient = userRestClient;
     }
 
