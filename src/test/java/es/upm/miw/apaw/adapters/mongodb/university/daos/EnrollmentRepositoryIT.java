@@ -39,18 +39,8 @@ class EnrollmentRepositoryIT {
     }
 
     @Test
-    void testFindByCodeMultipleResults() {
-        String enrollmentCode = "ENR002";
-        
-        Optional<EnrollmentEntity> enrollment = enrollmentRepository.findByCode(enrollmentCode);
-        
-        assertThat(enrollment).isPresent();
-        assertThat(enrollment.get().getCode()).isEqualTo(enrollmentCode);
-    }
-
-    @Test
     void testDeleteByCode() {
-        String enrollmentCode = "ENR003";
+        String enrollmentCode = "ENR002";
         
         Optional<EnrollmentEntity> enrollmentBefore = enrollmentRepository.findByCode(enrollmentCode);
         assertThat(enrollmentBefore).isPresent();

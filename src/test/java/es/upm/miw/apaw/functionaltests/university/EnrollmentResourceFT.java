@@ -24,7 +24,7 @@ public class EnrollmentResourceFT {
 
     @Test
     void testDelete() {
-        String enrollmentCode = "ENR001";
+        String enrollmentCode = "ENR004";
         
         assertThat(enrollmentRepository.findByCode(enrollmentCode)).isPresent();
         
