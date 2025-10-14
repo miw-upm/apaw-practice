@@ -76,7 +76,7 @@ public class BankSeeder {
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7000"))
                         .amount(new BigDecimal("69.99"))
                         .paymentDate(LocalDateTime.now())
-                        .paid(false)
+                        .paid(true)
                         .build()
         };
         this.paymentHistoryRepository.saveAll(Arrays.asList(paymentHistories));
@@ -115,6 +115,7 @@ public class BankSeeder {
                         .status(ACTIVE)
                         .accountHolders(List.of(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")))
                         .creditCardAssociated(CreditCardEntity.builder().cardNumber("1111222233334447").expirationDate(LocalDate.of(2029,8,8)).cardLimit(new BigDecimal("2000")).paymentHistoryList(Collections.singletonList(paymentHistories[6])).cvv(910).build())
+                        .loansApplied(Collections.singletonList(LoanEntity.builder().quantity(new BigDecimal("10000")).condition(ACTIVE).interestRate(0.07).build()))
                         .build()
         };
         this.bankAccountRepository.saveAll(Arrays.asList(bankAccountEntities));
