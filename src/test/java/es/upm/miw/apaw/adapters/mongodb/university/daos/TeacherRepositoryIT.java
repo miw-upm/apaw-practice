@@ -32,7 +32,7 @@ class TeacherRepositoryIT {
 
     @Test
     void testFindByIdentificationCodeNotFound() {
-        String nonExistentCode = "T999";
+        String nonExistentCode = "T999NotFoundCode";
         
         Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(nonExistentCode);
         

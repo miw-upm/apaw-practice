@@ -61,6 +61,20 @@ public class UniversitySeeder {
                         .specialization("TS004")
                         .fullName("TFN004")
                         .tenured(true)
+                        .build(),
+                TeacherEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0104"))
+                        .identificationCode("T005")
+                        .specialization("TS005")
+                        .fullName("TFN005")
+                        .tenured(false)
+                        .build(),
+                TeacherEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0105"))
+                        .identificationCode("T006")
+                        .specialization("TS006")
+                        .fullName("TFN006")
+                        .tenured(true)
                         .build()
         };
         this.teacherRepository.saveAll(Arrays.asList(teachers));
@@ -88,6 +102,18 @@ public class UniversitySeeder {
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0203"))
                         .name("SN004")
                         .description("SD004")
+                        .credits(6)
+                        .build(),
+                SubjectEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0204"))
+                        .name("SN005")
+                        .description("SD005")
+                        .credits(6)
+                        .build(),
+                SubjectEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0205"))
+                        .name("SN006")
+                        .description("SD006")
                         .credits(6)
                         .build()
         };
@@ -141,6 +167,27 @@ public class UniversitySeeder {
                         .build()
         };
 
+        LessonEntity[] lessons5 = {
+                LessonEntity.builder()
+                        .startDate(LocalDateTime.of(2024, 1, 19, 10, 0))
+                        .classroom("D401")
+                        .duration(90)
+                        .build(),
+                LessonEntity.builder()
+                        .startDate(LocalDateTime.of(2024, 1, 21, 10, 0))
+                        .classroom("D401")
+                        .duration(90)
+                        .build()
+        };
+
+        LessonEntity[] lessons6 = {
+                LessonEntity.builder()
+                        .startDate(LocalDateTime.of(2024, 1, 20, 15, 0))
+                        .classroom("E501")
+                        .duration(120)
+                        .build()
+        };
+
         // 4) Subject Assignments
         SubjectAssignmentEntity[] subjectAssignments = {
                 SubjectAssignmentEntity.builder()
@@ -170,6 +217,20 @@ public class UniversitySeeder {
                         .subjectEntity(subjects[3])
                         .teacherEntities(Arrays.asList(teachers[0]))
                         .lessonEntities(Arrays.asList(lessons4))
+                        .build(),
+                SubjectAssignmentEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0304"))
+                        .capacity(28)
+                        .subjectEntity(subjects[4])
+                        .teacherEntities(Arrays.asList(teachers[4]))
+                        .lessonEntities(Arrays.asList(lessons5))
+                        .build(),
+                SubjectAssignmentEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0305"))
+                        .capacity(22)
+                        .subjectEntity(subjects[5])
+                        .teacherEntities(Arrays.asList(teachers[5]))
+                        .lessonEntities(Arrays.asList(lessons6))
                         .build()
         };
         this.subjectAssignmentRepository.saveAll(Arrays.asList(subjectAssignments));
