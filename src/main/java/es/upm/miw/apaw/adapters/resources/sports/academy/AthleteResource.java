@@ -14,6 +14,7 @@ import java.util.UUID;
 public class AthleteResource {
     public static final String ATHLETES = "/sports-academy/athletes";
     public static final String ID_ID = "/{id}";
+    public static final String SPORT_MODALITY_PROFESSOR_SPECIALIZATIONS = "/sport-modalities/professor/specializations";
     private final AthleteService athleteService;
 
     @Autowired
@@ -26,8 +27,8 @@ public class AthleteResource {
         return this.athleteService.getById(id);
     }
 
-    @GetMapping()
-    public List<String> getDistinctProfessorsSpecializationsByLegalGuardianSecondMobile(@Valid @RequestParam String secondMobile){
-        return athleteService.getDistinctProfessorsSpecializationsByLegalGuardianSecondMobile(secondMobile);
+    @GetMapping(SPORT_MODALITY_PROFESSOR_SPECIALIZATIONS)
+    public List<String> getUniqueProfessorSpecializationsByLegalGuardian(@Valid @RequestParam String secondMobile){
+        return athleteService.getUniqueProfessorSpecializationsByLegalGuardian(secondMobile);
     }
 }

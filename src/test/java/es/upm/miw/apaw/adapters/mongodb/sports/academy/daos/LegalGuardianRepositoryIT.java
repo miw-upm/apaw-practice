@@ -26,6 +26,15 @@ class LegalGuardianRepositoryIT extends BaseSportsAcademyTests {
         assertThat(legalGuardian).isNotNull();
         assertThat(legalGuardian.getUserDtoId()).isEqualTo(legalGuardians[0].getUserDtoId());
         assertThat(legalGuardian.getRelationShip()).isEqualTo(RelationShip.AUNT.getValue());
-        assertThat(legalGuardian.getSecondMobile()).isEqualTo("+34711036811");
+        assertThat(legalGuardian.getSecondMobile()).isEqualTo("34711036822");
+    }
+
+    @Test
+    void testFindBySecondMobile(){
+        var legalGuardians = this.legalGuardianRepository.findBySecondMobile(this.legalGuardians[0].getSecondMobile()).toList();
+        assertThat(legalGuardians).hasSize(1);
+        assertThat(legalGuardians.getFirst().getUserDtoId()).isEqualTo(this.legalGuardians[0].getUserDtoId());
+        assertThat(legalGuardians.getFirst().getRelationShip()).isEqualTo(RelationShip.AUNT.getValue());
+        assertThat(legalGuardians.getFirst().getSecondMobile()).isEqualTo("34711036822");
     }
 }

@@ -5,8 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public interface LegalGuardianRepository extends MongoRepository<LegalGuardianEntity, UUID> {
     Optional<LegalGuardianEntity> findByUserDtoId(UUID userDtoId);
-    Optional<LegalGuardianEntity> findBySecondMobile(String secondMobile);
+    Stream<LegalGuardianEntity> findBySecondMobile(String secondMobile);
 }

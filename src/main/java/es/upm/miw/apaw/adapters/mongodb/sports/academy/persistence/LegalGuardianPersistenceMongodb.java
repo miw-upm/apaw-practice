@@ -63,7 +63,6 @@ public class LegalGuardianPersistenceMongodb implements ILegalGuardianPersistenc
     public Stream<LegalGuardian> getBySecondMobile(String secondMobile) {
         return this.legalGuardianRepository
                 .findBySecondMobile(secondMobile)
-                .stream()
                 .map(LegalGuardianEntity::toLegalGuardian);
     }
 }

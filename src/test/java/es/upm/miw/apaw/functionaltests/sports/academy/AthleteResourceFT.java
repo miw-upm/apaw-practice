@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.functionaltests.sports.academy;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import es.upm.miw.apaw.BaseSportsAcademyTests;
 import es.upm.miw.apaw.adapters.resources.sports.academy.AthleteResource;
 import es.upm.miw.apaw.domain.models.UserDto;
@@ -15,7 +17,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,6 +37,8 @@ class AthleteResourceFT extends BaseSportsAcademyTests {
 
     @MockitoBean
     private UserRestClient userRestClient;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     void testGetAthleteById() {
@@ -77,7 +85,7 @@ class AthleteResourceFT extends BaseSportsAcademyTests {
                     assertThat(athlete.getLegalGuardians().getFirst().getUser().getId()).isEqualTo(athletes[0].getLegalGuardians().getFirst().getUserDtoId());
                     assertThat(athlete.getLegalGuardians().getFirst().getUser().getFirstName()).isEqualTo("Luigi Rossi");
                     assertThat(athlete.getLegalGuardians().getFirst().getUser().getMobile()).isEqualTo("+34711036812");
-                    assertThat(athlete.getLegalGuardians().getFirst().getSecondMobile()).isEqualTo("+34711036811");
+                    assertThat(athlete.getLegalGuardians().getFirst().getSecondMobile()).isEqualTo("34711036822");
                     assertThat(athlete.getLegalGuardians().getFirst().getRelationShip()).isEqualTo(RelationShip.AUNT);
                     assertThat(athlete.getSportModalities()).hasSize(2);
                     assertThat(athlete.getSportModalities().getFirst().getProfessor().getUser().getId()).isEqualTo(athletes[0].getSportModalities().getFirst().getProfessor().getUserDtoId());
@@ -88,4 +96,26 @@ class AthleteResourceFT extends BaseSportsAcademyTests {
                     assertThat(athlete.getSportModalities().getLast().getProfessor().getUser().getMobile()).isEqualTo("+34711036814");
                 });
     }
+
+    @Test
+    void testGetUniqueProfessorSpecializationsByLegalGuardian() throws Exception {
+        String responseBody = webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(AthleteResource.ATHLETES + AthleteResource.SPORT_MODALITY_PROFESSOR_SPECIALIZATIONS)
+                        .queryParam("secondMobile", athletes[0].getLegalGuardians().getFirst().getSecondMobile())
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
+
+        List<String> result = objectMapper.readValue(responseBody, new TypeReference<>() {});
+
+        assertThat(result)
+                .isNotEmpty()
+                .contains("Tennis", "Swimming")
+                .doesNotHaveDuplicates();
+    }
+
 }

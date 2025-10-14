@@ -93,4 +93,14 @@ class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyTests {
                 .build();
         assertThrows(NotFoundException.class, () -> this.legalGuardianPersistence.update(id, legalGuardian));
     }
+
+    @Test
+    void testGetBySecondMobile(){
+        String secondMobile = legalGuardians[0].getSecondMobile();
+        var legalGuardians = this.legalGuardianPersistence.getBySecondMobile(secondMobile).toList();
+        assertFalse(legalGuardians.isEmpty());
+        assertThat(legalGuardians.getFirst().getSecondMobile()).isEqualTo(secondMobile);
+        assertThat(legalGuardians.getFirst().getRelationShip()).isEqualTo(RelationShip.AUNT);
+        assertThat(legalGuardians.getFirst().getUser().getId()).isEqualTo(this.legalGuardians[0].getUserDtoId());
+    }
 }

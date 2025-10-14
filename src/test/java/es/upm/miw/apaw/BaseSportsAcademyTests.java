@@ -26,12 +26,12 @@ public abstract class BaseSportsAcademyTests {
     protected final LegalGuardianEntity[] legalGuardians = {
             LegalGuardianEntity.builder()
                     .userDtoId(UUID.fromString(UUID.randomUUID().toString()))
-                    .secondMobile("+34711036811")
+                    .secondMobile("34711036822")
                     .relationShip(RelationShip.AUNT.getValue())
                     .build(),
             LegalGuardianEntity.builder()
                     .userDtoId(UUID.fromString(UUID.randomUUID().toString()))
-                    .secondMobile("+34712036811")
+                    .secondMobile("34712036833")
                     .relationShip(RelationShip.AUNT.getValue())
                     .build()
     };

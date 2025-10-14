@@ -41,7 +41,7 @@ public class AthleteService {
         return athlete;
     }
 
-    public List<String> getDistinctProfessorsSpecializationsByLegalGuardianSecondMobile(String secondMobile){
+    public List<String> getUniqueProfessorSpecializationsByLegalGuardian(String secondMobile){
         return athletePersistence
                 .getByLegalGuardians(legalGuardianService.getBySecondMobile(secondMobile))
                 .flatMap(athlete -> athlete.getSportModalities().stream())

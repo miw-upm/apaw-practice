@@ -68,7 +68,7 @@ class AthleteServiceIT extends BaseSportsAcademyTests {
         assertThat(athlete.getLegalGuardians().getFirst().getUser().getId()).isEqualTo(athletes[0].getLegalGuardians().getFirst().getUserDtoId());
         assertThat(athlete.getLegalGuardians().getFirst().getUser().getFirstName()).isEqualTo("Luigi Rossi");
         assertThat(athlete.getLegalGuardians().getFirst().getUser().getMobile()).isEqualTo("+34711036812");
-        assertThat(athlete.getLegalGuardians().getFirst().getSecondMobile()).isEqualTo("+34711036811");
+        assertThat(athlete.getLegalGuardians().getFirst().getSecondMobile()).isEqualTo("34711036822");
         assertThat(athlete.getLegalGuardians().getFirst().getRelationShip()).isEqualTo(RelationShip.AUNT);
         assertThat(athlete.getSportModalities()).hasSize(2);
         assertThat(athlete.getSportModalities().getFirst().getProfessor().getUser().getId()).isEqualTo(athletes[0].getSportModalities().getFirst().getProfessor().getUserDtoId());
@@ -77,5 +77,11 @@ class AthleteServiceIT extends BaseSportsAcademyTests {
         assertThat(athlete.getSportModalities().getLast().getProfessor().getUser().getId()).isEqualTo(athletes[0].getSportModalities().getLast().getProfessor().getUserDtoId());
         assertThat(athlete.getSportModalities().getLast().getProfessor().getUser().getFirstName()).isEqualTo("Laura Neri");
         assertThat(athlete.getSportModalities().getLast().getProfessor().getUser().getMobile()).isEqualTo("+34711036814");
+    }
+
+    @Test
+    void testGetUniqueProfessorSpecializationsByLegalGuardian(){
+        assertThat(this.athleteService.getUniqueProfessorSpecializationsByLegalGuardian(athletes[0].getLegalGuardians().getFirst().getSecondMobile()))
+                .containsExactlyInAnyOrder("Tennis", "Swimming");
     }
 }

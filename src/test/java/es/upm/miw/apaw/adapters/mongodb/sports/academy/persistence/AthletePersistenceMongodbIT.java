@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.AthleteRepository;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.LegalGuardianEntity;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.SportModalityEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
@@ -14,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -110,5 +113,19 @@ class AthletePersistenceMongodbIT extends BaseSportsAcademyTests {
                 .sportModalities(new ArrayList<>())
                 .build();
         assertThrows(NotFoundException.class, () -> this.athletePersistenceMongodb.update(id, athlete));
+    }
+
+    @Test
+    void testGetByLegalGuardians(){
+        var athletes = this.athletePersistenceMongodb.getByLegalGuardians(Stream.of(this.legalGuardians[0].toLegalGuardian())).toList();
+        assertFalse(athletes.isEmpty());
+        assertEquals(1, athletes.size());
+        assertEquals(this.athletes[0].getUserDtoId(), athletes.getFirst().getUser().getId());
+        assertEquals(this.athletes[0].getGender(), athletes.getFirst().getGender().getValue());
+        assertEquals(this.athletes[0].getHeight(), athletes.getFirst().getHeight());
+        assertEquals(this.athletes[0].getWeight(), athletes.getFirst().getWeight());
+        assertEquals(this.athletes[0].getBirthDate(), athletes.getFirst().getBirthDate());
+        assertThat(athletes.getFirst().getLegalGuardians()).isEqualTo(this.athletes[0].getLegalGuardians().stream().map(LegalGuardianEntity::toLegalGuardian).toList());
+        assertThat(athletes.getFirst().getSportModalities()).isEqualTo(this.athletes[0].getSportModalities().stream().map(SportModalityEntity::toSportModality).toList());
     }
 }

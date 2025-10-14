@@ -8,7 +8,6 @@ import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
 import es.upm.miw.apaw.domain.persistenceports.sports.academy.IAthletePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -71,5 +70,4 @@ public class AthletePersistenceMongodb implements IAthletePersistence {
         List<AthleteEntity> athletes = athleteRepository.findByLegalGuardiansIn(guardianEntities);
         return athletes.stream().map(AthleteEntity::toAthlete);
     }
-
 }
