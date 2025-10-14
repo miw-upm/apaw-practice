@@ -9,4 +9,5 @@ import java.util.stream.Stream;
 public interface VideoPersistence {
 
     Stream<Video> findByTitle(String title);
+
 }
