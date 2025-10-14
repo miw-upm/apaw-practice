@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(VideogameResource.VIDEOGAMES)
 public class VideogameResource {
 
-    public static final String VIDEOGAMES = "/videogame/videogames";
+    public static final String VIDEOGAMES = "/videogame/videogame";
     public static final String NAME_ID = "/{name}";
 
     private final VideogameService videogameService;
