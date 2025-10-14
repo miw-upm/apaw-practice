@@ -29,4 +29,15 @@ class CoachServiceIT {
     void testReadByFullName_notFound() {
         assertThrows(NotFoundException.class, () -> this.coachService.readByFullName("no existe"));
     }
+    @Test
+    void testFindCoachExperienceYearsSumByRatingComment_incredibleStriking_distinctOk() {
+        int sum = this.coachService.findCoachExperienceYearsSumByRatingComment("Incredible striking!");
+        assertThat(sum).isEqualTo(23);
+    }
+
+    @Test
+    void testFindCoachExperienceYearsSumByRatingComment_notFound_zero() {
+        int sum = this.coachService.findCoachExperienceYearsSumByRatingComment("no such comment");
+        assertThat(sum).isZero();
+    }
 }
