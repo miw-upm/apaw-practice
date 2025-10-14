@@ -14,7 +14,7 @@ import java.util.UUID;
 public class AthleteResource {
     public static final String ATHLETES = "/sports-academy/athletes";
     public static final String ID_ID = "/{id}";
-    public static final String SPORT_MODALITY_PROFESSOR_SPECIALIZATIONS = "/sport-modalities/professor/specializations";
+    public static final String SPORT_MODALITY_PROFESSOR_SPECIALIZATIONS = "/sport-modalities/professors/specializations";
     private final AthleteService athleteService;
 
     @Autowired
