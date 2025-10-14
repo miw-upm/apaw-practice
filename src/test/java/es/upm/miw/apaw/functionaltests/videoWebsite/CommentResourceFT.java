@@ -1,15 +1,22 @@
 package es.upm.miw.apaw.functionaltests.videoWebsite;
 
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.models.videoWebsite.enums.AccountType;
+import es.upm.miw.apaw.domain.models.videoWebsite.enums.VideoStatus;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.junit.jupiter.api.Test;
+import es.upm.miw.apaw.domain.models.videoWebsite.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.adapters.resources.videoWebsite.CommentResource.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -27,7 +34,48 @@ public class CommentResourceFT {
                 .uri(COMMENTS + "/" + commentId)
                 .exchange()
                 .expectStatus().isNoContent();
+    }
 
+    @Test
+    void testCreateComment() {
+        UserDto user = UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9990")).build();
 
+        Video video = Video.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9991"))
+                .title("test_title 1")
+                .description("test_Description of 1º video")
+                .UploadDate(LocalDateTime.now())
+                .videoStatus(VideoStatus.PUBLIC)
+                .build();
+
+        WatchList watchList = WatchList.builder()
+                .listName("test_listName 1")
+                .description("test_list description 1")
+                .savedVideos(List.of(video))
+                .build();
+
+        WebAccount commenter = WebAccount.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9992"))
+                .userName("test_Test Account")
+                .accountType(AccountType.NORMAL)
+                .user(user)
+                .watchList(List.of(watchList))
+                .build();
+
+        Comment comment = Comment.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9993"))
+                .content("Created from controller test")
+                .commentTime(LocalDateTime.now())
+                .video(video)
+                .commenter(commenter)
+                .build();
+
+        webTestClient.post()
+                .uri("/videoWebsite/comments")
+                .bodyValue(comment)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Comment.class)
+                .value(c -> assertEquals("Created from controller test", c.getContent()));
     }
 }
