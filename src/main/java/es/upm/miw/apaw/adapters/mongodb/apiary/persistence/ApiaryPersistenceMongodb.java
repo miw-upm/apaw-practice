@@ -11,6 +11,7 @@ import es.upm.miw.apaw.domain.persistenceports.apiary.ApiaryPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -57,5 +58,17 @@ public class ApiaryPersistenceMongodb implements ApiaryPersistence {
                 .map(ApiaryEntity::getLocation)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public BigDecimal sumProductPricesByRega(String rega) {
+        return this.apiaryRepository.findAll().stream()
+                .filter(apiary -> rega.equals(apiary.getRega()))
+                .flatMap(apiary -> apiary.getHiveEntities().stream())
+                .map(hive -> hive.getProductEntity())
+                .filter(Objects::nonNull)
+                .map(product -> product.getPrice())
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

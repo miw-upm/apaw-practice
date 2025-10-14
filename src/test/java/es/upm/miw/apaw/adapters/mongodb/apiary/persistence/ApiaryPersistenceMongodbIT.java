@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -46,4 +47,17 @@ class ApiaryPersistenceMongodbIT {
         Set<String> locations = apiaryPersistenceMongodb.findLocationsByShippingAddress("Direccion Falsa 123");
         assertThat(locations).isEmpty();
     }
+
+    @Test
+    void testSumProductPricesByRega_ReturnsCorrectSum() {
+        BigDecimal sum = apiaryPersistenceMongodb.sumProductPricesByRega("REGA00001");
+        assertThat(sum).isEqualByComparingTo(new BigDecimal("15.00"));
+    }
+
+    @Test
+    void testSumProductPricesByRega_ReturnsZeroWhenNotFound() {
+        BigDecimal sum = apiaryPersistenceMongodb.sumProductPricesByRega("REGA_NO_EXISTE");
+        assertThat(sum).isEqualByComparingTo(BigDecimal.ZERO);
+    }
+
 }
