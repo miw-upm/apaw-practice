@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,7 +57,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
     void testApplyANewLoanForABankAccount(){
         Loan loan = Loan.builder().quantity(new BigDecimal("10000")).condition("active").interestRate(0.07).build();
-        List<Loan> result = this.bankAccountService.applyANewLoanForABankAccount("ES2800000000000000000002",loan);
+        List<Loan> result = this.bankAccountService.applyANewLoanForABankAccount("ES2800000000000000000002",loan).toList();
         assertEquals(1,result.size());
         assertNotNull(result.getFirst().getId());
         assertEquals(new BigDecimal("10000"), result.getFirst().getQuantity());
@@ -72,6 +73,16 @@ import static org.junit.jupiter.api.Assertions.*;
         assertThrows(NotFoundException.class, () -> this.bankAccountService.findByAccountNumber("ES2800000000000000000001"));
         bankSeeder.deleteAll();
         bankSeeder.seedDatabase();
+    }
+
+    @Test
+    void testObtainPaidPaymentHistoryIdByCondition(){
+        Stream<UUID> result = this.bankAccountService.obtainPaidPaymentHistoryIdByCondition("active");
+        assertThat(result).hasSize(3)
+                .containsAll(List.of(
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"),
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff5000"),
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7000")));
     }
 
 }

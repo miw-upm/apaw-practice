@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -24,20 +27,82 @@ class GarmentPersistenceMongodbIT {
     private DatabaseSeeder databaseSeeder;
 
     @BeforeEach
-    void seed() {
-        databaseSeeder.reSeedDatabase();
+    void setUp() {
+        this.databaseSeeder.reSeedDatabase();
     }
 
     @Test
     void testFindByPriceBetween() {
-        List<Garment> garments =
-                this.garmentPersistenceMongodb.findByPriceBetween(new BigDecimal("50"), new BigDecimal("100")).toList();
+        BigDecimal min = new BigDecimal("50.00");
+        BigDecimal max = new BigDecimal("100.00");
 
-        assertThat(garments).isNotNull();
-        // 可选非空断言
-        // assertThat(garments).isNotEmpty();
-        assertThat(garments).allSatisfy(g ->
-                assertThat(g.getPrice()).isBetween(new BigDecimal("50"), new BigDecimal("100"))
-        );
+        List<Garment> garments = this.garmentPersistenceMongodb.findByPriceBetween(min, max)
+                .toList();
+
+        assertThat(garments).isNotNull().isNotEmpty();
+        assertThat(garments)
+                .allSatisfy(g ->
+                        assertThat(g.getPrice()).isBetween(min, max)
+                );
+    }
+
+    @Test
+    void testCreate() {
+        Garment newGarment = Garment.builder()
+                .size("S")
+                .price(new BigDecimal("19.99"))
+                .onSale(false)
+                .build();
+
+        Garment created = this.garmentPersistenceMongodb.create(newGarment);
+
+        assertThat(created).isNotNull();
+        assertThat(created.getId()).isNotNull(); // 创建后应有 id
+        assertThat(created.getSize()).isEqualTo("S");
+        assertThat(created.getPrice()).isEqualByComparingTo("19.99");
+        assertThat(created.getOnSale()).isFalse();
+
+        // ✅ 验证是否真的保存入库
+        List<Garment> garments = this.garmentPersistenceMongodb.findByPriceBetween(
+                new BigDecimal("10"), new BigDecimal("30")
+        ).toList();
+
+        assertThat(garments)
+                .extracting(Garment::getSize)
+                .contains("S");
+    }
+
+    @Test
+    void testUpdate() {
+        UUID seededId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+
+        Garment body = Garment.builder()
+                .size("XL")
+                .price(new BigDecimal("129.99"))
+                .onSale(true)
+                .build();
+
+        Garment updated = this.garmentPersistenceMongodb.update(seededId, body);
+
+        assertThat(updated).isNotNull();
+        assertThat(updated.getId()).isEqualTo(seededId);
+        assertThat(updated.getSize()).isEqualTo("XL");
+        assertThat(updated.getPrice()).isEqualByComparingTo("129.99");
+        assertThat(updated.getOnSale()).isTrue();
+    }
+
+    @Test
+    void testUpdate_NotFound() {
+        UUID unknownId = UUID.fromString("ffffffff-ffff-ffff-ffff-ffffffff9999");
+
+        Garment body = Garment.builder()
+                .size("L")
+                .price(new BigDecimal("49.99"))
+                .onSale(false)
+                .build();
+
+        assertThatThrownBy(() -> this.garmentPersistenceMongodb.update(unknownId, body))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("not found");
     }
 }

@@ -20,7 +20,7 @@ public class ApplicationResource {
     public static final String MEETINGS = "/meetings";
     public static final String SEARCHES = "/searches";
     public static final String ANNUALSALARY = "/annualSalary"; // First search: #1269
-    public static final String UNIQUEURLS = "/uniqueUrls";
+    public static final String UNIQUEURLS = "/uniqueUrls";  // Second search: #1270
 
     private final ApplicationService applicationService;
 

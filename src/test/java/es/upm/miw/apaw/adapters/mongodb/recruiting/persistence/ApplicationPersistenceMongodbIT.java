@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.ApplicationRepository;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.persistance.ApplicationPersistenceMongodb;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
@@ -26,9 +25,6 @@ class ApplicationPersistenceMongodbIT {
 
     @Autowired
     private ApplicationPersistenceMongodb applicationPersistence;
-
-    @Autowired
-    private ApplicationRepository applicationRepository;
 
     @Autowired
     private RecruitingSeeder recruitingSeeder;

@@ -34,4 +34,12 @@ class RepresentativeRepositoryIT {
         assertThat(found).isNotNull();
         assertThat(found.getResponsibility()).isEqualTo("Treasurer");
     }
+
+    @Test
+    void testFindAllAndContainsSeededData() {
+        List<RepresentativeEntity> reps = representativeRepository.findAll();
+        assertThat(reps).isNotEmpty();
+        assertThat(reps.getFirst().getResponsibility()).isNotBlank();
+        assertThat(reps.getFirst().getJoinDate()).isNotNull();
+    }
 }

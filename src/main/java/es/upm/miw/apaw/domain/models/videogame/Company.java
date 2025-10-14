@@ -25,5 +25,9 @@ public class Company {
     @NotBlank
     private String sector;
     private List<Videogame> videoGames;
+
+    public void doDefault() {
+
+    }
 }
 

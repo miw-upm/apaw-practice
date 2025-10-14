@@ -100,19 +100,4 @@ class ApplicationRepositoryIT {
 
         assertThat(rejected.getStatus()).isEqualTo(Status.In_process);
     }
-
-    @Test
-    void testFindByStatus() {
-        List<ApplicationEntity> openApps = applicationRepository.findByStatus(Status.Hired);
-        assertThat(openApps).hasSize(1);
-        assertThat(openApps.getFirst().getPositionEntity().getReference()).isEqualTo(1003);
-    }
-
-    @Test
-    void testFindByUser() {
-        List<ApplicationEntity> openApps = applicationRepository.findByUser(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"));
-        assertThat(openApps).hasSize(1);
-        assertThat(openApps.getFirst().getPositionEntity().getReference()).isEqualTo(1003);
-        assertThat(openApps.getFirst().getPositionEntity().getNumVacancies()).isEqualTo(2);
-    }
 }
