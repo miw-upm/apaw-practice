@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.persistenceports.sports.academy.ILegalGuardianPers
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class LegalGuardianService {
 
@@ -20,5 +22,9 @@ public class LegalGuardianService {
         existingLegalGuardian.setRelationShip(legalGuardian.getRelationShip());
         existingLegalGuardian.setSecondMobile(legalGuardian.getSecondMobile());
         return this.legalGuardianPersistence.update(id, existingLegalGuardian);
+    }
+
+    public Stream<LegalGuardian> getBySecondMobile(String secondMobile){
+        return this.legalGuardianPersistence.getBySecondMobile(secondMobile);
     }
 }
