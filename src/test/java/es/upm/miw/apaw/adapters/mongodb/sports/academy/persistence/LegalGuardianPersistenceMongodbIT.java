@@ -103,4 +103,13 @@ class LegalGuardianPersistenceMongodbIT extends BaseSportsAcademyTests {
         assertThat(legalGuardians.getFirst().getRelationShip()).isEqualTo(RelationShip.AUNT);
         assertThat(legalGuardians.getFirst().getUser().getId()).isEqualTo(this.legalGuardians[0].getUserDtoId());
     }
+
+    @Test
+    void testGetByRelationShip() {
+        var legalGuardians = this.legalGuardianPersistence.getByRelationShip(RelationShip.FATHER).toList();
+        assertFalse(legalGuardians.isEmpty());
+        assertThat(legalGuardians.getFirst().getSecondMobile()).isEqualTo("34712036844");
+        assertThat(legalGuardians.getFirst().getRelationShip()).isEqualTo(RelationShip.FATHER);
+        assertThat(legalGuardians.getFirst().getUser().getId()).isEqualTo(this.legalGuardians[2].getUserDtoId());
+    }
 }

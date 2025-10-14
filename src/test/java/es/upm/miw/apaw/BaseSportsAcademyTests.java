@@ -33,6 +33,11 @@ public abstract class BaseSportsAcademyTests {
                     .userDtoId(UUID.fromString(UUID.randomUUID().toString()))
                     .secondMobile("34712036833")
                     .relationShip(RelationShip.AUNT.getValue())
+                    .build(),
+            LegalGuardianEntity.builder()
+                    .userDtoId(UUID.fromString(UUID.randomUUID().toString()))
+                    .secondMobile("34712036844")
+                    .relationShip(RelationShip.FATHER.getValue())
                     .build()
     };
 
@@ -78,6 +83,13 @@ public abstract class BaseSportsAcademyTests {
                     .height(165)
                     .weight(56)
                     .birthDate(LocalDate.of(2003, 6, 20))
+                    .build(),
+            AthleteEntity.builder()
+                    .userDtoId(UUID.fromString(UUID.randomUUID().toString()))
+                    .gender(Gender.OTHER.getValue())
+                    .height(1.70)
+                    .weight(68)
+                    .birthDate(LocalDate.of(1995, 6, 20))
                     .build()
     };
 
@@ -105,6 +117,8 @@ public abstract class BaseSportsAcademyTests {
         athletes[0].setSportModalities(java.util.Arrays.asList(sportModalities));
         athletes[1].setLegalGuardians(Collections.singletonList(legalGuardians[1]));
         athletes[1].setSportModalities(java.util.Arrays.asList(sportModalities));
+        athletes[2].setLegalGuardians(Collections.singletonList(legalGuardians[2]));
+        athletes[2].setSportModalities(java.util.Arrays.asList(sportModalities));
 
         legalGuardianRepository.saveAll(java.util.Arrays.asList(legalGuardians));
         professorRepository.saveAll(java.util.Arrays.asList(professors));
