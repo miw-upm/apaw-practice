@@ -7,4 +7,7 @@ import java.util.stream.Stream;
 
 public interface RepresentativePersistence {
     Stream<Representative> readAll();
+
+    List<String> findUserMobilesByReplyReason(String reason);
+
 }
