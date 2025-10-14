@@ -1,10 +1,11 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.AthleteRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
-import es.upm.miw.apaw.BaseSportsAcademyIT;
+import es.upm.miw.apaw.BaseSportsAcademyTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class AthletePersistenceMongodbIT extends BaseSportsAcademyIT {
+class AthletePersistenceMongodbIT extends BaseSportsAcademyTests {
 
     @Autowired
     private AthletePersistenceMongodb athletePersistenceMongodb;
@@ -31,7 +32,7 @@ class AthletePersistenceMongodbIT extends BaseSportsAcademyIT {
     }
 
     @Test
-    void testCreateAndGetById() {
+    void testCreateAndGetById(@Autowired AthleteRepository athleteRepository) {
         Athlete athlete =  Athlete.builder()
                 .user(UserDto.builder().id(UUID.randomUUID()).build())
                 .gender(Gender.MALE)
@@ -50,10 +51,11 @@ class AthletePersistenceMongodbIT extends BaseSportsAcademyIT {
         assertThat(athleteBD.getBirthDate()).isEqualTo(athlete.getBirthDate());
         assertThat(athleteBD.getLegalGuardians()).isEmpty();
         assertThat(athleteBD.getSportModalities()).isEmpty();
+        athleteRepository.deleteById(athlete.getUser().getId());
     }
 
     @Test
-    void testCreateAndUpdate() {
+    void testCreateAndUpdate(@Autowired AthleteRepository athleteRepository) {
         Athlete athlete = Athlete.builder()
                 .user(UserDto.builder().id(UUID.randomUUID()).build())
                 .gender(Gender.MALE)
@@ -68,6 +70,7 @@ class AthletePersistenceMongodbIT extends BaseSportsAcademyIT {
         this.athletePersistenceMongodb.update(athlete.getUser().getId(), athleteBD);
         athleteBD = this.athletePersistenceMongodb.getById(athlete.getUser().getId());
         assertThat(athleteBD.getGender()).isEqualTo(Gender.FEMALE);
+        athleteRepository.deleteById(athlete.getUser().getId());
     }
 
     @Test
