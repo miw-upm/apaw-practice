@@ -38,8 +38,8 @@ public class CommentPersistenceMongodbIT {
         UUID commentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000");
         this.commentPersistence.deleteById(commentId);
         assertThrows(NotFoundException.class, () -> this.commentPersistence.findById(commentId));
-
-
+        videoWebSiteSeeder.deleteAll();
+        videoWebSiteSeeder.seedDatabase();
     }
 
     @Test
