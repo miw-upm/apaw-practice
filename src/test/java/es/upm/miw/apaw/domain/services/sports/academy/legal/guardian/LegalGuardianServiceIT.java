@@ -39,4 +39,12 @@ class LegalGuardianServiceIT extends BaseSportsAcademyTests {
         assertThat(legalGuardianList).hasSize(1);
         assertThat(legalGuardianList.getFirst()).isEqualTo(athletes[0].getLegalGuardians().getFirst().toLegalGuardian());
     }
+
+    @Test
+    void testGetByRelationShip(){
+        var legalGuardianList = this.legalGuardianService.getByRelationShip(RelationShip.FATHER).toList();
+        assertThat(legalGuardianList).hasSize(1);
+        assertThat(legalGuardianList).allMatch(legalGuardian -> legalGuardian.getRelationShip().equals(RelationShip.FATHER));
+        assertThat(legalGuardianList.getFirst()).isEqualTo(athletes[2].getLegalGuardians().getFirst().toLegalGuardian());
+    }
 }

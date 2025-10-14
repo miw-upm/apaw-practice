@@ -39,7 +39,8 @@ class AthleteRepositoryIT extends BaseSportsAcademyTests {
     @Test
     void testFindByLegalGuardiansIn(){
         var legalGuardian = athletes[0].getLegalGuardians().getFirst();
-        assertThat(this.athleteRepository.findByLegalGuardiansIn(Collections.singletonList(legalGuardian)).size()).isEqualTo(1);
+        assertThat(this.athleteRepository.findByLegalGuardiansIn(Collections.singletonList(legalGuardian)))
+                .hasSize(1);
         var athlete = this.athleteRepository.findByLegalGuardiansIn(Collections.singletonList(legalGuardian)).getFirst();
         assertThat(athlete).isNotNull();
         assertThat(athlete.getUserDtoId()).isEqualTo(athletes[0].getUserDtoId());

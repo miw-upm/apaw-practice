@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.adapters.resources.sports.academy;
 
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.SportModalitiesLevelsPercentage;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.services.sports.academy.AthleteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ public class AthleteResource {
     public static final String ATHLETES = "/sports-academy/athletes";
     public static final String ID_ID = "/{id}";
     public static final String SPORT_MODALITY_PROFESSOR_SPECIALIZATIONS = "/sport-modalities/professors/specializations";
+    public static final String SPORT_MODALITY_LEVELS = "/sport-modalities/levels";
     private final AthleteService athleteService;
 
     @Autowired
@@ -30,5 +33,10 @@ public class AthleteResource {
     @GetMapping(SPORT_MODALITY_PROFESSOR_SPECIALIZATIONS)
     public List<String> getUniqueProfessorSpecializationsByLegalGuardian(@Valid @RequestParam String secondMobile){
         return athleteService.getUniqueProfessorSpecializationsByLegalGuardian(secondMobile);
+    }
+
+    @GetMapping(SPORT_MODALITY_LEVELS)
+    public List<SportModalitiesLevelsPercentage> getPercentageOfSportModalityLevelsByLegalGuardian(@Valid @RequestParam RelationShip relationShip){
+        return athleteService.getPercentageOfSportModalityLevelsByLegalGuardian(relationShip);
     }
 }
