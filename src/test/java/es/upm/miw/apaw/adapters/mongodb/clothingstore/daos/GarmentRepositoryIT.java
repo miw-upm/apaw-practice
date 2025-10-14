@@ -70,7 +70,7 @@ class GarmentRepositoryIT {
         garment.setPrice(newPrice);
         garment.setOnSale(newOnSale);
         garment.setSize("XL");
-
+//1
         garmentRepository.save(garment);
 
         Optional<GarmentEntity> reloaded = garmentRepository.findById(garment.getId());
