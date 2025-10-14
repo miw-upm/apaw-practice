@@ -1,0 +1,11 @@
+package es.upm.miw.apaw.domain.persistenceports.university;
+
+import es.upm.miw.apaw.domain.models.university.SubjectAssignment;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface SubjectAssignmentPersistence {
+    SubjectAssignment getById(UUID id);
+}
