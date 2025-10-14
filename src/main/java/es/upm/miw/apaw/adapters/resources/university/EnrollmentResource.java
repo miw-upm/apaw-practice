@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(EnrollmentResource.ENROLLMENTS)
 public class EnrollmentResource {
-    public static final String ENROLLMENTS = "/enrollments";
+    public static final String ENROLLMENTS = "/university/enrollments";
     public static final String CODE_ID = "/{code}";
     
     private final EnrollmentService enrollmentService;

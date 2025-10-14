@@ -48,7 +48,7 @@ class TeacherServiceIT {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
         
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T999")
+                .identificationCode("T9999")
                 .specialization("New Specialization")
                 .fullName("New Teacher Name")
                 .tenured(true)
@@ -57,7 +57,7 @@ class TeacherServiceIT {
         Teacher result = this.teacherService.update(teacherId, updatedTeacher);
 
         assertThat(result).isNotNull();
-        assertThat(result.getIdentificationCode()).isEqualTo("T999");
+        assertThat(result.getIdentificationCode()).isEqualTo("T9999");
         assertThat(result.getSpecialization()).isEqualTo("New Specialization");
         assertThat(result.getFullName()).isEqualTo("New Teacher Name");
         assertThat(result.getTenured()).isTrue();
