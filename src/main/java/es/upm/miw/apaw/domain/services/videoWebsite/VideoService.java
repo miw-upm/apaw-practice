@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.videoWebsite;
 
 import es.upm.miw.apaw.domain.models.videoWebsite.Video;
+import es.upm.miw.apaw.domain.models.videoWebsite.VideoStatusUpdating;
 import es.upm.miw.apaw.domain.persistenceports.videoWebsite.VideoPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,18 @@ public class VideoService {
 
     public Video save(Video newVideoData) {
         return this.videoPersistence.save(newVideoData);
+    }
+
+    public void updateVideoStatus(Stream<VideoStatusUpdating> videoStatusUpdatingList) {
+        videoStatusUpdatingList.map(statusUpdate -> {
+            Video video = this.videoPersistence.findById(statusUpdate.getId());
+            video.setVideoStatus(statusUpdate.getStatus());
+            return video;
+        })
+                .forEach(video -> this.videoPersistence.update(video.getId(), video));
+    }
+
+    public Video findById(UUID id) {
+        return this.videoPersistence.findById(id);
     }
 }

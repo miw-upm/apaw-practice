@@ -43,7 +43,15 @@ public class CommentPersistenceMongodbIT {
     }
 
     @Test
-    void testCreateComment() {
+    void testFindById() {
+        UUID commentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000");
+        Comment comment = this.commentPersistence.findById(commentId);
+        assertNotNull(comment);
+        assertEquals(comment.getContent(), "content 1");
+    }
+
+    @Test
+    void testCreate() {
         UserDto user = UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9990")).build();
 
         Video video = Video.builder()
@@ -82,4 +90,5 @@ public class CommentPersistenceMongodbIT {
         Optional<CommentEntity> optional = this.commentRepository.findById(comment.getId());
         assertTrue(optional.isPresent());
     }
+
 }
