@@ -199,6 +199,22 @@ public class UniversitySeeder {
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 12, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[1], subjectAssignments[2]))
                         .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0502"))
+                        .build(),
+                EnrollmentEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0403"))
+                        .code("ENR004")
+                        .semester("2024-1")
+                        .enrollmentDate(LocalDateTime.of(2024, 1, 10, 13, 0))
+                        .subjectAssignmentEntities(Arrays.asList(subjectAssignments[2], subjectAssignments[3]))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0503"))
+                        .build(),
+                EnrollmentEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0404"))
+                        .code("ENR005")
+                        .semester("2024-2")
+                        .enrollmentDate(LocalDateTime.of(2024, 1, 10, 14, 0))
+                        .subjectAssignmentEntities(Arrays.asList(subjectAssignments[0], subjectAssignments[2]))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0504"))
                         .build()
         };
         this.enrollmentRepository.saveAll(Arrays.asList(enrollments));

@@ -23,7 +23,7 @@ class EnrollmentServiceIT {
 
     @Test
     void testDelete() {
-        String enrollmentCode = "ENR001";
+        String enrollmentCode = "ENR005";
         
         Optional<EnrollmentEntity> enrollmentBefore = enrollmentRepository.findByCode(enrollmentCode);
         assertThat(enrollmentBefore).isPresent();
