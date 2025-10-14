@@ -29,8 +29,13 @@ public class ApiaryResource {
         return this.apiaryService.findByLocation(location);
     }
 
-      @GetMapping("/locations-by-shipping")
-      public Set<String> findLocationsByShippingAddress(@RequestParam String shippingAddress) {
-          return this.apiaryService.findLocationsByShippingAddress(shippingAddress);
-      }
+    @GetMapping("/locations-by-shipping")
+    public Set<String> findLocationsByShippingAddress(@RequestParam String shippingAddress) {
+        return this.apiaryService.findLocationsByShippingAddress(shippingAddress);
+    }
+
+    @GetMapping("/sum-price-by-rega")
+    public BigDecimal sumProductPricesByRega(@RequestParam String rega) {
+        return this.apiaryService.sumProductPricesByRega(rega);
+    }
 }

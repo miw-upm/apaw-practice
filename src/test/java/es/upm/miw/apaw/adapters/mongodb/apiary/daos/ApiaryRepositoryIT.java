@@ -44,7 +44,6 @@ class ApiaryRepositoryIT {
     @Test
     void testFindByLocationCaseSensitivity() {
         List<ApiaryEntity> apiaries = apiaryRepository.findByLocation("burgos");
-        // As MongoRepository default queries are case sensitive, expect empty.
         assertThat(apiaries).isEmpty();
     }
 }
