@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.recipes;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.recipes.Recipe;
+import es.upm.miw.apaw.domain.models.recipes.RecipeItem;
 import es.upm.miw.apaw.domain.persistenceports.recipes.RecipePersistence;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -120,4 +121,47 @@ class RecipeServiceIT {
                 .hasMessageContaining("A recipe with reference number '1' already exists.");
     }
 
+    @Test
+    void testUpdateItems() {
+        Recipe existingRecipe = Recipe.builder()
+                .title("Butter Cookies")
+                .referenceNumber("1")
+                .build();
+
+        BDDMockito.given(this.recipePersistence.readByReferenceNumber("1"))
+                .willReturn(existingRecipe);
+
+        RecipeItem item1 = RecipeItem.builder()
+                .quantity(200.0)
+                .specifications("Use fresh butter")
+                .optional(false)
+                .build();
+        RecipeItem item2 = RecipeItem.builder()
+                .quantity(100.0)
+                .specifications("Add chocolate chips")
+                .optional(true)
+                .build();
+
+        List<RecipeItem> updatedItems = List.of(item1, item2);
+
+        Recipe updatedRecipe = Recipe.builder()
+                .title("Butter Cookies")
+                .referenceNumber("1")
+                .items(updatedItems)
+                .build();
+
+        BDDMockito.given(this.recipePersistence.update(BDDMockito.any(Recipe.class)))
+                .willReturn(updatedRecipe);
+
+        Recipe result = this.recipeService.updateItems("1", updatedItems);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getReferenceNumber()).isEqualTo("1");
+        assertThat(result.getItems()).hasSize(2);
+        assertThat(result.getItems().getFirst().getSpecifications())
+                .isEqualTo("Use fresh butter");
+
+        BDDMockito.verify(this.recipePersistence).readByReferenceNumber("1");
+        BDDMockito.verify(this.recipePersistence).update(BDDMockito.any(Recipe.class));
+    }
 }

@@ -10,8 +10,8 @@ import es.upm.miw.apaw.domain.models.bank.Loan;
 import es.upm.miw.apaw.domain.persistenceports.bank.BankAccountPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Repository("bankAccountPersistence")
 public class BankAccountPersistenceMongodb implements BankAccountPersistence {
@@ -44,7 +44,7 @@ public class BankAccountPersistenceMongodb implements BankAccountPersistence {
     }
 
     @Override
-    public List<Loan> applyANewLoanForABankAccount(String accountNumber, Loan loan) {
+    public Stream<Loan> applyANewLoanForABankAccount(String accountNumber, Loan loan) {
         BankAccountEntity bankAccount = this.bankAccountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new NotFoundException(BANK_ACCOUNT_ERROR_MESSAGE + accountNumber));
         if (bankAccount.getLoansApplied()==null){
@@ -52,7 +52,7 @@ public class BankAccountPersistenceMongodb implements BankAccountPersistence {
         }
         bankAccount.getLoansApplied().add(new LoanEntity(loan));
 
-        return this.bankAccountRepository.save(bankAccount).toBankAccount().getLoansApplied();
+        return this.bankAccountRepository.save(bankAccount).toBankAccount().getLoansApplied().stream();
     }
 
     @Override
@@ -67,5 +67,19 @@ public class BankAccountPersistenceMongodb implements BankAccountPersistence {
         }
         bankAccount.setCreditCardAssociated(new CreditCardEntity(creditCard));
         return this.bankAccountRepository.save(bankAccount).toBankAccount().getCreditCardAssociated();
+    }
+
+    @Override
+    public Stream<BankAccount> findByAccountHolders(UUID accountHolder) {
+
+        return this.bankAccountRepository.findByAccountHolders(accountHolder).stream()
+                .map(BankAccountEntity::toBankAccount);
+    }
+
+    @Override
+    public Stream<BankAccount> findByLoansAppliedCondition(String condition) {
+        return Optional.ofNullable(this.bankAccountRepository.findByLoansAppliedCondition(condition)).orElse(Collections.emptyList())
+                .stream()
+                .map(BankAccountEntity::toBankAccount);
     }
 }

@@ -3,6 +3,7 @@ package es.upm.miw.apaw.functionaltests.recruiting;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.resources.recruiting.ApplicationResource;
 import es.upm.miw.apaw.domain.models.recruiting.Application;
+import es.upm.miw.apaw.domain.models.recruiting.Attendee;
 import es.upm.miw.apaw.domain.models.recruiting.Meeting;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,40 +47,98 @@ class ApplicationResourceFT {
     // --- UPDATE endpoint test ---------------------------------------------------------
 
     @Test
-    void testUpdateMeetings() {
+    void testUpdateMeetings_WithSeederData() {
+
         UUID applicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0031");
 
+        // Attendees from Seeder
+        Attendee attendee1 = Attendee.builder()
+                .emailAddress("beate.magnie@test.com")
+                .fullName("Beate Magnie")
+                .phoneNumber("+4143645789")
+                .build();
+
+        Attendee attendee2 = Attendee.builder()
+                .emailAddress("felix.issle@test.com")
+                .fullName("Felix Issle")
+                .phoneNumber("+4173912799")
+                .build();
+
+        Attendee attendee3 = Attendee.builder()
+                .emailAddress("andrea.schulz@test.com")
+                .fullName("Andrea Schulz")
+                .phoneNumber("+4165889667")
+                .build();
+
         // New meetings
-        Meeting newMeeting1 = Meeting.builder()
-                .date(LocalDateTime.now().plusDays(2))
-                .url("https://updated-meeting-1.com")
+        Meeting meeting1 = Meeting.builder()
+                .date(LocalDateTime.now().plusDays(3))
+                .url("https://meeting-updated-1.com")
+                .attendees(List.of(attendee1, attendee2))
                 .build();
 
-        Meeting newMeeting2 = Meeting.builder()
-                .date(LocalDateTime.now().plusDays(5))
-                .url("https://updated-meeting-2.com")
+        Meeting meeting2 = Meeting.builder()
+                .date(LocalDateTime.now().plusDays(7))
+                .url("https://meeting-updated-2.com")
+                .attendees(List.of(attendee3))
                 .build();
 
-        List<Meeting> newMeetings = List.of(newMeeting1, newMeeting2);
+        List<Meeting> updatedMeetings = List.of(meeting1, meeting2);
 
         webTestClient.put()
-                .uri(ApplicationResource.APPLICATIONS + ApplicationResource.ID_ID + ApplicationResource.MEETINGS,
-                        applicationId)
+                .uri(ApplicationResource.APPLICATIONS + ApplicationResource.ID_ID + ApplicationResource.MEETINGS, applicationId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(newMeetings)
+                .bodyValue(updatedMeetings)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody(Application.class)
                 .value(updated -> {
+                    assertThat(updated).isNotNull();
                     assertThat(updated.getId()).isEqualTo(applicationId);
-                    assertThat(updated.getMeetingList()).hasSize(2);
-                    assertThat(updated.getMeetingList().get(0).getUrl()).isEqualTo("https://updated-meeting-1.com");
-                    assertThat(updated.getMeetingList().get(1).getUrl()).isEqualTo("https://updated-meeting-2.com");
                     assertThat(updated.getStatus()).isEqualTo(Status.In_process);
                     assertThat(updated.getUser()).isNotNull();
                     assertThat(updated.getUser().getId())
                             .isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"));
+                    assertThat(updated.getMeetingList())
+                            .isNotNull()
+                            .hasSize(2);
+
+                    Meeting m1 = updated.getMeetingList().getFirst();
+                    assertThat(m1.getUrl()).isEqualTo("https://meeting-updated-1.com");
+                    assertThat(m1.getAttendees())
+                            .isNotNull()
+                            .hasSize(2)
+                            .extracting(Attendee::getEmailAddress)
+                            .containsExactlyInAnyOrder(
+                                    "beate.magnie@test.com",
+                                    "felix.issle@test.com"
+                            );
+
+                    Attendee a1 = m1.getAttendees().stream()
+                            .filter(a -> a.getEmailAddress().equals("beate.magnie@test.com"))
+                            .findFirst().orElseThrow();
+                    assertThat(a1.getFullName()).isEqualTo("Beate Magnie");
+                    assertThat(a1.getPhoneNumber()).isEqualTo("+4143645789");
+
+                    Attendee a2 = m1.getAttendees().stream()
+                            .filter(a -> a.getEmailAddress().equals("felix.issle@test.com"))
+                            .findFirst().orElseThrow();
+                    assertThat(a2.getFullName()).isEqualTo("Felix Issle");
+                    assertThat(a2.getPhoneNumber()).isEqualTo("+4173912799");
+
+                    Meeting m2 = updated.getMeetingList().get(1);
+                    assertThat(m2.getUrl()).isEqualTo("https://meeting-updated-2.com");
+                    assertThat(m2.getAttendees())
+                            .isNotNull()
+                            .hasSize(1);
+
+                    Attendee a3 = m2.getAttendees().getFirst();
+                    assertThat(a3.getEmailAddress()).isEqualTo("andrea.schulz@test.com");
+                    assertThat(a3.getFullName()).isEqualTo("Andrea Schulz");
+                    assertThat(a3.getPhoneNumber()).isEqualTo("+4165889667");
+
+                    assertThat(updated.getPosition().getName()).isEqualTo("CPI consultant");
                 });
     }
 
@@ -88,15 +147,30 @@ class ApplicationResourceFT {
 
         UUID applicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
 
+        // Attendees from Seeder
+        Attendee attendee1 = Attendee.builder()
+                .emailAddress("beate.magnie@test.com")
+                .fullName("Beate Magnie")
+                .phoneNumber("+4143645789")
+                .build();
+
+        Attendee attendee2 = Attendee.builder()
+                .emailAddress("felix.issle@test.com")
+                .fullName("Felix Issle")
+                .phoneNumber("+4173912799")
+                .build();
+
         // New meetings
         Meeting newMeeting1 = Meeting.builder()
                 .date(LocalDateTime.now().plusDays(2))
                 .url("https://updated-meeting-1.com")
+                .attendees(List.of(attendee1))
                 .build();
 
         Meeting newMeeting2 = Meeting.builder()
                 .date(LocalDateTime.now().plusDays(5))
                 .url("https://updated-meeting-2.com")
+                .attendees(List.of(attendee2))
                 .build();
 
         List<Meeting> newMeetings = List.of(newMeeting1, newMeeting2);
@@ -115,9 +189,16 @@ class ApplicationResourceFT {
         // This Application is in status Rejected
         UUID rejectedApplicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0034");
 
+        Attendee attendee = Attendee.builder()
+                .emailAddress("beate.magnie@test.com")
+                .fullName("Beate Magnie")
+                .phoneNumber("+4143645789")
+                .build();
+
         Meeting meeting = Meeting.builder()
                 .date(LocalDateTime.now().plusDays(1))
                 .url("https://conflict-meeting.com")
+                .attendees(List.of(attendee))
                 .build();
 
         List<Meeting> meetingList = List.of(meeting);

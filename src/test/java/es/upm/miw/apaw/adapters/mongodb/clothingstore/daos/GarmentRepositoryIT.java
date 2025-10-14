@@ -5,41 +5,27 @@ import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.GarmentEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
 import java.math.BigDecimal;
-import java.util.List;
-
+import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//@DataMongoTest
-//@ActiveProfiles("test")
+@SpringBootTest
+@ActiveProfiles("test")
 class GarmentRepositoryIT {
-
-    //@Autowired
-    private GarmentRepository garmentRepository;
-
-    //@Autowired
-    private DatabaseSeeder databaseSeeder;
-
-    //@BeforeEach
-    void seed() {
-        databaseSeeder.reSeedDatabase();
-    }
-
-//    @Test
-    void testFindByPriceBetween() {
-        List<GarmentEntity> entities =
-                this.garmentRepository.findByPriceBetween(new BigDecimal("50"), new BigDecimal("100"));
-
-        assertThat(entities).isNotNull();
-        // 同上，如果 seeder 确认有数据可断言非空
-        // assertThat(entities).isNotEmpty();
-
-        assertThat(entities).allSatisfy(e ->
-                assertThat(e.getPrice()).isBetween(new BigDecimal("50"), new BigDecimal("100"))
-        );
+    @Autowired GarmentRepository garmentRepository;
+    @Autowired DatabaseSeeder databaseSeeder;
+    @BeforeEach void setUp(){databaseSeeder.reSeedDatabase();}
+    @Test void testFindById(){
+        UUID id=UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+        assertTrue(garmentRepository.findById(id).isPresent());
+        GarmentEntity g=garmentRepository.findById(id).get();
+        assertThat(g.getSize()).isEqualTo("M");
+        assertThat(g.getPrice()).isEqualByComparingTo(new BigDecimal("59.99"));
+        assertThat(g.getOnSale()).isTrue();
     }
 }
+
 

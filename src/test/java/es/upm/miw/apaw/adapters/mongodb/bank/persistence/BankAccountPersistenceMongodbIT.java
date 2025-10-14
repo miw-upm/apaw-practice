@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 class BankAccountPersistenceMongodbIT {
 
-    CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Arrays.asList(PaymentHistoryEntity.builder()
+    CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Collections.singletonList(PaymentHistoryEntity.builder()
             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
             .amount(new BigDecimal("9.99"))
             .paymentDate(LocalDateTime.now())
@@ -58,7 +58,7 @@ class BankAccountPersistenceMongodbIT {
     @Test
     void testApplyANewLoanForABankAccount(){
         Loan loan = Loan.builder().quantity(new BigDecimal("10000")).condition("active").interestRate(0.07).build();
-        List<Loan> result = this.bankAccountPersistenceMongodb.applyANewLoanForABankAccount("ES2800000000000000000002",loan);
+        List<Loan> result = this.bankAccountPersistenceMongodb.applyANewLoanForABankAccount("ES2800000000000000000002",loan).toList();
         assertEquals(1,result.size());
         assertNotNull(result.getFirst().getId());
         assertEquals(new BigDecimal("10000"), result.getFirst().getQuantity());
@@ -102,4 +102,22 @@ class BankAccountPersistenceMongodbIT {
         bankSeeder.deleteAll();
         bankSeeder.seedDatabase();
     }
+
+    @Test
+    void testFindByAccountHolders(){
+        List<BankAccount> result = this.bankAccountPersistenceMongodb.findByAccountHolders(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")).toList();
+        assertThat(result).hasSize(2);
+        List<String> ids = result.stream().map(BankAccount::getAccountNumber).toList();
+        assertThat(ids).contains("ES2800000000000000000000")
+                .contains("ES2800000000000000000003");
+    }
+
+    @Test
+    void testFindByLoansAppliedCondition(){
+        List<BankAccount> result = this.bankAccountPersistenceMongodb.findByLoansAppliedCondition("active").toList();
+        assertThat(result).hasSize(2)
+                .anyMatch(bankAccountEntity -> bankAccountEntity.getAccountNumber().equals("ES2800000000000000000003"))
+                .anyMatch(bankAccountEntity -> bankAccountEntity.getAccountNumber().equals("ES2800000000000000000001"));
+    }
+
 }
