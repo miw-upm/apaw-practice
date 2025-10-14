@@ -32,7 +32,7 @@ class BankAccountServiceTest {
                         UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                                 .mobile(invocation.getArgument(0))
                                 .firstName("mock").build());
-        assertEquals(new BigDecimal("100000"),this.bankAccountService.obtainTotalQuantityByMobile("123123123"));
+        assertEquals(new BigDecimal("110000"),this.bankAccountService.obtainTotalQuantityByMobile("123123123"));
     }
 
 }

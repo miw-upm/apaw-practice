@@ -33,4 +33,4 @@ management:
 
 miw:
   apaw:
-    user: "http://localhost:8080/users"
+    user: "http://localhost:8081/users"

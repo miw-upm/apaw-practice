@@ -18,6 +18,9 @@ class BankAccountRepositoryIT {
     @Autowired
     private BankAccountRepository bankAccountRepository;
 
+    @Autowired
+    private BankSeeder bankSeeder;
+
     @Test
     void testFindByAccountNumber() {
         assertTrue(this.bankAccountRepository.findByAccountNumber("ES2800000000000000000000").isPresent());
@@ -31,6 +34,8 @@ class BankAccountRepositoryIT {
     void testDeleteByAccountNumber(){
         assertTrue(this.bankAccountRepository.findByAccountNumber("ES2800000000000000000003").isPresent());
         assertThat(this.bankAccountRepository.deleteByAccountNumber("ES2800000000000000000003")).isEqualTo(1);
+        this.bankSeeder.deleteAll();
+        this.bankSeeder.seedDatabase();
     }
 
     @Test
@@ -40,5 +45,13 @@ class BankAccountRepositoryIT {
         List<UUID> ids = result.stream().map(BankAccountEntity::getId).toList();
         assertThat(ids).contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff6000"))
                 .contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9000"));
+    }
+
+    @Test
+    void testFindByLoansAppliedCondition(){
+        List<BankAccountEntity> result = this.bankAccountRepository.findByLoansAppliedCondition("active");
+        assertThat(result).hasSize(2)
+                .anyMatch(bankAccountEntity -> bankAccountEntity.getId().equals(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9000")))
+                .anyMatch(bankAccountEntity -> bankAccountEntity.getId().equals(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7000")));
     }
 }

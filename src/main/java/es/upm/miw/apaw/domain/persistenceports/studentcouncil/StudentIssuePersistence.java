@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.persistenceports.studentcouncil;
 
 import es.upm.miw.apaw.domain.models.studentcouncil.StudentIssue;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface StudentIssuePersistence {
