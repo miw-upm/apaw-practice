@@ -57,5 +57,12 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
                 .stream()
                 .map(GarmentEntity::toGarment);
     }
+    @Override
+    public void delete(UUID id) {
+        if (!this.garmentRepository.existsById(id)) {
+            throw new NotFoundException("Garment not found: " + id);
+        }
+        this.garmentRepository.deleteById(id);
+    }
 
 }
