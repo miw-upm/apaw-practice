@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.entities;
 
+import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -23,5 +25,15 @@ public class VideogameEntity {
     private LocalDate releaseDate;
     @DBRef
     private GenreEntity genreEntity;
+
+    public Videogame toVideogame() {
+        Videogame videogame = new Videogame();
+        BeanUtils.copyProperties(this,videogame);
+        return videogame;
+    }
+
+    public void fromVideogame(Videogame videogame){
+        BeanUtils.copyProperties(videogame,this);
+    }
 
 }
