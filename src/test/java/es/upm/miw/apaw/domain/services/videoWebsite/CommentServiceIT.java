@@ -76,5 +76,16 @@ public class CommentServiceIT {
         Comment saved = this.commentService.create(comment);
         assertNotNull(saved.getId());
         assertEquals("test_This is a test comment", saved.getContent());
+
+        videoWebSiteSeeder.deleteAll();
+        videoWebSiteSeeder.seedDatabase();
+    }
+
+    @Test
+    void testFindById(){
+        UUID commentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000");
+        Comment comment = this.commentService.findById(commentId);
+        assertNotNull(comment);
+        assertEquals(comment.getContent(), "content 1");
     }
 }
