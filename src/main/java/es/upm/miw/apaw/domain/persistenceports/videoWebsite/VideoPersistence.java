@@ -9,5 +9,8 @@ import java.util.stream.Stream;
 public interface VideoPersistence {
 
     Stream<Video> findByTitle(String title);
+    Video update(UUID id, Video video);
+    Video findById(UUID id);
+    Video save(Video video);
 
 }

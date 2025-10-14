@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.videoWebsite;
 
 import es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos.CommentRepository;
+import es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos.VideoWebSiteSeeder;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.videoWebsite.enums.AccountType;
 import es.upm.miw.apaw.domain.models.videoWebsite.enums.VideoStatus;
@@ -24,12 +25,18 @@ public class CommentServiceIT {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private VideoWebSiteSeeder videoWebSiteSeeder;
+
     @Test
     void testDeleteById() {
         UUID commentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000");
         assertTrue(this.commentRepository.findById(commentId).isPresent());
         this.commentService.deleteById(commentId);
         assertFalse(this.commentRepository.findById(commentId).isPresent());
+
+        videoWebSiteSeeder.deleteAll();
+        videoWebSiteSeeder.seedDatabase();
     }
 
     @Test
@@ -40,7 +47,7 @@ public class CommentServiceIT {
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9991"))
                 .title("test_title 1")
                 .description("test_Description of 1º video")
-                .UploadDate(LocalDateTime.now())
+                .uploadDate(LocalDateTime.now())
                 .videoStatus(VideoStatus.PUBLIC)
                 .build();
 

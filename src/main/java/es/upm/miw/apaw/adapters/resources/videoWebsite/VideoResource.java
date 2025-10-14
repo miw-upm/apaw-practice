@@ -1,14 +1,13 @@
 package es.upm.miw.apaw.adapters.resources.videoWebsite;
 
-import es.upm.miw.apaw.domain.models.videoWebsite.Video;
 import es.upm.miw.apaw.domain.services.videoWebsite.VideoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import es.upm.miw.apaw.domain.models.videoWebsite.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(VideoResource.VIDEOS)
@@ -26,5 +25,10 @@ public class VideoResource {
     @GetMapping
     public List<Video> findByTitle(@RequestParam("title") String title) {
         return videoService.findByTitle(title).toList();
+    }
+
+    @PutMapping("/{id}")
+    public Video updateVideo(@PathVariable UUID id, @Valid @RequestBody Video video) {
+        return this.videoService.update(id, video);
     }
 }
