@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -57,5 +58,17 @@ class ApiaryServiceIT {
     void testFindLocationsByShippingAddress_returnsEmptyWhenNotFound() {
         Set<String> locations = apiaryService.findLocationsByShippingAddress("Fake Address 123");
         assertThat(locations).isEmpty();
+    }
+
+    @Test
+    void testSumProductPricesByRega_Service_ReturnsCorrectSum() {
+        BigDecimal sum = apiaryService.sumProductPricesByRega("REGA00002");
+        assertThat(sum).isEqualByComparingTo(new BigDecimal("14.50"));
+    }
+
+    @Test
+    void testSumProductPricesByRega_Service_ReturnsZeroWhenNotFound() {
+        BigDecimal sum = apiaryService.sumProductPricesByRega("REGA_NO_EXISTE");
+        assertThat(sum).isEqualByComparingTo(BigDecimal.ZERO);
     }
 }
