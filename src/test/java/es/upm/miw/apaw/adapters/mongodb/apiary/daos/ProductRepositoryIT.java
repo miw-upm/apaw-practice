@@ -41,8 +41,8 @@ class ProductRepositoryIT {
     void testFindByPriceGreaterThan() {
         List<ProductEntity> products = this.productRepository.findByPriceGreaterThan(new BigDecimal("7.50"));
         assertFalse(products.isEmpty());
-        assertTrue(products.stream().anyMatch(p -> p.getBarcode().equals("P001"))); // Miel de Romero
-        assertTrue(products.stream().anyMatch(p -> p.getBarcode().equals("P004"))); // Miel de Azahar
+        assertTrue(products.stream().anyMatch(p -> p.getBarcode().equals("P001")));
+        assertTrue(products.stream().anyMatch(p -> p.getBarcode().equals("P004")));
     }
 
     @Test

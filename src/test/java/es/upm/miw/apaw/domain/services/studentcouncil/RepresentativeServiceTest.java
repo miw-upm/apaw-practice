@@ -13,9 +13,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.mockito.Mockito.when;
 
 
 @SpringBootTest
@@ -29,7 +33,7 @@ class RepresentativeServiceTest {
     private UserRestClient userRestClient;
 
     @Autowired
-    private RepresentativeService representativeService; // <-- NO crees instancia manualmente
+    private RepresentativeService representativeService;
 
     @Test
     void testGetAllRepresentatives() {
@@ -57,5 +61,15 @@ class RepresentativeServiceTest {
         Assertions.assertFalse(reps.isEmpty());
         Assertions.assertEquals("mockUser", reps.getFirst().getRepresentative().getFirstName());
         Assertions.assertEquals("123456789", reps.getFirst().getRepresentative().getMobile());
+    }
+
+    @Test
+    void testFindUserMobilesByReplyReason() {
+        when(representativePersistence.findUserMobilesByReplyReason("Reply1"))
+                .thenReturn(List.of("666777888", "666999000"));
+
+        List<String> result = representativeService.findUserMobilesByReplyReason("Reply1");
+
+        assertThat(result).containsExactlyInAnyOrder("666777888", "666999000");
     }
 }
