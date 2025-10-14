@@ -4,11 +4,9 @@ import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.services.sports.academy.AthleteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,5 +24,10 @@ public class AthleteResource {
     @GetMapping(ID_ID)
     public Athlete getById(@Valid @PathVariable UUID id) {
         return this.athleteService.getById(id);
+    }
+
+    @GetMapping()
+    public List<String> getDistinctProfessorsSpecializationsByLegalGuardianSecondMobile(@Valid @RequestParam String secondMobile){
+        return athleteService.getDistinctProfessorsSpecializationsByLegalGuardianSecondMobile(secondMobile);
     }
 }

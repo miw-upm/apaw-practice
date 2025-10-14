@@ -13,4 +13,6 @@ public interface ILegalGuardianPersistence {
     LegalGuardian update(UUID id, LegalGuardian legalGuardian);
 
     LegalGuardian getById(UUID id);
+
+    Stream<LegalGuardian> getBySecondMobile(String secondMobile);
 }

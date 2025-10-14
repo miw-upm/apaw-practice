@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface LegalGuardianRepository extends MongoRepository<LegalGuardianEntity, UUID> {
     Optional<LegalGuardianEntity> findByUserDtoId(UUID userDtoId);
+    Optional<LegalGuardianEntity> findBySecondMobile(String secondMobile);
 }
