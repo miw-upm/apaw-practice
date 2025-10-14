@@ -40,7 +40,6 @@ public class CommentPersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> this.commentPersistence.findById(commentId));
         videoWebSiteSeeder.deleteAll();
         videoWebSiteSeeder.seedDatabase();
-
     }
 
     @Test
@@ -51,7 +50,7 @@ public class CommentPersistenceMongodbIT {
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9991"))
                 .title("test_title 1")
                 .description("test_Description of 1º video")
-                .UploadDate(LocalDateTime.now())
+                .uploadDate(LocalDateTime.now())
                 .videoStatus(VideoStatus.PUBLIC)
                 .build();
 

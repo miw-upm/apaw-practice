@@ -18,12 +18,17 @@ public class CommentRepositoryIT {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private VideoWebSiteSeeder videoWebSiteSeeder;
+
     @Test
     void testDeleteById() {
         UUID commentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000");
         assertTrue(this.commentRepository.findById(commentId).isPresent());
         this.commentRepository.deleteById(commentId);
         assertFalse(this.commentRepository.findById(commentId).isPresent());
+        videoWebSiteSeeder.deleteAll();
+        videoWebSiteSeeder.seedDatabase();
     }
 
 }

@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.functionaltests.videoWebsite;
 
+import es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos.VideoWebSiteSeeder;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.videoWebsite.enums.AccountType;
 import es.upm.miw.apaw.domain.models.videoWebsite.enums.VideoStatus;
@@ -25,6 +26,9 @@ public class CommentResourceFT {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Autowired
+    private VideoWebSiteSeeder videoWebSiteSeeder;
+
     @Test
     void testDeleteComment() {
         UUID commentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000");
@@ -34,6 +38,8 @@ public class CommentResourceFT {
                 .uri(COMMENTS + "/" + commentId)
                 .exchange()
                 .expectStatus().isNoContent();
+        videoWebSiteSeeder.deleteAll();
+        videoWebSiteSeeder.seedDatabase();
     }
 
     @Test
@@ -44,7 +50,7 @@ public class CommentResourceFT {
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9991"))
                 .title("test_title 1")
                 .description("test_Description of 1º video")
-                .UploadDate(LocalDateTime.now())
+                .uploadDate(LocalDateTime.now())
                 .videoStatus(VideoStatus.PUBLIC)
                 .build();
 

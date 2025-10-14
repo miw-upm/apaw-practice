@@ -2,8 +2,10 @@ package es.upm.miw.apaw.domain.services.videoWebsite;
 
 import es.upm.miw.apaw.domain.models.videoWebsite.Video;
 import es.upm.miw.apaw.domain.persistenceports.videoWebsite.VideoPersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
@@ -11,6 +13,7 @@ public class VideoService {
 
     private final VideoPersistence videoPersistence;
 
+    @Autowired
     public VideoService(VideoPersistence videoPersistence) {
         this.videoPersistence = videoPersistence;
     }
@@ -19,5 +22,15 @@ public class VideoService {
         return videoPersistence.findByTitle(title);
     }
 
+    public Video update(UUID id, Video newVideoData) {
+        Video existing = this.videoPersistence.findById(id);
+        existing.setTitle(newVideoData.getTitle());
+        existing.setDescription(newVideoData.getDescription());
+        existing.setVideoStatus(newVideoData.getVideoStatus());
+        return this.videoPersistence.save(existing);
+    }
 
+    public Video save(Video newVideoData) {
+        return this.videoPersistence.save(newVideoData);
+    }
 }
