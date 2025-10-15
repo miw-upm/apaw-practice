@@ -1,8 +1,10 @@
 package es.upm.miw.apaw.functionaltests.studentcouncil;
 
+import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.StudentCouncilSeeder;
 import es.upm.miw.apaw.adapters.resources.studentcouncil.StudentCouncilResource;
 import es.upm.miw.apaw.domain.models.studentcouncil.StudentCouncil;
 import es.upm.miw.apaw.domain.services.studentcouncil.StudentCouncilService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -25,6 +27,14 @@ class StudentCouncilResourceFT {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Autowired
+    private StudentCouncilSeeder seeder;
+
+    @BeforeEach
+    void setUp() {
+        seeder.deleteAll();
+        seeder.seedDatabase();
+    }
     @MockitoBean
     private StudentCouncilService studentCouncilService;
 
@@ -49,5 +59,22 @@ class StudentCouncilResourceFT {
                 .expectStatus().isOk()
                 .expectBody(StudentCouncil.class)
                 .value(sc -> assertThat(sc.getResources()).isEqualByComparingTo(newResources));
+    }
+
+    @Test
+    void testGetResourcesByStatement() {
+        String statement = "Problem1";
+        given(studentCouncilService.sumResourcesByStatement(statement))
+                .willReturn(new BigDecimal("80000.00"));
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(StudentCouncilResource.STUDENT_COUNCILS + "/resources")
+                        .queryParam("statement", statement)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(sum -> assertThat(sum).isEqualByComparingTo(new BigDecimal("80000.00")));
     }
 }
