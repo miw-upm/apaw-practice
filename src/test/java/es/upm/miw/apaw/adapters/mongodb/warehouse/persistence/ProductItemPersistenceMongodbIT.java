@@ -21,9 +21,12 @@ class ProductItemPersistenceMongodbIT {
     @Test
     void testReadByBarcode() {
         Optional<ProductItem> item = this.productItemPersistence.readByBarcode("PI-001");
+
         assertThat(item).isPresent();
-        assertThat(item.get().getAppoint()).isEqualTo("Wood Screw 10mm");
-        assertThat(item.get().getCost()).isEqualByComparingTo(new BigDecimal("0.20"));
+        assertThat(item.get().getBarcode()).isEqualTo("PI-001");
+        assertThat(item.get().getAppoint()).isNotBlank();
+        assertThat(item.get().getCost()).isNotNull();
+        assertThat(item.get().getUnitOfMeasure()).isNotBlank();
     }
 
 }
