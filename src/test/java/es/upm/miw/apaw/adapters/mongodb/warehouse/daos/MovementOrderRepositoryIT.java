@@ -1,12 +1,13 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.daos;
 
-import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.MovementOrderEntity;
+import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.OrderDetailEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -18,26 +19,16 @@ class MovementOrderRepositoryIT {
 
     @Test
     void testFindAll() {
-        List<MovementOrderEntity> orders = this.movementOrderRepository.findAll();
-        assertThat(orders).isNotEmpty();
-        assertThat(orders).hasSize(2);
-    }
-
-    @Test
-    void testFindByTypeOrder() {
-        List<MovementOrderEntity> inboundOrders = this.movementOrderRepository.findByTypeOrder("INBOUND");
-        assertThat(inboundOrders).isNotEmpty();
-        MovementOrderEntity order = inboundOrders.get(0);
-        assertThat(order.getPartnerName()).isEqualTo("Supplier XYZ");
-        assertThat(order.getCompletedOrder()).isTrue();
-    }
-
-    @Test
-    void testFindByCompletedOrderTrue() {
-        List<MovementOrderEntity> completedOrders = this.movementOrderRepository.findByCompletedOrderTrue();
-        assertThat(completedOrders).isNotEmpty();
-        assertThat(completedOrders)
-                .allMatch(MovementOrderEntity::getCompletedOrder);
+        assertThat(this.movementOrderRepository.findAll())
+                .anySatisfy(order -> {
+                    assertThat(order.getUserId())
+                            .isEqualTo(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"));
+                    assertThat(order.getRegistrationDate()).isNotNull();
+                    assertThat(order.getOrderDetailEntities()).hasSize(2);
+                    OrderDetailEntity detail = order.getOrderDetailEntities().getFirst();
+                    assertThat(detail.getProductItemEntity().getBarcode()).isIn("PI-001", "PI-002");
+                    assertThat(detail.getQtyRequested()).isGreaterThan(0);
+                });
     }
 
 }

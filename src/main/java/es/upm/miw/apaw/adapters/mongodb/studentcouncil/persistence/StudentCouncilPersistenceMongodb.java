@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Repository("studentCouncilPersistence")
 public class StudentCouncilPersistenceMongodb implements StudentCouncilPersistence {
@@ -31,5 +32,11 @@ public class StudentCouncilPersistenceMongodb implements StudentCouncilPersisten
                 .orElseThrow(() -> new RuntimeException("StudentCouncil not found"));
         entity.fromStudentCouncil(studentCouncil);
         return this.studentCouncilRepository.save(entity).toStudentCouncil();
+    }
+
+    @Override
+    public Stream<StudentCouncil> readAll() {
+        return this.studentCouncilRepository.findAll().stream()
+                .map(StudentCouncilEntity::toStudentCouncil);
     }
 }

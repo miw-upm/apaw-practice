@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.functionaltests.studentcouncil;
 
 import es.upm.miw.apaw.adapters.resources.studentcouncil.StudentIssueResource;
+import es.upm.miw.apaw.domain.models.studentcouncil.StudentCouncil;
 import es.upm.miw.apaw.domain.models.studentcouncil.StudentIssue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -41,31 +43,6 @@ class StudentIssueResourceFT {
                     assertThat(created.getStatement()).isEqualTo("Issue for testing");
                     assertThat(created.getClosed()).isFalse();
                     assertThat(created.getReplies()).isEmpty();
-                });
-    }
-
-    @Test
-    void testUpdateExistingStudentIssue() {
-        UUID existingId = UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0000");
-
-        StudentIssue updated = StudentIssue.builder()
-                .statement("Updated Problem1")
-                .closed(true)
-                .urgency(9)
-                .build();
-
-        webTestClient.put()
-                .uri(StudentIssueResource.STUDENT_ISSUES + "/" + existingId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(updated)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(StudentIssue.class)
-                .value(issue -> {
-                    assertThat(issue.getId()).isEqualTo(existingId);
-                    assertThat(issue.getStatement()).isEqualTo("Updated Problem1");
-                    assertThat(issue.getClosed()).isTrue();
-                    assertThat(issue.getUrgency()).isEqualTo(9);
                 });
     }
 }

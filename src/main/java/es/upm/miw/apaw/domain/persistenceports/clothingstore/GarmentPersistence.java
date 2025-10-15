@@ -13,5 +13,6 @@ public interface GarmentPersistence {
     Garment update(UUID id, Garment garment);
     Stream<Garment> readAll();
     Garment create(Garment garment);
+    void delete(UUID id);
 
 }

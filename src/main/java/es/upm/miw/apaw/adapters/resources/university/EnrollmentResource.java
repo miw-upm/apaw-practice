@@ -2,14 +2,17 @@ package es.upm.miw.apaw.adapters.resources.university;
 
 import es.upm.miw.apaw.domain.services.university.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(EnrollmentResource.ENROLLMENTS)
 public class EnrollmentResource {
-    public static final String ENROLLMENTS = "/enrollments";
+    public static final String ENROLLMENTS = "/university/enrollments";
     public static final String CODE_ID = "/{code}";
-    
+
     private final EnrollmentService enrollmentService;
 
     @Autowired

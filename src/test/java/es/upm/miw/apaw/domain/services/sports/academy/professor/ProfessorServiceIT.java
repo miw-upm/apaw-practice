@@ -1,9 +1,10 @@
 package es.upm.miw.apaw.domain.services.sports.academy.professor;
 
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ProfessorRepository;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
-import es.upm.miw.apaw.BaseSportsAcademyIT;
+import es.upm.miw.apaw.BaseSportsAcademyTests;
 import es.upm.miw.apaw.domain.services.sports.academy.ProfessorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ProfessorServiceIT extends BaseSportsAcademyIT {
+class ProfessorServiceIT extends BaseSportsAcademyTests {
 
     @Autowired
     private ProfessorService professorService;
@@ -27,7 +28,7 @@ class ProfessorServiceIT extends BaseSportsAcademyIT {
     private UserRestClient userRestClient;
 
     @Test
-    void testCreate() {
+    void testCreate(@Autowired ProfessorRepository professorRepository) {
         UUID id = UUID.randomUUID();
         UserDto userDto = UserDto.builder()
                 .id(id)
@@ -42,5 +43,6 @@ class ProfessorServiceIT extends BaseSportsAcademyIT {
         assertThat(professorCreated.getUser().getId()).isEqualTo(id);
         assertThat(professorCreated.getLicenseNumber()).isEqualTo("LIC123456");
         assertThat(professorCreated.getSpecialization()).isEqualTo("CrossFit");
+        professorRepository.deleteById(id);
     }
 }

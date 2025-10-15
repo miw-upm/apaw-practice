@@ -14,8 +14,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -76,6 +75,20 @@ public class WineServiceIT {
         this.wineService.updatePrices(Stream.of(newWine));
 
         BDDMockito.then(this.winePersistence).should().update(any(Wine.class));
+    }
+
+    @Test
+    void testSumPricesByComment() {
+        String comment = "Excellent experience";
+        BigDecimal expectedSum = new BigDecimal("55.50");
+
+        BDDMockito.given(this.winePersistence.sumPricesByComment(comment))
+                .willReturn(expectedSum);
+
+        BigDecimal result = this.wineService.sumPricesByComment(comment);
+
+        assertThat(result).isEqualByComparingTo("55.50");
+        BDDMockito.then(this.winePersistence).should().sumPricesByComment(comment);
     }
 
 }

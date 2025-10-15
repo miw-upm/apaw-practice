@@ -2,7 +2,6 @@ package es.upm.miw.apaw.adapters.mongodb.studentcouncil.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.RepresentativeRepository;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites.RepresentativeEntity;
-import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.studentcouncil.Representative;
 import es.upm.miw.apaw.domain.persistenceports.studentcouncil.RepresentativePersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;

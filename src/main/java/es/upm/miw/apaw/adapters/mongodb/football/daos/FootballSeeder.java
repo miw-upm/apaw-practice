@@ -40,13 +40,13 @@ public class FootballSeeder {
 
         StadiumEntity[] stadiums = {
                 StadiumEntity.builder()
-                        .stadiumId(1L)
+                        .stadiumId(UUID.randomUUID())
                         .officialName("Salamanca Stadium")
                         .capacity(40000)
                         .roof(true)
                         .build(),
                 StadiumEntity.builder()
-                        .stadiumId(2L)
+                        .stadiumId(UUID.randomUUID())
                         .officialName("Madrid Arena")
                         .capacity(65000)
                         .roof(false)

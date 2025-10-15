@@ -19,16 +19,16 @@ public class TeacherService {
 
     public Teacher update(UUID id, Teacher teacher) {
         var existingTeacher = this.teacherPersistence.getById(id);
-        
+
         if (!existingTeacher.getIdentificationCode().equals(teacher.getIdentificationCode())) {
             this.assertIdentificationCodeNotExists(teacher.getIdentificationCode());
         }
-        
+
         existingTeacher.setIdentificationCode(teacher.getIdentificationCode());
         existingTeacher.setSpecialization(teacher.getSpecialization());
         existingTeacher.setFullName(teacher.getFullName());
         existingTeacher.setTenured(teacher.getTenured());
-        
+
         return this.teacherPersistence.update(id, existingTeacher);
     }
 

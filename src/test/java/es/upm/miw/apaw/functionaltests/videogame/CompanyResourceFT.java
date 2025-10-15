@@ -41,7 +41,8 @@ public class CompanyResourceFT {
                 .value(createdCompany -> assertThat(createdCompany).isNotNull());
 
     }
-@Test
+
+    @Test
     void testCreateDenominationConflict() {
         Company company = Company.builder()
                 .denomination("company0")

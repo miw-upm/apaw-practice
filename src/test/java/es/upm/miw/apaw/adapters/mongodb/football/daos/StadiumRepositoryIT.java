@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +21,7 @@ class StadiumRepositoryIT {
 
     @Test
     void testFindByOfficialName_ok() {
-        Optional<StadiumEntity> opt = this.stadiumRepository.findByOfficialName("Salamanca Stadium");
+        Optional<StadiumEntity> opt = this.stadiumRepository.findByOfficialNameIgnoreCase("Salamanca Stadium");
         assertTrue(opt.isPresent());
         StadiumEntity stadium = opt.get();
         assertThat(stadium.getOfficialName()).isEqualTo("Salamanca Stadium");
@@ -30,16 +31,17 @@ class StadiumRepositoryIT {
 
     @Test
     void testFindByOfficialName_notFound() {
-        assertThat(this.stadiumRepository.findByOfficialName("no existe")).isEmpty();
+        assertThat(this.stadiumRepository.findByOfficialNameIgnoreCase("no existe")).isEmpty();
     }
 
     @Test
     void testExistsByStadiumId_ok() {
-        assertThat(this.stadiumRepository.existsByStadiumId(1L)).isTrue();
+        UUID stadiumId = this.stadiumRepository.findAll().get(0).getStadiumId();
+        assertThat(this.stadiumRepository.existsById(stadiumId)).isTrue();
     }
-
     @Test
     void testExistsByStadiumId_notFound() {
-        assertThat(this.stadiumRepository.existsByStadiumId(999L)).isFalse();
+        UUID randomId = UUID.randomUUID();
+        assertThat(this.stadiumRepository.existsById(randomId)).isFalse();
     }
 }

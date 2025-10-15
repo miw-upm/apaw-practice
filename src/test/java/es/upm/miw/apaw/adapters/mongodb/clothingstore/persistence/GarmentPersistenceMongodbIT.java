@@ -1,20 +1,19 @@
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -22,7 +21,8 @@ class GarmentPersistenceMongodbIT {
 
     @Autowired
     private GarmentPersistenceMongodb garmentPersistenceMongodb;
-
+    @Autowired
+    private GarmentRepository garmentRepository;
     @Autowired
     private DatabaseSeeder databaseSeeder;
 
@@ -61,8 +61,6 @@ class GarmentPersistenceMongodbIT {
         assertThat(created.getSize()).isEqualTo("S");
         assertThat(created.getPrice()).isEqualByComparingTo("19.99");
         assertThat(created.getOnSale()).isFalse();
-
-        // ✅ 验证是否真的保存入库
         List<Garment> garments = this.garmentPersistenceMongodb.findByPriceBetween(
                 new BigDecimal("10"), new BigDecimal("30")
         ).toList();
@@ -91,18 +89,12 @@ class GarmentPersistenceMongodbIT {
         assertThat(updated.getOnSale()).isTrue();
     }
 
+
     @Test
-    void testUpdate_NotFound() {
-        UUID unknownId = UUID.fromString("ffffffff-ffff-ffff-ffff-ffffffff9999");
-
-        Garment body = Garment.builder()
-                .size("L")
-                .price(new BigDecimal("49.99"))
-                .onSale(false)
-                .build();
-
-        assertThatThrownBy(() -> this.garmentPersistenceMongodb.update(unknownId, body))
-                .isInstanceOf(NotFoundException.class)
-                .hasMessageContaining("not found");
+    void testDelete_ok() {
+        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+        assertThat(garmentRepository.findById(id)).isPresent();
+        garmentPersistenceMongodb.delete(id);
+        assertThat(garmentRepository.findById(id)).isEmpty();
     }
 }

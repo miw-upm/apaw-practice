@@ -8,8 +8,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Builder
@@ -23,26 +21,28 @@ public class ProductItemEntity {
 
     @Id
     private UUID        id;
+
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
     private String      barcode;
-    private String      appoint;    //name / description
+
+    private String      appoint;
     private BigDecimal  cost;
     private String      unitOfMeasure;
+
 
     public ProductItemEntity(ProductItem productItem) {
         BeanUtils.copyProperties(productItem, this);
         this.id = UUID.randomUUID();
     }
 
-    public void fromProductItem(ProductItem productItem) {
-        BeanUtils.copyProperties(productItem, this);
-    }
-
     public ProductItem toProductItem() {
-        ProductItem productItem = new ProductItem();
-        BeanUtils.copyProperties(this, productItem);
-        return productItem;
+        return ProductItem.builder()
+                .barcode(this.barcode)
+                .appoint(this.appoint)
+                .cost(this.cost)
+                .unitOfMeasure(this.unitOfMeasure)
+                .build();
     }
 
 }

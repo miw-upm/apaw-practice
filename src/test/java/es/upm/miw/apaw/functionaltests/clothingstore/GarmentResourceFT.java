@@ -101,7 +101,6 @@ class GarmentResourceFT {
         assertThat(updated.getPrice()).isEqualByComparingTo("129.99");
         assertThat(updated.getOnSale()).isTrue();
     }
-    // es/upm/miw/apaw/functionaltests/clothingstore/GarmentResourceFT.java
     @Test
     void testCreate(){
         Garment body = Garment.builder()
@@ -136,5 +135,42 @@ class GarmentResourceFT {
         assertThat(query).isNotNull();
         assertThat(query.stream().anyMatch(g -> g.getId().equals(created.getId()))).isTrue();
     }
+    @Test
+    void testDeleteGarment_Ok() {
+        List<Garment> garments = this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(GarmentResource.GARMENTS)
+                        .queryParam("min", "0")
+                        .queryParam("max", "100000")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Garment.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(garments).isNotEmpty();
+        UUID idToDelete = garments.get(0).getId();
+
+        this.webTestClient.delete()
+                .uri(GarmentResource.GARMENTS + "/" + idToDelete)
+                .exchange()
+                .expectStatus().isNoContent();
+
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(GarmentResource.GARMENTS)
+                        .queryParam("min", "0")
+                        .queryParam("max", "100000")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Garment.class)
+                .value(list ->
+                        assertThat(list)
+                                .noneMatch(g -> g.getId().equals(idToDelete))
+                );
+    }
+
 
 }

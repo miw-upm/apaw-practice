@@ -22,7 +22,9 @@ public class IssueReplyPersistenceMongodb implements IssueReplyPersistence {
         this.issueReplyRepository.findById(id)
                 .ifPresentOrElse(
                         this.issueReplyRepository::delete,
-                        () -> { throw new RuntimeException("IssueReply not found with id: " + id); }
+                        () -> {
+                            throw new RuntimeException("IssueReply not found with id: " + id);
+                        }
                 );
     }
 }
