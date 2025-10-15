@@ -2,7 +2,6 @@ package es.upm.miw.apaw.adapters.mongodb.football.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.football.daos.StadiumRepository;
 import es.upm.miw.apaw.adapters.mongodb.football.entities.StadiumEntity;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.football.Stadium;
 import es.upm.miw.apaw.domain.persistenceports.football.StadiumPersistence;
 import org.springframework.stereotype.Repository;
@@ -14,7 +13,6 @@ import java.util.Optional;
 public class StadiumPersistenceMongodb implements StadiumPersistence {
 
     private final StadiumRepository stadiumRepository;
-    private static final String STADIUM_NAME = "Stadium name: ";
 
     public StadiumPersistenceMongodb(StadiumRepository stadiumRepository) {
         this.stadiumRepository = stadiumRepository;
@@ -22,7 +20,7 @@ public class StadiumPersistenceMongodb implements StadiumPersistence {
 
     @Override
     public Optional<Stadium> findByOfficialName(String name) {
-        return this.stadiumRepository.findByOfficialName(name)
+        return this.stadiumRepository.findByOfficialNameIgnoreCase(name)
                 .map(StadiumEntity::toStadium);
     }
 
@@ -31,5 +29,16 @@ public class StadiumPersistenceMongodb implements StadiumPersistence {
         return this.stadiumRepository.findAll().stream()
                 .map(StadiumEntity::toStadium)
                 .toList();
+    }
+
+    @Override
+    public Stadium save(Stadium stadium) {
+        StadiumEntity entity = new StadiumEntity(stadium);
+        return this.stadiumRepository.save(entity).toStadium();
+    }
+
+    @Override
+    public boolean existsByOfficialName(String name) {
+        return this.stadiumRepository.existsByOfficialNameIgnoreCase(name);
     }
 }
