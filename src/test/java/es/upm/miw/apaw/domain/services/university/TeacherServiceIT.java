@@ -26,7 +26,7 @@ class TeacherServiceIT {
     @Test
     void testUpdate() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0104");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T005")
                 .specialization("Updated Computer Science")
@@ -46,7 +46,7 @@ class TeacherServiceIT {
     @Test
     void testUpdateWithNewIdentificationCode() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0105");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T9999")
                 .specialization("New Specialization")
@@ -66,7 +66,7 @@ class TeacherServiceIT {
     @Test
     void testUpdateWithConflictingIdentificationCode() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0102");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T001")
                 .specialization("Updated Specialization")
@@ -82,7 +82,7 @@ class TeacherServiceIT {
     @Test
     void testUpdateNotFound() {
         UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T009")
                 .specialization("New Specialization")

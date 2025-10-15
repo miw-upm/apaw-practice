@@ -26,7 +26,7 @@ public class TeacherResourceFT {
     @Test
     void testUpdate() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0102");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T003")
                 .specialization("Updated Computer Science")
@@ -52,7 +52,7 @@ public class TeacherResourceFT {
     @Test
     void testUpdateWithNewIdentificationCode() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0103");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T017")
                 .specialization("New Specialization")
@@ -78,7 +78,7 @@ public class TeacherResourceFT {
     @Test
     void testUpdateNotFound() {
         UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T008")
                 .specialization("New Specialization")
@@ -97,7 +97,7 @@ public class TeacherResourceFT {
     @Test
     void testUpdateWithConflictingIdentificationCode() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0103");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T001")
                 .specialization("Updated Specialization")
@@ -116,8 +116,7 @@ public class TeacherResourceFT {
     @Test
     void testUpdateBadRequest() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0106");
-        
-        // Try to update with empty identification code (should fail validation)
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("")
                 .specialization("Updated Specialization")
@@ -136,8 +135,7 @@ public class TeacherResourceFT {
     @Test
     void testUpdateBadRequestNullIdentificationCode() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
-        
-        // Try to update with null identification code (should fail validation)
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode(null)
                 .specialization("Updated Specialization")

@@ -24,12 +24,12 @@ class EnrollmentServiceIT {
     @Test
     void testDelete() {
         String enrollmentCode = "ENR005";
-        
+
         Optional<EnrollmentEntity> enrollmentBefore = enrollmentRepository.findByCode(enrollmentCode);
         assertThat(enrollmentBefore).isPresent();
-        
+
         enrollmentService.delete(enrollmentCode);
-        
+
         Optional<EnrollmentEntity> enrollmentAfter = enrollmentRepository.findByCode(enrollmentCode);
         assertThat(enrollmentAfter).isEmpty();
     }
@@ -37,12 +37,12 @@ class EnrollmentServiceIT {
     @Test
     void testDeleteNotFound() {
         String nonExistentCode = "NONEXISTENT";
-        
+
         Optional<EnrollmentEntity> enrollmentBefore = enrollmentRepository.findByCode(nonExistentCode);
         assertThat(enrollmentBefore).isEmpty();
-        
+
         enrollmentService.delete(nonExistentCode);
-        
+
         Optional<EnrollmentEntity> enrollmentAfter = enrollmentRepository.findByCode(nonExistentCode);
         assertThat(enrollmentAfter).isEmpty();
     }

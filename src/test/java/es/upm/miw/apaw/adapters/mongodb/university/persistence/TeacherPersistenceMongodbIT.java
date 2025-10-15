@@ -29,9 +29,9 @@ class TeacherPersistenceMongodbIT {
     @Test
     void testGetById() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101");
-        
+
         Teacher teacher = teacherPersistence.getById(teacherId);
-        
+
         assertThat(teacher).isNotNull();
         assertThat(teacher.getIdentificationCode()).isEqualTo("T002");
         assertThat(teacher.getFullName()).isEqualTo("TFN002");
@@ -42,7 +42,7 @@ class TeacherPersistenceMongodbIT {
     @Test
     void testGetByIdNotFound() {
         UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
-        
+
         assertThatThrownBy(() -> teacherPersistence.getById(nonExistentId))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Teacher not found with id: " + nonExistentId);
@@ -51,7 +51,7 @@ class TeacherPersistenceMongodbIT {
     @Test
     void testUpdate() {
         UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0107");
-        
+
         Teacher updatedTeacher = Teacher.builder()
                 .identificationCode("T008")
                 .fullName("Dr. Smith Updated")
@@ -60,7 +60,7 @@ class TeacherPersistenceMongodbIT {
                 .build();
 
         Teacher result = teacherPersistence.update(teacherId, updatedTeacher);
-        
+
         assertThat(result).isNotNull();
         assertThat(result.getIdentificationCode()).isEqualTo("T008");
         assertThat(result.getFullName()).isEqualTo("Dr. Smith Updated");
@@ -87,7 +87,7 @@ class TeacherPersistenceMongodbIT {
     @Test
     void testUpdateWithNewTeacher() {
         UUID newTeacherId = UUID.randomUUID();
-        
+
         Teacher newTeacher = Teacher.builder()
                 .identificationCode("T011")
                 .fullName("New Teacher")
@@ -96,7 +96,7 @@ class TeacherPersistenceMongodbIT {
                 .build();
 
         Teacher result = teacherPersistence.update(newTeacherId, newTeacher);
-        
+
         assertThat(result).isNotNull();
         assertThat(result.getIdentificationCode()).isEqualTo("T011");
         assertThat(result.getFullName()).isEqualTo("New Teacher");

@@ -20,9 +20,9 @@ class TeacherRepositoryIT {
     @Test
     void testFindByIdentificationCode() {
         String identificationCode = "T001";
-        
+
         Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(identificationCode);
-        
+
         assertThat(teacher).isPresent();
         assertThat(teacher.get().getIdentificationCode()).isEqualTo(identificationCode);
         assertThat(teacher.get().getFullName()).isEqualTo("TFN001");
@@ -33,27 +33,27 @@ class TeacherRepositoryIT {
     @Test
     void testFindByIdentificationCodeNotFound() {
         String nonExistentCode = "T999NotFoundCode";
-        
+
         Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(nonExistentCode);
-        
+
         assertThat(teacher).isEmpty();
     }
 
     @Test
     void testFindByIdentificationCodeExactMatch() {
         String partialCode = "T00";
-        
+
         Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(partialCode);
-        
+
         assertThat(teacher).isEmpty();
     }
 
     @Test
     void testFindByIdentificationCodeEmptyString() {
         String emptyCode = "";
-        
+
         Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(emptyCode);
-        
+
         assertThat(teacher).isEmpty();
     }
 }
