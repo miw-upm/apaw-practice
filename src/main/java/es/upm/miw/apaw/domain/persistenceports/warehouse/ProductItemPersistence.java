@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface ProductItemPersistence {
 
     Optional<ProductItem> readByBarcode(String barcode);
+    Optional<ProductItem> update(String barcode, ProductItem productItem);
 
 }

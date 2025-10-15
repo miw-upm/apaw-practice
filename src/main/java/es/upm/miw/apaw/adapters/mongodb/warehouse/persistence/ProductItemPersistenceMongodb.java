@@ -24,4 +24,17 @@ public class ProductItemPersistenceMongodb implements ProductItemPersistence {
         return this.productItemRepository.findByBarcode(barcode)
                 .map(ProductItemEntity::toProductItem);
     }
+
+    @Override
+    public Optional<ProductItem> update(String barcode, ProductItem productItem) {
+        return this.productItemRepository.findByBarcode(barcode)
+                .map(entity -> {
+                    entity.setAppoint(productItem.getAppoint());
+                    entity.setCost(productItem.getCost());
+                    entity.setUnitOfMeasure(productItem.getUnitOfMeasure());
+                    ProductItemEntity updated = this.productItemRepository.save(entity);
+                    return updated.toProductItem();
+                });
+    }
+
 }
