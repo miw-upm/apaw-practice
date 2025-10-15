@@ -33,4 +33,12 @@ public class LocationPersistenceMongodb implements LocationPersistence {
                 .orElseThrow(() -> new NotFoundException("Location position: " + position));
     }
 
+    @Override
+    public Location update(Location location) {
+        LocationEntity entity = this.locationRepository.findByPosition(location.getPosition())
+                .orElseThrow(() -> new NotFoundException("Location position: " + location.getPosition()));
+        entity.setAvailability(location.getAvailability());
+        return this.locationRepository.save(entity).toLocation();
+    }
+
 }
