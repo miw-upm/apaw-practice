@@ -1,4 +1,5 @@
-package es.upm.miw.apaw.domain.models.studentcouncil;
+package es.upm.miw.apaw.domain.models.airport;
+
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,22 +8,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IssueReply {
-
+public class PlaneSeatCountUpdating {
     @NotNull
     @NotBlank
-    private String reason;
-
+    private String registrationNumber;
     @NotNull
-    private LocalDateTime createDate;
-
-    @NotNull
-    private BigDecimal compensation;
+    private Integer seatCount;
 }

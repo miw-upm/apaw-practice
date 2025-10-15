@@ -2,13 +2,13 @@ package es.upm.miw.apaw.adapters.resources.airport;
 
 
 import es.upm.miw.apaw.domain.models.airport.Plane;
+import es.upm.miw.apaw.domain.models.airport.PlaneSeatCountUpdating;
 import es.upm.miw.apaw.domain.services.airport.PlaneService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(PlaneResource.PLANES)
@@ -24,5 +24,10 @@ public class PlaneResource {
     @PostMapping
     public Plane create(@Valid @RequestBody Plane plane) {
         return this.planeService.create(plane);
+    }
+
+    @PatchMapping
+    public void update(@RequestBody List<PlaneSeatCountUpdating> planeSeatCountUpdatingList) {
+        this.planeService.updateSeatCount(planeSeatCountUpdatingList.stream());
     }
 }
