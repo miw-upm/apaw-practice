@@ -17,13 +17,14 @@ import java.util.UUID;
 
 public class MovementOrder {
 
+    @NotNull
     private UUID id;
 
     @NotNull
     private LocalDateTime registrationDate;
 
     @NotBlank
-    private String typeOrder;
+    private String typeOrder;   //    INBOUND , OUTBOUND
 
     private String partnerName;
     private String partnerAddress;

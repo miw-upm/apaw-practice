@@ -24,7 +24,7 @@ class SubjectServiceIT {
     @Test
     void testCreate() {
         Subject subject = Subject.builder()
-                .name("Test Subject Service")
+                .name("Test Subject Service Unique")
                 .description("Test Description Service")
                 .credits(6)
                 .build();
@@ -32,7 +32,7 @@ class SubjectServiceIT {
         Subject createdSubject = this.subjectService.create(subject);
 
         assertThat(createdSubject).isNotNull();
-        assertThat(createdSubject.getName()).isEqualTo("Test Subject Service");
+        assertThat(createdSubject.getName()).isEqualTo("Test Subject Service Unique");
         assertThat(createdSubject.getDescription()).isEqualTo("Test Description Service");
         assertThat(createdSubject.getCredits()).isEqualTo(6);
     }

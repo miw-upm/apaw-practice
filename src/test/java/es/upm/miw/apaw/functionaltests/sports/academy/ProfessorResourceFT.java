@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.functionaltests.sports.academy;
 
+import es.upm.miw.apaw.BaseSportsAcademyTests;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ProfessorRepository;
 import es.upm.miw.apaw.adapters.resources.sports.academy.ProfessorResource;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
@@ -21,7 +23,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-class ProfessorResourceFT extends BaseSportsAcademyFT {
+class ProfessorResourceFT extends BaseSportsAcademyTests {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -30,7 +32,7 @@ class ProfessorResourceFT extends BaseSportsAcademyFT {
     private UserRestClient userRestClient;
 
     @Test
-    void testCreate(){
+    void testCreate(@Autowired ProfessorRepository professorRepository) {
         UUID id = UUID.randomUUID();
         UserDto userDto = UserDto.builder()
                 .id(id)
@@ -56,5 +58,6 @@ class ProfessorResourceFT extends BaseSportsAcademyFT {
                     assertThat(professorResponse.getSpecialization()).isEqualTo("Fitness");
                     assertThat(professorResponse.getLicenseNumber()).isEqualTo("LIC123456");
                 });
+        professorRepository.deleteById(id);
     }
 }

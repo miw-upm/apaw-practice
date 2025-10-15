@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.airport.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.PlaneRepository;
 import es.upm.miw.apaw.adapters.mongodb.airport.entities.PlaneEntity;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.airport.Plane;
 import es.upm.miw.apaw.domain.persistenceports.airport.PlanePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,24 @@ public class PlanePersistenceMongodb implements PlanePersistence {
     public Plane create(Plane plane) {
         return this.planeRepository
                 .save(new PlaneEntity(plane))
+                .toPlane();
+    }
+
+    @Override
+    public Plane update(String registrationNumber, Plane plane) {
+        PlaneEntity planeEntity = this.planeRepository
+                .findByRegistrationNumber(registrationNumber)
+                .orElseThrow(() -> new NotFoundException("Plane registration number: " + plane.getRegistrationNumber()));
+        planeEntity.fromPlane(plane);
+        return this.planeRepository
+                .save(planeEntity)
+                .toPlane();
+    }
+
+    @Override
+    public Plane findByRegistrationNumber(String registrationNumber) {
+        return this.planeRepository.findByRegistrationNumber(registrationNumber)
+                .orElseThrow(() -> new NotFoundException(" Plane registration number: " + registrationNumber))
                 .toPlane();
     }
 

@@ -69,12 +69,13 @@ public class clothingstoreSeeder {
                 .build();
 
         StoreEntity store = StoreEntity.builder()
-                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7100"))
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7005")) // 固定ID，和测试一致
                 .name("Madrid Fashion")
                 .address("Calle Gran Vía 25, Madrid")
-                .orders(List.of(order)) // 强连接：嵌入
+                .orders(List.of(order))
                 .build();
 
+        this.storeRepository.save(store);
         this.storeRepository.save(store);
 
         log.warn("------- Clothingstore Initial Load Completed -----------");
