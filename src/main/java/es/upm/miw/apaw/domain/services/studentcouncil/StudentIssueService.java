@@ -32,4 +32,5 @@ public class StudentIssueService {
     public StudentIssue updateStudentIssue(UUID id, StudentIssue studentIssue) {
         return this.studentIssuePersistence.update(id, studentIssue);
     }
+
 }

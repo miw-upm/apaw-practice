@@ -26,4 +26,13 @@ public class StudentCouncilResource {
     public StudentCouncil updateResources(@PathVariable UUID id, @RequestBody BigDecimal newResources) {
         return this.studentCouncilService.updateResources(id, newResources);
     }
+
+    // GET /student-councils/resources?statement=xxx -> suma de recursos por statement
+    @GetMapping("/resources")
+    public BigDecimal getResourcesByStatement(@RequestParam String statement) {
+        BigDecimal sum = this.studentCouncilService.sumResourcesByStatement(statement);
+        return sum != null ? sum : BigDecimal.ZERO;
+    }
+
+
 }

@@ -12,4 +12,9 @@ public interface SaleRepository extends MongoRepository<SaleEntity, UUID> {
     Optional<SaleEntity> findByIdSale(int idSale);
 
     void deleteByIdSale(int idSale);
+
+    List<SaleEntity> findByShippingAddress(String shippingAddress);
+
+
+
 }

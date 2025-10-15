@@ -6,5 +6,6 @@ import java.util.UUID;
 
 public interface StudentIssuePersistence {
     StudentIssue create(StudentIssue studentIssue);
+
     StudentIssue update(UUID id, StudentIssue studentIssue);
 }

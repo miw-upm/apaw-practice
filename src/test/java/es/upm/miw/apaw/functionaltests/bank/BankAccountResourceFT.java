@@ -1,4 +1,5 @@
 package es.upm.miw.apaw.functionaltests.bank;
+import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
 import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.bank.CreditCard;
@@ -35,6 +36,9 @@ class BankAccountResourceFT {
     @MockitoBean
     private UserRestClient userRestClient;
 
+    @Autowired
+    private BankSeeder bankSeeder;
+
     @Test
     void testReadStatusByAccountNumber() {
         webTestClient.get()
@@ -51,6 +55,8 @@ class BankAccountResourceFT {
                 .uri(BANK_ACCOUNTS + ACCOUNT_NUMBER, "ES2800000000000000000001")
                 .exchange()
                 .expectStatus().isOk();
+        this.bankSeeder.deleteAll();
+        this.bankSeeder.seedDatabase();
     }
 
     @Test
@@ -73,6 +79,8 @@ class BankAccountResourceFT {
                     assertThat(loans.getFirst().getCondition()).isEqualTo("active");
                     assertThat(loans.getFirst().getInterestRate()).isEqualTo(0.07);
                 });
+        this.bankSeeder.deleteAll();
+        this.bankSeeder.seedDatabase();
     }
 
     @Test
@@ -102,6 +110,8 @@ class BankAccountResourceFT {
                     assertThat(card.getPaymentHistoryList().getFirst().getAmount()).isEqualTo(new BigDecimal("9.99"));
                     assertThat(card.getPaymentHistoryList().getFirst().getPaid()).isTrue();
                 });
+        this.bankSeeder.deleteAll();
+        this.bankSeeder.seedDatabase();
     }
 
     @Test
@@ -118,5 +128,23 @@ class BankAccountResourceFT {
                 .expectStatus().isOk()
                 .expectBody(BigDecimal.class)
                 .value(resul -> assertEquals(new BigDecimal("70000"),resul));
+    }
+
+    @Test
+    void testObtainPaidPaymentHistoriesByCondition(){
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(BANK_ACCOUNTS+CREDIT_CARDS+PAYMENT_HISTORIES+ID)
+                        .queryParam("condition", "active")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(UUID.class)
+                .value(resul ->{
+                    assertThat(resul).hasSize(3);
+                    assertThat(resul).contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"));
+                    assertThat(resul).contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff5000"));
+                    assertThat(resul).contains(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7000"));
+                });
     }
 }

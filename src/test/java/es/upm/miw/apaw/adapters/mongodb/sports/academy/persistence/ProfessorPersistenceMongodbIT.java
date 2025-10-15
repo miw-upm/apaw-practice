@@ -1,9 +1,10 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ProfessorRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
-import es.upm.miw.apaw.BaseSportsAcademyIT;
+import es.upm.miw.apaw.BaseSportsAcademyTests;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ProfessorPersistenceMongodbIT extends BaseSportsAcademyIT {
+class ProfessorPersistenceMongodbIT extends BaseSportsAcademyTests {
 
     @Autowired
     private ProfessorPersistenceMongodb professorPersistence;
@@ -28,7 +29,7 @@ class ProfessorPersistenceMongodbIT extends BaseSportsAcademyIT {
     }
 
     @Test
-    void testCreateAndGetById() {
+    void testCreateAndGetById(@Autowired ProfessorRepository professorRepository) {
         Professor professor = Professor.builder()
                 .user(UserDto.builder().id(UUID.randomUUID()).build())
                 .specialization("Padel")
@@ -39,10 +40,11 @@ class ProfessorPersistenceMongodbIT extends BaseSportsAcademyIT {
         assertThat(professorBD.getUser().getId()).isEqualTo(professor.getUser().getId());
         assertThat(professorBD.getSpecialization()).isEqualTo("Padel");
         assertThat(professorBD.getLicenseNumber()).isEqualTo("XYZ789");
+        professorRepository.deleteById(professor.getUser().getId());
     }
 
     @Test
-    void testCreateAndUpdate() {
+    void testCreateAndUpdate(@Autowired ProfessorRepository professorRepository) {
         Professor professor = Professor.builder()
                 .user(UserDto.builder().id(UUID.randomUUID()).build())
                 .specialization("Basket")
@@ -53,6 +55,7 @@ class ProfessorPersistenceMongodbIT extends BaseSportsAcademyIT {
         this.professorPersistence.update(professor.getUser().getId(), professorBD);
         professorBD = this.professorPersistence.getById(professor.getUser().getId());
         assertThat(professorBD.getSpecialization()).isEqualTo("Volley");
+        professorRepository.deleteById(professor.getUser().getId());
     }
 
     @Test

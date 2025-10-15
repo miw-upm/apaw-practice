@@ -14,12 +14,10 @@ import java.util.UUID;
 
 public class ProductItem {
 
-    private UUID id;
-
     @NotBlank
     private String barcode;
 
-    private String appoint;
+    private String appoint; //productname
 
     @NotNull
     private BigDecimal cost;

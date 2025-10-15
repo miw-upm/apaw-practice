@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.studentcouncil.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.RepresentativeRepository;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.StudentIssueRepository;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites.StudentIssueEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
@@ -15,11 +16,14 @@ import java.util.UUID;
 public class StudentIssuePersistenceMongodb implements StudentIssuePersistence {
 
     private final StudentIssueRepository repository;
+    private final RepresentativeRepository representativeRepository;
 
     @Autowired
-    public StudentIssuePersistenceMongodb(StudentIssueRepository repository) {
+    public StudentIssuePersistenceMongodb(StudentIssueRepository repository, RepresentativeRepository representativeRepository) {
         this.repository = repository;
+        this.representativeRepository = representativeRepository;
     }
+
     @Override
     public StudentIssue create(StudentIssue studentIssue) {
         StudentIssueEntity entity = StudentIssueEntity.builder()
@@ -51,4 +55,5 @@ public class StudentIssuePersistenceMongodb implements StudentIssuePersistence {
         StudentIssueEntity updated = this.repository.save(entity);
         return updated.toStudentIssue();
     }
+
 }

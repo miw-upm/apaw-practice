@@ -1,58 +1,49 @@
 package es.upm.miw.apaw.adapters.mongodb.apiary.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.apiary.entities.ApiaryEntity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@DataMongoTest
 @ActiveProfiles("test")
 class ApiaryRepositoryIT {
 
     @Autowired
     private ApiaryRepository apiaryRepository;
 
-    @Autowired
-    private ApiarySeeder apiarySeeder;
+    @Test
+    void testFindByLocationReturnsApiaries() {
+        ApiaryEntity entity = ApiaryEntity.builder()
+                .id(UUID.randomUUID())
+                .cadastralRef("0000000-00000000-0001-XX")
+                .location("Burgos")
+                .rega("REGA00001")
+                .build();
+        apiaryRepository.save(entity);
 
-    @BeforeEach
-    void setUp() {
-        // Limpia y repuebla la base de datos antes de cada test
-        this.apiarySeeder.deleteAll();
-        this.apiarySeeder.seedDatabase();
+        List<ApiaryEntity> apiaries = apiaryRepository.findByLocation("Burgos");
+        assertThat(apiaries)
+                .isNotNull()
+                .isNotEmpty()
+                .allMatch(apiary -> "Burgos".equals(apiary.getLocation()));
     }
 
     @Test
-    void testFindByLocationReturnsApiary() {
-        List<ApiaryEntity> apiaries = this.apiaryRepository.findByLocation("Burgos");
-
-        assertThat(apiaries).isNotEmpty();
-        ApiaryEntity apiary = apiaries.get(0);
-
-        // Comprueba campos principales
-        assertThat(apiary.getLocation()).isEqualTo("Burgos");
-        assertThat(apiary.getCadastralRef()).isEqualTo("0000000-00000000-0001-XX");
-        assertThat(apiary.getRega()).isEqualTo("REGA00001");
-
-        // Comprueba que tiene colmenas asociadas
-        assertThat(apiary.getHiveEntities()).isNotEmpty();
-        assertThat(apiary.getHiveEntities().get(0).getCode()).isEqualTo(101);
-
-        // Comprueba que la colmena tiene un producto asociado
-        assertThat(apiary.getHiveEntities().get(0).getProductEntity()).isNotNull();
-        assertThat(apiary.getHiveEntities().get(0).getProductEntity().getProduct())
-                .isEqualTo("Miel de Romero");
+    void testFindByLocationReturnsEmptyListForUnknownLocation() {
+        List<ApiaryEntity> apiaries = apiaryRepository.findByLocation("UnknownLocation");
+        assertThat(apiaries).isNotNull().isEmpty();
     }
 
     @Test
-    void testFindByLocationNotFound() {
-        List<ApiaryEntity> apiaries = this.apiaryRepository.findByLocation("Valencia");
+    void testFindByLocationCaseSensitivity() {
+        List<ApiaryEntity> apiaries = apiaryRepository.findByLocation("burgos");
         assertThat(apiaries).isEmpty();
     }
 }

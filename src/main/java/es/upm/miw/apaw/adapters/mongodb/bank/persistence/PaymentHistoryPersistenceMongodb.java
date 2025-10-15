@@ -4,7 +4,6 @@ import es.upm.miw.apaw.adapters.mongodb.bank.daos.PaymentHistoryRepository;
 import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.bank.PaymentHistory;
-import es.upm.miw.apaw.domain.models.shop.Article;
 import es.upm.miw.apaw.domain.persistenceports.bank.PaymentHistoryPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

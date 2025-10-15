@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.bank.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
-import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
 import es.upm.miw.apaw.domain.models.bank.PaymentHistory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

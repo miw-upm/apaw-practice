@@ -34,4 +34,8 @@ public class RepresentativeService {
                 })
                 .toList();
     }
+
+    public List<String> findUserMobilesByReplyReason(String reason) {
+        return this.representativePersistence.findUserMobilesByReplyReason(reason);
+    }
 }

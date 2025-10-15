@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Document
@@ -25,5 +24,10 @@ public class GenreEntity {
     private Float popularity;
     private Integer ageRestriction;
 
+    public GenreEntity() {
+        if (this.id == null) {
 
+            this.id = UUID.randomUUID();
+        }
+    }
 }

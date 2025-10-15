@@ -1,9 +1,9 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.daos;
 
-import es.upm.miw.apaw.adapters.mongodb.recipes.entities.MenuEntity;
-import es.upm.miw.apaw.adapters.mongodb.recipes.entities.RecipeItemEntity;
-import es.upm.miw.apaw.adapters.mongodb.recipes.entities.RecipeEntity;
 import es.upm.miw.apaw.adapters.mongodb.recipes.entities.IngredientEntity;
+import es.upm.miw.apaw.adapters.mongodb.recipes.entities.MenuEntity;
+import es.upm.miw.apaw.adapters.mongodb.recipes.entities.RecipeEntity;
+import es.upm.miw.apaw.adapters.mongodb.recipes.entities.RecipeItemEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

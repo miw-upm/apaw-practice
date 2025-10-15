@@ -4,13 +4,14 @@ import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.bank.BankAccount;
 import es.upm.miw.apaw.domain.models.bank.CreditCard;
 import es.upm.miw.apaw.domain.models.bank.Loan;
+import es.upm.miw.apaw.domain.models.bank.PaymentHistory;
 import es.upm.miw.apaw.domain.persistenceports.bank.BankAccountPersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class BankAccountService {
@@ -36,7 +37,7 @@ public class BankAccountService {
         return this.bankAccountPersistence.findByAccountNumber(accountNumber);
     }
 
-    public List<Loan> applyANewLoanForABankAccount(String accountNumber, Loan loan){
+    public Stream<Loan> applyANewLoanForABankAccount(String accountNumber, Loan loan){
         return this.bankAccountPersistence.applyANewLoanForABankAccount(accountNumber,loan);
     }
 
@@ -46,6 +47,24 @@ public class BankAccountService {
 
     public BigDecimal obtainTotalQuantityByMobile(String mobile){
         UserDto user = this.userRestClient.readByMobile(mobile);
-        return this.bankAccountPersistence.obtainTotalQuantity(user.getId());
+        return this.bankAccountPersistence.findByAccountHolders(user.getId())
+                .flatMap(bankAccount -> Optional.ofNullable(bankAccount.getLoansApplied())
+                        .orElse(List.of())
+                        .stream())
+                .map(Loan::getQuantity)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public Stream<UUID> obtainPaidPaymentHistoryIdByCondition(String condition){
+
+        return this.bankAccountPersistence.findByLoansAppliedCondition(condition)
+                .map(BankAccount::getCreditCardAssociated)
+                .filter(Objects::nonNull)
+                .map(CreditCard::getPaymentHistoryList)
+                .filter(Objects::nonNull)
+                .flatMap(paymentHistories -> paymentHistories.stream()
+                        .filter(PaymentHistory::getPaid)
+                        .map(PaymentHistory::getId))
+                .distinct();
     }
 }

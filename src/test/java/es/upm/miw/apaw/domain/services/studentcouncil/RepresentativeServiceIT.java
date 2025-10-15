@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
 @ActiveProfiles("test")
 class RepresentativeServiceIT {
@@ -29,36 +32,38 @@ class RepresentativeServiceIT {
     @MockitoBean
     private UserRestClient userRestClient;
 
-    @MockitoBean
-    private RepresentativePersistence representativePersistence;
 
     @Test
-    void testGetAllRepresentativesUnit() {
-        UUID userId = UUID.randomUUID();
+    void testFindUserMobilesByReplyReason() {
+        when(userRestClient.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")))
+                .thenReturn(new UserDto(UUID.randomUUID(), "600111222", "John"));
+        when(userRestClient.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")))
+                .thenReturn(new UserDto(UUID.randomUUID(), "600333444", "Mary"));
 
-        Representative rep = Representative.builder()
-                .joinDate(LocalDateTime.now())
-                .responsibility("President")
-                .representative(UserDto.builder().id(userId).build())
-                .topics(new ArrayList<>())
-                .build();
+        List<String> mobiles = representativeService.findUserMobilesByReplyReason("Reply1");
 
-        // Stubeamos el mock
-        BDDMockito.given(representativePersistence.readAll())
-                .willReturn(Stream.of(rep));
+        assertThat(mobiles)
+                .isNotEmpty()
+                .contains("600111222", "600333444")
+                .doesNotContain("999999999");
+    }
+    @Test
+    void testGetAllRepresentatives() {
+        when(userRestClient.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")))
+                .thenReturn(new UserDto(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"),
+                        "600123456", "John"));
+        when(userRestClient.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")))
+                .thenReturn(new UserDto(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"),
+                        "600654321", "Mary"));
 
-        BDDMockito.given(userRestClient.readById(userId))
-                .willReturn(UserDto.builder()
-                        .id(userId)
-                        .firstName("mockUser")
-                        .mobile("123456789")
-                        .build());
+        List<Representative> representatives = representativeService.getAllRepresentatives();
 
-        List<Representative> reps = representativeService.getAllRepresentatives();
-
-        Assertions.assertFalse(reps.isEmpty());
-        Assertions.assertEquals("mockUser", reps.getFirst().getRepresentative().getFirstName());
-        Assertions.assertEquals("123456789", reps.getFirst().getRepresentative().getMobile());
+        assertThat(representatives).isNotEmpty();
+        assertThat(representatives)
+                .anyMatch(rep -> rep.getRepresentative().getFirstName().equals("John")
+                        && rep.getRepresentative().getMobile().equals("600123456"))
+                .anyMatch(rep -> rep.getRepresentative().getFirstName().equals("Mary")
+                        && rep.getRepresentative().getMobile().equals("600654321"));
     }
 }
 
