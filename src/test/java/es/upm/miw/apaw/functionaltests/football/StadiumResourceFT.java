@@ -72,7 +72,6 @@ class StadiumResourceFT {
                 .roof(true)
                 .build();
 
-        // Primera creación OK
         this.webTestClient
                 .post()
                 .uri(STADIUMS)
@@ -81,7 +80,6 @@ class StadiumResourceFT {
                 .exchange()
                 .expectStatus().isCreated();
 
-        // Segunda creación con mismo nombre -> 409
         this.webTestClient
                 .post()
                 .uri(STADIUMS)
@@ -89,5 +87,35 @@ class StadiumResourceFT {
                 .bodyValue(stadium)
                 .exchange()
                 .expectStatus().isEqualTo(409);
+    }
+
+    @Test
+    void testUpdateCapacity_ok() {
+        Stadium stadium = Stadium.builder()
+                .stadiumId(1L)
+                .officialName("Camp Nou-" + System.nanoTime())
+                .capacity(99000)
+                .roof(true)
+                .build();
+
+        this.webTestClient.post()
+                .uri(STADIUMS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(stadium)
+                .exchange()
+                .expectStatus().isCreated();
+
+        Stadium updateRequest = Stadium.builder()
+                .capacity(100000)
+                .build();
+
+        this.webTestClient.patch()
+                .uri(STADIUMS + "/" + stadium.getOfficialName())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updateRequest)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.capacity").isEqualTo(100000);
     }
 }
