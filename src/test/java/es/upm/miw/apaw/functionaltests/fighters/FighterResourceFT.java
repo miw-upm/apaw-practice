@@ -260,4 +260,51 @@ class FighterResourceFT {
                 .exchange()
                 .expectStatus().isBadRequest();
     }
+    @Test
+    void testGetRatingsDistinctByAcademy_ok_tokyoDojo() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(FIGHTERS + "/ratings-distinct-by-academy")
+                        .queryParam("academy", "Tokyo Dojo")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.comments[0]").isEqualTo("Incredible striking!")
+                .jsonPath("$.comments[1]").isEqualTo("Needs better cardio")
+                .jsonPath("$.comments.length()").isEqualTo(2);
+    }
+
+    @Test
+    void testGetRatingsDistinctByAcademy_ok_moscowClub() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(FIGHTERS + "/ratings-distinct-by-academy")
+                        .queryParam("academy", "Moscow Combat Club")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.comments").isArray()
+                .jsonPath("$.comments.length()").isEqualTo(3)
+                .jsonPath("$.comments").value(list -> {
+                    var s = list.toString();
+                    assertThat(s).contains("Excellent fighter!");
+                    assertThat(s).contains("Incredible striking!");
+                    assertThat(s).contains("Poor ground defense");
+                });
+    }
+
+    @Test
+    void testGetRatingsDistinctByAcademy_noResults_empty() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(FIGHTERS + "/ratings-distinct-by-academy")
+                        .queryParam("academy", "No Academy")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.comments.length()").isEqualTo(0);
+    }
 }
