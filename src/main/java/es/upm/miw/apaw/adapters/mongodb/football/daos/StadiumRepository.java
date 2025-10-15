@@ -6,6 +6,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface StadiumRepository extends MongoRepository<StadiumEntity, Long> {
-    Optional<StadiumEntity> findByOfficialName(String officialName);
-    boolean existsByStadiumId(Long stadiumId);
+
+    Optional<StadiumEntity> findByOfficialNameIgnoreCase(String officialName);
+
+    boolean existsByOfficialNameIgnoreCase(String officialName);
 }

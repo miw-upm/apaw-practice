@@ -20,7 +20,7 @@ class StadiumRepositoryIT {
 
     @Test
     void testFindByOfficialName_ok() {
-        Optional<StadiumEntity> opt = this.stadiumRepository.findByOfficialName("Salamanca Stadium");
+        Optional<StadiumEntity> opt = this.stadiumRepository.findByOfficialNameIgnoreCase("Salamanca Stadium");
         assertTrue(opt.isPresent());
         StadiumEntity stadium = opt.get();
         assertThat(stadium.getOfficialName()).isEqualTo("Salamanca Stadium");
@@ -30,16 +30,16 @@ class StadiumRepositoryIT {
 
     @Test
     void testFindByOfficialName_notFound() {
-        assertThat(this.stadiumRepository.findByOfficialName("no existe")).isEmpty();
+        assertThat(this.stadiumRepository.findByOfficialNameIgnoreCase("no existe")).isEmpty();
     }
 
     @Test
     void testExistsByStadiumId_ok() {
-        assertThat(this.stadiumRepository.existsByStadiumId(1L)).isTrue();
+        assertThat(this.stadiumRepository.existsById(1L)).isTrue();
     }
 
     @Test
     void testExistsByStadiumId_notFound() {
-        assertThat(this.stadiumRepository.existsByStadiumId(999L)).isFalse();
+        assertThat(this.stadiumRepository.existsById(999L)).isFalse();
     }
 }
