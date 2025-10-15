@@ -21,9 +21,9 @@ class EnrollmentRepositoryIT {
     @Test
     void testFindByCode() {
         String enrollmentCode = "ENR001";
-        
+
         Optional<EnrollmentEntity> enrollment = enrollmentRepository.findByCode(enrollmentCode);
-        
+
         assertThat(enrollment).isPresent();
         assertThat(enrollment.get().getCode()).isEqualTo(enrollmentCode);
         assertThat(enrollment.get().getStudentId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0500"));
@@ -32,23 +32,23 @@ class EnrollmentRepositoryIT {
     @Test
     void testFindByCodeNotFound() {
         String nonExistentCode = "NONEXISTENT";
-        
+
         Optional<EnrollmentEntity> enrollment = enrollmentRepository.findByCode(nonExistentCode);
-        
+
         assertThat(enrollment).isEmpty();
     }
 
     @Test
     void testDeleteByCode() {
         String enrollmentCode = "ENR002";
-        
+
         Optional<EnrollmentEntity> enrollmentBefore = enrollmentRepository.findByCode(enrollmentCode);
         assertThat(enrollmentBefore).isPresent();
-        
+
         int deletedCount = enrollmentRepository.deleteByCode(enrollmentCode);
-        
+
         assertThat(deletedCount).isGreaterThan(0);
-        
+
         Optional<EnrollmentEntity> enrollmentAfter = enrollmentRepository.findByCode(enrollmentCode);
         assertThat(enrollmentAfter).isEmpty();
     }
@@ -56,9 +56,9 @@ class EnrollmentRepositoryIT {
     @Test
     void testDeleteByCodeNotFound() {
         String nonExistentCode = "NONEXISTENT";
-        
+
         int deletedCount = enrollmentRepository.deleteByCode(nonExistentCode);
-        
+
         assertThat(deletedCount).isEqualTo(0);
     }
 }

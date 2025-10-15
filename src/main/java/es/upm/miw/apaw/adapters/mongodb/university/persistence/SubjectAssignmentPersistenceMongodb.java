@@ -26,4 +26,17 @@ public class SubjectAssignmentPersistenceMongodb implements SubjectAssignmentPer
                 .orElseThrow(() -> new NotFoundException("SubjectAssignment id: " + id))
                 .toSubjectAssignment();
     }
+
+    @Override
+    public SubjectAssignment update(UUID id, SubjectAssignment subjectAssignment) {
+        SubjectAssignmentEntity subjectAssignmentEntity = this.subjectAssignmentRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("SubjectAssignment id: " + id));
+
+        subjectAssignmentEntity.setCapacity(subjectAssignment.getCapacity());
+
+        return this.subjectAssignmentRepository
+                .save(subjectAssignmentEntity)
+                .toSubjectAssignment();
+    }
 }

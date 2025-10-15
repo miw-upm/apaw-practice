@@ -25,12 +25,12 @@ class EnrollmentPersistenceMongodbIT {
     @Test
     void testDelete() {
         String enrollmentCode = "ENR003";
-        
+
         Optional<EnrollmentEntity> enrollmentBefore = enrollmentRepository.findByCode(enrollmentCode);
         assertThat(enrollmentBefore).isPresent();
-        
+
         enrollmentPersistence.delete(enrollmentCode);
-        
+
         Optional<EnrollmentEntity> enrollmentAfter = enrollmentRepository.findByCode(enrollmentCode);
         assertThat(enrollmentAfter).isEmpty();
     }
@@ -38,12 +38,12 @@ class EnrollmentPersistenceMongodbIT {
     @Test
     void testDeleteNonExistent() {
         String nonExistentCode = "NONEXISTENT";
-        
+
         Optional<EnrollmentEntity> enrollmentBefore = enrollmentRepository.findByCode(nonExistentCode);
         assertThat(enrollmentBefore).isEmpty();
-        
+
         enrollmentPersistence.delete(nonExistentCode);
-        
+
         Optional<EnrollmentEntity> enrollmentAfter = enrollmentRepository.findByCode(nonExistentCode);
         assertThat(enrollmentAfter).isEmpty();
     }

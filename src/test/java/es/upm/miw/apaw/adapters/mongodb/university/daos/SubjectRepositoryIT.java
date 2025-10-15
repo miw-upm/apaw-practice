@@ -20,9 +20,9 @@ class SubjectRepositoryIT {
     @Test
     void testFindByName() {
         String subjectName = "SN001";
-        
+
         Optional<SubjectEntity> subject = subjectRepository.findByName(subjectName);
-        
+
         assertThat(subject).isPresent();
         assertThat(subject.get().getName()).isEqualTo(subjectName);
         assertThat(subject.get().getDescription()).isEqualTo("SD001");
@@ -32,9 +32,9 @@ class SubjectRepositoryIT {
     @Test
     void testFindByNameNotFound() {
         String nonExistentName = "NonExistentSubject";
-        
+
         Optional<SubjectEntity> subject = subjectRepository.findByName(nonExistentName);
-        
+
         assertThat(subject).isEmpty();
     }
 }
