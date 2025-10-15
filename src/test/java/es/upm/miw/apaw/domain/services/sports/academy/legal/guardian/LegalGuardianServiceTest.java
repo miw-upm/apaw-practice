@@ -14,7 +14,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -51,7 +51,7 @@ class LegalGuardianServiceTest {
                 .build();
         when(legalGuardianPersistence.getBySecondMobile(secondMobile)).thenReturn(Stream.of(legalGuardian));
         var legalGuardianList = this.legalGuardianService.getBySecondMobile(secondMobile).toList();
-        assertThat(legalGuardianList.size()).isEqualTo(1);
+        assertThat(legalGuardianList).hasSize(1);
         assertThat(legalGuardianList.getFirst()).isEqualTo(legalGuardian);
     }
 
@@ -65,7 +65,7 @@ class LegalGuardianServiceTest {
                 .build();
         when(legalGuardianPersistence.getByRelationShip(relationShip)).thenReturn(Stream.of(legalGuardian));
         var legalGuardianList = this.legalGuardianService.getByRelationShip(relationShip).toList();
-        assertThat(legalGuardianList.size()).isEqualTo(1);
+        assertThat(legalGuardianList).hasSize(1);
         assertThat(legalGuardianList.getFirst()).isEqualTo(legalGuardian);
     }
 }
