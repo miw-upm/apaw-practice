@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,8 +28,12 @@ public class StudentCouncilResource {
         return this.studentCouncilService.updateResources(id, newResources);
     }
 
+    // GET /student-councils/resources?statement=xxx -> suma de recursos por statement
     @GetMapping("/resources")
     public BigDecimal getResourcesByStatement(@RequestParam String statement) {
-        return this.studentCouncilService.sumResourcesByStatement(statement);
+        BigDecimal sum = this.studentCouncilService.sumResourcesByStatement(statement);
+        return sum != null ? sum : BigDecimal.ZERO;
     }
+
+
 }

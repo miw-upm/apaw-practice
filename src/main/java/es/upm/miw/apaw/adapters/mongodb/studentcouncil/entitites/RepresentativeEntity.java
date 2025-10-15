@@ -11,9 +11,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -28,23 +26,19 @@ public class RepresentativeEntity {
     private String responsibility;
     private UUID representativeId;
 
-    @DBRef
     private List<StudentIssueEntity> topics;
 
     public Representative toRepresentative() {
         return Representative.builder()
                 .joinDate(this.joinDate)
                 .responsibility(this.responsibility)
-                .representative(
-                        UserDto.builder()
-                                .id(this.representativeId)
-                                .build()
-                )
+                .representative(UserDto.builder().id(this.representativeId).build())
                 .topics(
-                        this.topics == null ? new ArrayList<>() :
-                                this.topics.stream()
-                                        .map(StudentIssueEntity::toStudentIssue)
-                                        .toList()
+                        Optional.ofNullable(this.topics)
+                                .orElse(Collections.emptyList())
+                                .stream()
+                                .map(StudentIssueEntity::toStudentIssue)
+                                .toList()
                 )
                 .build();
     }
