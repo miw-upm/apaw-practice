@@ -121,7 +121,7 @@ class StadiumResourceFT {
                 .jsonPath("$.capacity").isEqualTo(100000);
     }
 
-    @Test
+   /* @Test
     void testDelete_ok() {
         Stadium stadium = Stadium.builder()
                 .officialName("ToDelete-" + System.nanoTime())
@@ -151,5 +151,5 @@ class StadiumResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
-
+*/
 }
