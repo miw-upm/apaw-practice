@@ -11,5 +11,6 @@ public interface LocationPersistence {
     Stream<Location> readAll();
     Location readByPosition (String position);
     Location update(Location location);
+    void deleteByPosition(String position);
 
 }
