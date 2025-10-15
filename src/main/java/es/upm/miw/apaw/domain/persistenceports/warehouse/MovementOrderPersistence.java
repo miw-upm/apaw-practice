@@ -10,5 +10,6 @@ import java.util.UUID;
 public interface MovementOrderPersistence {
 
     Optional<MovementOrder> readById(UUID id);
+    MovementOrder create(MovementOrder movementOrder);
 
 }
