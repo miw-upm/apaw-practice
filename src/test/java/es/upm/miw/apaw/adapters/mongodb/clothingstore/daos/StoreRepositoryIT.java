@@ -9,12 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
-
+import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
 class StoreRepositoryIT {
+    private static final UUID SEEDED_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7005");
 
     @Autowired
     private StoreRepository storeRepository;
@@ -38,5 +39,18 @@ class StoreRepositoryIT {
         storeRepository.deleteById(id);
 
         assertThat(storeRepository.findById(id)).isEmpty();
+    }
+    @Test
+    void testPatchLike_SaveOnlyAddress_KeepName() {
+        StoreEntity before = storeRepository.findById(SEEDED_ID).orElseThrow();
+        String originalName = before.getName();
+
+        before.setAddress("Calle Nueva 123");
+        storeRepository.save(before);
+
+        Optional<StoreEntity> reloaded = storeRepository.findById(SEEDED_ID);
+        assertThat(reloaded).isPresent();
+        assertThat(reloaded.get().getAddress()).isEqualTo("Calle Nueva 123");
+        assertThat(reloaded.get().getName()).isEqualTo(originalName); // 没改的字段保持不变
     }
 }

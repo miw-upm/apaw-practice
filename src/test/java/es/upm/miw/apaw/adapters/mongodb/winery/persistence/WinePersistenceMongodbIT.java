@@ -27,7 +27,7 @@ public class WinePersistenceMongodbIT {
     private WinerySeeder winerySeeder;
 
     @BeforeEach
-    void resetDb(){
+    void resetDb() {
         winerySeeder.deleteAll();
         winerySeeder.seedDatabase();
     }
@@ -74,6 +74,12 @@ public class WinePersistenceMongodbIT {
         assertThatThrownBy(() -> this.winePersistenceMongodb.update(fake))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Wine id:");
+    }
+
+    @Test
+    void testSumPricesByComment() {
+        BigDecimal sum = this.winePersistenceMongodb.sumPricesByComment("Great organization and excellent wine selection");
+        assertThat(sum).isEqualByComparingTo("44.40");
     }
 
 }

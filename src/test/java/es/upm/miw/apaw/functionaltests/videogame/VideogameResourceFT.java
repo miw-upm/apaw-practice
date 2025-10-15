@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.functionaltests.videogame;
 
+import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -17,14 +18,27 @@ public class VideogameResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
+    @Autowired
+    private VideogameRepository videogameRepository;
+
 
     @Test
-    void testDelete(){
+    void testDelete() {
 
         webTestClient.delete()
-                .uri(VIDEOGAMES + NAME_ID,"game0")
+                .uri(VIDEOGAMES + NAME_ID, "game0")
                 .exchange()
                 .expectStatus().isOk();
+
+    }
+
+    @Test
+    void testUpdateOnlineByGenre() {
+        webTestClient.patch()
+                .uri(VIDEOGAMES + "/genre/action/online?online=false")
+                .exchange()
+                .expectStatus().isOk();
+
 
     }
 

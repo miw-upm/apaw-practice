@@ -14,4 +14,8 @@ public interface StadiumPersistence {
     Stadium save(Stadium stadium);
 
     boolean existsByOfficialName(String name);
+
+    void delete(Stadium stadium);
+
+
 }

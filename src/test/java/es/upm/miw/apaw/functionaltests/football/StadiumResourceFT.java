@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.UUID;
+
 import static es.upm.miw.apaw.adapters.resources.football.StadiumResource.STADIUMS;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +25,7 @@ class StadiumResourceFT {
     @Test
     void testCreate_ok() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(1L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Metropolitano-" + System.nanoTime())
                 .capacity(68000)
                 .roof(true)
@@ -48,7 +50,7 @@ class StadiumResourceFT {
     @Test
     void testCreate_badRequest() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(2L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("")
                 .capacity(0)
                 .roof(null)
@@ -66,7 +68,7 @@ class StadiumResourceFT {
     @Test
     void testCreate_conflict() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(3L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Duplicate Stadium-" + System.nanoTime())
                 .capacity(40000)
                 .roof(true)
@@ -92,7 +94,7 @@ class StadiumResourceFT {
     @Test
     void testUpdateCapacity_ok() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(1L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Camp Nou-" + System.nanoTime())
                 .capacity(99000)
                 .roof(true)
@@ -118,4 +120,36 @@ class StadiumResourceFT {
                 .expectBody()
                 .jsonPath("$.capacity").isEqualTo(100000);
     }
+
+   /* @Test
+    void testDelete_ok() {
+        Stadium stadium = Stadium.builder()
+                .officialName("ToDelete-" + System.nanoTime())
+                .capacity(45000)
+                .roof(true)
+                .build();
+
+        // Crear primero
+        this.webTestClient.post()
+                .uri(STADIUMS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(stadium)
+                .exchange()
+                .expectStatus().isCreated();
+
+        // Eliminar
+        this.webTestClient.delete()
+                .uri(STADIUMS + "/" + stadium.getOfficialName())
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+
+    @Test
+    void testDelete_notFound() {
+        this.webTestClient.delete()
+                .uri(STADIUMS + "/NoExists-" + System.nanoTime())
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+*/
 }

@@ -41,4 +41,10 @@ public class StadiumPersistenceMongodb implements StadiumPersistence {
     public boolean existsByOfficialName(String name) {
         return this.stadiumRepository.existsByOfficialNameIgnoreCase(name);
     }
+
+    @Override
+    public void delete(Stadium stadium) {
+        this.stadiumRepository.delete(new StadiumEntity(stadium));
+
+    }
 }
