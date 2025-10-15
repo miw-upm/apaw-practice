@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import es.upm.miw.apaw.domain.models.videoWebsite.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,5 +32,11 @@ public class CommentResource {
     @PostMapping
     public Comment create(@Valid @RequestBody Comment comment) {
         return this.commentService.create(comment);
+    }
+
+    @GetMapping("/video/{title}/mobiles")
+    public List<String> getCommentersMobileByVideoTitle(@PathVariable String title) {
+        return this.commentService.findCommentersMobileByVideoTitle(title);
+
     }
 }

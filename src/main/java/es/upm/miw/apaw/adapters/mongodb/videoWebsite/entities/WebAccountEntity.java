@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +47,9 @@ public class WebAccountEntity {
         BeanUtils.copyProperties(this, webAccount, "user", "userId", "watchListEntities", "watchList");
         webAccount.setUser(UserDto.builder().id(this.userId).build());
 
-        List<WatchList> watchLists = this.watchListEntities.stream()
+        List<WatchList> watchLists = (this.watchListEntities == null)
+                ? Collections.emptyList()
+                : this.watchListEntities.stream()
                 .map(WatchListEntity::toWatchList)
                 .toList();
 
