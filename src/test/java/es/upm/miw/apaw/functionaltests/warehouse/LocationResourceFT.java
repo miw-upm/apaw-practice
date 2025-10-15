@@ -70,4 +70,17 @@ class LocationResourceFT {
                 .expectStatus().isNotFound();
     }
 
+    @Test
+    void testDeleteByPosition() {
+        this.webTestClient.delete()
+                .uri(LocationResource.LOCATIONS + LocationResource.POSITION, "B1")
+                .exchange()
+                .expectStatus().isOk();
+
+        this.webTestClient.get()
+                .uri(LocationResource.LOCATIONS + LocationResource.POSITION, "B1")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
 }

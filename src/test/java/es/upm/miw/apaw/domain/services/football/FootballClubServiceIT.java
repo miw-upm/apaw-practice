@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,14 +33,14 @@ class FootballClubServiceIT {
     @Test
     void testReadAll_ok() {
         Stadium stadium1 = Stadium.builder()
-                .stadiumId(1L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Salamanca Stadium")
                 .capacity(40000)
                 .roof(true)
                 .build();
 
         Stadium stadium2 = Stadium.builder()
-                .stadiumId(2L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Madrid Arena")
                 .capacity(65000)
                 .roof(false)
@@ -75,7 +76,7 @@ class FootballClubServiceIT {
     @Test
     void testReadByName_ok() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(1L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Salamanca Stadium")
                 .capacity(40000)
                 .roof(true)

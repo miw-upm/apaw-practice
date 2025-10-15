@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
@@ -50,6 +51,19 @@ class LocationPersistenceMongodbIT {
         assertThat(updated.getAvailability())
                 .isNotNull()
                 .isNotEqualTo(originalAvailability);
+    }
+
+    @Test
+    void testDeleteByPosition() {
+        String position = "B1";
+
+        Location location = this.locationPersistence.readByPosition(position);
+        assertThat(location).isNotNull();
+
+        this.locationPersistence.deleteByPosition(position);
+
+        assertThatThrownBy(() -> this.locationPersistence.readByPosition(position))
+                .isInstanceOf(NotFoundException.class);
     }
 
 }

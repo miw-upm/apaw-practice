@@ -41,4 +41,12 @@ public class LocationPersistenceMongodb implements LocationPersistence {
         return this.locationRepository.save(entity).toLocation();
     }
 
+    @Override
+    public void deleteByPosition(String position) {
+        LocationEntity entity = this.locationRepository.findByPosition(position)
+                .orElseThrow(() -> new NotFoundException("Location not found: " + position));
+
+        this.locationRepository.delete(entity);
+    }
+
 }
