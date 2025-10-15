@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import es.upm.miw.apaw.domain.services.clothingstore.GarmentService;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -22,7 +22,8 @@ class GarmentRepositoryIT {
 
     @Autowired
     private GarmentRepository garmentRepository;
-
+    @Autowired
+    private GarmentService garmentService;
     @Autowired
     private DatabaseSeeder databaseSeeder;
 
@@ -78,6 +79,13 @@ class GarmentRepositoryIT {
         assertThat(reloaded.get().getPrice()).isEqualByComparingTo(newPrice);
         assertThat(reloaded.get().getOnSale()).isEqualTo(newOnSale);
         assertThat(reloaded.get().getSize()).isEqualTo("XL");
+    }
+    @Test
+    void testDelete_ok() {
+        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+        assertThat(garmentRepository.findById(id)).isPresent();
+        garmentService.delete(id);
+        assertThat(garmentRepository.findById(id)).isEmpty();
     }
 }
 
