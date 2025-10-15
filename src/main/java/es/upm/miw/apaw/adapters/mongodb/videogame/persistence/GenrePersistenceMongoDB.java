@@ -8,6 +8,8 @@ import es.upm.miw.apaw.domain.persistenceports.videogame.GenrePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 @Repository("genreRepository")
 public class GenrePersistenceMongoDB implements GenrePersistence {
 
@@ -33,6 +35,10 @@ public class GenrePersistenceMongoDB implements GenrePersistence {
                 .orElseThrow(() -> new NotFoundException("Genre type:" + type))
                 .toGenre();
 
+    }
+    @Override
+    public Stream<Genre> readAll(){
+        return this.genreRepository.findAll().stream().map(GenreEntity::toGenre);
     }
 
 }

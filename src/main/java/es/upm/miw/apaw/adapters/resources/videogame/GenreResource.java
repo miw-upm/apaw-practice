@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(GenreResource.GENRES)
 public class GenreResource {
     public static final String GENRES = "/videogame/genres";
+    public static final String GENRE_TYPE = "/{type}";
     private final GenreService genreService;
 
     @Autowired
