@@ -31,4 +31,8 @@ public class LocationService {
         return this.locationPersistence.update(location);
     }
 
+    public void deleteByPosition(String position) {
+        this.locationPersistence.deleteByPosition(position);
+    }
+
 }
