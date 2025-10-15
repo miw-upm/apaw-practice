@@ -50,10 +50,10 @@ class TeacherPersistenceMongodbIT {
 
     @Test
     void testUpdate() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101");
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0107");
         
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T002")
+                .identificationCode("T008")
                 .fullName("Dr. Smith Updated")
                 .specialization("Advanced Mathematics")
                 .tenured(false)
@@ -62,7 +62,7 @@ class TeacherPersistenceMongodbIT {
         Teacher result = teacherPersistence.update(teacherId, updatedTeacher);
         
         assertThat(result).isNotNull();
-        assertThat(result.getIdentificationCode()).isEqualTo("T002");
+        assertThat(result.getIdentificationCode()).isEqualTo("T008");
         assertThat(result.getFullName()).isEqualTo("Dr. Smith Updated");
         assertThat(result.getSpecialization()).isEqualTo("Advanced Mathematics");
         assertThat(result.getTenured()).isFalse();
@@ -80,7 +80,7 @@ class TeacherPersistenceMongodbIT {
 
     @Test
     void testExistIdentificationCodeFalse() {
-        boolean exists = teacherPersistence.existIdentificationCode("T999");
+        boolean exists = teacherPersistence.existIdentificationCode("T010");
         assertThat(exists).isFalse();
     }
 
@@ -89,7 +89,7 @@ class TeacherPersistenceMongodbIT {
         UUID newTeacherId = UUID.randomUUID();
         
         Teacher newTeacher = Teacher.builder()
-                .identificationCode("T999")
+                .identificationCode("T011")
                 .fullName("New Teacher")
                 .specialization("Computer Science")
                 .tenured(true)
@@ -98,7 +98,7 @@ class TeacherPersistenceMongodbIT {
         Teacher result = teacherPersistence.update(newTeacherId, newTeacher);
         
         assertThat(result).isNotNull();
-        assertThat(result.getIdentificationCode()).isEqualTo("T999");
+        assertThat(result.getIdentificationCode()).isEqualTo("T011");
         assertThat(result.getFullName()).isEqualTo("New Teacher");
         assertThat(result.getSpecialization()).isEqualTo("Computer Science");
         assertThat(result.getTenured()).isTrue();

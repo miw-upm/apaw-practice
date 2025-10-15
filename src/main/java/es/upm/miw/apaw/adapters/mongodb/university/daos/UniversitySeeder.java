@@ -75,6 +75,20 @@ public class UniversitySeeder {
                         .specialization("TS006")
                         .fullName("TFN006")
                         .tenured(true)
+                        .build(),
+                TeacherEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0106"))
+                        .identificationCode("T007")
+                        .specialization("TS007")
+                        .fullName("TFN007")
+                        .tenured(false)
+                        .build(),
+                TeacherEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0107"))
+                        .identificationCode("T008")
+                        .specialization("TS008")
+                        .fullName("TFN008")
+                        .tenured(true)
                         .build()
         };
         this.teacherRepository.saveAll(Arrays.asList(teachers));

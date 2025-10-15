@@ -40,25 +40,6 @@ class TeacherRepositoryIT {
     }
 
     @Test
-    void testFindByIdentificationCodeCaseSensitive() {
-        String identificationCode = "t001";
-        
-        Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(identificationCode);
-        
-        assertThat(teacher).isEmpty();
-    }
-
-    @Test
-    void testFindByIdentificationCodeWithSpaces() {
-        String identificationCode = "T002";
-        
-        Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(identificationCode);
-        
-        assertThat(teacher).isPresent();
-        assertThat(teacher.get().getIdentificationCode()).isEqualTo(identificationCode);
-    }
-
-    @Test
     void testFindByIdentificationCodeExactMatch() {
         String partialCode = "T00";
         

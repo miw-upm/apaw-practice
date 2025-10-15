@@ -65,11 +65,10 @@ class TeacherServiceIT {
 
     @Test
     void testUpdateWithConflictingIdentificationCode() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0104");
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0102");
         
-        // Try to update with an identification code that already exists (T002)
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T002")
+                .identificationCode("T001")
                 .specialization("Updated Specialization")
                 .fullName("Updated Teacher Name")
                 .tenured(true)
@@ -77,7 +76,7 @@ class TeacherServiceIT {
 
         assertThatThrownBy(() -> this.teacherService.update(teacherId, updatedTeacher))
                 .isInstanceOf(ConflictException.class)
-                .hasMessageContaining("Identification code already exists: T002");
+                .hasMessageContaining("Identification code already exists: T001");
     }
 
     @Test
@@ -85,7 +84,7 @@ class TeacherServiceIT {
         UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
         
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T999")
+                .identificationCode("T009")
                 .specialization("New Specialization")
                 .fullName("New Teacher Name")
                 .tenured(true)
