@@ -26,7 +26,7 @@ public class ProductItemEntity {
     @Indexed(unique = true)
     private String      barcode;
 
-    private String      appoint;    //name / description
+    private String      appoint;
     private BigDecimal  cost;
     private String      unitOfMeasure;
 

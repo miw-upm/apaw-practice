@@ -26,4 +26,11 @@ public class MovementOrderPersistenceMongodb implements MovementOrderPersistence
                 .map(MovementOrderEntity::toMovementOrder);
     }
 
+    @Override
+    public MovementOrder create(MovementOrder movementOrder) {
+        MovementOrderEntity entity = new MovementOrderEntity(movementOrder);
+        this.movementOrderRepository.save(entity);
+        return entity.toMovementOrder();
+    }
+
 }
