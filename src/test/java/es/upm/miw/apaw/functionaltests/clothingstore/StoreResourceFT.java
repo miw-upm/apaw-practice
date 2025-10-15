@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.http.MediaType;
 
 import java.util.UUID;
 
@@ -49,6 +50,26 @@ class StoreResourceFT {
                 .expectStatus().isNoContent();  // 要求 204
 
         assertThat(storeRepository.findById(id)).isEmpty();
+    }
+    @Test
+    void testPatchStore_OK() {
+        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7005");
+        Store patchBody = Store.builder().address("Calle Nueva 123").build();
+
+        Store updated = this.webTestClient.patch()
+                .uri(StoreResource.STORES + "/" + id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(patchBody)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Store.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(updated).isNotNull();
+        assertThat(updated.getId()).isEqualTo(id);
+        assertThat(updated.getAddress()).isEqualTo("Calle Nueva 123");
+
     }
 }
 
