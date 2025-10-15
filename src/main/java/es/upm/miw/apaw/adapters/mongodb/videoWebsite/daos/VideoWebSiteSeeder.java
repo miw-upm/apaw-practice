@@ -37,6 +37,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 1º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PUBLIC)
+                            .views(10000)
                             .build(),
                     VideoEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0200"))
@@ -44,6 +45,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 2º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PUBLIC)
+                            .views(20000)
                             .build(),
                     VideoEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0300"))
@@ -51,6 +53,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 3º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PUBLIC)
+                            .views(50000)
                             .build(),
                     VideoEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0400"))
@@ -58,6 +61,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 4º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PRIVATE)
+                            .views(100)
                             .build(),
                     VideoEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0500"))
@@ -65,6 +69,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 5º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PROTECT)
+                            .views(100000)
                             .build()
             };
             this.videoRepository.saveAll(Arrays.asList(videoEntities));

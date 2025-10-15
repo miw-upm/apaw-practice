@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.metrics.jdbc.DataSourcePoolMetricsAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos.CommentRepository;
@@ -40,6 +41,16 @@ public class CommentPersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> this.commentPersistence.findById(commentId));
         videoWebSiteSeeder.deleteAll();
         videoWebSiteSeeder.seedDatabase();
+    }
+
+    @Test
+    void testDeleteByIdNotFoundException() {
+        UUID commentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1111");
+
+        assertThrows(
+                NotFoundException.class,
+                () -> this.commentPersistence.deleteById(commentId)
+        );
     }
 
     @Test
