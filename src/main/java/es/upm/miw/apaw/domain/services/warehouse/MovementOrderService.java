@@ -23,15 +23,13 @@ public class MovementOrderService {
     }
 
     public MovementOrder create(MovementOrder movementOrder) {
-        // Verificar usuario en microservicio externo
-        UUID userId = movementOrder.getUser().getId();
-        this.userRestClient.readById(userId); // validación indirecta (mockeada en tests)
 
-        // Setear datos adicionales
+        UUID userId = movementOrder.getUser().getId();
+        this.userRestClient.readById(userId);
+
         movementOrder.setId(UUID.randomUUID());
         movementOrder.setRegistrationDate(LocalDateTime.now());
 
-        // Guardar en Mongo
         return this.movementOrderPersistence.create(movementOrder);
     }
 

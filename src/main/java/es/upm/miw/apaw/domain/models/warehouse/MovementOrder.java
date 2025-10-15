@@ -24,7 +24,7 @@ public class MovementOrder {
     private LocalDateTime registrationDate;
 
     @NotBlank
-    private String typeOrder;   //    INBOUND , OUTBOUND
+    private String typeOrder;
 
     private String partnerName;
     private String partnerAddress;
