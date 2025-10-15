@@ -62,23 +62,23 @@ public class RecipePersistenceMongodb implements RecipePersistence {
         return this.recipeRepository.save(recipeEntity).toRecipe();
     }
 
-   @Override
-   public Recipe update(Recipe recipe){
+    @Override
+    public Recipe update(Recipe recipe) {
         RecipeEntity recipeEntity = this.recipeRepository
                 .readByReferenceNumber(recipe.getReferenceNumber())
                 .orElseThrow(() -> new NotFoundException(" Recipe reference number: " + recipe.getReferenceNumber()));
         List<RecipeItemEntity> recipeItemEntities = recipe.getItems().stream()
-                .map( recipeItem -> new RecipeItemEntity(
-                    this.ingredientRepository
-                            .readByLabel(recipeItem.getIngredient().getLabel())
-                            .orElseThrow(() -> new NotFoundException(
-                                    "Ingredient label: " + recipeItem.getIngredient().getLabel()
-                            )),
-                    recipeItem.getQuantity(),
-                    recipeItem.getSpecifications(),
-                    recipeItem.getOptional())
+                .map(recipeItem -> new RecipeItemEntity(
+                        this.ingredientRepository
+                                .readByLabel(recipeItem.getIngredient().getLabel())
+                                .orElseThrow(() -> new NotFoundException(
+                                        "Ingredient label: " + recipeItem.getIngredient().getLabel()
+                                )),
+                        recipeItem.getQuantity(),
+                        recipeItem.getSpecifications(),
+                        recipeItem.getOptional())
                 ).toList();
         recipeEntity.setItemEntities(recipeItemEntities);
         return this.recipeRepository.save(recipeEntity).toRecipe();
-   }
+    }
 }

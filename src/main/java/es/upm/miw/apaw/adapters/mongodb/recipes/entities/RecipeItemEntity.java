@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.entities;
 
 import es.upm.miw.apaw.domain.models.recipes.RecipeItem;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.entities;
 
 import es.upm.miw.apaw.domain.models.recipes.Ingredient;
-
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
