@@ -142,5 +142,4 @@ class MenuResourceFT {
                 .should()
                 .getUnitQuantitySumByMenuType(menuType);
     }
-
 }
