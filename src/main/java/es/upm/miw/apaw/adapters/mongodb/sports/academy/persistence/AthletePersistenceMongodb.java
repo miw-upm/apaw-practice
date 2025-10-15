@@ -2,17 +2,17 @@ package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.AthleteRepository;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.AthleteEntity;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.LegalGuardianEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
-import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.persistenceports.sports.academy.IAthletePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -60,5 +60,14 @@ public class AthletePersistenceMongodb implements IAthletePersistence {
                 .findByUserDtoId(id)
                 .orElseThrow(() -> new NotFoundException("Athlete user dto id: " + id))
                 .toAthlete();
+    }
+
+    @Override
+    public Stream<Athlete> getByLegalGuardians(Stream<LegalGuardian> legalGuardianStream) {
+        List<LegalGuardianEntity> guardianEntities = legalGuardianStream
+                .map(LegalGuardianEntity::new)
+                .toList();
+        List<AthleteEntity> athletes = athleteRepository.findByLegalGuardiansIn(guardianEntities);
+        return athletes.stream().map(AthleteEntity::toAthlete);
     }
 }

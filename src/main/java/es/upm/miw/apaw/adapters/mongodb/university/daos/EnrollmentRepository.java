@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface EnrollmentRepository extends MongoRepository<EnrollmentEntity, UUID> {
     int deleteByCode(String code);
-    
+
     Optional<EnrollmentEntity> findByCode(String code);
 }
 
