@@ -28,7 +28,7 @@ public class PlanePersistenceMongodb implements PlanePersistence {
     @Override
     public Plane update(String registrationNumber, Plane plane) {
         PlaneEntity planeEntity = this.planeRepository
-                .findByRegistrationNumber(plane.getRegistrationNumber())
+                .findByRegistrationNumber(registrationNumber)
                 .orElseThrow(() -> new NotFoundException("Plane registration number: " + plane.getRegistrationNumber()));
         planeEntity.fromPlane(plane);
         return this.planeRepository
