@@ -32,37 +32,6 @@ class SubjectAssignmentPersistenceMongodbIT {
 
     @Test
     void testGetById() {
-        UUID subjectAssignmentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0300");
-        
-        SubjectAssignment result = subjectAssignmentPersistence.getById(subjectAssignmentId);
-        
-        assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(subjectAssignmentId);
-        assertThat(result.getLessons()).isNotEmpty();
-        assertThat(result.getLessons()).hasSize(2);
-
-        Lesson lesson1 = result.getLessons().get(0);
-        assertThat(lesson1.getStartDate()).isEqualTo(LocalDateTime.of(2024, 1, 15, 9, 0));
-        assertThat(lesson1.getClassroom()).isEqualTo("A101");
-        assertThat(lesson1.getDuration()).isEqualTo(90);
-        
-        Lesson lesson2 = result.getLessons().get(1);
-        assertThat(lesson2.getStartDate()).isEqualTo(LocalDateTime.of(2024, 1, 17, 9, 0));
-        assertThat(lesson2.getClassroom()).isEqualTo("A101");
-        assertThat(lesson2.getDuration()).isEqualTo(90);
-    }
-
-    @Test
-    void testGetByIdNotFound() {
-        UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
-        
-        assertThatThrownBy(() -> subjectAssignmentPersistence.getById(nonExistentId))
-                .isInstanceOf(NotFoundException.class)
-                .hasMessageContaining("SubjectAssignment id: " + nonExistentId);
-    }
-
-    @Test
-    void testGetByIdWithMultipleLessons() {
         UUID subjectAssignmentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0301");
         
         SubjectAssignment result = subjectAssignmentPersistence.getById(subjectAssignmentId);
@@ -84,7 +53,16 @@ class SubjectAssignmentPersistenceMongodbIT {
     }
 
     @Test
-    void testGetByIdWithSingleLesson() {
+    void testGetByIdNotFound() {
+        UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
+        
+        assertThatThrownBy(() -> subjectAssignmentPersistence.getById(nonExistentId))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("SubjectAssignment id: " + nonExistentId);
+    }
+
+    @Test
+    void testGetByIdWithMultipleLessons() {
         UUID subjectAssignmentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0302");
         
         SubjectAssignment result = subjectAssignmentPersistence.getById(subjectAssignmentId);
@@ -98,5 +76,27 @@ class SubjectAssignmentPersistenceMongodbIT {
         assertThat(lesson.getStartDate()).isEqualTo(LocalDateTime.of(2024, 1, 15, 14, 0));
         assertThat(lesson.getClassroom()).isEqualTo("C301");
         assertThat(lesson.getDuration()).isEqualTo(60);
+    }
+
+    @Test
+    void testGetByIdWithSingleLesson() {
+        UUID subjectAssignmentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0303");
+        
+        SubjectAssignment result = subjectAssignmentPersistence.getById(subjectAssignmentId);
+        
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(subjectAssignmentId);
+        assertThat(result.getLessons()).isNotEmpty();
+        assertThat(result.getLessons()).hasSize(2);
+
+        Lesson lesson1 = result.getLessons().get(0);
+        assertThat(lesson1.getStartDate()).isEqualTo(LocalDateTime.of(2024, 1, 16, 16, 0));
+        assertThat(lesson1.getClassroom()).isEqualTo("A102");
+        assertThat(lesson1.getDuration()).isEqualTo(90);
+        
+        Lesson lesson2 = result.getLessons().get(1);
+        assertThat(lesson2.getStartDate()).isEqualTo(LocalDateTime.of(2024, 1, 18, 16, 0));
+        assertThat(lesson2.getClassroom()).isEqualTo("A102");
+        assertThat(lesson2.getDuration()).isEqualTo(60);
     }
 }

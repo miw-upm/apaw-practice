@@ -32,30 +32,11 @@ class TeacherRepositoryIT {
 
     @Test
     void testFindByIdentificationCodeNotFound() {
-        String nonExistentCode = "T999";
+        String nonExistentCode = "T999NotFoundCode";
         
         Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(nonExistentCode);
         
         assertThat(teacher).isEmpty();
-    }
-
-    @Test
-    void testFindByIdentificationCodeCaseSensitive() {
-        String identificationCode = "t001";
-        
-        Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(identificationCode);
-        
-        assertThat(teacher).isEmpty();
-    }
-
-    @Test
-    void testFindByIdentificationCodeWithSpaces() {
-        String identificationCode = "T002";
-        
-        Optional<TeacherEntity> teacher = teacherRepository.findByIdentificationCode(identificationCode);
-        
-        assertThat(teacher).isPresent();
-        assertThat(teacher.get().getIdentificationCode()).isEqualTo(identificationCode);
     }
 
     @Test

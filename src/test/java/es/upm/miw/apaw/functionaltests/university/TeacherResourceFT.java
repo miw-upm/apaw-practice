@@ -25,10 +25,10 @@ public class TeacherResourceFT {
 
     @Test
     void testUpdate() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0102");
         
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T001")
+                .identificationCode("T003")
                 .specialization("Updated Computer Science")
                 .fullName("Updated Teacher Name")
                 .tenured(false)
@@ -42,7 +42,7 @@ public class TeacherResourceFT {
                 .expectStatus().isOk()
                 .expectBody(Teacher.class)
                 .value(teacher -> {
-                    assertThat(teacher.getIdentificationCode()).isEqualTo("T001");
+                    assertThat(teacher.getIdentificationCode()).isEqualTo("T003");
                     assertThat(teacher.getSpecialization()).isEqualTo("Updated Computer Science");
                     assertThat(teacher.getFullName()).isEqualTo("Updated Teacher Name");
                     assertThat(teacher.getTenured()).isFalse();
@@ -51,10 +51,10 @@ public class TeacherResourceFT {
 
     @Test
     void testUpdateWithNewIdentificationCode() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0103");
         
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T999")
+                .identificationCode("T017")
                 .specialization("New Specialization")
                 .fullName("New Teacher Name")
                 .tenured(true)
@@ -68,7 +68,7 @@ public class TeacherResourceFT {
                 .expectStatus().isOk()
                 .expectBody(Teacher.class)
                 .value(teacher -> {
-                    assertThat(teacher.getIdentificationCode()).isEqualTo("T999");
+                    assertThat(teacher.getIdentificationCode()).isEqualTo("T017");
                     assertThat(teacher.getSpecialization()).isEqualTo("New Specialization");
                     assertThat(teacher.getFullName()).isEqualTo("New Teacher Name");
                     assertThat(teacher.getTenured()).isTrue();
@@ -80,7 +80,7 @@ public class TeacherResourceFT {
         UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
         
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T999")
+                .identificationCode("T008")
                 .specialization("New Specialization")
                 .fullName("New Teacher Name")
                 .tenured(true)
@@ -96,11 +96,10 @@ public class TeacherResourceFT {
 
     @Test
     void testUpdateWithConflictingIdentificationCode() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0103");
         
-        // Try to update with an identification code that already exists (T002)
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T002")
+                .identificationCode("T001")
                 .specialization("Updated Specialization")
                 .fullName("Updated Teacher Name")
                 .tenured(true)
@@ -116,7 +115,7 @@ public class TeacherResourceFT {
 
     @Test
     void testUpdateBadRequest() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0106");
         
         // Try to update with empty identification code (should fail validation)
         Teacher updatedTeacher = Teacher.builder()

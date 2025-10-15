@@ -26,7 +26,7 @@ class SubjectPersistenceMongodbIT {
     @Test
     void testCreate() {
         Subject subject = Subject.builder()
-                .name("Test Subject")
+                .name("Test Subject 1")
                 .description("Test Description")
                 .credits(6)
                 .build();
@@ -34,13 +34,13 @@ class SubjectPersistenceMongodbIT {
         Subject createdSubject = subjectPersistence.create(subject);
 
         assertThat(createdSubject).isNotNull();
-        assertThat(createdSubject.getName()).isEqualTo("Test Subject");
+        assertThat(createdSubject.getName()).isEqualTo("Test Subject 1");
         assertThat(createdSubject.getDescription()).isEqualTo("Test Description");
         assertThat(createdSubject.getCredits()).isEqualTo(6);
 
-        Optional<SubjectEntity> subjectEntity = subjectRepository.findByName("Test Subject");
+        Optional<SubjectEntity> subjectEntity = subjectRepository.findByName("Test Subject 1");
         assertThat(subjectEntity).isPresent();
-        assertThat(subjectEntity.get().getName()).isEqualTo("Test Subject");
+        assertThat(subjectEntity.get().getName()).isEqualTo("Test Subject 1");
     }
 
     @Test
