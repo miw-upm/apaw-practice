@@ -39,4 +39,9 @@ public class LocationResource {
         return this.locationService.updateAvailability(position, availability.get("availability"));
     }
 
+    @DeleteMapping(POSITION)
+    public void deleteByPosition(@PathVariable String position) {
+        this.locationService.deleteByPosition(position);
+    }
+
 }
