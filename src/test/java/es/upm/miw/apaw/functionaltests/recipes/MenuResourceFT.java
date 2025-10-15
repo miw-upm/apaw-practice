@@ -35,7 +35,6 @@ class MenuResourceFT {
 
     @Test
     void testFindAllMenus() {
-        // given
         UserDto user = UserDto.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                 .firstName("Alice")
@@ -114,4 +113,34 @@ class MenuResourceFT {
                 .should()
                 .findMobilesBySpecifications(specification);
     }
+
+    @Test
+    void testGetUnitQuantitySumByMenuType() {
+        String menuType = "Vegetarian";
+        Double expectedSum = 2912.0;
+
+        BDDMockito.given(this.menuService.getUnitQuantitySumByMenuType(menuType))
+                .willReturn(expectedSum);
+
+        webTestClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(MenuResource.MENUS + MenuResource.UNIT_QUANTITY_SUM)
+                                .queryParam("menuType", menuType)
+                                .build()
+                )
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Double.class)
+                .value(result -> {
+                    assertThat(result)
+                            .isNotNull()
+                            .isEqualTo(expectedSum);
+                });
+
+        BDDMockito.then(this.menuService)
+                .should()
+                .getUnitQuantitySumByMenuType(menuType);
+    }
+
 }

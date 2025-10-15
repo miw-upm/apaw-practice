@@ -97,4 +97,24 @@ class MenuServiceIT {
                 .should()
                 .findMobilesBySpecifications(specification);
     }
+
+    @Test
+    void testGetUnitQuantitySumByMenuType() {
+        String menuType = "Vegetarian";
+        Double expectedSum = 2912.0;
+
+        BDDMockito.given(this.menuPersistence.getUnitQuantitySumByMenuType(menuType))
+                .willReturn(expectedSum);
+
+        Double result = this.menuService.getUnitQuantitySumByMenuType(menuType);
+
+        assertThat(result)
+                .isNotNull()
+                .isEqualTo(expectedSum);
+
+        BDDMockito.then(this.menuPersistence)
+                .should()
+                .getUnitQuantitySumByMenuType(menuType);
+    }
+
 }
