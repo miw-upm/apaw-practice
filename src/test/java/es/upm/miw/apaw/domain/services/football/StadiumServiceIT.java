@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,7 +31,7 @@ class StadiumServiceIT {
     @Test
     void testCreate_ok() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(1L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Old Trafford")
                 .capacity(75000)
                 .roof(true)
@@ -52,7 +53,7 @@ class StadiumServiceIT {
     @Test
     void testCreate_conflictException() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(2L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Duplicate Stadium")
                 .capacity(60000)
                 .roof(false)
@@ -68,7 +69,7 @@ class StadiumServiceIT {
     @Test
     void testCreate_badRequestException() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(3L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Invalid Capacity Stadium")
                 .capacity(0)
                 .roof(true)
@@ -81,7 +82,7 @@ class StadiumServiceIT {
     @Test
     void testUpdateCapacity_ok() {
         Stadium stadium = Stadium.builder()
-                .stadiumId(10L)
+                .stadiumId(UUID.randomUUID())
                 .officialName("Anfield")
                 .capacity(54000)
                 .roof(true)
@@ -110,4 +111,31 @@ class StadiumServiceIT {
         assertThrows(BadRequestException.class,
                 () -> this.stadiumService.updateCapacity("Anfield", 0));
     }
+
+    @Test
+    void testDelete_ok() {
+        Stadium stadium = Stadium.builder()
+                .stadiumId(UUID.randomUUID())
+                .officialName("ToDelete")
+                .capacity(40000)
+                .roof(true)
+                .build();
+
+        BDDMockito.given(this.stadiumPersistence.findByOfficialName("ToDelete"))
+                .willReturn(Optional.of(stadium));
+
+        this.stadiumService.deleteByOfficialName("ToDelete");
+
+        BDDMockito.then(this.stadiumPersistence).should().delete(stadium);
+    }
+
+    @Test
+    void testDelete_notFound() {
+        BDDMockito.given(this.stadiumPersistence.findByOfficialName("Missing"))
+                .willReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class,
+                () -> this.stadiumService.deleteByOfficialName("Missing"));
+    }
+
 }
