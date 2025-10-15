@@ -5,12 +5,14 @@ import es.upm.miw.apaw.domain.services.recipes.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(MenuResource.MENUS)
 public class MenuResource {
     public static final String MENUS = "/recipes/menus";
+    public static final String USER_MOBILES = "/user/mobiles";
 
     private final MenuService menuService;
 
@@ -22,5 +24,10 @@ public class MenuResource {
     @GetMapping
     public Stream<Menu> findAll() {
         return this.menuService.getAllMenus();
+    }
+
+    @GetMapping(USER_MOBILES)
+    public List<String> findMobilesBySpecifications(@RequestParam String specifications){
+        return this.menuService.findMobilesBySpecifications(specifications);
     }
 }

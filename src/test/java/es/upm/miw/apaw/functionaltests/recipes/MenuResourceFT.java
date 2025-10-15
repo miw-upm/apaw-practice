@@ -84,4 +84,34 @@ class MenuResourceFT {
                     assertThat(menus.getFirst().getRecipes()).hasSizeGreaterThanOrEqualTo(1);
                 });
     }
+
+    @Test
+    void testFindMobilesBySpecifications() {
+        String specification = "Melted butter";
+        List<String> mobiles = List.of("666000660", "666000661");
+
+        BDDMockito.given(this.menuService.findMobilesBySpecifications(specification))
+                .willReturn(mobiles);
+
+        webTestClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path(MenuResource.MENUS + MenuResource.USER_MOBILES)
+                                .queryParam("specifications", specification)
+                                .build()
+                )
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Object.class)
+                .value(result -> {
+                    assertThat(result)
+                            .isNotEmpty()
+                            .hasSize(2)
+                            .containsExactlyInAnyOrder("666000660", "666000661");
+                });
+
+        BDDMockito.then(this.menuService)
+                .should()
+                .findMobilesBySpecifications(specification);
+    }
 }

@@ -2,9 +2,11 @@ package es.upm.miw.apaw.domain.services.recipes;
 
 import es.upm.miw.apaw.domain.models.recipes.Menu;
 import es.upm.miw.apaw.domain.persistenceports.recipes.MenuPersistence;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -19,5 +21,9 @@ public class MenuService {
 
     public Stream<Menu> getAllMenus() {
         return this.menuPersistence.findAll();
+    }
+
+    public List<String> findMobilesBySpecifications(@Valid String specifications){
+        return menuPersistence.findMobilesBySpecifications(specifications);
     }
 }
