@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class VideogameEntity {
     @Id
@@ -25,6 +24,12 @@ public class VideogameEntity {
     private LocalDate releaseDate;
     @DBRef
     private GenreEntity genreEntity;
+
+    public VideogameEntity() {
+        if (this.id == null) {  // Generar UUID automáticamente
+            this.id = UUID.randomUUID();
+        }
+    }
 
     public Videogame toVideogame() {
         Videogame videogame = new Videogame();
