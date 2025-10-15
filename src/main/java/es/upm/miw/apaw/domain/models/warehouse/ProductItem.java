@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Builder
 @Data
@@ -17,7 +16,7 @@ public class ProductItem {
     @NotBlank
     private String barcode;
 
-    private String appoint; //productname
+    private String appoint;
 
     @NotNull
     private BigDecimal cost;
