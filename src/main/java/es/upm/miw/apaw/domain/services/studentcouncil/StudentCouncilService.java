@@ -25,4 +25,17 @@ public class StudentCouncilService {
         council.setResources(newResources);
         return this.studentCouncilPersistence.update(council);
     }
+
+    public BigDecimal sumResourcesByStatement(String statement) {
+        return this.studentCouncilPersistence.readAll()
+                .filter(council -> council.getRepresentatives() != null)
+                .filter(council -> council.getRepresentatives().stream()
+                        .filter(rep -> rep.getTopics() != null)
+                        .anyMatch(rep -> rep.getTopics().stream()
+                                .anyMatch(issue -> statement.equalsIgnoreCase(issue.getStatement()))
+                        )
+                )
+                .map(StudentCouncil::getResources)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }

@@ -26,4 +26,9 @@ public class StudentCouncilResource {
     public StudentCouncil updateResources(@PathVariable UUID id, @RequestBody BigDecimal newResources) {
         return this.studentCouncilService.updateResources(id, newResources);
     }
+
+    @GetMapping("/resources")
+    public BigDecimal getResourcesByStatement(@RequestParam String statement) {
+        return this.studentCouncilService.sumResourcesByStatement(statement);
+    }
 }
