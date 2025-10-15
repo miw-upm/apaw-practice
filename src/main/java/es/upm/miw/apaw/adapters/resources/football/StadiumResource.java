@@ -31,4 +31,8 @@ public class StadiumResource {
     public Stadium readByOfficialName(@PathVariable String officialName) {
         return this.stadiumService.readByOfficialName(officialName);
     }
+    @PatchMapping(NAME_ID)
+    public Stadium updateCapacity(@PathVariable String officialName, @RequestBody Stadium stadium) {
+        return this.stadiumService.updateCapacity(officialName, stadium.getCapacity());
+    }
 }
