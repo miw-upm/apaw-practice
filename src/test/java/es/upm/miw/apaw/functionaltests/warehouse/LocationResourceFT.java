@@ -20,4 +20,32 @@ class LocationResourceFT {
     private WebTestClient webTestClient;
 
 
+    @Test
+    void testReadAll() {
+        this.webTestClient.get()
+                .uri(LocationResource.LOCATIONS) // sin BASE_URL
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Location.class)
+                .value(list -> assertThat(list).isNotEmpty());
+    }
+
+    @Test
+    void testReadByPositionExisting() {
+        this.webTestClient.get()
+                .uri(LocationResource.LOCATIONS + LocationResource.POSITION, "A1") // usa la constante del resource
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Location.class)
+                .value(loc -> assertThat(loc.getPosition()).isEqualTo("A1"));
+    }
+
+    @Test
+    void testReadByPositionNotFound() {
+        this.webTestClient.get()
+                .uri(LocationResource.LOCATIONS + LocationResource.POSITION, "Z9")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
 }

@@ -21,4 +21,8 @@ public class LocationService {
         return this.locationPersistence.readAll();
     }
 
+    public Location readByPosition(String position) {
+        return this.locationPersistence.readByPosition(position);
+    }
+
 }

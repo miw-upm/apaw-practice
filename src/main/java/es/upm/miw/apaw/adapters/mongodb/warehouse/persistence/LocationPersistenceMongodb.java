@@ -27,10 +27,10 @@ public class LocationPersistenceMongodb implements LocationPersistence {
     }
 
     @Override
-    public Location readByPosition (String position) {
+    public Location readByPosition(String position) {
         return this.locationRepository.findByPosition(position)
-                .orElseThrow(() -> new NotFoundException("Location position " + position))
-                .toLocation();
+                .map(LocationEntity::toLocation)
+                .orElseThrow(() -> new NotFoundException("Location position: " + position));
     }
 
 }
