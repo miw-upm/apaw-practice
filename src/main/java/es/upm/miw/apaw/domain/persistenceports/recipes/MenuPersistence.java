@@ -1,4 +1,5 @@
 package es.upm.miw.apaw.domain.persistenceports.recipes;
+
 import es.upm.miw.apaw.domain.models.recipes.Menu;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,6 @@ public interface MenuPersistence {
     Stream<Menu> findAll();
 
     List<String> findMobilesBySpecifications(String specifications);
-}
 
+    Double getUnitQuantitySumByMenuType(String menuType);
+}

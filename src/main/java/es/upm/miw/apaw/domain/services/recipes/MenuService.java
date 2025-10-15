@@ -23,7 +23,11 @@ public class MenuService {
         return this.menuPersistence.findAll();
     }
 
-    public List<String> findMobilesBySpecifications(@Valid String specifications){
+    public List<String> findMobilesBySpecifications(@Valid String specifications) {
         return menuPersistence.findMobilesBySpecifications(specifications);
+    }
+
+    public Double getUnitQuantitySumByMenuType(@Valid String menuType) {
+        return menuPersistence.getUnitQuantitySumByMenuType(menuType);
     }
 }

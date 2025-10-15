@@ -105,4 +105,26 @@ class MenuPersistenceMongodbIT {
 
         assertThat(mobiles).isEmpty();
     }
+
+    @Test
+    void testGetUnitQuantitySumByMenuType() {
+        String menuType = "Vegetarian";
+        double expectedSum = 2912.0;
+        Double result = this.menuPersistenceMongodb.getUnitQuantitySumByMenuType(menuType);
+
+        assertThat(result)
+                .isNotNull()
+                .isEqualTo(expectedSum);
+    }
+
+    @Test
+    void testGetUnitQuantitySumByMenuType_NoMatches() {
+        String menuType = "NonexistentType";
+
+        Double result = this.menuPersistenceMongodb.getUnitQuantitySumByMenuType(menuType);
+
+        assertThat(result)
+                .isNotNull()
+                .isEqualTo(0.0);
+    }
 }

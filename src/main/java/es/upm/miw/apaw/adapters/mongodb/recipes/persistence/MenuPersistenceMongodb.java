@@ -1,9 +1,10 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.recipes.daos.MenuRepository;
+import es.upm.miw.apaw.adapters.mongodb.recipes.entities.IngredientEntity;
 import es.upm.miw.apaw.adapters.mongodb.recipes.entities.MenuEntity;
+import es.upm.miw.apaw.adapters.mongodb.recipes.entities.RecipeItemEntity;
 import es.upm.miw.apaw.domain.models.recipes.Menu;
-import es.upm.miw.apaw.domain.models.recipes.Recipe;
 import es.upm.miw.apaw.domain.persistenceports.recipes.MenuPersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,17 @@ public class MenuPersistenceMongodb implements MenuPersistence {
                 .map(userId -> this.userRestClient.readById(userId).getMobile())
                 .distinct()
                 .toList();
+    }
+
+    @Override
+    public Double getUnitQuantitySumByMenuType(String menuType) {
+        return this.menuRepository.findAll().stream()
+                .filter(menu -> menu.getType() != null && menu.getType().equalsIgnoreCase(menuType))
+                .flatMap(menu -> menu.getRecipeEntities().stream())
+                .flatMap(recipe -> recipe.getItemEntities().stream())
+                .map(RecipeItemEntity::getIngredientEntity)
+                .distinct()
+                .mapToDouble(IngredientEntity::getUnitQuantity)
+                .sum();
     }
 }
