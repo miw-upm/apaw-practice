@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.Collections;
 import java.util.List;
 
 @Builder
@@ -26,8 +27,9 @@ public class WatchListEntity {
         WatchList watchList = new WatchList();
         BeanUtils.copyProperties(this, watchList, "savedVideos");
 
-        List<Video> videos = this.savedVideoEntities
-                .stream()
+        List<Video> videos = (this.savedVideoEntities == null)
+                ? Collections.emptyList()
+                : this.savedVideoEntities.stream()
                 .map(VideoEntity::toVideo)
                 .toList();
 

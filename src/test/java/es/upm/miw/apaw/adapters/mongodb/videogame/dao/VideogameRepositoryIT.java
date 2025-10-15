@@ -4,6 +4,7 @@ import es.upm.miw.apaw.adapters.mongodb.videogame.daos.GenreRepository;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameRepository;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.GenreEntity;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.VideogameEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,12 @@ public class VideogameRepositoryIT {
     private VideogameRepository videogameRepository;
     @Autowired
     private GenreRepository genreRepository;
+
+    @BeforeEach
+    void setup() {
+        genreRepository.deleteAll();
+        videogameRepository.deleteAll();
+    }
 
     @Test
     void testUpdateOnlineByGenre() {
@@ -46,6 +53,7 @@ public class VideogameRepositoryIT {
         videogameRepository.saveAll(beforeUpdate);
 
         List<VideogameEntity> afterUpdate = videogameRepository.findByGenreEntityId(genre.getId());
+        assertThat(afterUpdate).isNotEmpty();
         assertThat(afterUpdate).allMatch(v -> !v.getOnline());
     }
 

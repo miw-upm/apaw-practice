@@ -24,5 +24,6 @@ public class Video {
     private LocalDateTime uploadDate;
     @NotNull
     private VideoStatus videoStatus;
+    private Integer views;
 
 }
