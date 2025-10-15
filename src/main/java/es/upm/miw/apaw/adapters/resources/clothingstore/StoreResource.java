@@ -3,6 +3,8 @@ package es.upm.miw.apaw.adapters.resources.clothingstore;
 import es.upm.miw.apaw.domain.services.clothingstore.StoreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import es.upm.miw.apaw.domain.models.clothingstore.Store;
+
 import java.util.UUID;
 
 @RestController
@@ -22,4 +24,9 @@ public class StoreResource {
     public void delete(@PathVariable UUID id) {
         this.storeService.delete(id);
     }
+    @PatchMapping("/{id}")
+    public Store patch(@PathVariable UUID id, @RequestBody Store partialStore) {
+        return this.storeService.patch(id, partialStore);
+    }
+
 }
