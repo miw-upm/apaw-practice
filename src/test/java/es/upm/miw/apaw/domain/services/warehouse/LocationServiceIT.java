@@ -32,13 +32,19 @@ class LocationServiceIT {
         Location location = this.locationService.readByPosition("A1");
         assertThat(location.getPosition()).isEqualTo("A1");
         assertThat(location.getCurrentStock()).isEqualTo(100);
-        assertThat(location.getAvailability()).isTrue();
+        assertThat(location.getAvailability()).isNotNull();
         assertThat(location.getProductItems()).hasSize(2);
     }
 
     @Test
     void testReadByPositionNotFound() {
         assertThrows(NotFoundException.class, () -> this.locationService.readByPosition("Z9"));
+    }
+
+    @Test
+    void testUpdateAvailability() {
+        Location location = this.locationService.updateAvailability("A1", false);
+        assertThat(location.getAvailability()).isFalse();
     }
 
 }

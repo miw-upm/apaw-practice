@@ -28,13 +28,28 @@ class LocationPersistenceMongodbIT {
     @Test
     void testReadByPosition() {
         Location location = this.locationPersistence.readByPosition("A1");
-        assertThat(location.getAvailability()).isTrue();
+        assertThat(location.getAvailability()).isNotNull();
         assertThat(location.getProductItems()).hasSize(2);
     }
 
     @Test
     void testReadByPositionNotFound() {
         assertThrows(NotFoundException.class, () -> this.locationPersistence.readByPosition("Z9"));
+    }
+
+    @Test
+    void testUpdateAvailability() {
+        Location location = this.locationPersistence.readByPosition("A1");
+        assertThat(location.getAvailability()).isNotNull();
+
+        Boolean originalAvailability = location.getAvailability();
+
+        location.setAvailability(!originalAvailability);
+        Location updated = this.locationPersistence.update(location);
+
+        assertThat(updated.getAvailability())
+                .isNotNull()
+                .isNotEqualTo(originalAvailability);
     }
 
 }
