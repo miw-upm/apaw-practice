@@ -4,6 +4,7 @@ package es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.entitites.StudentCouncilEntity;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.persistence.StudentCouncilPersistenceMongodb;
 import es.upm.miw.apaw.domain.models.studentcouncil.StudentCouncil;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -22,7 +23,14 @@ class StudentCouncilRepositoryIT {
 
     @Autowired
     private StudentCouncilRepository repository;
+    @Autowired
+    private StudentCouncilSeeder seeder;
 
+    @BeforeEach
+    void setUp() {
+        seeder.deleteAll();
+        seeder.seedDatabase();
+    }
 
     @Test
     void testSaveAndFind() {
