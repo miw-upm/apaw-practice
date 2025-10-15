@@ -24,12 +24,13 @@ public class VideoEntity {
     private String description;
     private LocalDateTime uploadDate;
     private VideoStatus videoStatus;
+    private Integer views;
 
     public VideoEntity(Video video) {
         BeanUtils.copyProperties(video, this);
     }
 
     public Video toVideo() {
-        return new Video(this.id, this.title, this.description, this.uploadDate, this.videoStatus);
+        return new Video(this.id, this.title, this.description, this.uploadDate, this.videoStatus, this.views);
     }
 }

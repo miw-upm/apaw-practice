@@ -1,11 +1,9 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.entities;
 
 import es.upm.miw.apaw.domain.models.warehouse.OrderDetail;
-import es.upm.miw.apaw.domain.models.warehouse.ProductItem;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
@@ -13,27 +11,31 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
 
 public class OrderDetailEntity {
 
-    @DBRef
-    private ProductItemEntity productItemEntity;
     private Integer     qtyRequested;
     private Integer     qtyMoved;
     private BigDecimal  unitCost;
 
+    @DBRef
+    private ProductItemEntity productItemEntity;
+
+
     public OrderDetailEntity(OrderDetail orderDetail) {
-        BeanUtils.copyProperties(orderDetail, this);
+        BeanUtils.copyProperties(orderDetail, this, "productItem");
+        this.productItemEntity = orderDetail.getProductItem() == null ? null :
+                new ProductItemEntity(orderDetail.getProductItem());
     }
 
     public OrderDetail toOrderDetail() {
-        return new OrderDetail(
-                this.productItemEntity.toProductItem(),
-                this.qtyRequested,
-                this.qtyMoved,
-                this.unitCost
-        );
+        return OrderDetail.builder()
+                .qtyRequested(this.qtyRequested)
+                .qtyMoved(this.qtyMoved)
+                .unitCost(this.unitCost)
+                .productItem(this.productItemEntity != null ?
+                        this.productItemEntity.toProductItem() : null)
+                .build();
     }
 
 }

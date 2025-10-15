@@ -35,10 +35,10 @@ public class StudentCouncilSeeder {
         this.issueReplyRepository = issueReplyRepository;
     }
 
-    public void seedDatabase(){
+    public void seedDatabase() {
         log.warn("------- StudentCouncil Initial Load -----------");
 
-
+        // ===== Issue replies =====
         IssueReplyEntity reply1 = IssueReplyEntity.builder()
                 .id(UUID.fromString("bbbbbbbb-bbbb-cccc-dddd-eeeeffff0000"))
                 .reason("Reply1")
@@ -55,7 +55,7 @@ public class StudentCouncilSeeder {
 
         this.issueReplyRepository.saveAll(Arrays.asList(reply1, reply2));
 
-
+        // ===== Student issues =====
         StudentIssueEntity issue1 = StudentIssueEntity.builder()
                 .id(UUID.fromString("cccccccc-bbbb-cccc-dddd-eeeeffff0000"))
                 .statement("Problem1")
@@ -76,7 +76,7 @@ public class StudentCouncilSeeder {
 
         this.studentIssueRepository.saveAll(Arrays.asList(issue1, issue2));
 
-
+        // ===== Representatives =====
         RepresentativeEntity rep1 = RepresentativeEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                 .joinDate(LocalDateTime.now().minusYears(1))
@@ -93,10 +93,18 @@ public class StudentCouncilSeeder {
                 .topics(Collections.singletonList(issue1))
                 .build();
 
-        this.representativeRepository.saveAll(Arrays.asList(rep1, rep2));
+        RepresentativeEntity rep3 = RepresentativeEntity.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                .joinDate(LocalDateTime.now().minusMonths(6))
+                .responsibility("Treasurer2")
+                .representativeId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                .topics(Collections.singletonList(issue2))
+                .build();
 
+        this.representativeRepository.saveAll(Arrays.asList(rep1, rep2, rep3));
 
-        StudentCouncilEntity council = StudentCouncilEntity.builder()
+        // ===== Councils =====
+        StudentCouncilEntity council1 = StudentCouncilEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                 .council("Council1")
                 .site("Building A")
@@ -104,10 +112,27 @@ public class StudentCouncilSeeder {
                 .representatives(Arrays.asList(rep1, rep2))
                 .build();
 
-        this.studentCouncilRepository.save(council);
+        StudentCouncilEntity council2 = StudentCouncilEntity.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
+                .council("Council2")
+                .site("Building B")
+                .resources(new BigDecimal("30000.00"))
+                .representatives(Collections.singletonList(rep1))
+                .build();
 
-        log.warn("------- StudentCouncil");
+        StudentCouncilEntity council3 = StudentCouncilEntity.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                .council("Council3")
+                .site("Building C")
+                .resources(new BigDecimal("10000.00"))
+                .representatives(Collections.singletonList(rep3))
+                .build();
+
+        this.studentCouncilRepository.saveAll(Arrays.asList(council1, council2, council3));
+
+        log.warn("------- StudentCouncil Loaded: 3 councils -----------");
     }
+
 
     public void deleteAll() {
         this.studentCouncilRepository.deleteAll();

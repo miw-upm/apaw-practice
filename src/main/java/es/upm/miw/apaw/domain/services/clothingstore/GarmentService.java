@@ -29,7 +29,9 @@ public class GarmentService {
     public Stream<Garment> readAll() {
         return this.garmentPersistence.readAll();
     }
-
+    public void delete(UUID id) {
+        this.garmentPersistence.delete(id);
+    }
 
 }
 
