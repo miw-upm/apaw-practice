@@ -4,4 +4,4 @@ server:
 spring:
   data:
     mongodb:
-      uri: "mongodb://localhost:27017/apaw-practice"
+      uri: "mongodb://mongo:mongo@localhost:27017/apaw?authSource=admin"

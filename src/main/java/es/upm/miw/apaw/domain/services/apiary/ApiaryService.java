@@ -6,8 +6,10 @@ import es.upm.miw.apaw.domain.persistenceports.apiary.ApiaryPersistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.stream.Stream;
 
+import java.math.BigDecimal;
+import java.util.Set;
+import java.util.stream.Stream;
 
 
 @Service
@@ -22,5 +24,13 @@ public class ApiaryService {
 
     public Stream<Apiary> findByLocation(String location) {
         return this.apiaryPersistence.findByLocation(location);
+    }
+
+    public Set<String> findLocationsByShippingAddress(String shippingAddress) {
+        return this.apiaryPersistence.findLocationsByShippingAddress(shippingAddress);
+    }
+
+    public BigDecimal sumProductPricesByRega(String rega) {
+        return this.apiaryPersistence.sumProductPricesByRega(rega);
     }
 }

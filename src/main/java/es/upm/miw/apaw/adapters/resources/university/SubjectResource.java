@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(SubjectResource.SUBJECTS)
 public class SubjectResource {
-    public static final String SUBJECTS = "/subjects";
+    public static final String SUBJECTS = "/university/subjects";
     private final SubjectService subjectService;
 
     @Autowired

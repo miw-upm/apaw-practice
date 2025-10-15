@@ -25,10 +25,10 @@ class TeacherServiceIT {
 
     @Test
     void testUpdate() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
-        
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0104");
+
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T001")
+                .identificationCode("T005")
                 .specialization("Updated Computer Science")
                 .fullName("Updated Teacher Name")
                 .tenured(false)
@@ -37,7 +37,7 @@ class TeacherServiceIT {
         Teacher result = this.teacherService.update(teacherId, updatedTeacher);
 
         assertThat(result).isNotNull();
-        assertThat(result.getIdentificationCode()).isEqualTo("T001");
+        assertThat(result.getIdentificationCode()).isEqualTo("T005");
         assertThat(result.getSpecialization()).isEqualTo("Updated Computer Science");
         assertThat(result.getFullName()).isEqualTo("Updated Teacher Name");
         assertThat(result.getTenured()).isFalse();
@@ -45,10 +45,10 @@ class TeacherServiceIT {
 
     @Test
     void testUpdateWithNewIdentificationCode() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
-        
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0105");
+
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T999")
+                .identificationCode("T9999")
                 .specialization("New Specialization")
                 .fullName("New Teacher Name")
                 .tenured(true)
@@ -57,7 +57,7 @@ class TeacherServiceIT {
         Teacher result = this.teacherService.update(teacherId, updatedTeacher);
 
         assertThat(result).isNotNull();
-        assertThat(result.getIdentificationCode()).isEqualTo("T999");
+        assertThat(result.getIdentificationCode()).isEqualTo("T9999");
         assertThat(result.getSpecialization()).isEqualTo("New Specialization");
         assertThat(result.getFullName()).isEqualTo("New Teacher Name");
         assertThat(result.getTenured()).isTrue();
@@ -65,11 +65,10 @@ class TeacherServiceIT {
 
     @Test
     void testUpdateWithConflictingIdentificationCode() {
-        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100");
-        
-        // Try to update with an identification code that already exists (T002)
+        UUID teacherId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0102");
+
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T002")
+                .identificationCode("T001")
                 .specialization("Updated Specialization")
                 .fullName("Updated Teacher Name")
                 .tenured(true)
@@ -77,15 +76,15 @@ class TeacherServiceIT {
 
         assertThatThrownBy(() -> this.teacherService.update(teacherId, updatedTeacher))
                 .isInstanceOf(ConflictException.class)
-                .hasMessageContaining("Identification code already exists: T002");
+                .hasMessageContaining("Identification code already exists: T001");
     }
 
     @Test
     void testUpdateNotFound() {
         UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
-        
+
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T999")
+                .identificationCode("T009")
                 .specialization("New Specialization")
                 .fullName("New Teacher Name")
                 .tenured(true)
