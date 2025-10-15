@@ -25,6 +25,9 @@ public class StadiumEntity {
 
     public StadiumEntity(Stadium stadium) {
         BeanUtils.copyProperties(stadium, this);
+        if (this.stadiumId == null) {
+            this.stadiumId = UUID.randomUUID();
+        }
     }
 
     public Stadium toStadium() {
