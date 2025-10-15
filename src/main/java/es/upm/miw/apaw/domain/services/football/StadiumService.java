@@ -33,4 +33,15 @@ public class StadiumService {
         return this.stadiumPersistence.findByOfficialName(name)
                 .orElseThrow(() -> new NotFoundException("Stadium name: " + name));
     }
+    public Stadium updateCapacity(String officialName, Integer newCapacity) {
+        if (newCapacity == null || newCapacity <= 0) {
+            throw new BadRequestException("Capacity must be greater than 0");
+        }
+
+        Stadium existing = this.stadiumPersistence.findByOfficialName(officialName)
+                .orElseThrow(() -> new NotFoundException("Stadium not found: " + officialName));
+
+        existing.setCapacity(newCapacity);
+        return this.stadiumPersistence.save(existing);
+    }
 }
