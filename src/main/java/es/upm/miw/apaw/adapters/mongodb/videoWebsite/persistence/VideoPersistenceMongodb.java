@@ -4,7 +4,6 @@ import es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos.VideoRepository;
 import es.upm.miw.apaw.adapters.mongodb.videoWebsite.entities.VideoEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.videoWebsite.Video;
-import es.upm.miw.apaw.domain.models.videoWebsite.enums.VideoStatus;
 import es.upm.miw.apaw.domain.persistenceports.videoWebsite.VideoPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -100,6 +100,7 @@ public class VideoServiceIT {
                 .title("save video title")
                 .description("save video description")
                 .videoStatus(VideoStatus.PROTECT)
+                .views(500)
                 .build();
         this.videoService.save(newVideo);
         Video video = this.videoService.findById(videoId);

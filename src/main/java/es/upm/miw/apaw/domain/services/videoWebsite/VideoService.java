@@ -17,6 +17,7 @@ public class VideoService {
     @Autowired
     public VideoService(VideoPersistence videoPersistence) {
         this.videoPersistence = videoPersistence;
+
     }
 
     public Stream<Video> findByTitle(String title) {
