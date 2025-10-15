@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.models.warehouse.Location;
 import es.upm.miw.apaw.domain.services.warehouse.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +15,7 @@ import java.util.stream.Stream;
 public class LocationResource {
 
     public static final String LOCATIONS = "/warehouse/locations";
+    public static final String POSITION = "/{position}";
 
     private final LocationService locationService;
 
@@ -25,6 +27,11 @@ public class LocationResource {
     @GetMapping
     public Stream<Location> readAll() {
         return this.locationService.readAll();
+    }
+
+    @GetMapping(POSITION)
+    public Location readByPosition(@PathVariable String position) {
+        return this.locationService.readByPosition(position);
     }
 
 }
