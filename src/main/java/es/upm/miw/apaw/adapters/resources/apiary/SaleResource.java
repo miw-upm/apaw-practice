@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Stream;
+
 
 @RestController
 @RequestMapping(SaleResource.SALES)
@@ -31,4 +33,5 @@ public class SaleResource {
     public Sale create(@Valid @RequestBody Sale sale) {
         return this.saleService.create(sale);
     }
+
 }

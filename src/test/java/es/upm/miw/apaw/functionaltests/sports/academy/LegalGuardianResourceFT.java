@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.functionaltests.sports.academy;
 
+import es.upm.miw.apaw.BaseSportsAcademyTests;
 import es.upm.miw.apaw.adapters.resources.sports.academy.LegalGuardianResource;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
@@ -12,21 +13,19 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-class LegalGuardianResourceFT extends BaseSportsAcademyFT {
+class LegalGuardianResourceFT extends BaseSportsAcademyTests {
     
     @Autowired
     private WebTestClient webTestClient;
 
     @Test
     void testUpdate(){
-        var id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
+        var id = legalGuardians[1].getUserDtoId();
         var legalGuardian = LegalGuardian.builder()
                 .user(UserDto.builder().id(id).build())
                 .secondMobile("+5549988706208")

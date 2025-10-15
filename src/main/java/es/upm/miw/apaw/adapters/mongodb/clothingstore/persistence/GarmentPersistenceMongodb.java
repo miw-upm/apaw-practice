@@ -21,8 +21,16 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
     public GarmentPersistenceMongodb(GarmentRepository garmentRepository) {
         this.garmentRepository = garmentRepository;
     }
-@Override
-public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
+
+    @Override
+    public Garment create(Garment garment) {
+        GarmentEntity entity = new GarmentEntity(garment); // 或者 new GarmentEntity(... )
+        entity.setId(UUID.randomUUID());
+        return this.garmentRepository.save(entity).toGarment();
+    }
+
+    @Override
+    public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
     List<GarmentEntity> list = this.garmentRepository.findByPriceBetween(min, max);
 
     if (list.isEmpty()) {
@@ -49,4 +57,12 @@ public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
                 .stream()
                 .map(GarmentEntity::toGarment);
     }
+    @Override
+    public void delete(UUID id) {
+        if (!this.garmentRepository.existsById(id)) {
+            throw new NotFoundException("Garment not found: " + id);
+        }
+        this.garmentRepository.deleteById(id);
+    }
+
 }

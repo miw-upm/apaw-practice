@@ -7,17 +7,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 
+import java.util.UUID;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @ActiveProfiles("test")
 class GarmentServiceIT {
 
     @Autowired
     private GarmentService garmentService;
+    @Autowired
+    private GarmentRepository garmentRepository;
 
     @Autowired
     private DatabaseSeeder databaseSeeder;
@@ -63,5 +68,28 @@ class GarmentServiceIT {
         assertThat(updated.getOnSale()).isEqualTo(changes.getOnSale());
         assertThat(updated.getSize()).isEqualTo(changes.getSize());
     }
+    @Test
+    void testCreate() {
+        Garment garment = Garment.builder()
+                .size("M")
+                .price(new BigDecimal("59.99"))
+                .onSale(false)
+                .build();
+
+        Garment created = garmentService.create(garment);
+
+        assertThat(created).isNotNull();
+        assertThat(created.getSize()).isEqualTo("M");
+        assertThat(created.getPrice()).isEqualByComparingTo("59.99");
+    }
+    @Test
+    void testDelete_ok() {
+        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+
+        assertThat(garmentRepository.findById(id)).isPresent();
+        garmentService.delete(id);
+        assertThat(garmentRepository.findById(id)).isEmpty();
+    }
+
 }
 

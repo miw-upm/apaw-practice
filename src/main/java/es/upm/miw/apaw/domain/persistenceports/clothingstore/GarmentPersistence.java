@@ -12,4 +12,7 @@ public interface GarmentPersistence {
     Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max);
     Garment update(UUID id, Garment garment);
     Stream<Garment> readAll();
+    Garment create(Garment garment);
+    void delete(UUID id);
+
 }

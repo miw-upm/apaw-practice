@@ -30,7 +30,6 @@ class MenuServiceIT {
 
     @Test
     void testGetAllMenus() {
-        // given
         UserDto user = UserDto.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                 .firstName("Alice")
@@ -61,10 +60,8 @@ class MenuServiceIT {
         BDDMockito.given(this.menuPersistence.findAll())
                 .willReturn(Stream.of(christmasMenu, easterMenu));
 
-        // when
         List<Menu> menus = this.menuService.getAllMenus().toList();
 
-        // then
         assertThat(menus)
                 .isNotEmpty()
                 .hasSize(2)
@@ -79,5 +76,44 @@ class MenuServiceIT {
         assertThat(menus.getFirst().getRecipes())
                 .isNotEmpty()
                 .allSatisfy(recipe -> assertThat(recipe.getTitle()).isNotNull());
+    }
+
+    @Test
+    void testFindMobilesBySpecifications() {
+        String specification = "Melted butter";
+        List<String> expectedMobiles = List.of("666000660");
+
+        BDDMockito.given(this.menuPersistence.findMobilesBySpecifications(specification))
+                .willReturn(expectedMobiles);
+
+        List<String> mobiles = this.menuService.findMobilesBySpecifications(specification);
+
+        assertThat(mobiles)
+                .isNotEmpty()
+                .hasSize(1)
+                .containsExactlyInAnyOrder("666000660");
+
+        BDDMockito.then(this.menuPersistence)
+                .should()
+                .findMobilesBySpecifications(specification);
+    }
+
+    @Test
+    void testGetUnitQuantitySumByMenuType() {
+        String menuType = "Vegetarian";
+        Double expectedSum = 2912.0;
+
+        BDDMockito.given(this.menuPersistence.getUnitQuantitySumByMenuType(menuType))
+                .willReturn(expectedSum);
+
+        Double result = this.menuService.getUnitQuantitySumByMenuType(menuType);
+
+        assertThat(result)
+                .isNotNull()
+                .isEqualTo(expectedSum);
+
+        BDDMockito.then(this.menuPersistence)
+                .should()
+                .getUnitQuantitySumByMenuType(menuType);
     }
 }

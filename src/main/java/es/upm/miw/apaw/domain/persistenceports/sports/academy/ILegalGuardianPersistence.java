@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.persistenceports.sports.academy;
 
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -13,4 +14,8 @@ public interface ILegalGuardianPersistence {
     LegalGuardian update(UUID id, LegalGuardian legalGuardian);
 
     LegalGuardian getById(UUID id);
+
+    Stream<LegalGuardian> getBySecondMobile(String secondMobile);
+
+    Stream<LegalGuardian> getByRelationShip(RelationShip relationShip);
 }

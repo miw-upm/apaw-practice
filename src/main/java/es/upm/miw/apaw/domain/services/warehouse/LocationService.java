@@ -21,4 +21,14 @@ public class LocationService {
         return this.locationPersistence.readAll();
     }
 
+    public Location readByPosition(String position) {
+        return this.locationPersistence.readByPosition(position);
+    }
+
+    public Location updateAvailability(String position, Boolean availability) {
+        Location location = this.locationPersistence.readByPosition(position);
+        location.setAvailability(availability);
+        return this.locationPersistence.update(location);
+    }
+
 }

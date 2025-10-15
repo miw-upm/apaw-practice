@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +23,7 @@ class ApiaryResourceFT {
     private WebTestClient webTestClient;
 
     @Test
-    void testFindByLocation() {
+    void testFindByLocationReturnsApiaries() {
         webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path(ApiaryResource.APIARIES)
@@ -34,7 +34,92 @@ class ApiaryResourceFT {
                 .expectStatus().isOk()
                 .expectBodyList(Apiary.class)
                 .value(apiaries -> assertThat(apiaries)
-                        .extracting(Apiary::getLocation)
-                        .allMatch(location -> location.equals("Burgos")));
+                        .isNotEmpty()
+                        .allMatch(apiary -> "Burgos".equals(apiary.getLocation())));
+    }
+
+    @Test
+    void testFindByLocationReturnsEmptyWhenNotFound() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApiaryResource.APIARIES)
+                        .queryParam("location", "NoExiste")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Apiary.class)
+                .value(apiaries -> assertThat(apiaries).isEmpty());
+    }
+
+    @Test
+    void testFindLocationsByShippingAddressReturnsLocations() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApiaryResource.APIARIES + "/locations-by-shipping")
+                        .queryParam("shippingAddress", "Calle Mayor 10, Madrid")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Object.class)
+                .value(locations -> assertThat(locations)
+                        .isNotEmpty()
+                        .contains("Burgos"));
+    }
+
+    @Test
+    void testFindLocationsByShippingAddressReturnsEmptyWhenNotFound() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApiaryResource.APIARIES + "/locations-by-shipping")
+                        .queryParam("shippingAddress", "No existe 123")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Object.class)
+                .value(locations -> assertThat(locations).isEmpty());
+    }
+
+    @Test
+    void testFindLocationsByShippingAddressV2() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApiaryResource.APIARIES + "/locations-by-shipping")
+                        .queryParam("shippingAddress", "Calle Mayor 10, Madrid")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$[0]").isEqualTo("Burgos");
+    }
+
+    @Test
+    void testSumProductPricesByRega_ReturnsCorrectSum() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApiaryResource.APIARIES + "/sum-price-by-rega")
+                        .queryParam("rega", "REGA00001")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .value(response -> assertThat(new BigDecimal(response)).isEqualByComparingTo(new BigDecimal("15.00")));
+    }
+
+    @Test
+    void testSumProductPricesByRega_ReturnsZeroWhenNotFound() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ApiaryResource.APIARIES + "/sum-price-by-rega")
+                        .queryParam("rega", "REGA_NO_EXISTE")
+                        .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .value(response -> assertThat(new BigDecimal(response)).isEqualByComparingTo(BigDecimal.ZERO));
     }
 }

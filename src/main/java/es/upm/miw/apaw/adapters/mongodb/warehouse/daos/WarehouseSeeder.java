@@ -61,14 +61,11 @@ public class WarehouseSeeder {
         };
         this.productItemRepository.saveAll(Arrays.asList(productItems));
 
-        // =======================================================
-        // 2️⃣ Locations
-        // =======================================================
         LocationEntity[] locations = {
                 LocationEntity.builder()
                         .id(UUID.fromString("cccccccc-dddd-eeee-ffff-aaaabbbb0001"))
                         .currentStock(100)
-                        .position("A-01-01")
+                        .position("A1")
                         .lastUpdateDate(LocalDateTime.now().minusDays(1))
                         .productItemEntities(List.of(productItems[0], productItems[1]))
                         .availability(true)
@@ -76,7 +73,7 @@ public class WarehouseSeeder {
                 LocationEntity.builder()
                         .id(UUID.fromString("cccccccc-dddd-eeee-ffff-aaaabbbb0002"))
                         .currentStock(50)
-                        .position("B-02-03")
+                        .position("B1")
                         .lastUpdateDate(LocalDateTime.now().minusDays(2))
                         .productItemEntities(List.of(productItems[2]))
                         .availability(true)
@@ -84,27 +81,24 @@ public class WarehouseSeeder {
         };
         this.locationRepository.saveAll(Arrays.asList(locations));
 
-        // =======================================================
-        // 3️⃣ Movement Orders
-        // =======================================================
         OrderDetailEntity[] orderDetails = {
                 OrderDetailEntity.builder()
-                        .productItemEntity(productItems[0])
                         .qtyRequested(10)
                         .qtyMoved(10)
                         .unitCost(productItems[0].getCost())
+                        .productItemEntity(productItems[0])
                         .build(),
                 OrderDetailEntity.builder()
-                        .productItemEntity(productItems[1])
                         .qtyRequested(5)
                         .qtyMoved(5)
                         .unitCost(productItems[1].getCost())
+                        .productItemEntity(productItems[1])
                         .build(),
                 OrderDetailEntity.builder()
-                        .productItemEntity(productItems[2])
                         .qtyRequested(15)
                         .qtyMoved(15)
                         .unitCost(productItems[2].getCost())
+                        .productItemEntity(productItems[2])
                         .build()
         };
 
@@ -116,8 +110,8 @@ public class WarehouseSeeder {
                         .partnerName("Supplier XYZ")
                         .partnerAddress("Calle Mayor 123, Madrid")
                         .completedOrder(true)
-                        .userId(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"))
                         .orderDetailEntities(List.of(orderDetails[0], orderDetails[1]))
+                        .userId(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"))
                         .build(),
                 MovementOrderEntity.builder()
                         .id(UUID.fromString("dddddddd-eeee-ffff-aaaa-bbbbcccc0002"))
@@ -126,8 +120,8 @@ public class WarehouseSeeder {
                         .partnerName("Customer ABC")
                         .partnerAddress("Av. Central 56, Barcelona")
                         .completedOrder(false)
-                        .userId(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"))
                         .orderDetailEntities(List.of(orderDetails[2]))
+                        .userId(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"))
                         .build()
         };
         this.movementOrderRepository.saveAll(Arrays.asList(movementOrders));

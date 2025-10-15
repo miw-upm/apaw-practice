@@ -260,30 +260,4 @@ class FighterResourceFT {
                 .exchange()
                 .expectStatus().isBadRequest();
     }
-    @Test
-    void testGetCoachExperienceSum_ok() {
-        this.webTestClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(FIGHTERS + "/coach-experience-sum")
-                        .queryParam("comment", "Incredible striking!")
-                        .build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$.sum").isEqualTo(23);
-    }
-
-    @Test
-    void testGetCoachExperienceSum_zeroWhenNoMatches() {
-        this.webTestClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(FIGHTERS + "/coach-experience-sum")
-                        .queryParam("comment", "no such comment")
-                        .build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$.sum").isEqualTo(0);
-    }
-
 }

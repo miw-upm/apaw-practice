@@ -101,4 +101,76 @@ class GarmentResourceFT {
         assertThat(updated.getPrice()).isEqualByComparingTo("129.99");
         assertThat(updated.getOnSale()).isTrue();
     }
+    @Test
+    void testCreate(){
+        Garment body = Garment.builder()
+                .size("S").price(new BigDecimal("19.99")).onSale(false).build();
+
+        Garment created = this.webTestClient.post()
+                .uri(GarmentResource.GARMENTS)
+                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .bodyValue(body)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Garment.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(created).isNotNull();
+        assertThat(created.getId()).isNotNull();
+        assertThat(created.getSize()).isEqualTo("S");
+        assertThat(created.getPrice()).isEqualByComparingTo("19.99");
+        assertThat(created.getOnSale()).isFalse();
+
+        List<Garment> query = this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(GarmentResource.GARMENTS)
+                        .queryParam("min","0").queryParam("max","20").build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Garment.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(query).isNotNull();
+        assertThat(query.stream().anyMatch(g -> g.getId().equals(created.getId()))).isTrue();
+    }
+    @Test
+    void testDeleteGarment_Ok() {
+        List<Garment> garments = this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(GarmentResource.GARMENTS)
+                        .queryParam("min", "0")
+                        .queryParam("max", "100000")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Garment.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(garments).isNotEmpty();
+        UUID idToDelete = garments.get(0).getId();
+
+        this.webTestClient.delete()
+                .uri(GarmentResource.GARMENTS + "/" + idToDelete)
+                .exchange()
+                .expectStatus().isNoContent();
+
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(GarmentResource.GARMENTS)
+                        .queryParam("min", "0")
+                        .queryParam("max", "100000")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Garment.class)
+                .value(list ->
+                        assertThat(list)
+                                .noneMatch(g -> g.getId().equals(idToDelete))
+                );
+    }
+
+
 }

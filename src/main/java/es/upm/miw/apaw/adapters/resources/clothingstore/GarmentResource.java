@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 import java.math.BigDecimal;
@@ -27,6 +30,10 @@ public class GarmentResource {
         this.garmentService = garmentService;
     }
 
+    @PostMapping
+    public Garment create(@RequestBody Garment garment) {
+        return this.garmentService.create(garment);
+    }
     @GetMapping("/all")
     public Stream<Garment> readAll() {
         return this.garmentService.readAll();
@@ -43,5 +50,10 @@ public class GarmentResource {
     @PutMapping("/{id}")
     public Garment update(@PathVariable UUID id, @RequestBody Garment garment) {
         return this.garmentService.update(id, garment);
+    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.garmentService.delete(id);
     }
 }

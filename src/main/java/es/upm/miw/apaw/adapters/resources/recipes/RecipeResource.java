@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping(RecipeResource.RECIPES)
 public class RecipeResource {
     public static final String RECIPES = "/recipes/recipe";
-    public static final String REFERENCE_NUMBER =  "/{referenceNumber}";
+    public static final String REFERENCE_NUMBER = "/{referenceNumber}";
     public static final String RECIPE_ITEMS = "/recipe-items";
 
     private final RecipeService recipeService;

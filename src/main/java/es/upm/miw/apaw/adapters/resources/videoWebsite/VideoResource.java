@@ -31,4 +31,9 @@ public class VideoResource {
     public Video updateVideo(@PathVariable UUID id, @Valid @RequestBody Video video) {
         return this.videoService.update(id, video);
     }
+
+    @PatchMapping
+    public void updateStatus(@RequestBody List<VideoStatusUpdating> videoStatusStream) {
+        this.videoService.updateVideoStatus(videoStatusStream.stream());
+    }
 }

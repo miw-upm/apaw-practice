@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -52,6 +53,36 @@ public class VideoPersistanceMongodbIT {
 
         assertEquals("updated title", updated.getTitle());
         assertEquals(VideoStatus.PRIVATE, updated.getVideoStatus());
+        videoWebSiteSeeder.deleteAll();
+        videoWebSiteSeeder.seedDatabase();
+    }
+
+    @Test
+    void testFindById(){
+        Video video = this.videoPersistence.findById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100"));
+        assertNotNull(video);
+        assertThat(video.getTitle()).isEqualTo("title 1");
+        assertThat(video.getDescription()).isEqualTo("Description of 1º video");
+        assertThat(video.getVideoStatus()).isEqualTo(VideoStatus.PUBLIC);
+    }
+
+    @Test
+    void save(){
+        UUID videoId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9998");
+
+        Video newVideo = Video.builder()
+                .id(videoId)
+                .title("save video title")
+                .description("save video description")
+                .videoStatus(VideoStatus.PROTECT)
+                .build();
+        this.videoPersistence.save(newVideo);
+        Video video = this.videoPersistence.findById(videoId);
+        assertNotNull(video);
+        assertThat(video.getTitle()).isEqualTo("save video title");
+        assertThat(video.getDescription()).isEqualTo("save video description");
+        assertThat(video.getVideoStatus()).isEqualTo(VideoStatus.PROTECT);
+
         videoWebSiteSeeder.deleteAll();
         videoWebSiteSeeder.seedDatabase();
     }

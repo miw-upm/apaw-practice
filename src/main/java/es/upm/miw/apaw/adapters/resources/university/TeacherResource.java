@@ -11,7 +11,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping(TeacherResource.TEACHERS)
 public class TeacherResource {
-    public static final String TEACHERS = "/teachers";
+    public static final String TEACHERS = "/university/teachers";
     public static final String ID_ID = "/{id}";
     private final TeacherService teacherService;
 
@@ -21,7 +21,7 @@ public class TeacherResource {
     }
 
     @PutMapping(ID_ID)
-    public Teacher update(@Valid @PathVariable UUID id,@Valid @RequestBody Teacher teacher) {
+    public Teacher update(@Valid @PathVariable UUID id, @Valid @RequestBody Teacher teacher) {
         return this.teacherService.update(id, teacher);
     }
 }
