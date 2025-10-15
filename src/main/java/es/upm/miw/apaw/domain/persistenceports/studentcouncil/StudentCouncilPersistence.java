@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 public interface StudentCouncilPersistence {
     Optional<StudentCouncil> readById(UUID id);
+
     StudentCouncil update(StudentCouncil studentCouncil);
 
     Stream<StudentCouncil> readAll();

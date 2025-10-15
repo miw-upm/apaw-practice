@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 @Repository("studentCouncilPersistence")
 public class StudentCouncilPersistenceMongodb implements StudentCouncilPersistence {
     private final StudentCouncilRepository studentCouncilRepository;
+
     @Autowired
     public StudentCouncilPersistenceMongodb(StudentCouncilRepository studentCouncilRepository) {
         this.studentCouncilRepository = studentCouncilRepository;
