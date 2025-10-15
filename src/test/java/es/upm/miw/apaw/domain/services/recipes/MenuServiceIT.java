@@ -116,5 +116,4 @@ class MenuServiceIT {
                 .should()
                 .getUnitQuantitySumByMenuType(menuType);
     }
-
 }
