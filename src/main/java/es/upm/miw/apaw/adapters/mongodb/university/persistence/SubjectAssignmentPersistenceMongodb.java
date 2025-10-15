@@ -32,9 +32,9 @@ public class SubjectAssignmentPersistenceMongodb implements SubjectAssignmentPer
         SubjectAssignmentEntity subjectAssignmentEntity = this.subjectAssignmentRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("SubjectAssignment id: " + id));
-        
+
         subjectAssignmentEntity.setCapacity(subjectAssignment.getCapacity());
-        
+
         return this.subjectAssignmentRepository
                 .save(subjectAssignmentEntity)
                 .toSubjectAssignment();

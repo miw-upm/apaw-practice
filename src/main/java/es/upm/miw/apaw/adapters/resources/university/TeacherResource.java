@@ -21,7 +21,7 @@ public class TeacherResource {
     }
 
     @PutMapping(ID_ID)
-    public Teacher update(@Valid @PathVariable UUID id,@Valid @RequestBody Teacher teacher) {
+    public Teacher update(@Valid @PathVariable UUID id, @Valid @RequestBody Teacher teacher) {
         return this.teacherService.update(id, teacher);
     }
 }

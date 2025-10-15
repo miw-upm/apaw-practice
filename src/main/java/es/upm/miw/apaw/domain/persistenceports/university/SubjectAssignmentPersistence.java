@@ -8,6 +8,6 @@ import java.util.UUID;
 @Repository
 public interface SubjectAssignmentPersistence {
     SubjectAssignment getById(UUID id);
-    
+
     SubjectAssignment update(UUID id, SubjectAssignment subjectAssignment);
 }

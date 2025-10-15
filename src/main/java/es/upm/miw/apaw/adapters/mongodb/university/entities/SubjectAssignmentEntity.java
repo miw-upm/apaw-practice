@@ -1,9 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.university.entities;
 
-import es.upm.miw.apaw.domain.models.university.Lesson;
-import es.upm.miw.apaw.domain.models.university.Subject;
 import es.upm.miw.apaw.domain.models.university.SubjectAssignment;
-import es.upm.miw.apaw.domain.models.university.Teacher;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;

@@ -15,7 +15,7 @@ public class SubjectAssignmentResource {
     public static final String SUBJECT_ASSIGNMENTS = "/university/subject-assignments";
     public static final String ID = "/{id}";
     public static final String LESSONS = "/lessons";
-    
+
     private final SubjectAssignmentService subjectAssignmentService;
 
     @Autowired
