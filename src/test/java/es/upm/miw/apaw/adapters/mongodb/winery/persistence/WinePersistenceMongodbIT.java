@@ -82,4 +82,12 @@ public class WinePersistenceMongodbIT {
         assertThat(sum).isEqualByComparingTo("44.40");
     }
 
+    @Test
+    void testSumPricesByComment_NoMatch() {
+        BigDecimal sum = this.winePersistenceMongodb.sumPricesByComment("Comment not present in any evaluation");
+        assertThat(sum).isEqualByComparingTo("0.00");
+    }
+
+
+
 }
