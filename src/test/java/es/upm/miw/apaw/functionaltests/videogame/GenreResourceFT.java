@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.functionaltests.videogame;
 
-import es.upm.miw.apaw.adapters.resources.videogame.GenreResource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -20,12 +19,12 @@ public class GenreResourceFT {
     void  testUpdateAgeRestriction(){
         webTestClient.put()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/genres/ageRestriction")
+                        .path("/videogame/genres")
                         .queryParam("type", "action")
                         .queryParam("newAge", 25)
                         .build())
                 .exchange()
-                .expectStatus().isOk(); // esperamos 200 OK
+                .expectStatus().isOk();
 
     }
 

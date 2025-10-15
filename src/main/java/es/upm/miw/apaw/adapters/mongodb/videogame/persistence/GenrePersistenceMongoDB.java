@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
 
-@Repository("genreRepository")
+@Repository()
 public class GenrePersistenceMongoDB implements GenrePersistence {
 
     private final GenreRepository genreRepository;
@@ -25,6 +25,7 @@ public class GenrePersistenceMongoDB implements GenrePersistence {
         GenreEntity genreEntity = this.genreRepository
                 .findByType(genre.getType())
                 .orElseThrow(() -> new NotFoundException("Genre type:" + genre.getType()));
+        genreEntity.setAgeRestriction(genre.getAgeRestriction());
         return this.genreRepository.save(genreEntity).toGenre();
     }
 
