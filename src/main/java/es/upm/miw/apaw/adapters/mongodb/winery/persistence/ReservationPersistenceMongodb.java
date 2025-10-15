@@ -10,6 +10,10 @@ import es.upm.miw.apaw.domain.persistenceports.winery.ReservationPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+
 @Repository("reservationPersistence")
 public class ReservationPersistenceMongodb implements ReservationPersistence {
 
@@ -30,6 +34,21 @@ public class ReservationPersistenceMongodb implements ReservationPersistence {
         reservationEntity.setTastingSessionEntity(tastingSessionEntity);
 
         return this.reservationRepository.save(reservationEntity).toReservation();
+    }
+
+    @Override
+    public List<UUID> findReservationIdsByWineName(String name) {
+        return this.reservationRepository.findAll().stream()
+                .filter(reservation ->
+                        reservation.getTastingSessionEntity() != null &&
+                                reservation.getTastingSessionEntity().getWineEntities() != null &&
+                                reservation.getTastingSessionEntity().getWineEntities().stream()
+                                        .anyMatch(w -> w.getName() != null &&
+                                                w.getName().equalsIgnoreCase(name)))
+                .map(ReservationEntity::getId)
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
     }
 
 }
