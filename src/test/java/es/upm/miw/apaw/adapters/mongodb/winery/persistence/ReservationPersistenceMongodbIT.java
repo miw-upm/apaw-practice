@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -109,6 +110,30 @@ public class ReservationPersistenceMongodbIT {
                 .findReservationIdsByWineName("Cabernet Sauvignon");
 
         assertThat(reservationIds).doesNotHaveDuplicates();
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_tastingSessionNull() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("Cabernet Sauvignon");
+
+        assertThat(reservationIds).doesNotContainNull();
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_wineEntitiesNull() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("Cabernet Sauvignon");
+
+        assertThat(reservationIds).allMatch(Objects::nonNull);
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_wineNameNull() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("Cabernet Sauvignon");
+
+        assertThat(reservationIds).isNotNull();
     }
 
 }
