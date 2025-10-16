@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.models.football.Stadium;
 import es.upm.miw.apaw.domain.persistenceports.football.StadiumPersistence;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -136,6 +137,34 @@ class StadiumServiceIT {
 
         assertThrows(NotFoundException.class,
                 () -> this.stadiumService.deleteByOfficialName("Missing"));
+    }
+
+    @Test
+    void testUpdate_ok() {
+        Stadium original = Stadium.builder()
+                .stadiumId(UUID.randomUUID())
+                .officialName("Old Name")
+                .capacity(30000)
+                .roof(false)
+                .build();
+
+        Stadium updated = Stadium.builder()
+                .stadiumId(original.getStadiumId())
+                .officialName("New Name")
+                .capacity(35000)
+                .roof(true)
+                .build();
+
+        BDDMockito.given(this.stadiumPersistence.findByOfficialName("Old Name"))
+                .willReturn(Optional.of(original));
+        BDDMockito.given(this.stadiumPersistence.save(Mockito.any(Stadium.class)))
+                .willReturn(updated);
+
+        Stadium result = this.stadiumService.update("Old Name", updated);
+
+        assertThat(result.getOfficialName()).isEqualTo("New Name");
+        assertThat(result.getCapacity()).isEqualTo(35000);
+        assertThat(result.getRoof()).isTrue();
     }
 
 }
