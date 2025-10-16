@@ -3,10 +3,10 @@ package es.upm.miw.apaw.adapters.mongodb.apiary.persistence;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiaryRepository;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.SaleRepository;
 import es.upm.miw.apaw.adapters.mongodb.apiary.entities.ApiaryEntity;
+import es.upm.miw.apaw.adapters.mongodb.apiary.entities.HiveEntity;
+import es.upm.miw.apaw.adapters.mongodb.apiary.entities.ProductEntity;
 import es.upm.miw.apaw.adapters.mongodb.apiary.entities.SaleEntity;
 import es.upm.miw.apaw.domain.models.apiary.Apiary;
-import es.upm.miw.apaw.domain.models.apiary.Hive;
-import es.upm.miw.apaw.domain.models.apiary.Product;
 import es.upm.miw.apaw.domain.persistenceports.apiary.ApiaryPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,7 +29,6 @@ public class ApiaryPersistenceMongodb implements ApiaryPersistence {
     public ApiaryPersistenceMongodb(ApiaryRepository apiaryRepository, SaleRepository saleRepository) {
         this.apiaryRepository = apiaryRepository;
         this.saleRepository = saleRepository;
-
     }
 
     @Override
@@ -48,7 +47,7 @@ public class ApiaryPersistenceMongodb implements ApiaryPersistence {
 
         Set<String> productBarcodes = sales.stream()
                 .flatMap(sale -> sale.getProductEntities().stream())
-                .map(product -> product.getBarcode())
+                .map(ProductEntity::getBarcode)
                 .collect(Collectors.toSet());
 
         return this.apiaryRepository.findAll().stream()
@@ -65,9 +64,9 @@ public class ApiaryPersistenceMongodb implements ApiaryPersistence {
         return this.apiaryRepository.findAll().stream()
                 .filter(apiary -> rega.equals(apiary.getRega()))
                 .flatMap(apiary -> apiary.getHiveEntities().stream())
-                .map(hive -> hive.getProductEntity())
+                .map(HiveEntity::getProductEntity)
                 .filter(Objects::nonNull)
-                .map(product -> product.getPrice())
+                .map(ProductEntity::getPrice)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }

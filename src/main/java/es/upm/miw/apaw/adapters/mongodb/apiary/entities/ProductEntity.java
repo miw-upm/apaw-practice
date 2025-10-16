@@ -33,14 +33,8 @@ public class ProductEntity {
     @DBRef
     private List<SaleEntity> saleEntities;
 
-    public ProductEntity(Product product) {
-        BeanUtils.copyProperties(product, this, "sales");
-        this.id = UUID.randomUUID();
-        if (product.getSales() != null) {
-            this.saleEntities = product.getSales().stream()
-                    .map(SaleEntity::new)
-                    .toList();
-        }
+    public void fromProduct(Product product) {
+        BeanUtils.copyProperties(product, this);
     }
 
     public Product toProduct() {

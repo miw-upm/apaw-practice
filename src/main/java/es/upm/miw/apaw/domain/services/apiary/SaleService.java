@@ -10,30 +10,22 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Stream;
 
 @Service
 public class SaleService {
-
     private final SalePersistence salePersistence;
-    private final ApiaryPersistence apiaryPersistence;
     private final UserRestClient userRestClient;
-
 
     @Autowired
     public SaleService(SalePersistence salePersistence, UserRestClient userRestClient, ApiaryPersistence apiaryPersistence) {
         this.salePersistence = salePersistence;
-        this.apiaryPersistence = apiaryPersistence;
         this.userRestClient = userRestClient;
     }
-
 
     public void delete(int idSale) {
         this.salePersistence.delete(idSale);
     }
-
 
     public Sale create(@Valid Sale sale) {
         sale.setIdSale(new Random().nextInt());

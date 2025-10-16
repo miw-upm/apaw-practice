@@ -39,7 +39,7 @@ class ProductServiceIT {
                 .sales(List.of()) // no relevante para la prueba
                 .build();
 
-        Product result = this.productService.update(updatedProduct);
+        Product result = this.productService.updatePut(updatedProduct);
 
         assertEquals("P002", result.getBarcode());
         assertEquals("Miel de Tomillo Ecológica", result.getProduct());
