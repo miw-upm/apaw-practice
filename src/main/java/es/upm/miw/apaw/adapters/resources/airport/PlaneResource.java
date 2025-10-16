@@ -14,6 +14,9 @@ import java.util.List;
 @RequestMapping(PlaneResource.PLANES)
 public class PlaneResource {
     public static final String PLANES = "airport/planes";
+    public static final String PILOT = "/pilot";
+    public static final String MOBILE = "/{mobile}";
+
     private final PlaneService planeService;
 
     @Autowired
@@ -29,5 +32,10 @@ public class PlaneResource {
     @PatchMapping
     public void update(@RequestBody List<PlaneSeatCountUpdating> planeSeatCountUpdatingList) {
         this.planeService.updateSeatCount(planeSeatCountUpdatingList.stream());
+    }
+
+    @GetMapping(PILOT + MOBILE)
+    public List<String> getRegitrationNumberByPilotMobile(@PathVariable String mobile) {
+        return this.planeService.findRegistrationNumbersByPilotMobile(mobile);
     }
 }

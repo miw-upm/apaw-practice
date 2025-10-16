@@ -1,21 +1,35 @@
 package es.upm.miw.apaw.adapters.mongodb.airport.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.airport.daos.FlightRepository;
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.PlaneRepository;
+import es.upm.miw.apaw.adapters.mongodb.airport.entities.FlightEntity;
 import es.upm.miw.apaw.adapters.mongodb.airport.entities.PlaneEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.airport.Plane;
 import es.upm.miw.apaw.domain.persistenceports.airport.PlanePersistence;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository("planePersistence")
 public class PlanePersistenceMongodb implements PlanePersistence {
 
     private final PlaneRepository planeRepository;
+    private final FlightRepository flightRepository;
+    private final UserRestClient userRestClient;
 
     @Autowired
-    public PlanePersistenceMongodb(PlaneRepository planeRepository) {
+    public PlanePersistenceMongodb(
+            PlaneRepository planeRepository,
+            FlightRepository flightRepository,
+            UserRestClient userRestClient
+    ) {
         this.planeRepository = planeRepository;
+        this.flightRepository = flightRepository;
+        this.userRestClient = userRestClient;
     }
 
     @Override
@@ -34,6 +48,17 @@ public class PlanePersistenceMongodb implements PlanePersistence {
         return this.planeRepository
                 .save(planeEntity)
                 .toPlane();
+    }
+
+    @Override
+    public List<String> findRegistrationNumberByPilotMobile(String mobile) {
+        return this.flightRepository.findAll().stream()
+                .filter(flight -> flight.getPilotId()
+                        .equals(this.userRestClient.readByMobile(mobile).getId()))
+                .map(FlightEntity::getPlane)
+                .map(PlaneEntity::getRegistrationNumber)
+                .distinct()
+                .toList();
     }
 
     @Override

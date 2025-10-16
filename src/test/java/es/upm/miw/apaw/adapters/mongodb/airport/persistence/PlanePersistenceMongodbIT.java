@@ -1,14 +1,21 @@
 package es.upm.miw.apaw.adapters.mongodb.airport.persistence;
 
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.airport.Plane;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -19,6 +26,8 @@ public class PlanePersistenceMongodbIT {
 
     @Autowired
     private PlanePersistenceMongodb planePersistence;
+    @MockitoBean
+    private UserRestClient userRestClient;
 
     @Test
     void testCreate() {
@@ -56,6 +65,20 @@ public class PlanePersistenceMongodbIT {
         assertThatThrownBy(() -> this.planePersistence.update("Test", planeDb))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Plane registration number");
+    }
+
+    @Test
+    void testFindRegistrationNumberByPilotMobile() {
+        UserDto userDto = UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .firstName("user0")
+                .mobile("666000660").build();
+
+        BDDMockito.given(this.userRestClient.readByMobile("666000660"))
+                .willReturn(userDto);
+
+        List<String> registrationNumbers = this.planePersistence.findRegistrationNumberByPilotMobile("666000660");
+
+        assertThat(registrationNumbers).contains("EC-MAD").contains("EC-BCN").contains("EC-VAL");
     }
 
     @Test
