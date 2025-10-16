@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class BankAccountServiceIT {
+class TrainStationServiceIT {
 
     @Autowired
     private TrainStationService trainStationService;
