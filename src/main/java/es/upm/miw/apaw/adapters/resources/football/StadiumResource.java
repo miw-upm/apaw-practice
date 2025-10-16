@@ -41,5 +41,9 @@ public class StadiumResource {
     public void deleteByOfficialName(@PathVariable String officialName) {
         this.stadiumService.deleteByOfficialName(officialName);
     }
+    @PutMapping(NAME_ID)
+    public Stadium update(@PathVariable String officialName, @Valid @RequestBody Stadium stadium) {
+        return this.stadiumService.update(officialName, stadium);
+    }
 
 }

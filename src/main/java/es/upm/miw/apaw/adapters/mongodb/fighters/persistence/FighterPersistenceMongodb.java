@@ -78,4 +78,9 @@ public class FighterPersistenceMongodb implements FighterPersistence {
         return this.fighterRepository.findByRatingsEntitiesComment(comment).stream()
                 .map(FighterEntity::toFighter);
     }
+    @Override
+    public Stream<Fighter> findByCoachAcademy(String academy) {
+        return this.fighterRepository.findByCoachAcademy(academy).stream()
+                .map(FighterEntity::toFighter);
+    }
 }

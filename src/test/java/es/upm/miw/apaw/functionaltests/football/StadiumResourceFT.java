@@ -121,7 +121,7 @@ class StadiumResourceFT {
                 .jsonPath("$.capacity").isEqualTo(100000);
     }
 
-   /* @Test
+   @Test
     void testDelete_ok() {
         Stadium stadium = Stadium.builder()
                 .officialName("ToDelete-" + System.nanoTime())
@@ -151,5 +151,41 @@ class StadiumResourceFT {
                 .exchange()
                 .expectStatus().isNotFound();
     }
-*/
+
+    @Test
+    void testUpdate_ok() {
+        Stadium stadium = Stadium.builder()
+                .officialName("ToUpdate-" + System.nanoTime())
+                .capacity(40000)
+                .roof(true)
+                .build();
+
+        this.webTestClient.post()
+                .uri(STADIUMS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(stadium)
+                .exchange()
+                .expectStatus().isCreated();
+
+        Stadium updated = Stadium.builder()
+                .officialName("Updated-" + System.nanoTime())
+                .capacity(50000)
+                .roof(false)
+                .build();
+
+        this.webTestClient.put()
+                .uri(STADIUMS + "/" + stadium.getOfficialName())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updated)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Stadium.class)
+                .value(st -> {
+                    assertThat(st.getOfficialName()).contains("Updated");
+                    assertThat(st.getCapacity()).isEqualTo(50000);
+                    assertThat(st.getRoof()).isFalse();
+                });
+    }
+
+
 }
