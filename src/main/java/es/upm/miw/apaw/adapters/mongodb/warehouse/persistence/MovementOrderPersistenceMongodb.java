@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Repository("movementOrderPersistence")
 public class MovementOrderPersistenceMongodb implements MovementOrderPersistence {
@@ -31,6 +32,12 @@ public class MovementOrderPersistenceMongodb implements MovementOrderPersistence
         MovementOrderEntity entity = new MovementOrderEntity(movementOrder);
         this.movementOrderRepository.save(entity);
         return entity.toMovementOrder();
+    }
+
+    @Override
+    public Stream<MovementOrder> findAll() {
+        return this.movementOrderRepository.findAll().stream()
+                .map(MovementOrderEntity::toMovementOrder);
     }
 
 }
