@@ -31,14 +31,7 @@ public class StudentCouncilService {
 
     public BigDecimal sumResourcesByStatement(String statement) {
         var councils = this.studentCouncilPersistence.readAll().toList();
-
-        log.warn("Total councils loaded: {}", councils.size());
-        councils.forEach(c ->
-                log.warn("Council: {} | Representatives: {}", c.getCouncil(),
-                        c.getRepresentatives() == null ? 0 : c.getRepresentatives().size())
-        );
-
-        BigDecimal sum = councils.stream()
+        return councils.stream()
                 .filter(c -> c.getRepresentatives() != null)
                 .filter(c -> c.getRepresentatives().stream()
                         .anyMatch(r -> r.getTopics() != null &&
@@ -52,8 +45,5 @@ public class StudentCouncilService {
                 )
                 .map(StudentCouncil::getResources)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        log.warn("Sum for [{}] = {}", statement, sum);
-        return sum;
     }
 }

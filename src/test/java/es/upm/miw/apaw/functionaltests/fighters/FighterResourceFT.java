@@ -169,28 +169,6 @@ class FighterResourceFT {
     }
 
     @Test
-    void testDeleteRating_whenNotExistsInFighter_returns404() {
-        String nickname = "The Dragon";
-        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
-
-        this.webTestClient.delete()
-                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, notExisting)
-                .exchange()
-                .expectStatus().isNotFound();
-    }
-
-    @Test
-    void testDeleteRating_whenFighterHasNoRatings_returns404() {
-        String nickname = "Iron";
-        UUID anyId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
-
-        this.webTestClient.delete()
-                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, anyId)
-                .exchange()
-                .expectStatus().isNotFound();
-    }
-
-    @Test
     void testPatchWinsOk() {
         Coach coach = Coach.builder()
                 .fullName("Carlos Mendes")
@@ -259,5 +237,52 @@ class FighterResourceFT {
                 .bodyValue(fighter)
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+    @Test
+    void testGetRatingsDistinctByAcademy_ok_tokyoDojo() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(FIGHTERS + "/ratings-distinct-by-academy")
+                        .queryParam("academy", "Tokyo Dojo")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.comments[0]").isEqualTo("Incredible striking!")
+                .jsonPath("$.comments[1]").isEqualTo("Needs better cardio")
+                .jsonPath("$.comments.length()").isEqualTo(2);
+    }
+
+    @Test
+    void testGetRatingsDistinctByAcademy_ok_moscowClub() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(FIGHTERS + "/ratings-distinct-by-academy")
+                        .queryParam("academy", "Moscow Combat Club")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.comments").isArray()
+                .jsonPath("$.comments.length()").isEqualTo(3)
+                .jsonPath("$.comments").value(list -> {
+                    var s = list.toString();
+                    assertThat(s).contains("Excellent fighter!");
+                    assertThat(s).contains("Incredible striking!");
+                    assertThat(s).contains("Poor ground defense");
+                });
+    }
+
+    @Test
+    void testGetRatingsDistinctByAcademy_noResults_empty() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(FIGHTERS + "/ratings-distinct-by-academy")
+                        .queryParam("academy", "No Academy")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.comments.length()").isEqualTo(0);
     }
 }

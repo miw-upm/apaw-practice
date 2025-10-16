@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.Set;
 import java.util.stream.Stream;
 
-
 @Repository
 public interface ApiaryPersistence {
     Stream<Apiary> findByLocation(String location);
@@ -15,5 +14,4 @@ public interface ApiaryPersistence {
     Set<String> findLocationsByShippingAddress(String shippingAddress);
 
     BigDecimal sumProductPricesByRega(String rega);
-
 }

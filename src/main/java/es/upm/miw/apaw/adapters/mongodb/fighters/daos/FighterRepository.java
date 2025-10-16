@@ -11,4 +11,6 @@ public interface FighterRepository extends MongoRepository<FighterEntity, String
     Optional<FighterEntity> findByNickname(String nickname);
     @Query(value = "{ 'ratingsEntities.comment': ?0 }")
     List<FighterEntity> findByRatingsEntitiesComment(String comment);
+    @Query(value = "{ 'coach.academy': ?0 }")
+    List<FighterEntity> findByCoachAcademy(String academy);
 }

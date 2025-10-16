@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Repository("WebAccountPersistence")
 public class WebAccountPersistenceMongodb implements WebAccountPersistence{
@@ -26,5 +27,11 @@ public class WebAccountPersistenceMongodb implements WebAccountPersistence{
         WebAccountEntity webAccountEntity = this.webAccountRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(COMMENT_NOT_FOUND + id));
         return webAccountEntity.toWebAccount();
+    }
+
+    @Override
+    public Stream<WebAccount> findByUserId(UUID userId) {
+        return this.webAccountRepository.findByUserId(userId).stream()
+                .map(WebAccountEntity::toWebAccount);
     }
 }
