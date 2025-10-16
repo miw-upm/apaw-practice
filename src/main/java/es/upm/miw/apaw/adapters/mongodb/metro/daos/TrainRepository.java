@@ -6,5 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.UUID;
 
 public interface TrainRepository extends MongoRepository<TrainEntity, UUID> {
+    int deleteTrainById(UUID id);
 }
 
