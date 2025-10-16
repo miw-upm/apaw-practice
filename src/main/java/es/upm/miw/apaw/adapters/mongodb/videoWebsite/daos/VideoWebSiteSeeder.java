@@ -104,6 +104,7 @@ public class VideoWebSiteSeeder {
                             .accountType(AccountType.NORMAL)
                             .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                             .watchListEntities(List.of(watchListEntities[0],watchListEntities[1]))
+                            .publishedVideoEntites(List.of(videoEntities[0],videoEntities[1]))
                             .build(),
                     WebAccountEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
@@ -111,6 +112,7 @@ public class VideoWebSiteSeeder {
                             .accountType(AccountType.PLUS)
                             .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                             .watchListEntities(List.of(watchListEntities[2]))
+                            .publishedVideoEntites(List.of(videoEntities[2]))
                             .build(),
                     WebAccountEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030"))
@@ -118,6 +120,7 @@ public class VideoWebSiteSeeder {
                             .accountType(AccountType.PRO)
                             .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                             .watchListEntities(List.of(watchListEntities[3]))
+                            .publishedVideoEntites(List.of(videoEntities[3]))
                             .build(),
                     WebAccountEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0040"))
@@ -125,6 +128,7 @@ public class VideoWebSiteSeeder {
                             .accountType(AccountType.NORMAL)
                             .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                             .watchListEntities(List.of(watchListEntities[4]))
+                            .publishedVideoEntites(List.of(videoEntities[4]))
                             .build()
             };
             this.webAccountRepository.saveAll(Arrays.asList(webAccountEntities));

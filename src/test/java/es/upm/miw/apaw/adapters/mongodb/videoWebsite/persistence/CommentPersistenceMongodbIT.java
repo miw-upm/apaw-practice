@@ -85,6 +85,7 @@ public class CommentPersistenceMongodbIT {
                 .accountType(AccountType.NORMAL)
                 .user(user)
                 .watchList(List.of(watchList))
+                .publishedVideos(List.of(video))
                 .build();
 
         Comment comment = Comment.builder()
