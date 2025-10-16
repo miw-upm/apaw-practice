@@ -1,16 +1,16 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.persistence;
 
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.warehouse.Location;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
@@ -22,38 +22,48 @@ class LocationPersistenceMongodbIT {
 
     @Test
     void testReadAll() {
-        List<Location> locations = this.locationPersistence.readAll().toList();
+        Stream<Location> locations = this.locationPersistence.readAll();
         assertThat(locations).isNotEmpty();
-        assertThat(locations.get(0).getPosition()).startsWith("Z");
     }
 
     @Test
-    void testUpdate() {
-        UUID id = UUID.fromString("bbbb1111-2222-3333-4444-555566660001");
-        Location location = new Location(
-                999,
-                "Z1-A",
-                LocalDateTime.now(),
-                true                  // availability
-        );
-
-        Location updated = this.locationPersistence.update(id, location);
-        assertThat(updated.getCurrentStock()).isEqualTo(999);
+    void testReadByPosition() {
+        Location location = this.locationPersistence.readByPosition("A1");
+        assertThat(location.getAvailability()).isNotNull();
+        assertThat(location.getProductItems()).hasSize(2);
     }
 
     @Test
-    void testUpdateNotFound() {
-        UUID randomId = UUID.randomUUID();
-        Location location = new Location(
-                20,
-                "Z1-X",
-                LocalDateTime.now(),
-                false
-        );
+    void testReadByPositionNotFound() {
+        assertThrows(NotFoundException.class, () -> this.locationPersistence.readByPosition("Z9"));
+    }
 
-        assertThrows(RuntimeException.class, () ->
-                this.locationPersistence.update(randomId, location)
-        );
+    @Test
+    void testUpdateAvailability() {
+        Location location = this.locationPersistence.readByPosition("A1");
+        assertThat(location.getAvailability()).isNotNull();
+
+        Boolean originalAvailability = location.getAvailability();
+
+        location.setAvailability(!originalAvailability);
+        Location updated = this.locationPersistence.update(location);
+
+        assertThat(updated.getAvailability())
+                .isNotNull()
+                .isNotEqualTo(originalAvailability);
+    }
+
+    @Test
+    void testDeleteByPosition() {
+        String position = "B1";
+
+        Location location = this.locationPersistence.readByPosition(position);
+        assertThat(location).isNotNull();
+
+        this.locationPersistence.deleteByPosition(position);
+
+        assertThatThrownBy(() -> this.locationPersistence.readByPosition(position))
+                .isInstanceOf(NotFoundException.class);
     }
 
 }

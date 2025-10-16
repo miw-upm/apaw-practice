@@ -28,4 +28,9 @@ public class StudentIssueService {
         studentIssue.setClosed(false);
         return studentIssuePersistence.create(studentIssue);
     }
+
+    public StudentIssue updateStudentIssue(UUID id, StudentIssue studentIssue) {
+        return this.studentIssuePersistence.update(id, studentIssue);
+    }
+
 }

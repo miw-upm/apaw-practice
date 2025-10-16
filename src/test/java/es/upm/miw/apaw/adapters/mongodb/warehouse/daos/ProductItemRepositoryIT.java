@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Optional;
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,17 +19,12 @@ class ProductItemRepositoryIT {
     private ProductItemRepository productItemRepository;
 
     @Test
-    void testFindAll() {
-        assertThat(this.productItemRepository.findAll()).isNotEmpty();
-    }
-
-    @Test
     void testFindByBarcode() {
-        Optional<ProductItemEntity> productItem = this.productItemRepository.findByBarcode("PROD-9001");
-        assertTrue(productItem.isPresent());
-        ProductItemEntity entity = productItem.get();
-        assertThat(entity.getAppoint()).isEqualTo("Motor hidráulico industrial");
-        assertThat(entity.getCost()).isEqualByComparingTo("220.45");
+        assertTrue(this.productItemRepository.findByBarcode("PI-001").isPresent());
+        ProductItemEntity item = this.productItemRepository.findByBarcode("PI-001").get();
+        assertThat(item.getAppoint()).isEqualTo("Wood Screw 10mm");
+        assertThat(item.getCost()).isEqualByComparingTo(new BigDecimal("0.20"));
+        assertThat(item.getUnitOfMeasure()).isEqualTo("UNIT");
     }
 
 }

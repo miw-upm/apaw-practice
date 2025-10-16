@@ -8,8 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Builder
@@ -22,10 +21,9 @@ public class Video {
     @NotBlank
     private String title;
     private String description;
-    private LocalDate UploadDate;
+    private LocalDateTime uploadDate;
     @NotNull
     private VideoStatus videoStatus;
-    @NotNull
-    private List<Comment> comments;
+    private Integer views;
 
 }

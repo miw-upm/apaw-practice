@@ -20,125 +20,108 @@ import java.util.UUID;
 @Log4j2
 public class WarehouseSeeder {
 
-    private final LocationRepository locationRepository;
     private final ProductItemRepository productItemRepository;
+    private final LocationRepository locationRepository;
     private final MovementOrderRepository movementOrderRepository;
-    private final OrderDetailRepository orderDetailRepository;
 
     @Autowired
-    public WarehouseSeeder(LocationRepository locationRepository,
-                           ProductItemRepository productItemRepository,
-                           MovementOrderRepository movementOrderRepository,
-                           OrderDetailRepository orderDetailRepository) {
-        this.locationRepository = locationRepository;
+    public WarehouseSeeder(ProductItemRepository productItemRepository,
+                           LocationRepository locationRepository,
+                           MovementOrderRepository movementOrderRepository) {
         this.productItemRepository = productItemRepository;
+        this.locationRepository = locationRepository;
         this.movementOrderRepository = movementOrderRepository;
-        this.orderDetailRepository = orderDetailRepository;
     }
 
     public void seedDatabase() {
         log.warn("------- Warehouse Initial Load -----------");
 
-        // 🔹 Crear ubicaciones
-        LocationEntity[] locations = {
-                LocationEntity.builder()
-                        .id(UUID.fromString("bbbb1111-2222-3333-4444-555566660001"))
-                        .currentStock(150)
-                        .position("Z1-A")
-                        .lastUpdateDate(LocalDateTime.now().minusDays(2))
-                        .availability(true)
-                        .build(),
-                LocationEntity.builder()
-                        .id(UUID.fromString("bbbb1111-2222-3333-4444-555566660002"))
-                        .currentStock(85)
-                        .position("Z2-C")
-                        .lastUpdateDate(LocalDateTime.now().minusDays(1))
-                        .availability(true)
-                        .build(),
-                LocationEntity.builder()
-                        .id(UUID.fromString("bbbb1111-2222-3333-4444-555566660003"))
-                        .currentStock(0)
-                        .position("Y1-F")
-                        .lastUpdateDate(LocalDateTime.now().minusDays(5))
-                        .availability(false)
-                        .build()
-        };
-        this.locationRepository.saveAll(Arrays.asList(locations));
-
-        // 🔹 Crear productos
         ProductItemEntity[] productItems = {
                 ProductItemEntity.builder()
-                        .id(UUID.fromString("bbbb2222-3333-4444-5555-666677770001"))
-                        .barcode("PROD-9001")
-                        .appoint("Motor hidráulico industrial")
-                        .cost(new BigDecimal("220.45"))
-                        .unitOfMeasure("unit")
-                        .locationEntities(List.of(locations[0], locations[1]))
+                        .id(UUID.fromString("bbbbbbbb-cccc-dddd-eeee-ffffaaa00001"))
+                        .barcode("PI-001")
+                        .appoint("Wood Screw 10mm")
+                        .cost(new BigDecimal("0.20"))
+                        .unitOfMeasure("UNIT")
                         .build(),
                 ProductItemEntity.builder()
-                        .id(UUID.fromString("bbbb2222-3333-4444-5555-666677770002"))
-                        .barcode("PROD-9002")
-                        .appoint("Bomba de presión 2.5L")
-                        .cost(new BigDecimal("180.99"))
-                        .unitOfMeasure("unit")
-                        .locationEntities(List.of(locations[1]))
+                        .id(UUID.fromString("bbbbbbbb-cccc-dddd-eeee-ffffaaa00002"))
+                        .barcode("PI-002")
+                        .appoint("Metal Bolt 15mm")
+                        .cost(new BigDecimal("0.35"))
+                        .unitOfMeasure("UNIT")
                         .build(),
                 ProductItemEntity.builder()
-                        .id(UUID.fromString("bbbb2222-3333-4444-5555-666677770003"))
-                        .barcode("PROD-9003")
-                        .appoint("Aceite lubricante premium 5W-40")
-                        .cost(new BigDecimal("45.30"))
-                        .unitOfMeasure("liter")
-                        .locationEntities(List.of(locations[2]))
+                        .id(UUID.fromString("bbbbbbbb-cccc-dddd-eeee-ffffaaa00003"))
+                        .barcode("PI-003")
+                        .appoint("Plastic Handle")
+                        .cost(new BigDecimal("1.15"))
+                        .unitOfMeasure("UNIT")
                         .build()
         };
         this.productItemRepository.saveAll(Arrays.asList(productItems));
 
-        // 🔹 Crear detalles de orden (OrderDetails)
+        LocationEntity[] locations = {
+                LocationEntity.builder()
+                        .id(UUID.fromString("cccccccc-dddd-eeee-ffff-aaaabbbb0001"))
+                        .currentStock(100)
+                        .position("A1")
+                        .lastUpdateDate(LocalDateTime.now().minusDays(1))
+                        .productItemEntities(List.of(productItems[0], productItems[1]))
+                        .availability(true)
+                        .build(),
+                LocationEntity.builder()
+                        .id(UUID.fromString("cccccccc-dddd-eeee-ffff-aaaabbbb0002"))
+                        .currentStock(50)
+                        .position("B1")
+                        .lastUpdateDate(LocalDateTime.now().minusDays(2))
+                        .productItemEntities(List.of(productItems[2]))
+                        .availability(true)
+                        .build()
+        };
+        this.locationRepository.saveAll(Arrays.asList(locations));
+
         OrderDetailEntity[] orderDetails = {
                 OrderDetailEntity.builder()
-                        .id(UUID.fromString("bbbb3333-aaaa-bbbb-cccc-000000000001"))
                         .qtyRequested(10)
-                        .qtyMoved(8)
-                        .unitCost(new BigDecimal("220.45"))
+                        .qtyMoved(10)
+                        .unitCost(productItems[0].getCost())
                         .productItemEntity(productItems[0])
                         .build(),
                 OrderDetailEntity.builder()
-                        .id(UUID.fromString("bbbb3333-aaaa-bbbb-cccc-000000000002"))
                         .qtyRequested(5)
                         .qtyMoved(5)
-                        .unitCost(new BigDecimal("180.99"))
+                        .unitCost(productItems[1].getCost())
                         .productItemEntity(productItems[1])
                         .build(),
                 OrderDetailEntity.builder()
-                        .id(UUID.fromString("bbbb3333-aaaa-bbbb-cccc-000000000003"))
-                        .qtyRequested(12)
-                        .qtyMoved(10)
-                        .unitCost(new BigDecimal("45.30"))
+                        .qtyRequested(15)
+                        .qtyMoved(15)
+                        .unitCost(productItems[2].getCost())
                         .productItemEntity(productItems[2])
                         .build()
         };
-        this.orderDetailRepository.saveAll(Arrays.asList(orderDetails));
 
-        // 🔹 Crear órdenes de movimiento con orderDetailEntities asociados
         MovementOrderEntity[] movementOrders = {
                 MovementOrderEntity.builder()
-                        .id(UUID.fromString("bbbb3333-4444-5555-6666-777788880001"))
-                        .registrationDate(LocalDateTime.now().minusDays(3))
-                        .typeOrder("OUTBOUND")
-                        .partnerName("Talleres Omega S.A.")
-                        .partnerAddress("Sevilla, España")
+                        .id(UUID.fromString("dddddddd-eeee-ffff-aaaa-bbbbcccc0001"))
+                        .registrationDate(LocalDateTime.now().minusHours(4))
+                        .typeOrder("INBOUND")
+                        .partnerName("Supplier XYZ")
+                        .partnerAddress("Calle Mayor 123, Madrid")
                         .completedOrder(true)
-                        .orderDetailEntities(List.of(orderDetails[0], orderDetails[1])) // ✅ ahora sí correcto
+                        .orderDetailEntities(List.of(orderDetails[0], orderDetails[1]))
+                        .userId(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"))
                         .build(),
                 MovementOrderEntity.builder()
-                        .id(UUID.fromString("bbbb3333-4444-5555-6666-777788880002"))
-                        .registrationDate(LocalDateTime.now().minusDays(1))
-                        .typeOrder("INBOUND")
-                        .partnerName("Distribuidora MaxParts")
-                        .partnerAddress("Barcelona, España")
+                        .id(UUID.fromString("dddddddd-eeee-ffff-aaaa-bbbbcccc0002"))
+                        .registrationDate(LocalDateTime.now().minusHours(2))
+                        .typeOrder("OUTBOUND")
+                        .partnerName("Customer ABC")
+                        .partnerAddress("Av. Central 56, Barcelona")
                         .completedOrder(false)
-                        .orderDetailEntities(List.of(orderDetails[2])) // ✅ una sola relación
+                        .orderDetailEntities(List.of(orderDetails[2]))
+                        .userId(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"))
                         .build()
         };
         this.movementOrderRepository.saveAll(Arrays.asList(movementOrders));
@@ -148,7 +131,8 @@ public class WarehouseSeeder {
 
     public void deleteAll() {
         this.movementOrderRepository.deleteAll();
-        this.productItemRepository.deleteAll();
         this.locationRepository.deleteAll();
+        this.productItemRepository.deleteAll();
     }
+
 }

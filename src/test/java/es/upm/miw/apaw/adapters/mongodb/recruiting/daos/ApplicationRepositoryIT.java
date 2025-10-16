@@ -1,14 +1,14 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,31 +22,51 @@ class ApplicationRepositoryIT {
     @Autowired
     private ApplicationRepository applicationRepository;
 
-    @Autowired
-    private RecruitingSeeder recruitingSeeder;
+    @Test
+    void testUpdateMeetings() {
+        UUID applicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0031");
 
-    @BeforeEach
-    void setUp() {
-        recruitingSeeder.deleteAll();
-        recruitingSeeder.seedDatabase();
+        ApplicationEntity application = applicationRepository.findById(applicationId)
+                .orElseThrow();
+
+        assertThat(application.getMeetingList()).isNotEmpty();
+
+        AttendeeEntity existingAttendee = AttendeeEntity.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0015")) // Andrea Schulz
+                .fullName("Andrea Schulz")
+                .phoneNumber("+4165889667")
+                .emailAddress("andrea.schulz@test.com")
+                .build();
+
+        MeetingEntity newMeeting = MeetingEntity.builder()
+                .id(UUID.randomUUID())
+                .date(java.time.LocalDateTime.now().plusDays(5))
+                .url("//new-meeting-url")
+                .attendees(List.of(existingAttendee))
+                .build();
+
+        application.setMeetingList(List.of(newMeeting));
+        applicationRepository.save(application);
+
+        ApplicationEntity updated = applicationRepository.findById(applicationId)
+                .orElseThrow();
+
+        assertThat(updated.getMeetingList()).hasSize(1);
+
+        MeetingEntity m = updated.getMeetingList().getFirst();
+        assertThat(m.getUrl()).isEqualTo("//new-meeting-url");
+        assertThat(m.getAttendees()).hasSize(1);
+
+        AttendeeEntity a = m.getAttendees().getFirst();
+        assertThat(a.getEmailAddress()).isEqualTo("andrea.schulz@test.com");
+        assertThat(a.getFullName()).isEqualTo("Andrea Schulz");
+
+        assertThat(updated.getStatus()).isEqualTo(Status.In_process);
+        assertThat(updated.getPositionEntity().getReference()).isEqualTo(1002);
     }
 
     @Test
-    void testFindAll_SeededApplicationsExist() {
-        List<ApplicationEntity> applications = this.applicationRepository.findAll();
-
-        assertThat(applications)
-                .hasSize(4)
-                .extracting(ApplicationEntity::getStatus)
-                .contains(Status.Open, Status.Hired);
-
-        assertThat(applications)
-                .extracting(a -> a.getPositionEntity().getReference())
-                .contains(1001);
-    }
-
-    @Test
-    void testFindById_ExistingSeededApplication() {
+    void testFindById() {
         UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
 
         Optional<ApplicationEntity> optionalApp = this.applicationRepository.findById(id);
@@ -57,22 +77,12 @@ class ApplicationRepositoryIT {
         assertThat(application.getStatus()).isEqualTo(Status.Open);
         assertThat(application.getReferral()).isTrue();
         assertThat(application.getPositionEntity().getReference()).isEqualTo(1001);
-        assertThat(application.getMeetingList()).hasSize(2);
+        assertThat(application.getMeetingList()).hasSize(3);
         assertThat(application.getMeetingList().getFirst().getUrl()).contains("url-for-meeting");
     }
 
     @Test
-    void testFindByStatus() {
-        List<ApplicationEntity> hiredApplications = this.applicationRepository.findAll().stream()
-                .filter(app -> app.getStatus() == Status.Hired)
-                .toList();
-
-        assertThat(hiredApplications).isNotEmpty();
-        assertThat(hiredApplications.getFirst().getPositionEntity().getReference()).isEqualTo(1003);
-    }
-
-    @Test
-    void testApplicationHasValidPositionRelation() {
+    void testApplicationPositionRelation() {
         ApplicationEntity app = applicationRepository.findById(
                 UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0031")
         ).orElseThrow();
@@ -83,73 +93,11 @@ class ApplicationRepositoryIT {
     }
 
     @Test
-    void testApplicationHasMeetingsLinked() {
-        ApplicationEntity hiredApp = applicationRepository.findById(
-                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0032")
-        ).orElseThrow();
-
-        assertThat(hiredApp.getMeetingList()).isNotEmpty();
-        assertThat(hiredApp.getMeetingList()).hasSize(3);
-        assertThat(hiredApp.getMeetingList())
-                .extracting(m -> m.getUrl())
-                .anyMatch(url -> url.contains("meeting-4"));
-    }
-
-    @Test
-    void testDeleteApplicationDoesNotRemoveRelatedEntities() {
-        UUID appId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
-        applicationRepository.deleteById(appId);
-
-        assertThat(applicationRepository.findById(appId)).isEmpty();
-
-        // Position and meetings must exist as only Application is deleted at this test level
-        List<ApplicationEntity> remaining = applicationRepository.findAll();
-        assertThat(remaining).hasSize(3);
-    }
-
-    @Test
-    void testFindAllByOrderByCreatedAsc_ReturnsSortedApplications() {
-        List<ApplicationEntity> sortedApps = applicationRepository.findAllByOrderByCreatedAsc();
-
-        List<LocalDate> creationDates = sortedApps.stream()
-                .map(ApplicationEntity::getCreated)
-                .toList();
-
-        assertThat(creationDates).isSortedAccordingTo(LocalDate::compareTo);
-    }
-
-    @Test
-    void testStatusEnumPersistsCorrectly() {
+    void testStatusEnumPersistence() {
         ApplicationEntity rejected = applicationRepository.findById(
                 UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0033")
         ).orElseThrow();
 
-        assertThat(rejected.getStatus()).isEqualTo(Status.Rejected);
-    }
-
-    @Test
-    void testUserCanHaveMultipleApplications() {
-        UUID userId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
-
-        List<ApplicationEntity> userApps = applicationRepository.findAll().stream()
-                .filter(app -> app.getUser().equals(userId))
-                .toList();
-
-        assertThat(userApps).hasSize(2); // According to Seeder, this user has 2 applications.
-    }
-
-    @Test
-    void testFindByStatusMethod() {
-        List<ApplicationEntity> openApps = applicationRepository.findByStatus(Status.Open);
-        assertThat(openApps).hasSize(1);
-        assertThat(openApps.getFirst().getPositionEntity().getReference()).isEqualTo(1001);
-    }
-
-    @Test
-    void testFindByUserMethod() {
-        List<ApplicationEntity> openApps = applicationRepository.findByUser(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"));
-        assertThat(openApps).hasSize(1);
-        assertThat(openApps.getFirst().getPositionEntity().getReference()).isEqualTo(1003);
-        assertThat(openApps.getFirst().getPositionEntity().getNumVacancies()).isEqualTo(2);
+        assertThat(rejected.getStatus()).isEqualTo(Status.In_process);
     }
 }

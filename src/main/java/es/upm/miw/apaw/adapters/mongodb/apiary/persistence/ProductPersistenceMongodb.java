@@ -2,13 +2,16 @@ package es.upm.miw.apaw.adapters.mongodb.apiary.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ProductRepository;
 import es.upm.miw.apaw.adapters.mongodb.apiary.entities.ProductEntity;
+import es.upm.miw.apaw.adapters.mongodb.apiary.entities.SaleEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.apiary.Product;
+import es.upm.miw.apaw.domain.models.apiary.Sale;
 import es.upm.miw.apaw.domain.persistenceports.apiary.ProductPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 @Repository("productPersistence")
 public class ProductPersistenceMongodb implements ProductPersistence {

@@ -1,14 +1,15 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.entities;
 
 import es.upm.miw.apaw.domain.models.warehouse.Location;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -21,33 +22,42 @@ import java.util.UUID;
 public class LocationEntity {
 
     @Id
-    @EqualsAndHashCode.Include
     private UUID id;
 
-    @NotNull
     private Integer currentStock;
 
-    @NotBlank
+    @EqualsAndHashCode.Include
+    @Indexed(unique = true)
     private String position;
 
     private LocalDateTime lastUpdateDate;
 
-    @NotNull
+    @DBRef
+    private List<ProductItemEntity> productItemEntities;
+
     private Boolean availability;
 
+
     public LocationEntity(Location location) {
-        BeanUtils.copyProperties(location, this);
+        BeanUtils.copyProperties(location, this, "productItems");
+        this.productItemEntities = location.getProductItems() == null ? null :
+                location.getProductItems().stream()
+                        .map(ProductItemEntity::new)
+                        .toList();
         this.id = UUID.randomUUID();
     }
 
     public Location toLocation() {
-        Location location = new Location();
-        BeanUtils.copyProperties(this, location);
-        return location;
-    }
-
-    public void fromLocation(Location location) {
-        BeanUtils.copyProperties(location, this);
+        return Location.builder()
+                .currentStock(this.currentStock)
+                .position(this.position)
+                .lastUpdateDate(this.lastUpdateDate)
+                .availability(this.availability)
+                .productItems(this.productItemEntities == null ? null :
+                        this.productItemEntities.stream()
+                                .map(ProductItemEntity::toProductItem)
+                                .toList())
+                .build();
     }
 
 }

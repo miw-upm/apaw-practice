@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,6 +19,8 @@ public class WineRepositoryIT {
 
     @Autowired
     private WineRepository wineRepository;
+    @Autowired
+    private TastingSessionRepository tastingSessionRepository;
 
     @Test
     void testRead() {
@@ -33,12 +36,27 @@ public class WineRepositoryIT {
 
     @Test
     void testDelete() {
-        UUID wineId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
+        UUID wineId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003");
 
         assertTrue(this.wineRepository.findById(wineId).isPresent());
         this.wineRepository.deleteById(wineId);
 
         assertFalse(this.wineRepository.findById(wineId).isPresent());
+    }
+
+    @Test
+    void testSumPricesByComment() {
+        String comment = "Great organization and excellent wine selection";
+
+        BigDecimal sum = this.tastingSessionRepository.findAll().stream()
+                .filter(session -> session.getEvaluationEntities().stream()
+                        .anyMatch(e -> e.getComment().equalsIgnoreCase(comment)))
+                .flatMap(session -> session.getWineEntities().stream())
+                .map(WineEntity::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        assertThat(sum).isGreaterThan(BigDecimal.ZERO);
+        assertThat(sum).isEqualByComparingTo("44.40");
     }
 
 }

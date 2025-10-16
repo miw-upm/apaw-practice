@@ -19,14 +19,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WebAccount {
-    private UUID uid;
+    private UUID id;
     @NotBlank
     private String userName;
     private AccountType accountType;
 
-    @NotNull
     private UserDto user;
-    @NotNull
     private List<WatchList> watchList;
     private List<Video> publishedVideos;
 

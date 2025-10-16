@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @RestController
@@ -24,5 +27,15 @@ public class ApiaryResource {
     @GetMapping
     public Stream<Apiary> findByLocation(@RequestParam String location) {
         return this.apiaryService.findByLocation(location);
+    }
+
+    @GetMapping("/locations-by-shipping")
+    public Set<String> findLocationsByShippingAddress(@RequestParam String shippingAddress) {
+        return this.apiaryService.findLocationsByShippingAddress(shippingAddress);
+    }
+
+    @GetMapping("/sum-price-by-rega")
+    public BigDecimal sumProductPricesByRega(@RequestParam String rega) {
+        return this.apiaryService.sumProductPricesByRega(rega);
     }
 }

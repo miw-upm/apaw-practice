@@ -11,8 +11,10 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -51,6 +53,42 @@ public class WineServiceIT {
         UUID idWine = UUID.randomUUID();
         this.wineService.delete(idWine);
         BDDMockito.then(this.winePersistence).should().delete(idWine);
+    }
+
+    @Test
+    void testUpdatePrices() {
+        Wine wine = Wine.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006"))
+                .price(new BigDecimal("57.90"))
+                .build();
+
+        Wine newWine = Wine.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006"))
+                .price(new BigDecimal("67.50"))
+                .build();
+
+        BDDMockito.given(this.winePersistence.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0006")))
+                .willReturn(wine);
+        BDDMockito.given(this.winePersistence.update(any(Wine.class)))
+                .willReturn(newWine);
+
+        this.wineService.updatePrices(Stream.of(newWine));
+
+        BDDMockito.then(this.winePersistence).should().update(any(Wine.class));
+    }
+
+    @Test
+    void testSumPricesByComment() {
+        String comment = "Excellent experience";
+        BigDecimal expectedSum = new BigDecimal("55.50");
+
+        BDDMockito.given(this.winePersistence.sumPricesByComment(comment))
+                .willReturn(expectedSum);
+
+        BigDecimal result = this.wineService.sumPricesByComment(comment);
+
+        assertThat(result).isEqualByComparingTo("55.50");
+        BDDMockito.then(this.winePersistence).should().sumPricesByComment(comment);
     }
 
 }

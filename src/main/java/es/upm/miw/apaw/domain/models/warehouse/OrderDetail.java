@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.domain.models.warehouse;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -23,4 +22,5 @@ public class OrderDetail {
 
     @NotNull
     private ProductItem productItem;
+
 }

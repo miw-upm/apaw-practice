@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.fighters.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.fighters.entities.FighterEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,14 @@ class FighterRepositoryIT {
     @Autowired
     private FighterRepository fighterRepository;
 
+    @Autowired
+    private FightersSeeder fightersSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        fightersSeeder.deleteAll();
+        fightersSeeder.seedDatabase();
+    }
     @Test
     void testFindByNickname_ok() {
         Optional<FighterEntity> opt = this.fighterRepository.findByNickname("Spider");
@@ -34,5 +43,29 @@ class FighterRepositoryIT {
     @Test
     void testFindByNickname_notFound() {
         assertThat(this.fighterRepository.findByNickname("no-existe")).isEmpty();
+    }
+    @Test
+    void testFindByRatingsEntitiesComment_ok_multipleFighters() {
+        var list = this.fighterRepository.findByRatingsEntitiesComment("Incredible striking!");
+        assertThat(list)
+                .extracting(FighterEntity::getNickname)
+                .containsExactlyInAnyOrder("The Dragon", "Shadow", "The Eagle"); // con rating6
+    }
+
+    @Test
+    void testFindByRatingsEntitiesComment_notFound_returnsEmpty() {
+        var list = this.fighterRepository.findByRatingsEntitiesComment("no-such-comment");
+        assertThat(list).isEmpty();
+    }
+    @Test
+    void testFindByCoachAcademy_ok() {
+        var list = this.fighterRepository.findByCoachAcademy("Moscow Combat Club");
+        assertThat(list).extracting(FighterEntity::getNickname)
+                .containsExactlyInAnyOrder("The Eagle", "Shadow");
+    }
+    @Test
+    void testFindByCoachAcademy_notFound_returnsEmpty() {
+        var list = this.fighterRepository.findByCoachAcademy("No Academy");
+        assertThat(list).isEmpty();
     }
 }

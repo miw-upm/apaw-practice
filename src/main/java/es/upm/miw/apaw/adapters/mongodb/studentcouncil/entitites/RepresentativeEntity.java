@@ -10,8 +10,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Data
@@ -26,22 +27,20 @@ public class RepresentativeEntity {
     private LocalDateTime joinDate;
     private String responsibility;
     private UUID representativeId;
+
     private List<StudentIssueEntity> topics;
 
     public Representative toRepresentative() {
         return Representative.builder()
                 .joinDate(this.joinDate)
                 .responsibility(this.responsibility)
-                .representative(
-                        UserDto.builder()
-                                .id(this.representativeId)
-                                .build()
-                )
+                .representative(UserDto.builder().id(this.representativeId).build())
                 .topics(
-                        this.topics == null ? new ArrayList<>() :
-                                this.topics.stream()
-                                        .map(StudentIssueEntity::toStudentIssue)
-                                        .toList()
+                        Optional.ofNullable(this.topics)
+                                .orElse(Collections.emptyList())
+                                .stream()
+                                .map(StudentIssueEntity::toStudentIssue)
+                                .toList()
                 )
                 .build();
     }

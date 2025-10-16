@@ -35,7 +35,6 @@ public class ApiarySeeder {
     public void seedDatabase() {
         log.warn("------- Apiary Initial Load -----------");
 
-        // ===== APIARIO 1 =====
         ProductEntity[] products1 = {
                 ProductEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
@@ -93,7 +92,7 @@ public class ApiarySeeder {
                         .type("Layens")
                         .queen(false)
                         .installationDate(LocalDate.of(2021, 3, 15))
-                        .productEntity(products1[2])
+                        .productEntity(products1[1])
                         .build(),
         };
 
@@ -106,7 +105,7 @@ public class ApiarySeeder {
                 .build();
         apiaryRepository.save(apiary1);
 
-        // ===== APIARIO 2 =====
+
         ProductEntity[] products2 = {
                 ProductEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))

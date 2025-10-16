@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.services.winery.WineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -14,6 +16,7 @@ public class WineResource {
     public static final String WINES = "/winery/wines";
 
     public static final String ID = "/{id}";
+    public static final String SEARCH_BY_COMMENT = "/searchByComment";
 
     private final WineService wineService;
 
@@ -30,5 +33,15 @@ public class WineResource {
     @DeleteMapping(ID)
     public void delete(@PathVariable UUID id) {
         this.wineService.delete(id);
+    }
+
+    @PatchMapping
+    public void updatePrices(@RequestBody List<Wine> wineList) {
+        this.wineService.updatePrices(wineList.stream());
+    }
+
+    @GetMapping(SEARCH_BY_COMMENT)
+    public BigDecimal sumPricesByComment(@RequestParam String comment) {
+        return this.wineService.sumPricesByComment(comment);
     }
 }

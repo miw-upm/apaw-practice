@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.functionaltests.studentcouncil;
 
 import es.upm.miw.apaw.adapters.resources.studentcouncil.StudentIssueResource;
+import es.upm.miw.apaw.domain.models.studentcouncil.StudentCouncil;
 import es.upm.miw.apaw.domain.models.studentcouncil.StudentIssue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 

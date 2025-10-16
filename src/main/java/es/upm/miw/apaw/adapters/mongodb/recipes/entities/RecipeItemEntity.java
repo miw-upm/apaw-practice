@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.recipes.entities;
 
 import es.upm.miw.apaw.domain.models.recipes.RecipeItem;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +18,10 @@ public class RecipeItemEntity {
     private Double quantity;
     private String specifications;
     private Boolean optional;
+
+    public RecipeItemEntity(RecipeItem recipeItem) {
+        BeanUtils.copyProperties(recipeItem, this);
+    }
 
     public RecipeItem toRecipeItem() {
         RecipeItem recipeItem = new RecipeItem();

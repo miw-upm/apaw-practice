@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.persistence;
 
-
 import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.LocationRepository;
 import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.LocationEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
@@ -9,7 +8,6 @@ import es.upm.miw.apaw.domain.persistenceports.warehouse.LocationPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
 import java.util.stream.Stream;
 
 @Repository("locationPersistence")
@@ -29,12 +27,26 @@ public class LocationPersistenceMongodb implements LocationPersistence {
     }
 
     @Override
-    public Location update(UUID id, Location location) {
-        LocationEntity entity = this.locationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Location id: " + id));
-        entity.fromLocation(location);
-        this.locationRepository.save(entity);
-        return entity.toLocation();
+    public Location readByPosition(String position) {
+        return this.locationRepository.findByPosition(position)
+                .map(LocationEntity::toLocation)
+                .orElseThrow(() -> new NotFoundException("Location position: " + position));
+    }
+
+    @Override
+    public Location update(Location location) {
+        LocationEntity entity = this.locationRepository.findByPosition(location.getPosition())
+                .orElseThrow(() -> new NotFoundException("Location position: " + location.getPosition()));
+        entity.setAvailability(location.getAvailability());
+        return this.locationRepository.save(entity).toLocation();
+    }
+
+    @Override
+    public void deleteByPosition(String position) {
+        LocationEntity entity = this.locationRepository.findByPosition(position)
+                .orElseThrow(() -> new NotFoundException("Location not found: " + position));
+
+        this.locationRepository.delete(entity);
     }
 
 }

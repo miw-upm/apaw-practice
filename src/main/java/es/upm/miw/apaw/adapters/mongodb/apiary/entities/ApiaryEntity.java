@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.apiary.entities;
 
 import es.upm.miw.apaw.domain.models.apiary.Apiary;
 
+import es.upm.miw.apaw.domain.models.apiary.Hive;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -52,5 +53,6 @@ public class ApiaryEntity {
         }
         return apiary;
     }
+
 }
 

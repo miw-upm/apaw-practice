@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.mongodb;
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.AirportSeeder;
 import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
 import es.upm.miw.apaw.adapters.mongodb.fighters.daos.FightersSeeder;
+import es.upm.miw.apaw.adapters.mongodb.football.daos.FootballSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.StudentCouncilSeeder;
@@ -11,10 +12,10 @@ import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
+import es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos.VideoWebSiteSeeder;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.WarehouseSeeder;
-import es.upm.miw.apaw.adapters.mongodb.metro.daos.MetroSeeder;
 
 
 import lombok.extern.log4j.Log4j2;
@@ -43,7 +44,8 @@ public class DatabaseSeeder {
     private final FightersSeeder fightersSeeder;
     private final RecipesSeeder recipesSeeder;
     private final WarehouseSeeder warehouseSeeder;
-    private final MetroSeeder metroSeeder;
+    private final VideoWebSiteSeeder videoWebSiteSeeder;
+    private final FootballSeeder footballSeeder;
 
 
     @Autowired
@@ -63,7 +65,8 @@ public class DatabaseSeeder {
             BankSeeder bankSeeder,
             RecipesSeeder recipesSeeder,
             WarehouseSeeder warehouseSeeder,
-            MetroSeeder metroSeeder
+            VideoWebSiteSeeder videoWebsiteSeeder,
+            FootballSeeder footballSeeder
             ) {
 
         this.shopSeeder = shopSeeder;
@@ -81,7 +84,8 @@ public class DatabaseSeeder {
         this.bankSeeder = bankSeeder;
         this.recipesSeeder = recipesSeeder;
         this.warehouseSeeder = warehouseSeeder;
-        this.metroSeeder = metroSeeder;
+        this.videoWebSiteSeeder = videoWebsiteSeeder;
+        this.footballSeeder = footballSeeder;
         this.seedDatabase();
 
     }
@@ -102,7 +106,8 @@ public class DatabaseSeeder {
         this.bankSeeder.seedDatabase();
         this.recipesSeeder.seedDatabase();
         this.warehouseSeeder.seedDatabase();
-        this.metroSeeder.seedDatabase();
+        this.videoWebSiteSeeder.seedDatabase();
+        this.footballSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -121,7 +126,8 @@ public class DatabaseSeeder {
         this.bankSeeder.deleteAll();
         this.recipesSeeder.deleteAll();
         this.warehouseSeeder.deleteAll();
-        this.metroSeeder.deleteAll();
+        this.videoWebSiteSeeder.deleteAll();
+        this.footballSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {

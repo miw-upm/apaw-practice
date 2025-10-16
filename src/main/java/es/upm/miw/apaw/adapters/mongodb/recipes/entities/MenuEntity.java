@@ -2,7 +2,6 @@ package es.upm.miw.apaw.adapters.mongodb.recipes.entities;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.recipes.Menu;
-
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -39,8 +38,8 @@ public class MenuEntity {
         menu.setUser(UserDto.builder().id(userId).build());
         menu.setRecipes(
                 this.recipeEntities.stream()
-                .map(RecipeEntity::toRecipe)
-                .toList()
+                        .map(RecipeEntity::toRecipe)
+                        .toList()
         );
         return menu;
     }

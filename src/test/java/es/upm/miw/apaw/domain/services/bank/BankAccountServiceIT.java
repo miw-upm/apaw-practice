@@ -1,6 +1,9 @@
 package es.upm.miw.apaw.domain.services.bank;
+import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
 import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.bank.CreditCard;
+import es.upm.miw.apaw.domain.models.bank.Loan;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,10 +12,11 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -20,6 +24,8 @@ import static org.assertj.core.api.Assertions.*;
 
     @Autowired
     private BankAccountService bankAccountService;
+    @Autowired
+    private BankSeeder bankSeeder;
 
     @Test
     void testReadStatusByAccountNumber(){
@@ -30,7 +36,7 @@ import static org.assertj.core.api.Assertions.*;
 
     @Test
     void testUpdateCreditCard(){
-        CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Arrays.asList(PaymentHistoryEntity.builder()
+        CreditCard creditCard = CreditCard.builder().cardNumber("1111222233334444").expirationDate(LocalDate.of(2040,12,31)).cardLimit(new BigDecimal("1000")).paymentHistoryList(Collections.singletonList(PaymentHistoryEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"))
                 .amount(new BigDecimal("9.99"))
                 .paymentDate(LocalDateTime.now())
@@ -46,6 +52,37 @@ import static org.assertj.core.api.Assertions.*;
         assertThat(result.getPaymentHistoryList().getFirst().getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1000"));
         assertThat(result.getPaymentHistoryList().getFirst().getAmount()).isEqualTo(new BigDecimal("9.99"));
         assertThat(result.getPaymentHistoryList().getFirst().getPaid()).isTrue();
+    }
+
+    @Test
+    void testApplyANewLoanForABankAccount(){
+        Loan loan = Loan.builder().quantity(new BigDecimal("10000")).condition("active").interestRate(0.07).build();
+        List<Loan> result = this.bankAccountService.applyANewLoanForABankAccount("ES2800000000000000000002",loan).toList();
+        assertEquals(1,result.size());
+        assertNotNull(result.getFirst().getId());
+        assertEquals(new BigDecimal("10000"), result.getFirst().getQuantity());
+        assertEquals("active",result.getFirst().getCondition());
+        assertEquals(0.07,result.getFirst().getInterestRate());
+        bankSeeder.deleteAll();
+        bankSeeder.seedDatabase();
+    }
+
+    @Test
+    void testDelete(){
+        this.bankAccountService.delete("ES2800000000000000000001");
+        assertThrows(NotFoundException.class, () -> this.bankAccountService.findByAccountNumber("ES2800000000000000000001"));
+        bankSeeder.deleteAll();
+        bankSeeder.seedDatabase();
+    }
+
+    @Test
+    void testObtainPaidPaymentHistoryIdByCondition(){
+        Stream<UUID> result = this.bankAccountService.obtainPaidPaymentHistoryIdByCondition("active");
+        assertThat(result).hasSize(3)
+                .containsAll(List.of(
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"),
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff5000"),
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7000")));
     }
 
 }

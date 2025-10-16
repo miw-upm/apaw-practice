@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -30,5 +31,11 @@ class StudentCouncilServiceIT {
         StudentCouncil updated = service.updateResources(council.getId(), newResources);
 
         assertEquals(newResources, updated.getResources());
+    }
+
+    @Test
+    void testSumResourcesByStatement() {
+        BigDecimal sum = service.sumResourcesByStatement("Problem1");
+        assertThat(sum).isEqualByComparingTo(new BigDecimal("80000.00"));
     }
 }
