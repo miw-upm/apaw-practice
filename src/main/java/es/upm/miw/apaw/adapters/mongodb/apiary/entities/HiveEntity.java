@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -34,14 +33,6 @@ public class HiveEntity {
 
     @DBRef
     private ProductEntity productEntity;
-
-    public HiveEntity(Hive hive) {
-        BeanUtils.copyProperties(hive, this, "product");
-        this.id = UUID.randomUUID();
-        if (hive.getProduct() != null) {
-            this.productEntity = new ProductEntity(hive.getProduct());
-        }
-    }
 
     public Hive toHive() {
         Hive hive = new Hive();

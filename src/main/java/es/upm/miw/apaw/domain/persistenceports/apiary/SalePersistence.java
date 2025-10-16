@@ -3,8 +3,6 @@ package es.upm.miw.apaw.domain.persistenceports.apiary;
 import es.upm.miw.apaw.domain.models.apiary.Sale;
 import org.springframework.stereotype.Repository;
 
-import java.util.stream.Stream;
-
 @Repository
 public interface SalePersistence {
 

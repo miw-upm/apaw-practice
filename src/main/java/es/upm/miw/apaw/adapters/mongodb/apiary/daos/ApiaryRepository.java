@@ -8,5 +8,4 @@ import java.util.UUID;
 
 public interface ApiaryRepository extends MongoRepository<ApiaryEntity, UUID> {
     List<ApiaryEntity> findByLocation(String location);
-
 }

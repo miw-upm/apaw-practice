@@ -50,7 +50,7 @@ class ProductPersistenceMongodbIT {
         existing.setPrice(new BigDecimal("4.00"));
         existing.setProduct("Cera refinada de abeja");
 
-        Product updated = this.productPersistence.update(existing);
+        Product updated = this.productPersistence.updatePut(existing);
 
         assertEquals("Cera refinada de abeja", updated.getProduct());
         assertEquals(new BigDecimal("4.00"), updated.getPrice());

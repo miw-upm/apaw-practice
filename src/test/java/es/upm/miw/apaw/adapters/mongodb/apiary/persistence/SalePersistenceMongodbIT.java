@@ -40,7 +40,7 @@ class SalePersistenceMongodbIT {
 
         Sale sale = Sale.builder()
                 .idSale(1)
-                .paymentForm(1) // Ejemplo: 1 = tarjeta
+                .paymentForm(1)
                 .shippingAddress("Calle Falsa 123")
                 .amount(new BigDecimal("100.50"))
                 .client(client)
@@ -68,18 +68,15 @@ class SalePersistenceMongodbIT {
 
         Sale sale = Sale.builder()
                 .idSale(2)
-                .paymentForm(2) // Ejemplo: 2 = PayPal
+                .paymentForm(2)
                 .shippingAddress("Avenida Siempre Viva 742")
                 .amount(new BigDecimal("50.00"))
                 .client(client)
                 .build();
 
         salePersistence.create(sale);
-
         assertThat(salePersistence.existIdSale(2)).isTrue();
-
         salePersistence.delete(2);
-
         assertThat(salePersistence.existIdSale(2)).isFalse();
     }
 }
