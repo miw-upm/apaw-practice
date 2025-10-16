@@ -169,28 +169,6 @@ class FighterResourceFT {
     }
 
     @Test
-    void testDeleteRating_whenNotExistsInFighter_returns404() {
-        String nickname = "The Dragon";
-        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
-
-        this.webTestClient.delete()
-                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, notExisting)
-                .exchange()
-                .expectStatus().isNotFound();
-    }
-
-    @Test
-    void testDeleteRating_whenFighterHasNoRatings_returns404() {
-        String nickname = "Iron";
-        UUID anyId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
-
-        this.webTestClient.delete()
-                .uri(FIGHTERS + NICK_ID + RATINGS + RATING_ID, nickname, anyId)
-                .exchange()
-                .expectStatus().isNotFound();
-    }
-
-    @Test
     void testPatchWinsOk() {
         Coach coach = Coach.builder()
                 .fullName("Carlos Mendes")

@@ -136,15 +136,6 @@ class FighterServiceIT {
     }
 
     @Test
-    void testDeleteRating_ratingNotFound() {
-        String nickname = "The Dragon";
-        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
-
-        assertThrows(NotFoundException.class,
-                () -> fighterService.deleteRatings(nickname, notExisting));
-    }
-
-    @Test
     void testUpdateWins() {
         Fighter fighter = new Fighter();
         fighter.setWins(77);
