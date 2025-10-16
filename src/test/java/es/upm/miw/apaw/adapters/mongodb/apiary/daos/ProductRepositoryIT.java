@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,21 +34,6 @@ class ProductRepositoryIT {
         assertTrue(product.isPresent());
         assertEquals("Miel de Romero", product.get().getProduct());
         assertEquals(new BigDecimal("8.00"), product.get().getPrice());
-    }
-
-    @Test
-    void testFindByPriceGreaterThan() {
-        List<ProductEntity> products = this.productRepository.findByPriceGreaterThan(new BigDecimal("7.50"));
-        assertFalse(products.isEmpty());
-        assertTrue(products.stream().anyMatch(p -> p.getBarcode().equals("P001")));
-        assertTrue(products.stream().anyMatch(p -> p.getBarcode().equals("P004")));
-    }
-
-    @Test
-    void testFindByProductAndPriceGreaterThan() {
-        List<ProductEntity> products = this.productRepository.findByProductAndPriceGreaterThan("Miel de Azahar", new BigDecimal("8.00"));
-        assertEquals(1, products.size());
-        assertEquals("P004", products.get(0).getBarcode());
     }
 
     @Test

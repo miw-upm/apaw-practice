@@ -1,16 +1,15 @@
 package es.upm.miw.apaw.adapters.resources.apiary;
 
 import es.upm.miw.apaw.domain.models.apiary.Product;
+import es.upm.miw.apaw.domain.models.apiary.ProductPriceUpdating;
 import es.upm.miw.apaw.domain.services.apiary.ProductService;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.PatchMapping;
 
-import java.math.BigDecimal;
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping(ProductResource.PRODUCTS)
@@ -27,22 +26,15 @@ public class ProductResource {
         this.productService = productService;
     }
 
-
     @PutMapping(BARCODE_ID)
-    public Product update(@PathVariable String barcode, @Valid @RequestBody Product product) {
+    public Product updatePut(@PathVariable String barcode, @Valid @RequestBody Product product) {
         product.setBarcode(barcode);
-        return this.productService.update(product);
+        return this.productService.updatePut(product);
     }
 
-    @PatchMapping(BARCODE_ID)
-    public Product updatePrice(@PathVariable String barcode, @RequestBody Map<String, BigDecimal> body) {
-        if (body.get("price") == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Price must be provided");
-        }
-        BigDecimal newPrice = body.get("price");
-        return this.productService.updatePrice(barcode, newPrice);
+    @PatchMapping
+    public void updatePrices(@Valid @RequestBody List<@Valid ProductPriceUpdating> productPriceUpdatingList) {
+        this.productService.updatePricesDTO(productPriceUpdatingList.stream());
     }
-
-
 }
 

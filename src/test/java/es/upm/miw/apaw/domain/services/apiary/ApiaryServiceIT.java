@@ -31,7 +31,6 @@ class ApiaryServiceIT {
         apiarySeeder.seedDatabase();
     }
 
-
     @Test
     void testFindByLocation_returnsApiariesWithCorrectLocation() {
         List<Apiary> apiaries = apiaryService.findByLocation("Burgos").collect(Collectors.toList());
@@ -56,7 +55,7 @@ class ApiaryServiceIT {
 
     @Test
     void testFindLocationsByShippingAddress_returnsEmptyWhenNotFound() {
-        Set<String> locations = apiaryService.findLocationsByShippingAddress("Fake Address 123");
+        Set<String> locations = apiaryService.findLocationsByShippingAddress("Direccion inexistente");
         assertThat(locations).isEmpty();
     }
 

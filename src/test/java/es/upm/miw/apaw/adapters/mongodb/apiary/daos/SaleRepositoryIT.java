@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,6 +48,4 @@ class SaleRepositoryIT {
         Optional<SaleEntity> saleOpt = saleRepository.findByIdSale(999);
         assertThat(saleOpt).isEmpty();
     }
-
-
 }

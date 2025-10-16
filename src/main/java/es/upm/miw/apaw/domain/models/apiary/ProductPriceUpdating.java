@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.domain.models.apiary;
 
-import es.upm.miw.apaw.domain.models.UserDto;
-
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,13 +13,10 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Sale {
+public class ProductPriceUpdating {
     @NotNull
-    private Integer idSale;
-    private Integer paymentForm;
-    private String shippingAddress;
-    private BigDecimal amount;
+    @NotBlank
+    private String barcode;
     @NotNull
-    private UserDto client;
+    private BigDecimal price;
 }
