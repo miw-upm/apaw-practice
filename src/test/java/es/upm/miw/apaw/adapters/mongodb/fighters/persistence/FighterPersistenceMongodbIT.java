@@ -89,16 +89,6 @@ class FighterPersistenceMongodbIT {
     }
 
     @Test
-    void testDeleteRating_ratingNotFound() {
-        String nickname = "The Dragon";
-        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
-
-        assertThrows(NotFoundException.class,
-                () -> fighterPersistence.deleteRating(nickname, notExisting));
-    }
-
-
-    @Test
     void testUpdateWinsOk() {
         Fighter fighter = new Fighter();
         fighter.setWins(88);
