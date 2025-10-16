@@ -121,8 +121,8 @@ public class MetroSeeder {
                         .multipleLines(true)
                         .inaugurationDate(LocalDate.of(1990, 5, 12))
                         .trainLineEntities(Arrays.asList(trainLines[0], trainLines[1]))
-                        .zoneType("ZoneA")
-                        .users(Arrays.asList(UUID.randomUUID(), UUID.randomUUID()))
+                        .zoneEntity(zones[0])
+                        .usersTrainStation(Arrays.asList(UUID.randomUUID(), UUID.randomUUID()))
                         .build(),
                 TrainStationEntity.builder()
                         .name("North Station")
@@ -131,8 +131,8 @@ public class MetroSeeder {
                         .multipleLines(false)
                         .inaugurationDate(LocalDate.of(2000, 3, 20))
                         .trainLineEntities(List.of(trainLines[2]))
-                        .zoneType("ZoneB")
-                        .users(List.of(UUID.randomUUID()))
+                        .zoneEntity(zones[1])
+                        .usersTrainStation(List.of(UUID.randomUUID()))
                         .build(),
                 TrainStationEntity.builder()
                         .name("East Station")
@@ -141,8 +141,8 @@ public class MetroSeeder {
                         .multipleLines(false)
                         .inaugurationDate(LocalDate.of(2010, 7, 15))
                         .trainLineEntities(List.of(trainLines[1]))
-                        .zoneType("ZoneC")
-                        .users(Arrays.asList(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()))
+                        .zoneEntity(zones[2])
+                        .usersTrainStation(Arrays.asList(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()))
                         .build(),
                 TrainStationEntity.builder()
                         .name("West Station")
@@ -151,8 +151,8 @@ public class MetroSeeder {
                         .multipleLines(true)
                         .inaugurationDate(LocalDate.of(2015, 11, 5))
                         .trainLineEntities(Arrays.asList(trainLines[0], trainLines[2]))
-                        .zoneType("ZoneD")
-                        .users(List.of())
+                        .zoneEntity(zones[3])
+                        .usersTrainStation(List.of())
                         .build()
         };
 
