@@ -2,7 +2,6 @@ package es.upm.miw.apaw.domain.models.apiary;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +17,6 @@ import java.math.BigDecimal;
 
 public class Sale {
     @NotNull
-    @NotBlank
     private Integer idSale;
     private Integer paymentForm;
     private String shippingAddress;

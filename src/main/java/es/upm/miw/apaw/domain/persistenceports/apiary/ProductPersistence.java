@@ -8,9 +8,11 @@ import java.math.BigDecimal;
 @Repository
 public interface ProductPersistence {
 
-    Product update(Product product);
+    Product updatePut(Product product);
+
+    Product update(String barcode, Product product);
+
     Product updatePrice(String barcode, BigDecimal newPrice);
+
     Product read(String barcode);
-
-
 }

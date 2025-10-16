@@ -12,11 +12,13 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import javax.annotation.processing.Generated;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.UUID;
 
+@Generated("exclude-from-code-coverage")
 @Repository
 @Profile({"dev", "test"})
 @Log4j2

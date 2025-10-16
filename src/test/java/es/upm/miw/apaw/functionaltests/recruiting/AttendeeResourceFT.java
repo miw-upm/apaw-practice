@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.functionaltests.recruiting;
 
-import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.AttendeeRepository;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.resources.recruiting.AttendeeResource;
 import es.upm.miw.apaw.domain.models.recruiting.Attendee;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,48 +23,65 @@ class AttendeeResourceFT {
     private WebTestClient webTestClient;
 
     @Autowired
-    private AttendeeRepository attendeeRepository;
-
-    private AttendeeEntity savedEntity;
+    private RecruitingSeeder recruitingSeeder;
 
     @BeforeEach
-    void setUp() {
-        attendeeRepository.deleteAll();
-
-        savedEntity = attendeeRepository.save(
-                AttendeeEntity.builder()
-                        .id(UUID.randomUUID())
-                        .emailAddress("john.doe@example.com")
-                        .fullName("John Doe")
-                        .phoneNumber("600123456")
-                        .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                        .build()
-        );
+    void resetDb() {
+        recruitingSeeder.deleteAll();
+        recruitingSeeder.seedDatabase();
     }
+
+    // --- READ endpoint test -----------------------------------------------------------
 
     @Test
     void testReadAttendeeByEmail() {
+        String email = "felix.issle@test.com";
+
         webTestClient.get()
-                .uri(AttendeeResource.ATTENDEES + "/{email}", savedEntity.getEmailAddress())
+                .uri(AttendeeResource.ATTENDEES + "/{email}", email)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody(Attendee.class)
                 .value(attendee -> {
-                    assertThat(attendee.getEmailAddress()).isEqualTo(savedEntity.getEmailAddress());
-                    assertThat(attendee.getFullName()).isEqualTo("John Doe");
-                    assertThat(attendee.getPhoneNumber()).isEqualTo("600123456");
-                    assertThat(attendee.getUser()).isNotNull();
-                    assertThat(attendee.getUser().getId()).isEqualTo(savedEntity.getUser());
+                    assertThat(attendee.getEmailAddress()).isEqualTo(email);
+                    assertThat(attendee.getFullName()).isEqualTo("Felix Issle");
+                    assertThat(attendee.getPhoneNumber()).isEqualTo("+4173912799");
                 });
     }
 
     @Test
     void testReadAttendeeByEmailNotFound() {
         webTestClient.get()
-                .uri(AttendeeResource.ATTENDEES + "/{email}", "not.exists@example.com")
+                .uri(AttendeeResource.ATTENDEES + "/{email}", "nonexistent@example.com")
                 .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    // --- DELETE endpoint tests --------------------------------------------------------
+
+    @Test
+    void testDeleteAttendeeByEmail() {
+        String email = "karolyn.sanz@test.com";
+
+        webTestClient.delete()
+                .uri(AttendeeResource.ATTENDEES + "/{email}", email)
+                .exchange()
+                .expectStatus().isNoContent();
+
+        webTestClient.get()
+                .uri(AttendeeResource.ATTENDEES + "/{email}", email)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testDeleteAttendeeByEmailNotFound() {
+        webTestClient.delete()
+                .uri(AttendeeResource.ATTENDEES + "/{email}", "unknown@example.com")
                 .exchange()
                 .expectStatus().isNotFound();
     }

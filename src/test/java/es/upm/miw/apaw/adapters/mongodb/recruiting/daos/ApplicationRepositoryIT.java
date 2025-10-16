@@ -1,19 +1,19 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.ApplicationEntity;
-import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.PositionEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.AttendeeEntity;
+import es.upm.miw.apaw.adapters.mongodb.recruiting.entities.MeetingEntity;
 import es.upm.miw.apaw.domain.models.recruiting.enums.Status;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -23,31 +23,81 @@ class ApplicationRepositoryIT {
     private ApplicationRepository applicationRepository;
 
     @Test
-    void testSaveAndFind() {
-        UUID newId = UUID.randomUUID();
+    void testUpdateMeetings() {
+        UUID applicationId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0031");
 
-        ApplicationEntity newApplication = ApplicationEntity.builder()
-                .id(newId)
-                .status(Status.Open)
-                .created(LocalDate.now())
-                .referral(false)
-                .user(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
-                .positionEntity(PositionEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
-                        .name("Java Developer")
-                        .description("Spring Boot backend position")
-                        .build())
-                .meetingList(List.of())
+        ApplicationEntity application = applicationRepository.findById(applicationId)
+                .orElseThrow();
+
+        assertThat(application.getMeetingList()).isNotEmpty();
+
+        AttendeeEntity existingAttendee = AttendeeEntity.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0015")) // Andrea Schulz
+                .fullName("Andrea Schulz")
+                .phoneNumber("+4165889667")
+                .emailAddress("andrea.schulz@test.com")
                 .build();
 
-        this.applicationRepository.save(newApplication);
+        MeetingEntity newMeeting = MeetingEntity.builder()
+                .id(UUID.randomUUID())
+                .date(java.time.LocalDateTime.now().plusDays(5))
+                .url("//new-meeting-url")
+                .attendees(List.of(existingAttendee))
+                .build();
 
-        // Verify persistence
-        assertTrue(this.applicationRepository.findById(newId).isPresent());
-        ApplicationEntity saved = this.applicationRepository.findById(newId).get();
+        application.setMeetingList(List.of(newMeeting));
+        applicationRepository.save(application);
 
-        assertThat(saved.getStatus()).isEqualTo(Status.Open );
-        assertThat(saved.getReferral()).isFalse();
-        assertThat(saved.getUser()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"));
+        ApplicationEntity updated = applicationRepository.findById(applicationId)
+                .orElseThrow();
+
+        assertThat(updated.getMeetingList()).hasSize(1);
+
+        MeetingEntity m = updated.getMeetingList().getFirst();
+        assertThat(m.getUrl()).isEqualTo("//new-meeting-url");
+        assertThat(m.getAttendees()).hasSize(1);
+
+        AttendeeEntity a = m.getAttendees().getFirst();
+        assertThat(a.getEmailAddress()).isEqualTo("andrea.schulz@test.com");
+        assertThat(a.getFullName()).isEqualTo("Andrea Schulz");
+
+        assertThat(updated.getStatus()).isEqualTo(Status.In_process);
+        assertThat(updated.getPositionEntity().getReference()).isEqualTo(1002);
+    }
+
+    @Test
+    void testFindById() {
+        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030");
+
+        Optional<ApplicationEntity> optionalApp = this.applicationRepository.findById(id);
+
+        assertThat(optionalApp).isPresent();
+        ApplicationEntity application = optionalApp.get();
+
+        assertThat(application.getStatus()).isEqualTo(Status.Open);
+        assertThat(application.getReferral()).isTrue();
+        assertThat(application.getPositionEntity().getReference()).isEqualTo(1001);
+        assertThat(application.getMeetingList()).hasSize(3);
+        assertThat(application.getMeetingList().getFirst().getUrl()).contains("url-for-meeting");
+    }
+
+    @Test
+    void testApplicationPositionRelation() {
+        ApplicationEntity app = applicationRepository.findById(
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0031")
+        ).orElseThrow();
+
+        assertThat(app.getPositionEntity()).isNotNull();
+        assertThat(app.getPositionEntity().getReference()).isEqualTo(1002);
+        assertThat(app.getPositionEntity().getName()).contains("CPI consultant");
+    }
+
+    @Test
+    void testStatusEnumPersistence() {
+        ApplicationEntity rejected = applicationRepository.findById(
+                UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0033")
+        ).orElseThrow();
+
+        assertThat(rejected.getStatus()).isEqualTo(Status.In_process);
     }
 }

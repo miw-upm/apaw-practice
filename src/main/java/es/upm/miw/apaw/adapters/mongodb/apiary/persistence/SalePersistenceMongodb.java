@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository("salePersistence")
 public class SalePersistenceMongodb implements SalePersistence {
-
     private final SaleRepository saleRepository;
 
     @Autowired

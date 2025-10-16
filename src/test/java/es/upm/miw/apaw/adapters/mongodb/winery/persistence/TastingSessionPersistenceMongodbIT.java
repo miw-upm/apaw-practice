@@ -4,6 +4,7 @@ import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
 import es.upm.miw.apaw.domain.models.winery.Evaluation;
 import es.upm.miw.apaw.domain.models.winery.TastingSession;
 import es.upm.miw.apaw.domain.models.winery.Wine;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,12 @@ public class TastingSessionPersistenceMongodbIT {
 
     @Autowired
     private WinerySeeder winerySeeder;
+
+    @BeforeEach
+    void resetDb(){
+        winerySeeder.deleteAll();
+        winerySeeder.seedDatabase();
+    }
 
     @Test
     void testReadById() {

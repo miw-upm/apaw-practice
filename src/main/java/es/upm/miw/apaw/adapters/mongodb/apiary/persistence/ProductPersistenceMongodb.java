@@ -28,10 +28,24 @@ public class ProductPersistenceMongodb implements ProductPersistence {
     }
 
     @Override
-    public Product update(Product product) {
-        ProductEntity productEntity = new ProductEntity(product);
-        this.productRepository.save(productEntity);
-        return product;
+    public Product updatePut(Product product) {
+        ProductEntity existingEntity = this.productRepository.findByBarcode(product.getBarcode())
+                .orElseThrow(() -> new NotFoundException("Product barcode: " + product.getBarcode()));
+        existingEntity.setProduct(product.getProduct());
+        existingEntity.setPrice(product.getPrice());
+        this.productRepository.save(existingEntity);
+        return existingEntity.toProduct();
+    }
+
+    @Override
+    public Product update(String barcode, Product product) {
+        ProductEntity productEntity = this.productRepository
+                .findByBarcode(product.getBarcode())
+                .orElseThrow(() -> new NotFoundException("Product barcode: " + product.getBarcode()));
+        productEntity.fromProduct(product);
+        return this.productRepository
+                .save(productEntity)
+                .toProduct();
     }
 
     @Override

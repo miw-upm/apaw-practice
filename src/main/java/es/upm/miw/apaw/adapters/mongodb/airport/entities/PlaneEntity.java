@@ -32,6 +32,10 @@ public class PlaneEntity {
         this.id = UUID.randomUUID();
     }
 
+    public void fromPlane(Plane plane) {
+        BeanUtils.copyProperties(plane, this);
+    }
+
     public Plane toPlane() {
         Plane plane = new Plane();
         BeanUtils.copyProperties(this, plane);

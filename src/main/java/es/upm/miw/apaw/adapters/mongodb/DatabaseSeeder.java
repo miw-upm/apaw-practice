@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.mongodb;
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.AirportSeeder;
 import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
 import es.upm.miw.apaw.adapters.mongodb.fighters.daos.FightersSeeder;
+import es.upm.miw.apaw.adapters.mongodb.football.daos.FootballSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
 import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.StudentCouncilSeeder;
@@ -11,13 +12,18 @@ import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
+import es.upm.miw.apaw.adapters.mongodb.videoWebsite.daos.VideoWebSiteSeeder;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
-
 import es.upm.miw.apaw.adapters.mongodb.winery.daos.WinerySeeder;
+import es.upm.miw.apaw.adapters.mongodb.warehouse.daos.WarehouseSeeder;
+import es.upm.miw.apaw.adapters.mongodb.metro.daos.MetroSeeder;
+
+
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 
 @Repository
 @Profile({"dev", "test"})
@@ -33,10 +39,15 @@ public class DatabaseSeeder {
     private final WinerySeeder winerySeeder;
     private final UniversitySeeder universitySeeder;
     private final SportsAcademySeeder sportsAcademySeeder;
+    private final clothingstoreSeeder clothingstoreSeeder;
     private final VideogameSeeder videogameSeeder;
     private final BankSeeder bankSeeder;
     private final FightersSeeder fightersSeeder;
     private final RecipesSeeder recipesSeeder;
+    private final WarehouseSeeder warehouseSeeder;
+    private final VideoWebSiteSeeder videoWebSiteSeeder;
+    private final FootballSeeder footballSeeder;
+    private final MetroSeeder metroSeeder;
 
 
     @Autowired
@@ -50,11 +61,17 @@ public class DatabaseSeeder {
             WinerySeeder winerySeeder,
             UniversitySeeder universitySeeder,
             SportsAcademySeeder sportsAcademySeeder,
+            clothingstoreSeeder clothingstoreSeeder,
             VideogameSeeder videogameSeeder,
             FightersSeeder fightersSeeder,
             BankSeeder bankSeeder,
-            RecipesSeeder recipesSeeder
+            RecipesSeeder recipesSeeder,
+            WarehouseSeeder warehouseSeeder,
+            VideoWebSiteSeeder videoWebsiteSeeder,
+            FootballSeeder footballSeeder,
+            MetroSeeder metroSeeder
             ) {
+
         this.shopSeeder = shopSeeder;
         this.airportSeeder = airportSeeder;
         this.vehicleSeeder = vehicleSeeder;
@@ -64,14 +81,21 @@ public class DatabaseSeeder {
         this.winerySeeder = winerySeeder;
         this.universitySeeder = universitySeeder;
         this.sportsAcademySeeder = sportsAcademySeeder;
+        this.clothingstoreSeeder = clothingstoreSeeder;
         this.videogameSeeder = videogameSeeder;
         this.fightersSeeder = fightersSeeder;
         this.bankSeeder = bankSeeder;
         this.recipesSeeder = recipesSeeder;
+        this.warehouseSeeder = warehouseSeeder;
+        this.videoWebSiteSeeder = videoWebsiteSeeder;
+        this.footballSeeder = footballSeeder;
+        this.metroSeeder = metroSeeder;
         this.seedDatabase();
+
     }
 
     public void seedDatabase() {
+        this.clothingstoreSeeder.seedDatabase();
         this.shopSeeder.seedDatabase();
         this.airportSeeder.seedDatabase();
         this.vehicleSeeder.seedDatabase();
@@ -85,9 +109,14 @@ public class DatabaseSeeder {
         this.fightersSeeder.seedDatabase();
         this.bankSeeder.seedDatabase();
         this.recipesSeeder.seedDatabase();
+        this.warehouseSeeder.seedDatabase();
+        this.videoWebSiteSeeder.seedDatabase();
+        this.footballSeeder.seedDatabase();
+        this.metroSeeder.seedDatabase();
     }
 
     public void deleteAll() {
+        this.clothingstoreSeeder.deleteAll();
         this.shopSeeder.deleteAll();
         this.airportSeeder.deleteAll();
         this.vehicleSeeder.deleteAll();
@@ -101,6 +130,10 @@ public class DatabaseSeeder {
         this.fightersSeeder.deleteAll();
         this.bankSeeder.deleteAll();
         this.recipesSeeder.deleteAll();
+        this.warehouseSeeder.deleteAll();
+        this.videoWebSiteSeeder.deleteAll();
+        this.footballSeeder.deleteAll();
+        this.metroSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {

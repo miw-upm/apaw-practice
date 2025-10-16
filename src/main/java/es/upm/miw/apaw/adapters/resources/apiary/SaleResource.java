@@ -6,13 +6,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping(SaleResource.SALES)
 
 public class SaleResource {
     public static final String SALES = "/apiary/sales";
-
     public static final String ID_SALE = "/{idSale}";
 
     private final SaleService saleService;

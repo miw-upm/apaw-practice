@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Builder
 @Data
@@ -17,15 +16,14 @@ public class Location {
 
     @NotNull
     private Integer currentStock;
-    @NotNull
+
     @NotBlank
     private String position;
 
+    private LocalDateTime lastUpdateDate;
     private List<ProductItem> productItems;
 
-    private LocalDateTime lastUpdateDate;
-
     @NotNull
-    private Boolean avialability;
+    private Boolean availability;
 
 }

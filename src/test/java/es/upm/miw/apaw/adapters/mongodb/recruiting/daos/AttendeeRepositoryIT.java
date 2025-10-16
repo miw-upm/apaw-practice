@@ -27,4 +27,13 @@ class AttendeeRepositoryIT {
         assertThat(attendee.getPhoneNumber()).isEqualTo("+4112345123");
         assertThat(attendee.getUser()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"));
     }
+
+    @Test
+    void testDeleteByEmailAddress() {
+        String email = "javier.oliver@test.com";
+
+        assertTrue(attendeeRepository.findByEmailAddress(email).isPresent());
+        attendeeRepository.delete(attendeeRepository.findByEmailAddress(email).get());
+        assertThat(attendeeRepository.findByEmailAddress(email)).isEmpty();
+    }
 }

@@ -21,24 +21,14 @@ import java.util.UUID;
 public class ApiaryEntity {
     @Id
     private UUID id;
+
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
     private String cadastralRef;
-
     private String location;
     private String rega;
 
     private List<HiveEntity> hiveEntities;
-
-    public ApiaryEntity(Apiary apiary) {
-        BeanUtils.copyProperties(apiary, this);
-        this.id = UUID.randomUUID();
-        if (apiary.getHives() != null) {
-            this.hiveEntities = apiary.getHives().stream()
-                    .map(HiveEntity::new)
-                    .toList();
-        }
-    }
 
     public Apiary toApiary() {
         Apiary apiary = new Apiary();

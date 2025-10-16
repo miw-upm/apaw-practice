@@ -2,9 +2,12 @@ package es.upm.miw.apaw.domain.services.airport;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.models.airport.Plane;
+import es.upm.miw.apaw.domain.models.airport.PlaneSeatCountUpdating;
 import es.upm.miw.apaw.domain.persistenceports.airport.PlanePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Stream;
 
 @Service
 public class PlaneService {
@@ -19,6 +22,15 @@ public class PlaneService {
     public Plane create(Plane plane) {
         this.assertRegistrationNumberNotExist(plane.getRegistrationNumber());
         return this.planePersistence.create(plane);
+    }
+
+    public void updateSeatCount(Stream<PlaneSeatCountUpdating> planeSeatCountUpdatingList) {
+        planeSeatCountUpdatingList.map(planeNewSeatCount ->{
+            Plane plane = this.planePersistence.findByRegistrationNumber(planeNewSeatCount.getRegistrationNumber());
+            plane.setSeatCount(planeNewSeatCount.getSeatCount());
+            return plane;
+        })
+        .forEach(plane -> this.planePersistence.update(plane.getRegistrationNumber(), plane));
     }
 
     public void assertRegistrationNumberNotExist(String registrationNumber) {
