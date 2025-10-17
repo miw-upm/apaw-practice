@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -116,5 +117,39 @@ class ZoneResourceFT {
                 .bodyValue(updatedZone)
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testUpdateTicketPrice() {
+        List<Zone> zoneUpdates = List.of(
+                Zone.builder()
+                        .type("ZoneA")
+                        .ticketPrice(new BigDecimal("10.00"))
+                        .build()
+        );
+
+        webTestClient.patch()
+                .uri(ZoneResource.ZONES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(zoneUpdates)
+                .exchange()
+                .expectStatus().isOk();
+    }
+
+    @Test
+    void testUpdateTicketPriceNotFound() {
+        List<Zone> zoneUpdates = List.of(
+                Zone.builder()
+                        .type("ZoneNULL")
+                        .ticketPrice(new BigDecimal("10.00"))
+                        .build()
+        );
+
+        webTestClient.patch()
+                .uri(ZoneResource.ZONES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(zoneUpdates)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

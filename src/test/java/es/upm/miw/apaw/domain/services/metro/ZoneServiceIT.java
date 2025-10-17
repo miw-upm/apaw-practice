@@ -3,15 +3,18 @@ package es.upm.miw.apaw.domain.services.metro;
 import es.upm.miw.apaw.adapters.mongodb.metro.daos.ZoneRepository;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.models.metro.Zone;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -80,5 +83,29 @@ class ZoneServiceIT {
 
         assertThatThrownBy(() -> this.zoneService.update(nonExistentId, updatedZone))
                 .isInstanceOf(es.upm.miw.apaw.domain.exceptions.NotFoundException.class);
+    }
+
+    @Test
+    void testUpdateTicketPrices() {
+        // Given: two existing zones that we know are present in the DB
+        Zone zoneA = Zone.builder()
+                .type("ZoneA")
+                .ticketPrice(new BigDecimal("6.50"))
+                .build();
+
+        Zone zoneB = Zone.builder()
+                .type("ZoneB")
+                .ticketPrice(new BigDecimal("7.25"))
+                .build();
+
+        // When: updating their prices in bulk
+        this.zoneService.updateTicketPrices(Stream.of(zoneA, zoneB));
+
+        // Then: verify that both zones were updated correctly
+        var updatedZoneA = this.zoneRepository.findByType("ZoneA").orElseThrow();
+        var updatedZoneB = this.zoneRepository.findByType("ZoneB").orElseThrow();
+
+        assertThat(updatedZoneA.getTicketPrice()).isEqualTo(new BigDecimal("6.50"));
+        assertThat(updatedZoneB.getTicketPrice()).isEqualTo(new BigDecimal("7.25"));
     }
 }
