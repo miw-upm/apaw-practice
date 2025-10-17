@@ -97,4 +97,13 @@ class GarmentPersistenceMongodbIT {
         garmentPersistenceMongodb.delete(id);
         assertThat(garmentRepository.findById(id)).isEmpty();
     }
+    @Test
+    void testSumDistinctPriceByMobile_ok() {
+        BigDecimal result = garmentPersistenceMongodb.sumDistinctPriceByMobile("666000660");
+        System.out.println(">>> Persistence sumDistinctPriceByMobile(666000660) = " + result);
+
+        // Esperado: Dos prendas en la sembradora a 59,99 + 89,99 = 149,98
+        assertThat(result).isEqualByComparingTo("149.98");
+    }
+
 }
