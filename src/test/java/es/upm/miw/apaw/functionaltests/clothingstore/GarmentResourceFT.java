@@ -5,6 +5,7 @@ import es.upm.miw.apaw.adapters.resources.clothingstore.GarmentResource;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
+import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +46,16 @@ class GarmentResourceFT {
     void seed() {
         databaseSeeder.reSeedDatabase();
 
-        UserDto mockUser = new UserDto();
-        mockUser.setId(SEEDED_USER_ID);
-        mockUser.setMobile(KNOWN_MOBILE);
-        mockUser.setFirstName("user0");
-
-
+        UserDto mockUser = UserDto.builder()
+                .id(SEEDED_USER_ID)
+                .mobile(KNOWN_MOBILE)
+                .firstName("user0")
+                .build();
         given(userRestClient.readByMobile(KNOWN_MOBILE)).willReturn(mockUser);
+
+        // Mock: 未知手机号 -> 由 Resource/Service 统一映射为 502
+        given(userRestClient.readByMobile(UNKNOWN_MOBILE))
+                .willThrow(new BadGatewayException("User not found with MOBILE: " + UNKNOWN_MOBILE));
 
         System.out.println(">>> After reseed, GET size = " +
                 webTestClient.get()
@@ -224,7 +228,7 @@ class GarmentResourceFT {
     }
 
     @Test
-    void testSumDistinctPriceByMobile_userNotFour() {
+    void testSumDistinctPriceByMobile_userNotFound() {
         this.webTestClient.get()
                 .uri(uri -> uri.path(SUM_PRICE_SEARCH_PATH)
                         .queryParam("mobile", UNKNOWN_MOBILE)
