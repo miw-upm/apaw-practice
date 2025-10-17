@@ -20,13 +20,13 @@ class ZoneRepositoryIT {
 
     @Test
     void testFindByType() {
-        String type = "ZoneA";
+        String type = "ZoneB";
 
         Optional<ZoneEntity> zone = zoneRepository.findByType(type);
 
         assertThat(zone).isPresent();
         assertThat(zone.get().getType()).isEqualTo(type);
-        assertThat(zone.get().getTicketPrice()).isEqualTo(new BigDecimal("2.50"));
+        assertThat(zone.get().getTicketPrice()).isEqualTo(new BigDecimal("3.75"));
     }
 
     @Test
