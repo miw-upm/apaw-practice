@@ -1,5 +1,9 @@
 package es.upm.miw.apaw.adapters.mongodb.apiary.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiaryRepository;
+import es.upm.miw.apaw.adapters.mongodb.apiary.entities.ApiaryEntity;
+import es.upm.miw.apaw.adapters.mongodb.apiary.entities.HiveEntity;
+import es.upm.miw.apaw.adapters.mongodb.apiary.entities.ProductEntity;
 import es.upm.miw.apaw.domain.models.apiary.Apiary;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,6 +24,9 @@ class ApiaryPersistenceMongodbIT {
 
     @Autowired
     private ApiaryPersistenceMongodb apiaryPersistenceMongodb;
+
+    @Autowired
+    private ApiaryRepository apiaryRepository;
 
     @Test
     void testFindByLocation_returnsApiaries() {
@@ -49,6 +57,44 @@ class ApiaryPersistenceMongodbIT {
     }
 
     @Test
+    void testFindLocationsByShippingAddress_hiveProductEntityNull_noMatch() {
+        ApiaryEntity apiaryEntity = ApiaryEntity.builder()
+                .id(UUID.randomUUID())
+                .cadastralRef("NO_PRODUCT_REF")
+                .location("TestNull")
+                .rega("REGA_TEST_NULL")
+                .hiveEntities(List.of(HiveEntity.builder().productEntity(null).build()))
+                .build();
+        apiaryRepository.save(apiaryEntity);
+
+        Set<String> locations = apiaryPersistenceMongodb.findLocationsByShippingAddress("Calle Mayor 10, Madrid");
+        assertThat(locations).doesNotContain("TestNull");
+    }
+
+    @Test
+    void testFindLocationsByShippingAddress_hiveProductEntityBarcodeNotInSales_noMatch() {
+        ProductEntity product = ProductEntity.builder()
+                .id(UUID.randomUUID())
+                .barcode("NO_MATCH_BARCODE")
+                .build();
+        HiveEntity hive = HiveEntity.builder()
+                .id(UUID.randomUUID())
+                .productEntity(product)
+                .build();
+        ApiaryEntity apiaryEntity = ApiaryEntity.builder()
+                .id(UUID.randomUUID())
+                .cadastralRef("NO_MATCH_REF")
+                .location("TestNotMatch")
+                .rega("REGA_TEST_NOMATCH")
+                .hiveEntities(List.of(hive))
+                .build();
+        apiaryRepository.save(apiaryEntity);
+
+        Set<String> locations = apiaryPersistenceMongodb.findLocationsByShippingAddress("Calle Mayor 10, Madrid");
+        assertThat(locations).doesNotContain("TestNotMatch");
+    }
+
+    @Test
     void testSumProductPricesByRega_ReturnsCorrectSum() {
         BigDecimal sum = apiaryPersistenceMongodb.sumProductPricesByRega("REGA00001");
         assertThat(sum).isEqualByComparingTo(new BigDecimal("15.00"));
@@ -59,5 +105,4 @@ class ApiaryPersistenceMongodbIT {
         BigDecimal sum = apiaryPersistenceMongodb.sumProductPricesByRega("REGA_NO_EXISTE");
         assertThat(sum).isEqualByComparingTo(BigDecimal.ZERO);
     }
-
 }
