@@ -1,13 +1,17 @@
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
-import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,14 +25,30 @@ class GarmentPersistenceMongodbIT {
 
     @Autowired
     private GarmentPersistenceMongodb garmentPersistenceMongodb;
+
     @Autowired
     private GarmentRepository garmentRepository;
+
     @Autowired
     private DatabaseSeeder databaseSeeder;
+
+    // 👇 Mock 掉对 apaw-user 的 HTTP 调用
+    @MockBean
+    private UserRestClient userRestClient;
+
+    // 和 clothingstoreSeeder 里 Order.userId 对应
+    private static final UUID SEEDED_USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+    private static final String KNOWN_MOBILE = "666000660";
 
     @BeforeEach
     void setUp() {
         this.databaseSeeder.reSeedDatabase();
+
+        // stub apaw-user: /users/{mobile} -> UserDto(id=SEEDED_USER_ID, mobile=KNOWN_MOBILE)
+        UserDto dto = new UserDto();
+        dto.setId(SEEDED_USER_ID);
+        dto.setMobile(KNOWN_MOBILE);
+        BDDMockito.given(userRestClient.readByMobile(KNOWN_MOBILE)).willReturn(dto);
     }
 
     @Test
@@ -40,10 +60,9 @@ class GarmentPersistenceMongodbIT {
                 .toList();
 
         assertThat(garments).isNotNull().isNotEmpty();
-        assertThat(garments)
-                .allSatisfy(g ->
-                        assertThat(g.getPrice()).isBetween(min, max)
-                );
+        assertThat(garments).allSatisfy(g ->
+                assertThat(g.getPrice()).isBetween(min, max)
+        );
     }
 
     @Test
@@ -57,17 +76,16 @@ class GarmentPersistenceMongodbIT {
         Garment created = this.garmentPersistenceMongodb.create(newGarment);
 
         assertThat(created).isNotNull();
-        assertThat(created.getId()).isNotNull(); // 创建后应有 id
+        assertThat(created.getId()).isNotNull();
         assertThat(created.getSize()).isEqualTo("S");
         assertThat(created.getPrice()).isEqualByComparingTo("19.99");
         assertThat(created.getOnSale()).isFalse();
-        List<Garment> garments = this.garmentPersistenceMongodb.findByPriceBetween(
-                new BigDecimal("10"), new BigDecimal("30")
-        ).toList();
 
-        assertThat(garments)
-                .extracting(Garment::getSize)
-                .contains("S");
+        List<Garment> garments = this.garmentPersistenceMongodb
+                .findByPriceBetween(new BigDecimal("10"), new BigDecimal("30"))
+                .toList();
+
+        assertThat(garments).extracting(Garment::getSize).contains("S");
     }
 
     @Test
@@ -89,7 +107,6 @@ class GarmentPersistenceMongodbIT {
         assertThat(updated.getOnSale()).isTrue();
     }
 
-
     @Test
     void testDelete_ok() {
         UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
@@ -97,13 +114,13 @@ class GarmentPersistenceMongodbIT {
         garmentPersistenceMongodb.delete(id);
         assertThat(garmentRepository.findById(id)).isEmpty();
     }
+
     @Test
     void testSumDistinctPriceByMobile_ok() {
-        BigDecimal result = garmentPersistenceMongodb.sumDistinctPriceByMobile("666000660");
-        System.out.println(">>> Persistence sumDistinctPriceByMobile(666000660) = " + result);
+        BigDecimal result = garmentPersistenceMongodb.sumDistinctPriceByMobile(KNOWN_MOBILE);
+        System.out.println(">>> Persistence sumDistinctPriceByMobile(" + KNOWN_MOBILE + ") = " + result);
 
-        // Esperado: Dos prendas en la sembradora a 59,99 + 89,99 = 149,98
+        // seeder 2  garmentes 59.99 + 89.99 = 149.98
         assertThat(result).isEqualByComparingTo("149.98");
     }
-
 }

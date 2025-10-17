@@ -1,14 +1,17 @@
-
 package es.upm.miw.apaw.functionaltests.clothingstore;
 
 import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
 import es.upm.miw.apaw.adapters.resources.clothingstore.GarmentResource;
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -29,14 +33,26 @@ class GarmentResourceFT {
     @Autowired
     private DatabaseSeeder databaseSeeder;
 
+    @MockBean
+    private UserRestClient userRestClient;
+
     private static final String SUM_PRICE_SEARCH_PATH = GarmentResource.GARMENTS + "/search/sum-price";
     private static final String KNOWN_MOBILE = "666000660";
     private static final String UNKNOWN_MOBILE = "999999999";
-
+    private static final UUID SEEDED_USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
 
     @BeforeEach
     void seed() {
         databaseSeeder.reSeedDatabase();
+
+        UserDto mockUser = new UserDto();
+        mockUser.setId(SEEDED_USER_ID);
+        mockUser.setMobile(KNOWN_MOBILE);
+        mockUser.setFirstName("user0");
+
+
+        given(userRestClient.readByMobile(KNOWN_MOBILE)).willReturn(mockUser);
+
         System.out.println(">>> After reseed, GET size = " +
                 webTestClient.get()
                         .uri(uriBuilder -> uriBuilder
@@ -103,7 +119,7 @@ class GarmentResourceFT {
 
         Garment updated = this.webTestClient.put()
                 .uri(GarmentResource.GARMENTS + "/" + id)
-                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(body)
                 .exchange()
                 .expectStatus().isOk()
@@ -125,7 +141,7 @@ class GarmentResourceFT {
 
         Garment created = this.webTestClient.post()
                 .uri(GarmentResource.GARMENTS)
-                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(body)
                 .exchange()
                 .expectStatus().isOk()
@@ -190,7 +206,6 @@ class GarmentResourceFT {
                 );
     }
 
-
     @Test
     void testSumDistinctPriceByMobile_ok() {
         BigDecimal total = this.webTestClient.get()
@@ -204,11 +219,12 @@ class GarmentResourceFT {
                 .getResponseBody();
 
         assertThat(total).isNotNull();
-        assertThat(total).isGreaterThanOrEqualTo(BigDecimal.ZERO);
+        assertThat(total).isEqualByComparingTo(new BigDecimal("149.98")); // 59.99 + 89.99
         System.out.println(">>> sumDistinctPrice(" + KNOWN_MOBILE + ") = " + total);
     }
+
     @Test
-    void testSumDistinctPriceByMobile_userNotFound() {
+    void testSumDistinctPriceByMobile_userNotFour() {
         this.webTestClient.get()
                 .uri(uri -> uri.path(SUM_PRICE_SEARCH_PATH)
                         .queryParam("mobile", UNKNOWN_MOBILE)
@@ -217,3 +233,4 @@ class GarmentResourceFT {
                 .expectStatus().isEqualTo(502);
     }
 }
+
