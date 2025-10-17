@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository("planePersistence")
 public class PlanePersistenceMongodb implements PlanePersistence {
@@ -51,14 +52,13 @@ public class PlanePersistenceMongodb implements PlanePersistence {
     }
 
     @Override
-    public List<String> findRegistrationNumberByPilotMobile(String mobile) {
+    public Stream<String> findRegistrationNumberByPilotMobile(String mobile) {
         return this.flightRepository.findAll().stream()
                 .filter(flight -> flight.getPilotId()
                         .equals(this.userRestClient.readByMobile(mobile).getId()))
                 .map(FlightEntity::getPlane)
                 .map(PlaneEntity::getRegistrationNumber)
-                .distinct()
-                .toList();
+                .distinct();
     }
 
     @Override

@@ -11,11 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -35,7 +33,7 @@ public class PlanePersistenceMongodbIT {
                 .registrationNumber("EC-PMI")
                 .model("A320neo")
                 .seatCount(186)
-                .createdAt(LocalDateTime.of(2024,1, 1, 12, 0))
+                .createdAt(LocalDateTime.of(2024, 1, 1, 12, 0))
                 .manufacturer("Airbus")
                 .build();
 
@@ -49,7 +47,7 @@ public class PlanePersistenceMongodbIT {
                 .registrationNumber("ED-PMI")
                 .model("A320neo")
                 .seatCount(186)
-                .createdAt(LocalDateTime.of(2024,1, 1, 12, 0))
+                .createdAt(LocalDateTime.of(2024, 1, 1, 12, 0))
                 .manufacturer("Airbus")
                 .build();
         Plane planeDb = this.planePersistence.create(plane);
@@ -76,9 +74,11 @@ public class PlanePersistenceMongodbIT {
         BDDMockito.given(this.userRestClient.readByMobile("666000660"))
                 .willReturn(userDto);
 
-        List<String> registrationNumbers = this.planePersistence.findRegistrationNumberByPilotMobile("666000660");
+        Stream<String> registrationNumbers = this.planePersistence.findRegistrationNumberByPilotMobile("666000660");
 
-        assertThat(registrationNumbers).contains("EC-MAD").contains("EC-BCN").contains("EC-VAL");
+        assertThat(registrationNumbers)
+                .hasSize(3)
+                .containsExactlyInAnyOrder("EC-MAD", "EC-BCN", "EC-VAL");
     }
 
     @Test

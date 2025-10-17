@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(PlaneResource.PLANES)
@@ -35,7 +36,7 @@ public class PlaneResource {
     }
 
     @GetMapping(PILOT + MOBILE)
-    public List<String> getRegitrationNumberByPilotMobile(@PathVariable String mobile) {
+    public Stream<String> getRegitrationNumberByPilotMobile(@PathVariable String mobile) {
         return this.planeService.findRegistrationNumbersByPilotMobile(mobile);
     }
 }

@@ -40,7 +40,7 @@ public class PlaneService {
         }
     }
 
-    public List<String> findRegistrationNumbersByPilotMobile(String mobile) {
+    public Stream<String> findRegistrationNumbersByPilotMobile(String mobile) {
         return this.planePersistence.findRegistrationNumberByPilotMobile(mobile);
     }
 }

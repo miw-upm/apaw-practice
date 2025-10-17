@@ -2,12 +2,12 @@ package es.upm.miw.apaw.domain.persistenceports.airport;
 
 import es.upm.miw.apaw.domain.models.airport.Plane;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public interface PlanePersistence {
     Plane create(Plane plane);
     Plane update(String registrationNumber, Plane plane);
-    List<String> findRegistrationNumberByPilotMobile(String mobile);
+    Stream<String> findRegistrationNumberByPilotMobile(String mobile);
     Plane findByRegistrationNumber(String registrationNumber);
     boolean existRegistrationNumber(String registrationNumber);
 }
