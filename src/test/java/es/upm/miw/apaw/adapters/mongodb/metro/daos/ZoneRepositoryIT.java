@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.metro.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.metro.entities.ZoneEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,15 @@ class ZoneRepositoryIT {
 
     @Autowired
     private ZoneRepository zoneRepository;
+
+    @Autowired
+    private MetroSeeder metroSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        metroSeeder.deleteAll();
+        metroSeeder.seedDatabase();
+    }
 
     @Test
     void testFindByType() {

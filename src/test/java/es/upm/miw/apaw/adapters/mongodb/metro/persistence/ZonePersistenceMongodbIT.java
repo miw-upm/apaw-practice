@@ -1,10 +1,12 @@
 package es.upm.miw.apaw.adapters.mongodb.metro.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.metro.daos.MetroSeeder;
 import es.upm.miw.apaw.adapters.mongodb.metro.daos.ZoneRepository;
 import es.upm.miw.apaw.adapters.mongodb.metro.entities.ZoneEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.metro.Zone;
 import es.upm.miw.apaw.domain.persistenceports.metro.ZonePersistence;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +27,15 @@ class ZonePersistenceMongodbIT {
 
     @Autowired
     private ZoneRepository zoneRepository;
+
+    @Autowired
+    private MetroSeeder metroSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        metroSeeder.deleteAll();
+        metroSeeder.seedDatabase();
+    }
 
     @Test
     void testGetById() {
