@@ -1,7 +1,9 @@
 package es.upm.miw.apaw.adapters.mongodb.metro.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.metro.daos.MetroSeeder;
 import es.upm.miw.apaw.adapters.mongodb.metro.entities.TrainEntity;
 import es.upm.miw.apaw.adapters.mongodb.metro.daos.TrainRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,15 @@ class TrainPersistenceMongodbIT {
 
     @Autowired
     private TrainRepository trainRepository;
+
+    @Autowired
+    private MetroSeeder metroSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        metroSeeder.deleteAll();
+        metroSeeder.seedDatabase();
+    }
 
 
     @Test
