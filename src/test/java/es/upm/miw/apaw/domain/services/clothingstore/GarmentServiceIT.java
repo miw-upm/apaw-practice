@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,6 +21,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -28,13 +33,29 @@ class GarmentServiceIT {
     @Autowired
     private GarmentRepository garmentRepository;
 
+    @MockitoBean
+    private UserRestClient userRestClient;
+
+    private static final UUID USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+    private static final String KNOWN_MOBILE = "666000660";
+    private static final String UNKNOWN_MOBILE = "999999999";
     @Autowired
     private DatabaseSeeder databaseSeeder;
 
     @BeforeEach
     void seed() {
         databaseSeeder.reSeedDatabase();
+        UserDto mockUser = UserDto.builder()
+                .id(USER_ID)
+                .mobile(KNOWN_MOBILE)
+                .firstName("user0")
+                .build();
+        given(userRestClient.readByMobile(KNOWN_MOBILE)).willReturn(mockUser);
+
+        given(userRestClient.readByMobile(UNKNOWN_MOBILE))
+                .willThrow(new BadGatewayException("User not found with MOBILE: " + UNKNOWN_MOBILE));
     }
+
 
     @Test
     void testFindByPriceBetween() {
@@ -115,6 +136,19 @@ class GarmentServiceIT {
         assertThatThrownBy(() -> garmentService.delete(unknown))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Garment not found");
+    }
+    @Test
+    void testSumDistinctPriceByMobile_ok() {
+        BigDecimal total = garmentService.sumDistinctPriceByMobile(KNOWN_MOBILE);
+        assertThat(total).isNotNull();
+        assertThat(total).isEqualByComparingTo("149.98");
+        System.out.println(">>> Service sumDistinctPriceByMobile(" + KNOWN_MOBILE + ") = " + total);
+    }
+
+    @Test
+    void testSumDistinctPriceByMobile_userNotFound() {
+        assertThatThrownBy(() -> garmentService.sumDistinctPriceByMobile(UNKNOWN_MOBILE))
+                .isInstanceOf(BadGatewayException.class);
     }
 
 }

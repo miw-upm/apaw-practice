@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
@@ -34,7 +34,7 @@ class GarmentResourceFT {
     @Autowired
     private DatabaseSeeder databaseSeeder;
 
-    @MockBean
+    @MockitoBean
     private UserRestClient userRestClient;
 
     private static final String SUM_PRICE_SEARCH_PATH = GarmentResource.GARMENTS + "/search/sum-price";
@@ -46,6 +46,7 @@ class GarmentResourceFT {
     void seed() {
         databaseSeeder.reSeedDatabase();
 
+        // Mock: 已知手机号返回 user
         UserDto mockUser = UserDto.builder()
                 .id(SEEDED_USER_ID)
                 .mobile(KNOWN_MOBILE)
@@ -237,4 +238,5 @@ class GarmentResourceFT {
                 .expectStatus().isEqualTo(502);
     }
 }
+
 

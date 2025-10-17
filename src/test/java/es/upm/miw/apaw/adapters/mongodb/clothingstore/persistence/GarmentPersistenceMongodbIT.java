@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,8 +32,7 @@ class GarmentPersistenceMongodbIT {
     @Autowired
     private DatabaseSeeder databaseSeeder;
 
-    // 👇 Mock 掉对 apaw-user 的 HTTP 调用
-    @MockBean
+    @MockitoBean
     private UserRestClient userRestClient;
 
     // 和 clothingstoreSeeder 里 Order.userId 对应
@@ -44,7 +43,6 @@ class GarmentPersistenceMongodbIT {
     void setUp() {
         this.databaseSeeder.reSeedDatabase();
 
-        // stub apaw-user: /users/{mobile} -> UserDto(id=SEEDED_USER_ID, mobile=KNOWN_MOBILE)
         UserDto dto = new UserDto();
         dto.setId(SEEDED_USER_ID);
         dto.setMobile(KNOWN_MOBILE);
@@ -120,7 +118,8 @@ class GarmentPersistenceMongodbIT {
         BigDecimal result = garmentPersistenceMongodb.sumDistinctPriceByMobile(KNOWN_MOBILE);
         System.out.println(">>> Persistence sumDistinctPriceByMobile(" + KNOWN_MOBILE + ") = " + result);
 
-        // seeder 2  garmentes 59.99 + 89.99 = 149.98
+        // seeder 2 garments: 59.99 + 89.99 = 149.98
         assertThat(result).isEqualByComparingTo("149.98");
     }
 }
+
