@@ -13,6 +13,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,9 +26,6 @@ class MovementOrderServiceIT {
 
     @MockitoBean
     private UserRestClient userRestClient;
-
-    @Autowired
-    private MovementOrderPersistence movementOrderPersistence;
 
     @Test
     void testCreateMovementOrder() {
@@ -53,5 +51,18 @@ class MovementOrderServiceIT {
         assertThat(created.getRegistrationDate()).isBeforeOrEqualTo(LocalDateTime.now());
         assertThat(created.getUser().getId()).isEqualTo(mockUserId);
     }
+
+    @Test
+    void testFindPositionsByUserMobile() {
+        BDDMockito.given(this.userRestClient.readByMobile("6600006600"))
+                .willReturn(UserDto.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .mobile("6600006600")
+                        .build());
+
+        Stream<String> positions = this.movementOrderService.findPositionsByUserMobile("6600006600");
+        assertThat(positions.toList()).contains("A1");
+    }
+
 
 }

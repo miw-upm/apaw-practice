@@ -42,15 +42,6 @@ public class MovementOrderEntity {
     private UUID userId;
 
 
-    public MovementOrderEntity(MovementOrder movementOrder) {
-        BeanUtils.copyProperties(movementOrder, this, "orderDetails", "user");
-        this.orderDetailEntities = movementOrder.getOrderDetails() == null ? null :
-                movementOrder.getOrderDetails().stream()
-                        .map(OrderDetailEntity::new)
-                        .toList();
-        this.userId = movementOrder.getUser() != null ? movementOrder.getUser().getId() : null;
-    }
-
     public MovementOrder toMovementOrder() {
         return MovementOrder.builder()
                 .id(this.id)
@@ -63,7 +54,23 @@ public class MovementOrderEntity {
                         this.orderDetailEntities.stream()
                                 .map(OrderDetailEntity::toOrderDetail)
                                 .toList())
-                .user(this.userId != null ? UserDto.builder().id(this.userId).build() : null)
+                .user(UserDto.builder().id(this.userId).build())
+                .build();
+    }
+
+    public static MovementOrderEntity fromMovementOrder(MovementOrder movementOrder) {
+        return MovementOrderEntity.builder()
+                .id(movementOrder.getId() != null ? movementOrder.getId() : UUID.randomUUID())
+                .registrationDate(movementOrder.getRegistrationDate())
+                .typeOrder(movementOrder.getTypeOrder())
+                .partnerName(movementOrder.getPartnerName())
+                .partnerAddress(movementOrder.getPartnerAddress())
+                .completedOrder(movementOrder.getCompletedOrder())
+                .orderDetailEntities(movementOrder.getOrderDetails() == null ? null :
+                        movementOrder.getOrderDetails().stream()
+                                .map(OrderDetailEntity::fromOrderDetail)
+                                .toList())
+                .userId(movementOrder.getUser() == null ? null : movementOrder.getUser().getId())
                 .build();
     }
 

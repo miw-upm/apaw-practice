@@ -22,7 +22,7 @@ class MovementOrderRepositoryIT {
         assertThat(this.movementOrderRepository.findAll())
                 .anySatisfy(order -> {
                     assertThat(order.getUserId())
-                            .isEqualTo(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"));
+                            .isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"));
                     assertThat(order.getRegistrationDate()).isNotNull();
                     assertThat(order.getOrderDetailEntities()).hasSize(2);
                     OrderDetailEntity detail = order.getOrderDetailEntities().getFirst();
