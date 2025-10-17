@@ -2,9 +2,11 @@ package es.upm.miw.apaw.adapters.mongodb.videogame.dao;
 
 
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.LikeListRepository;
+import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.GenreEntity;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.LikeListEntity;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.VideogameEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +25,15 @@ public class LikeListRepositoryIT {
 
     @Autowired
     private LikeListRepository likeListRepository;
+
+    @Autowired
+    private VideogameSeeder videogameSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        videogameSeeder.deleteAll();
+        videogameSeeder.seedDatabase();
+    }
 
     @Test
     void testFindById() {
