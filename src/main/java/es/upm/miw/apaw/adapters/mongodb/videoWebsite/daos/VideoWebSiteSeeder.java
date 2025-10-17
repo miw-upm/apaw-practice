@@ -37,6 +37,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 1º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PUBLIC)
+                            .views(10000)
                             .build(),
                     VideoEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0200"))
@@ -44,6 +45,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 2º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PUBLIC)
+                            .views(20000)
                             .build(),
                     VideoEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0300"))
@@ -51,6 +53,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 3º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PUBLIC)
+                            .views(50000)
                             .build(),
                     VideoEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0400"))
@@ -58,6 +61,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 4º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PRIVATE)
+                            .views(100)
                             .build(),
                     VideoEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0500"))
@@ -65,6 +69,7 @@ public class VideoWebSiteSeeder {
                             .description("Description of 5º video")
                             .uploadDate(LocalDateTime.now())
                             .videoStatus(VideoStatus.PROTECT)
+                            .views(100000)
                             .build()
             };
             this.videoRepository.saveAll(Arrays.asList(videoEntities));
@@ -99,6 +104,7 @@ public class VideoWebSiteSeeder {
                             .accountType(AccountType.NORMAL)
                             .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                             .watchListEntities(List.of(watchListEntities[0],watchListEntities[1]))
+                            .publishedVideoEntites(List.of(videoEntities[0],videoEntities[1]))
                             .build(),
                     WebAccountEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
@@ -106,6 +112,7 @@ public class VideoWebSiteSeeder {
                             .accountType(AccountType.PLUS)
                             .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                             .watchListEntities(List.of(watchListEntities[2]))
+                            .publishedVideoEntites(List.of(videoEntities[2]))
                             .build(),
                     WebAccountEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0030"))
@@ -113,6 +120,7 @@ public class VideoWebSiteSeeder {
                             .accountType(AccountType.PRO)
                             .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                             .watchListEntities(List.of(watchListEntities[3]))
+                            .publishedVideoEntites(List.of(videoEntities[3]))
                             .build(),
                     WebAccountEntity.builder()
                             .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0040"))
@@ -120,6 +128,7 @@ public class VideoWebSiteSeeder {
                             .accountType(AccountType.NORMAL)
                             .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                             .watchListEntities(List.of(watchListEntities[4]))
+                            .publishedVideoEntites(List.of(videoEntities[4]))
                             .build()
             };
             this.webAccountRepository.saveAll(Arrays.asList(webAccountEntities));

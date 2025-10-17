@@ -136,15 +136,6 @@ class FighterServiceIT {
     }
 
     @Test
-    void testDeleteRating_ratingNotFound() {
-        String nickname = "The Dragon";
-        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
-
-        assertThrows(NotFoundException.class,
-                () -> fighterService.deleteRatings(nickname, notExisting));
-    }
-
-    @Test
     void testUpdateWins() {
         Fighter fighter = new Fighter();
         fighter.setWins(77);
@@ -166,5 +157,22 @@ class FighterServiceIT {
         Fighter fighter = new Fighter();
         fighter.setWins(-5);
         assertThrows(ResponseStatusException.class, () -> this.fighterService.updateWins("Spider", fighter));
+    }
+    @Test
+    void testFindDistinctCommentsByAcademy() {
+        var comments = this.fighterService.findDistinctCommentsByAcademy("Tokyo Dojo");
+        assertThat(comments).containsExactly("Incredible striking!", "Needs better cardio");
+    }
+
+    @Test
+    void testFindDistinctCommentsByAcademyDistinctAcrossFighters() {
+        var comments = this.fighterService.findDistinctCommentsByAcademy("Moscow Combat Club");
+        assertThat(comments).containsExactly("Excellent fighter!", "Incredible striking!", "Poor ground defense");
+    }
+
+    @Test
+    void testFindDistinctCommentsByAcademy_noResults_empty() {
+        var comments = this.fighterService.findDistinctCommentsByAcademy("Iron Fist Gym");
+        assertThat(comments).isEmpty();
     }
 }

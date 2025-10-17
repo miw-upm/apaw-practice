@@ -35,4 +35,15 @@ public class StadiumResource {
     public Stadium updateCapacity(@PathVariable String officialName, @RequestBody Stadium stadium) {
         return this.stadiumService.updateCapacity(officialName, stadium.getCapacity());
     }
+
+    @DeleteMapping(NAME_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteByOfficialName(@PathVariable String officialName) {
+        this.stadiumService.deleteByOfficialName(officialName);
+    }
+    @PutMapping(NAME_ID)
+    public Stadium update(@PathVariable String officialName, @Valid @RequestBody Stadium stadium) {
+        return this.stadiumService.update(officialName, stadium);
+    }
+
 }

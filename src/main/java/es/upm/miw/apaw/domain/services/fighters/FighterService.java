@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -50,5 +52,17 @@ public class FighterService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "wins must be >= 0");
         }
         return this.fighterPersistence.updateWins(nickname, wins);
+    }
+    public List<String> findDistinctCommentsByAcademy(String academy) {
+        return this.fighterPersistence.findByCoachAcademy(academy)
+                .flatMap(f -> f.getRatings() == null ? java.util.stream.Stream.empty()
+                        : f.getRatings().stream())
+                .map(Rating::getComment)
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .distinct()
+                .sorted()
+                .toList();
     }
 }

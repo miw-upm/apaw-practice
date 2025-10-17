@@ -49,4 +49,10 @@ public class LocationPersistenceMongodb implements LocationPersistence {
         this.locationRepository.delete(entity);
     }
 
+    @Override
+    public Stream<Location> findAll() {
+        return this.locationRepository.findAll().stream()
+                .map(LocationEntity::toLocation);
+    }
+
 }

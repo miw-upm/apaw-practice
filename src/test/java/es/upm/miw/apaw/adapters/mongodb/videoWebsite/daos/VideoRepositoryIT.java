@@ -27,5 +27,6 @@ public class VideoRepositoryIT {
         assertThat(video.getDescription()).isEqualTo("Description of 1º video");
         assertThat(video.getVideoStatus()).isEqualTo(VideoStatus.PUBLIC);
         assertThat(video.getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100"));
+        assertThat(video.getViews()).isEqualTo(10000);
     }
 }

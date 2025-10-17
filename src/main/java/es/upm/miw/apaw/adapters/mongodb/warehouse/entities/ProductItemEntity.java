@@ -26,7 +26,7 @@ public class ProductItemEntity {
     @Indexed(unique = true)
     private String      barcode;
 
-    private String      appoint;    //name / description
+    private String      appoint;
     private BigDecimal  cost;
     private String      unitOfMeasure;
 
@@ -42,6 +42,15 @@ public class ProductItemEntity {
                 .appoint(this.appoint)
                 .cost(this.cost)
                 .unitOfMeasure(this.unitOfMeasure)
+                .build();
+    }
+
+    public static ProductItemEntity fromProductItem(ProductItem productItem) {
+        return ProductItemEntity.builder()
+                .barcode(productItem.getBarcode())
+                .appoint(productItem.getAppoint())
+                .cost(productItem.getCost())
+                .unitOfMeasure(productItem.getUnitOfMeasure())
                 .build();
     }
 

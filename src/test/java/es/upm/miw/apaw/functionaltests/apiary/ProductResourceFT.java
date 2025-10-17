@@ -2,6 +2,7 @@ package es.upm.miw.apaw.functionaltests.apiary;
 
 import es.upm.miw.apaw.adapters.resources.apiary.ProductResource;
 import es.upm.miw.apaw.domain.models.apiary.Product;
+import es.upm.miw.apaw.domain.models.apiary.ProductPriceUpdating;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -12,7 +13,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -67,31 +67,42 @@ public class ProductResourceFT {
     }
 
     @Test
-    void testUpdatePrice() {
-        String barcode = "P004";
-        BigDecimal newPrice = new BigDecimal("12.50");
+    void testUpdatePrices() {
+        List<ProductPriceUpdating> updates = List.of(
+                new ProductPriceUpdating("P001", new BigDecimal("3.33"))
+        );
 
         webTestClient.patch()
-                .uri(ProductResource.PRODUCTS + ProductResource.BARCODE_ID, barcode)
+                .uri(ProductResource.PRODUCTS)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(Map.of("price", newPrice))
+                .bodyValue(updates)
                 .exchange()
-                .expectStatus().isOk()
-                .expectBody(Product.class)
-                .value(updated -> {
-                    assertThat(updated.getBarcode()).isEqualTo(barcode);
-                    assertThat(updated.getPrice()).isEqualTo(newPrice);
-                });
+                .expectStatus().isOk();
     }
 
     @Test
-    void testUpdatePriceBadRequest() {
-        String barcode = "P001";
+    void testUpdatePricesNotFound() {
+        List<ProductPriceUpdating> updates = List.of(
+                new ProductPriceUpdating("0", BigDecimal.ONE)
+        );
+
         webTestClient.patch()
-                .uri(ProductResource.PRODUCTS + ProductResource.BARCODE_ID, barcode)
+                .uri(ProductResource.PRODUCTS)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue("{\"price\": }") // Body vacío → debe dar BAD_REQUEST
+                .bodyValue(updates)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdatePricesEmptyList() {
+        List<ProductPriceUpdating> updates = List.of();
+
+        webTestClient.patch()
+                .uri(ProductResource.PRODUCTS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updates)
+                .exchange()
+                .expectStatus().isOk();
     }
 }

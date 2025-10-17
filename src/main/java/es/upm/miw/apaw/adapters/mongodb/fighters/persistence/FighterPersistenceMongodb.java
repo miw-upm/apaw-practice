@@ -52,17 +52,12 @@ public class FighterPersistenceMongodb implements FighterPersistence {
     public void deleteRating(String nickname, UUID ratingId) {
         FighterEntity fighter = this.fighterRepository.findByNickname(nickname)
                 .orElseThrow(() -> new NotFoundException(fighterNickname + nickname));
-
         List<RatingEntity> ratings = fighter.getRatingsEntities();
         if (ratings == null || ratings.isEmpty()) {
-            throw new NotFoundException("Rating id: " + ratingId);
+            this.fighterRepository.save(fighter);
+            return;
         }
-
-        boolean removed = ratings.removeIf(r -> ratingId.equals(r.getId()));
-        if (!removed) {
-            throw new NotFoundException("Rating id: " + ratingId);
-        }
-
+        ratings.removeIf(r -> ratingId.equals(r.getId()));
         fighter.setRatingsEntities(ratings);
         this.fighterRepository.save(fighter);
     }
@@ -76,6 +71,11 @@ public class FighterPersistenceMongodb implements FighterPersistence {
     @Override
     public Stream<Fighter> findByRatingComment(String comment) {
         return this.fighterRepository.findByRatingsEntitiesComment(comment).stream()
+                .map(FighterEntity::toFighter);
+    }
+    @Override
+    public Stream<Fighter> findByCoachAcademy(String academy) {
+        return this.fighterRepository.findByCoachAcademy(academy).stream()
                 .map(FighterEntity::toFighter);
     }
 }

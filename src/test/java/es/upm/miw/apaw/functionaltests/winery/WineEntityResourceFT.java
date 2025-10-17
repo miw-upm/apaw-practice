@@ -84,4 +84,17 @@ public class WineEntityResourceFT {
                 .expectStatus().isNotFound();
     }
 
+    @Test
+    void testSumPricesByComment() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(WineResource.WINES + WineResource.SEARCH_BY_COMMENT)
+                        .queryParam("comment", "Great organization and excellent wine selection")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .value(sum -> assertThat(sum).isEqualByComparingTo("44.40"));
+    }
+
 }

@@ -57,4 +57,15 @@ class FighterRepositoryIT {
         var list = this.fighterRepository.findByRatingsEntitiesComment("no-such-comment");
         assertThat(list).isEmpty();
     }
+    @Test
+    void testFindByCoachAcademy_ok() {
+        var list = this.fighterRepository.findByCoachAcademy("Moscow Combat Club");
+        assertThat(list).extracting(FighterEntity::getNickname)
+                .containsExactlyInAnyOrder("The Eagle", "Shadow");
+    }
+    @Test
+    void testFindByCoachAcademy_notFound_returnsEmpty() {
+        var list = this.fighterRepository.findByCoachAcademy("No Academy");
+        assertThat(list).isEmpty();
+    }
 }

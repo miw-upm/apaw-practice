@@ -38,8 +38,8 @@ public class CommentEntity {
     public Comment toComment(){
         Comment comment = new Comment();
         BeanUtils.copyProperties(this, comment, "commenter", "video");
-        comment.setCommenter(WebAccount.builder().id(commenterEntity.getId()).build());
-        comment.setVideo(Video.builder().id(videoEntity.getId()).build());
+        comment.setCommenter(commenterEntity.toWebAccount());
+        comment.setVideo(videoEntity.toVideo());
         return comment;
     }
 

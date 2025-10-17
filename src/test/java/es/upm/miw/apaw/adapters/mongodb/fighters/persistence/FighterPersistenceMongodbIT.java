@@ -89,16 +89,6 @@ class FighterPersistenceMongodbIT {
     }
 
     @Test
-    void testDeleteRating_ratingNotFound() {
-        String nickname = "The Dragon";
-        UUID notExisting = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0999");
-
-        assertThrows(NotFoundException.class,
-                () -> fighterPersistence.deleteRating(nickname, notExisting));
-    }
-
-
-    @Test
     void testUpdateWinsOk() {
         Fighter fighter = new Fighter();
         fighter.setWins(88);
@@ -121,12 +111,25 @@ class FighterPersistenceMongodbIT {
                 .toList();
         assertThat(nicknames).containsExactlyInAnyOrder("The Dragon", "Shadow", "The Eagle");
     }
-
     @Test
     void testFindByRatingComment_notFound_emptyStream() {
         var nicknames = this.fighterPersistence.findByRatingComment("does-not-exist")
                 .map(Fighter::getNickname)
                 .toList();
         assertThat(nicknames).isEmpty();
+    }
+    @Test
+    void testFindByCoachAcademy_ok_mapsToDomain() {
+        var nicks = this.fighterPersistence.findByCoachAcademy("Tokyo Dojo")
+                .map(Fighter::getNickname)
+                .toList();
+        assertThat(nicks).containsExactlyInAnyOrder("The Dragon");
+    }
+    @Test
+    void testFindByCoachAcademy_notFound_emptyStream() {
+        var nicks = this.fighterPersistence.findByCoachAcademy("No Academy")
+                .map(Fighter::getNickname)
+                .toList();
+        assertThat(nicks).isEmpty();
     }
 }

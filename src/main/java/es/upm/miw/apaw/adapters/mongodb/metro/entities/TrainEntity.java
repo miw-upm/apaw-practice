@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.metro.entities;
 
+import es.upm.miw.apaw.domain.models.metro.Train;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,4 +27,16 @@ public class TrainEntity {
     private Boolean operational;
 
     private Double maxSpeed;
+
+    public TrainEntity(Train train){
+        BeanUtils.copyProperties(train, this);
+    }
+
+    public Train toTrain(){
+        Train train = new Train();
+        BeanUtils.copyProperties(this, train);
+        return train;
+    }
+
+
 }

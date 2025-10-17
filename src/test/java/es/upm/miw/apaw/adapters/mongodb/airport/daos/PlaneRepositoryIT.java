@@ -24,7 +24,7 @@ public class PlaneRepositoryIT {
         PlaneEntity plane = this.planeRepository.findByRegistrationNumber("EC-MAD").get();
         assertThat(plane.getModel()).isEqualTo("A320neo");
         assertThat(plane.getSeatCount()).isEqualTo(186);
-        assertThat(plane.getCreatedAt()).isEqualTo(LocalDateTime.of(2024,1, 1, 12, 0));
+        assertThat(plane.getCreatedAt()).isEqualTo(LocalDateTime.of(2024, 1, 1, 12, 0));
         assertThat(plane.getManufacturer()).isEqualTo("Airbus");
     }
 }

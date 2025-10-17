@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,11 +36,12 @@ class StadiumRepositoryIT {
 
     @Test
     void testExistsByStadiumId_ok() {
-        assertThat(this.stadiumRepository.existsById(1L)).isTrue();
+        UUID stadiumId = this.stadiumRepository.findAll().get(0).getStadiumId();
+        assertThat(this.stadiumRepository.existsById(stadiumId)).isTrue();
     }
-
     @Test
     void testExistsByStadiumId_notFound() {
-        assertThat(this.stadiumRepository.existsById(999L)).isFalse();
+        UUID randomId = UUID.randomUUID();
+        assertThat(this.stadiumRepository.existsById(randomId)).isFalse();
     }
 }

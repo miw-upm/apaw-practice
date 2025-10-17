@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 @Document
 @Data
 @NoArgsConstructor
@@ -16,13 +18,16 @@ public class StadiumEntity {
 
     @Id
     @EqualsAndHashCode.Include
-    private Long stadiumId;
+    private UUID stadiumId;
     private String officialName;
     private Integer capacity;
     private Boolean roof;
 
     public StadiumEntity(Stadium stadium) {
         BeanUtils.copyProperties(stadium, this);
+        if (this.stadiumId == null) {
+            this.stadiumId = UUID.randomUUID();
+        }
     }
 
     public Stadium toStadium() {

@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,10 +54,13 @@ public class LocationEntity {
                 .position(this.position)
                 .lastUpdateDate(this.lastUpdateDate)
                 .availability(this.availability)
-                .productItems(this.productItemEntities == null ? null :
-                        this.productItemEntities.stream()
+                .productItems(
+                        this.productItemEntities == null
+                                ? new ArrayList<>()
+                                : this.productItemEntities.stream()
                                 .map(ProductItemEntity::toProductItem)
-                                .toList())
+                                .toList()
+                )
                 .build();
     }
 

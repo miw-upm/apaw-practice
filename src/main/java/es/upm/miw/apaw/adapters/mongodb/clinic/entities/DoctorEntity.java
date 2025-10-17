@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed; // <--- Importante
 import org.springframework.data.mongodb.core.mapping.Document;
 import es.upm.miw.apaw.domain.models.clinic.Doctor;
 
@@ -22,6 +23,7 @@ public class DoctorEntity {
     private String id;
 
     // Clave de negocio (copiada del Modelo Doctor)
+    @Indexed(unique = true) // <--- ESTE ES EL CAMBIO CLAVE
     private Long licenseNumber;
 
     private String name;

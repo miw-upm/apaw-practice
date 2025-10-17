@@ -44,4 +44,20 @@ public class StadiumService {
         existing.setCapacity(newCapacity);
         return this.stadiumPersistence.save(existing);
     }
+    public void deleteByOfficialName(String officialName) {
+        Stadium stadium = this.stadiumPersistence.findByOfficialName(officialName)
+                .orElseThrow(() -> new NotFoundException("Stadium not found: " + officialName));
+
+        this.stadiumPersistence.delete(stadium);
+    }
+    public Stadium update(String officialName, Stadium updated) {
+        Stadium stadium = this.stadiumPersistence.findByOfficialName(officialName)
+                .orElseThrow(() -> new NotFoundException("Stadium not found: " + officialName));
+
+        stadium.setOfficialName(updated.getOfficialName());
+        stadium.setCapacity(updated.getCapacity());
+        stadium.setRoof(updated.getRoof());
+
+        return this.stadiumPersistence.save(stadium);
+    }
 }

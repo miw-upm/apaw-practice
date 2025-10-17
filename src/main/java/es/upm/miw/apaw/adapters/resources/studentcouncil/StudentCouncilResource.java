@@ -27,12 +27,13 @@ public class StudentCouncilResource {
         return this.studentCouncilService.updateResources(id, newResources);
     }
 
-    // GET /student-councils/resources?statement=xxx -> suma de recursos por statement
     @GetMapping("/resources")
     public BigDecimal getResourcesByStatement(@RequestParam String statement) {
-        BigDecimal sum = this.studentCouncilService.sumResourcesByStatement(statement);
+        String cleanStatement = statement == null ? "" : statement.replaceAll("[^\\w\\s-]", "").trim();
+        if (cleanStatement.length() > 100) {
+            throw new IllegalArgumentException("Statement too long");
+        }
+        BigDecimal sum = this.studentCouncilService.sumResourcesByStatement(cleanStatement);
         return sum != null ? sum : BigDecimal.ZERO;
     }
-
-
 }

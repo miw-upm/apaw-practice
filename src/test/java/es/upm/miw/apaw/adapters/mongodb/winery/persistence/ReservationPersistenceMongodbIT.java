@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,7 +28,7 @@ public class ReservationPersistenceMongodbIT {
     private WinerySeeder winerySeeder;
 
     @BeforeEach
-    void resetDb(){
+    void resetDb() {
         winerySeeder.deleteAll();
         winerySeeder.seedDatabase();
     }
@@ -63,6 +64,76 @@ public class ReservationPersistenceMongodbIT {
                 .isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"));
         assertThat(reservationDb.getTastingSession()).isNotNull();
         assertThat(reservationDb.getTastingSession().getId()).isEqualTo(tastingSessionId);
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_foundInReservations() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("Cabernet Sauvignon");
+
+        assertThat(reservationIds)
+                .isNotEmpty()
+                .doesNotHaveDuplicates();
+
+        assertThat(reservationIds.size()).isGreaterThan(0);
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_notFound() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("NonExistentWine");
+
+        assertThat(reservationIds).isEmpty();
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_nullName() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName(null);
+
+        assertThat(reservationIds).isEmpty();
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_caseInsensitive() {
+        List<UUID> reservationIdsLowerCase = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("cabernet sauvignon");
+        List<UUID> reservationIdsUpperCase = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("CABERNET SAUVIGNON");
+
+        assertThat(reservationIdsLowerCase).isEqualTo(reservationIdsUpperCase);
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_noDuplicates() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("Cabernet Sauvignon");
+
+        assertThat(reservationIds).doesNotHaveDuplicates();
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_tastingSessionNull() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("Cabernet Sauvignon");
+
+        assertThat(reservationIds).doesNotContainNull();
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_wineEntitiesNull() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("Cabernet Sauvignon");
+
+        assertThat(reservationIds).allMatch(Objects::nonNull);
+    }
+
+    @Test
+    void testFindReservationIdsByWineName_wineNameNull() {
+        List<UUID> reservationIds = this.reservationPersistenceMongodb
+                .findReservationIdsByWineName("Cabernet Sauvignon");
+
+        assertThat(reservationIds).isNotNull();
     }
 
 }

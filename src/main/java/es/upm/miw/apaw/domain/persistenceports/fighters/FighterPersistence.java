@@ -12,4 +12,5 @@ public interface FighterPersistence {
     void deleteRating(String nickname, UUID id);
     Fighter updateWins(String nickname, Fighter wins);
     Stream<Fighter> findByRatingComment(String comment);
+    Stream<Fighter> findByCoachAcademy(String academy);
 }

@@ -49,6 +49,7 @@ public class CommentServiceIT {
                 .description("test_Description of 1º video")
                 .uploadDate(LocalDateTime.now())
                 .videoStatus(VideoStatus.PUBLIC)
+                .views(2000)
                 .build();
 
         WatchList watchList = WatchList.builder()
@@ -63,6 +64,7 @@ public class CommentServiceIT {
                 .accountType(AccountType.NORMAL)
                 .user(user)
                 .watchList(List.of(watchList))
+                .publishedVideos(List.of(video))
                 .build();
 
         Comment comment = Comment.builder()
