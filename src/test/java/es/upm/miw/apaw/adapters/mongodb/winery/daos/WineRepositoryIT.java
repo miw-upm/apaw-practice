@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.winery.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.winery.entities.WineEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,15 @@ public class WineRepositoryIT {
     private WineRepository wineRepository;
     @Autowired
     private TastingSessionRepository tastingSessionRepository;
+
+    @Autowired
+    private WinerySeeder winerySeeder;
+
+    @BeforeEach
+    void resetDb() {
+        winerySeeder.deleteAll();
+        winerySeeder.seedDatabase();
+    }
 
     @Test
     void testRead() {

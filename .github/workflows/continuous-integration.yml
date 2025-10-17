@@ -34,7 +34,7 @@ jobs:
           queries: security-extended
 
       - name: ✅ Run Unit Test & Integration Test & Functional Test
-        run: mvn -B verify -Dspring.profiles.active=test
+        run: mvn -B verify
 
       - name: 🔔 Notify Slack on failure
         if: failure()
