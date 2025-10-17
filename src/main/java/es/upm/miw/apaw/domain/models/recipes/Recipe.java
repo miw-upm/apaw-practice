@@ -20,7 +20,10 @@ public class Recipe {
     @NotNull
     @NotBlank
     private String title;
+    @NotNull
+    @NotBlank
     private String instructions;
+    @NotNull
     private Integer servings;
     private List<RecipeItem> items;
 }

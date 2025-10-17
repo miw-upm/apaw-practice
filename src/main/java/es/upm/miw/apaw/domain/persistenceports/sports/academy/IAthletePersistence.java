@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.persistenceports.sports.academy;
 
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
+import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
 
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -13,4 +14,6 @@ public interface IAthletePersistence {
     Athlete update(UUID id, Athlete athlete);
 
     Athlete getById(UUID id);
+
+    Stream<Athlete> getByLegalGuardians(Stream<LegalGuardian> legalGuardianStream);
 }

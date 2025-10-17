@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.SportModality;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -40,6 +41,7 @@ public class AthleteEntity {
         legalGuardians = athlete.getLegalGuardians().stream()
                 .map(LegalGuardianEntity::new)
                 .toList();
+        gender = athlete.getGender().getValue();
     }
 
     public void fromAthlete(Athlete athlete) {
@@ -51,6 +53,7 @@ public class AthleteEntity {
         legalGuardians = athlete.getLegalGuardians().stream()
                 .map(LegalGuardianEntity::new)
                 .toList();
+        gender = athlete.getGender().getValue();
     }
 
     public Athlete toAthlete() {
@@ -65,6 +68,7 @@ public class AthleteEntity {
                 .map(LegalGuardianEntity::toLegalGuardian)
                 .toList();
         athlete.setLegalGuardians(legalGuardiansList);
+        athlete.setGender(Gender.values()[this.gender]);
         return athlete;
     }
 }

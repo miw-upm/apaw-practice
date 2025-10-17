@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import es.upm.miw.apaw.domain.models.clinic.Diagnosis;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -17,17 +16,35 @@ import java.util.UUID;
 @AllArgsConstructor
 @Document
 public class DiagnosisEntity {
+
+    // Identificador técnico de MongoDB
     @Id
-    private String diagnosisId;
+    private String id;
+
+    // Clave de negocio (copiada del Modelo Diagnosis)
+    private String code;
+
     private String diagnosisName;
     private LocalDateTime diagnosisDate;
-    // Campo para la relación 1..n (Animal 1 *-- n Diagnosis)
-    private String animalId;
 
+    // Clave foránea al Animal
+    private Long animalMicrochipNumber;
+
+    // Constructor para mapear el Modelo de Dominio (Diagnosis) a la Entidad (DiagnosisEntity)
     public DiagnosisEntity(Diagnosis diagnosis) {
-        this.diagnosisId = diagnosis.getDiagnosisId().toString();
+        this.code = diagnosis.getCode();
         this.diagnosisName = diagnosis.getDiagnosisName();
         this.diagnosisDate = diagnosis.getDiagnosisDate();
-        this.animalId = diagnosis.getAnimalId().toString();
+        this.animalMicrochipNumber = diagnosis.getAnimalMicrochipNumber();
+    }
+
+    // Método para mapear la Entidad (DiagnosisEntity) de vuelta al Modelo de Dominio (Diagnosis)
+    public Diagnosis toDiagnosis() {
+        return Diagnosis.builder()
+                .code(this.code)
+                .diagnosisName(this.diagnosisName)
+                .diagnosisDate(this.diagnosisDate)
+                .animalMicrochipNumber(this.animalMicrochipNumber)
+                .build();
     }
 }

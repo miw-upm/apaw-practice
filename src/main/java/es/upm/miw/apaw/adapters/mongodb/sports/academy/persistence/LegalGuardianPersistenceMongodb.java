@@ -1,9 +1,10 @@
 package es.upm.miw.apaw.adapters.mongodb.sports.academy.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ILegalGuardianRepository;
+import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.LegalGuardianRepository;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.entities.LegalGuardianEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.persistenceports.sports.academy.ILegalGuardianPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -16,10 +17,10 @@ import java.util.stream.Stream;
 @Repository("legalGuardianPersistence")
 public class LegalGuardianPersistenceMongodb implements ILegalGuardianPersistence {
 
-    private final ILegalGuardianRepository legalGuardianRepository;
+    private final LegalGuardianRepository legalGuardianRepository;
 
     @Autowired
-    public LegalGuardianPersistenceMongodb(ILegalGuardianRepository legalGuardianRepository) {
+    public LegalGuardianPersistenceMongodb(LegalGuardianRepository legalGuardianRepository) {
         this.legalGuardianRepository = legalGuardianRepository;
     }
 
@@ -57,5 +58,19 @@ public class LegalGuardianPersistenceMongodb implements ILegalGuardianPersistenc
                 .findByUserDtoId(id)
                 .orElseThrow(() -> new NotFoundException("Legal Guardian user dto id: " + id))
                 .toLegalGuardian();
+    }
+
+    @Override
+    public Stream<LegalGuardian> getBySecondMobile(String secondMobile) {
+        return this.legalGuardianRepository
+                .findBySecondMobile(secondMobile)
+                .map(LegalGuardianEntity::toLegalGuardian);
+    }
+
+    @Override
+    public Stream<LegalGuardian> getByRelationShip(RelationShip relationShip) {
+        return this.legalGuardianRepository
+                .findByRelationShip(relationShip.getValue())
+                .map(LegalGuardianEntity::toLegalGuardian);
     }
 }

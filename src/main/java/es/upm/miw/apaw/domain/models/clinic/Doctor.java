@@ -1,27 +1,29 @@
 package es.upm.miw.apaw.domain.models.clinic;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import java.util.UUID;
 
+@Builder
 @Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
 public class Doctor {
-    private UUID doctorId;
+
+    // Clave de negocio principal (licenseNumber)
+    @NotNull
     private Long licenseNumber;
-    private Boolean isActive;
 
+    // Atributos de Doctor
+    @NotNull
+    @NotBlank
+    private String name;
+
+    @NotNull
+    @NotBlank
+    private String specialty;
+
+    // Relación n..1 con UserDto (implementada con su ID)
     private UUID userId;
-
-   public Doctor(Long licenseNumber, Boolean isActive, UUID userId) {
-        this.doctorId = UUID.randomUUID();
-        this.licenseNumber = licenseNumber;
-        this.isActive = isActive;
-        this.userId = userId;
-    }
 }

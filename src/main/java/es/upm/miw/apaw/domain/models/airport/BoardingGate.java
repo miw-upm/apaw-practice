@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -14,9 +16,16 @@ import lombok.NoArgsConstructor;
 public class BoardingGate {
     @NotNull
     @NotBlank
+    private UUID Id;
+    @NotNull
+    @NotBlank
     private String number;
     @NotNull
     @NotBlank
     private String terminal;
     private Boolean opened;
+
+    public void update(BoardingGate boardingGate) {
+
+    }
 }

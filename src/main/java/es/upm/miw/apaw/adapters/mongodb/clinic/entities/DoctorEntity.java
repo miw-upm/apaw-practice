@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed; // <--- Importante
 import org.springframework.data.mongodb.core.mapping.Document;
 import es.upm.miw.apaw.domain.models.clinic.Doctor;
 
@@ -16,18 +17,36 @@ import java.util.UUID;
 @AllArgsConstructor
 @Document
 public class DoctorEntity {
-    @Id
-    private String doctorId;
-    private Long licenseNumber;
-    private Boolean isActive;
-    // Campo para la relación 1..n (UserDto 1 -> n Doctor)
-    private String userId;
 
-    // Se asume un constructor para crear desde el dominio o en el Seeder
+    // Identificador técnico de MongoDB
+    @Id
+    private String id;
+
+    // Clave de negocio (copiada del Modelo Doctor)
+    @Indexed(unique = true) // <--- ESTE ES EL CAMBIO CLAVE
+    private Long licenseNumber;
+
+    private String name;
+    private String specialty;
+
+    // Clave foránea al usuario externo (UserDto)
+    private UUID userId;
+
+    // Constructor para mapear el Modelo de Dominio (Doctor) a la Entidad (DoctorEntity)
     public DoctorEntity(Doctor doctor) {
-        this.doctorId = doctor.getDoctorId().toString();
         this.licenseNumber = doctor.getLicenseNumber();
-        this.isActive = doctor.getIsActive();
-        this.userId = doctor.getUserId().toString();
+        this.name = doctor.getName();
+        this.specialty = doctor.getSpecialty();
+        this.userId = doctor.getUserId();
+    }
+
+    // Método para mapear la Entidad (DoctorEntity) de vuelta al Modelo de Dominio (Doctor)
+    public Doctor toDoctor() {
+        return Doctor.builder()
+                .licenseNumber(this.licenseNumber)
+                .name(this.name)
+                .specialty(this.specialty)
+                .userId(this.userId)
+                .build();
     }
 }

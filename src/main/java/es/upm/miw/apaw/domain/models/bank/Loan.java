@@ -16,7 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Loan {
 
-        @NotNull
         private UUID id;
         @NotNull
         private BigDecimal quantity;

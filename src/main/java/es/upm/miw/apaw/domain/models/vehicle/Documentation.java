@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -17,4 +19,6 @@ public class Documentation {
     private String name;
     @NotNull
     private Boolean validate;
+    @NotNull
+    private LocalDate issued;
 }

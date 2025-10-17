@@ -23,6 +23,4 @@ public class MartialArt {
     private Boolean striking;
     @NotNull
     private Boolean grappling;
-    @Builder.Default
-    private List<Fighter> fighters = new ArrayList<>();
 }

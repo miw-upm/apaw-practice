@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 
 public class Sale {
+    @NotNull
     private Integer idSale;
     private Integer paymentForm;
     private String shippingAddress;

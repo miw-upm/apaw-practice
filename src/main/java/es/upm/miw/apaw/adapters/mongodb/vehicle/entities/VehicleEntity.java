@@ -1,8 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.vehicle.entities;
 
 import es.upm.miw.apaw.domain.models.UserDto;
-import es.upm.miw.apaw.domain.models.vehicle.Documentation;
-import es.upm.miw.apaw.domain.models.vehicle.Extra;
 import es.upm.miw.apaw.domain.models.vehicle.Vehicle;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
@@ -36,4 +34,23 @@ public class VehicleEntity {
     @DBRef
     private List<ExtraEntity> extraEntities;
     private UUID owner;
+
+    public Vehicle toVehicle() {
+        Vehicle vehicle = new Vehicle();
+        BeanUtils.copyProperties(this, vehicle,
+                "owner", "engineEntity", "documentationEntities", "extraEntities");
+        vehicle.setEngine(this.engineEntity.toEngine());
+        vehicle.setDocumentations(
+                this.documentationEntities.stream()
+                        .map(DocumentationEntity::toDocumentation)
+                        .toList()
+        );
+        vehicle.setExtras(
+                this.extraEntities.stream()
+                        .map(ExtraEntity::toExtra)
+                        .toList()
+        );
+        vehicle.setOwner(UserDto.builder().id(owner).build());
+        return vehicle;
+    }
 }

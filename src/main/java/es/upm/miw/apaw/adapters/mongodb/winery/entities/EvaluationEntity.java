@@ -12,9 +12,9 @@ import org.springframework.beans.BeanUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EvaluationEntity {
-    private Long idEvaluation;
     private Integer score;
     private String comment;
+    private Boolean recommended;
 
     public EvaluationEntity(Evaluation evaluation) {
         BeanUtils.copyProperties(evaluation, this);

@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 public class Attendee {
     @NotNull
     @NotBlank
+    private String emailAddress;
+    @NotNull
+    @NotBlank
     private String fullName;
     @NotNull
     @NotBlank
     private String phoneNumber;
-    @NotNull
-    @NotBlank
-    private String emailAddress;
 
     // Optional Aggregation with one UserDto
     private UserDto user;

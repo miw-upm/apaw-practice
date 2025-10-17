@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.apiary.entities;
 
-import es.upm.miw.apaw.adapters.mongodb.shop.entities.ArticleEntity;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.apiary.Sale;
 
@@ -48,7 +47,7 @@ public class SaleEntity {
 
     public Sale toSale() {
         Sale sale = new Sale();
-        BeanUtils.copyProperties(this, sale, "userId");
+        BeanUtils.copyProperties(this, sale, "client");
         if (this.userId != null) {
             sale.setClient(UserDto.builder().id(this.userId).build());
         }

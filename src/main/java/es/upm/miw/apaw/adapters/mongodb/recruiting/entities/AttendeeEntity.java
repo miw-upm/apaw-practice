@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.recruiting.entities;
 
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.models.recruiting.Attendee;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -18,14 +20,32 @@ public class AttendeeEntity {
     private UUID id;
     @EqualsAndHashCode.Include
     @Indexed(unique = true)
-    private String fullName;
-    @EqualsAndHashCode.Include
-    @Indexed(unique = true)
-    private String phoneNumber;
-    @EqualsAndHashCode.Include
-    @Indexed(unique = true)
     private String emailAddress;
+    private String fullName;
+    private String phoneNumber;
 
     // Reference to User by id
     private UUID user;
+
+    public Attendee toAttendee() {
+        return Attendee.builder()
+                .emailAddress(this.emailAddress)
+                .fullName(this.fullName)
+                .phoneNumber(this.phoneNumber)
+                .user(this.user != null ? UserDto.builder().id(this.user).build() : null)
+                .build();
+    }
+
+    public static AttendeeEntity fromAttendee(Attendee attendee) {
+        if (attendee == null) {
+            return null;
+        }
+        return AttendeeEntity.builder()
+                .id(UUID.randomUUID())
+                .emailAddress(attendee.getEmailAddress())
+                .fullName(attendee.getFullName())
+                .phoneNumber(attendee.getPhoneNumber())
+                .user(attendee.getUser() != null ? attendee.getUser().getId() : null)
+                .build();
+    }
 }

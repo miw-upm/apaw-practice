@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import es.upm.miw.apaw.domain.models.clinic.Treatment;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -17,17 +16,35 @@ import java.util.UUID;
 @AllArgsConstructor
 @Document
 public class TreatmentEntity {
+
+
     @Id
-    private String treatmentId;
+    private String id;
+
+    // Clave de negocio (copiada del Modelo Treatment)
+    private String treatmentCode;
+
     private String procedureName;
     private BigDecimal totalCost;
-    // Campo para la relación n..1 (Diagnosis 1 o-- n Treatment)
-    private String diagnosisId;
 
+    // Clave foránea a la Diagnosis
+    private String diagnosisCode;
+
+    // Constructor para mapear el Modelo de Dominio (Treatment) a la Entidad (TreatmentEntity)
     public TreatmentEntity(Treatment treatment) {
-        this.treatmentId = treatment.getTreatmentId().toString();
+        this.treatmentCode = treatment.getTreatmentCode();
         this.procedureName = treatment.getProcedureName();
         this.totalCost = treatment.getTotalCost();
-        this.diagnosisId = treatment.getDiagnosisId().toString();
+        this.diagnosisCode = treatment.getDiagnosisCode();
+    }
+
+    // Método para mapear la Entidad (TreatmentEntity) de vuelta al Modelo de Dominio (Treatment)
+    public Treatment toTreatment() {
+        return Treatment.builder()
+                .treatmentCode(this.treatmentCode)
+                .procedureName(this.procedureName)
+                .totalCost(this.totalCost)
+                .diagnosisCode(this.diagnosisCode)
+                .build();
     }
 }

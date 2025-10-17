@@ -14,5 +14,4 @@ public class RecipeItem {
     private Double quantity;
     private String specifications;
     private Boolean optional;
-
 }

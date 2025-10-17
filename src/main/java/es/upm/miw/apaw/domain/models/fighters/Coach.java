@@ -18,13 +18,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Coach {
     @NotNull
-    private UUID coachNumber;
+    private UUID id;
     @NotBlank
     private String fullName;
     @NotBlank
     private String academy;
     @Min(0)
     private Integer experienceYears;
-    @Builder.Default
-    private List<Fighter> fighters = new ArrayList<>();
 }

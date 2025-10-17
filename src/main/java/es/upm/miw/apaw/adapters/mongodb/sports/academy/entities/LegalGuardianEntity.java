@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.sports.academy.entities;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,17 +27,20 @@ public class LegalGuardianEntity {
     public LegalGuardianEntity(LegalGuardian legalGuardian) {
         BeanUtils.copyProperties(legalGuardian, this);
         userDtoId = legalGuardian.getUser().getId();
+        relationShip = legalGuardian.getRelationShip().getValue();
     }
 
     public void fromLegalGuardian(LegalGuardian legalGuardian) {
         BeanUtils.copyProperties(legalGuardian, this);
         userDtoId = legalGuardian.getUser().getId();
+        relationShip = legalGuardian.getRelationShip().getValue();
     }
 
     public LegalGuardian toLegalGuardian() {
         LegalGuardian legalGuardian = new LegalGuardian();
         BeanUtils.copyProperties(this, legalGuardian);
         legalGuardian.setUser(UserDto.builder().id(userDtoId).build());
+        legalGuardian.setRelationShip(RelationShip.values()[this.relationShip]);
         return legalGuardian;
     }
 }
