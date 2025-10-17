@@ -1,3 +1,4 @@
+
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.GarmentEntity;
@@ -31,22 +32,20 @@ public class clothingstoreSeeder {
 
     public void seedDatabase() {
         log.warn("------- Clothingstore Initial Load -----------");
+        this.storeRepository.deleteAll();
+        this.garmentRepository.deleteAll();
+
+
         GarmentEntity g1 = GarmentEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001"))
-                .size("M")
-                .price(new BigDecimal("59.99"))
-                .onSale(true)
-                .build();
-
+                .size("M").price(new BigDecimal("59.99")).onSale(true).build();
         GarmentEntity g2 = GarmentEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002"))
-                .size("L")
-                .price(new BigDecimal("89.99"))
-                .onSale(false)
-                .build();
-
+                .size("L").price(new BigDecimal("89.99")).onSale(false).build();
         this.garmentRepository.saveAll(List.of(g1, g2));
-        List<GarmentEntity> garments = this.garmentRepository.findAll();
+
+
+        UUID userId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
 
         InvoiceEntity invoice = InvoiceEntity.builder()
                 .number("INV-2025-001")
@@ -57,29 +56,26 @@ public class clothingstoreSeeder {
 
         OrderEntity order = OrderEntity.builder()
                 .date(LocalDate.of(2025, 10, 6))
-                .total(garments.stream()
-                        .map(GarmentEntity::getPrice)
-                        .reduce(BigDecimal.ZERO, BigDecimal::add))
-                .itemCount(garments.size())
+                .total(g1.getPrice().add(g2.getPrice()))
+                .itemCount(2)
                 .status("PAID")
                 .paymentMethod("CARD")
-                .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7000"))
-                .invoice(invoice)       // 强连接：嵌入
-                .garments(garments)     // 弱连接：@DBRef
+                .userId(userId)
+                .invoice(invoice)
+                .garments(List.of(g1, g2))
                 .build();
 
         StoreEntity store = StoreEntity.builder()
-                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7005")) // 固定ID，和测试一致
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7005"))
                 .name("Madrid Fashion")
                 .address("Calle Gran Vía 25, Madrid")
                 .orders(List.of(order))
                 .build();
 
         this.storeRepository.save(store);
-        this.storeRepository.save(store);
-
         log.warn("------- Clothingstore Initial Load Completed -----------");
     }
+
     public void deleteAll() {
         this.storeRepository.deleteAll();
         this.garmentRepository.deleteAll();

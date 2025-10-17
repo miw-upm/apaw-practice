@@ -56,4 +56,10 @@ public class GarmentResource {
     public void delete(@PathVariable UUID id) {
         this.garmentService.delete(id);
     }
+
+
+    @GetMapping("/search/sum-price")
+    public BigDecimal sumDistinctPriceByMobile(@RequestParam String mobile) {
+        return this.garmentService.sumDistinctPriceByMobile(mobile);
+    }
 }
