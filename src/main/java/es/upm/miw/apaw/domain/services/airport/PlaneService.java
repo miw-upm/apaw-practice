@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.persistenceports.airport.PlanePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -37,5 +38,9 @@ public class PlaneService {
         if (this.planePersistence.existRegistrationNumber(registrationNumber)) {
             throw new ConflictException("Registartion number exist: " + registrationNumber);
         }
+    }
+
+    public Stream<String> findRegistrationNumbersByPilotMobile(String mobile) {
+        return this.planePersistence.findRegistrationNumberByPilotMobile(mobile);
     }
 }

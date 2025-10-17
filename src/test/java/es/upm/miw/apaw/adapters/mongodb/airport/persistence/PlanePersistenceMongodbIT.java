@@ -1,14 +1,19 @@
 package es.upm.miw.apaw.adapters.mongodb.airport.persistence;
 
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.airport.Plane;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
+import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -19,6 +24,8 @@ public class PlanePersistenceMongodbIT {
 
     @Autowired
     private PlanePersistenceMongodb planePersistence;
+    @MockitoBean
+    private UserRestClient userRestClient;
 
     @Test
     void testCreate() {
@@ -26,7 +33,7 @@ public class PlanePersistenceMongodbIT {
                 .registrationNumber("EC-PMI")
                 .model("A320neo")
                 .seatCount(186)
-                .createdAt(LocalDateTime.of(2024,1, 1, 12, 0))
+                .createdAt(LocalDateTime.of(2024, 1, 1, 12, 0))
                 .manufacturer("Airbus")
                 .build();
 
@@ -40,7 +47,7 @@ public class PlanePersistenceMongodbIT {
                 .registrationNumber("ED-PMI")
                 .model("A320neo")
                 .seatCount(186)
-                .createdAt(LocalDateTime.of(2024,1, 1, 12, 0))
+                .createdAt(LocalDateTime.of(2024, 1, 1, 12, 0))
                 .manufacturer("Airbus")
                 .build();
         Plane planeDb = this.planePersistence.create(plane);
@@ -56,6 +63,22 @@ public class PlanePersistenceMongodbIT {
         assertThatThrownBy(() -> this.planePersistence.update("Test", planeDb))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Plane registration number");
+    }
+
+    @Test
+    void testFindRegistrationNumberByPilotMobile() {
+        UserDto userDto = UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .firstName("user0")
+                .mobile("666000660").build();
+
+        BDDMockito.given(this.userRestClient.readByMobile("666000660"))
+                .willReturn(userDto);
+
+        Stream<String> registrationNumbers = this.planePersistence.findRegistrationNumberByPilotMobile("666000660");
+
+        assertThat(registrationNumbers)
+                .hasSize(3)
+                .containsExactlyInAnyOrder("EC-MAD", "EC-BCN", "EC-VAL");
     }
 
     @Test
