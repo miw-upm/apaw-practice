@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 @org.junit.jupiter.api.extension.ExtendWith(MockitoExtension.class)
 class GarmentServiceTest {
@@ -59,5 +60,20 @@ class GarmentServiceTest {
 
         assertThat(garments).hasSize(2);
         assertThat(garments.get(0).getPrice()).isBetween(new BigDecimal("50"), new BigDecimal("100"));
+    }
+
+    @Test
+    void testSumDistinctPriceByMobile() {
+        String mobile = "666000660";
+        BigDecimal expectedTotal = new BigDecimal("149.98");
+
+        BDDMockito.given(garmentPersistence.sumDistinctPriceByMobile(eq(mobile)))
+                .willReturn(expectedTotal);
+
+        BigDecimal total = garmentService.sumDistinctPriceByMobile(mobile);
+
+        assertThat(total).isNotNull();
+        assertThat(total).isEqualByComparingTo(expectedTotal);
+        System.out.println(">>> testSumDistinctPriceByMobile(" + mobile + ") = " + total);
     }
 }
