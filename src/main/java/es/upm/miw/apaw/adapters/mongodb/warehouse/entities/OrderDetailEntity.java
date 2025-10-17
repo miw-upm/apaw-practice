@@ -38,4 +38,13 @@ public class OrderDetailEntity {
                 .build();
     }
 
+    public static OrderDetailEntity fromOrderDetail(OrderDetail orderDetail) {
+        return OrderDetailEntity.builder()
+                .qtyRequested(orderDetail.getQtyRequested())
+                .qtyMoved(orderDetail.getQtyMoved())
+                .unitCost(orderDetail.getUnitCost())
+                .productItemEntity(ProductItemEntity.fromProductItem(orderDetail.getProductItem()))
+                .build();
+    }
+
 }

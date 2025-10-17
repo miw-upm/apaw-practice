@@ -45,4 +45,13 @@ public class ProductItemEntity {
                 .build();
     }
 
+    public static ProductItemEntity fromProductItem(ProductItem productItem) {
+        return ProductItemEntity.builder()
+                .barcode(productItem.getBarcode())
+                .appoint(productItem.getAppoint())
+                .cost(productItem.getCost())
+                .unitOfMeasure(productItem.getUnitOfMeasure())
+                .build();
+    }
+
 }

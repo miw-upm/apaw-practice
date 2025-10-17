@@ -42,23 +42,40 @@ public class MovementOrderService {
     }
 
     public Stream<String> findPositionsByUserMobile(String mobile) {
+
         UserDto userDto = this.userRestClient.readByMobile(mobile);
         if (userDto == null) {
             throw new NotFoundException("User not found with mobile: " + mobile);
         }
 
         return this.movementOrderPersistence.findAll()
-                .filter(order -> order.getUser() != null &&
-                        order.getUser().getId().equals(userDto.getId()))
-                .flatMap(order -> this.locationPersistence.findAll()
-                        .filter(location -> location.getProductItems().stream()
-                                .anyMatch(productItem ->
-                                        order.getOrderDetails().stream()
-                                                .anyMatch(detail ->
-                                                        detail.getProductItem() != null &&
-                                                                detail.getProductItem().getBarcode()
-                                                                        .equals(productItem.getBarcode()))))
-                        .map(Location::getPosition))
+                .filter(order -> {
+                    if (order.getUser() == null) {
+                        return false;
+                    }
+
+                    if (order.getUser().getId() != null && userDto.getId() != null) {
+                        return order.getUser().getId().equals(userDto.getId());
+                    }
+
+                    return order.getUser().getMobile() != null &&
+                            order.getUser().getMobile().equals(userDto.getMobile());
+                })
+
+                .flatMap(order ->
+                        this.locationPersistence.findAll()
+                                .filter(location -> location.getProductItems() != null &&
+                                        location.getProductItems().stream()
+                                                .anyMatch(productItem ->
+                                                        order.getOrderDetails() != null &&
+                                                                order.getOrderDetails().stream()
+                                                                        .anyMatch(detail ->
+                                                                                detail.getProductItem() != null &&
+                                                                                        detail.getProductItem().getBarcode().equals(productItem.getBarcode()))
+                                                )
+                                )
+                                .map(Location::getPosition)
+                )
                 .distinct();
     }
 

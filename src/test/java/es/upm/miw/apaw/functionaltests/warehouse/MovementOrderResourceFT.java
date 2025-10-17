@@ -58,4 +58,23 @@ class MovementOrderResourceFT {
                 });
     }
 
+    @Test
+    void testFindPositionsByUserMobile() {
+        BDDMockito.given(this.userRestClient.readByMobile("6600006600"))
+                .willReturn(UserDto.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .mobile("6600006600")
+                        .build());
+
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(MovementOrderResource.MOVEMENT_ORDERS)
+                        .queryParam("mobile", "6600006600")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .value(body -> assertThat(body).contains("A1"));
+    }
+
 }
