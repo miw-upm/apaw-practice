@@ -11,6 +11,8 @@ import es.upm.miw.apaw.domain.services.metro.ZoneService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping(ZoneResource.ZONES)
@@ -27,5 +29,10 @@ public class ZoneResource {
     @PutMapping(TYPE)
     public Zone update(@Valid @PathVariable String type, @Valid @RequestBody Zone zone) {
         return this.zoneService.update(type, zone);
+    }
+
+    @PatchMapping
+    public void updateTicketPrices(@RequestBody List<Zone> zoneList) {
+        this.zoneService.updateTicketPrices(zoneList.stream());
     }
 }

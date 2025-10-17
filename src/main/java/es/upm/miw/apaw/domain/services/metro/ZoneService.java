@@ -6,6 +6,8 @@ import es.upm.miw.apaw.domain.persistenceports.metro.ZonePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class ZoneService {
 
@@ -32,5 +34,14 @@ public class ZoneService {
         if (this.zonePersistence.existType(type)) {
             throw new ConflictException("Type already exists: " + type);
         }
+    }
+
+    public void updateTicketPrices(Stream<Zone> zonesList) {
+        zonesList.map(zoneNewPrice -> {
+                    Zone zone = this.zonePersistence.getByType(zoneNewPrice.getType());
+                    zone.setTicketPrice(zoneNewPrice.getTicketPrice());
+                    return zone;
+                })
+                .forEach(zone -> this.zonePersistence.update(zone.getType(), zone));
     }
 }
