@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -19,7 +21,8 @@ public class Playlist {
     @NotNull
     @NotBlank
     private String label;
-    private Boolean opened;
-    @NotNull
-    private List<Song> songs;
+    @Builder.Default
+    private Boolean opened = Boolean.TRUE;
+    @Builder.Default
+    private List<Song> songs = new ArrayList<>();
 }
