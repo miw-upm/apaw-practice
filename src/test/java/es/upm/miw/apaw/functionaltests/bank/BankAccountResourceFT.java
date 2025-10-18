@@ -123,7 +123,7 @@ class BankAccountResourceFT {
                                 .firstName("mock").build());
 
         webTestClient.get()
-                .uri(BANK_ACCOUNTS+MOBILE+TOTAL_QUANTITIES, "123123123")
+                .uri(BANK_ACCOUNTS+MOBILE+LOANS+TOTAL_QUANTITIES, "123123123")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(BigDecimal.class)
