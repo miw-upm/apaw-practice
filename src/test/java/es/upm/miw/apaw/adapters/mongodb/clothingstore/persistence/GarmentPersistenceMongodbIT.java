@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
@@ -30,7 +31,7 @@ class GarmentPersistenceMongodbIT {
     private GarmentRepository garmentRepository;
 
     @Autowired
-    private DatabaseSeeder databaseSeeder;
+    private clothingstoreSeeder clothingstoreSeeder;
 
     @MockitoBean
     private UserRestClient userRestClient;
@@ -40,8 +41,9 @@ class GarmentPersistenceMongodbIT {
     private static final String KNOWN_MOBILE = "666000660";
 
     @BeforeEach
-    void setUp() {
-        this.databaseSeeder.reSeedDatabase();
+    void resetDb() {
+        clothingstoreSeeder.deleteAll();
+        clothingstoreSeeder.seedDatabase();
 
         UserDto dto = new UserDto();
         dto.setId(SEEDED_USER_ID);

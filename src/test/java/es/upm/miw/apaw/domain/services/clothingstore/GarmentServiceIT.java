@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.clothingstore;
 
 import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +33,8 @@ class GarmentServiceIT {
 
     @Autowired
     private GarmentRepository garmentRepository;
+    @Autowired
+    private clothingstoreSeeder clothingstoreSeeder;
 
     @MockitoBean
     private UserRestClient userRestClient;
@@ -43,8 +46,9 @@ class GarmentServiceIT {
     private DatabaseSeeder databaseSeeder;
 
     @BeforeEach
-    void seed() {
-        databaseSeeder.reSeedDatabase();
+    void resetDb() {
+        clothingstoreSeeder.deleteAll();
+        clothingstoreSeeder.seedDatabase();
         UserDto mockUser = UserDto.builder()
                 .id(USER_ID)
                 .mobile(KNOWN_MOBILE)

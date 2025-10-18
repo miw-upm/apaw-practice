@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.functionaltests.clothingstore;
 
-import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 import es.upm.miw.apaw.adapters.resources.clothingstore.GarmentResource;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
@@ -32,7 +32,7 @@ class GarmentResourceFT {
     private WebTestClient webTestClient;
 
     @Autowired
-    private DatabaseSeeder databaseSeeder;
+    private clothingstoreSeeder clothingstoreSeeder;
 
     @MockitoBean
     private UserRestClient userRestClient;
@@ -43,10 +43,10 @@ class GarmentResourceFT {
     private static final UUID SEEDED_USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
 
     @BeforeEach
-    void seed() {
-        databaseSeeder.reSeedDatabase();
+    void resetDb() {
+        clothingstoreSeeder.deleteAll();
+        clothingstoreSeeder.seedDatabase();
 
-        // Mock: 已知手机号返回 user
         UserDto mockUser = UserDto.builder()
                 .id(SEEDED_USER_ID)
                 .mobile(KNOWN_MOBILE)
