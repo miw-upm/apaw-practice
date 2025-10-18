@@ -407,7 +407,7 @@ public class UniversitySeeder {
                         .semester("2024-1")
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 10, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[0], subjectAssignments[1]))
-                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0500"))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .build(),
                 EnrollmentEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0401"))
@@ -415,7 +415,7 @@ public class UniversitySeeder {
                         .semester("2024-1")
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 11, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[0], subjectAssignments[3]))
-                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0501"))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .build(),
                 EnrollmentEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0402"))
@@ -423,7 +423,7 @@ public class UniversitySeeder {
                         .semester("2024-2")
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 12, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[1], subjectAssignments[2]))
-                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0502"))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                         .build(),
                 EnrollmentEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0403"))
@@ -431,7 +431,7 @@ public class UniversitySeeder {
                         .semester("2024-1")
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 13, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[2], subjectAssignments[3]))
-                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0503"))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                         .build(),
                 EnrollmentEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0404"))
@@ -439,7 +439,23 @@ public class UniversitySeeder {
                         .semester("2024-2")
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 14, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[0], subjectAssignments[2]))
-                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0504"))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
+                        .build(),
+                EnrollmentEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0410"))
+                        .code("ENR100")
+                        .semester("2025-2")
+                        .enrollmentDate(LocalDateTime.of(2024, 1, 10, 14, 0))
+                        .subjectAssignmentEntities(Arrays.asList(subjectAssignments[0], subjectAssignments[2]))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004"))
+                        .build(),
+                EnrollmentEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0411"))
+                        .code("ENR101")
+                        .semester("2025-1")
+                        .enrollmentDate(LocalDateTime.of(2024, 1, 10, 14, 0))
+                        .subjectAssignmentEntities(Arrays.asList(subjectAssignments[0], subjectAssignments[2]))
+                        .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
                         .build()
         };
         this.enrollmentRepository.saveAll(Arrays.asList(enrollments));
