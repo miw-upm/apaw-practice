@@ -4,6 +4,8 @@ import es.upm.miw.apaw.domain.persistenceports.airport.AirlinePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class AirlineService {
 
@@ -16,5 +18,9 @@ public class AirlineService {
 
     public void delete(String name) {
         this.airlinePersistence.delete(name);
+    }
+
+    public Stream<String> readByPlaneModel(String planeModel) {
+        return this.airlinePersistence.readByPlaneModel(planeModel);
     }
 }
