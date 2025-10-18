@@ -16,7 +16,6 @@ public class LikeListServiceIT {
     @Autowired
     private LikeListService likeListService;
 
-
     @Test
     void testReadSharedById() {
         assertTrue(this.likeListService.readSharedById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020")));

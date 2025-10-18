@@ -1,7 +1,10 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.entities;
 
 import es.upm.miw.apaw.domain.models.videogame.Videogame;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -33,12 +36,12 @@ public class VideogameEntity {
 
     public Videogame toVideogame() {
         Videogame videogame = new Videogame();
-        BeanUtils.copyProperties(this,videogame);
+        BeanUtils.copyProperties(this, videogame);
         return videogame;
     }
 
-    public void fromVideogame(Videogame videogame){
-        BeanUtils.copyProperties(videogame,this);
+    public void fromVideogame(Videogame videogame) {
+        BeanUtils.copyProperties(videogame, this);
     }
 
 }
