@@ -25,11 +25,12 @@ class GarmentRepositoryIT {
     @Autowired
     private GarmentService garmentService;
     @Autowired
-    private DatabaseSeeder databaseSeeder;
+    private clothingstoreSeeder clothingstoreSeeder;
 
     @BeforeEach
-    void setUp() {
-        this.databaseSeeder.reSeedDatabase();
+    void resetDb() {
+        clothingstoreSeeder.deleteAll();
+        clothingstoreSeeder.seedDatabase();
     }
 
     @Test

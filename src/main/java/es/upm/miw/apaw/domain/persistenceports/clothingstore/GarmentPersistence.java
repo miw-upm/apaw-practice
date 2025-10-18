@@ -14,5 +14,5 @@ public interface GarmentPersistence {
     Stream<Garment> readAll();
     Garment create(Garment garment);
     void delete(UUID id);
-
+    BigDecimal sumDistinctPriceByMobile(String mobile);
 }
