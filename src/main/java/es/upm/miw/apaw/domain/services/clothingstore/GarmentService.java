@@ -33,6 +33,9 @@ public class GarmentService {
         this.garmentPersistence.delete(id);
     }
 
+    public BigDecimal sumDistinctPriceByMobile(String mobile) {
+        return this.garmentPersistence.sumDistinctPriceByMobile(mobile);
+    }
 }
 
 

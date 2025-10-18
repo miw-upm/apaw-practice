@@ -80,7 +80,7 @@ class TeacherPersistenceMongodbIT {
 
     @Test
     void testExistIdentificationCodeFalse() {
-        boolean exists = teacherPersistence.existIdentificationCode("T010");
+        boolean exists = teacherPersistence.existIdentificationCode("T010NOTFOUND");
         assertThat(exists).isFalse();
     }
 

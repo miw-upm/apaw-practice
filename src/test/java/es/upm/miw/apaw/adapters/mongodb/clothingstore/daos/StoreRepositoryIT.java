@@ -19,13 +19,14 @@ class StoreRepositoryIT {
 
     @Autowired
     private StoreRepository storeRepository;
-
     @Autowired
-    private DatabaseSeeder databaseSeeder;
+    private clothingstoreSeeder clothingstoreSeeder;
+
 
     @BeforeEach
-    void seed() {
-        databaseSeeder.reSeedDatabase();
+    void resetDb() {
+        clothingstoreSeeder.deleteAll();
+        clothingstoreSeeder.seedDatabase();
     }
 
     @Test
