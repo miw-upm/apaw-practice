@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.resources.university;
 
-import es.upm.miw.apaw.domain.models.university.DurationSum;
+import es.upm.miw.apaw.domain.models.university.LessonDurationSearching;
 import es.upm.miw.apaw.domain.models.university.Teacher;
 import es.upm.miw.apaw.domain.services.university.TeacherService;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ public class TeacherResource {
     }
 
     @GetMapping(LESSONS_DURATION)
-    public DurationSum findLessonDurationSumByTeacherFullName(@RequestParam String fullName) {
+    public LessonDurationSearching findLessonDurationSumByTeacherFullName(@RequestParam String fullName) {
         return this.teacherService.findLessonDurationSumByTeacherFullName(fullName);
     }
 }
