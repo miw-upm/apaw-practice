@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.metro.daos;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,15 @@ class TrainRepositoryIT {
 
     @Autowired
     private TrainRepository trainRepository;
+
+    @Autowired
+    private MetroSeeder metroSeeder;
+
+    @BeforeEach
+    void resetDb() {
+        metroSeeder.deleteAll();
+        metroSeeder.seedDatabase();
+    }
 
     @Test
     void testDeleteTrainById() {

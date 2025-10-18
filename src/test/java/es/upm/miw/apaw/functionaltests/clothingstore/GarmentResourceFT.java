@@ -1,14 +1,19 @@
 package es.upm.miw.apaw.functionaltests.clothingstore;
 
-import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 import es.upm.miw.apaw.adapters.resources.clothingstore.GarmentResource;
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
+import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
@@ -16,17 +21,43 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
 class GarmentResourceFT {
+
     @Autowired
     private WebTestClient webTestClient;
+
     @Autowired
-    private DatabaseSeeder databaseSeeder;
+    private clothingstoreSeeder clothingstoreSeeder;
+
+    @MockitoBean
+    private UserRestClient userRestClient;
+
+    private static final String SUM_PRICE_SEARCH_PATH = GarmentResource.GARMENTS + "/search/sum-price";
+    private static final String KNOWN_MOBILE = "666000660";
+    private static final String UNKNOWN_MOBILE = "999999999";
+    private static final UUID SEEDED_USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+
     @BeforeEach
-    void seed() {
-        databaseSeeder.reSeedDatabase();
+    void resetDb() {
+        clothingstoreSeeder.deleteAll();
+        clothingstoreSeeder.seedDatabase();
+
+        UserDto mockUser = UserDto.builder()
+                .id(SEEDED_USER_ID)
+                .mobile(KNOWN_MOBILE)
+                .firstName("user0")
+                .build();
+        given(userRestClient.readByMobile(KNOWN_MOBILE)).willReturn(mockUser);
+
+        // Mock: 未知手机号 -> 由 Resource/Service 统一映射为 502
+        given(userRestClient.readByMobile(UNKNOWN_MOBILE))
+                .willThrow(new BadGatewayException("User not found with MOBILE: " + UNKNOWN_MOBILE));
+
         System.out.println(">>> After reseed, GET size = " +
                 webTestClient.get()
                         .uri(uriBuilder -> uriBuilder
@@ -42,6 +73,7 @@ class GarmentResourceFT {
                         .size()
         );
     }
+
     @Test
     void testFindByPriceBetween() {
         List<Garment> garments = this.webTestClient.get()
@@ -56,11 +88,12 @@ class GarmentResourceFT {
                 .returnResult()
                 .getResponseBody();
 
-        assertThat(garments).isNotNull().isNotEmpty(); // ← 关键
+        assertThat(garments).isNotNull().isNotEmpty();
         assertThat(garments).allSatisfy(g ->
                 assertThat(g.getPrice()).isBetween(new BigDecimal("50"), new BigDecimal("100"))
         );
     }
+
     @Test
     void testUpdateGarment_Ok() {
         List<Garment> garments = this.webTestClient.get()
@@ -80,27 +113,32 @@ class GarmentResourceFT {
             System.out.println(" No Garment data found in the current database; skipping PUT test");
             return;
         }
+
         UUID id = garments.get(0).getId();
+
         Garment body = Garment.builder()
                 .size("XL")
                 .price(new BigDecimal("129.99"))
                 .onSale(true)
                 .build();
+
         Garment updated = this.webTestClient.put()
                 .uri(GarmentResource.GARMENTS + "/" + id)
-                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(body)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Garment.class)
                 .returnResult()
                 .getResponseBody();
+
         assertThat(updated).isNotNull();
         assertThat(updated.getId()).isEqualTo(id);
         assertThat(updated.getSize()).isEqualTo("XL");
         assertThat(updated.getPrice()).isEqualByComparingTo("129.99");
         assertThat(updated.getOnSale()).isTrue();
     }
+
     @Test
     void testCreate(){
         Garment body = Garment.builder()
@@ -108,7 +146,7 @@ class GarmentResourceFT {
 
         Garment created = this.webTestClient.post()
                 .uri(GarmentResource.GARMENTS)
-                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(body)
                 .exchange()
                 .expectStatus().isOk()
@@ -135,6 +173,7 @@ class GarmentResourceFT {
         assertThat(query).isNotNull();
         assertThat(query.stream().anyMatch(g -> g.getId().equals(created.getId()))).isTrue();
     }
+
     @Test
     void testDeleteGarment_Ok() {
         List<Garment> garments = this.webTestClient.get()
@@ -172,5 +211,32 @@ class GarmentResourceFT {
                 );
     }
 
+    @Test
+    void testSumDistinctPriceByMobile_ok() {
+        BigDecimal total = this.webTestClient.get()
+                .uri(uri -> uri.path(SUM_PRICE_SEARCH_PATH)
+                        .queryParam("mobile", KNOWN_MOBILE)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(BigDecimal.class)
+                .returnResult()
+                .getResponseBody();
 
+        assertThat(total).isNotNull();
+        assertThat(total).isEqualByComparingTo(new BigDecimal("149.98")); // 59.99 + 89.99
+        System.out.println(">>> sumDistinctPrice(" + KNOWN_MOBILE + ") = " + total);
+    }
+
+    @Test
+    void testSumDistinctPriceByMobile_userNotFound() {
+        this.webTestClient.get()
+                .uri(uri -> uri.path(SUM_PRICE_SEARCH_PATH)
+                        .queryParam("mobile", UNKNOWN_MOBILE)
+                        .build())
+                .exchange()
+                .expectStatus().isEqualTo(502);
+    }
 }
+
+

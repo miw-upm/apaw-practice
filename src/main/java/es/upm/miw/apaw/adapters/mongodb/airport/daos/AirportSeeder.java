@@ -187,6 +187,36 @@ public class AirportSeeder {
                         .passengersIds(passengerLists.get(3))
                         .pilotId(pilots[0])
                         .build(),
+                FlightEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3004"))
+                        .departureTime(LocalDateTime.now().plusDays(5).withHour(7).withMinute(35))
+                        .arrivalTime(LocalDateTime.now().plusDays(5).withHour(10).withMinute(10))
+                        .destination("LIS")
+                        .boardingGate(boardingGates[2])
+                        .plane(planes[0])
+                        .passengersIds(passengerLists.get(3))
+                        .pilotId(pilots[0])
+                        .build(),
+                FlightEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3005"))
+                        .departureTime(LocalDateTime.now().plusDays(6).withHour(7).withMinute(35))
+                        .arrivalTime(LocalDateTime.now().plusDays(6).withHour(10).withMinute(10))
+                        .destination("LIS")
+                        .boardingGate(boardingGates[1])
+                        .plane(planes[0])
+                        .passengersIds(passengerLists.get(2))
+                        .pilotId(pilots[0])
+                        .build(),
+                FlightEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3005"))
+                        .departureTime(LocalDateTime.now().plusDays(7).withHour(7).withMinute(35))
+                        .arrivalTime(LocalDateTime.now().plusDays(7).withHour(10).withMinute(10))
+                        .destination("LIS")
+                        .boardingGate(boardingGates[1])
+                        .plane(planes[2])
+                        .passengersIds(passengerLists.get(2))
+                        .pilotId(pilots[0])
+                        .build(),
         };
         this.flightRepository.saveAll(Arrays.asList(flights));
 

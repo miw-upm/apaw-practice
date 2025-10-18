@@ -24,8 +24,8 @@ public class FlightPersistenceMongodbIT {
     void testReadOk() {
         Flight flight = this.flightPersistence.read(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"));
         assertThat(flight).isNotNull();
-        assertThat(flight.getDepartureTime()).isEqualTo(LocalDateTime.of(2025,10, 5, 12, 0));
-        assertThat(flight.getArrivalTime()).isEqualTo(LocalDateTime.of(2025,10, 5, 16, 0));
+        assertThat(flight.getDepartureTime()).isEqualTo(LocalDateTime.of(2025, 10, 5, 12, 0));
+        assertThat(flight.getArrivalTime()).isEqualTo(LocalDateTime.of(2025, 10, 5, 16, 0));
         assertThat(flight.getDestination()).isEqualTo("BCN");
         assertThat(flight.getBoardingGate().getNumber()).isEqualTo("A01");
         assertThat(flight.getPlane().getRegistrationNumber()).isEqualTo("EC-VAL");
