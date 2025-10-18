@@ -19,6 +19,7 @@ public class UniversitySeeder {
     private final SubjectRepository subjectRepository;
     private final SubjectAssignmentRepository subjectAssignmentRepository;
     private final EnrollmentRepository enrollmentRepository;
+    private static final String SEMESTER_2024_1 = "2024-1";
 
     @Autowired
     public UniversitySeeder(TeacherRepository teacherRepository, SubjectRepository subjectRepository,
@@ -404,7 +405,7 @@ public class UniversitySeeder {
                 EnrollmentEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0400"))
                         .code("ENR001")
-                        .semester("2024-1")
+                        .semester(SEMESTER_2024_1)
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 10, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[0], subjectAssignments[1]))
                         .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
@@ -412,7 +413,7 @@ public class UniversitySeeder {
                 EnrollmentEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0401"))
                         .code("ENR002")
-                        .semester("2024-1")
+                        .semester(SEMESTER_2024_1)
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 11, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[0], subjectAssignments[3]))
                         .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
@@ -428,7 +429,7 @@ public class UniversitySeeder {
                 EnrollmentEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0403"))
                         .code("ENR004")
-                        .semester("2024-1")
+                        .semester(SEMESTER_2024_1)
                         .enrollmentDate(LocalDateTime.of(2024, 1, 10, 13, 0))
                         .subjectAssignmentEntities(Arrays.asList(subjectAssignments[2], subjectAssignments[3]))
                         .studentId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))

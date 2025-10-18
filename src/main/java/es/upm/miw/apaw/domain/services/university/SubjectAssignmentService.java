@@ -1,6 +1,9 @@
 package es.upm.miw.apaw.domain.services.university;
 
-import es.upm.miw.apaw.domain.models.university.*;
+import es.upm.miw.apaw.domain.models.university.Lesson;
+import es.upm.miw.apaw.domain.models.university.SubjectAssignment;
+import es.upm.miw.apaw.domain.models.university.SubjectAssignmentCapacityUpdating;
+import es.upm.miw.apaw.domain.models.university.UserMobileSearching;
 import es.upm.miw.apaw.domain.persistenceports.university.EnrollmentPersistence;
 import es.upm.miw.apaw.domain.persistenceports.university.SubjectAssignmentPersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
@@ -39,9 +42,9 @@ public class SubjectAssignmentService {
     }
 
     public UserMobileSearching findUniqueUsersMobilesByCapacity(Integer capacity) {
-        List<UUID> studentIds  = this.enrollmentPersistence.findAll()
-                        .filter(enrollment -> enrollment.getSubjectAssignments().stream()
-                                .anyMatch(subjectAssignment -> subjectAssignment.getCapacity().equals(capacity)))
+        List<UUID> studentIds = this.enrollmentPersistence.findAll()
+                .filter(enrollment -> enrollment.getSubjectAssignments().stream()
+                        .anyMatch(subjectAssignment -> subjectAssignment.getCapacity().equals(capacity)))
                 .map(enrollment -> enrollment.getStudent().getId())
                 .toList();
         List<String> mobiles = studentIds.stream()
