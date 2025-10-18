@@ -41,6 +41,7 @@ public class VideogameRepositoryIT {
         assertThat(afterUpdate).isNotEmpty();
         assertThat(afterUpdate).allMatch(v -> !v.getOnline());
     }
+
     @Test
     void testDeleteByName() {
         assertThat(videogameRepository.findAll()).extracting("name").contains("game0");
@@ -49,6 +50,7 @@ public class VideogameRepositoryIT {
 
         assertThat(videogameRepository.findAll()).extracting("name").doesNotContain("game0");
     }
+
     @Test
     void testFindByGenreEntityId() {
         UUID genreIdRol = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"); // género "rol"

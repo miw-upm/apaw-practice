@@ -1,4 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.persistence;
+
 import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
-
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,11 +22,12 @@ public class VideogamePersistenceMongodbIT {
     @Test
     void testUpdateOnlineByGenre() {
         String genreType = "rol";
-        videogamePersistenceMongoDB.updateOnlineByGenre(genreType,false);
+        videogamePersistenceMongoDB.updateOnlineByGenre(genreType, false);
         List<Videogame> rolGames = videogamePersistenceMongoDB.findByGenre(genreType);
         assertThat(rolGames).extracting("online").containsOnly(false);
 
-}
+    }
+
     @Test
     void testFindByGenre_existingGenre() {
         String genreType = "rol";

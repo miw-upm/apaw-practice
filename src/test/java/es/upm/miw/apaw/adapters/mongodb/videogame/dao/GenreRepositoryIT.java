@@ -20,7 +20,7 @@ public class GenreRepositoryIT {
     private GenreRepository genreRepository;
 
     @Test
-    void testFindByType(){
+    void testFindByType() {
         assertTrue(this.genreRepository.findByType("action").isPresent());
         GenreEntity genre = this.genreRepository.findByType("action").get();
         assertThat(genre.getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"));

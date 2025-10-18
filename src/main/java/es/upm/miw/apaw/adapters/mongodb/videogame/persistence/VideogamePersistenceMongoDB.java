@@ -21,7 +21,6 @@ public class VideogamePersistenceMongoDB implements VideogamePersistence {
     private final GenreRepository genreRepository;
 
 
-
     @Autowired
     public VideogamePersistenceMongoDB(VideogameRepository videogameRepository,
                                        GenreRepository genreRepository) {
@@ -32,11 +31,12 @@ public class VideogamePersistenceMongoDB implements VideogamePersistence {
     }
 
     @Override
-     public void delete(String name){
+    public void delete(String name) {
         this.videogameRepository
                 .deleteByName(name);
 
     }
+
     @Override
     public List<Videogame> findByGenre(String genreType) {
         GenreEntity genre = genreRepository.findByType(genreType)

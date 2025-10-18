@@ -48,6 +48,7 @@ public class CompanyPersistenceMongodbIT {
         assertThat(notExists).isFalse();
 
     }
+
     @Test
     void testReadAll() {
         List<Company> companies = companyPersistenceMongoDB.readAll().toList();

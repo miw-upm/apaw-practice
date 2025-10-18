@@ -31,24 +31,16 @@ public class LikeListService {
     }
 
     public List<String> obtainSectorsByMobile(String mobile) {
-        //  Obtener usuario externo
         UserDto user = this.userRestClient.readByMobile(mobile);
 
-        //  Obtener nombres de videojuegos que le gustan al usuario
         List<String> likedVideogames = this.likeListPersistence.findVideogamesByUserId(user.getId())
-                .filter(Objects::nonNull)
                 .map(Videogame::getName)
                 .filter(Objects::nonNull)
-                .distinct()
                 .toList();
 
-        //  Obtener compañías que tengan al menos un videojuego de la LikeList
-        return this.companyPersistence.readAll() // todas las compañías
-                .filter(Objects::nonNull)
-                .filter(company -> company.getVideoGames() != null &&
-                        company.getVideoGames().stream()
-                                .map(Videogame::getName)
-                                .anyMatch(likedVideogames::contains)) // mínimo un videojuego coincida
+        return this.companyPersistence.readAll()
+                .filter(company -> company.getVideoGames() != null)
+                .filter(company -> company.getVideoGames().stream().anyMatch(videogame -> likedVideogames.contains(videogame.getName())))
                 .map(Company::getSector)
                 .filter(Objects::nonNull)
                 .distinct()

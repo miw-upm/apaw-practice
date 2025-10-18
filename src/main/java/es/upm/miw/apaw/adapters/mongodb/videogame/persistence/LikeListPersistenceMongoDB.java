@@ -8,6 +8,7 @@ import es.upm.miw.apaw.domain.persistenceports.videogame.LikeListPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -28,9 +29,18 @@ public class LikeListPersistenceMongoDB implements LikeListPersistence {
                 .getShared();
     }
 
+
     @Override
-    public Stream<Videogame> findVideogamesByUserId(UUID id){
-        return this.likeListRepository.findVideogamesLikedByUserId(id).stream()
-        .map(VideogameEntity::toVideogame);
+    public Stream<Videogame> findVideogamesByUserId(UUID userId) {
+        return this.likeListRepository.findByUserId(userId).stream() // devuelve List<LikeListEntity>
+                .filter(Objects::nonNull)
+                .flatMap(likeList -> {
+                    if (likeList.getGamesLikedEntity() == null) return Stream.empty();
+                    return likeList.getGamesLikedEntity().stream(); // Stream<VideogameEntity>
+                })
+                .filter(Objects::nonNull)
+                .map(VideogameEntity::toVideogame); // Stream<Videogame>
     }
+
+
 }

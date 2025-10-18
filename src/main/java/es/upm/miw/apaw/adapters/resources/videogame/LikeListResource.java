@@ -13,10 +13,11 @@ import java.util.UUID;
 @RestController
 @RequestMapping(LikeListResource.LIKE_LISTS)
 public class LikeListResource {
-    public static final String LIKE_LISTS = "/videogame/likeList";
+    public static final String LIKE_LISTS = "/videogame/likeLists";
     public static final String ID_ID = "/{id}";
     public static final String SHARED = "/shared";
-    public static final String MOBILE="/{mobile}";
+    public static final String MOBILE = "/{mobile}";
+    public static final String GAME_SECTOR = "/gamesLiked/sectors";
     private final LikeListService likeListService;
 
     @Autowired
@@ -29,8 +30,8 @@ public class LikeListResource {
         return this.likeListService.readSharedById(id);
     }
 
-    @GetMapping(MOBILE)
-    public List<String> obtainSectorsByMobile(@PathVariable("mobile") String mobile ){
+    @GetMapping(MOBILE + GAME_SECTOR)
+    public List<String> obtainSectorsByMobile(@PathVariable("mobile") String mobile) {
         return this.likeListService.obtainSectorsByMobile(mobile);
     }
 

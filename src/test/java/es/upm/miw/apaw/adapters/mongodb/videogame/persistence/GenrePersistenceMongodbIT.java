@@ -20,7 +20,7 @@ public class GenrePersistenceMongodbIT {
     private GenrePersistenceMongoDB genrePersistenceMongoDB;
 
     @Test
-    void testUpdate(){
+    void testUpdate() {
 
         Genre genre = genrePersistenceMongoDB.findByType("action");
         assertThat(genre).isNotNull();
@@ -39,6 +39,7 @@ public class GenrePersistenceMongodbIT {
 
 
     }
+
     @Test
     void testUpdate_nonExistingGenre() {
         Genre fakeGenre = new Genre();

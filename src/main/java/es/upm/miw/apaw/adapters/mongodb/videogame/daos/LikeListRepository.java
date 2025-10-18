@@ -1,9 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.daos;
 
 
-
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.LikeListEntity;
-import es.upm.miw.apaw.adapters.mongodb.videogame.entities.VideogameEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
@@ -11,5 +9,5 @@ import java.util.UUID;
 
 public interface LikeListRepository extends MongoRepository<LikeListEntity, UUID> {
 
-    List<VideogameEntity> findVideogamesLikedByUserId(UUID id);
+    List<LikeListEntity> findByUserId(UUID userId);
 }

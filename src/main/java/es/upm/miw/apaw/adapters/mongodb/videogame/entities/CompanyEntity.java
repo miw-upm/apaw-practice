@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Builder
@@ -38,11 +39,24 @@ public class CompanyEntity {
 
     public Company toCompany() {
         Company company = new Company();
-        BeanUtils.copyProperties(this, company);
+
+        // Copiamos las propiedades básicas
+        BeanUtils.copyProperties(this, company, "videoGamesEntity");
+
+        // Convertimos la lista de VideoGameEntity a VideoGame
+        List<Videogame> videogames = Optional.ofNullable(this.videoGamesEntity)
+                .orElse(List.of())
+                .stream()
+                .map(VideogameEntity::toVideogame)
+                .toList();
+
+        company.setVideoGames(videogames);
+
         return company;
     }
-    public void fromCompany(Company company){
-        BeanUtils.copyProperties(company,this);
+
+    public void fromCompany(Company company) {
+        BeanUtils.copyProperties(company, this);
     }
 
 }
