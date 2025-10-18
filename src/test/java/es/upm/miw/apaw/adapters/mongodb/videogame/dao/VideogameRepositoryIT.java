@@ -4,13 +4,13 @@ import es.upm.miw.apaw.adapters.mongodb.videogame.daos.GenreRepository;
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameRepository;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.GenreEntity;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.VideogameEntity;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,38 +23,40 @@ public class VideogameRepositoryIT {
     @Autowired
     private GenreRepository genreRepository;
 
-    @BeforeEach
-    void setup() {
-        genreRepository.deleteAll();
-        videogameRepository.deleteAll();
-    }
 
     @Test
     void testUpdateOnlineByGenre() {
-        GenreEntity genre = new GenreEntity();
-        genre.setType("action");
-        genreRepository.save(genre);
 
-        VideogameEntity v1 = new VideogameEntity();
-        v1.setName("Halo");
-        v1.setOnline(true);
-        v1.setGenreEntity(genre);
+        GenreEntity genre = genreRepository.findByType("rol")
+                .orElseThrow(() -> new RuntimeException("Género 'rol' no encontrado"));
 
-        VideogameEntity v2 = new VideogameEntity();
-        v2.setName("COD");
-        v2.setOnline(true);
-        v2.setGenreEntity(genre);
-
-        videogameRepository.saveAll(List.of(v1, v2));
-
-        // Actualizar online = false
         List<VideogameEntity> beforeUpdate = videogameRepository.findByGenreEntityId(genre.getId());
+        assertThat(beforeUpdate).isNotEmpty();
+
         beforeUpdate.forEach(v -> v.setOnline(false));
         videogameRepository.saveAll(beforeUpdate);
 
         List<VideogameEntity> afterUpdate = videogameRepository.findByGenreEntityId(genre.getId());
+
         assertThat(afterUpdate).isNotEmpty();
         assertThat(afterUpdate).allMatch(v -> !v.getOnline());
+    }
+    @Test
+    void testDeleteByName() {
+        assertThat(videogameRepository.findAll()).extracting("name").contains("game0");
+
+        videogameRepository.deleteByName("game0");
+
+        assertThat(videogameRepository.findAll()).extracting("name").doesNotContain("game0");
+    }
+    @Test
+    void testFindByGenreEntityId() {
+        UUID genreIdRol = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"); // género "rol"
+
+        List<VideogameEntity> games = videogameRepository.findByGenreEntityId(genreIdRol);
+
+        // Debe devolver los juegos game1 y game3
+        assertThat(games).extracting("name").containsExactlyInAnyOrder("game1", "game3");
     }
 
 }

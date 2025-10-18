@@ -22,12 +22,13 @@ public class VideogameService {
         this.videogamePersistence.delete(name);
     }
 
-    public List<VideogameEntity> getByGenre(String genreType) {
+    public List<Videogame> getByGenre(String genreType) {
         return videogamePersistence.findByGenre(genreType);
     }
 
     public void setOnlineByGenre(String genreType, boolean online) {
         videogamePersistence.updateOnlineByGenre(genreType, online);
     }
-    }
+
+}
 

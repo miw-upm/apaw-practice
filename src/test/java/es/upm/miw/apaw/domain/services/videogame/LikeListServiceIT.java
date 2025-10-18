@@ -1,6 +1,9 @@
 package es.upm.miw.apaw.domain.services.videogame;
 
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -15,7 +18,6 @@ public class LikeListServiceIT {
 
     @Autowired
     private LikeListService likeListService;
-
 
     @Test
     void testReadSharedById() {

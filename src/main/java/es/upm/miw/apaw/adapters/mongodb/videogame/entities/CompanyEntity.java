@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.entities;
 
 import es.upm.miw.apaw.domain.models.videogame.Company;
+import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -40,4 +41,8 @@ public class CompanyEntity {
         BeanUtils.copyProperties(this, company);
         return company;
     }
+    public void fromCompany(Company company){
+        BeanUtils.copyProperties(company,this);
+    }
+
 }
