@@ -67,6 +67,7 @@ public class VideogameSeeder {
         };
         this.companyRepository.saveAll(Arrays.asList(companies));
 
+
         LikeListEntity[] likeLists = {
                 LikeListEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))
                         .likesCount(0).shared(true).gamesLikedEntity(Arrays.asList(videogames[0], videogames[1]))
