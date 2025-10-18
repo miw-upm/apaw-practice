@@ -26,7 +26,7 @@ class EnrollmentRepositoryIT {
 
         assertThat(enrollment).isPresent();
         assertThat(enrollment.get().getCode()).isEqualTo(enrollmentCode);
-        assertThat(enrollment.get().getStudentId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0500"));
+        assertThat(enrollment.get().getStudentId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"));
     }
 
     @Test
