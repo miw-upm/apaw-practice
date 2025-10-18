@@ -49,7 +49,7 @@ public class BankAccountResource {
         return this.bankAccountService.updateCreditCard(accountNumber,creditCard);
     }
 
-    @GetMapping(MOBILE+ TOTAL_QUANTITIES)
+    @GetMapping(MOBILE+LOANS+TOTAL_QUANTITIES)
     public BigDecimal obtainTotalQuantityByMobile(@PathVariable("mobile") String mobile){
         return this.bankAccountService.obtainTotalQuantityByMobile(mobile);
     }
