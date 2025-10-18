@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.daos;
 
+import es.upm.miw.apaw.adapters.mongodb.videogame.entities.CompanyEntity;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.GenreEntity;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.LikeListEntity;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.VideogameEntity;
@@ -54,6 +55,17 @@ public class VideogameSeeder {
         };
         this.videogameRepository.saveAll(Arrays.asList(videogames));
 
+        CompanyEntity[] companies = {
+                CompanyEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0010"))
+                        .denomination("company0").foundationDate(LocalDate.now()).sector("sector0")
+                        .videoGamesEntity(Arrays.asList(videogames[1], videogames[2])).build(),
+                CompanyEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0011"))
+                        .denomination("company1").foundationDate(LocalDate.now()).sector("sector1").build(),
+                CompanyEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0012"))
+                        .denomination("company2").foundationDate(LocalDate.now()).sector("sector0")
+                        .videoGamesEntity(Arrays.asList(videogames[3], videogames[4])).build(),
+        };
+        this.companyRepository.saveAll(Arrays.asList(companies));
 
 
         LikeListEntity[] likeLists = {
