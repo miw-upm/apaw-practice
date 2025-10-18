@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Repository("subjectAssignmentPersistence")
 public class SubjectAssignmentPersistenceMongodb implements SubjectAssignmentPersistence {
@@ -38,5 +39,11 @@ public class SubjectAssignmentPersistenceMongodb implements SubjectAssignmentPer
         return this.subjectAssignmentRepository
                 .save(subjectAssignmentEntity)
                 .toSubjectAssignment();
+    }
+
+    @Override
+    public Stream<SubjectAssignment> findAll() {
+        return this.subjectAssignmentRepository.findAll().stream()
+                .map(SubjectAssignmentEntity::toSubjectAssignment);
     }
 }

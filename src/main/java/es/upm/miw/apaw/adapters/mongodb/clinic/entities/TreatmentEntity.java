@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @Document
 public class TreatmentEntity {
 
-    // Identificador técnico de MongoDB
+
     @Id
     private String id;
 

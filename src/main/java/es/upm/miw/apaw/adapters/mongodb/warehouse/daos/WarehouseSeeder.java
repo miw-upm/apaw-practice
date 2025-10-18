@@ -111,7 +111,7 @@ public class WarehouseSeeder {
                         .partnerAddress("Calle Mayor 123, Madrid")
                         .completedOrder(true)
                         .orderDetailEntities(List.of(orderDetails[0], orderDetails[1]))
-                        .userId(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"))
+                        .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                         .build(),
                 MovementOrderEntity.builder()
                         .id(UUID.fromString("dddddddd-eeee-ffff-aaaa-bbbbcccc0002"))
@@ -121,7 +121,7 @@ public class WarehouseSeeder {
                         .partnerAddress("Av. Central 56, Barcelona")
                         .completedOrder(false)
                         .orderDetailEntities(List.of(orderDetails[2]))
-                        .userId(UUID.fromString("eeeeeeee-ffff-aaaa-bbbb-ccccdddd0001"))
+                        .userId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .build()
         };
         this.movementOrderRepository.saveAll(Arrays.asList(movementOrders));

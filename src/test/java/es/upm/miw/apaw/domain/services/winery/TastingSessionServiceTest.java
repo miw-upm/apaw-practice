@@ -124,4 +124,32 @@ public class TastingSessionServiceTest {
                         Tuple.tuple(7, "Nice experience", true)
                 );
     }
+
+    @Test
+    void testUpdateEvaluationsNotFound() {
+        UUID sessionId = UUID.randomUUID();
+
+        List<Evaluation> newEvaluations = List.of(
+                new Evaluation(10, "Excellent", true)
+        );
+
+        TastingSession tastingSession = TastingSession.builder()
+                .id(sessionId)
+                .date(LocalDate.now())
+                .capacity(10)
+                .location("Test")
+                .wines(List.of())
+                .evaluations(List.of())
+                .build();
+
+        BDDMockito.given(this.tastingSessionPersistence.readById(sessionId))
+                .willReturn(tastingSession);
+
+        BDDMockito.given(this.tastingSessionPersistence.update(Mockito.any(TastingSession.class)))
+                .willThrow(new NotFoundException("TastingSession id: " + sessionId));
+
+        assertThatThrownBy(() -> this.tastingSessionService.updateEvaluations(sessionId, newEvaluations))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining(sessionId.toString());
+    }
 }

@@ -47,7 +47,7 @@ public class TastingSessionEntityResourceFT {
     }
 
     @Test
-    void testUpdate() {
+    void testUpdateEvaluationsFail() {
         List<Evaluation> evaluationList = Arrays.asList(
                 new Evaluation(8, "Good wines and better service", true),
                 new Evaluation(2, "Bad organization", false)
@@ -60,6 +60,28 @@ public class TastingSessionEntityResourceFT {
                 .bodyValue(evaluationList)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testUpdateEvaluationsSuccess() {
+        List<Evaluation> newEvaluations = Arrays.asList(
+                new Evaluation(9, "Perfectly organized", true),
+                new Evaluation(4, "Too crowded", false)
+        );
+
+        webTestClient.put()
+                .uri(TastingSessionResource.TASTING_SESSIONS + TastingSessionResource.ID + TastingSessionResource.EVALUATIONS,
+                        "aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(newEvaluations)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(TastingSession.class)
+                .value(updatedSession -> {
+                    assertThat(updatedSession).isNotNull();
+                    assertThat(updatedSession.getEvaluations()).hasSize(2);
+                    assertThat(updatedSession.getEvaluations().getFirst().getComment()).isEqualTo("Perfectly organized");
+                });
     }
 
 }
