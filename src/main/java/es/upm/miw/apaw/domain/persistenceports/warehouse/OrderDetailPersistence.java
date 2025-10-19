@@ -7,6 +7,6 @@ import java.math.BigDecimal;
 @Repository
 public interface OrderDetailPersistence {
 
-    BigDecimal sumUnitCostDistinctByPosition(String position);
+    BigDecimal findBySumUnitCostDistinctByPosition(String position);
 
 }

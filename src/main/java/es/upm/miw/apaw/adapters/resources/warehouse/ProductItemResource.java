@@ -21,7 +21,9 @@ public class ProductItemResource {
 
     @PutMapping(BARCODE)
     public ProductItem update(@PathVariable String barcode, @RequestBody ProductItem productItem) {
-        return this.productItemService.update(barcode, productItem);
+        String normalizedBarcode = barcode.toUpperCase();
+        productItem.setBarcode(normalizedBarcode);
+        return this.productItemService.update(normalizedBarcode, productItem);
     }
 
 }

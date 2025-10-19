@@ -19,21 +19,21 @@ class OrderDetailServiceIT {
     private OrderDetailPersistenceMongodb orderDetailPersistence;
 
     @Test
-    void testSumUnitCostDistinctByPosition() {
+    void testFindBySumUnitCostDistinctByPosition() {
         String position = "A1";
 
-        BigDecimal result = this.orderDetailPersistence.sumUnitCostDistinctByPosition(position);
+        BigDecimal result = this.orderDetailPersistence.findBySumUnitCostDistinctByPosition(position);
 
         assertThat(result).isNotNull();
         assertThat(result).isGreaterThan(BigDecimal.ZERO);
     }
 
     @Test
-    void testSumUnitCostDistinctByPositionNotFound() {
+    void testFindBySumUnitCostDistinctByPositionNotFound() {
         String invalidPosition = "Z9";
 
         assertThrows(RuntimeException.class,
-                () -> this.orderDetailPersistence.sumUnitCostDistinctByPosition(invalidPosition));
+                () -> this.orderDetailPersistence.findBySumUnitCostDistinctByPosition(invalidPosition));
     }
 
 }
