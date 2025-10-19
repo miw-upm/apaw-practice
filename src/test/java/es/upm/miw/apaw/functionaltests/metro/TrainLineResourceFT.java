@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.functionaltests.metro;
 import es.upm.miw.apaw.adapters.resources.metro.TrainLineResource;
+import es.upm.miw.apaw.domain.models.metro.SumTicketPrices;
 import es.upm.miw.apaw.domain.models.metro.TrainLine;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -92,6 +94,38 @@ class TrainLineResourceFT {
                 .bodyValue(trainLine)
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testFindSumTicketPricesByTrainLineColor() {
+        String color = "Red";
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(TrainLineResource.TRAIN_LINES + TrainLineResource.ZONES_TICKET_PRICE)
+                        .queryParam("color", color)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(SumTicketPrices.class)
+                .value(sumPrices -> {
+                    assertThat(sumPrices.getSumPrices()).isEqualTo(new BigDecimal("9.75"));
+                });
+    }
+
+    @Test
+    void testFindSumTicketPricesByNonExistingTrainLineColor() {
+        String color = "NonExistentColor";
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(TrainLineResource.TRAIN_LINES + TrainLineResource.ZONES_TICKET_PRICE)
+                        .queryParam("color", color)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(SumTicketPrices.class)
+                .value(sumPrices -> {
+                    assertThat(sumPrices.getSumPrices()).isEqualTo(new BigDecimal("0"));
+                });
     }
 }
 
