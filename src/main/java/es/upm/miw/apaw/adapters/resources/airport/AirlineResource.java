@@ -1,17 +1,18 @@
 package es.upm.miw.apaw.adapters.resources.airport;
 
+import es.upm.miw.apaw.domain.models.airport.Airline;
 import es.upm.miw.apaw.domain.services.airport.AirlineService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(AirlineResource.AIRLINES)
 public class AirlineResource {
     public static final String AIRLINES = "airport/airlines";
     public static final String NAME = "/{name}";
+    public static final String PLANE_MODEL = "/{planeModel}";
 
     private final AirlineService airlineService;
 
@@ -23,5 +24,10 @@ public class AirlineResource {
     @DeleteMapping(NAME)
     public void delete(@PathVariable String name) {
         this.airlineService.delete(name);
+    }
+
+    @GetMapping(PLANE_MODEL)
+    public Stream<String> readByPlaneModel(@PathVariable String planeModel) {
+        return this.airlineService.readByPlaneModel(planeModel);
     }
 }

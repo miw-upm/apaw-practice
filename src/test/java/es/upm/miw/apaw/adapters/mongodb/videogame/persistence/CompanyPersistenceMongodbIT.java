@@ -1,12 +1,15 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.domain.models.videogame.Company;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -16,6 +19,14 @@ public class CompanyPersistenceMongodbIT {
 
     @Autowired
     private CompanyPersistenceMongoDB companyPersistenceMongoDB;
+
+    @Autowired
+    private VideogameSeeder videogameSeeder;
+    @BeforeEach
+    void setUp() {
+        this.videogameSeeder.deleteAll();
+        this.videogameSeeder.seedDatabase();
+    }
 
     @Test
     void testCreate() {
@@ -27,7 +38,6 @@ public class CompanyPersistenceMongodbIT {
                 .sector("sector0")
                 .build();
 
-
         Company saved = companyPersistenceMongoDB.create(company);
 
         assertThat(saved).isNotNull();
@@ -35,23 +45,28 @@ public class CompanyPersistenceMongodbIT {
         assertThat(saved.getSector()).isEqualTo("sector0");
         assertThat(saved.getFoundationDate()).isEqualTo(today);
 
-
         assertThat(companyPersistenceMongoDB.existDenomination("company5"));
     }
 
+    @Test
     void testExistDenomination() {
-
-        Company entity = new Company();
-        entity.setDenomination("company1");
-        entity.setSector("sector1");
-        entity.setFoundationDate(LocalDate.now());
-        companyPersistenceMongoDB.create(entity);
 
         boolean exists = companyPersistenceMongoDB.existDenomination("company1");
         boolean notExists = companyPersistenceMongoDB.existDenomination("noSuchCompany");
 
         assertThat(exists).isTrue();
         assertThat(notExists).isFalse();
+
+    }
+
+    @Test
+    void testReadAll() {
+        List<Company> companies = companyPersistenceMongoDB.readAll().toList();
+
+        assertThat(companies.size()).isEqualTo(3);
+        assertThat(companies.get(0).getDenomination()).isEqualTo("company0");
+        assertThat(companies.get(1).getDenomination()).isEqualTo("company1");
+        assertThat(companies.get(2).getDenomination()).isEqualTo("company2");
 
     }
 }

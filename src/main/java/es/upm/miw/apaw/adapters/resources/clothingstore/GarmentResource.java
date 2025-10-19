@@ -13,23 +13,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
+import java.util.List;
+
 
 @RestController
 @RequestMapping(GarmentResource.GARMENTS)
 public class GarmentResource {
 
     public static final String GARMENTS = "/clothingstore/garments";
+    public static final String SEARCH = "/search";
+    public static final String SUM_PRICE = "/sum-price";
+    public static final String DISTINCT_IDS = "/distinct-ids";
 
     private final GarmentService garmentService;
+
     @Autowired
     public GarmentResource(GarmentService garmentService) {
         this.garmentService = garmentService;
     }
-
     @PostMapping
     public Garment create(@RequestBody Garment garment) {
         return this.garmentService.create(garment);
@@ -58,8 +65,22 @@ public class GarmentResource {
     }
 
 
-    @GetMapping("/search/sum-price")
-    public BigDecimal sumDistinctPriceByMobile(@RequestParam String mobile) {
-        return this.garmentService.sumDistinctPriceByMobile(mobile);
+
+   @GetMapping(SEARCH + SUM_PRICE)
+    public BigDecimal sumDistinctPriceByMobile(@RequestParam(value = "mobile", required = false) String mobile) {
+    if (mobile == null || mobile.isBlank()) {
+        throw new BadRequestException("Query param 'mobile' is required");
     }
+    return this.garmentService.sumDistinctPriceByMobile(mobile);
+}
+
+    @GetMapping(SEARCH + DISTINCT_IDS)
+    public List<UUID> findDistinctIdsByInvoiceNumber(
+            @RequestParam(value = "number", required = false) String number) {
+        if (number == null || number.isBlank()) {
+            throw new BadRequestException("Query param 'number' is required");
+        }
+        return this.garmentService.findDistinctIdsByInvoiceNumber(number);
+    }
+
 }

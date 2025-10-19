@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
+
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.StoreRepository;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.StoreEntity;

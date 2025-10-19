@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.functionaltests.university;
 
 import es.upm.miw.apaw.adapters.resources.university.TeacherResource;
-import es.upm.miw.apaw.domain.models.university.DurationSum;
+import es.upm.miw.apaw.domain.models.university.LessonDurationSearching;
 import es.upm.miw.apaw.domain.models.university.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.Map;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-public class TeacherResourceFT {
+class TeacherResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -164,9 +163,9 @@ public class TeacherResourceFT {
                         .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(DurationSum.class)
-                .value(durationSum -> {
-                    assertThat(durationSum.getDurationSum()).isEqualTo(210);
+                .expectBody(LessonDurationSearching.class)
+                .value(lessonDurationSearching -> {
+                    assertThat(lessonDurationSearching.getDurationSum()).isEqualTo(210);
                 });
     }
 
@@ -180,9 +179,9 @@ public class TeacherResourceFT {
                         .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(DurationSum.class)
-                .value(durationSum -> {
-                    assertThat(durationSum.getDurationSum()).isEqualTo(60);
+                .expectBody(LessonDurationSearching.class)
+                .value(lessonDurationSearching -> {
+                    assertThat(lessonDurationSearching.getDurationSum()).isEqualTo(60);
                 });
     }
 
@@ -196,9 +195,9 @@ public class TeacherResourceFT {
                         .build())
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(DurationSum.class)
-                .value(durationSum -> {
-                    assertThat(durationSum.getDurationSum()).isEqualTo(0);
+                .expectBody(LessonDurationSearching.class)
+                .value(lessonDurationSearching -> {
+                    assertThat(lessonDurationSearching.getDurationSum()).isZero();
                 });
     }
 }

@@ -91,10 +91,10 @@ public class AirportSeeder {
                 PlaneEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1003"))
                         .registrationNumber("EC-VAL")
-                        .model("A350-900")
-                        .seatCount(331)
+                        .model("B787-9 Dreamliner")
+                        .seatCount(296)
                         .createdAt(LocalDateTime.of(2024,7, 1, 12, 0))
-                        .manufacturer("Airbus")
+                        .manufacturer("Boeing")
                         .build(),
                 PlaneEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1004"))
@@ -228,14 +228,14 @@ public class AirportSeeder {
                         .name("UPM Airlines")
                         .code("UP")
                         .country("ES")
-                        .flights(List.of())
+                        .flights(List.of(flights[0], flights[1]))
                         .build(),
                 AirlineEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4001"))
                         .name("Iberia Express")
                         .code("IB")
                         .country("ES")
-                        .flights(List.of(flights[0], flights[1]))
+                        .flights(List.of(flights[4]))
                         .build(),
                 AirlineEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4002"))
@@ -249,8 +249,36 @@ public class AirportSeeder {
                         .name("Vueling")
                         .code("VY")
                         .country("ES")
-                        .flights(List.of(flights[3]))
-                        .build()
+                        .flights(List.of(flights[3], flights[6]))
+                        .build(),
+                AirlineEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4004"))
+                        .name("UPM Dellines Express")
+                        .code("UP")
+                        .country("ES")
+                        .flights(List.of())
+                        .build(),
+                AirlineEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4005"))
+                        .name("UPM Dellines")
+                        .code("UP")
+                        .country("ES")
+                        .flights(List.of())
+                        .build(),
+                AirlineEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4006"))
+                        .name("UPM Dellines Economy")
+                        .code("UP")
+                        .country("ES")
+                        .flights(List.of())
+                        .build(),
+                AirlineEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4007"))
+                        .name("UPM Dellines Plus")
+                        .code("UP")
+                        .country("ES")
+                        .flights(List.of())
+                        .build(),
         };
         this.airlineRepository.saveAll(Arrays.asList(airlines));
 
