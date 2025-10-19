@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.domain.services.university;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
-import es.upm.miw.apaw.domain.models.university.DurationSum;
+import es.upm.miw.apaw.domain.models.university.LessonDurationSearching;
 import es.upm.miw.apaw.domain.models.university.Teacher;
 import es.upm.miw.apaw.domain.persistenceports.university.TeacherPersistence;
 import org.junit.jupiter.api.Test;
@@ -99,26 +99,26 @@ class TeacherServiceIT {
     void testfindLessonDurationSumByTeacherFullName() {
         String teacherFullName = "TFN010";
 
-        DurationSum durationSum = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
+        LessonDurationSearching lessonDurationSearching = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
 
-        assertThat(durationSum.getDurationSum()).isEqualTo(210);
+        assertThat(lessonDurationSearching.getDurationSum()).isEqualTo(210);
     }
 
     @Test
     void testfindLessonDurationSumByTeacherFullNameExcludingDuplicates() {
         String teacherFullName = "TFN009";
 
-        DurationSum durationSum = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
+        LessonDurationSearching lessonDurationSearching = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
 
-        assertThat(durationSum.getDurationSum()).isEqualTo(60);
+        assertThat(lessonDurationSearching.getDurationSum()).isEqualTo(60);
     }
 
     @Test
     void testfindLessonDurationSumByTeacherFullNameNotFound() {
         String teacherFullName = "TFN009NOTFOUND";
 
-        DurationSum durationSum = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
+        LessonDurationSearching lessonDurationSearching = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
 
-        assertThat(durationSum.getDurationSum()).isEqualTo(0);
+        assertThat(lessonDurationSearching.getDurationSum()).isZero();
     }
 }

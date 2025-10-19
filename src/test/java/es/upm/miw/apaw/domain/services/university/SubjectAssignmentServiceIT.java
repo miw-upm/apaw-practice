@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -46,10 +47,9 @@ class SubjectAssignmentServiceIT {
 
         List<Lesson> lessons = subjectAssignmentService.getLessons(subjectAssignmentId);
 
-        assertThat(lessons).isNotEmpty();
         assertThat(lessons).hasSize(2);
 
-        Lesson lesson1 = lessons.get(0);
+        Lesson lesson1 = lessons.getFirst();
         assertThat(lesson1.getStartDate()).isEqualTo(LocalDateTime.of(2024, 1, 19, 10, 0));
         assertThat(lesson1.getClassroom()).isEqualTo("D401");
         assertThat(lesson1.getDuration()).isEqualTo(90);
@@ -145,7 +145,9 @@ class SubjectAssignmentServiceIT {
                         .build()
         );
 
-        assertThatThrownBy(() -> subjectAssignmentService.updateCapacities(capacityUpdates.stream()))
+        Stream<SubjectAssignmentCapacityUpdating> capacityUpdatesStream = capacityUpdates.stream();
+
+        assertThatThrownBy(() -> subjectAssignmentService.updateCapacities(capacityUpdatesStream))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("SubjectAssignment id: " + nonExistentId);
     }
@@ -184,7 +186,6 @@ class SubjectAssignmentServiceIT {
                             .build();
                 });
 
-        // capacity=20 tiene enrollments con students: 0002, 0003, 0004, 0005
         UserMobileSearching result = subjectAssignmentService.findUniqueUsersMobilesByCapacity(20);
 
         assertThat(result).isNotNull();

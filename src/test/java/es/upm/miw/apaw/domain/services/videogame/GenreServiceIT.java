@@ -1,10 +1,8 @@
 package es.upm.miw.apaw.domain.services.videogame;
 
-import es.upm.miw.apaw.adapters.mongodb.videogame.daos.GenreRepository;
 import es.upm.miw.apaw.adapters.mongodb.videogame.persistence.GenrePersistenceMongoDB;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.videogame.Genre;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +21,6 @@ public class GenreServiceIT {
     @Autowired
     private GenrePersistenceMongoDB genrePersistenceMongoDB;
 
-    @Autowired
-    private GenreRepository genreRepository;
 
     @Test
     void testUpdateAgeRestriction() {

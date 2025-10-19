@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DurationSum {
+public class LessonDurationSearching {
     private Integer durationSum;
 }

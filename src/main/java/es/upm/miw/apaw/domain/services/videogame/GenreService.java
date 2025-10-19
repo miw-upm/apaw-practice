@@ -10,7 +10,7 @@ public class GenreService {
     private final GenrePersistence genrePersistence;
 
     @Autowired
-    public GenreService(GenrePersistence genrePersistence){
+    public GenreService(GenrePersistence genrePersistence) {
         this.genrePersistence = genrePersistence;
     }
 

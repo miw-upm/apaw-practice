@@ -59,6 +59,6 @@ class EnrollmentRepositoryIT {
 
         int deletedCount = enrollmentRepository.deleteByCode(nonExistentCode);
 
-        assertThat(deletedCount).isEqualTo(0);
+        assertThat(deletedCount).isZero();
     }
 }

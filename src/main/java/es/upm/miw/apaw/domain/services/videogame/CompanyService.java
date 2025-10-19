@@ -3,11 +3,13 @@ package es.upm.miw.apaw.domain.services.videogame;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.models.videogame.Company;
 import es.upm.miw.apaw.domain.persistenceports.videogame.CompanyPersistence;
+import es.upm.miw.apaw.domain.persistenceports.videogame.LikeListPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyService {
+    @Autowired
     private final CompanyPersistence companyPersistence;
 
     @Autowired
