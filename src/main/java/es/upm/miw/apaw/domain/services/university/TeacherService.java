@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.domain.services.university;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
-import es.upm.miw.apaw.domain.models.university.DurationSum;
+import es.upm.miw.apaw.domain.models.university.LessonDurationSearching;
 import es.upm.miw.apaw.domain.models.university.Lesson;
 import es.upm.miw.apaw.domain.models.university.Teacher;
 import es.upm.miw.apaw.domain.persistenceports.university.SubjectAssignmentPersistence;
@@ -44,8 +44,8 @@ public class TeacherService {
         }
     }
 
-    public DurationSum findLessonDurationSumByTeacherFullName(String fullName) {
-        return new DurationSum(this.subjectAssignmentPersistence.findAll()
+    public LessonDurationSearching findLessonDurationSumByTeacherFullName(String fullName) {
+        return new LessonDurationSearching(this.subjectAssignmentPersistence.findAll()
                 .filter(subjectAssignment -> subjectAssignment.getTeachers().stream()
                         .anyMatch(teacher -> fullName.equalsIgnoreCase(teacher.getFullName())))
                 .flatMap(subjectAssignment -> subjectAssignment.getLessons().stream())

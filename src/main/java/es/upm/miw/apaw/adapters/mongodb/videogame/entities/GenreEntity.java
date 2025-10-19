@@ -2,7 +2,10 @@ package es.upm.miw.apaw.adapters.mongodb.videogame.entities;
 
 
 import es.upm.miw.apaw.domain.models.videogame.Genre;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -35,7 +38,7 @@ public class GenreEntity {
 
     public Genre toGenre() {
         Genre genre = new Genre();
-        BeanUtils.copyProperties(this,genre);
+        BeanUtils.copyProperties(this, genre);
         return genre;
     }
 }

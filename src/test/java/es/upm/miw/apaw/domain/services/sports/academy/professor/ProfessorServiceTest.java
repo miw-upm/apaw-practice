@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.sports.academy.professor;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.CreateProfessor;
 import es.upm.miw.apaw.domain.persistenceports.sports.academy.IProfessorPersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import es.upm.miw.apaw.domain.services.sports.academy.ProfessorService;
@@ -32,6 +33,11 @@ class ProfessorServiceTest {
         UserDto userDto = UserDto.builder()
                 .id(id)
                 .build();
+        CreateProfessor createProfessor = CreateProfessor.builder()
+                .userId(id)
+                .specialization("Tennis")
+                .licenseNumber("LIC123456")
+                .build();
         Professor professor = Professor.builder()
                 .user(UserDto.builder().id(id).build())
                 .specialization("Tennis")
@@ -40,7 +46,7 @@ class ProfessorServiceTest {
         when(userRestClient.readById(id)).thenReturn(userDto);
         when(professorPersistence.create(professor)).thenReturn(professor);
 
-        Professor result = professorService.create(professor);
+        Professor result = professorService.create(createProfessor);
 
         assertThat(result.getUser().getId()).isEqualTo(id);
         assertThat(result.getSpecialization()).isEqualTo("Tennis");

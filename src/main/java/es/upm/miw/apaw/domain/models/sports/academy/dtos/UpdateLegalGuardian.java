@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.models.sports.academy.dtos;
 
-import es.upm.miw.apaw.domain.models.sports.academy.enums.Level;
+import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +12,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SportModalitiesLevelsPercentage {
+public class UpdateLegalGuardian {
     @NotNull
-    private Level level;
+    @NotBlank
+    public String secondMobile;
     @NotNull
-    private Double percentage;
+    public RelationShip relationShip;
 }

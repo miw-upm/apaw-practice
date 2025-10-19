@@ -10,4 +10,5 @@ public interface CompanyRepository extends MongoRepository<CompanyEntity, UUID> 
     Optional<CompanyEntity> findById(UUID id);
 
     Optional<CompanyEntity> findByDenomination(String denomination);
+
 }

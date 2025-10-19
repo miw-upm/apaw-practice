@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DurationSum {
-    private Integer durationSum;
+public class UserMobileSearching {
+    private List<String> mobiles;
 }

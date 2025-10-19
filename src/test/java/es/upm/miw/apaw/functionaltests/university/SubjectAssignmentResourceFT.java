@@ -1,13 +1,18 @@
 package es.upm.miw.apaw.functionaltests.university;
 
 import es.upm.miw.apaw.adapters.resources.university.SubjectAssignmentResource;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.university.Lesson;
 import es.upm.miw.apaw.domain.models.university.SubjectAssignmentCapacityUpdating;
+import es.upm.miw.apaw.domain.models.university.UserMobileSearching;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDateTime;
@@ -15,6 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -23,6 +29,9 @@ class SubjectAssignmentResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
+
+    @MockitoBean
+    private UserRestClient userRestClient;
 
     @Test
     void testGetLessons() {
@@ -143,5 +152,62 @@ class SubjectAssignmentResourceFT {
                 .bodyValue(capacityUpdates)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testFindUniqueUsersMobilesByCapacity() {
+        BDDMockito.given(this.userRestClient.readById(any(UUID.class)))
+                .willAnswer(invocation -> {
+                    UUID id = invocation.getArgument(0);
+                    String idSuffix = id.toString().substring(32);
+                    return UserDto.builder()
+                            .id(id)
+                            .mobile("6" + idSuffix)
+                            .firstName("Student" + idSuffix)
+                            .build();
+                });
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(SubjectAssignmentResource.SUBJECT_ASSIGNMENTS + SubjectAssignmentResource.USERS_MOBILE)
+                        .queryParam("capacity", 30)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(UserMobileSearching.class)
+                .value(result -> {
+                    assertThat(result).isNotNull();
+                    assertThat(result.getMobiles()).isNotNull();
+                    assertThat(result.getMobiles()).hasSize(4);
+                    assertThat(result.getMobiles()).containsExactlyInAnyOrder("60001", "60003", "60004", "60005");
+                });
+    }
+
+    @Test
+    void testFindUniqueUsersMobilesByCapacityEmpty() {
+        BDDMockito.given(this.userRestClient.readById(any(UUID.class)))
+                .willAnswer(invocation -> {
+                    UUID id = invocation.getArgument(0);
+                    String idSuffix = id.toString().substring(32);
+                    return UserDto.builder()
+                            .id(id)
+                            .mobile("6" + idSuffix)
+                            .firstName("Student" + idSuffix)
+                            .build();
+                });
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(SubjectAssignmentResource.SUBJECT_ASSIGNMENTS + SubjectAssignmentResource.USERS_MOBILE)
+                        .queryParam("capacity", 999)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(UserMobileSearching.class)
+                .value(result -> {
+                    assertThat(result).isNotNull();
+                    assertThat(result.getMobiles()).isNotNull();
+                    assertThat(result.getMobiles()).isEmpty();
+                });
     }
 }
