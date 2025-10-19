@@ -21,6 +21,5 @@ public class PlaylistEntity {
     private String code;
     private String label;
     private Boolean opened;
-    @Builder.Default
     private List<String> songIsrcs = new ArrayList<>();
 }

@@ -37,22 +37,6 @@ public class MusicSeeder {
     public void seedDatabase() {
         log.warn("------- Music Initial Load -----------");
 
-        ArtistEntity[] artists = {
-                ArtistEntity.builder()
-                        .name("Daft Punk")
-                        .activeSince(LocalDate.of(1993, 1, 1))
-                        .monthlyListeners(10_000_000L)
-                        .userId("11111111-1111-1111-1111-111111111111")
-                        .build(),
-                ArtistEntity.builder()
-                        .name("Tame Impala")
-                        .activeSince(LocalDate.of(2007, 1, 1))
-                        .monthlyListeners(6_500_000L)
-                        .userId("22222222-2222-2222-2222-222222222222")
-                        .build()
-        };
-        this.artistRepository.saveAll(Arrays.asList(artists));
-
         StyleEntity[] styles = {
                 StyleEntity.builder()
                         .genre("ELECTRONIC")
@@ -72,25 +56,40 @@ public class MusicSeeder {
                         .isrc("FRX123ABC0001")
                         .title("Around the World")
                         .durationSeconds(420)
-                        .artistName("Daft Punk")
                         .styleGenre("ELECTRONIC")
                         .build(),
                 SongEntity.builder()
                         .isrc("FRX123ABC0002")
                         .title("Digital Love")
                         .durationSeconds(300)
-                        .artistName("Daft Punk")
                         .styleGenre("ELECTRONIC")
                         .build(),
                 SongEntity.builder()
                         .isrc("AUX99ZZZ00001")
                         .title("The Less I Know The Better")
                         .durationSeconds(216)
-                        .artistName("Tame Impala")
                         .styleGenre("PSYCH")
                         .build()
         };
         this.songRepository.saveAll(Arrays.asList(songs));
+
+        ArtistEntity[] artists = {
+                ArtistEntity.builder()
+                        .name("Daft Punk")
+                        .activeSince(LocalDate.of(1993, 1, 1))
+                        .monthlyListeners(10_000_000L)
+                        .userId("11111111-1111-1111-1111-111111111111")
+                        .songIsrcs(List.of("FRX123ABC0001", "FRX123ABC0002"))
+                        .build(),
+                ArtistEntity.builder()
+                        .name("Tame Impala")
+                        .activeSince(LocalDate.of(2007, 1, 1))
+                        .monthlyListeners(6_500_000L)
+                        .userId("22222222-2222-2222-2222-222222222222")
+                        .songIsrcs(List.of("AUX99ZZZ00001"))
+                        .build()
+        };
+        this.artistRepository.saveAll(Arrays.asList(artists));
 
         PlaylistEntity[] playlists = {
                 PlaylistEntity.builder()
@@ -108,7 +107,7 @@ public class MusicSeeder {
         };
         this.playlistRepository.saveAll(Arrays.asList(playlists));
 
-        log.warn("        ------- music");
+        log.warn("------- music");
     }
 
     public void deleteAll() {

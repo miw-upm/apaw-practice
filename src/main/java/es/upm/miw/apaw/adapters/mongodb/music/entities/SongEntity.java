@@ -18,6 +18,5 @@ public class SongEntity {
     private String isrc;
     private String title;
     private Integer durationSeconds;
-    private String artistName;
     private String styleGenre;
 }
