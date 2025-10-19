@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.resources.sports.academy;
 
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.CreateProfessor;
 import es.upm.miw.apaw.domain.services.sports.academy.ProfessorService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class ProfessorResource {
     }
 
     @PostMapping
-    public Professor createProfessor(@Valid @RequestBody Professor professor) {
+    public Professor createProfessor(@Valid @RequestBody CreateProfessor professor) {
         return this.professorService.create(professor);
     }
 }

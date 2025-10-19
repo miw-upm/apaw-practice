@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.sports.academy.professor;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ProfessorRepository;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.CreateProfessor;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import es.upm.miw.apaw.BaseSportsAcademyTests;
 import es.upm.miw.apaw.domain.services.sports.academy.ProfessorService;
@@ -34,8 +35,8 @@ class ProfessorServiceIT extends BaseSportsAcademyTests {
                 .id(id)
                 .build();
         when(userRestClient.readById(id)).thenReturn(userDto);
-        Professor professor = Professor.builder()
-                .user(UserDto.builder().id(id).build())
+        CreateProfessor professor = CreateProfessor.builder()
+                .userId(id)
                 .licenseNumber("LIC123456")
                 .specialization("CrossFit")
                 .build();
