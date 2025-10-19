@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.warehouse;
 
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.warehouse.Location;
+import es.upm.miw.apaw.domain.persistenceports.warehouse.LocationPersistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +21,7 @@ class LocationServiceIT {
     private LocationService locationService;
 
     @Autowired
-    private LocationService locationPersistence;
+    private LocationPersistence locationPersistence;
 
     @Test
     void testReadAll() {

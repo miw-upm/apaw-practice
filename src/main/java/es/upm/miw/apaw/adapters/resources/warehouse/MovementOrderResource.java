@@ -14,7 +14,7 @@ public class MovementOrderResource {
 
     public static final String MOVEMENT_ORDERS = "/warehouse/movement-orders";
     public static final String SEARCHES = "/searches";
-    static final String FIND_BY_MOBILE = SEARCHES + "/find-by-mobile";
+    public static final String FIND_BY_MOBILE = SEARCHES + "/find-by-mobile";
 
     private final MovementOrderService movementOrderService;
 

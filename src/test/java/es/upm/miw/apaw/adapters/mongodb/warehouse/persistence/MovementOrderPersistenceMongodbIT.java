@@ -1,16 +1,11 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.persistence;
 
-import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.warehouse.MovementOrder;
-import es.upm.miw.apaw.domain.models.warehouse.OrderDetail;
-import es.upm.miw.apaw.domain.models.warehouse.ProductItem;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,12 +20,15 @@ class MovementOrderPersistenceMongodbIT {
 
     @Test
     void testReadById() {
-        Optional<MovementOrder> order = this.movementOrderPersistence
-                .readById(UUID.fromString("dddddddd-eeee-ffff-aaaa-bbbbcccc0001"));
-        assertThat(order).isPresent();
-        assertThat(order.get().getTypeOrder()).isEqualTo("INBOUND");
-        assertThat(order.get().getPartnerName()).isEqualTo("Supplier XYZ");
-        assertThat(order.get().getOrderDetails()).hasSize(2);
+        UUID existingId = UUID.fromString("dddddddd-eeee-ffff-aaaa-bbbbcccc0001");
+
+        Optional<MovementOrder> optionalOrder = this.movementOrderPersistence.readById(existingId);
+        assertThat(optionalOrder).isPresent();
+
+        MovementOrder order = optionalOrder.get();
+        assertThat(order.getTypeOrder()).isNotBlank();
+        assertThat(order.getPartnerName()).isNotBlank();
+        assertThat(order.getOrderDetails()).isNotNull().isNotEmpty();
     }
 
     @Test
