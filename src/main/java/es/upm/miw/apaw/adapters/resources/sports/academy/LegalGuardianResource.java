@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.resources.sports.academy;
 
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.UpdateLegalGuardian;
 import es.upm.miw.apaw.domain.services.sports.academy.LegalGuardianService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class LegalGuardianResource {
     }
 
     @PutMapping(ID_ID)
-    public LegalGuardian updateLegalGuardian(@Valid @PathVariable UUID id, @RequestBody LegalGuardian legalGuardian) {
+    public LegalGuardian updateLegalGuardian(@Valid @PathVariable UUID id, @RequestBody UpdateLegalGuardian legalGuardian) {
         return this.legalGuardianService.update(id, legalGuardian);
     }
 }
