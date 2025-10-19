@@ -1,58 +1,55 @@
 package es.upm.miw.apaw.domain.services.music;
 
-import es.upm.miw.apaw.adapters.mongodb.music.daos.ArtistRepository;
 import es.upm.miw.apaw.adapters.mongodb.music.daos.MusicSeeder;
-import es.upm.miw.apaw.adapters.mongodb.music.entities.ArtistEntity;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.music.Artist;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @SpringBootTest
 @ActiveProfiles("test")
 class ArtistServiceIT {
 
-    @Autowired
-    private ArtistService artistService;
+    @Autowired private ArtistService artistService;
+    @Autowired private MusicSeeder musicSeeder;
 
-    @Autowired
-    private ArtistRepository artistRepository;
-
-    @Autowired
-    private MusicSeeder musicSeeder;
+    @MockBean private UserRestClient userRestClient;
 
     @BeforeEach
-    void resetDb() {
+    void setUp() {
         musicSeeder.deleteAll();
         musicSeeder.seedDatabase();
+
+        UserDto mockUser = Mockito.mock(UserDto.class);
+        Mockito.when(userRestClient.readById(any(UUID.class))).thenReturn(mockUser);
+        Mockito.when(userRestClient.readByMobile(anyString())).thenReturn(mockUser);
     }
 
     @Test
     void testReadByNameOk() {
-        String name = "Tame Impala";
-
-        Optional<ArtistEntity> optional = this.artistRepository.findById(name);
-        assertThat(optional).isPresent();
-
-        Artist artist = this.artistService.readByName(name);
-
-        assertThat(artist.getName()).isEqualTo(name);
-        assertThat(artist.getUser()).isNotNull(); // user viene del micro externo
+        Artist artist = this.artistService.readByName("Tame Impala");
+        assertThat(artist.getName()).isEqualTo("Tame Impala");
+        assertThat(artist.getUser()).isNotNull();
         assertThat(artist.getMonthlyListeners()).isGreaterThan(0);
     }
 
     @Test
     void testReadByNameNotFound() {
         assertThatThrownBy(() -> this.artistService.readByName("Unknown Band"))
-                .isInstanceOf(NotFoundException.class)
+                .isInstanceOf(es.upm.miw.apaw.domain.exceptions.NotFoundException.class)
                 .hasMessageContaining("Artist not found");
     }
 }

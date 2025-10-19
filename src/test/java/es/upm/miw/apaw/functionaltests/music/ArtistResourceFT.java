@@ -42,13 +42,9 @@ class ArtistResourceFT {
         musicSeeder.deleteAll();
         musicSeeder.seedDatabase();
 
-        // nombre existente del seeder (evita “magic strings”)
         this.existingName = artistRepository.findAll().stream()
-                .findFirst()
-                .map(ArtistEntity::getName)
-                .orElse("Tame Impala");
+                .findFirst().map(ArtistEntity::getName).orElse("Tame Impala");
 
-        // Mock del micro de users para evitar 502 en CI
         UserDto mockUser = Mockito.mock(UserDto.class);
         Mockito.when(userRestClient.readById(any(UUID.class))).thenReturn(mockUser);
         Mockito.when(userRestClient.readByMobile(anyString())).thenReturn(mockUser);
@@ -63,7 +59,7 @@ class ArtistResourceFT {
                 .expectBody(Artist.class)
                 .value(a -> {
                     assertThat(a.getName()).isEqualTo(this.existingName);
-                    assertThat(a.getUser()).isNotNull();  // gracias al mock
+                    assertThat(a.getUser()).isNotNull();
                 });
     }
 
