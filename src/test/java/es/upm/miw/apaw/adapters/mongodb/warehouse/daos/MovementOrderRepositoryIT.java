@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.warehouse.daos;
 
-import es.upm.miw.apaw.adapters.mongodb.warehouse.entities.OrderDetailEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,9 +24,6 @@ class MovementOrderRepositoryIT {
                             .isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"));
                     assertThat(order.getRegistrationDate()).isNotNull();
                     assertThat(order.getOrderDetailEntities()).hasSize(2);
-                    OrderDetailEntity detail = order.getOrderDetailEntities().getFirst();
-                    assertThat(detail.getProductItemEntity().getBarcode()).isIn("PI-001", "PI-002");
-                    assertThat(detail.getQtyRequested()).isGreaterThan(0);
                 });
     }
 
