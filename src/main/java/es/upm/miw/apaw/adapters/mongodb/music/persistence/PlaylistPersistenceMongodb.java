@@ -36,7 +36,6 @@ public class PlaylistPersistenceMongodb implements PlaylistPersistence {
         if (playlist.getOpened() != null) {
             entity.setOpened(playlist.getOpened());
         }
-
-        this.playlistRepository.save(entity);
+        this.playlistRepository.save(entity); // ✅ sin return
     }
 }

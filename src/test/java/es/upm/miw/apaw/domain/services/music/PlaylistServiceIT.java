@@ -2,7 +2,9 @@ package es.upm.miw.apaw.domain.services.music;
 
 import es.upm.miw.apaw.adapters.mongodb.music.daos.MusicSeeder;
 import es.upm.miw.apaw.adapters.mongodb.music.daos.PlaylistRepository;
+import es.upm.miw.apaw.adapters.mongodb.music.entities.PlaylistEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.music.Playlist;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +28,59 @@ public class PlaylistServiceIT {
 
     @BeforeEach
     void resetDb() {
-        musicSeeder.deleteAll();
-        musicSeeder.seedDatabase();
+        this.musicSeeder.deleteAll();
+        this.musicSeeder.seedDatabase();
     }
 
     @Test
     void testDeleteOk() {
-        assertThat(playlistRepository.existsById("PL-001")).isTrue();
-        playlistService.delete("PL-001");
-        assertThat(playlistRepository.existsById("PL-001")).isFalse();
+        assertThat(this.playlistRepository.existsById("PL-001")).isTrue();
+        this.playlistService.delete("PL-001");
+        assertThat(this.playlistRepository.existsById("PL-001")).isFalse();
     }
 
     @Test
     void testDeleteNotFound() {
-        assertThatThrownBy(() -> playlistService.delete("PL-999"))
+        assertThatThrownBy(() -> this.playlistService.delete("PL-999"))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Playlist not found: PL-999");
+    }
+
+    @Test
+    void testUpdateOk() {
+        String code = "PL-001";
+
+        PlaylistEntity before = this.playlistRepository.findById(code).orElseThrow();
+        String oldLabel = before.getLabel();
+        Boolean oldOpened = before.getOpened();
+
+        String newLabel = oldLabel + " (UPDATED)";
+        Boolean newOpened = (oldOpened == null) ? Boolean.TRUE : !oldOpened;
+
+        Playlist payload = Playlist.builder()
+                .label(newLabel)
+                .opened(newOpened)
+                .build();
+
+        this.playlistService.update(code, payload);
+
+        PlaylistEntity after = this.playlistRepository.findById(code).orElseThrow();
+        assertThat(after.getLabel()).isEqualTo(newLabel);
+        assertThat(after.getOpened()).isEqualTo(newOpened);
+        assertThat(after.getSongIsrcs()).isEqualTo(before.getSongIsrcs()); // relación intacta
+        assertThat(after.getLabel()).isNotEqualTo(oldLabel);
+        assertThat(after.getOpened()).isNotEqualTo(oldOpened);
+    }
+
+    @Test
+    void testUpdateNotFound() {
+        Playlist payload = Playlist.builder()
+                .label("Does Not Exist")
+                .opened(Boolean.FALSE)
+                .build();
+
+        assertThatThrownBy(() -> this.playlistService.update("PL-404", payload))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("Playlist not found: PL-404");
     }
 }
