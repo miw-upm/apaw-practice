@@ -8,10 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-public class AirlineResourceFT {
+class AirlineResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -21,5 +25,18 @@ public class AirlineResourceFT {
         webTestClient.delete().uri(AirlineResource.AIRLINES + "/Iberia Express")
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    @Test
+    void testReadByPlaneModel() {
+        webTestClient.get().uri(AirlineResource.AIRLINES + "/B787-9 Dreamliner")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(names -> {
+                            assertThat(names)
+                                    .hasSize(2);
+                        }
+                );
     }
 }

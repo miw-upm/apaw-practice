@@ -24,4 +24,11 @@ public class AirlineServiceIT {
         this.airlineService.delete("Iberia Express");
         assertThat(this.airlinePersistence.existsName("Iberia Express")).isFalse();
     }
+
+    @Test
+    void testReadByPlaneModel() {
+        assertThat(this.airlineService.readByPlaneModel("B787-9 Dreamliner"))
+                .isNotNull()
+                .containsExactlyInAnyOrder("UPM Airlines", "Vueling");
+    }
 }
