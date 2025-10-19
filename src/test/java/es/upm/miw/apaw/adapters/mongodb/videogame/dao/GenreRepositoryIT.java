@@ -21,10 +21,10 @@ public class GenreRepositoryIT {
 
     @Test
     void testFindByType() {
-        assertTrue(this.genreRepository.findByType("action").isPresent());
-        GenreEntity genre = this.genreRepository.findByType("action").get();
-        assertThat(genre.getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"));
-        assertThat(genre.getDescription()).isEqualTo("Accion");
-        assertThat(genre.getAgeRestriction()).isEqualTo(10);
+        assertTrue(this.genreRepository.findByType("puzzle").isPresent());
+        GenreEntity genre = this.genreRepository.findByType("puzzle").get();
+        assertThat(genre.getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"));
+        assertThat(genre.getDescription()).isEqualTo("puzle");
+        assertThat(genre.getAgeRestriction()).isEqualTo(15);
     }
 }

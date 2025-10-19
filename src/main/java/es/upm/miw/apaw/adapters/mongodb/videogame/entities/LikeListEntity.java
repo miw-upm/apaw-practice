@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.entities;
 
 import es.upm.miw.apaw.domain.models.UserDto;
-import es.upm.miw.apaw.domain.models.videogame.Company;
 import es.upm.miw.apaw.domain.models.videogame.LikeList;
 import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import lombok.*;
