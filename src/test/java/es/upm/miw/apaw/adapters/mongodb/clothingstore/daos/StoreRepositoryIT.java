@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.daos;
 
-import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.StoreEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

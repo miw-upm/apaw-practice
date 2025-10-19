@@ -2,10 +2,10 @@ package es.upm.miw.apaw.functionaltests.clothingstore;
 
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 import es.upm.miw.apaw.adapters.resources.clothingstore.GarmentResource;
-import es.upm.miw.apaw.domain.models.UserDto;
-import es.upm.miw.apaw.domain.restclients.UserRestClient;
-import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.models.clothingstore.Garment;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,9 +39,16 @@ class GarmentResourceFT {
     private UserRestClient userRestClient;
 
     private static final String SUM_PRICE_SEARCH_PATH = GarmentResource.GARMENTS + "/search/sum-price";
-    private static final String KNOWN_MOBILE = "666000660";
+    private static final String DISTINCT_IDS_SEARCH_PATH = GarmentResource.GARMENTS + "/search/distinct-ids";
+
+    private static final String KNOWN_MOBILE   = "666000660";
     private static final String UNKNOWN_MOBILE = "999999999";
-    private static final UUID SEEDED_USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+    private static final UUID   SEEDED_USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+
+    // 与 clothingstoreSeeder 一致
+    private static final String KNOWN_INVOICE_NUMBER = "INV-2025-001";
+    private static final UUID   G1_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+    private static final UUID   G2_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002");
 
     @BeforeEach
     void resetDb() {
@@ -54,24 +62,8 @@ class GarmentResourceFT {
                 .build();
         given(userRestClient.readByMobile(KNOWN_MOBILE)).willReturn(mockUser);
 
-        // Mock: 未知手机号 -> 由 Resource/Service 统一映射为 502
         given(userRestClient.readByMobile(UNKNOWN_MOBILE))
                 .willThrow(new BadGatewayException("User not found with MOBILE: " + UNKNOWN_MOBILE));
-
-        System.out.println(">>> After reseed, GET size = " +
-                webTestClient.get()
-                        .uri(uriBuilder -> uriBuilder
-                                .path(GarmentResource.GARMENTS)
-                                .queryParam("min", "0")
-                                .queryParam("max", "100000")
-                                .build())
-                        .exchange()
-                        .expectStatus().isOk()
-                        .expectBodyList(Garment.class)
-                        .returnResult()
-                        .getResponseBody()
-                        .size()
-        );
     }
 
     @Test
@@ -109,10 +101,7 @@ class GarmentResourceFT {
                 .getResponseBody();
 
         assertThat(garments).isNotNull();
-        if (garments.isEmpty()) {
-            System.out.println(" No Garment data found in the current database; skipping PUT test");
-            return;
-        }
+        if (garments.isEmpty()) return;
 
         UUID id = garments.get(0).getId();
 
@@ -140,7 +129,7 @@ class GarmentResourceFT {
     }
 
     @Test
-    void testCreate(){
+    void testCreate() {
         Garment body = Garment.builder()
                 .size("S").price(new BigDecimal("19.99")).onSale(false).build();
 
@@ -205,10 +194,7 @@ class GarmentResourceFT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Garment.class)
-                .value(list ->
-                        assertThat(list)
-                                .noneMatch(g -> g.getId().equals(idToDelete))
-                );
+                .value(list -> assertThat(list).noneMatch(g -> g.getId().equals(idToDelete)));
     }
 
     @Test
@@ -224,8 +210,7 @@ class GarmentResourceFT {
                 .getResponseBody();
 
         assertThat(total).isNotNull();
-        assertThat(total).isEqualByComparingTo(new BigDecimal("149.98")); // 59.99 + 89.99
-        System.out.println(">>> sumDistinctPrice(" + KNOWN_MOBILE + ") = " + total);
+        assertThat(total).isEqualByComparingTo("149.98"); // 59.99 + 89.99
     }
 
     @Test
@@ -237,6 +222,24 @@ class GarmentResourceFT {
                 .exchange()
                 .expectStatus().isEqualTo(502);
     }
+
+    @Test
+    void testFindDistinctIdsByInvoiceNumber_ok() {
+        List<UUID> ids = this.webTestClient.get()
+                .uri(uri -> uri.path(DISTINCT_IDS_SEARCH_PATH)
+                        .queryParam("number", KNOWN_INVOICE_NUMBER) // 参数名必须是 number
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(UUID.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(ids).isNotNull();
+        assertThat(Set.copyOf(ids))
+                .containsExactlyInAnyOrder(G1_ID, G2_ID);
+    }
 }
+
 
 
