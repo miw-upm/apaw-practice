@@ -21,7 +21,7 @@ class OrderDetailResourceFT {
     private WebTestClient webTestClient;
 
     @Test
-    void testSumUnitCostDistinctByPosition() {
+    void testFindBySumUnitCostDistinctByPosition() {
         this.webTestClient.get()
                 .uri(OrderDetailResource.ORDER_DETAILS+OrderDetailResource.SUM_UNITCOST_BY_POSITION, "A1")
                 .exchange()
@@ -31,7 +31,7 @@ class OrderDetailResourceFT {
     }
 
     @Test
-    void testSumUnitCostDistinctByPositionNotFound() {
+    void testFindBySumUnitCostDistinctByPositionNotFound() {
         this.webTestClient.get()
                 .uri(OrderDetailResource.ORDER_DETAILS + OrderDetailResource.SUM_UNITCOST_BY_POSITION,"Z9")
                 .exchange()

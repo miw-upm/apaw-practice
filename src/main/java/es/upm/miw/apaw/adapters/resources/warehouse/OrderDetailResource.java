@@ -25,9 +25,9 @@ public class OrderDetailResource {
     }
 
     @GetMapping(SUM_UNITCOST_BY_POSITION)
-    public BigDecimal sumUnitCostDistinctByPosition(
+    public BigDecimal findBySumUnitCostDistinctByPosition(
             @PathVariable String position) {
-        return this.orderDetailService.sumUnitCostDistinctByPosition(position);
+        return this.orderDetailService.findBySumUnitCostDistinctByPosition(position.toUpperCase());
     }
 
 }

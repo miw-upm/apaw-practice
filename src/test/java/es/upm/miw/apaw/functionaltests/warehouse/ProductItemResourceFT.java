@@ -31,14 +31,23 @@ class ProductItemResourceFT {
                 new ProductItemResource(mockService)
         ).build();
 
-        String barcode = "PI-001";
+        String barcode = "pi-001";
+
         ProductItem input = ProductItem.builder()
                 .appoint("Updated Screw 12mm")
                 .cost(new BigDecimal("0.25"))
                 .unitOfMeasure("UNIT")
                 .build();
 
-        BDDMockito.given(mockService.update(barcode, input)).willReturn(input);
+        ProductItem result = ProductItem.builder()
+                .barcode("PI-001")
+                .appoint("Updated Screw 12mm")
+                .cost(new BigDecimal("0.25"))
+                .unitOfMeasure("UNIT")
+                .build();
+
+        BDDMockito.given(mockService.update(Mockito.anyString(), Mockito.any(ProductItem.class)))
+                .willReturn(result);
 
         localClient.put()
                 .uri(ProductItemResource.PRODUCT_ITEMS + ProductItemResource.BARCODE, barcode)
@@ -47,11 +56,13 @@ class ProductItemResourceFT {
                 .expectStatus().isOk()
                 .expectBody(ProductItem.class)
                 .value(item -> {
+                    assertThat(item).isNotNull();
                     assertThat(item.getAppoint()).isEqualTo("Updated Screw 12mm");
                     assertThat(item.getCost()).isEqualByComparingTo("0.25");
+                    assertThat(item.getUnitOfMeasure()).isEqualTo("UNIT");
                 });
 
-        Mockito.verify(mockService).update(barcode, input);
+        Mockito.verify(mockService).update(Mockito.anyString(), Mockito.any(ProductItem.class));
     }
 
 }

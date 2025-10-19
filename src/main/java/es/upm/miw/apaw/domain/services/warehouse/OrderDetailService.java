@@ -16,8 +16,8 @@ public class OrderDetailService {
         this.orderDetailPersistence = orderDetailPersistence;
     }
 
-    public BigDecimal sumUnitCostDistinctByPosition(String position) {
-        return this.orderDetailPersistence.sumUnitCostDistinctByPosition(position);
+    public BigDecimal findBySumUnitCostDistinctByPosition(String position) {
+        return this.orderDetailPersistence.findBySumUnitCostDistinctByPosition(position);
     }
 
 }
