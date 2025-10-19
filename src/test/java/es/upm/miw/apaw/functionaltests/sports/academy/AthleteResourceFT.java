@@ -6,9 +6,7 @@ import es.upm.miw.apaw.BaseSportsAcademyTests;
 import es.upm.miw.apaw.adapters.resources.sports.academy.AthleteResource;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
-import es.upm.miw.apaw.domain.models.sports.academy.dtos.SportModalitiesLevelsPercentage;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
-import es.upm.miw.apaw.domain.models.sports.academy.enums.Level;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
@@ -101,7 +99,7 @@ class AthleteResourceFT extends BaseSportsAcademyTests {
         String responseBody = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path(AthleteResource.ATHLETES + AthleteResource.SPORT_MODALITY_PROFESSOR_SPECIALIZATIONS)
-                        .queryParam("secondMobile", athletes[0].getLegalGuardians().getFirst().getSecondMobile())
+                        .queryParam("legalGuardianSecondMobile", athletes[0].getLegalGuardians().getFirst().getSecondMobile())
                         .build())
                 .exchange()
                 .expectStatus().isOk()
@@ -118,12 +116,12 @@ class AthleteResourceFT extends BaseSportsAcademyTests {
     }
 
     @Test
-    void testGetPercentageOfSportModalityLevelsByLegalGuardian() throws Exception {
+    void testGetAverageHeightByLegalGuardian() throws Exception {
         String relationShip = RelationShip.FATHER.name();
         String responseBody = webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(AthleteResource.ATHLETES + AthleteResource.SPORT_MODALITY_LEVELS)
-                        .queryParam("relationShip", relationShip)
+                        .path(AthleteResource.ATHLETES + AthleteResource.HEIGHT_BY_LEGAL_GUARDIAN)
+                        .queryParam("legalGuardianRelationShip", relationShip)
                         .build())
                 .exchange()
                 .expectStatus().isOk()
@@ -131,12 +129,8 @@ class AthleteResourceFT extends BaseSportsAcademyTests {
                 .returnResult()
                 .getResponseBody();
 
-        List<SportModalitiesLevelsPercentage> result = objectMapper.readValue(responseBody, new TypeReference<>() {});
+        double result = objectMapper.readValue(responseBody, double.class);
 
-        assertThat(result)
-                .isNotEmpty()
-                .contains(new SportModalitiesLevelsPercentage(Level.BEGINNER, 50.0),
-                        new SportModalitiesLevelsPercentage(Level.INTERMEDIATE, 50.0))
-                .doesNotHaveDuplicates();
+        assertThat(result).isEqualTo(1.7);
     }
 }

@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.sports.academy.legal.guardian;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.UpdateLegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.persistenceports.sports.academy.ILegalGuardianPersistence;
 import es.upm.miw.apaw.domain.services.sports.academy.LegalGuardianService;
@@ -28,6 +29,10 @@ class LegalGuardianServiceTest {
     @Test
     void testUpdate() {
         var id = UUID.randomUUID();
+        UpdateLegalGuardian updateLegalGuardian = UpdateLegalGuardian.builder()
+                .relationShip(RelationShip.FATHER)
+                .secondMobile("+5549988706208")
+                .build();
         LegalGuardian legalGuardian = LegalGuardian.builder()
                 .user(UserDto.builder().id(id).build())
                 .relationShip(RelationShip.FATHER)
@@ -35,7 +40,7 @@ class LegalGuardianServiceTest {
                 .build();
         when(legalGuardianPersistence.getById(id)).thenReturn(legalGuardian);
         when(legalGuardianPersistence.update(id, legalGuardian)).thenReturn(legalGuardian);
-        LegalGuardian result = legalGuardianService.update(id, legalGuardian);
+        LegalGuardian result = legalGuardianService.update(id, updateLegalGuardian);
         assertThat(result.getUser().getId()).isEqualTo(id);
         assertThat(result.getRelationShip()).isEqualTo(RelationShip.FATHER);
         assertThat(result.getSecondMobile()).isEqualTo("+5549988706208");

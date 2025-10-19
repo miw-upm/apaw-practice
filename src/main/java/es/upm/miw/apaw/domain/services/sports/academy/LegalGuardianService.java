@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.sports.academy;
 
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.UpdateLegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.domain.persistenceports.sports.academy.ILegalGuardianPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class LegalGuardianService {
         this.legalGuardianPersistence = legalGuardianPersistence;
     }
 
-    public LegalGuardian update(java.util.UUID id, LegalGuardian legalGuardian) {
+    public LegalGuardian update(java.util.UUID id, UpdateLegalGuardian legalGuardian) {
         var existingLegalGuardian = this.legalGuardianPersistence.getById(id);
         existingLegalGuardian.setRelationShip(legalGuardian.getRelationShip());
         existingLegalGuardian.setSecondMobile(legalGuardian.getSecondMobile());

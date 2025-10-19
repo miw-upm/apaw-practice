@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 public class MovementOrderResource {
 
     public static final String MOVEMENT_ORDERS = "/warehouse/movement-orders";
+    public static final String SEARCHES = "/searches";
+    public static final String FIND_BY_MOBILE = SEARCHES + "/find-by-mobile";
 
     private final MovementOrderService movementOrderService;
 
@@ -27,7 +29,7 @@ public class MovementOrderResource {
         return this.movementOrderService.create(movementOrder);
     }
 
-    @GetMapping(params = "mobile")
+    @GetMapping(FIND_BY_MOBILE)
     public Stream<String> findPositionsByUserMobile(@RequestParam String mobile) {
         return this.movementOrderService.findPositionsByUserMobile(mobile);
     }

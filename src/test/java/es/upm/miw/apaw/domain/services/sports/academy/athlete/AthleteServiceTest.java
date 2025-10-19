@@ -5,7 +5,6 @@ import es.upm.miw.apaw.domain.models.sports.academy.Athlete;
 import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
 import es.upm.miw.apaw.domain.models.sports.academy.SportModality;
-import es.upm.miw.apaw.domain.models.sports.academy.dtos.SportModalitiesLevelsPercentage;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Gender;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.Level;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
@@ -135,13 +134,13 @@ class AthleteServiceTest {
         when(legalGuardianService.getBySecondMobile(secondMobile)).thenReturn(returnedLegalGuardians);
         when(athletePersistence.getByLegalGuardians(returnedLegalGuardians)).thenReturn(Stream.of(athlete1));
 
-        var result = athleteService.getUniqueProfessorSpecializationsByLegalGuardian(secondMobile);
+        var result = athleteService.getUniqueProfessorSpecializations(secondMobile);
 
         assertThat(result).containsExactlyInAnyOrder("Fitness", "Tennis");
     }
 
     @Test
-    void testGetPercentageOfSportModalityLevelsByLegalGuardian() {
+    void testGetAverageHeightByLegalGuardian() {
         var relationShip = RelationShip.SIBLING;
         UUID legalGuardianId = UUID.fromString("bbbbbbbb-bbbb-cccc-dddd-eeeeffff0003");
         UUID athleteId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002");
@@ -154,6 +153,7 @@ class AthleteServiceTest {
                 .user(UserDto.builder().id(athleteId).build())
                 .legalGuardians(new ArrayList<>())
                 .sportModalities(new ArrayList<>())
+                .height(1.75)
                 .build();
 
         var legalGuardian = LegalGuardian.builder()
@@ -204,8 +204,8 @@ class AthleteServiceTest {
         when(legalGuardianService.getByRelationShip(relationShip)).thenReturn(returnedLegalGuardians);
         when(athletePersistence.getByLegalGuardians(returnedLegalGuardians)).thenReturn(Stream.of(athlete1));
 
-        var result = athleteService.getPercentageOfSportModalityLevelsByLegalGuardian(relationShip);
+        var result = athleteService.getAverageHeightByLegalGuardian(relationShip);
 
-        assertThat(result).containsExactlyInAnyOrder(new SportModalitiesLevelsPercentage(Level.ADVANCED, 100.0));
+        assertThat(result).isEqualTo(athlete1.getHeight());
     }
 }

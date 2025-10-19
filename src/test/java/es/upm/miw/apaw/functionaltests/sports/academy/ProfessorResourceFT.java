@@ -5,6 +5,7 @@ import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.ProfessorRepository;
 import es.upm.miw.apaw.adapters.resources.sports.academy.ProfessorResource;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.sports.academy.Professor;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.CreateProfessor;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,8 @@ class ProfessorResourceFT extends BaseSportsAcademyTests {
                 .mobile("+34711036811")
                 .build();
         when(userRestClient.readById(id)).thenReturn(userDto);
-        var professor = Professor.builder()
-                .user(UserDto.builder().id(id).build())
+        var professor = CreateProfessor.builder()
+                .userId(id)
                 .specialization("Fitness")
                 .licenseNumber("LIC123456")
                 .build();
