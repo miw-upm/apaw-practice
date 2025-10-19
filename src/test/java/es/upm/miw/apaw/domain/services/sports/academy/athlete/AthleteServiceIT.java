@@ -81,7 +81,7 @@ class AthleteServiceIT extends BaseSportsAcademyTests {
 
     @Test
     void testGetUniqueProfessorSpecializationsByLegalGuardian(){
-        assertThat(this.athleteService.getUniqueProfessorSpecializationsByLegalGuardian(athletes[0].getLegalGuardians().getFirst().getSecondMobile()))
+        assertThat(this.athleteService.getUniqueProfessorSpecializations(athletes[0].getLegalGuardians().getFirst().getSecondMobile()))
                 .containsExactlyInAnyOrder("Tennis", "Swimming");
     }
 }

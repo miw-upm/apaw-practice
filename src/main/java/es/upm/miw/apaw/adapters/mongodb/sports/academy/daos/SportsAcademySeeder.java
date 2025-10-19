@@ -115,7 +115,7 @@ public class SportsAcademySeeder {
                     AthleteEntity.builder()
                             .userDtoId(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"))
                             .gender(Gender.FEMALE.getValue())
-                            .height(165)
+                            .height(1.65)
                             .weight(56)
                             .birthDate(LocalDate.of(2003, 6, 20))
                             .legalGuardians(Collections.singletonList(legalGuardians[1]))
