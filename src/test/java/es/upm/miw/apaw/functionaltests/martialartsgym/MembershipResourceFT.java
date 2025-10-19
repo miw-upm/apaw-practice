@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.adapters.rest.martialartsgym;
+package es.upm.miw.apaw.functionaltests.martialartsgym;
 
 import es.upm.miw.apaw.adapters.resources.martialartsgym.MembershipResource;
 import org.junit.jupiter.api.Test;
@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
