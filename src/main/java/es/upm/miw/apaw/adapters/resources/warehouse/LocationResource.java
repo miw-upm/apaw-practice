@@ -32,7 +32,7 @@ public class LocationResource {
 
     @GetMapping(POSITION)
     public Location readByPosition(@PathVariable String position) {
-        return this.locationService.readByPosition(position);
+        return this.locationService.readByPosition(position.toUpperCase());
     }
 
     @PatchMapping(AVAILABILITY)
@@ -44,12 +44,12 @@ public class LocationResource {
                                                )
                                        )
                                        @RequestBody Map<String, Boolean> availability) {
-        return this.locationService.updateAvailability(position, availability.get("availability"));
+        return this.locationService.updateAvailability(position.toUpperCase(), availability.get("availability"));
     }
 
     @DeleteMapping(POSITION)
     public void deleteByPosition(@PathVariable String position) {
-        this.locationService.deleteByPosition(position);
+        this.locationService.deleteByPosition(position.toUpperCase());
     }
 
 }
