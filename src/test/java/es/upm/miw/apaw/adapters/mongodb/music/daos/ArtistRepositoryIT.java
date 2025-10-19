@@ -15,11 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 class ArtistRepositoryIT {
 
-    @Autowired
-    private ArtistRepository artistRepository;
-
-    @Autowired
-    private MusicSeeder musicSeeder;
+    @Autowired private ArtistRepository artistRepository;
+    @Autowired private MusicSeeder musicSeeder;
 
     @BeforeEach
     void resetDb() {
@@ -40,7 +37,6 @@ class ArtistRepositoryIT {
 
     @Test
     void testFindByIdNotFound() {
-        Optional<ArtistEntity> opt = this.artistRepository.findById("Unknown Artist");
-        assertThat(opt).isNotPresent();
+        assertThat(this.artistRepository.findById("Unknown Artist")).isNotPresent();
     }
 }

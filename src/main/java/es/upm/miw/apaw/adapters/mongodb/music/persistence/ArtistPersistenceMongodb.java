@@ -34,13 +34,12 @@ public class ArtistPersistenceMongodb implements ArtistPersistence {
 
     private Artist toArtist(ArtistEntity entity) {
         UserDto user = this.userRestClient.readById(UUID.fromString(entity.getUserId()));
-
         return new Artist(
                 entity.getName(),
                 entity.getActiveSince(),
                 entity.getMonthlyListeners(),
                 user,
-                null // canciones se pueden resolver después si hace falta
+                null
         );
     }
 }
