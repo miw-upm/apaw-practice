@@ -27,7 +27,7 @@ public class OrderDetailPersistenceMongodb implements OrderDetailPersistence {
     }
 
     @Override
-    public BigDecimal sumUnitCostDistinctByPosition(String position) {
+    public BigDecimal findBySumUnitCostDistinctByPosition(String position) {
         LocationEntity location = this.locationRepository.findByPosition(position)
                 .orElseThrow(() -> new NotFoundException("Position not found: " + position));
 
