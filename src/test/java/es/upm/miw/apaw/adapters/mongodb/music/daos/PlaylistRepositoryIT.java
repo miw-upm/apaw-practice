@@ -42,7 +42,7 @@ public class PlaylistRepositoryIT {
 
     @Test
     void testFindSave() {
-        String code = "PL-001"; // ajusta si tu seeder usa otro
+        String code = "PL-001";
         PlaylistEntity entity = this.playlistRepository.findById(code).orElseThrow();
 
         String oldLabel = entity.getLabel();
