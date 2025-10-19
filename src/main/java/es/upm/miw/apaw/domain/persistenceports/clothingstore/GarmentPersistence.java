@@ -15,4 +15,6 @@ public interface GarmentPersistence {
     Garment create(Garment garment);
     void delete(UUID id);
     BigDecimal sumDistinctPriceByMobile(String mobile);
+
+    Stream<UUID> findDistinctIdsByInvoiceNumber(String invoiceNumber);
 }
