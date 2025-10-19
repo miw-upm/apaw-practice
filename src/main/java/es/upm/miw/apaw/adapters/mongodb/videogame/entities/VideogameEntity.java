@@ -28,15 +28,15 @@ public class VideogameEntity {
     @DBRef
     private GenreEntity genreEntity;
 
-    public VideogameEntity() {
-        if (this.id == null) {  // Generar UUID automáticamente
-            this.id = UUID.randomUUID();
-        }
-    }
 
     public Videogame toVideogame() {
         Videogame videogame = new Videogame();
-        BeanUtils.copyProperties(this, videogame);
+        BeanUtils.copyProperties(this, videogame,"genreEntity");
+
+        if (this.genreEntity != null) {
+            videogame.setGenre(this.genreEntity.toGenre());
+        }
+
         return videogame;
     }
 

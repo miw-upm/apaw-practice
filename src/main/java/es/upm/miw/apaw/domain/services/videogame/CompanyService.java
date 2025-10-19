@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyService {
+    @Autowired
     private final CompanyPersistence companyPersistence;
-    private final LikeListPersistence LikeListPersistence;
 
     @Autowired
-    public CompanyService(CompanyPersistence companyPersistence, LikeListPersistence likeListPersistence) {
+    public CompanyService(CompanyPersistence companyPersistence) {
         this.companyPersistence = companyPersistence;
-        this.LikeListPersistence = likeListPersistence;
     }
 
     public void assertDenominationNotExist(String name) {
