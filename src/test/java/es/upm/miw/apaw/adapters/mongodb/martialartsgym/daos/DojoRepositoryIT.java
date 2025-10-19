@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.martialartsgym.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.martialartsgym.entities.DojoEntity;
+import es.upm.miw.apaw.adapters.mongodb.martialartsgym.entities.EquipmentEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ class DojoRepositoryIT {
 
     @Autowired
     private DojoRepository dojoRepository;
+    @Autowired
+    private EquipmentRepository equipmentRepository;
+
 
     private DojoEntity savedEntity;
 
@@ -68,14 +72,18 @@ class DojoRepositoryIT {
 
     @Test
     void testFindByCity() {
+        var eq1 = this.equipmentRepository.save(
+                new EquipmentEntity(1, "Tatami", new java.math.BigDecimal("100.00"), null)
+        );
+        var eq2 = this.equipmentRepository.save(
+                new EquipmentEntity(2, "Punching Bag", new java.math.BigDecimal("150.00"), null)
+        );
+
         DojoEntity dojo = DojoEntity.builder()
                 .cadastralReference("D-9001")
                 .city("Madrid")
                 .foundationDate(LocalDate.of(2020, 1, 1))
-                .equipment(List.of(  // <-- se añade lista de equipment
-                        new es.upm.miw.apaw.adapters.mongodb.martialartsgym.entities.EquipmentEntity(1, "Tatami", new java.math.BigDecimal("100.00"), null),
-                        new es.upm.miw.apaw.adapters.mongodb.martialartsgym.entities.EquipmentEntity(2, "Punching Bag", new java.math.BigDecimal("150.00"), null)
-                ))
+                .equipment(List.of(eq1, eq2))  // ✅ ahora son DBRef válidas
                 .build();
 
         this.dojoRepository.save(dojo);
@@ -84,8 +92,10 @@ class DojoRepositoryIT {
         assertThat(found).isPresent();
         assertThat(found.get().getCity()).isEqualTo("Madrid");
         assertThat(found.get().getEquipment()).hasSize(2);
-        assertThat(found.get().getEquipment().getFirst().getUnitCost()).isEqualByComparingTo("100.00");
+        assertThat(found.get().getEquipment().getFirst().getUnitCost())
+                .isEqualByComparingTo("100.00");
     }
+
 
 
 }

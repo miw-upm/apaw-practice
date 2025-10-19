@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.martialartsgym;
 
 import es.upm.miw.apaw.adapters.mongodb.martialartsgym.daos.DojoRepository;
+import es.upm.miw.apaw.adapters.mongodb.martialartsgym.daos.EquipmentRepository;
 import es.upm.miw.apaw.adapters.mongodb.martialartsgym.entities.DojoEntity;
 import es.upm.miw.apaw.domain.models.martialartsgym.Dojo;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,9 @@ class DojoServiceIT {
 
     @Autowired
     private DojoRepository dojoRepository;
+    @Autowired
+    private EquipmentRepository equipmentRepository;
+
 
     @BeforeEach
     void cleanDatabase() {
@@ -49,20 +53,34 @@ class DojoServiceIT {
     }
     @Test
     void testFindTotalUnitCostByCityIntegration() {
+
+        EquipmentEntity eq1 = EquipmentEntity.builder()
+                .barCode(30)
+                .itemLabel("Kicking Pad")
+                .unitCost(new BigDecimal("120.00"))
+                .build();
+
+        EquipmentEntity eq2 = EquipmentEntity.builder()
+                .barCode(31)
+                .itemLabel("Body Protector")
+                .unitCost(new BigDecimal("180.00"))
+                .build();
+
+        this.equipmentRepository.saveAll(List.of(eq1, eq2));
+
         DojoEntity dojo = DojoEntity.builder()
                 .cadastralReference("D-8001")
                 .city("Valencia")
                 .foundationDate(LocalDate.of(2020, 2, 2))
-                .equipment(List.of(
-                        EquipmentEntity.builder().barCode(30).itemLabel("Kicking Pad").unitCost(new BigDecimal("120.00")).build(),
-                        EquipmentEntity.builder().barCode(31).itemLabel("Body Protector").unitCost(new BigDecimal("180.00")).build()
-                ))
+                .equipment(List.of(eq1, eq2)) // referencias válidas
                 .build();
 
         this.dojoRepository.save(dojo);
 
         BigDecimal total = this.dojoService.findTotalUnitCostByCity("Valencia");
+
         assertThat(total).isEqualByComparingTo(new BigDecimal("300.00"));
     }
+
 
 }
