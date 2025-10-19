@@ -35,5 +35,5 @@ class OrderDetailServiceIT {
         assertThrows(RuntimeException.class,
                 () -> this.orderDetailPersistence.sumUnitCostDistinctByPosition(invalidPosition));
     }
- //
+
 }
