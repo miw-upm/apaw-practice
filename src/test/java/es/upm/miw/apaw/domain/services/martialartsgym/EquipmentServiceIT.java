@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.martialartsgym;
 
 import es.upm.miw.apaw.adapters.mongodb.martialartsgym.daos.EquipmentRepository;
 import es.upm.miw.apaw.adapters.mongodb.martialartsgym.entities.EquipmentEntity;
+import es.upm.miw.apaw.domain.models.martialartsgym.Equipment;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,4 +35,30 @@ class EquipmentServiceIT {
         var updated = equipmentService.updateUnitCost(1003, new BigDecimal("40.00"));
         assertThat(updated.getUnitCost()).isEqualByComparingTo(new BigDecimal("40.00"));
     }
+
+    @Test
+    void testFullUpdateEquipmentIntegration() {
+        EquipmentEntity entity = EquipmentEntity.builder()
+                .barCode(4001)
+                .itemLabel("Old Shin Guard")
+                .unitCost(new BigDecimal("25.00"))
+                .build();
+        equipmentRepository.save(entity);
+
+        Equipment updated = Equipment.builder()
+                .barCode(4001)
+                .itemLabel("New Shin Guard")
+                .unitCost(new BigDecimal("45.00"))
+                .build();
+
+        Equipment result = equipmentService.updateEquipment(updated);
+
+        assertThat(result.getItemLabel()).isEqualTo("New Shin Guard");
+        assertThat(result.getUnitCost()).isEqualByComparingTo("45.00");
+
+        EquipmentEntity persisted = equipmentRepository.findById(4001).orElseThrow();
+        assertThat(persisted.getItemLabel()).isEqualTo("New Shin Guard");
+        assertThat(persisted.getUnitCost()).isEqualByComparingTo("45.00");
+    }
+
 }

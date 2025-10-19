@@ -49,4 +49,26 @@ class EquipmentServiceTest {
         Assertions.assertEquals(new BigDecimal("45.00"), updated.getUnitCost());
         Assertions.assertEquals("Kicking Pad", updated.getItemLabel());
     }
+    @Test
+    void testFullUpdateEquipment() {
+
+
+        Equipment updated = Equipment.builder()
+                .barCode(2001)
+                .itemLabel("Professional Gloves")
+                .unitCost(new BigDecimal("60.00"))
+                .build();
+
+        BDDMockito.given(equipmentPersistence.updateEquipment(updated))
+                .willReturn(updated);
+
+        // When
+        Equipment result = equipmentService.updateEquipment(updated);
+
+        // Then
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("Professional Gloves", result.getItemLabel());
+        Assertions.assertEquals(new BigDecimal("60.00"), result.getUnitCost());
+    }
+
 }

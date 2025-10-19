@@ -29,4 +29,16 @@ public class EquipmentPersistenceMongodb implements EquipmentPersistence {
         this.equipmentRepository.save(entity);
         return entity.toEquipment();
     }
+
+    @Override
+    public Equipment updateEquipment(Equipment equipment) {
+        EquipmentEntity entity = this.equipmentRepository.findById(equipment.getBarCode())
+                .orElseThrow(() -> new NotFoundException("Equipment not found: " + equipment.getBarCode()));
+
+        entity.setItemLabel(equipment.getItemLabel());
+        entity.setUnitCost(equipment.getUnitCost());
+
+        this.equipmentRepository.save(entity);
+        return entity.toEquipment();
+    }
 }

@@ -65,4 +65,30 @@ class EquipmentPersistenceMongodbIT {
             assertThat(ex.getMessage()).contains("Equipment not found");
         }
     }
+    @Test
+    void testFullUpdateEquipment() {
+        EquipmentEntity entity = EquipmentEntity.builder()
+                .barCode(2002)
+                .itemLabel("Punching Bag")
+                .unitCost(new BigDecimal("70.00"))
+                .build();
+        this.equipmentRepository.save(entity);
+
+        Equipment updatedModel = Equipment.builder()
+                .barCode(2002)
+                .itemLabel("Heavy Punching Bag")
+                .unitCost(new BigDecimal("85.00"))
+                .build();
+
+        Equipment updated = this.equipmentPersistence.updateEquipment(updatedModel);
+
+        assertThat(updated.getItemLabel()).isEqualTo("Heavy Punching Bag");
+        assertThat(updated.getUnitCost()).isEqualByComparingTo("85.00");
+
+        EquipmentEntity persisted = this.equipmentRepository.findById(2002).orElseThrow();
+        assertThat(persisted.getItemLabel()).isEqualTo("Heavy Punching Bag");
+        assertThat(persisted.getUnitCost()).isEqualByComparingTo("85.00");
+    }
+
+
 }

@@ -58,4 +58,24 @@ class EquipmentRepositoryIT {
         Optional<EquipmentEntity> deleted = this.equipmentRepository.findById(savedEntity.getBarCode());
         assertThat(deleted).isEmpty();
     }
+    @Test
+    void testFullUpdateEquipment() {
+        EquipmentEntity entity = EquipmentEntity.builder()
+                .barCode(3001)
+                .itemLabel("Old Headgear")
+                .unitCost(new BigDecimal("35.00"))
+                .build();
+        this.equipmentRepository.save(entity);
+
+        entity.setItemLabel("New Headgear");
+        entity.setUnitCost(new BigDecimal("55.00"));
+        this.equipmentRepository.save(entity);
+
+        Optional<EquipmentEntity> updated = this.equipmentRepository.findById(3001);
+
+        assertThat(updated).isPresent();
+        assertThat(updated.get().getItemLabel()).isEqualTo("New Headgear");
+        assertThat(updated.get().getUnitCost()).isEqualByComparingTo("55.00");
+    }
+
 }
