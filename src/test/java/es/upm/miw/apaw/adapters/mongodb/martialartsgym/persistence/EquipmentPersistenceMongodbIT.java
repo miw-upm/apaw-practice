@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
+import java.util.List;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -89,6 +89,22 @@ class EquipmentPersistenceMongodbIT {
         assertThat(persisted.getItemLabel()).isEqualTo("Heavy Punching Bag");
         assertThat(persisted.getUnitCost()).isEqualByComparingTo("85.00");
     }
+    @Test
+    void testFindMobilesByItemLabel() {
+
+        EquipmentEntity equipment = EquipmentEntity.builder()
+                .barCode(1001)
+                .itemLabel("Boxing Gloves")
+                .unitCost(new BigDecimal("50.00"))
+                .build();
+        equipmentRepository.save(equipment);
+
+
+        List<String> result = this.equipmentPersistence.findMobilesByItemLabel("Boxing Gloves");
+
+        assertThat(result).isNotNull();
+    }
+
 
 
 }

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-
+import java.util.List;
 import java.math.BigDecimal;
 
 @SpringBootTest
@@ -70,5 +70,20 @@ class EquipmentServiceTest {
         Assertions.assertEquals("Professional Gloves", result.getItemLabel());
         Assertions.assertEquals(new BigDecimal("60.00"), result.getUnitCost());
     }
+    @Test
+    void testFindMobilesByItemLabel() {
+        String itemLabel = "Karate Belt";
+        List<String> expectedMobiles = List.of("600123123", "699888777");
+
+        BDDMockito.given(equipmentPersistence.findMobilesByItemLabel(itemLabel))
+                .willReturn(expectedMobiles);
+
+        List<String> result = equipmentService.findMobilesByItemLabel(itemLabel);
+
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertTrue(result.contains("600123123"));
+        Assertions.assertTrue(result.contains("699888777"));
+    }
+
 
 }
