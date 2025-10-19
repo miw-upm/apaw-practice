@@ -122,7 +122,10 @@ public class MetroSeeder {
                         .inaugurationDate(LocalDate.of(1990, 5, 12))
                         .trainLineEntities(Arrays.asList(trainLines[0], trainLines[1]))
                         .zoneEntity(zones[0])
-                        .usersTrainStation(Arrays.asList(UUID.randomUUID(), UUID.randomUUID()))
+                        .usersTrainStation(Arrays.asList(
+                                UUID.fromString("11111111-1111-1111-1111-111111111111"),
+                                UUID.fromString("22222222-2222-2222-2222-222222222222")
+                        ))
                         .build(),
                 TrainStationEntity.builder()
                         .name("North Station")
@@ -132,7 +135,9 @@ public class MetroSeeder {
                         .inaugurationDate(LocalDate.of(2000, 3, 20))
                         .trainLineEntities(List.of(trainLines[2]))
                         .zoneEntity(zones[1])
-                        .usersTrainStation(List.of(UUID.randomUUID()))
+                        .usersTrainStation(List.of(
+                                UUID.fromString("33333333-3333-3333-3333-333333333333")
+                        ))
                         .build(),
                 TrainStationEntity.builder()
                         .name("East Station")
@@ -142,7 +147,11 @@ public class MetroSeeder {
                         .inaugurationDate(LocalDate.of(2010, 7, 15))
                         .trainLineEntities(List.of(trainLines[1]))
                         .zoneEntity(zones[2])
-                        .usersTrainStation(Arrays.asList(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID()))
+                        .usersTrainStation(Arrays.asList(
+                                UUID.fromString("44444444-4444-4444-4444-444444444444"),
+                                UUID.fromString("55555555-5555-5555-5555-555555555555"),
+                                UUID.fromString("66666666-6666-6666-6666-666666666666")
+                        ))
                         .build(),
                 TrainStationEntity.builder()
                         .name("West Station")
@@ -152,9 +161,10 @@ public class MetroSeeder {
                         .inaugurationDate(LocalDate.of(2015, 11, 5))
                         .trainLineEntities(Arrays.asList(trainLines[0], trainLines[2]))
                         .zoneEntity(zones[3])
-                        .usersTrainStation(List.of())
+                        .usersTrainStation(List.of()) // no users
                         .build()
         };
+
 
         this.trainStationRepository.saveAll(Arrays.asList(trainStations));
 
