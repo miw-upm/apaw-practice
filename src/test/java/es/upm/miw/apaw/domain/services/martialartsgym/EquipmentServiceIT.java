@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
+import java.util.List;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,6 +59,23 @@ class EquipmentServiceIT {
         EquipmentEntity persisted = equipmentRepository.findById(4001).orElseThrow();
         assertThat(persisted.getItemLabel()).isEqualTo("New Shin Guard");
         assertThat(persisted.getUnitCost()).isEqualByComparingTo("45.00");
+    }
+
+    @Test
+    void testFindMobilesByItemLabelIntegration() {
+        EquipmentEntity equipment = EquipmentEntity.builder()
+                .barCode(5001)
+                .itemLabel("Training Mat")
+                .unitCost(new BigDecimal("25.00"))
+                .build();
+
+        equipmentRepository.save(equipment);
+
+        // Act
+        List<String> mobiles = equipmentService.findMobilesByItemLabel("Training Mat");
+
+        // Assert
+        assertThat(mobiles).isNotNull();
     }
 
 }
