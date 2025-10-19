@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @Data
@@ -21,4 +22,5 @@ public class ArtistEntity {
     private LocalDate activeSince;
     private Long monthlyListeners;
     private String userId;
+    private List<String> songIsrcs;
 }
