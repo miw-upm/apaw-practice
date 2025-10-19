@@ -2,10 +2,9 @@ package es.upm.miw.apaw.adapters.resources.metro;
 
 import es.upm.miw.apaw.domain.services.metro.TrainStationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(TrainStationResource.TRAIN_STATIONS)
@@ -24,5 +23,10 @@ public class TrainStationResource {
     @GetMapping(NAME+CAPACITY)
     public Integer readCapacityByName(@PathVariable("name") String name) {
         return this.trainStationService.readCapacityByName(name);
+    }
+
+    @GetMapping(params = "mobile")
+    public Stream<Integer> findNumCarsByUserMobile(@RequestParam String mobile) {
+        return this.trainStationService.findNumCarsByUserMobile(mobile);
     }
 }
