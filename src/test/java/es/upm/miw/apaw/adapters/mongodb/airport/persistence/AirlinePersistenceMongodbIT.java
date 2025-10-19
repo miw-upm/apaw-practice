@@ -9,20 +9,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AirlinePersistenceMongodbIT {
+class AirlinePersistenceMongodbIT {
 
     @Autowired
     private AirlinePersistenceMongodb airlinePersistence;
 
     @Test
     void testDeleteByName() {
-        assertThat(this.airlinePersistence.existsName("Vueling")).isTrue();
-        this.airlinePersistence.delete("Vueling");
-        assertThat(this.airlinePersistence.existsName("Vueling")).isFalse();
+        assertThat(this.airlinePersistence.existsName("UPM Dellines Express")).isTrue();
+        this.airlinePersistence.delete("UPM Dellines Express");
+        assertThat(this.airlinePersistence.existsName("UPM Dellines Express")).isFalse();
     }
 
     @Test
     void testExistsName() {
         assertThat(this.airlinePersistence.existsName("UPM Airlines")).isTrue();
+    }
+
+    @Test
+    void testReadByPlaneModel() {
+        assertThat(this.airlinePersistence.readByPlaneModel("A320neo").toList())
+                .isNotEmpty()
+                .containsExactlyInAnyOrder("Iberia Express", "Air Europa");
     }
 }

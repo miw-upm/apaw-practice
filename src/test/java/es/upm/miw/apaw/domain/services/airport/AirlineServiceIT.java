@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AirlineServiceIT {
+class AirlineServiceIT {
 
     @Autowired
     private AirlineService airlineService;
@@ -20,8 +20,15 @@ public class AirlineServiceIT {
 
     @Test
     void testDelete() {
-        assertThat(this.airlinePersistence.existsName("Iberia Express")).isTrue();
-        this.airlineService.delete("Iberia Express");
-        assertThat(this.airlinePersistence.existsName("Iberia Express")).isFalse();
+        assertThat(this.airlinePersistence.existsName("UPM Dellines Plus")).isTrue();
+        this.airlineService.delete("UPM Dellines Plus");
+        assertThat(this.airlinePersistence.existsName("UPM Dellines Plus")).isFalse();
+    }
+
+    @Test
+    void testReadByPlaneModel() {
+        assertThat(this.airlineService.readByPlaneModel("B787-9 Dreamliner"))
+                .isNotNull()
+                .containsExactlyInAnyOrder("UPM Airlines", "Vueling");
     }
 }
