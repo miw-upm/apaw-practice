@@ -2,6 +2,8 @@ package es.upm.miw.apaw.adapters.resources.warehouse;
 
 import es.upm.miw.apaw.domain.models.warehouse.Location;
 import es.upm.miw.apaw.domain.services.warehouse.LocationService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +37,12 @@ public class LocationResource {
 
     @PatchMapping(AVAILABILITY)
     public Location updateAvailability(@PathVariable String position,
+                                       @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                                               required = true,
+                                               content = @Content(
+                                                       schema = @Schema(example = "{\"availability\": true}")
+                                               )
+                                       )
                                        @RequestBody Map<String, Boolean> availability) {
         return this.locationService.updateAvailability(position, availability.get("availability"));
     }

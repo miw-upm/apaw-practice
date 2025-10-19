@@ -19,6 +19,9 @@ class LocationServiceIT {
     @Autowired
     private LocationService locationService;
 
+    @Autowired
+    private LocationService locationPersistence;
+
     @Test
     void testReadAll() {
         List<Location> locations = this.locationService.readAll().toList();
@@ -42,8 +45,18 @@ class LocationServiceIT {
 
     @Test
     void testUpdateAvailability() {
-        Location location = this.locationService.updateAvailability("A1", false);
-        assertThat(location.getAvailability()).isFalse();
+        String position = "A1";
+    Boolean originalAvailability = this.locationPersistence.readByPosition(position).getAvailability();
+
+    try {
+        Location updated = this.locationService.updateAvailability(position, !originalAvailability);
+        assertThat(updated.getAvailability()).isNotEqualTo(originalAvailability);
+    } finally {
+        this.locationService.updateAvailability(position, originalAvailability);
+    }
+
+    Location restored = this.locationPersistence.readByPosition(position);
+    assertThat(restored.getAvailability()).isEqualTo(originalAvailability);
     }
 
 }
