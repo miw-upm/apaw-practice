@@ -14,10 +14,11 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -36,18 +37,32 @@ public class LikeListRepositoryIT {
     }
 
     @Test
-    void testFindById() {
+    void testFindByUserId() {
+        UUID userId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003");
 
-        assertTrue(this.likeListRepository.findById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020")).isPresent());
-        LikeListEntity likeList = this.likeListRepository.findById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020")).get();
+        List<LikeListEntity> likeLists = this.likeListRepository.findByUserId(userId);
+
+        assertFalse(likeLists.isEmpty());
+
+        LikeListEntity likeList = likeLists.get(0);
+
         assertThat(likeList.getLikesCount()).isEqualTo(0);
-        assertThat(likeList.getGamesLikedEntity()).isEqualTo(Arrays.asList(VideogameEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100")).genreEntity(GenreEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                        .type("action").description("Accion").ageRestriction(10).build()).name("game0").online(false).releaseDate(LocalDate.now()).maxPlayers(10).build(),
-                VideogameEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101")).genreEntity(GenreEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
-                        .type("rol").description("Rol").ageRestriction(15).build()).name("game1").online(true).releaseDate(LocalDate.now()).maxPlayers(1).build()
+        assertThat(likeList.getGamesLikedEntity()).isEqualTo(Arrays.asList(
+                VideogameEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0100"))
+                        .genreEntity(GenreEntity.builder()
+                                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                                .type("action").description("Accion").ageRestriction(10).build())
+                        .name("game0").online(false).releaseDate(LocalDate.now()).maxPlayers(10).build(),
 
+                VideogameEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101"))
+                        .genreEntity(GenreEntity.builder()
+                                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                                .type("rol").description("Rol").ageRestriction(15).build())
+                        .name("game1").online(true).releaseDate(LocalDate.now()).maxPlayers(1).build()
         ));
-        assertThat(likeList.getUserId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003"));
-
+        assertThat(likeList.getUserId()).isEqualTo(userId);
     }
+
 }

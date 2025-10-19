@@ -16,7 +16,7 @@ public class GenreResourceFT {
     private WebTestClient webTestClient;
 
     @Test
-    void  testUpdateAgeRestriction(){
+    void testUpdateAgeRestriction() {
         webTestClient.put()
                 .uri(uriBuilder -> uriBuilder
                         .path("/videogame/genres")

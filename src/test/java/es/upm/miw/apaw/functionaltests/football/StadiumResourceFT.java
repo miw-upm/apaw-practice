@@ -187,5 +187,17 @@ class StadiumResourceFT {
                 });
     }
 
+    @Test
+    void testGetPlayersGoalsSum_ok() {
+        this.webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(STADIUMS + "/Salamanca Stadium/players-goals-sum")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.sum").isEqualTo(21);
+    }
+
 
 }

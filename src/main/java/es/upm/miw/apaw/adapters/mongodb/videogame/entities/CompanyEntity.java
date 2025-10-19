@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.entities;
 
 import es.upm.miw.apaw.domain.models.videogame.Company;
+import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Builder
@@ -37,7 +39,22 @@ public class CompanyEntity {
 
     public Company toCompany() {
         Company company = new Company();
-        BeanUtils.copyProperties(this, company);
+
+        BeanUtils.copyProperties(this, company, "videoGamesEntity");
+
+        List<Videogame> videogames = Optional.ofNullable(this.videoGamesEntity)
+                .orElse(List.of())
+                .stream()
+                .map(VideogameEntity::toVideogame)
+                .toList();
+
+        company.setVideoGames(videogames);
+
         return company;
     }
+
+    public void fromCompany(Company company) {
+        BeanUtils.copyProperties(company, this);
+    }
+
 }

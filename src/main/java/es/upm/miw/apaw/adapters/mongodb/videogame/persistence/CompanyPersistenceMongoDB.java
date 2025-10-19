@@ -7,6 +7,8 @@ import es.upm.miw.apaw.domain.persistenceports.videogame.CompanyPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.stream.Stream;
+
 @Repository("CompanyPersistence")
 public class CompanyPersistenceMongoDB implements CompanyPersistence {
 
@@ -30,5 +32,14 @@ public class CompanyPersistenceMongoDB implements CompanyPersistence {
                 .findByDenomination(denomination)
                 .isPresent();
     }
+
+
+    @Override
+    public Stream<Company> readAll() {
+        return this.companyRepository
+                .findAll().stream()
+                .map(CompanyEntity::toCompany);
+    }
+
 
 }

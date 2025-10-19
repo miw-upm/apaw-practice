@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.domain.services.sports.academy.legal.guardian;
 
-import es.upm.miw.apaw.domain.models.UserDto;
-import es.upm.miw.apaw.domain.models.sports.academy.LegalGuardian;
+import es.upm.miw.apaw.domain.models.sports.academy.dtos.UpdateLegalGuardian;
 import es.upm.miw.apaw.domain.models.sports.academy.enums.RelationShip;
 import es.upm.miw.apaw.BaseSportsAcademyTests;
 import es.upm.miw.apaw.domain.services.sports.academy.LegalGuardianService;
@@ -22,8 +21,7 @@ class LegalGuardianServiceIT extends BaseSportsAcademyTests {
     @Test
     void testUpdate() {
         var id = legalGuardians[0].getUserDtoId();
-        var legalGuardian = LegalGuardian.builder()
-                .user(UserDto.builder().id(id).build())
+        var legalGuardian = UpdateLegalGuardian.builder()
                 .secondMobile("+5549988706208")
                 .relationShip(RelationShip.OTHER)
                 .build();

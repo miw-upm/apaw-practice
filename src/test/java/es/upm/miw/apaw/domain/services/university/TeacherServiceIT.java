@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.university;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.models.university.LessonDurationSearching;
 import es.upm.miw.apaw.domain.models.university.Teacher;
 import es.upm.miw.apaw.domain.persistenceports.university.TeacherPersistence;
 import org.junit.jupiter.api.Test;
@@ -84,7 +85,7 @@ class TeacherServiceIT {
         UUID nonExistentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999");
 
         Teacher updatedTeacher = Teacher.builder()
-                .identificationCode("T009")
+                .identificationCode("T_ANOTHER_CODE")
                 .specialization("New Specialization")
                 .fullName("New Teacher Name")
                 .tenured(true)
@@ -92,5 +93,32 @@ class TeacherServiceIT {
 
         assertThatThrownBy(() -> this.teacherService.update(nonExistentId, updatedTeacher))
                 .isInstanceOf(es.upm.miw.apaw.domain.exceptions.NotFoundException.class);
+    }
+
+    @Test
+    void testfindLessonDurationSumByTeacherFullName() {
+        String teacherFullName = "TFN010";
+
+        LessonDurationSearching lessonDurationSearching = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
+
+        assertThat(lessonDurationSearching.getDurationSum()).isEqualTo(210);
+    }
+
+    @Test
+    void testfindLessonDurationSumByTeacherFullNameExcludingDuplicates() {
+        String teacherFullName = "TFN009";
+
+        LessonDurationSearching lessonDurationSearching = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
+
+        assertThat(lessonDurationSearching.getDurationSum()).isEqualTo(60);
+    }
+
+    @Test
+    void testfindLessonDurationSumByTeacherFullNameNotFound() {
+        String teacherFullName = "TFN009NOTFOUND";
+
+        LessonDurationSearching lessonDurationSearching = this.teacherService.findLessonDurationSumByTeacherFullName(teacherFullName);
+
+        assertThat(lessonDurationSearching.getDurationSum()).isZero();
     }
 }

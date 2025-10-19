@@ -8,17 +8,11 @@ import java.util.stream.Stream;
 
 @Repository
 public interface BankAccountPersistence {
-    //GET --> BankAccount
     String readStatusByAccountNumber(String accountNumber);
-    // DELETE --> BankAccount
     void delete(String accountNumber);
     BankAccount findByAccountNumber(String accountNumber);
-    // POST --> Loan
     Stream<Loan> applyANewLoanForABankAccount(String accountNumber, Loan loan);
-    // PUT --> CreditCard
     CreditCard updateCreditCard(String accountNumber, CreditCard creditCard);
-    // Search 1
     Stream<BankAccount> findByAccountHolders(UUID accountHolder);
-    // Search 2
     Stream<BankAccount> findByLoansAppliedCondition(String condition);
 }

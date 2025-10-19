@@ -1,9 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.videogame.daos.GenreRepository;
-import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameRepository;
-import es.upm.miw.apaw.adapters.mongodb.videogame.entities.GenreEntity;
-import es.upm.miw.apaw.adapters.mongodb.videogame.entities.VideogameEntity;
+import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,43 +9,42 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("test")
 public class VideogamePersistenceMongodbIT {
 
     @Autowired
-    private VideogamePersistenceMongoDB videogamePersistence;
+    private VideogamePersistenceMongoDB videogamePersistenceMongoDB;
 
-    @Autowired
-    private VideogameRepository videogameRepository;
-
-    @Autowired
-    private GenreRepository genreRepository;
 
     @Test
     void testUpdateOnlineByGenre() {
-        VideogamePersistenceMongoDB persistence = new VideogamePersistenceMongoDB(videogameRepository, genreRepository);
+        String genreType = "rol";
+        videogamePersistenceMongoDB.updateOnlineByGenre(genreType, false);
+        List<Videogame> rolGames = videogamePersistenceMongoDB.findByGenre(genreType);
+        assertThat(rolGames).extracting("online").containsOnly(false);
 
-        GenreEntity genre = new GenreEntity();
-        genre.setType("TestGenre");
-        genreRepository.save(genre);
+    }
 
-        VideogameEntity v1 = new VideogameEntity();
-        v1.setName("Videogame1");
-        v1.setOnline(true);
-        v1.setGenreEntity(genre);
+    @Test
+    void testFindByGenre_existingGenre() {
+        String genreType = "rol";
+        List<Videogame> games = videogamePersistenceMongoDB.findByGenre(genreType);
 
-        VideogameEntity v2 = new VideogameEntity();
-        v2.setName("Videogame2");
-        v2.setOnline(true);
-        v2.setGenreEntity(genre);
+        assertThat(games.size()).isEqualTo(2);
+        assertThat(games.get(0).getName()).isEqualTo("game1");
+        assertThat(games.get(1).getName()).isEqualTo("game3");
+    }
 
-        persistence.saveAll(List.of(v1, v2));
+    @Test
+    void testFindByGenre_nonExistingGenre() {
+        String genreType = "nonexistent";
 
-        persistence.updateOnlineByGenre("TestGenre", false);
-
-        List<VideogameEntity> updated = persistence.findByGenre("TestGenre");
-        assertThat(updated).allMatch(v -> !v.getOnline());
+        // Debe lanzar RuntimeException
+        assertThrows(RuntimeException.class, () -> {
+            videogamePersistenceMongoDB.findByGenre(genreType);
+        });
     }
 }

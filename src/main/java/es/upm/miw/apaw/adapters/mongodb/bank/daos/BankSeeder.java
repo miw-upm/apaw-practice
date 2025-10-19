@@ -116,6 +116,13 @@ public class BankSeeder {
                         .accountHolders(List.of(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")))
                         .creditCardAssociated(CreditCardEntity.builder().cardNumber("1111222233334447").expirationDate(LocalDate.of(2029,8,8)).cardLimit(new BigDecimal("2000")).paymentHistoryList(Collections.singletonList(paymentHistories[6])).cvv(910).build())
                         .loansApplied(Collections.singletonList(LoanEntity.builder().quantity(new BigDecimal("10000")).condition(ACTIVE).interestRate(0.07).build()))
+                        .build(),
+                BankAccountEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff6100"))
+                        .accountNumber("ES2800000000010000000000")
+                        .balance(new BigDecimal("9999.88"))
+                        .status(ACTIVE)
+                        .accountHolders(List.of(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff1100")))
                         .build()
         };
         this.bankAccountRepository.saveAll(Arrays.asList(bankAccountEntities));

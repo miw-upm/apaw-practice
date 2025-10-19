@@ -62,10 +62,11 @@ public class VideogameSeeder {
                 CompanyEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0011"))
                         .denomination("company1").foundationDate(LocalDate.now()).sector("sector1").build(),
                 CompanyEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0012"))
-                        .denomination("company2").foundationDate(LocalDate.now()).sector("sector0")
-                        .videoGamesEntity(Arrays.asList(videogames[3], videogames[4])).build(),
+                        .denomination("company2").foundationDate(LocalDate.now()).sector("sector1")
+                        .videoGamesEntity(Arrays.asList(videogames[0], videogames[3], videogames[4])).build(),
         };
         this.companyRepository.saveAll(Arrays.asList(companies));
+
 
         LikeListEntity[] likeLists = {
                 LikeListEntity.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"))

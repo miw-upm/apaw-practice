@@ -5,14 +5,12 @@ import es.upm.miw.apaw.adapters.mongodb.airport.daos.PlaneRepository;
 import es.upm.miw.apaw.adapters.mongodb.airport.entities.FlightEntity;
 import es.upm.miw.apaw.adapters.mongodb.airport.entities.PlaneEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.airport.Plane;
 import es.upm.miw.apaw.domain.persistenceports.airport.PlanePersistence;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 @Repository("planePersistence")

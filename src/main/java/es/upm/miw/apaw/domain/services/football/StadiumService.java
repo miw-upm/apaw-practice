@@ -3,17 +3,25 @@ package es.upm.miw.apaw.domain.services.football;
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.football.FootballClub;
+import es.upm.miw.apaw.domain.models.football.FootballPlayer;
 import es.upm.miw.apaw.domain.models.football.Stadium;
+import es.upm.miw.apaw.domain.persistenceports.football.FootballClubPersistence;
 import es.upm.miw.apaw.domain.persistenceports.football.StadiumPersistence;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StadiumService {
 
     private final StadiumPersistence stadiumPersistence;
+    private final FootballClubPersistence footballClubPersistence;
 
-    public StadiumService(StadiumPersistence stadiumPersistence) {
+    public StadiumService(StadiumPersistence stadiumPersistence,
+                          FootballClubPersistence footballClubPersistence) {
         this.stadiumPersistence = stadiumPersistence;
+        this.footballClubPersistence = footballClubPersistence;
     }
 
     public Stadium create(Stadium stadium) {
@@ -59,5 +67,20 @@ public class StadiumService {
         stadium.setRoof(updated.getRoof());
 
         return this.stadiumPersistence.save(stadium);
+    }
+
+    public int getPlayersGoalsSum(String officialName) {
+        Stadium stadium = this.stadiumPersistence.findByOfficialName(officialName)
+                .orElseThrow(() -> new NotFoundException("Stadium not found: " + officialName));
+
+        List<FootballClub> clubs = this.footballClubPersistence.readAll().stream()
+                .filter(club -> club.getStadium().getOfficialName().equals(stadium.getOfficialName()))
+                .toList();
+
+        return clubs.stream()
+                .flatMap(club -> club.getPlayers().stream())
+                .distinct()
+                .mapToInt(FootballPlayer::getGoalsScored)
+                .sum();
     }
 }
