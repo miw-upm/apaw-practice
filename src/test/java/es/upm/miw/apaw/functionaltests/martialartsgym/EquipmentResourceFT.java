@@ -34,4 +34,29 @@ class EquipmentResourceFT {
                 .expectBody()
                 .jsonPath("$.unitCost").isEqualTo(50.00);
     }
+
+    @Test
+    void testFullUpdateEquipment() {
+        int barCode = 1003;
+
+        String updatedJson = """
+        {
+            "barCode": 1003,
+            "itemLabel": "Updated Helmet",
+            "unitCost": 60.00
+        }
+        """;
+
+        this.webTestClient
+                .put()
+                .uri(EquipmentResource.EQUIPMENT + "/" + barCode)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(updatedJson)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.itemLabel").isEqualTo("Updated Helmet")
+                .jsonPath("$.unitCost").isEqualTo(60.00);
+    }
+
 }

@@ -20,4 +20,9 @@ public class EquipmentService {
     public Equipment updateUnitCost(Integer barCode, BigDecimal newUnitCost) {
         return this.equipmentPersistence.updateUnitCost(barCode, newUnitCost);
     }
+
+    public Equipment updateEquipment(Equipment equipment) {
+        return this.equipmentPersistence.updateEquipment(equipment);
+    }
+
 }

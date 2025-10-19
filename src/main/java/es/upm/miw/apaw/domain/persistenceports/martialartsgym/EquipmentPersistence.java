@@ -8,4 +8,5 @@ import java.math.BigDecimal;
 @Repository
 public interface EquipmentPersistence {
     Equipment updateUnitCost(Integer barCode, BigDecimal newUnitCost);
+    Equipment updateEquipment(Equipment equipment);
 }

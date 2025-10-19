@@ -26,4 +26,15 @@ public class EquipmentResource {
             @RequestBody BigDecimal newUnitCost) {
         return this.equipmentService.updateUnitCost(barCode, newUnitCost);
     }
+
+    @PutMapping("/{barCode}")
+    public Equipment updateEquipment(
+            @PathVariable Integer barCode,
+            @RequestBody Equipment equipment) {
+
+        equipment.setBarCode(barCode);
+
+        return this.equipmentService.updateEquipment(equipment);
+    }
+
 }
