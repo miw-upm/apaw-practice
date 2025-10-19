@@ -16,9 +16,9 @@ class AirlinePersistenceMongodbIT {
 
     @Test
     void testDeleteByName() {
-        assertThat(this.airlinePersistence.existsName("Vueling")).isTrue();
-        this.airlinePersistence.delete("Vueling");
-        assertThat(this.airlinePersistence.existsName("Vueling")).isFalse();
+        assertThat(this.airlinePersistence.existsName("UPM Dellines Express")).isTrue();
+        this.airlinePersistence.delete("UPM Dellines Express");
+        assertThat(this.airlinePersistence.existsName("UPM Dellines Express")).isFalse();
     }
 
     @Test

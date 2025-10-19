@@ -22,7 +22,7 @@ class AirlineResourceFT {
 
     @Test
     void testDelete() {
-        webTestClient.delete().uri(AirlineResource.AIRLINES + "/Iberia Express")
+        webTestClient.delete().uri(AirlineResource.AIRLINES + "/UPM Dellines Economy")
                 .exchange()
                 .expectStatus().isOk();
     }

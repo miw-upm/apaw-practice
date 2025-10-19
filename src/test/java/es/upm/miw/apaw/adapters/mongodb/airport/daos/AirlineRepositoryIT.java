@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class AirlineRepositoryIT {
+class AirlineRepositoryIT {
 
     @Autowired
     private AirlineRepository airlineRepository;
@@ -27,7 +27,7 @@ public class AirlineRepositoryIT {
 
     @Test
     void testDeleteByName() {
-        this.airlineRepository.deleteByName("Air Europa");
-        assertThat(this.airlineRepository.findByName("Air Europa").isPresent()).isFalse();
+        this.airlineRepository.deleteByName("UPM Dellines");
+        assertThat(this.airlineRepository.findByName("UPM Dellines")).isEmpty();
     }
 }

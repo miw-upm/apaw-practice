@@ -250,7 +250,35 @@ public class AirportSeeder {
                         .code("VY")
                         .country("ES")
                         .flights(List.of(flights[3], flights[6]))
-                        .build()
+                        .build(),
+                AirlineEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4004"))
+                        .name("UPM Dellines Express")
+                        .code("UP")
+                        .country("ES")
+                        .flights(List.of())
+                        .build(),
+                AirlineEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4005"))
+                        .name("UPM Dellines")
+                        .code("UP")
+                        .country("ES")
+                        .flights(List.of())
+                        .build(),
+                AirlineEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4006"))
+                        .name("UPM Dellines Economy")
+                        .code("UP")
+                        .country("ES")
+                        .flights(List.of())
+                        .build(),
+                AirlineEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff4007"))
+                        .name("UPM Dellines Plus")
+                        .code("UP")
+                        .country("ES")
+                        .flights(List.of())
+                        .build(),
         };
         this.airlineRepository.saveAll(Arrays.asList(airlines));
 
