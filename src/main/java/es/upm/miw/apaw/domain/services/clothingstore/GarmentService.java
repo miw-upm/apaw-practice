@@ -3,18 +3,25 @@ package es.upm.miw.apaw.domain.services.clothingstore;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.persistenceports.clothingstore.GarmentPersistence;
 import org.springframework.stereotype.Service;
+import es.upm.miw.apaw.domain.models.UserDto;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.stream.Stream;
 import java.util.UUID;
+import java.util.stream.Stream;
+import java.util.List;
 
 @Service
 public class GarmentService {
 
     private final GarmentPersistence garmentPersistence;
+    private final UserRestClient userRestClient;
 
-    public GarmentService(GarmentPersistence garmentPersistence) {
+    @Autowired
+    public GarmentService(GarmentPersistence garmentPersistence, UserRestClient userRestClient) {
         this.garmentPersistence = garmentPersistence;
+        this.userRestClient = userRestClient;
     }
 
     public Garment create(Garment garment) {
@@ -34,8 +41,15 @@ public class GarmentService {
     }
 
     public BigDecimal sumDistinctPriceByMobile(String mobile) {
+        UserDto user = this.userRestClient.readByMobile(mobile);
+        UUID userId = user.getId();
         return this.garmentPersistence.sumDistinctPriceByMobile(mobile);
     }
+
+    public List<UUID> findDistinctIdsByInvoiceNumber(String number) {
+        return this.garmentPersistence.findDistinctIdsByInvoiceNumber(number).toList();
+    }
+
 }
 
 
