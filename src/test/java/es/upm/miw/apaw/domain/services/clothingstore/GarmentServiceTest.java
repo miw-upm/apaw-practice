@@ -1,25 +1,34 @@
 package es.upm.miw.apaw.domain.services.clothingstore;
 
+
+import es.upm.miw.apaw.domain.models.UserDto;
+
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.persistenceports.clothingstore.GarmentPersistence;
+import es.upm.miw.apaw.domain.restclients.UserRestClient;
+import es.upm.miw.apaw.domain.services.clothingstore.GarmentService;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
 
-@org.junit.jupiter.api.extension.ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class)
 class GarmentServiceTest {
 
     @Mock
     private GarmentPersistence garmentPersistence;
+
+    @Mock
+    private UserRestClient userRestClient;
 
     @InjectMocks
     private GarmentService garmentService;
@@ -32,7 +41,7 @@ class GarmentServiceTest {
                 .onSale(true)
                 .build();
 
-        BDDMockito.given(garmentPersistence.create(any(Garment.class))).willReturn(
+        given(garmentPersistence.create(any(Garment.class))).willReturn(
                 Garment.builder()
                         .size("S")
                         .price(new BigDecimal("29.99"))
@@ -49,7 +58,7 @@ class GarmentServiceTest {
 
     @Test
     void testFindByPriceBetween() {
-        BDDMockito.given(garmentPersistence.findByPriceBetween(any(), any()))
+        given(garmentPersistence.findByPriceBetween(any(BigDecimal.class), any(BigDecimal.class)))
                 .willReturn(Stream.of(
                         Garment.builder().price(new BigDecimal("59.99")).build(),
                         Garment.builder().price(new BigDecimal("89.99")).build()
@@ -59,21 +68,30 @@ class GarmentServiceTest {
                 new BigDecimal("50"), new BigDecimal("100")).toList();
 
         assertThat(garments).hasSize(2);
-        assertThat(garments.get(0).getPrice()).isBetween(new BigDecimal("50"), new BigDecimal("100"));
+        assertThat(garments.get(0).getPrice())
+                .isBetween(new BigDecimal("50"), new BigDecimal("100"));
     }
 
     @Test
     void testSumDistinctPriceByMobile() {
         String mobile = "666000660";
+        UUID userId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
         BigDecimal expectedTotal = new BigDecimal("149.98");
 
-        BDDMockito.given(garmentPersistence.sumDistinctPriceByMobile(eq(mobile)))
+        UserDto user = UserDto.builder()
+                .id(userId)
+                .mobile(mobile)
+                .firstName("user0")
+                .build();
+        given(userRestClient.readByMobile(mobile)).willReturn(user);
+
+        given(garmentPersistence.sumDistinctPriceByMobile(mobile))
                 .willReturn(expectedTotal);
 
         BigDecimal total = garmentService.sumDistinctPriceByMobile(mobile);
 
-        assertThat(total).isNotNull();
         assertThat(total).isEqualByComparingTo(expectedTotal);
         System.out.println(">>> testSumDistinctPriceByMobile(" + mobile + ") = " + total);
     }
+
 }

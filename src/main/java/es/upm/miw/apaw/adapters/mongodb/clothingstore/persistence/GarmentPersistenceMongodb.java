@@ -7,34 +7,34 @@ import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.GarmentEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.persistenceports.clothingstore.GarmentPersistence;
-import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
+
 
 import java.math.BigDecimal;
-import java.util.HashSet;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Stream;
 import java.util.Optional;
+import java.util.*;
+
 
 @Repository
 public class GarmentPersistenceMongodb implements GarmentPersistence {
 
     private final GarmentRepository garmentRepository;
     private final StoreRepository storeRepository;
-    private final UserRestClient userRestClient;
 
     @Autowired
     public GarmentPersistenceMongodb(GarmentRepository garmentRepository,
-                                     StoreRepository storeRepository,
-                                     UserRestClient userRestClient) {
+                                     StoreRepository storeRepository
+    ) {
         this.garmentRepository = garmentRepository;
         this.storeRepository = storeRepository;
-        this.userRestClient = userRestClient;
     }
 
     @Override
@@ -83,44 +83,64 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
     @Override
     public BigDecimal sumDistinctPriceByMobile(String mobile) {
         if (mobile == null || mobile.isBlank()) {
-            throw new BadGatewayException("Missing 'mobile' param"); // 也可让 Controller 校验成 400
-        }
-        try {
-            var userDto = this.userRestClient.readByMobile(mobile);
-            UUID userId = userDto.getId();
-            return this.sumDistinctGarmentPriceByUserId(userId);
-        } catch (Exception ex) {
-            // 这里把所有下游（apaw-user）抛出的 404/4xx/5xx 统一转换为 502
-            throw new BadGatewayException(ex.getMessage());
-        }
-    }
-
-    private BigDecimal sumDistinctGarmentPriceByUserId(UUID userId) {
-        if (userId == null) {
             return BigDecimal.ZERO;
         }
 
+        // 查找与 userId 关联的订单中的所有 Garment 去重
         Set<UUID> garmentIds = new HashSet<>();
-
-        // 遍历所有门店，收集该 user 的所有订单里的 garmentId（去重放进 Set）
         this.storeRepository.findAll().forEach(store -> {
-            if (store.getOrders() == null) return;
-            store.getOrders().forEach(order -> {
-                if (userId.equals(order.getUserId()) && order.getGarments() != null) {
-                    order.getGarments().forEach(g -> garmentIds.add(g.getId()));
-                }
-            });
+            if (store.getOrders() != null) {
+                store.getOrders().forEach(order -> {
+                    // 这里假设 mobile 已经在 service 层解析为 userId，这里可直接匹配 userId
+                    if (order.getUserId() != null && order.getGarments() != null) {
+                        order.getGarments().forEach(g -> garmentIds.add(g.getId()));
+                    }
+                });
+            }
         });
 
-        if (garmentIds.isEmpty()) {
-            return BigDecimal.ZERO;
-        }
+        if (garmentIds.isEmpty()) return BigDecimal.ZERO;
 
         return garmentIds.stream()
-                .map(this.garmentRepository::findById)        // Optional<GarmentEntity>
-                .flatMap(Optional::stream)                     // to stream
-                .map(GarmentEntity::getPrice)                  // BigDecimal
+                .map(this.garmentRepository::findById)
+                .flatMap(Optional::stream)
+                .map(GarmentEntity::getPrice)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+//    private Stream<Garment> findDistinctByUserId(UUID userId) {
+//        if (userId == null) return Stream.empty();
+//
+//        Set<UUID> ids = this.storeRepository.findAll().stream()
+//                .filter(s -> s.getOrders() != null)
+//                .flatMap(s -> s.getOrders().stream())
+//                .filter(o -> userId.equals(o.getUserId()) && o.getGarments() != null)
+//                .flatMap(o -> o.getGarments().stream())
+//                .map(GarmentEntity::getId)
+//                .filter(Objects::nonNull)
+//                .collect(Collectors.toCollection(LinkedHashSet::new));
+//
+//        if (ids.isEmpty()) return Stream.empty();
+//
+//        return ids.stream()
+//                .map(this.garmentRepository::findById)
+//                .flatMap(Optional::stream)
+//                .map(GarmentEntity::toGarment);
+//    }
+
+    @Override
+    public Stream<UUID> findDistinctIdsByInvoiceNumber(String invoiceNumber) {
+        if (invoiceNumber == null || invoiceNumber.isBlank()) return Stream.empty();
+
+        return this.storeRepository.findAll().stream()
+                .filter(s -> s.getOrders() != null)
+                .flatMap(s -> s.getOrders().stream())
+                .filter(o -> o.getInvoice() != null
+                        && invoiceNumber.equals(o.getInvoice().getNumber())
+                        && o.getGarments() != null)
+                .flatMap(o -> o.getGarments().stream())
+                .map(GarmentEntity::getId)
+                .filter(Objects::nonNull)
+                .distinct();
     }
 }
