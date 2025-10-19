@@ -4,7 +4,7 @@ import es.upm.miw.apaw.domain.models.martialartsgym.Equipment;
 import es.upm.miw.apaw.domain.persistenceports.martialartsgym.EquipmentPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import java.math.BigDecimal;
 
 @Service
@@ -24,5 +24,9 @@ public class EquipmentService {
     public Equipment updateEquipment(Equipment equipment) {
         return this.equipmentPersistence.updateEquipment(equipment);
     }
+    public List<String> findMobilesByItemLabel(String itemLabel) {
+        return this.equipmentPersistence.findMobilesByItemLabel(itemLabel);
+    }
+
 
 }

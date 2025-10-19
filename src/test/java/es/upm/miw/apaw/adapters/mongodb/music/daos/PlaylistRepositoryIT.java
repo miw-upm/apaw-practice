@@ -39,4 +39,22 @@ public class PlaylistRepositoryIT {
         this.playlistRepository.deleteById(code);
         assertThat(this.playlistRepository.findById(code)).isEmpty();
     }
+
+    @Test
+    void testFindSave() {
+        String code = "PL-001"; // ajusta si tu seeder usa otro
+        PlaylistEntity entity = this.playlistRepository.findById(code).orElseThrow();
+
+        String oldLabel = entity.getLabel();
+        Boolean oldOpened = entity.getOpened();
+
+        entity.setLabel(oldLabel + " RepoUpdated");
+        entity.setOpened(oldOpened == null ? Boolean.TRUE : !oldOpened);
+
+        this.playlistRepository.save(entity);
+
+        PlaylistEntity after = this.playlistRepository.findById(code).orElseThrow();
+        assertThat(after.getLabel()).isNotEqualTo(oldLabel);
+        assertThat(after.getOpened()).isNotEqualTo(oldOpened);
+    }
 }

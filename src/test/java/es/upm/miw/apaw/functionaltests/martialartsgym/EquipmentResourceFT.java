@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -57,6 +58,18 @@ class EquipmentResourceFT {
                 .expectBody()
                 .jsonPath("$.itemLabel").isEqualTo("Updated Helmet")
                 .jsonPath("$.unitCost").isEqualTo(60.00);
+    }
+    @Test
+    void testFindMobilesByItemLabel() {
+        String itemLabel = "Tatami Mats";
+
+        this.webTestClient
+                .get()
+                .uri(EquipmentResource.EQUIPMENT + "/mobiles/" + itemLabel)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(mobiles -> assertThat(mobiles).isNotEmpty());
     }
 
 }

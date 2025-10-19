@@ -4,7 +4,7 @@ import es.upm.miw.apaw.domain.models.martialartsgym.Equipment;
 import es.upm.miw.apaw.domain.services.martialartsgym.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.math.BigDecimal;
 
 @RestController
@@ -36,5 +36,10 @@ public class EquipmentResource {
 
         return this.equipmentService.updateEquipment(equipment);
     }
+    @GetMapping("/mobiles/{itemLabel}")
+    public List<String> findMobilesByItemLabel(@PathVariable String itemLabel) {
+        return this.equipmentService.findMobilesByItemLabel(itemLabel);
+    }
+
 
 }
