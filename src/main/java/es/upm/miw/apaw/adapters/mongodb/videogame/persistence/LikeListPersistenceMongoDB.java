@@ -1,8 +1,12 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.videogame.daos.LikeListRepository;
+import es.upm.miw.apaw.adapters.mongodb.videogame.entities.CompanyEntity;
+import es.upm.miw.apaw.adapters.mongodb.videogame.entities.LikeListEntity;
 import es.upm.miw.apaw.adapters.mongodb.videogame.entities.VideogameEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.videogame.Company;
+import es.upm.miw.apaw.domain.models.videogame.LikeList;
 import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import es.upm.miw.apaw.domain.persistenceports.videogame.LikeListPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +46,12 @@ public class LikeListPersistenceMongoDB implements LikeListPersistence {
                 .map(VideogameEntity::toVideogame); // Stream<Videogame>
     }
 
+    @Override
+    public Stream<LikeList> readAll() {
+        return this.likeListRepository
+                .findAll().stream()
+                .map(LikeListEntity::toLikeList);
 
+
+    }
 }

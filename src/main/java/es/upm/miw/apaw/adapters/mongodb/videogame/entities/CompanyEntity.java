@@ -40,10 +40,8 @@ public class CompanyEntity {
     public Company toCompany() {
         Company company = new Company();
 
-        // Copiamos las propiedades básicas
         BeanUtils.copyProperties(this, company, "videoGamesEntity");
 
-        // Convertimos la lista de VideoGameEntity a VideoGame
         List<Videogame> videogames = Optional.ofNullable(this.videoGamesEntity)
                 .orElse(List.of())
                 .stream()

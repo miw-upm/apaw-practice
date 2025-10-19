@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.entities;
 
+import es.upm.miw.apaw.domain.models.videogame.Genre;
 import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Builder
@@ -28,15 +31,15 @@ public class VideogameEntity {
     @DBRef
     private GenreEntity genreEntity;
 
-    public VideogameEntity() {
-        if (this.id == null) {  // Generar UUID automáticamente
-            this.id = UUID.randomUUID();
-        }
-    }
 
     public Videogame toVideogame() {
         Videogame videogame = new Videogame();
-        BeanUtils.copyProperties(this, videogame);
+        BeanUtils.copyProperties(this, videogame,"genreEntity");
+
+        if (this.genreEntity != null) {
+            videogame.setGenre(this.genreEntity.toGenre());
+        }
+
         return videogame;
     }
 

@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.videogame;
 
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.videogame.Company;
+import es.upm.miw.apaw.domain.models.videogame.LikeList;
 import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import es.upm.miw.apaw.domain.persistenceports.videogame.CompanyPersistence;
 import es.upm.miw.apaw.domain.persistenceports.videogame.LikeListPersistence;
@@ -42,6 +43,31 @@ public class LikeListService {
                 .filter(company -> company.getVideoGames() != null)
                 .filter(company -> company.getVideoGames().stream().anyMatch(videogame -> likedVideogames.contains(videogame.getName())))
                 .map(Company::getSector)
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
+    }
+    public List<String> obtainMobilesBySector(String sector) {
+
+        List<Videogame> videogamesInSector = this.companyPersistence.readAll()
+                .filter(company -> sector.equals(company.getSector()))
+                .filter(company -> company.getVideoGames() != null)
+                .flatMap(company -> company.getVideoGames().stream())
+                .toList();
+
+        List<String> videogameNamesInSector = videogamesInSector.stream()
+                .map(Videogame::getName)
+                .filter(Objects::nonNull)
+                .toList();
+
+        return this.likeListPersistence.readAll()
+                .filter(likeList -> likeList.getGamesLiked() != null)
+                .filter(likeList -> likeList.getGamesLiked().stream()
+                        .anyMatch(videogame -> videogameNamesInSector.contains(videogame.getName())))
+                .map(LikeList::getUser)
+                .map(UserDto::getId)
+                .map(this.userRestClient::readById)
+                .map(UserDto::getMobile)
                 .filter(Objects::nonNull)
                 .distinct()
                 .toList();

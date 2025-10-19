@@ -44,6 +44,26 @@ public class LikeListServiceTest {
 
         assertEquals(expectedSectors, actualSectors);
     }
+    @Test
+    void testObtainMobilesBySectorUsingSeederData() {
+
+        BDDMockito.given(this.userRestClient.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")))
+                .willReturn(UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002")).mobile("222222222").build());
+
+        BDDMockito.given(this.userRestClient.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")))
+                .willReturn(UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")).mobile("333333333").build());
+
+        BDDMockito.given(this.userRestClient.readById(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004")))
+                .willReturn(UserDto.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0004")).mobile("444444444").build());
+
+
+        List<String> mobilesSector1 = this.likeListService.obtainMobilesBySector("sector1");
+
+        List<String> expectedSector1 = List.of( "333333333","222222222");
+        assertEquals(expectedSector1, mobilesSector1);
+
+
+    }
 
 
 }

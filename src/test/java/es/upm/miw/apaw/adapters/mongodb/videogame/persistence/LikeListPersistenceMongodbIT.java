@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.persistence;
 
+import es.upm.miw.apaw.domain.models.videogame.LikeList;
 import es.upm.miw.apaw.domain.models.videogame.Videogame;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -40,5 +42,15 @@ public class LikeListPersistenceMongodbIT {
         assertTrue(gameNames.contains("game0"));
         assertTrue(gameNames.contains("game1"));
         assertEquals(2, gameNames.size());
+    }
+    @Test
+    void testReadAll() {
+        List<LikeList> likeLists = likeListPersistenceMongoDB.readAll().toList();
+
+        assertThat(likeLists.size()).isEqualTo(3);
+        assertThat(likeLists.get(0).getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0020"));
+        assertThat(likeLists.get(1).getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0021"));
+        assertThat(likeLists.get(2).getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0022"));
+
     }
 }
