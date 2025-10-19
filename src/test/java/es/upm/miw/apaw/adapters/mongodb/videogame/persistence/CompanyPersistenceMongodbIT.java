@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.adapters.mongodb.videogame.persistence;
 
+import es.upm.miw.apaw.adapters.mongodb.videogame.daos.VideogameSeeder;
 import es.upm.miw.apaw.domain.models.videogame.Company;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +19,14 @@ public class CompanyPersistenceMongodbIT {
 
     @Autowired
     private CompanyPersistenceMongoDB companyPersistenceMongoDB;
+
+    @Autowired
+    private VideogameSeeder videogameSeeder;
+    @BeforeEach
+    void setUp() {
+        this.videogameSeeder.deleteAll();
+        this.videogameSeeder.seedDatabase();
+    }
 
     @Test
     void testCreate() {
