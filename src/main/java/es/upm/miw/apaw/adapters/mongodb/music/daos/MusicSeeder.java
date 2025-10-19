@@ -78,14 +78,14 @@ public class MusicSeeder {
                         .name("Daft Punk")
                         .activeSince(LocalDate.of(1993, 1, 1))
                         .monthlyListeners(10_000_000L)
-                        .userId("11111111-1111-1111-1111-111111111111")
+                        .userId("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")
                         .songIsrcs(List.of("FRX123ABC0001", "FRX123ABC0002"))
                         .build(),
                 ArtistEntity.builder()
                         .name("Tame Impala")
                         .activeSince(LocalDate.of(2007, 1, 1))
                         .monthlyListeners(6_500_000L)
-                        .userId("22222222-2222-2222-2222-222222222222")
+                        .userId("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0003")
                         .songIsrcs(List.of("AUX99ZZZ00001"))
                         .build()
         };
