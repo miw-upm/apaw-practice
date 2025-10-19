@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
+import java.util.List;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -65,4 +65,27 @@ class DojoRepositoryIT {
         Optional<DojoEntity> deleted = dojoRepository.findById(savedEntity.getCadastralReference());
         assertThat(deleted).isEmpty();
     }
+
+    @Test
+    void testFindByCity() {
+        DojoEntity dojo = DojoEntity.builder()
+                .cadastralReference("D-9001")
+                .city("Madrid")
+                .foundationDate(LocalDate.of(2020, 1, 1))
+                .equipment(List.of(  // <-- se añade lista de equipment
+                        new es.upm.miw.apaw.adapters.mongodb.martialartsgym.entities.EquipmentEntity(1, "Tatami", new java.math.BigDecimal("100.00"), null),
+                        new es.upm.miw.apaw.adapters.mongodb.martialartsgym.entities.EquipmentEntity(2, "Punching Bag", new java.math.BigDecimal("150.00"), null)
+                ))
+                .build();
+
+        this.dojoRepository.save(dojo);
+
+        var found = this.dojoRepository.findByCity("Madrid");
+        assertThat(found).isPresent();
+        assertThat(found.get().getCity()).isEqualTo("Madrid");
+        assertThat(found.get().getEquipment()).hasSize(2);
+        assertThat(found.get().getEquipment().getFirst().getUnitCost()).isEqualByComparingTo("100.00");
+    }
+
+
 }

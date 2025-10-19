@@ -4,7 +4,7 @@ import es.upm.miw.apaw.domain.models.martialartsgym.Dojo;
 import es.upm.miw.apaw.domain.persistenceports.martialartsgym.DojoPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.math.BigDecimal;
 @Service
 public class DojoService {
 
@@ -17,5 +17,8 @@ public class DojoService {
 
     public Dojo create(Dojo dojo) {
         return this.dojoPersistence.create(dojo);
+    }
+    public BigDecimal findTotalUnitCostByCity(String city) {
+        return this.dojoPersistence.findTotalUnitCostByCity(city);
     }
 }
