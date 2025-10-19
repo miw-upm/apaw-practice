@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.music;
 
+import es.upm.miw.apaw.domain.models.music.Playlist;
 import es.upm.miw.apaw.domain.persistenceports.music.PlaylistPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,9 @@ public class PlaylistService {
 
     public void delete(String code) {
         this.playlistPersistence.delete(code);
+    }
+
+    public void update(String code, Playlist playlist) {
+        this.playlistPersistence.update(code, playlist);
     }
 }

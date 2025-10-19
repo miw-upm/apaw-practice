@@ -1,11 +1,10 @@
 package es.upm.miw.apaw.adapters.resources.music;
 
+import es.upm.miw.apaw.domain.models.music.Playlist;
 import es.upm.miw.apaw.domain.services.music.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(PlaylistResource.PLAYLISTS)
@@ -23,5 +22,10 @@ public class PlaylistResource {
     @DeleteMapping(PLAYLIST_ID)
     public void delete(@PathVariable String code) {
         this.playlistService.delete(code);
+    }
+
+    @PutMapping(PLAYLIST_ID)
+    public void update(@PathVariable String code, @Validated @RequestBody Playlist playlist) {
+        this.playlistService.update(code, playlist);
     }
 }
