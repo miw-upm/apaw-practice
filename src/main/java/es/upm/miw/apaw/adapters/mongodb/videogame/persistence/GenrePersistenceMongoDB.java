@@ -16,12 +16,12 @@ public class GenrePersistenceMongoDB implements GenrePersistence {
     private final GenreRepository genreRepository;
 
     @Autowired
-    public GenrePersistenceMongoDB(GenreRepository genreRepository){
-        this.genreRepository =genreRepository;
+    public GenrePersistenceMongoDB(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
     }
 
     @Override
-    public Genre update(Genre genre){
+    public Genre update(Genre genre) {
         GenreEntity genreEntity = this.genreRepository
                 .findByType(genre.getType())
                 .orElseThrow(() -> new NotFoundException("Genre type:" + genre.getType()));
@@ -30,15 +30,16 @@ public class GenrePersistenceMongoDB implements GenrePersistence {
     }
 
     @Override
-    public Genre findByType(String type){
+    public Genre findByType(String type) {
         return this.genreRepository
                 .findByType(type)
                 .orElseThrow(() -> new NotFoundException("Genre type:" + type))
                 .toGenre();
 
     }
+
     @Override
-    public Stream<Genre> readAll(){
+    public Stream<Genre> readAll() {
         return this.genreRepository.findAll().stream().map(GenreEntity::toGenre);
     }
 

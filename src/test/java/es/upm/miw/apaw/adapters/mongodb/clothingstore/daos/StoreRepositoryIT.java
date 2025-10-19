@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.daos;
 
-import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.StoreEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,13 +18,14 @@ class StoreRepositoryIT {
 
     @Autowired
     private StoreRepository storeRepository;
-
     @Autowired
-    private DatabaseSeeder databaseSeeder;
+    private clothingstoreSeeder clothingstoreSeeder;
+
 
     @BeforeEach
-    void seed() {
-        databaseSeeder.reSeedDatabase();
+    void resetDb() {
+        clothingstoreSeeder.deleteAll();
+        clothingstoreSeeder.seedDatabase();
     }
 
     @Test

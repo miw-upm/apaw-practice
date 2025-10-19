@@ -15,12 +15,12 @@ public class GenreResource {
     private final GenreService genreService;
 
     @Autowired
-    public GenreResource (GenreService genreService){
+    public GenreResource(GenreService genreService) {
         this.genreService = genreService;
     }
 
-    @PutMapping
-    public void updateAgeRestriction(@Valid @RequestParam String type, @RequestParam Integer newAge){
-        this.genreService.updateAgeRestriction(type,newAge);
+    @PutMapping()
+    public void updateAgeRestriction(@Valid @RequestParam String type, @RequestParam Integer newAge) {
+        this.genreService.updateAgeRestriction(type, newAge);
     }
 }

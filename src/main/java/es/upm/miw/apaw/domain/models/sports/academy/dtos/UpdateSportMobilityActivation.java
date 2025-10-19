@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpdateSportMobilityActivation {
     @NotNull
-    private boolean active;
+    public boolean active;
 }

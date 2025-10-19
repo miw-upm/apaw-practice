@@ -48,15 +48,22 @@ public class WinePersistenceMongodb implements WinePersistence {
 
     @Override
     public BigDecimal sumPricesByComment(String comment) {
+        String search = comment.toLowerCase().trim();
         return this.tastingSessionRepository.findAll().stream()
                 .filter(session -> session.getEvaluationEntities() != null &&
                         session.getEvaluationEntities().stream()
-                                .anyMatch(e -> e.getComment() != null && e.getComment().equalsIgnoreCase(comment)))
-                .flatMap(session -> session.getWineEntities().stream())
+                                .anyMatch(e -> e.getComment() != null &&
+                                        e.getComment().toLowerCase().contains(search)))
+                .flatMap(session -> session.getWineEntities() != null
+                        ? session.getWineEntities().stream()
+                        : java.util.stream.Stream.empty())
                 .map(WineEntity::getPrice)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+
+
 
 
 }

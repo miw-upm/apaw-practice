@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.bank;
 import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
 import es.upm.miw.apaw.adapters.mongodb.bank.entities.PaymentHistoryEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.bank.BankAccount;
 import es.upm.miw.apaw.domain.models.bank.CreditCard;
 import es.upm.miw.apaw.domain.models.bank.Loan;
 import org.junit.jupiter.api.Test;
@@ -83,6 +84,15 @@ import static org.junit.jupiter.api.Assertions.*;
                         UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff3000"),
                         UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff5000"),
                         UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7000")));
+    }
+
+    @Test
+    void testFindByAccountNumber(){
+        BankAccount result = this.bankAccountService.findByAccountNumber("ES2800000000000000000001");
+        assertThat(result.getAccountHolders()).hasSize(1);
+        assertThat(result.getAccountHolders().getFirst().getId()).isEqualTo(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"));
+        assertThat(result.getBalance()).isEqualTo(new BigDecimal("5065.65"));
+        assertThat(result.getCreditCardAssociated().getCardNumber()).isEqualTo("1111222233334445");
     }
 
 }

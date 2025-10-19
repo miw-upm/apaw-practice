@@ -1,13 +1,13 @@
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 
-import es.upm.miw.apaw.adapters.mongodb.DatabaseSeeder;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,14 +21,22 @@ class GarmentPersistenceMongodbIT {
 
     @Autowired
     private GarmentPersistenceMongodb garmentPersistenceMongodb;
+
     @Autowired
     private GarmentRepository garmentRepository;
+
     @Autowired
-    private DatabaseSeeder databaseSeeder;
+    private clothingstoreSeeder clothingstoreSeeder;
+
+    private static final String KNOWN_MOBILE = "666000660";
+    private static final String KNOWN_INVOICE_NUMBER = "INV-2025-001";
+    private static final UUID   G1_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+    private static final UUID   G2_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002");
 
     @BeforeEach
-    void setUp() {
-        this.databaseSeeder.reSeedDatabase();
+    void resetDb() {
+        clothingstoreSeeder.deleteAll();
+        clothingstoreSeeder.seedDatabase();
     }
 
     @Test
@@ -40,10 +48,9 @@ class GarmentPersistenceMongodbIT {
                 .toList();
 
         assertThat(garments).isNotNull().isNotEmpty();
-        assertThat(garments)
-                .allSatisfy(g ->
-                        assertThat(g.getPrice()).isBetween(min, max)
-                );
+        assertThat(garments).allSatisfy(g ->
+                assertThat(g.getPrice()).isBetween(min, max)
+        );
     }
 
     @Test
@@ -57,22 +64,21 @@ class GarmentPersistenceMongodbIT {
         Garment created = this.garmentPersistenceMongodb.create(newGarment);
 
         assertThat(created).isNotNull();
-        assertThat(created.getId()).isNotNull(); // 创建后应有 id
+        assertThat(created.getId()).isNotNull();
         assertThat(created.getSize()).isEqualTo("S");
         assertThat(created.getPrice()).isEqualByComparingTo("19.99");
         assertThat(created.getOnSale()).isFalse();
-        List<Garment> garments = this.garmentPersistenceMongodb.findByPriceBetween(
-                new BigDecimal("10"), new BigDecimal("30")
-        ).toList();
 
-        assertThat(garments)
-                .extracting(Garment::getSize)
-                .contains("S");
+        List<Garment> garments = this.garmentPersistenceMongodb
+                .findByPriceBetween(new BigDecimal("10"), new BigDecimal("30"))
+                .toList();
+
+        assertThat(garments).extracting(Garment::getId).contains(created.getId());
     }
 
     @Test
     void testUpdate() {
-        UUID seededId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+        UUID seededId = G1_ID;
 
         Garment body = Garment.builder()
                 .size("XL")
@@ -89,12 +95,33 @@ class GarmentPersistenceMongodbIT {
         assertThat(updated.getOnSale()).isTrue();
     }
 
-
     @Test
     void testDelete_ok() {
-        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+        UUID id = G1_ID;
         assertThat(garmentRepository.findById(id)).isPresent();
+
         garmentPersistenceMongodb.delete(id);
+
         assertThat(garmentRepository.findById(id)).isEmpty();
     }
+
+    @Test
+    void testSumDistinctPriceByMobile_ok() {
+        BigDecimal result = garmentPersistenceMongodb.sumDistinctPriceByMobile(KNOWN_MOBILE);
+        System.out.println(">>> Persistence sumDistinctPriceByMobile(" + KNOWN_MOBILE + ") = " + result);
+
+        //  59.99 + 89.99 = 149.98
+        assertThat(result).isEqualByComparingTo("149.98");
+    }
+
+    @Test
+    void testFindDistinctIdsByInvoiceNumber_ok() {
+        List<UUID> ids = garmentPersistenceMongodb
+                .findDistinctIdsByInvoiceNumber(KNOWN_INVOICE_NUMBER)
+                .toList();
+
+        assertThat(ids).containsExactlyInAnyOrder(G1_ID, G2_ID);
+    }
 }
+
+

@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.functionaltests.university;
 
 import es.upm.miw.apaw.adapters.resources.university.TeacherResource;
+import es.upm.miw.apaw.domain.models.university.LessonDurationSearching;
 import es.upm.miw.apaw.domain.models.university.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
-public class TeacherResourceFT {
+class TeacherResourceFT {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -149,5 +150,54 @@ public class TeacherResourceFT {
                 .bodyValue(updatedTeacher)
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testfindLessonDurationSumByTeacherFullName() {
+        String teacherFullName = "TFN010";
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(TeacherResource.TEACHERS + TeacherResource.LESSONS_DURATION)
+                        .queryParam("fullName", teacherFullName)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(LessonDurationSearching.class)
+                .value(lessonDurationSearching -> {
+                    assertThat(lessonDurationSearching.getDurationSum()).isEqualTo(210);
+                });
+    }
+
+    @Test
+    void testfindLessonDurationSumByTeacherFullNameExcludingDuplicates() {
+        String teacherFullName = "TFN009";
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(TeacherResource.TEACHERS + TeacherResource.LESSONS_DURATION)
+                        .queryParam("fullName", teacherFullName)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(LessonDurationSearching.class)
+                .value(lessonDurationSearching -> {
+                    assertThat(lessonDurationSearching.getDurationSum()).isEqualTo(60);
+                });
+    }
+
+    @Test
+    void testfindLessonDurationSumByTeacherFullNameNotFound() {
+        String teacherFullName = "TFN009NOTFOUND";
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(TeacherResource.TEACHERS + TeacherResource.LESSONS_DURATION)
+                        .queryParam("fullName", teacherFullName)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(LessonDurationSearching.class)
+                .value(lessonDurationSearching -> {
+                    assertThat(lessonDurationSearching.getDurationSum()).isZero();
+                });
     }
 }

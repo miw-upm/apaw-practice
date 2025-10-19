@@ -7,14 +7,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping(LikeListResource.LIKE_LISTS)
 public class LikeListResource {
-    public static final String LIKE_LISTS = "/videogame/likeList";
+    public static final String LIKE_LISTS = "/videogame/likeLists";
     public static final String ID_ID = "/{id}";
     public static final String SHARED = "/shared";
+    public static final String MOBILE = "/{mobile}";
+    public static final String GAME_SECTOR = "/gamesLiked/sectors";
+    public static final String SECTOR_MOBILE = "/mobile";
+    public static final String SECTOR = "/sector/{sector}";
+
     private final LikeListService likeListService;
 
     @Autowired
@@ -26,4 +32,14 @@ public class LikeListResource {
     public Boolean readSharedById(@PathVariable UUID id) {
         return this.likeListService.readSharedById(id);
     }
+
+    @GetMapping(MOBILE + GAME_SECTOR)
+    public List<String> obtainSectorsByMobile(@PathVariable("mobile") String mobile) {
+        return this.likeListService.obtainSectorsByMobile(mobile);
+    }
+    @GetMapping(SECTOR + SECTOR_MOBILE)
+    public List<String> obtainMobilesBySector(@PathVariable("sector") String sector) {
+        return this.likeListService.obtainMobilesBySector(sector);
+    }
+
 }

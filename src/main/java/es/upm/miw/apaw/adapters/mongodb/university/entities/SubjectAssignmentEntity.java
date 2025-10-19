@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Builder
 @Data
@@ -31,14 +30,14 @@ public class SubjectAssignmentEntity {
 
     public SubjectAssignment toSubjectAssignment() {
         SubjectAssignment subjectAssignment = new SubjectAssignment();
-        BeanUtils.copyProperties(this, subjectAssignment);
+        BeanUtils.copyProperties(this, subjectAssignment, "teacherEntities", "lessonEntities");
         subjectAssignment.setSubject(this.subjectEntity.toSubject());
         subjectAssignment.setTeachers(this.teacherEntities.stream()
                 .map(TeacherEntity::toTeacher)
-                .collect(Collectors.toList()));
+                .toList());
         subjectAssignment.setLessons(this.lessonEntities.stream()
                 .map(LessonEntity::toLesson)
-                .collect(Collectors.toList()));
+                .toList());
         return subjectAssignment;
     }
 }

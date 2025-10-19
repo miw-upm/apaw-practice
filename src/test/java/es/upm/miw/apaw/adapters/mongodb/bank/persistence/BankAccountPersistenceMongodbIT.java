@@ -69,6 +69,21 @@ class BankAccountPersistenceMongodbIT {
     }
 
     @Test
+    void testApplyANewLoanForABankAccountWhenItAlreadyHasLoansApplied(){
+        Loan loan = Loan.builder().quantity(new BigDecimal("20000")).condition("active").interestRate(0.07).build();
+        List<Loan> result = this.bankAccountPersistenceMongodb.applyANewLoanForABankAccount("ES2800000000000000000003",loan).toList();
+        assertEquals(2,result.size());
+        assertEquals(new BigDecimal("10000"), result.getFirst().getQuantity());
+        assertEquals("active",result.getFirst().getCondition());
+        assertEquals(0.07,result.getFirst().getInterestRate());
+        assertEquals(new BigDecimal("20000"), result.get(1).getQuantity());
+        assertEquals("active", result.get(1).getCondition());
+        assertEquals(0.07, result.get(1).getInterestRate());
+        bankSeeder.deleteAll();
+        bankSeeder.seedDatabase();
+    }
+
+    @Test
     void testApplyANewLoanForABankAccountNotFound() {
         Loan loan = Loan.builder().quantity(new BigDecimal("10000")).condition("active").interestRate(0.07).build();
         assertThrows(NotFoundException.class, () -> this.bankAccountPersistenceMongodb.applyANewLoanForABankAccount("ES2800000000000000000004",loan));
@@ -86,6 +101,11 @@ class BankAccountPersistenceMongodbIT {
         creditCard.setCardNumber("1111222233334444");
     }
 
+    @Test
+    void testUpdateCreditCardNotFoundCardAssociatedNull() {
+        assertThrows(NotFoundException.class,
+                () -> this.bankAccountPersistenceMongodb.updateCreditCard("ES2800000000010000000000", creditCard));
+    }
 
     @Test
     void testUpdateCreditCard(){

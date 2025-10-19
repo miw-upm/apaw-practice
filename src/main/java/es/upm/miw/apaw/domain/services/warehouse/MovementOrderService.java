@@ -53,15 +53,12 @@ public class MovementOrderService {
                     if (order.getUser() == null) {
                         return false;
                     }
-
                     if (order.getUser().getId() != null && userDto.getId() != null) {
                         return order.getUser().getId().equals(userDto.getId());
                     }
-
                     return order.getUser().getMobile() != null &&
                             order.getUser().getMobile().equals(userDto.getMobile());
                 })
-
                 .flatMap(order ->
                         this.locationPersistence.findAll()
                                 .filter(location -> location.getProductItems() != null &&

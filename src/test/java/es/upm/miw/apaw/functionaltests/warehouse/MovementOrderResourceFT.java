@@ -60,16 +60,16 @@ class MovementOrderResourceFT {
 
     @Test
     void testFindPositionsByUserMobile() {
-        BDDMockito.given(this.userRestClient.readByMobile("6600006600"))
+        BDDMockito.given(this.userRestClient.readByMobile("660000660"))
                 .willReturn(UserDto.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                        .mobile("6600006600")
+                        .mobile("660000660")
                         .build());
 
         this.webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(MovementOrderResource.MOVEMENT_ORDERS)
-                        .queryParam("mobile", "6600006600")
+                        .path(MovementOrderResource.MOVEMENT_ORDERS + MovementOrderResource.FIND_BY_MOBILE)
+                        .queryParam("mobile", "660000660")
                         .build())
                 .exchange()
                 .expectStatus().isOk()
