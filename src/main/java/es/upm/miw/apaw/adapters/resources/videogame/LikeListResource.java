@@ -18,6 +18,9 @@ public class LikeListResource {
     public static final String SHARED = "/shared";
     public static final String MOBILE = "/{mobile}";
     public static final String GAME_SECTOR = "/gamesLiked/sectors";
+    public static final String SECTOR_MOBILE = "/mobile";
+    public static final String SECTOR = "/sector/{sector}";
+
     private final LikeListService likeListService;
 
     @Autowired
@@ -33,6 +36,10 @@ public class LikeListResource {
     @GetMapping(MOBILE + GAME_SECTOR)
     public List<String> obtainSectorsByMobile(@PathVariable("mobile") String mobile) {
         return this.likeListService.obtainSectorsByMobile(mobile);
+    }
+    @GetMapping(SECTOR + SECTOR_MOBILE)
+    public List<String> obtainMobilesBySector(@PathVariable("sector") String sector) {
+        return this.likeListService.obtainMobilesBySector(sector);
     }
 
 }
