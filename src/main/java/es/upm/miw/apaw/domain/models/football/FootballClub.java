@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.models.football;
 
+import es.upm.miw.apaw.domain.models.UserDto;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
