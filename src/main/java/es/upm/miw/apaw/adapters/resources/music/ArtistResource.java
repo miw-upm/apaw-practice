@@ -4,10 +4,10 @@ import es.upm.miw.apaw.domain.models.music.Artist;
 import es.upm.miw.apaw.domain.services.music.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(ArtistResource.ARTISTS)
@@ -28,8 +28,11 @@ public class ArtistResource {
         return this.artistService.readByName(name);
     }
 
-    @GetMapping("/moods")
-    public java.util.List<String> findMoodsByUserMobile(@RequestParam String mobile) {
-        return this.artistService.findMoodsByUserMobile(mobile).toList();
+    @GetMapping(value = "/moods", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<String>> findMoodsByUserMobile(@RequestParam String mobile) {
+        List<String> moods = this.artistService.findMoodsByUserMobile(mobile).toList();
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(moods);
     }
 }
