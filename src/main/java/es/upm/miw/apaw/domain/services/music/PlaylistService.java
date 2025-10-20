@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.persistenceports.music.PlaylistPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Stream;
+
 @Service
 public class PlaylistService {
     private final PlaylistPersistence playlistPersistence;
@@ -20,5 +22,9 @@ public class PlaylistService {
 
     public void update(String code, Playlist playlist) {
         this.playlistPersistence.update(code, playlist);
+    }
+
+    public Stream<String> findArtistNamesByLabel(String label) {
+        return this.playlistPersistence.findArtistNamesByLabel(label);
     }
 }

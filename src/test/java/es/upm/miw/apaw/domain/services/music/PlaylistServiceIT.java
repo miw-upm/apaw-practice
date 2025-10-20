@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -82,5 +84,20 @@ public class PlaylistServiceIT {
         assertThatThrownBy(() -> this.playlistService.update("PL-404", payload))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Playlist not found: PL-404");
+    }
+
+    @Test
+    void testFindArtistNamesByLabelOk() {
+        List<String> result = this.playlistService.findArtistNamesByLabel("Classics").toList();
+
+        assertThat(result).isNotEmpty();
+        assertThat(result).contains("Daft Punk", "Tame Impala");
+        assertThat(result).doesNotHaveDuplicates();
+    }
+
+    @Test
+    void testFindArtistNamesByLabelEmpty() {
+        List<String> result = this.playlistService.findArtistNamesByLabel("NOPE").toList();
+        assertThat(result).isEmpty();
     }
 }
