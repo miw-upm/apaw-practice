@@ -8,4 +8,6 @@ import java.util.stream.Stream;
 public interface ArtistPersistence {
 
     Stream<Artist> readByName(String name);
+
+    Stream<String> findMoodsByUserMobile(String mobile);
 }

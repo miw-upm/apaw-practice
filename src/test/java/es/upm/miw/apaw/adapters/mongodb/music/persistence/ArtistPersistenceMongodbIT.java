@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -52,5 +53,22 @@ class ArtistPersistenceMongodbIT {
     @Test
     void testReadByNameEmpty() {
         assertThat(this.artistPersistenceMongodb.readByName("Nonexistent Artist")).isEmpty();
+    }
+
+    @Test
+    void testFindMoodsByUserMobile() {
+        UserDto mockUser = UserDto.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .mobile("666000660")
+                .firstName("Thomas")
+                .build();
+
+        Mockito.when(userRestClient.readByMobile(anyString())).thenReturn(mockUser);
+
+        List<String> moods = this.artistPersistenceMongodb.findMoodsByUserMobile("666000660").toList();
+
+        assertThat(moods).isNotEmpty();
+        assertThat(moods).containsExactly("ENERGETIC");
+        assertThat(moods).doesNotHaveDuplicates();
     }
 }
