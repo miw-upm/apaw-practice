@@ -58,21 +58,21 @@ public class ArtistPersistenceMongodb implements ArtistPersistence {
     @Override
     public Stream<String> findMoodsByUserMobile(String mobile) {
         UserDto user = this.userRestClient.readByMobile(mobile);
-        if (user == null || user.getId() == null) {
-            // Sin usuario => sin artistas => sin moods
-            return Stream.empty();
-        }
         String userId = user.getId().toString();
 
         return this.artistRepository.findAll().stream()
-                .filter(a -> userId.equals(a.getUserId()))
-                .flatMap(a -> a.getSongIsrcs() == null ? Stream.empty() : a.getSongIsrcs().stream())
+                .filter(artist -> userId.equals(artist.getUserId()))
+                .flatMap(artist -> artist.getSongIsrcs() == null
+                        ? Stream.empty()
+                        : artist.getSongIsrcs().stream())
                 .map(this.songRepository::findById)
-                .flatMap(Optional::stream)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .map(SongEntity::getStyleGenre)
                 .filter(Objects::nonNull)
                 .map(this.styleRepository::findById)
-                .flatMap(Optional::stream)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .map(StyleEntity::getMood)
                 .filter(Objects::nonNull)
                 .distinct();

@@ -71,19 +71,42 @@ class ArtistResourceFT {
                 .expectStatus().isEqualTo(HttpStatus.NOT_FOUND);
     }
 
-//    @Test
-//    void testFindMoodsByUserMobile() {
-//        webTestClient.get()
-//                .uri(uriBuilder -> uriBuilder
-//                        .path(ArtistResource.ARTISTS + "/moods")
-//                        .queryParam("mobile", "666000660")
-//                        .build())
-//                .exchange()
-//                .expectStatus().isOk()
-//                .expectBodyList(String.class)
-//                .value(moods -> {
-//                    assertThat(moods).containsExactly("ENERGETIC");
-//                    assertThat(moods).doesNotHaveDuplicates();
-//                });
-//    }
+    @Test
+    void testFindMoodsByUserMobile() throws Exception {
+        UserDto mockUser = UserDto.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .mobile("666000660")
+                .firstName("Thomas")
+                .build();
+        Mockito.when(userRestClient.readByMobile(anyString())).thenReturn(mockUser);
+
+        // 1) Pedimos el cuerpo como String
+        String body = webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ArtistResource.ARTISTS + "/moods")
+                        .queryParam("mobile", "666000660")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
+
+        // 2) Si body ya es un array JSON, lo parseamos; si es un String con JSON, también
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+
+        java.util.List<String> moods;
+        if (body != null && body.startsWith("[") && body.endsWith("]")) {
+            // Es un array JSON “normal”
+            moods = mapper.readValue(body, new com.fasterxml.jackson.core.type.TypeReference<java.util.List<String>>() {});
+        } else {
+            // Por si viniera con comillas exteriores (String JSON que contiene el array)
+            String unwrapped = mapper.readValue(body, String.class);
+            moods = mapper.readValue(unwrapped, new com.fasterxml.jackson.core.type.TypeReference<java.util.List<String>>() {});
+        }
+
+        org.assertj.core.api.Assertions.assertThat(moods).isNotEmpty();
+        org.assertj.core.api.Assertions.assertThat(moods).containsExactly("ENERGETIC");
+        org.assertj.core.api.Assertions.assertThat(moods).doesNotHaveDuplicates();
+    }
 }
