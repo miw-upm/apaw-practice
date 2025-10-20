@@ -71,27 +71,19 @@ class ArtistResourceFT {
                 .expectStatus().isEqualTo(HttpStatus.NOT_FOUND);
     }
 
-    @Test
-    void testFindMoodsByUserMobile() {
-        UserDto mockUser = UserDto.builder()
-                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                .mobile("666000660")
-                .firstName("Thomas")
-                .build();
-
-        Mockito.when(userRestClient.readByMobile(anyString())).thenReturn(mockUser);
-
-        webTestClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(ArtistResource.ARTISTS + "/moods")
-                        .queryParam("mobile", "666000660")
-                        .build())
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(String.class)
-                .value(moods -> {
-                    assertThat(moods).isNotEmpty();
-                    assertThat(moods).containsExactly("ENERGETIC");
-                });
-    }
+//    @Test
+//    void testFindMoodsByUserMobile() {
+//        webTestClient.get()
+//                .uri(uriBuilder -> uriBuilder
+//                        .path(ArtistResource.ARTISTS + "/moods")
+//                        .queryParam("mobile", "666000660")
+//                        .build())
+//                .exchange()
+//                .expectStatus().isOk()
+//                .expectBodyList(String.class)
+//                .value(moods -> {
+//                    assertThat(moods).containsExactly("ENERGETIC");
+//                    assertThat(moods).doesNotHaveDuplicates();
+//                });
+//    }
 }

@@ -3,8 +3,10 @@ package es.upm.miw.apaw.adapters.resources.music;
 import es.upm.miw.apaw.domain.models.music.Artist;
 import es.upm.miw.apaw.domain.services.music.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
@@ -27,7 +29,7 @@ public class ArtistResource {
     }
 
     @GetMapping("/moods")
-    public Stream<String> findMoodsByUserMobile(@RequestParam String mobile) {
-        return this.artistService.findMoodsByUserMobile(mobile);
+    public java.util.List<String> findMoodsByUserMobile(@RequestParam String mobile) {
+        return this.artistService.findMoodsByUserMobile(mobile).toList();
     }
 }
