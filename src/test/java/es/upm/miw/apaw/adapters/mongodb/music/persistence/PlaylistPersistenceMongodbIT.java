@@ -12,14 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
 public class PlaylistPersistenceMongodbIT {
     @Autowired
     private PlaylistPersistence playlistPersistence;
+
+    @Autowired
+    private PlaylistPersistenceMongodb playlistPersistenceMongodb;
 
     @Autowired
     private PlaylistRepository playlistRepository;
@@ -49,15 +54,12 @@ public class PlaylistPersistenceMongodbIT {
 
     @Test
     void testUpdateOk() {
-        // Usa un code existente del seeder (ajusta si es distinto)
         String code = "PL-001";
 
-        // Estado antes de actualizar
         PlaylistEntity before = this.playlistRepository.findById(code).orElseThrow();
         String oldLabel = before.getLabel();
         Boolean oldOpened = before.getOpened();
 
-        // === payload: simula el JSON del PUT ===
         String newLabel = oldLabel + " (UPDATED)";
         Boolean newOpened = (oldOpened == null) ? Boolean.TRUE : !oldOpened;
 
@@ -87,5 +89,25 @@ public class PlaylistPersistenceMongodbIT {
         assertThatThrownBy(() -> this.playlistPersistence.update("PL-404", payload))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Playlist not found");
+    }
+
+    @Test
+    void testFindArtistNamesByLabelOk() {
+        List<String> names = this.playlistPersistenceMongodb
+                .findArtistNamesByLabel("Classics")
+                .collect(Collectors.toList());
+
+        assertThat(names).isNotEmpty();
+        assertThat(names).contains("Daft Punk", "Tame Impala");
+        assertThat(names).doesNotHaveDuplicates();
+    }
+
+    @Test
+    void testFindArtistNamesByLabelEmpty() {
+        List<String> names = this.playlistPersistenceMongodb
+                .findArtistNamesByLabel("NON-EXISTENT")
+                .collect(Collectors.toList());
+
+        assertThat(names).isEmpty();
     }
 }

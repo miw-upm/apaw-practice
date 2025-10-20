@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -66,5 +69,46 @@ class PlaylistResourceFT {
                 .bodyValue(playlist)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testFindArtistNamesByLabelOk() throws Exception {
+        String body = webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(PlaylistResource.PLAYLISTS + "/artist-names")
+                        .queryParam("label", "Classics")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
+
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+
+        java.util.List<String> names;
+        if (body != null && body.startsWith("[") && body.endsWith("]")) {
+            names = mapper.readValue(body, new com.fasterxml.jackson.core.type.TypeReference<java.util.List<String>>() {});
+        } else {
+            String unwrapped = mapper.readValue(body, String.class);
+            names = mapper.readValue(unwrapped, new com.fasterxml.jackson.core.type.TypeReference<java.util.List<String>>() {});
+        }
+
+        assertThat(names).isNotEmpty();
+        assertThat(names).contains("Daft Punk", "Tame Impala");
+        assertThat(names).doesNotHaveDuplicates();
+    }
+
+    @Test
+    void testFindArtistNamesByLabelEmpty() {
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(PlaylistResource.PLAYLISTS + "/artist-names")
+                        .queryParam("label", "NOPE")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(String.class)
+                .value(List::isEmpty);
     }
 }
