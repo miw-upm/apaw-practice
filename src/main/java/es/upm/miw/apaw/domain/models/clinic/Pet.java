@@ -7,24 +7,28 @@ import lombok.NoArgsConstructor;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class Diagnosis {
-
-    @NotBlank
-    private String code;
+public class Pet {
 
     @NotNull
-    private LocalDateTime diagnosisDate;
+    private Long microchipNumber;
 
-    private Integer severityLevel;
+    @NotBlank
+    private String name;
 
-    private String notes;
+    @NotNull
+    private Species species;
 
-    private List<Treatment> treatments;
+    @NotNull
+    private Gender gender;
+
+    private List<Appointment> appointments;
+
+    private List<PetVeterinarian> petVeterinarians;
+
 }

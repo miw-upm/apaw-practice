@@ -9,22 +9,22 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class Diagnosis {
-
-    @NotBlank
-    private String code;
+public class Appointment {
 
     @NotNull
-    private LocalDateTime diagnosisDate;
+    private UUID id;
 
-    private Integer severityLevel;
+    @NotNull
+    private LocalDateTime appointmentDate;
 
-    private String notes;
+    @NotBlank
+    private String reason;
 
-    private List<Treatment> treatments;
+    private List<Diagnosis> diagnoses;
 }

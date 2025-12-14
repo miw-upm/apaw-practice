@@ -1,22 +1,28 @@
 package es.upm.miw.apaw.domain.models.clinic;
 
-import lombok.*;
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
-@Getter
-@Setter
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.List;
+
+@Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class Treatment {
 
-    // Clave de principal
+    @NotBlank
     private String treatmentCode;
 
-    // Atributos de Treatment
-    private String procedureName;
-    private BigDecimal totalCost;
+    private String description;
 
-    // Relación n..1 con Diagnosis
-    private String diagnosisCode;
+    private List<String> medications;
+
+    @NotNull
+    private BigDecimal totalCost;
 }
