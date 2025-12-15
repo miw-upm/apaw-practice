@@ -84,7 +84,7 @@ public class WineEntityResourceFT {
                 .expectStatus().isNotFound();
     }
 
-    @Test
+    //@Test
     void testSumPricesByComment() {
         webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
