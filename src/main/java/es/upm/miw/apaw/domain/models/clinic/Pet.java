@@ -29,6 +29,4 @@ public class Pet {
 
     private List<Appointment> appointments;
 
-    private List<PetVeterinarian> petVeterinarians;
-
 }

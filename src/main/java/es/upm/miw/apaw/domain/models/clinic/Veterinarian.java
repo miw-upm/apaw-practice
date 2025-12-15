@@ -30,5 +30,4 @@ public class Veterinarian {
 
     private List<Appointment> appointments;
 
-    private List<PetVeterinarian> petVeterinarians;
 }
