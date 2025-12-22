@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb;
 
 import es.upm.miw.apaw.adapters.mongodb.airport.daos.AirportSeeder;
 import es.upm.miw.apaw.adapters.mongodb.bank.daos.BankSeeder;
+import es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;
 import es.upm.miw.apaw.adapters.mongodb.fighters.daos.FightersSeeder;
 import es.upm.miw.apaw.adapters.mongodb.football.daos.FootballSeeder;
 import es.upm.miw.apaw.adapters.mongodb.recruiting.daos.RecruitingSeeder;
@@ -52,7 +53,7 @@ public class DatabaseSeeder {
     private final MetroSeeder metroSeeder;
     private final MusicSeeder musicSeeder;
     private final MartialArtsGymSeeder martialArtsGymSeeder;
-
+    private final ClinicSeeder clinicSeeder;
 
     @Autowired
     public DatabaseSeeder(
@@ -74,7 +75,8 @@ public class DatabaseSeeder {
             VideoWebSiteSeeder videoWebsiteSeeder,
             FootballSeeder footballSeeder,
             MetroSeeder metroSeeder,
-            MusicSeeder musicSeeder, MartialArtsGymSeeder martialArtsGymSeeder
+            MusicSeeder musicSeeder, MartialArtsGymSeeder martialArtsGymSeeder,
+            ClinicSeeder clinicSeeder
     ) {
 
         this.shopSeeder = shopSeeder;
@@ -97,6 +99,7 @@ public class DatabaseSeeder {
         this.metroSeeder = metroSeeder;
         this.musicSeeder = musicSeeder;
         this.martialArtsGymSeeder = martialArtsGymSeeder;
+        this.clinicSeeder = clinicSeeder;
         this.seedDatabase();
 
     }
@@ -122,6 +125,7 @@ public class DatabaseSeeder {
         this.metroSeeder.seedDatabase();
         this.musicSeeder.seedDatabase();
         this.martialArtsGymSeeder.seedDatabase();
+        this.clinicSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -145,6 +149,7 @@ public class DatabaseSeeder {
         this.metroSeeder.deleteAll();
         this.musicSeeder.deleteAll();
         this.martialArtsGymSeeder.deleteAll();
+        this.clinicSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
