@@ -31,20 +31,26 @@ public class PetEntity {
     private List<UUID> appointments;
 
     public PetEntity(Pet pet) {
-        BeanUtils.copyProperties(pet, this,  "appointments");
+        BeanUtils.copyProperties(pet, this, "appointments");
 
         this.microchipNumber = pet.getMicrochipNumber();
         this.name = pet.getName();
         this.species = pet.getSpecies();
         this.gender = pet.getGender();
-        this.appointments = pet.getAppointments().stream()
-                .map(Appointment::getId)
-                .toList();
+        if (pet.getAppointments() != null) {
+            this.appointments = pet.getAppointments().stream()
+                    .map(Appointment::getId)
+                    .toList();
+        }
     }
 
-    public Pet toAnimal() {
+    public Pet toPet() {
         Pet pet = new Pet();
         BeanUtils.copyProperties(this, pet, "appointments");
+        if(this.getAppointments() != null) {
+            pet.setAppointments(this.getAppointments()
+                    .stream().map(appointmentId -> Appointment.builder().id(appointmentId).build()).toList());
+        }
         return pet;
     }
 }
