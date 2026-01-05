@@ -24,4 +24,15 @@ public class PetService {
     public void assignAppointment(Long microchipNumber, UUID appointmentId) {
         this.petPersistence.addAppointments(microchipNumber, appointmentId);
     }
+
+    public Pet update(Long microchipNumber, Pet updated) {
+        Pet existing = this.petPersistence.findByMicrochipNumber(microchipNumber)
+                .orElseThrow(() -> new NotFoundException("Pet not found: " + microchipNumber));
+
+        existing.setName(updated.getName());
+        existing.setSpecies(updated.getSpecies());
+        existing.setGender(updated.getGender());
+        existing.setAppointments(updated.getAppointments());
+        return this.petPersistence.save(existing);
+    }
 }

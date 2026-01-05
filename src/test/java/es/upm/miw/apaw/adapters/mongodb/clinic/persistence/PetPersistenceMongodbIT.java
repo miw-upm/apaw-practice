@@ -64,4 +64,15 @@ class PetPersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> this.petPersistence.addAppointments(999999L, appointmentId));
     }
 
+    @Test
+    void testSave_ok() {
+        Pet newPet = Pet.builder()
+                .microchipNumber(123456789L)
+                .name("Max")
+                .build();
+
+        Pet saved = this.petPersistence.save(newPet);
+        assertThat(saved.getName()).isEqualTo("Max");
+    }
+
 }

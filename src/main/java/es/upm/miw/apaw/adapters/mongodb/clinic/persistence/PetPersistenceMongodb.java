@@ -36,4 +36,9 @@ public class PetPersistenceMongodb implements PetPersistence {
         petEntity.getAppointments().add(appointmentId);
         this.petRepository.save(petEntity);
     }
+
+    @Override
+    public Pet save(Pet pet) {
+        return this.petRepository.save(new PetEntity(pet)).toPet();
+    }
 }
