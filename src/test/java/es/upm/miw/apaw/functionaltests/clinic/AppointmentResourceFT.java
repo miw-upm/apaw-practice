@@ -57,4 +57,19 @@ class AppointmentResourceFT {
                 .value(created -> assertThat(created.getReason()).isEqualTo("Check-up"));
     }
 
+    @Test
+    void testPatchAppointmentDate() {
+        LocalDateTime newDate = LocalDateTime.now().plusDays(2);
+
+        webTestClient.patch()
+                .uri(uriBuilder -> uriBuilder
+                        .path(AppointmentResource.APPOINTMENTS + AppointmentResource.ID)
+                        .queryParam("newDate", newDate)
+                        .build(ClinicSeeder.ID_APPOINTMENT_REVISION))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Appointment.class)
+                .value(appointment -> assertThat(appointment.getAppointmentDate()).isEqualTo(newDate));
+    }
+
 }

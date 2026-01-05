@@ -1,8 +1,10 @@
 package es.upm.miw.apaw.domain.services.clinic;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clinic.Appointment;
 import es.upm.miw.apaw.domain.models.clinic.Diagnosis;
 import es.upm.miw.apaw.domain.models.clinic.Treatment;
@@ -16,6 +18,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -63,6 +66,38 @@ class AppointmentServiceIT {
 
         return this.appointmentService.create(
                 newAppointment, ClinicSeeder.LICENSE_DR_SMITH, ClinicSeeder.MICROCHIP_CHISPA);
+    }
+
+    @Test
+    void testReadById() {
+        Appointment createdAppointment = this.getCreatedAppointment();
+        Appointment appointment = this.appointmentService.readById(createdAppointment.getId());
+        assertThat(appointment.getReason()).isEqualTo(ROUTINE_CHECK_UP);
+    }
+
+    @Test
+    void testReadByIdNotFound() {
+        assertThrows(NotFoundException.class, () ->
+                this.appointmentService.readById(UUID.randomUUID()));
+    }
+
+    @Test
+    void testUpdateAppointmentDate() {
+        Appointment createdAppointment = this.getCreatedAppointment();
+        LocalDateTime newDate = LocalDateTime.now().plusDays(5);
+
+        Appointment updatedAppointment = this.appointmentService.updateAppointmentDate(createdAppointment.getId(), newDate);
+
+        assertThat(updatedAppointment.getId()).isEqualTo(createdAppointment.getId());
+        assertThat(updatedAppointment.getAppointmentDate()).isEqualTo(newDate);
+    }
+
+    @Test
+    void testUpdateAppointmentDateNotFound() {
+        LocalDateTime newDate = LocalDateTime.now().plusDays(5);
+
+        assertThrows(NotFoundException.class, () ->
+                this.appointmentService.updateAppointmentDate(UUID.randomUUID(), newDate));
     }
 
 }

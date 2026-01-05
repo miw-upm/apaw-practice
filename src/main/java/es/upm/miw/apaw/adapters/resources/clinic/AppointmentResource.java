@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @RestController
 @RequestMapping(AppointmentResource.APPOINTMENTS)
 public class AppointmentResource {
@@ -29,5 +32,10 @@ public class AppointmentResource {
             @RequestParam(name = "pet-microchip") Long petMicrochip
     ) {
         return this.appointmentService.create(appointment, licenseVeterinarian, petMicrochip);
+    }
+
+    @PatchMapping(ID)
+    public Appointment updateAppointmentDate(@PathVariable UUID id, @RequestParam LocalDateTime newDate) {
+        return this.appointmentService.updateAppointmentDate(id, newDate);
     }
 }
