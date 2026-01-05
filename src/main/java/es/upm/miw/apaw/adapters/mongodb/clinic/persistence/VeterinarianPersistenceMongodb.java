@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.mongodb.clinic.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.clinic.daos.VeterinarianRepository;
 import es.upm.miw.apaw.adapters.mongodb.clinic.entities.VeterinarianEntity;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clinic.Veterinarian;
 import es.upm.miw.apaw.domain.persistenceports.clinic.VeterinarianPersistence;
 import org.springframework.stereotype.Repository;
@@ -21,5 +22,13 @@ public class VeterinarianPersistenceMongodb implements VeterinarianPersistence {
     public Optional<Veterinarian> findByLicenseNumber(Long licenseNumber) {
         return this.veterinarianRepository.findByLicenseNumber(licenseNumber)
                 .map(VeterinarianEntity::toVeterinarian);
+    }
+
+    @Override
+    public void delete(Veterinarian veterinarian) {
+        if (!this.veterinarianRepository.existsByLicenseNumber(veterinarian.getLicenseNumber())) {
+            throw new NotFoundException("Veterinarian not found: " + veterinarian.getLicenseNumber());
+        }
+        this.veterinarianRepository.deleteByLicenseNumber(veterinarian.getLicenseNumber());
     }
 }

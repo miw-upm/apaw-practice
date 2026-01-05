@@ -8,5 +8,7 @@ import java.util.Optional;
 public interface VeterinarianRepository extends MongoRepository<VeterinarianEntity, String> {
 
     Optional<VeterinarianEntity> findByLicenseNumber(Long licenseNumber);
+    boolean existsByLicenseNumber(Long licenseNumber);
+    void deleteByLicenseNumber(Long licenseNumber);
 
 }

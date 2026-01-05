@@ -34,4 +34,17 @@ class VeterinarianRepositoryIT {
         assertThat(vet.get().getLicenseNumber()).isEqualTo(ClinicSeeder.LICENSE_DR_JONES);
         assertThat(vet.get().getUserId()).isEqualTo(ClinicSeeder.USER_UUID_DR_JONES);
     }
+
+    @Test
+    void testExistsByLicenseNumber() {
+        boolean exists = this.veterinarianRepository.existsByLicenseNumber(ClinicSeeder.LICENSE_DR_JONES);
+        assertThat(exists).isTrue();
+    }
+
+    @Test
+    void testDeleteByLicenseNumber() {
+        this.veterinarianRepository.deleteByLicenseNumber(ClinicSeeder.LICENSE_DR_SMITH);
+        boolean exists = this.veterinarianRepository.existsByLicenseNumber(ClinicSeeder.LICENSE_DR_SMITH);
+        assertThat(exists).isFalse();
+    }
 }

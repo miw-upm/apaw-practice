@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.mongodb.clinic.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clinic.Veterinarian;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -40,5 +42,19 @@ class VeterinarianPersistenceMongodbIT {
     void testFindByLicense_notFound() {
         Optional<Veterinarian> vet = this.veterinarianPersistence.findByLicenseNumber(999999L);
         assertThat(vet).isEmpty();
+    }
+
+    @Test
+    void testDelete_ok() {
+        Long license = ClinicSeeder.LICENSE_DR_JONES;
+        Veterinarian vet = this.veterinarianPersistence.findByLicenseNumber(license).orElseThrow();
+        this.veterinarianPersistence.delete(vet);
+        assertThat(this.veterinarianPersistence.findByLicenseNumber(license)).isEmpty();
+    }
+
+    @Test
+    void testDelete_notFound() {
+        Veterinarian vet = Veterinarian.builder().licenseNumber(999999L).build();
+        assertThrows(NotFoundException.class, () -> this.veterinarianPersistence.delete(vet));
     }
 }
