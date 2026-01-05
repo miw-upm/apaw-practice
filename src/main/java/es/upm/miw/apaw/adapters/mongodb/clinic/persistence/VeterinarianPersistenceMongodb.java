@@ -7,7 +7,9 @@ import es.upm.miw.apaw.domain.models.clinic.Veterinarian;
 import es.upm.miw.apaw.domain.persistenceports.clinic.VeterinarianPersistence;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository("veterinarianPersistence")
 public class VeterinarianPersistenceMongodb implements VeterinarianPersistence {
@@ -30,5 +32,17 @@ public class VeterinarianPersistenceMongodb implements VeterinarianPersistence {
             throw new NotFoundException("Veterinarian not found: " + veterinarian.getLicenseNumber());
         }
         this.veterinarianRepository.deleteByLicenseNumber(veterinarian.getLicenseNumber());
+    }
+
+    @Override
+    public void addAppointments(Long licenseNumber, UUID appointmentId) {
+        VeterinarianEntity veterinarianEntity = this.veterinarianRepository.findByLicenseNumber(licenseNumber).orElseThrow(
+                () -> new NotFoundException("Veterinarian not found: " + licenseNumber)
+        );
+        if(veterinarianEntity.getAppointments() == null){
+            veterinarianEntity.setAppointments(new ArrayList<>());
+        }
+        veterinarianEntity.getAppointments().add(appointmentId);
+        this.veterinarianRepository.save(veterinarianEntity);
     }
 }

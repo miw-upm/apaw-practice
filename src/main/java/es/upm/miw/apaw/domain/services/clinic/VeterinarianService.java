@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.models.clinic.Veterinarian;
 import es.upm.miw.apaw.domain.persistenceports.clinic.VeterinarianPersistence;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class VeterinarianService {
 
@@ -23,4 +25,9 @@ public class VeterinarianService {
         Veterinarian veterinarian = this.readByLicense(licenseNumber);
         this.veterinarianPersistence.delete(veterinarian);
     }
+
+    public void assignAppointment(Long licenceVeterinarian, UUID appointmentId) {
+        this.veterinarianPersistence.addAppointments(licenceVeterinarian, appointmentId);
+    }
+
 }
