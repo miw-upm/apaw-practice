@@ -1,0 +1,51 @@
+@startuml
+' ===== Visual style (optional, keeps it similar to repository examples) =====
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultTextAlignment left
+
+title Art Gallery - Domain Model
+
+' ===== Outer structure =====
+package "domain" as domain {
+  package "model" as model {
+
+    package "art_gallery" as art_gallery {
+
+      class ArtGalleryGallery <<Document>> {
+        galleryName : String
+        galleryCity : String
+        galleryOpen : Boolean
+      }
+
+      class ArtGalleryExhibition <<Document>> {
+        exhibitionTitle : String
+        exhibitionStartDate : LocalDate
+        exhibitionEndDate : LocalDate
+        exhibitionEntryFee : BigDecimal
+      }
+
+      class ArtGalleryArtwork <<Document>> {
+        artworkTitle : String
+        artworkYear : Integer
+        artworkPrice : BigDecimal
+        artworkAvailable : Boolean
+      }
+
+      class ArtGalleryArtist <<Document>> {
+        artistFullName : String
+        artistBirthDate : LocalDate
+        artistNationality : String
+        artistActive : Boolean
+      }
+
+      ' ===== Relationships (must include 1..n, n..1, n..n) =====
+      ArtGalleryGallery "1" -- "n" ArtGalleryExhibition
+      ArtGalleryArtist  "1" -- "n" ArtGalleryArtwork
+      ArtGalleryExhibition "n" -- "n" ArtGalleryArtwork
+    }
+  }
+}
+
+@enduml
