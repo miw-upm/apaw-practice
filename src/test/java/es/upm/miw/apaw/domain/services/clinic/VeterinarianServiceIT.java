@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.UUID;
+
 @SpringBootTest
 @ActiveProfiles("test")
 class VeterinarianServiceIT {
@@ -38,5 +40,14 @@ class VeterinarianServiceIT {
     void testDeleteByLicense() {
         this.veterinarianService.deleteByLicense(ClinicSeeder.LICENSE_DR_SMITH);
         assertThrows(NotFoundException.class, () -> this.veterinarianService.readByLicense(ClinicSeeder.LICENSE_DR_SMITH));
+    }
+
+    @Test
+    void testAssignAppointment() {
+        UUID appointmentId = UUID.randomUUID();
+        this.veterinarianService.assignAppointment(ClinicSeeder.LICENSE_DR_SMITH, appointmentId);
+        Veterinarian veterinarian = this.veterinarianService.readByLicense(ClinicSeeder.LICENSE_DR_SMITH);
+        assertThat(veterinarian.getAppointments()).isNotNull();
+        assertThat(veterinarian.getAppointments()).anyMatch(appointment -> appointment.getId().equals(appointmentId));
     }
 }
