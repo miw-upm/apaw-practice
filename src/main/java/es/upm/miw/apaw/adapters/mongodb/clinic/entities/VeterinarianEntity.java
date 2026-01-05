@@ -35,9 +35,12 @@ public class VeterinarianEntity {
     public VeterinarianEntity(Veterinarian veterinarian) {
         BeanUtils.copyProperties(veterinarian, this,"userDto", "appointments");
         this.userId = veterinarian.getUser().getId();
-        this.appointments = veterinarian.getAppointments().stream()
-                .map(Appointment::getId)
-                .toList();
+        if(veterinarian.getAppointments() != null) {
+            this.appointments = veterinarian.getAppointments().stream()
+                    .map(Appointment::getId)
+                    .toList();
+        }
+
     }
 
     public Veterinarian toVeterinarian() {
@@ -45,6 +48,10 @@ public class VeterinarianEntity {
         BeanUtils.copyProperties(this, veterinarian, "userId","appointments");
         veterinarian.setUser(new UserDto());
         veterinarian.getUser().setId(this.userId);
+        if(this.getAppointments() != null) {
+            veterinarian.setAppointments(this.getAppointments()
+                    .stream().map(appointmentId -> Appointment.builder().id(appointmentId).build()).toList());
+        }
         return veterinarian;
     }
 }

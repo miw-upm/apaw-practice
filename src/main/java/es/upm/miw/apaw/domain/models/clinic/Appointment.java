@@ -17,7 +17,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Appointment {
 
-    @NotNull
     private UUID id;
 
     @NotNull

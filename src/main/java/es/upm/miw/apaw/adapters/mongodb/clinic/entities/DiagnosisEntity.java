@@ -24,9 +24,11 @@ public class DiagnosisEntity {
 
     public DiagnosisEntity(Diagnosis diagnosis) {
         BeanUtils.copyProperties(diagnosis, this, "treatments");
-        this.treatments = diagnosis.getTreatments().stream()
-                .map(TreatmentEntity::new)
-                .toList();
+        if (diagnosis.getTreatments() != null) {
+            this.treatments = diagnosis.getTreatments().stream()
+                    .map(TreatmentEntity::new)
+                    .toList();
+        }
     }
 
     public Diagnosis toDiagnosis() {

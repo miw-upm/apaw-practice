@@ -22,6 +22,10 @@ public class ClinicSeeder {
     public static final Long MICROCHIP_TOBY = 900000000000002L;
     public static final Long LICENSE_DR_SMITH = 10101010101L;
     public static final Long LICENSE_DR_JONES = 10101010102L;
+    public static final UUID USER_UUID_DR_SMITH = UUID.randomUUID();
+    public static final UUID USER_UUID_DR_JONES = UUID.randomUUID();
+    public static final UUID ID_APPOINTMENT_GRIPE = UUID.randomUUID();
+    public static final UUID ID_APPOINTMENT_REVISION = UUID.randomUUID();
 
     private final VeterinarianRepository veterinarianRepository;
     private final PetRepository petRepository;
@@ -50,11 +54,13 @@ public class ClinicSeeder {
                         .licenseNumber(LICENSE_DR_SMITH)
                         .active(true)
                         .createdAt(LocalDateTime.now().minusYears(5))
+                        .userId(USER_UUID_DR_SMITH)
                         .build(),
                 VeterinarianEntity.builder()
                         .licenseNumber(LICENSE_DR_JONES)
                         .active(true)
                         .createdAt(LocalDateTime.now().minusYears(3))
+                        .userId(USER_UUID_DR_JONES)
                         .build()
         );
         this.veterinarianRepository.saveAll(veterinarians);
@@ -81,7 +87,7 @@ public class ClinicSeeder {
     private void saveAppointments() {
         var appointments = List.of(
                 AppointmentEntity.builder()
-                        .id(UUID.randomUUID())
+                        .id(ID_APPOINTMENT_GRIPE)
                         .appointmentDate(LocalDateTime.now().plusDays(1))
                         .reason("Consulta general")
                         .diagnoses(List.of(
@@ -102,7 +108,7 @@ public class ClinicSeeder {
                         ))
                         .build(),
                 AppointmentEntity.builder()
-                        .id(UUID.randomUUID())
+                        .id(ID_APPOINTMENT_REVISION)
                         .appointmentDate(LocalDateTime.now().plusDays(3))
                         .reason("Revisión")
                         .diagnoses(List.of(
