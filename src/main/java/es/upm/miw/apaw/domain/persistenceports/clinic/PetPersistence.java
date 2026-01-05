@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface PetPersistence {
     Optional<Pet> findByMicrochipNumber(Long microchipNumber);
     void addAppointments(Long microchipNumber, UUID appointmentId);
+    Pet save(Pet pet);
 }

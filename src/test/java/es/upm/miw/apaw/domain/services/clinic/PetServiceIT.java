@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.clinic.Gender;
 import es.upm.miw.apaw.domain.models.clinic.Pet;
+import es.upm.miw.apaw.domain.models.clinic.Species;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,4 +51,17 @@ class PetServiceIT {
         assertThat(pet.getAppointments()).isNotNull();
         assertThat(pet.getAppointments()).anyMatch(appointment -> appointment.getId().equals(appointmentId));
     }
+
+    @Test
+    void testUpdatePet() {
+        Pet updatedPet = Pet.builder()
+                .name("Chispa Updated")
+                .species(Species.CAT)
+                .gender(Gender.MALE)
+                .build();
+
+        Pet result = this.petService.update(ClinicSeeder.MICROCHIP_CHISPA, updatedPet);
+        assertThat(result.getName()).isEqualTo("Chispa Updated");
+    }
+
 }
