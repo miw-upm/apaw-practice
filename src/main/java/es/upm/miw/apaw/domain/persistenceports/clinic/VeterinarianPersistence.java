@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface VeterinarianPersistence {
     Optional<Veterinarian> findByLicenseNumber(Long licenseNumber);
+    void delete(Veterinarian veterinarian);
+
 }

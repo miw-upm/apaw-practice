@@ -18,4 +18,9 @@ public class VeterinarianService {
         return this.veterinarianPersistence.findByLicenseNumber(licenseNumber)
                 .orElseThrow(() -> new NotFoundException("Veterinarian not found: " + licenseNumber));
     }
+
+    public void deleteByLicense(Long licenseNumber) {
+        Veterinarian veterinarian = this.readByLicense(licenseNumber);
+        this.veterinarianPersistence.delete(veterinarian);
+    }
 }

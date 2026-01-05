@@ -39,4 +39,12 @@ public class VeterinarianResourceFT {
                 .expectBody(Veterinarian.class)
                 .value(vet -> assertThat(vet.getLicenseNumber()).isEqualTo(ClinicSeeder.LICENSE_DR_SMITH));
     }
+
+    @Test
+    void testDeleteByLicense() {
+        webTestClient.delete()
+                .uri(VeterinarianResource.VETERINARIANS + VeterinarianResource.LICENSE, ClinicSeeder.LICENSE_DR_SMITH)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
 }
