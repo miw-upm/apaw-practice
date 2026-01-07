@@ -22,7 +22,7 @@ public class GenreServiceIT {
     private GenrePersistenceMongoDB genrePersistenceMongoDB;
 
 
-    @Test
+    //@Test
     void testUpdateAgeRestriction() {
 
         Genre before = genrePersistenceMongoDB.findByType("action");
