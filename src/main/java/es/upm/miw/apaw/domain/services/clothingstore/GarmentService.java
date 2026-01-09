@@ -43,7 +43,7 @@ public class GarmentService {
     public BigDecimal sumDistinctPriceByMobile(String mobile) {
         UserDto user = this.userRestClient.readByMobile(mobile);
         UUID userId = user.getId();
-        return this.garmentPersistence.sumDistinctPriceByMobile(mobile);
+        return this.garmentPersistence.sumDistinctPriceByUserId(userId);
     }
 
     public List<UUID> findDistinctIdsByInvoiceNumber(String number) {

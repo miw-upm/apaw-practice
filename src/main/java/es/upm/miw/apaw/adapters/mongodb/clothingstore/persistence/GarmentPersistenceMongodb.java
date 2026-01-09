@@ -1,4 +1,3 @@
-
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
@@ -10,18 +9,13 @@ import es.upm.miw.apaw.domain.persistenceports.clothingstore.GarmentPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Optional;
-import java.util.*;
-
+import java.util.stream.Stream;
 
 @Repository
 public class GarmentPersistenceMongodb implements GarmentPersistence {
@@ -31,8 +25,7 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
 
     @Autowired
     public GarmentPersistenceMongodb(GarmentRepository garmentRepository,
-                                     StoreRepository storeRepository
-    ) {
+                                     StoreRepository storeRepository) {
         this.garmentRepository = garmentRepository;
         this.storeRepository = storeRepository;
     }
@@ -80,59 +73,31 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
         }
         this.garmentRepository.deleteById(id);
     }
+
     @Override
-    public BigDecimal sumDistinctPriceByMobile(String mobile) {
-        if (mobile == null || mobile.isBlank()) {
+    public BigDecimal sumDistinctPriceByUserId(UUID userId) {
+        if (userId == null) {
             return BigDecimal.ZERO;
         }
 
-        // 查找与 userId 关联的订单中的所有 Garment 去重
-        Set<UUID> garmentIds = new HashSet<>();
-        this.storeRepository.findAll().forEach(store -> {
-            if (store.getOrders() != null) {
-                store.getOrders().forEach(order -> {
-                    // 这里假设 mobile 已经在 service 层解析为 userId，这里可直接匹配 userId
-                    if (order.getUserId() != null && order.getGarments() != null) {
-                        order.getGarments().forEach(g -> garmentIds.add(g.getId()));
-                    }
-                });
-            }
-        });
-
-        if (garmentIds.isEmpty()) return BigDecimal.ZERO;
-
-        return garmentIds.stream()
-                .map(this.garmentRepository::findById)
-                .flatMap(Optional::stream)
+        Set<UUID> seen = new HashSet<>();
+        return this.storeRepository.findByOrdersUserId(userId).stream()
+                .filter(store -> store.getOrders() != null)
+                .flatMap(store -> store.getOrders().stream())
+                .filter(order -> userId.equals(order.getUserId()) && order.getGarments() != null)
+                .flatMap(order -> order.getGarments().stream())
+                .filter(Objects::nonNull)
+                .filter(garment -> garment.getId() != null && seen.add(garment.getId()))
                 .map(GarmentEntity::getPrice)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
-//    private Stream<Garment> findDistinctByUserId(UUID userId) {
-//        if (userId == null) return Stream.empty();
-//
-//        Set<UUID> ids = this.storeRepository.findAll().stream()
-//                .filter(s -> s.getOrders() != null)
-//                .flatMap(s -> s.getOrders().stream())
-//                .filter(o -> userId.equals(o.getUserId()) && o.getGarments() != null)
-//                .flatMap(o -> o.getGarments().stream())
-//                .map(GarmentEntity::getId)
-//                .filter(Objects::nonNull)
-//                .collect(Collectors.toCollection(LinkedHashSet::new));
-//
-//        if (ids.isEmpty()) return Stream.empty();
-//
-//        return ids.stream()
-//                .map(this.garmentRepository::findById)
-//                .flatMap(Optional::stream)
-//                .map(GarmentEntity::toGarment);
-//    }
 
     @Override
     public Stream<UUID> findDistinctIdsByInvoiceNumber(String invoiceNumber) {
         if (invoiceNumber == null || invoiceNumber.isBlank()) return Stream.empty();
 
-        return this.storeRepository.findAll().stream()
+        return this.storeRepository.findByOrdersInvoiceNumber(invoiceNumber).stream()
                 .filter(s -> s.getOrders() != null)
                 .flatMap(s -> s.getOrders().stream())
                 .filter(o -> o.getInvoice() != null

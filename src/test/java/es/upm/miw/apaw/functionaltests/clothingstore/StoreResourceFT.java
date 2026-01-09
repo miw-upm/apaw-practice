@@ -31,7 +31,6 @@ class StoreResourceFT {
     @Autowired
     private StoreRepository storeRepository;
 
-
     private static final UUID SEEDED_STORE_ID =
             UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7005");
 
@@ -42,15 +41,51 @@ class StoreResourceFT {
     }
 
     @Test
+    void testReadById_OK() {
+        Store store = this.webTestClient.get()
+                .uri(StoreResource.STORES + "/" + SEEDED_STORE_ID)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Store.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(store).isNotNull();
+        assertThat(store.getId()).isEqualTo(SEEDED_STORE_ID);
+    }
+
+    @Test
+    void testUpdateStore_OK() {
+        Store body = Store.builder()
+                .name("Madrid Fashion Updated")
+                .address("Calle Actualizada 456")
+                .build();
+
+        Store updated = this.webTestClient.put()
+                .uri(StoreResource.STORES + "/" + SEEDED_STORE_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(body)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Store.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(updated).isNotNull();
+        assertThat(updated.getId()).isEqualTo(SEEDED_STORE_ID);
+        assertThat(updated.getName()).isEqualTo("Madrid Fashion Updated");
+        assertThat(updated.getAddress()).isEqualTo("Calle Actualizada 456");
+    }
+
+    @Test
     void testDeleteStore_OK() {
-        // 先确认种子存在
         assertThat(storeRepository.findById(SEEDED_STORE_ID)).isPresent();
 
         webTestClient
                 .delete()
                 .uri(StoreResource.STORES + "/" + SEEDED_STORE_ID)
                 .exchange()
-                .expectStatus().isNoContent();   // 204
+                .expectStatus().isNoContent();
 
         assertThat(storeRepository.findById(SEEDED_STORE_ID)).isEmpty();
     }
@@ -74,4 +109,3 @@ class StoreResourceFT {
         assertThat(updated.getAddress()).isEqualTo("Calle Nueva 123");
     }
 }
-
