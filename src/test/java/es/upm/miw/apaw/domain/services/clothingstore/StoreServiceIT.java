@@ -53,6 +53,15 @@ class StoreServiceIT {
         assertThatThrownBy(() -> storeService.delete(unknown))
                 .isInstanceOf(NotFoundException.class);
     }
+
+    @Test
+    void testReadById_ok() {
+        Store store = storeService.readById(SEEDED_ID);
+
+        assertThat(store).isNotNull();
+        assertThat(store.getId()).isEqualTo(SEEDED_ID);
+    }
+
     @Test
     void testPatch_UpdateOnlyAddress() {
         StoreEntity before = storeRepository.findById(SEEDED_ID).orElseThrow();
@@ -69,5 +78,19 @@ class StoreServiceIT {
         StoreEntity reloaded = storeRepository.findById(SEEDED_ID).orElseThrow();
         assertThat(reloaded.getAddress()).isEqualTo("Calle Nueva 123");
         assertThat(reloaded.getName()).isEqualTo(originalName);
+    }
+
+    @Test
+    void testUpdate_ok() {
+        Store body = Store.builder()
+                .name("Madrid Fashion Updated")
+                .address("Calle Actualizada 456")
+                .build();
+
+        Store updated = storeService.update(SEEDED_ID, body);
+
+        assertThat(updated.getId()).isEqualTo(SEEDED_ID);
+        assertThat(updated.getName()).isEqualTo("Madrid Fashion Updated");
+        assertThat(updated.getAddress()).isEqualTo("Calle Actualizada 456");
     }
 }

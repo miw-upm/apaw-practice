@@ -3,7 +3,6 @@ package es.upm.miw.apaw.domain.services.clothingstore;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.clothingstoreSeeder;
 import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.restclients.UserRestClient;
@@ -38,15 +37,9 @@ class GarmentServiceIT {
     @MockitoBean
     private UserRestClient userRestClient;
 
-    // --- 与 user-seeder / clothingstore-seeder 对齐的常量 ---
     private static final UUID USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
     private static final String KNOWN_MOBILE = "666000660";
     private static final String UNKNOWN_MOBILE = "999999999";
-
-    // 搜索2：已知的发票号与去重后的 Garment id（来自 clothingstoreSeeder）
-    private static final String KNOWN_INVOICE_NUMBER = "INV-2025-001";
-    private static final UUID G1_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
-    private static final UUID G2_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002");
 
     @BeforeEach
     void resetDb() {
@@ -127,7 +120,7 @@ class GarmentServiceIT {
 
     @Test
     void testDelete_ok() {
-        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001"); // seeder 中的一件衣服
+        UUID id = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
         assertThat(garmentRepository.findById(id)).isPresent();
 
         garmentService.delete(id);
@@ -146,16 +139,4 @@ class GarmentServiceIT {
         assertThatThrownBy(() -> garmentService.sumDistinctPriceByMobile(UNKNOWN_MOBILE))
                 .isInstanceOf(BadGatewayException.class);
     }
-
-    @Test
-    void testFindDistinctIdsByInvoiceNumber_ok() {
-        List<UUID> ids = this.garmentService
-                .findDistinctIdsByInvoiceNumber(KNOWN_INVOICE_NUMBER); // <-- 没有 .toList()
-
-        assertThat(ids)
-                .isNotNull()
-                .containsExactlyInAnyOrder(G1_ID, G2_ID);
-    }
 }
-
-

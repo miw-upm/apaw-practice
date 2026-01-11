@@ -24,6 +24,17 @@ public class StoreResource {
     public void delete(@PathVariable UUID id) {
         this.storeService.delete(id);
     }
+
+    @GetMapping("/{id}")
+    public Store readById(@PathVariable UUID id) {
+        return this.storeService.readById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Store update(@PathVariable UUID id, @RequestBody Store store) {
+        return this.storeService.update(id, store);
+    }
+
     @PatchMapping("/{id}")
     public Store patch(@PathVariable UUID id, @RequestBody Store partialStore) {
         return this.storeService.patch(id, partialStore);
