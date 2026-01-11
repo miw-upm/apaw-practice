@@ -19,7 +19,15 @@ public class StoreService {
         this.storePersistence.delete(id);
     }
 
+    public Store readById(UUID id) {
+        return this.storePersistence.readById(id);
+    }
+
     public Store patch(UUID id, Store partialStore){
         return this.storePersistence.update(id, partialStore);
+    }
+
+    public Store update(UUID id, Store store) {
+        return this.storePersistence.update(id, store);
     }
 }

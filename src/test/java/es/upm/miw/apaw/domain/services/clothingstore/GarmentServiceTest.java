@@ -82,13 +82,12 @@ class GarmentServiceTest {
                 .build();
         given(userRestClient.readByMobile(mobile)).willReturn(user);
 
-        given(garmentPersistence.sumDistinctPriceByMobile(mobile))
+        given(garmentPersistence.sumDistinctPriceByUserId(userId))
                 .willReturn(expectedTotal);
 
         BigDecimal total = garmentService.sumDistinctPriceByMobile(mobile);
 
         assertThat(total).isEqualByComparingTo(expectedTotal);
-        System.out.println(">>> testSumDistinctPriceByMobile(" + mobile + ") = " + total);
     }
 
 }
