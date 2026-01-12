@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping(StadiumResource.STADIUMS)
 public class StadiumResource {
@@ -17,6 +15,9 @@ public class StadiumResource {
     public static final String NAME_ID = "/{officialName}";
 
     private final StadiumService stadiumService;
+
+    public record SumDto(Integer sum) {
+    }
 
     @Autowired
     public StadiumResource(StadiumService stadiumService) {
@@ -33,6 +34,7 @@ public class StadiumResource {
     public Stadium readByOfficialName(@PathVariable String officialName) {
         return this.stadiumService.readByOfficialName(officialName);
     }
+
     @PatchMapping(NAME_ID)
     public Stadium updateCapacity(@PathVariable String officialName, @RequestBody Stadium stadium) {
         return this.stadiumService.updateCapacity(officialName, stadium.getCapacity());
@@ -43,14 +45,15 @@ public class StadiumResource {
     public void deleteByOfficialName(@PathVariable String officialName) {
         this.stadiumService.deleteByOfficialName(officialName);
     }
+
     @PutMapping(NAME_ID)
     public Stadium update(@PathVariable String officialName, @Valid @RequestBody Stadium stadium) {
         return this.stadiumService.update(officialName, stadium);
     }
+
     @GetMapping("/{officialName}/players-goals-sum")
-    public Map<String, Integer> getPlayersGoalsSum(@PathVariable String officialName) {
-        int sum = this.stadiumService.getPlayersGoalsSum(officialName);
-        return Map.of("sum", sum);
+    public SumDto getPlayersGoalsSum(@PathVariable String officialName) {
+        return new SumDto(this.stadiumService.getPlayersGoalsSum(officialName));
     }
 
 }
