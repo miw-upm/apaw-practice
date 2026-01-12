@@ -16,7 +16,6 @@ public class FootballClubPersistenceMongodb implements FootballClubPersistence {
 
     private final FootballClubRepository clubRepository;
     private static final String CLUB_ID = "Football club id: ";
-    private static final String CLUB_NAME = "Football club name: ";
 
     public FootballClubPersistenceMongodb(FootballClubRepository clubRepository) {
         this.clubRepository = clubRepository;
@@ -50,7 +49,6 @@ public class FootballClubPersistenceMongodb implements FootballClubPersistence {
 
     @Override
     public FootballClub updateBudget(Long clubId, BigDecimal newBudget) {
-        // Como no tienes findByClubId, usamos findAll + filter
         FootballClubEntity entity = this.clubRepository.findAll().stream()
                 .filter(c -> c.getClubId().equals(clubId))
                 .findFirst()

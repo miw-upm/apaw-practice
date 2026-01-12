@@ -2,7 +2,6 @@ package es.upm.miw.apaw.adapters.mongodb.football.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.football.daos.MatchRepository;
 import es.upm.miw.apaw.adapters.mongodb.football.entities.MatchEntity;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.football.Match;
 import es.upm.miw.apaw.domain.persistenceports.football.MatchPersistence;
 import org.springframework.stereotype.Repository;
@@ -14,7 +13,6 @@ import java.util.Optional;
 public class MatchPersistenceMongodb implements MatchPersistence {
 
     private final MatchRepository matchRepository;
-    private static final String MATCH_ID = "Match id: ";
 
     public MatchPersistenceMongodb(MatchRepository matchRepository) {
         this.matchRepository = matchRepository;
