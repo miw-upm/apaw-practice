@@ -16,9 +16,6 @@ public class FootballPlayerResource {
 
     private final FootballPlayerService footballPlayerService;
 
-    public record MobilesDto(List<String> mobiles) {
-    }
-
     @Autowired
     public FootballPlayerResource(FootballPlayerService footballPlayerService) {
         this.footballPlayerService = footballPlayerService;
@@ -30,7 +27,7 @@ public class FootballPlayerResource {
     }
 
     @GetMapping(NICKNAME_ID + "/mobiles")
-    public MobilesDto getMobilesByNickname(@PathVariable String nickname) {
-        return new MobilesDto(this.footballPlayerService.getMobilesByNickname(nickname));
+    public List<String> getMobilesByNickname(@PathVariable String nickname) {
+        return this.footballPlayerService.getMobilesByNickname(nickname);
     }
 }
