@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.models.clinic.Veterinarian;
 import es.upm.miw.apaw.domain.persistenceports.clinic.VeterinarianPersistence;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,6 +29,10 @@ public class VeterinarianService {
 
     public void assignAppointment(Long licenceVeterinarian, UUID appointmentId) {
         this.veterinarianPersistence.addAppointments(licenceVeterinarian, appointmentId);
+    }
+
+    public List<Veterinarian> findByAppointmentIds(List<UUID> appointmentId) {
+        return this.veterinarianPersistence.findByAppointmentIds(appointmentId);
     }
 
 }

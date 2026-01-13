@@ -2,9 +2,15 @@ package es.upm.miw.apaw.domain.services.clinic;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 import es.upm.miw.apaw.adapters.mongodb.clinic.daos.ClinicSeeder;
+import es.upm.miw.apaw.adapters.mongodb.clinic.daos.VeterinarianRepository;
+import es.upm.miw.apaw.adapters.mongodb.clinic.entities.VeterinarianEntity;
+import es.upm.miw.apaw.adapters.mongodb.clinic.persistence.AppointmentPersistenceMongodb;
+import es.upm.miw.apaw.adapters.restclients.UserRestClientImpl;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.models.UserDto;
 import es.upm.miw.apaw.domain.models.clinic.Appointment;
 import es.upm.miw.apaw.domain.models.clinic.Diagnosis;
 import es.upm.miw.apaw.domain.models.clinic.Treatment;
@@ -13,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,6 +37,12 @@ class AppointmentServiceIT {
 
     @Autowired
     private ClinicSeeder clinicSeeder;
+    @Autowired
+    private AppointmentPersistenceMongodb appointmentPersistence;
+    @Autowired
+    private VeterinarianRepository veterinarianRepository;
+    @MockitoBean
+    private UserRestClientImpl userRestClient;
 
     @BeforeEach
     void resetDb() {
@@ -98,6 +111,54 @@ class AppointmentServiceIT {
 
         assertThrows(NotFoundException.class, () ->
                 this.appointmentService.updateAppointmentDate(UUID.randomUUID(), newDate));
+    }
+
+    @Test
+    void testFindMobilesByDiagnosisCode_ok() {
+        String code = "001";
+        Appointment appointment1 = Appointment.builder()
+                .id(UUID.randomUUID())
+                .appointmentDate(LocalDateTime.now()).reason("Reason 1")
+                .diagnoses(
+                        List.of(Diagnosis.builder().code(code).build())).build();
+        Appointment appointment2 = Appointment.builder()
+                .id(UUID.randomUUID())
+                .appointmentDate(LocalDateTime.now()).reason("Reason 2")
+                .diagnoses(
+                        List.of(Diagnosis.builder().code(code).build()))
+                .build();
+        appointment1 = appointmentPersistence.save(appointment1);
+        appointment2 = appointmentPersistence.save(appointment2);
+
+        VeterinarianEntity veterinarian1 = VeterinarianEntity.builder()
+                .userId(UUID.randomUUID())
+                .appointments(List.of(appointment1.getId()))
+                .build();
+        VeterinarianEntity veterinarian2 = VeterinarianEntity.builder()
+                .userId(UUID.randomUUID())
+                .appointments(List.of(appointment2.getId()))
+                .build();
+        veterinarianRepository.save(veterinarian1);
+        veterinarianRepository.save(veterinarian2);
+
+        when(userRestClient.readById(veterinarian1.getUserId()))
+                .thenReturn(UserDto.builder().id(veterinarian1.getUserId()).mobile("123456789").build());
+        when(userRestClient.readById(veterinarian2.getUserId()))
+                .thenReturn(UserDto.builder().id(veterinarian2.getUserId()).mobile("123456789").build());
+
+        List<String> mobiles = appointmentService.findMobilesByDiagnosisCode(code);
+
+        assertThat(mobiles).isNotEmpty();
+        assertThat(mobiles).containsExactlyInAnyOrder("123456789");
+    }
+
+    @Test
+    void testFindMobilesByDiagnosisCode_emptyAppointments() {
+        String code = "INVALID_CODE";
+
+        List<String> mobiles = appointmentService.findMobilesByDiagnosisCode(code);
+
+        assertThat(mobiles).isEmpty();
     }
 
 }

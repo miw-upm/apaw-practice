@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.models.clinic.Appointment;
 import es.upm.miw.apaw.domain.persistenceports.clinic.AppointmentPersistence;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,5 +28,11 @@ public class AppointmentPersistenceMongodb implements AppointmentPersistence {
     @Override
     public Appointment save(Appointment appointment) {
         return this.appointmentRepository.save(new AppointmentEntity(appointment)).toAppointment();
+    }
+
+    @Override
+    public List<Appointment> findByDiagnosisCode(String code) {
+        return this.appointmentRepository.findByDiagnosisCode(code)
+                .stream().map(AppointmentEntity::toAppointment).toList();
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -49,5 +50,13 @@ class VeterinarianServiceIT {
         Veterinarian veterinarian = this.veterinarianService.readByLicense(ClinicSeeder.LICENSE_DR_SMITH);
         assertThat(veterinarian.getAppointments()).isNotNull();
         assertThat(veterinarian.getAppointments()).anyMatch(appointment -> appointment.getId().equals(appointmentId));
+    }
+
+    @Test
+    void testFindByAppointmentIds() {
+        List<Veterinarian> byAppointmentIds = this.veterinarianService.findByAppointmentIds(
+                List.of(ClinicSeeder.ID_APPOINTMENT_GRIPE, ClinicSeeder.ID_APPOINTMENT_REVISION));
+        assertThat(byAppointmentIds).isNotEmpty();
+        assertThat(byAppointmentIds).size().isEqualTo(2);
     }
 }
