@@ -60,7 +60,7 @@ class AppointmentPersistenceMongodbIT {
 
     @Test
     void testFindAppointmentsByDiagnosisCode_ok() {
-        String code = "001";
+        String code = "FLU-001";
         List<Appointment> appointments = this.appointmentPersistence.findByDiagnosisCode(code);
         assertThat(appointments).isNotEmpty();
         assertThat(appointments.getFirst().getDiagnoses()).anyMatch(diagnosis -> diagnosis.getCode().equals(code));
