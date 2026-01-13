@@ -22,7 +22,7 @@ public class ClinicSeeder {
     public static final Long MICROCHIP_TOBY = 900000000000002L;
     public static final Long LICENSE_DR_SMITH = 10101010101L;
     public static final Long LICENSE_DR_JONES = 10101010102L;
-    public static final UUID USER_UUID_DR_SMITH = UUID.randomUUID();
+    public static final UUID USER_UUID_DR_SMITH = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
     public static final UUID USER_UUID_DR_JONES = UUID.randomUUID();
     public static final UUID ID_APPOINTMENT_GRIPE = UUID.randomUUID();
     public static final UUID ID_APPOINTMENT_REVISION = UUID.randomUUID();
@@ -55,12 +55,14 @@ public class ClinicSeeder {
                         .active(true)
                         .createdAt(LocalDateTime.now().minusYears(5))
                         .userId(USER_UUID_DR_SMITH)
+                        .appointments(List.of(ID_APPOINTMENT_GRIPE))
                         .build(),
                 VeterinarianEntity.builder()
                         .licenseNumber(LICENSE_DR_JONES)
                         .active(true)
                         .createdAt(LocalDateTime.now().minusYears(3))
                         .userId(USER_UUID_DR_JONES)
+                        .appointments(List.of(ID_APPOINTMENT_REVISION))
                         .build()
         );
         this.veterinarianRepository.saveAll(veterinarians);

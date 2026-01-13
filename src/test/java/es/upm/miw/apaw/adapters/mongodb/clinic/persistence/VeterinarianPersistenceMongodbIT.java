@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -78,5 +79,12 @@ class VeterinarianPersistenceMongodbIT {
         assertThrows(NotFoundException.class, () -> this.veterinarianPersistence.addAppointments(999999L, appointmentId));
     }
 
+    @Test
+    void testFindByAppointmentIds() {
+        List<Veterinarian> veterinarians = this.veterinarianPersistence.findByAppointmentIds(
+                List.of(ClinicSeeder.ID_APPOINTMENT_GRIPE, ClinicSeeder.ID_APPOINTMENT_REVISION));
+        assertThat(veterinarians).isNotEmpty();
+        assertThat(veterinarians).size().isEqualTo(2);
+    }
 
 }

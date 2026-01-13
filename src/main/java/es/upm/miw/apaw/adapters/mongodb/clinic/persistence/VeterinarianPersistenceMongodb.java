@@ -8,6 +8,7 @@ import es.upm.miw.apaw.domain.persistenceports.clinic.VeterinarianPersistence;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,5 +45,11 @@ public class VeterinarianPersistenceMongodb implements VeterinarianPersistence {
         }
         veterinarianEntity.getAppointments().add(appointmentId);
         this.veterinarianRepository.save(veterinarianEntity);
+    }
+
+    @Override
+    public List<Veterinarian> findByAppointmentIds(List<UUID> appointmentId) {
+        return this.veterinarianRepository.findByAppointmentIds(appointmentId).stream()
+                .map(VeterinarianEntity::toVeterinarian).toList();
     }
 }

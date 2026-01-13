@@ -5,9 +5,11 @@ import es.upm.miw.apaw.domain.services.clinic.AppointmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,5 +39,11 @@ public class AppointmentResource {
     @PatchMapping(ID)
     public Appointment updateAppointmentDate(@PathVariable UUID id, @RequestParam LocalDateTime newDate) {
         return this.appointmentService.updateAppointmentDate(id, newDate);
+    }
+
+    @GetMapping("/diagnosis-code/{code}/mobiles")
+    public ResponseEntity<List<String>> getMobilesByDiagnosisCode(@PathVariable String code) {
+        List<String> mobiles = this.appointmentService.findMobilesByDiagnosisCode(code);
+        return ResponseEntity.ok(mobiles);
     }
 }
