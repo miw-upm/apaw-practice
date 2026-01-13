@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -62,6 +63,19 @@ class PetServiceIT {
 
         Pet result = this.petService.update(ClinicSeeder.MICROCHIP_CHISPA, updatedPet);
         assertThat(result.getName()).isEqualTo("Chispa Updated");
+    }
+
+    @Test
+    void testFindMicrochipNumbersByLicenseNumber() {
+        List<Long> microchipNumbers = this.petService.findMicrochipNumbersByLicenseNumber(ClinicSeeder.LICENSE_DR_SMITH);
+
+        assertThat(microchipNumbers).isNotEmpty();
+        assertThat(microchipNumbers).containsExactlyInAnyOrder(ClinicSeeder.MICROCHIP_CHISPA);
+    }
+
+    @Test
+    void testFindMicrochipNumbersByLicenseNumber_not_found() {
+        assertThrows(NotFoundException.class, ()-> this.petService.findMicrochipNumbersByLicenseNumber(99999999999L));
     }
 
 }

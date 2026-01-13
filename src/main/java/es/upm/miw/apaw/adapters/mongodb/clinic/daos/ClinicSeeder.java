@@ -75,12 +75,14 @@ public class ClinicSeeder {
                         .name("Chispa")
                         .species(Species.DOG)
                         .gender(Gender.FEMALE)
+                        .appointments(List.of(ID_APPOINTMENT_GRIPE))
                         .build(),
                 PetEntity.builder()
                         .microchipNumber(MICROCHIP_TOBY)
                         .name("Toby")
                         .species(Species.CAT)
                         .gender(Gender.MALE)
+                        .appointments(List.of(ID_APPOINTMENT_REVISION))
                         .build()
         );
         this.petRepository.saveAll(pets);

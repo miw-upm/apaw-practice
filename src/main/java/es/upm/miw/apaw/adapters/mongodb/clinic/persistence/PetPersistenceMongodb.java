@@ -8,6 +8,7 @@ import es.upm.miw.apaw.domain.persistenceports.clinic.PetPersistence;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,5 +41,12 @@ public class PetPersistenceMongodb implements PetPersistence {
     @Override
     public Pet save(Pet pet) {
         return this.petRepository.save(new PetEntity(pet)).toPet();
+    }
+
+    @Override
+    public List<Pet> findByAppointmentsIn(List<UUID> appointments) {
+        return this.petRepository.findByAppointmentsIn(appointments).stream()
+                .map(PetEntity::toPet)
+                .toList();
     }
 }
