@@ -63,7 +63,7 @@ class PetResourceFT {
                 .expectBody(List.class)
                 .value(microchips -> {
                     assertThat(microchips).isNotEmpty();
-                    assertThat(microchips).contains(ClinicSeeder.MICROCHIP_CHISPA.intValue());
+                    assertThat(microchips.getFirst()).isEqualTo(ClinicSeeder.MICROCHIP_CHISPA);
                 });
     }
 }
