@@ -29,7 +29,7 @@ class AppointmentRepositoryIT {
 
     @Test
     void testFindAppointmentsByDiagnosisCode_ok() {
-        String code = "001";
+        String code = "FLU-001";
         List<AppointmentEntity> appointments = this.appointmentRepository.findByDiagnosisCode(code);
         assertThat(appointments).isNotEmpty();
         assertThat(appointments.getFirst().getDiagnoses()).anyMatch(diagnosis -> diagnosis.getCode().equals(code));
