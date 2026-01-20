@@ -40,6 +40,9 @@ class GarmentServiceIT {
     private static final UUID USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
     private static final String KNOWN_MOBILE = "666000660";
     private static final String UNKNOWN_MOBILE = "999999999";
+    private static final String KNOWN_INVOICE_NUMBER = "INV-2025-001";
+    private static final UUID G1_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+    private static final UUID G2_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002");
 
     @BeforeEach
     void resetDb() {
@@ -138,5 +141,11 @@ class GarmentServiceIT {
     void testSumDistinctPriceByMobile_userNotFound() {
         assertThatThrownBy(() -> garmentService.sumDistinctPriceByMobile(UNKNOWN_MOBILE))
                 .isInstanceOf(BadGatewayException.class);
+    }
+
+    @Test
+    void testFindDistinctGarmentIdsByInvoiceNumber_ok() {
+        List<UUID> ids = garmentService.findDistinctGarmentIdsByInvoiceNumber(KNOWN_INVOICE_NUMBER);
+        assertThat(ids).containsExactlyInAnyOrder(G1_ID, G2_ID);
     }
 }

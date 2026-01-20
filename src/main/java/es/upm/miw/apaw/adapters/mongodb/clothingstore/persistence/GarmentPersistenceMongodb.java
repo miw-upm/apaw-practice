@@ -1,19 +1,20 @@
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
-import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.StoreRepository;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.OrderRepository;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.GarmentEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.persistenceports.clothingstore.GarmentPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+import org.bson.types.Decimal128;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -21,13 +22,16 @@ import java.util.stream.Stream;
 public class GarmentPersistenceMongodb implements GarmentPersistence {
 
     private final GarmentRepository garmentRepository;
-    private final StoreRepository storeRepository;
+    private final OrderRepository orderRepository;
+    private final MongoTemplate mongoTemplate;
 
     @Autowired
     public GarmentPersistenceMongodb(GarmentRepository garmentRepository,
-                                     StoreRepository storeRepository) {
+                                     OrderRepository orderRepository,
+                                     MongoTemplate mongoTemplate) {
         this.garmentRepository = garmentRepository;
-        this.storeRepository = storeRepository;
+        this.orderRepository = orderRepository;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -39,15 +43,12 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
 
     @Override
     public Stream<Garment> findByPriceBetween(BigDecimal min, BigDecimal max) {
-        List<GarmentEntity> list = this.garmentRepository.findByPriceBetween(min, max);
-        if (list.isEmpty()) {
-            list = this.garmentRepository.findAll().stream()
-                    .filter(e -> e.getPrice() != null
-                            && e.getPrice().compareTo(min) >= 0
-                            && e.getPrice().compareTo(max) <= 0)
-                    .toList();
-        }
-        return list.stream().map(GarmentEntity::toGarment);
+        Query query = new Query(Criteria.where("price")
+                .gte(new Decimal128(min))
+                .lte(new Decimal128(max)));
+        return this.mongoTemplate.find(query, GarmentEntity.class)
+                .stream()
+                .map(GarmentEntity::toGarment);
     }
 
     @Override
@@ -80,17 +81,26 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
             return BigDecimal.ZERO;
         }
 
-        Set<UUID> seen = new HashSet<>();
-        return this.storeRepository.findByOrdersUserId(userId).stream()
-                .filter(store -> store.getOrders() != null)
-                .flatMap(store -> store.getOrders().stream())
-                .filter(order -> userId.equals(order.getUserId()) && order.getGarments() != null)
+        return this.orderRepository.findByUserId(userId).stream()
+                .filter(order -> order.getGarments() != null)
                 .flatMap(order -> order.getGarments().stream())
                 .filter(Objects::nonNull)
-                .filter(garment -> garment.getId() != null && seen.add(garment.getId()))
+                .filter(garment -> garment.getId() != null)
+                .distinct()
                 .map(GarmentEntity::getPrice)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    @Override
+    public Stream<UUID> findDistinctGarmentIdsByInvoiceNumber(String invoiceNumber) {
+        if (invoiceNumber == null || invoiceNumber.isBlank()) return Stream.empty();
+
+        return this.orderRepository.findByInvoiceId(invoiceNumber).stream()
+                .filter(order -> order.getGarments() != null)
+                .flatMap(order -> order.getGarments().stream())
+                .map(GarmentEntity::getId)
+                .filter(Objects::nonNull)
+                .distinct();
+    }
 }

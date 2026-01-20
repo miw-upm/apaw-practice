@@ -8,6 +8,7 @@ import es.upm.miw.apaw.domain.restclients.UserRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -45,6 +46,9 @@ public class GarmentService {
         return this.garmentPersistence.sumDistinctPriceByUserId(userId);
     }
 
+    public List<UUID> findDistinctGarmentIdsByInvoiceNumber(String invoiceNumber) {
+        return this.garmentPersistence.findDistinctGarmentIdsByInvoiceNumber(invoiceNumber).toList();
+    }
 }
 
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -27,7 +28,9 @@ public class GarmentResource {
     public static final String GARMENTS = "/clothingstore/garments";
     public static final String SEARCH = "/search";
     public static final String SUM_PRICE = "/sum-price";
+    public static final String DISTINCT_IDS = "/distinct-ids";
     public record SumDto(BigDecimal sum) {}
+    public record GarmentIdsDto(List<UUID> ids) {}
 
     private final GarmentService garmentService;
 
@@ -70,6 +73,15 @@ public class GarmentResource {
         }
         BigDecimal sum = this.garmentService.sumDistinctPriceByMobile(mobile);
         return new SumDto(sum);
+    }
+
+    @GetMapping(SEARCH + DISTINCT_IDS)
+    public GarmentIdsDto findDistinctGarmentIdsByInvoiceNumber(
+            @RequestParam(value = "number", required = false) String number) {
+        if (number == null || number.isBlank()) {
+            throw new BadRequestException("Query param 'number' is required");
+        }
+        return new GarmentIdsDto(this.garmentService.findDistinctGarmentIdsByInvoiceNumber(number));
     }
 
 }

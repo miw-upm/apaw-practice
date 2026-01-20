@@ -5,7 +5,9 @@ import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.models.clothingstore.Order;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,7 +18,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Document(collection = "orders")
 public class OrderEntity {
+
+    @Id
+    @EqualsAndHashCode.Include
+    private UUID id;
 
     private LocalDate date;
     private BigDecimal total;
@@ -29,10 +37,12 @@ public class OrderEntity {
 
     private UUID userId;
 
+    @DBRef
     private InvoiceEntity invoice;
 
     public OrderEntity(Order order) {
         BeanUtils.copyProperties(order, this, "items", "user", "invoice");
+        if (this.id == null) this.id = UUID.randomUUID();
         this.userId = (order.getUser() == null) ? null : order.getUser().getId();
         this.invoice = (order.getInvoice() == null) ? null : new InvoiceEntity(order.getInvoice());
         this.garments = (order.getItems() == null) ? null :
@@ -52,6 +62,7 @@ public class OrderEntity {
 
     public void fromOrder(Order order) {
         BeanUtils.copyProperties(order, this, "items", "user", "invoice");
+        if (this.id == null) this.id = UUID.randomUUID();
         this.userId = (order.getUser() == null) ? null : order.getUser().getId();
         this.invoice = (order.getInvoice() == null) ? null : new InvoiceEntity(order.getInvoice());
         this.garments = (order.getItems() == null) ? null :

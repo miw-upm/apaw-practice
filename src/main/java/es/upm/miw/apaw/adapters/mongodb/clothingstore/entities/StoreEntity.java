@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.models.clothingstore.Store;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class StoreEntity {
     private String name;
     private String address;
 
+    @DBRef
     private List<OrderEntity> orders;
 
     public StoreEntity(Store store) {

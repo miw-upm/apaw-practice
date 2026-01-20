@@ -1,4 +1,3 @@
-
 package es.upm.miw.apaw.adapters.mongodb.clothingstore.daos;
 
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.GarmentEntity;
@@ -22,19 +21,26 @@ public class clothingstoreSeeder {
 
     private final GarmentRepository garmentRepository;
     private final StoreRepository storeRepository;
+    private final OrderRepository orderRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @Autowired
     public clothingstoreSeeder(GarmentRepository garmentRepository,
-                               StoreRepository storeRepository) {
+                               StoreRepository storeRepository,
+                               OrderRepository orderRepository,
+                               InvoiceRepository invoiceRepository) {
         this.garmentRepository = garmentRepository;
         this.storeRepository = storeRepository;
+        this.orderRepository = orderRepository;
+        this.invoiceRepository = invoiceRepository;
     }
 
     public void seedDatabase() {
         log.warn("------- Clothingstore Initial Load -----------");
         this.storeRepository.deleteAll();
+        this.orderRepository.deleteAll();
+        this.invoiceRepository.deleteAll();
         this.garmentRepository.deleteAll();
-
 
         GarmentEntity g1 = GarmentEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001"))
@@ -44,7 +50,6 @@ public class clothingstoreSeeder {
                 .size("L").price(new BigDecimal("89.99")).onSale(false).build();
         this.garmentRepository.saveAll(List.of(g1, g2));
 
-
         UUID userId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
 
         InvoiceEntity invoice = InvoiceEntity.builder()
@@ -53,23 +58,26 @@ public class clothingstoreSeeder {
                 .tax(new BigDecimal("21.00"))
                 .dueDate(LocalDate.of(2025, 11, 5))
                 .build();
+        InvoiceEntity savedInvoice = this.invoiceRepository.save(invoice);
 
         OrderEntity order = OrderEntity.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7010"))
                 .date(LocalDate.of(2025, 10, 6))
                 .total(g1.getPrice().add(g2.getPrice()))
                 .itemCount(2)
                 .status("PAID")
                 .paymentMethod("CARD")
                 .userId(userId)
-                .invoice(invoice)
+                .invoice(savedInvoice)
                 .garments(List.of(g1, g2))
                 .build();
+        OrderEntity savedOrder = this.orderRepository.save(order);
 
         StoreEntity store = StoreEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7005"))
                 .name("Madrid Fashion")
                 .address("Calle Gran Vía 25, Madrid")
-                .orders(List.of(order))
+                .orders(List.of(savedOrder))
                 .build();
 
         this.storeRepository.save(store);
@@ -78,7 +86,8 @@ public class clothingstoreSeeder {
 
     public void deleteAll() {
         this.storeRepository.deleteAll();
+        this.orderRepository.deleteAll();
+        this.invoiceRepository.deleteAll();
         this.garmentRepository.deleteAll();
     }
 }
-
