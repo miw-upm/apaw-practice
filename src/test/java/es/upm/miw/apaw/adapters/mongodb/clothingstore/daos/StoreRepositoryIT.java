@@ -52,5 +52,6 @@ class StoreRepositoryIT {
         assertThat(reloaded).isPresent();
         assertThat(reloaded.get().getAddress()).isEqualTo("Calle Nueva 123");
         assertThat(reloaded.get().getName()).isEqualTo(originalName); // 没改的字段保持不变
+        //1
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,10 +39,14 @@ class GarmentResourceFT {
     private UserRestClient userRestClient;
 
     private static final String SUM_PRICE_SEARCH_PATH = GarmentResource.GARMENTS + "/search/sum-price";
+    private static final String DISTINCT_IDS_SEARCH_PATH = GarmentResource.GARMENTS + "/search/distinct-ids";
 
     private static final String KNOWN_MOBILE = "666000660";
     private static final String UNKNOWN_MOBILE = "999999999";
     private static final UUID SEEDED_USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+    private static final String KNOWN_INVOICE_NUMBER = "INV-2025-001";
+    private static final UUID G1_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+    private static final UUID G2_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002");
 
     @BeforeEach
     void resetDb() {
@@ -214,5 +219,22 @@ class GarmentResourceFT {
                         .build())
                 .exchange()
                 .expectStatus().isEqualTo(502);
+    }
+
+    @Test
+    void testFindDistinctGarmentIdsByInvoiceNumber_ok() {
+        GarmentResource.GarmentIdsDto response = this.webTestClient.get()
+                .uri(uri -> uri.path(DISTINCT_IDS_SEARCH_PATH)
+                        .queryParam("number", KNOWN_INVOICE_NUMBER)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(GarmentResource.GarmentIdsDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(response).isNotNull();
+        assertThat(Set.copyOf(response.ids()))
+                .containsExactlyInAnyOrder(G1_ID, G2_ID);
     }
 }
