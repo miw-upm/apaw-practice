@@ -32,14 +32,6 @@ public class MatchEntity {
     @DBRef
     private List<FootballClubEntity> clubs = new ArrayList<>();
 
-    public MatchEntity(Match match) {
-        BeanUtils.copyProperties(match, this, IGNORE_PROPERTIES);
-        if (match.getClubs() != null) {
-            this.clubs = match.getClubs().stream()
-                    .map(FootballClubEntity::new)
-                    .toList();
-        }
-    }
 
     public Match toMatch() {
         Match match = new Match();

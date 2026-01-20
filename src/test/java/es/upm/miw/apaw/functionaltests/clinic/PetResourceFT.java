@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -49,6 +51,19 @@ class PetResourceFT {
                     assertThat(pet.getName()).isEqualTo("Max");
                     assertThat(pet.getSpecies()).isEqualTo(Species.DOG);
                     assertThat(pet.getGender()).isEqualTo(Gender.MALE);
+                });
+    }
+
+    @Test
+    void testFindMicrochipNumbersByLicenseNumber() {
+        webTestClient.get()
+                .uri(PetResource.PETS + PetResource.MICROCHIPS_BY_VETERINARIAN_LICENSE_NUMBER,  ClinicSeeder.LICENSE_DR_SMITH)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(List.class)
+                .value(microchips -> {
+                    assertThat(microchips).isNotEmpty();
+                    assertThat(microchips.getFirst()).isEqualTo(ClinicSeeder.MICROCHIP_CHISPA);
                 });
     }
 }

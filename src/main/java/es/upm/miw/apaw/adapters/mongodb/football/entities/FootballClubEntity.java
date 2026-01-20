@@ -2,7 +2,6 @@ package es.upm.miw.apaw.adapters.mongodb.football.entities;
 
 import es.upm.miw.apaw.domain.models.football.FootballClub;
 import es.upm.miw.apaw.domain.models.football.FootballPlayer;
-import es.upm.miw.apaw.domain.models.football.Stadium;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.Id;
@@ -52,7 +51,6 @@ public class FootballClubEntity {
         }
     }
 
-    // --- Método inverso ---
     public FootballClub toFootballClub() {
         FootballClub club = new FootballClub();
         BeanUtils.copyProperties(this, club, IGNORE_PROPERTIES);

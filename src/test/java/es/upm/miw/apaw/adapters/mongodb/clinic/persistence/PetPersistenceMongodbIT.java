@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -73,6 +74,18 @@ class PetPersistenceMongodbIT {
 
         Pet saved = this.petPersistence.save(newPet);
         assertThat(saved.getName()).isEqualTo("Max");
+    }
+
+    @Test
+    void testFindByAppointmentsIn_ok() {
+        List<UUID> appointmentIds = List.of(ClinicSeeder.ID_APPOINTMENT_GRIPE, ClinicSeeder.ID_APPOINTMENT_REVISION);
+
+        List<Pet> pets = this.petPersistence.findByAppointmentsIn(appointmentIds);
+
+        assertThat(pets).isNotEmpty();
+        assertThat(pets).hasSize(2);
+        assertThat(pets.stream().map(Pet::getMicrochipNumber))
+                .containsExactlyInAnyOrder(ClinicSeeder.MICROCHIP_CHISPA, ClinicSeeder.MICROCHIP_TOBY);
     }
 
 }

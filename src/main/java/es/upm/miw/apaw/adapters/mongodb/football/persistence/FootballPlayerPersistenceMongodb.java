@@ -2,7 +2,6 @@ package es.upm.miw.apaw.adapters.mongodb.football.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.football.daos.FootballPlayerRepository;
 import es.upm.miw.apaw.adapters.mongodb.football.entities.FootballPlayerEntity;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.football.FootballPlayer;
 import es.upm.miw.apaw.domain.persistenceports.football.FootballPlayerPersistence;
 import org.springframework.stereotype.Repository;
@@ -14,7 +13,6 @@ import java.util.Optional;
 public class FootballPlayerPersistenceMongodb implements FootballPlayerPersistence {
 
     private final FootballPlayerRepository playerRepository;
-    private static final String PLAYER_NICKNAME = "Football player nickname: ";
 
     public FootballPlayerPersistenceMongodb(FootballPlayerRepository playerRepository) {
         this.playerRepository = playerRepository;

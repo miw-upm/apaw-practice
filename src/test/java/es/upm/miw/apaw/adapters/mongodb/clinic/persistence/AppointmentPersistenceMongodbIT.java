@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,4 +57,20 @@ class AppointmentPersistenceMongodbIT {
                 .build();
         return this.appointmentPersistence.save(newAppointment);
     }
+
+    @Test
+    void testFindAppointmentsByDiagnosisCode_ok() {
+        String code = "FLU-001";
+        List<Appointment> appointments = this.appointmentPersistence.findByDiagnosisCode(code);
+        assertThat(appointments).isNotEmpty();
+        assertThat(appointments.getFirst().getDiagnoses()).anyMatch(diagnosis -> diagnosis.getCode().equals(code));
+    }
+
+    @Test
+    void testFindAppointmentsByDiagnosisCode_notFound() {
+        String invalidCode = "INVALID_CODE";
+        List<Appointment> appointments = this.appointmentPersistence.findByDiagnosisCode(invalidCode);
+        assertThat(appointments).isEmpty();
+    }
+
 }
