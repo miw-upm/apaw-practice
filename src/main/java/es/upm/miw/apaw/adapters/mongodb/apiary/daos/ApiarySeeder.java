@@ -46,19 +46,13 @@ public class ApiarySeeder {
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                         .barcode("P002")
                         .product("Miel de Tomillo")
-                        .price(new BigDecimal("7.00"))
+                        .price(new BigDecimal("11.50"))
                         .build(),
                 ProductEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002"))
                         .barcode("P003")
                         .product("Cera de Abeja")
                         .price(new BigDecimal("3.50"))
-                        .build(),
-                ProductEntity.builder()
-                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
-                        .barcode("P007")
-                        .product("Propóleo")
-                        .price(new BigDecimal("11.50"))
                         .build()
         };
         productRepository.saveAll(Arrays.asList(products1));
@@ -98,7 +92,7 @@ public class ApiarySeeder {
                         .type("Layens")
                         .queen(false)
                         .installationDate(LocalDate.of(2021, 3, 15))
-                        .productEntity(products1[3])
+                        .productEntity(products1[1])
                         .build(),
         };
 
