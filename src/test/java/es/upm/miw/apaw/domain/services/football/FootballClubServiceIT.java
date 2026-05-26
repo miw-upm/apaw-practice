@@ -107,4 +107,37 @@ class FootballClubServiceIT {
         assertThrows(NotFoundException.class,
                 () -> this.footballClubService.readByName("NoExiste"));
     }
+
+    @Test
+    void testPatchBudget_ok() {
+        FootballClub club = FootballClub.builder()
+                .clubId(1L)
+                .name("Salamanca FC")
+                .budget(new BigDecimal("4500000"))
+                .founded(LocalDate.of(1985, 6, 12))
+                .build();
+
+        FootballClub updated = FootballClub.builder()
+                .clubId(1L)
+                .name("Salamanca FC")
+                .budget(new BigDecimal("9999999"))
+                .founded(LocalDate.of(1985, 6, 12))
+                .build();
+
+        BDDMockito.given(this.footballClubPersistence.findByClubId(1L)).willReturn(club);
+        BDDMockito.given(this.footballClubPersistence.save(BDDMockito.any(FootballClub.class))).willReturn(updated);
+
+        FootballClub result = this.footballClubService.patchBudget(1L, new BigDecimal("9999999"));
+
+        assertThat(result.getBudget()).isEqualByComparingTo(new BigDecimal("9999999"));
+    }
+
+    @Test
+    void testPatchBudget_notFound() {
+        BDDMockito.given(this.footballClubPersistence.findByClubId(999L))
+                .willThrow(new NotFoundException("Football club id: 999"));
+
+        assertThrows(NotFoundException.class,
+                () -> this.footballClubService.patchBudget(999L, new BigDecimal("12345")));
+    }
 }
