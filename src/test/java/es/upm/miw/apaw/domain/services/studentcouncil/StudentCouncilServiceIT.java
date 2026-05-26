@@ -1,7 +1,9 @@
 package es.upm.miw.apaw.domain.services.studentcouncil;
 
+import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.StudentCouncilSeeder;
 import es.upm.miw.apaw.domain.models.studentcouncil.StudentCouncil;
 import es.upm.miw.apaw.domain.persistenceports.studentcouncil.StudentCouncilPersistence;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +24,15 @@ class StudentCouncilServiceIT {
 
     @Autowired
     private StudentCouncilPersistence persistence;
+
+    @Autowired
+    private StudentCouncilSeeder studentCouncilSeeder;
+
+    @BeforeEach
+    void setUp() {
+        studentCouncilSeeder.deleteAll();
+        studentCouncilSeeder.seedDatabase();
+    }
 
     @Test
     void testUpdateResourcesIT() {
