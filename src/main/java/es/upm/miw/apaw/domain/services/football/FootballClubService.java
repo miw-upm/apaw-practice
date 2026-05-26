@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.models.football.FootballClub;
 import es.upm.miw.apaw.domain.persistenceports.football.FootballClubPersistence;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -23,5 +24,11 @@ public class FootballClubService {
     public FootballClub readByName(String name) {
         return this.clubPersistence.findByName(name)
                 .orElseThrow(() -> new NotFoundException("Football club name: " + name));
+    }
+
+    public FootballClub patchBudget(Long clubId, BigDecimal newBudget) {
+        FootballClub club = this.clubPersistence.findByClubId(clubId);
+        club.setBudget(newBudget);
+        return this.clubPersistence.save(club);
     }
 }

@@ -7,7 +7,6 @@ import es.upm.miw.apaw.domain.models.football.FootballClub;
 import es.upm.miw.apaw.domain.persistenceports.football.FootballClubPersistence;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,13 +47,9 @@ public class FootballClubPersistenceMongodb implements FootballClubPersistence {
     }
 
     @Override
-    public FootballClub updateBudget(Long clubId, BigDecimal newBudget) {
-        FootballClubEntity entity = this.clubRepository.findAll().stream()
-                .filter(c -> c.getClubId().equals(clubId))
-                .findFirst()
+    public FootballClub findByClubId(Long clubId) {
+        return this.clubRepository.findById(clubId)
+                .map(FootballClubEntity::toFootballClub)
                 .orElseThrow(() -> new NotFoundException(CLUB_ID + clubId));
-
-        entity.setBudget(newBudget);
-        return this.clubRepository.save(entity).toFootballClub();
     }
 }
