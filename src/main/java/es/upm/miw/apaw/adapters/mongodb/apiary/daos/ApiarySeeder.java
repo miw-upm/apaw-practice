@@ -56,9 +56,9 @@ public class ApiarySeeder {
                         .build(),
                 ProductEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
-                        .barcode("P006")
-                        .product("Miel de Lavanda")
-                        .price(new BigDecimal("8.00"))
+                        .barcode("P007")
+                        .product("Propóleo")
+                        .price(new BigDecimal("11.50"))
                         .build()
         };
         productRepository.saveAll(Arrays.asList(products1));
@@ -90,7 +90,7 @@ public class ApiarySeeder {
                         .type("Langstroth")
                         .queen(true)
                         .installationDate(LocalDate.of(2020, 5, 20))
-                        .productEntity(products1[3])
+                        .productEntity(products1[2])
                         .build(),
                 HiveEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101"))
@@ -98,7 +98,7 @@ public class ApiarySeeder {
                         .type("Layens")
                         .queen(false)
                         .installationDate(LocalDate.of(2021, 3, 15))
-                        .productEntity(products1[1])
+                        .productEntity(products1[3])
                         .build(),
         };
 
