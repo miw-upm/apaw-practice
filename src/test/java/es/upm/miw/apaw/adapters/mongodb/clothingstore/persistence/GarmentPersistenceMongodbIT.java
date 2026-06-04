@@ -104,9 +104,14 @@ class GarmentPersistenceMongodbIT {
     }
 
     @Test
-    void testSumDistinctPriceByUserId_ok() {
-        BigDecimal result = garmentPersistenceMongodb.sumDistinctPriceByUserId(KNOWN_USER_ID);
+    void testFindByUserId_ok() {
+        List<Garment> garments = garmentPersistenceMongodb.findByUserId(KNOWN_USER_ID).toList();
 
-        assertThat(result).isEqualByComparingTo("149.98");
+        assertThat(garments)
+                .extracting(Garment::getId)
+                .contains(
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001"),
+                        UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002")
+                );
     }
 }

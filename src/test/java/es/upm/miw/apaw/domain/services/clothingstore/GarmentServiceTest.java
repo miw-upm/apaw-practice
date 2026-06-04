@@ -73,7 +73,8 @@ class GarmentServiceTest {
     void testSumDistinctPriceByMobile() {
         String mobile = "666000660";
         UUID userId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
-        BigDecimal expectedTotal = new BigDecimal("149.98");
+        UUID firstGarmentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
+        UUID secondGarmentId = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002");
 
         UserDto user = UserDto.builder()
                 .id(userId)
@@ -82,12 +83,16 @@ class GarmentServiceTest {
                 .build();
         given(userRestClient.readByMobile(mobile)).willReturn(user);
 
-        given(garmentPersistence.sumDistinctPriceByUserId(userId))
-                .willReturn(expectedTotal);
+        given(garmentPersistence.findByUserId(userId))
+                .willReturn(Stream.of(
+                        Garment.builder().id(firstGarmentId).price(new BigDecimal("59.99")).build(),
+                        Garment.builder().id(firstGarmentId).price(new BigDecimal("59.99")).build(),
+                        Garment.builder().id(secondGarmentId).price(new BigDecimal("89.99")).build()
+                ));
 
         BigDecimal total = garmentService.sumDistinctPriceByMobile(mobile);
 
-        assertThat(total).isEqualByComparingTo(expectedTotal);
+        assertThat(total).isEqualByComparingTo("149.98");
     }
 
 }
