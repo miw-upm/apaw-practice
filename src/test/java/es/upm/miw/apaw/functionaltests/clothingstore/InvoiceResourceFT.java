@@ -29,6 +29,7 @@ class InvoiceResourceFT {
     private InvoiceRepository invoiceRepository;
 
     private static final String SEEDED_NUMBER = "INV-2025-001";
+    private static final String UNKNOWN_NUMBER = "INV-9999-999";
 
     @BeforeEach
     void resetDb() {
@@ -51,6 +52,14 @@ class InvoiceResourceFT {
     }
 
     @Test
+    void testReadByNumber_notFound() {
+        this.webTestClient.get()
+                .uri(InvoiceResource.INVOICES + "/" + UNKNOWN_NUMBER)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
     void testDelete_ok() {
         assertThat(invoiceRepository.findById(SEEDED_NUMBER)).isPresent();
 
@@ -60,5 +69,13 @@ class InvoiceResourceFT {
                 .expectStatus().isNoContent();
 
         assertThat(invoiceRepository.findById(SEEDED_NUMBER)).isEmpty();
+    }
+
+    @Test
+    void testDelete_notFound() {
+        this.webTestClient.delete()
+                .uri(InvoiceResource.INVOICES + "/" + UNKNOWN_NUMBER)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

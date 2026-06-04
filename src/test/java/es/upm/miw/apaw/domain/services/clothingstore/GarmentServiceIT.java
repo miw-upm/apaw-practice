@@ -61,6 +61,15 @@ class GarmentServiceIT {
     }
 
     @Test
+    void testReadAll() {
+        List<Garment> garments = this.garmentService.readAll().toList();
+
+        assertThat(garments)
+                .extracting(Garment::getId)
+                .contains(G1_ID, G2_ID);
+    }
+
+    @Test
     void testFindByPriceBetween() {
         List<Garment> garments = this.garmentService
                 .findByPriceBetween(new BigDecimal("50"), new BigDecimal("100"))
@@ -147,5 +156,11 @@ class GarmentServiceIT {
     void testFindDistinctGarmentIdsByInvoiceNumber_ok() {
         List<UUID> ids = garmentService.findDistinctGarmentIdsByInvoiceNumber(KNOWN_INVOICE_NUMBER);
         assertThat(ids).containsExactlyInAnyOrder(G1_ID, G2_ID);
+    }
+
+    @Test
+    void testFindDistinctGarmentIdsByInvoiceNumber_notFound_empty() {
+        List<UUID> ids = garmentService.findDistinctGarmentIdsByInvoiceNumber("INV-9999-999");
+        assertThat(ids).isEmpty();
     }
 }
