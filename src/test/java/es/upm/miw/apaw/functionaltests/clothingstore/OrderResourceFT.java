@@ -14,6 +14,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
 class OrderResourceFT {
+
+    private static final UUID SEEDED_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7010");
 
     @Autowired
     private WebTestClient webTestClient;
@@ -41,6 +44,9 @@ class OrderResourceFT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Order.class)
+                .value(orders -> assertThat(orders)
+                        .extracting(Order::getId)
+                        .contains(SEEDED_ID))
                 .value(orders -> assertThat(orders)
                         .extracting(Order::getStatus)
                         .contains("PAID"));
@@ -64,6 +70,7 @@ class OrderResourceFT {
                 .expectStatus().isOk()
                 .expectBody(Order.class)
                 .value(created -> {
+                    assertThat(created.getId()).isNotNull();
                     assertThat(created.getDate()).isEqualTo(LocalDate.of(2026, 1, 10));
                     assertThat(created.getTotal()).isEqualByComparingTo("39.99");
                     assertThat(created.getItemCount()).isEqualTo(1);

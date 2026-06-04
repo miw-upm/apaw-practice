@@ -12,12 +12,15 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
 class OrderServiceIT {
+
+    private static final UUID SEEDED_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7010");
 
     @Autowired
     private OrderService orderService;
@@ -39,6 +42,9 @@ class OrderServiceIT {
         List<Order> orders = this.orderService.readAll().toList();
 
         assertThat(orders)
+                .extracting(Order::getId)
+                .contains(SEEDED_ID);
+        assertThat(orders)
                 .extracting(Order::getStatus)
                 .contains("PAID");
     }
@@ -55,6 +61,7 @@ class OrderServiceIT {
 
         Order created = this.orderService.create(order);
 
+        assertThat(created.getId()).isNotNull();
         assertThat(created.getDate()).isEqualTo(LocalDate.of(2026, 1, 10));
         assertThat(created.getTotal()).isEqualByComparingTo("39.99");
         assertThat(created.getItemCount()).isEqualTo(1);
