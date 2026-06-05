@@ -55,6 +55,14 @@ class StoreResourceFT {
     }
 
     @Test
+    void testReadById_notFound() {
+        this.webTestClient.get()
+                .uri(StoreResource.STORES + "/" + UUID.randomUUID())
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
     void testUpdateStore_OK() {
         Store body = Store.builder()
                 .name("Madrid Fashion Updated")
@@ -78,6 +86,21 @@ class StoreResourceFT {
     }
 
     @Test
+    void testUpdateStore_notFound() {
+        Store body = Store.builder()
+                .name("Madrid Fashion Updated")
+                .address("Calle Actualizada 456")
+                .build();
+
+        this.webTestClient.put()
+                .uri(StoreResource.STORES + "/" + UUID.randomUUID())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(body)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
     void testDeleteStore_OK() {
         assertThat(storeRepository.findById(SEEDED_STORE_ID)).isPresent();
 
@@ -88,6 +111,14 @@ class StoreResourceFT {
                 .expectStatus().isNoContent();
 
         assertThat(storeRepository.findById(SEEDED_STORE_ID)).isEmpty();
+    }
+
+    @Test
+    void testDeleteStore_notFound() {
+        this.webTestClient.delete()
+                .uri(StoreResource.STORES + "/" + UUID.randomUUID())
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -107,5 +138,17 @@ class StoreResourceFT {
         assertThat(updated).isNotNull();
         assertThat(updated.getId()).isEqualTo(SEEDED_STORE_ID);
         assertThat(updated.getAddress()).isEqualTo("Calle Nueva 123");
+    }
+
+    @Test
+    void testPatchStore_notFound() {
+        Store patchBody = Store.builder().address("Calle Nueva 123").build();
+
+        this.webTestClient.patch()
+                .uri(StoreResource.STORES + "/" + UUID.randomUUID())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(patchBody)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }

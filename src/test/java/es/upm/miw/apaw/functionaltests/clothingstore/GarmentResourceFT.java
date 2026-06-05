@@ -47,6 +47,7 @@ class GarmentResourceFT {
     private static final String KNOWN_INVOICE_NUMBER = "INV-2025-001";
     private static final UUID G1_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7001");
     private static final UUID G2_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7002");
+    private static final String UNKNOWN_INVOICE_NUMBER = "INV-9999-999";
 
     @BeforeEach
     void resetDb() {
@@ -62,6 +63,18 @@ class GarmentResourceFT {
 
         given(userRestClient.readByMobile(UNKNOWN_MOBILE))
                 .willThrow(new BadGatewayException("User not found with MOBILE: " + UNKNOWN_MOBILE));
+    }
+
+    @Test
+    void testReadAll_ok() {
+        this.webTestClient.get()
+                .uri(GarmentResource.GARMENTS + "/all")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Garment.class)
+                .value(garments -> assertThat(garments)
+                        .extracting(Garment::getId)
+                        .contains(G1_ID, G2_ID));
     }
 
     @Test
@@ -124,6 +137,22 @@ class GarmentResourceFT {
         assertThat(updated.getSize()).isEqualTo("XL");
         assertThat(updated.getPrice()).isEqualByComparingTo("129.99");
         assertThat(updated.getOnSale()).isTrue();
+    }
+
+    @Test
+    void testUpdateGarment_notFound() {
+        Garment body = Garment.builder()
+                .size("XL")
+                .price(new BigDecimal("129.99"))
+                .onSale(true)
+                .build();
+
+        this.webTestClient.put()
+                .uri(GarmentResource.GARMENTS + "/" + UUID.randomUUID())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(body)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
@@ -196,6 +225,14 @@ class GarmentResourceFT {
     }
 
     @Test
+    void testDeleteGarment_notFound() {
+        this.webTestClient.delete()
+                .uri(GarmentResource.GARMENTS + "/" + UUID.randomUUID())
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
     void testSumDistinctPriceByMobile_ok() {
         GarmentResource.SumDto response = this.webTestClient.get()
                 .uri(uri -> uri.path(SUM_PRICE_SEARCH_PATH)
@@ -212,6 +249,24 @@ class GarmentResourceFT {
     }
 
     @Test
+    void testSumDistinctPriceByMobile_withoutMobile_badRequest() {
+        this.webTestClient.get()
+                .uri(SUM_PRICE_SEARCH_PATH)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testSumDistinctPriceByMobile_blankMobile_badRequest() {
+        this.webTestClient.get()
+                .uri(uri -> uri.path(SUM_PRICE_SEARCH_PATH)
+                        .queryParam("mobile", " ")
+                        .build())
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
     void testSumDistinctPriceByMobile_userNotFound() {
         this.webTestClient.get()
                 .uri(uri -> uri.path(SUM_PRICE_SEARCH_PATH)
@@ -219,6 +274,30 @@ class GarmentResourceFT {
                         .build())
                 .exchange()
                 .expectStatus().isEqualTo(502);
+    }
+
+    @Test
+    void testFindDistinctGarmentIdsByInvoiceNumber_withoutNumber_badRequest() {
+        this.webTestClient.get()
+                .uri(DISTINCT_IDS_SEARCH_PATH)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testFindDistinctGarmentIdsByInvoiceNumber_notFound_empty() {
+        GarmentResource.GarmentIdsDto response = this.webTestClient.get()
+                .uri(uri -> uri.path(DISTINCT_IDS_SEARCH_PATH)
+                        .queryParam("number", UNKNOWN_INVOICE_NUMBER)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(GarmentResource.GarmentIdsDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(response).isNotNull();
+        assertThat(response.ids()).isEmpty();
     }
 
     @Test
