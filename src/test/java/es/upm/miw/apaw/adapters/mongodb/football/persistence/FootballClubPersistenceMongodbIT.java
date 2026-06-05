@@ -56,18 +56,16 @@ class FootballClubPersistenceMongodbIT {
     }
 
     @Test
-    void testUpdateBudget_ok() {
-        FootballClub updated = this.clubPersistence.updateBudget(1L, new BigDecimal("9999999"));
-        assertThat(updated.getBudget()).isEqualByComparingTo(new BigDecimal("9999999"));
-
-        FootballClub reloaded = this.clubPersistence.findByName("Salamanca FC").get();
-        assertThat(reloaded.getBudget()).isEqualByComparingTo(new BigDecimal("9999999"));
+    void testFindByClubId_ok() {
+        FootballClub club = this.clubPersistence.findByClubId(1L);
+        assertThat(club.getName()).isEqualTo("Salamanca FC");
+        assertThat(club.getBudget()).isEqualByComparingTo(new BigDecimal("4500000"));
     }
 
     @Test
-    void testUpdateBudget_notFound() {
+    void testFindByClubId_notFound() {
         assertThrows(NotFoundException.class,
-                () -> this.clubPersistence.updateBudget(999L, new BigDecimal("12345")));
+                () -> this.clubPersistence.findByClubId(999L));
     }
 
     @Test
