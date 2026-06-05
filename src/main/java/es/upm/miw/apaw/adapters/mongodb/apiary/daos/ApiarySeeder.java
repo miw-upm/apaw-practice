@@ -53,6 +53,12 @@ public class ApiarySeeder {
                         .barcode("P003")
                         .product("Cera de Abeja")
                         .price(new BigDecimal("3.50"))
+                        .build(),
+                ProductEntity.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
+                        .barcode("P006")
+                        .product("Miel de Azahar")
+                        .price(new BigDecimal("8.00"))
                         .build()
         };
         productRepository.saveAll(Arrays.asList(products1));
@@ -64,7 +70,7 @@ public class ApiarySeeder {
                         .paymentForm(1)
                         .shippingAddress("Calle Mayor 10, Madrid")
                         .amount(new BigDecimal("11.50"))
-                        .productEntities(List.of(products1[0], products1[2]))
+                        .productEntities(List.of(products1[0], products1[2], products1[3]))
                         .build(),
                 SaleEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0011"))
@@ -84,7 +90,7 @@ public class ApiarySeeder {
                         .type("Langstroth")
                         .queen(true)
                         .installationDate(LocalDate.of(2020, 5, 20))
-                        .productEntity(products1[0])
+                        .productEntity(products1[3])
                         .build(),
                 HiveEntity.builder()
                         .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0101"))
