@@ -32,7 +32,6 @@ public class StorePersistenceMongodb implements StorePersistence {
                 .orElseThrow(() -> new NotFoundException("Store not found: " + id));
     }
 
-    /** 用于 PATCH：仅覆盖非 null 的字段 */
     @Override
     public Store update(UUID id, Store partial) {
         StoreEntity entity = storeRepository.findById(id)
@@ -44,7 +43,6 @@ public class StorePersistenceMongodb implements StorePersistence {
         if (partial.getAddress() != null) {
             entity.setAddress(partial.getAddress());
         }
-        // 如需扩展其它可 patch 字段，在这里按需追加
 
         return storeRepository.save(entity).toStore();
     }

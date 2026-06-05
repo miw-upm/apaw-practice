@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.mongodb.clothingstore.persistence;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.GarmentRepository;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.daos.OrderRepository;
 import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.GarmentEntity;
+import es.upm.miw.apaw.adapters.mongodb.clothingstore.entities.OrderEntity;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.persistenceports.clothingstore.GarmentPersistence;
@@ -76,31 +77,36 @@ public class GarmentPersistenceMongodb implements GarmentPersistence {
     }
 
     @Override
-    public BigDecimal sumDistinctPriceByUserId(UUID userId) {
+    public Stream<Garment> findByUserId(UUID userId) {
         if (userId == null) {
-            return BigDecimal.ZERO;
+            return Stream.empty();
         }
 
-        return this.orderRepository.findByUserId(userId).stream()
-                .filter(order -> order.getGarments() != null)
-                .flatMap(order -> order.getGarments().stream())
-                .filter(Objects::nonNull)
-                .filter(garment -> garment.getId() != null)
-                .distinct()
-                .map(GarmentEntity::getPrice)
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return this.findGarmentsByUserId(userId)
+                .map(GarmentEntity::toGarment);
     }
 
     @Override
-    public Stream<UUID> findDistinctGarmentIdsByInvoiceNumber(String invoiceNumber) {
+    public Stream<UUID> findGarmentIdsByInvoiceNumber(String invoiceNumber) {
         if (invoiceNumber == null || invoiceNumber.isBlank()) return Stream.empty();
 
-        return this.orderRepository.findByInvoiceId(invoiceNumber).stream()
+        return this.findGarmentsByInvoiceNumber(invoiceNumber)
+                .map(GarmentEntity::getId)
+                .filter(Objects::nonNull);
+    }
+
+    private Stream<GarmentEntity> findGarmentsByUserId(UUID userId) {
+        return this.findGarments(this.orderRepository.findByUserId(userId).stream());
+    }
+
+    private Stream<GarmentEntity> findGarmentsByInvoiceNumber(String invoiceNumber) {
+        return this.findGarments(this.orderRepository.findByInvoiceId(invoiceNumber).stream());
+    }
+
+    private Stream<GarmentEntity> findGarments(Stream<OrderEntity> orders) {
+        return orders
                 .filter(order -> order.getGarments() != null)
                 .flatMap(order -> order.getGarments().stream())
-                .map(GarmentEntity::getId)
-                .filter(Objects::nonNull)
-                .distinct();
+                .filter(Objects::nonNull);
     }
 }

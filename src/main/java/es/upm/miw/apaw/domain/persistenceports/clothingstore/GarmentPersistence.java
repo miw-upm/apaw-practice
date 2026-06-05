@@ -14,7 +14,7 @@ public interface GarmentPersistence {
     Stream<Garment> readAll();
     Garment create(Garment garment);
     void delete(UUID id);
-    BigDecimal sumDistinctPriceByUserId(UUID userId);
-    Stream<UUID> findDistinctGarmentIdsByInvoiceNumber(String invoiceNumber);
+    Stream<Garment> findByUserId(UUID userId);
+    Stream<UUID> findGarmentIdsByInvoiceNumber(String invoiceNumber);
 
 }

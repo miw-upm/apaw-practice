@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -42,12 +43,18 @@ public class GarmentService {
 
     public BigDecimal sumDistinctPriceByMobile(String mobile) {
         UserDto user = this.userRestClient.readByMobile(mobile);
-        UUID userId = user.getId();
-        return this.garmentPersistence.sumDistinctPriceByUserId(userId);
+        return this.garmentPersistence.findByUserId(user.getId())
+                .filter(garment -> garment.getId() != null)
+                .distinct()
+                .map(Garment::getPrice)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public List<UUID> findDistinctGarmentIdsByInvoiceNumber(String invoiceNumber) {
-        return this.garmentPersistence.findDistinctGarmentIdsByInvoiceNumber(invoiceNumber).toList();
+        return this.garmentPersistence.findGarmentIdsByInvoiceNumber(invoiceNumber)
+                .distinct()
+                .toList();
     }
 }
 
