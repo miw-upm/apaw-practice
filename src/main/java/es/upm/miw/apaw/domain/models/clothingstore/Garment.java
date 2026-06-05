@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -16,7 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Garment {
 
-    @NotNull
     private UUID id;
 
     @NotBlank

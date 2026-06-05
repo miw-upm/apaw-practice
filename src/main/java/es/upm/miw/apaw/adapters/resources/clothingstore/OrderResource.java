@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.resources.clothingstore;
 
 import es.upm.miw.apaw.domain.models.clothingstore.Order;
 import es.upm.miw.apaw.domain.services.clothingstore.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class OrderResource {
     }
 
     @PostMapping
-    public Order create(@RequestBody Order order) {
+    public Order create(@Valid @RequestBody Order order) {
         return this.orderService.create(order);
     }
 
