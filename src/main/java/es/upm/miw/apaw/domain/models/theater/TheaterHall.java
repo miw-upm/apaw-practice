@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Builder
 @Data
 @NoArgsConstructor
@@ -24,8 +22,4 @@ public class TheaterHall {
     private Integer hallCapacity;
     @NotNull
     private Boolean hallAccessible;
-    @NotNull
-    private TheaterVenue hallVenue;
-    @NotNull
-    private List<TheaterPerformance> hallPerformances;
 }
