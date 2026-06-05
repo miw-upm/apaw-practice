@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Store {
 
-    @NotNull
     private UUID id;
 
     @NotBlank

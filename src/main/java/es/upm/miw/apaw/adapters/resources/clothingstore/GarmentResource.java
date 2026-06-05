@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.resources.clothingstore;
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.models.clothingstore.Garment;
 import es.upm.miw.apaw.domain.services.clothingstore.GarmentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,7 +41,7 @@ public class GarmentResource {
     }
 
     @PostMapping
-    public Garment create(@RequestBody Garment garment) {
+    public Garment create(@Valid @RequestBody Garment garment) {
         return this.garmentService.create(garment);
     }
 
@@ -56,7 +57,7 @@ public class GarmentResource {
     }
 
     @PutMapping("/{id}")
-    public Garment update(@PathVariable UUID id, @RequestBody Garment garment) {
+    public Garment update(@PathVariable UUID id, @Valid @RequestBody Garment garment) {
         return this.garmentService.update(id, garment);
     }
 

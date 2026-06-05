@@ -76,7 +76,7 @@ public class clothingstoreSeeder {
         StoreEntity store = StoreEntity.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff7005"))
                 .name("Madrid Fashion")
-                .address("Calle Gran Vía 25, Madrid")
+                .address("Calle Gran Via 25, Madrid")
                 .orders(List.of(savedOrder))
                 .build();
 
