@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Builder
 @Data
@@ -28,6 +27,4 @@ public class TheaterArtist {
     private BigDecimal artistFee;
     @NotNull
     private Boolean artistActive;
-    @NotNull
-    private Set<TheaterPerformance> artistPerformances;
 }
