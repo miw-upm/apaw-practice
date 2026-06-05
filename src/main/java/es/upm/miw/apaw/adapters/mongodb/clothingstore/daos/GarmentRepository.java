@@ -7,5 +7,4 @@ import java.util.List;
 import java.util.UUID;
 
 public interface GarmentRepository extends MongoRepository<GarmentEntity, UUID> {
-    List<GarmentEntity> findByPriceBetween(BigDecimal min, BigDecimal max);
 }
