@@ -6,8 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,5 +44,18 @@ class FootballClubResourceFT {
                 .uri(FootballClubResource.FOOTBALL_CLUBS + FootballClubResource.NAME_ID, "NoExiste")
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testPatchBudget_ok() {
+        this.webTestClient
+                .patch()
+                .uri(FootballClubResource.FOOTBALL_CLUBS + FootballClubResource.CLUB_ID, 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new BigDecimal("9999999"))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(FootballClub.class)
+                .value(club -> assertThat(club.getBudget()).isEqualByComparingTo(new BigDecimal("9999999")));
     }
 }

@@ -11,5 +11,5 @@ public interface FootballClubPersistence {
     List<FootballClub> readAll();
     FootballClub save(FootballClub club);
     void delete(Long clubId);
-    FootballClub updateBudget(Long clubId, BigDecimal newBudget);
+    FootballClub findByClubId(Long clubId);
 }
