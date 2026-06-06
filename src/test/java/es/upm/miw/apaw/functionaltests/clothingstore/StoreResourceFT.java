@@ -101,6 +101,20 @@ class StoreResourceFT {
     }
 
     @Test
+    void testUpdateStore_badRequestWithoutName() {
+        Store body = Store.builder()
+                .address("Calle Actualizada 456")
+                .build();
+
+        this.webTestClient.put()
+                .uri(StoreResource.STORES + "/" + SEEDED_STORE_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(body)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
     void testDeleteStore_OK() {
         assertThat(storeRepository.findById(SEEDED_STORE_ID)).isPresent();
 
@@ -123,6 +137,7 @@ class StoreResourceFT {
 
     @Test
     void testPatchStore_OK() {
+        String originalName = this.storeRepository.findById(SEEDED_STORE_ID).orElseThrow().getName();
         Store patchBody = Store.builder().address("Calle Nueva 123").build();
 
         Store updated = this.webTestClient.patch()
@@ -137,6 +152,7 @@ class StoreResourceFT {
 
         assertThat(updated).isNotNull();
         assertThat(updated.getId()).isEqualTo(SEEDED_STORE_ID);
+        assertThat(updated.getName()).isEqualTo(originalName);
         assertThat(updated.getAddress()).isEqualTo("Calle Nueva 123");
     }
 
