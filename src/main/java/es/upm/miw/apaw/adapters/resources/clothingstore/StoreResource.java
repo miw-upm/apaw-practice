@@ -1,9 +1,10 @@
 package es.upm.miw.apaw.adapters.resources.clothingstore;
 
+import es.upm.miw.apaw.domain.models.clothingstore.Store;
 import es.upm.miw.apaw.domain.services.clothingstore.StoreService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import es.upm.miw.apaw.domain.models.clothingstore.Store;
 
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class StoreResource {
     }
 
     @PutMapping("/{id}")
-    public Store update(@PathVariable UUID id, @RequestBody Store store) {
+    public Store update(@PathVariable UUID id, @Valid @RequestBody Store store) {
         return this.storeService.update(id, store);
     }
 
