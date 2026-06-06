@@ -15,6 +15,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
@@ -84,5 +86,21 @@ class TheaterArtistResourceFT extends BaseTheaterTests {
                 .bodyValue(artist)
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void testDelete() {
+        webTestClient.delete()
+                .uri(TheaterArtistResource.ARTISTS + TheaterArtistResource.ARTIST_CODE, "TART01")
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+
+    @Test
+    void testDelete_NotFound() {
+        webTestClient.delete()
+                .uri(TheaterArtistResource.ARTISTS + TheaterArtistResource.ARTIST_CODE, "NONEXISTENT")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
