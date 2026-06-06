@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.theater;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.theater.TheaterArtist;
 import es.upm.miw.apaw.domain.persistenceports.theater.TheaterArtistPersistence;
 import org.junit.jupiter.api.Test;
@@ -65,5 +66,21 @@ class TheaterArtistServiceTest {
         assertThatThrownBy(() -> this.theaterArtistService.create(artist))
                 .isInstanceOf(ConflictException.class)
                 .hasMessageContaining("TART99");
+    }
+
+    @Test
+    void testDelete() {
+        this.theaterArtistService.delete("TART01");
+        BDDMockito.then(this.theaterArtistPersistence).should().delete("TART01");
+    }
+
+    @Test
+    void testDelete_NotFound() {
+        BDDMockito.doThrow(new NotFoundException("TheaterArtist artistCode: NONEXISTENT"))
+                .when(this.theaterArtistPersistence).delete("NONEXISTENT");
+
+        assertThatThrownBy(() -> this.theaterArtistService.delete("NONEXISTENT"))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("NONEXISTENT");
     }
 }
