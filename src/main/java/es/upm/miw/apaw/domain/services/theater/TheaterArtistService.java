@@ -26,4 +26,8 @@ public class TheaterArtistService {
     public void delete(String artistCode) {
         this.theaterArtistPersistence.delete(artistCode);
     }
+
+    public TheaterArtist patchActive(String artistCode, Boolean artistActive) {
+        return this.theaterArtistPersistence.patchActive(artistCode, artistActive);
+    }
 }

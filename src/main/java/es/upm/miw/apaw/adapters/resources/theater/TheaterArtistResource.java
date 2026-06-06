@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,9 @@ public class TheaterArtistResource {
 
     public static final String ARTISTS = "/theater/artists";
     public static final String ARTIST_CODE = "/{artistCode}";
+    public static final String ACTIVE = "/active";
+
+    public record PatchActiveDto(Boolean artistActive) {}
 
     private final TheaterArtistService theaterArtistService;
 
@@ -36,5 +40,11 @@ public class TheaterArtistResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String artistCode) {
         this.theaterArtistService.delete(artistCode);
+    }
+
+    @PatchMapping(TheaterArtistResource.ARTIST_CODE + ACTIVE)
+    public TheaterArtist patchActive(@PathVariable String artistCode,
+            @Valid @RequestBody PatchActiveDto patchActiveDto) {
+        return this.theaterArtistService.patchActive(artistCode, patchActiveDto.artistActive());
     }
 }

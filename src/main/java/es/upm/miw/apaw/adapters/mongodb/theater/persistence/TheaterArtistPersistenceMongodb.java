@@ -58,4 +58,12 @@ public class TheaterArtistPersistenceMongodb implements TheaterArtistPersistence
             throw new NotFoundException("TheaterArtist artistCode: " + artistCode);
         }
     }
+
+    @Override
+    public TheaterArtist patchActive(String artistCode, Boolean artistActive) {
+        TheaterArtistEntity entity = this.theaterArtistRepository.findByArtistCode(artistCode)
+                .orElseThrow(() -> new NotFoundException("TheaterArtist artistCode: " + artistCode));
+        entity.patchActive(artistActive);
+        return this.theaterArtistRepository.save(entity).toTheaterArtist();
+    }
 }

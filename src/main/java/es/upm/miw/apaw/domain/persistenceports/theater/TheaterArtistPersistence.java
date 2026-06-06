@@ -19,4 +19,6 @@ public interface TheaterArtistPersistence {
     boolean existsByArtistCode(String artistCode);
 
     void delete(String artistCode);
+
+    TheaterArtist patchActive(String artistCode, Boolean artistActive);
 }

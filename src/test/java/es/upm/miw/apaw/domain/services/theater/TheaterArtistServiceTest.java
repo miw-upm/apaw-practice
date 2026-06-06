@@ -83,4 +83,32 @@ class TheaterArtistServiceTest {
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("NONEXISTENT");
     }
+
+    @Test
+    void testPatchActive() {
+        TheaterArtist artist = TheaterArtist.builder()
+                .artistCode("TART01")
+                .artistFullName("Alice Performer")
+                .artistBirthDate(LocalDate.of(1992, 4, 10))
+                .artistFee(new BigDecimal("800.00"))
+                .artistActive(false)
+                .build();
+        BDDMockito.given(this.theaterArtistPersistence.patchActive(Mockito.eq("TART01"), Mockito.eq(false)))
+                .willReturn(artist);
+
+        TheaterArtist result = this.theaterArtistService.patchActive("TART01", false);
+
+        assertThat(result.getArtistActive()).isFalse();
+        BDDMockito.then(this.theaterArtistPersistence).should().patchActive(Mockito.eq("TART01"), Mockito.eq(false));
+    }
+
+    @Test
+    void testPatchActive_NotFound() {
+        BDDMockito.given(this.theaterArtistPersistence.patchActive(Mockito.eq("NONEXISTENT"), Mockito.any(Boolean.class)))
+                .willThrow(new NotFoundException("TheaterArtist artistCode: NONEXISTENT"));
+
+        assertThatThrownBy(() -> this.theaterArtistService.patchActive("NONEXISTENT", true))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("NONEXISTENT");
+    }
 }
