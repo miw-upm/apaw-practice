@@ -2,6 +2,7 @@ package es.upm.miw.apaw.functionaltests.theater;
 
 import es.upm.miw.apaw.BaseTheaterTests;
 import es.upm.miw.apaw.adapters.resources.theater.TheaterArtistResource;
+import es.upm.miw.apaw.adapters.resources.theater.TheaterArtistResource.PatchActiveDto;
 import es.upm.miw.apaw.domain.models.theater.TheaterArtist;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,37 @@ class TheaterArtistResourceFT extends BaseTheaterTests {
     void testDelete_NotFound() {
         webTestClient.delete()
                 .uri(TheaterArtistResource.ARTISTS + TheaterArtistResource.ARTIST_CODE, "NONEXISTENT")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testPatchActive() {
+        PatchActiveDto dto = new PatchActiveDto(false);
+
+        webTestClient.patch()
+                .uri(TheaterArtistResource.ARTISTS + TheaterArtistResource.ARTIST_CODE + TheaterArtistResource.ACTIVE, "TART01")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(dto)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(TheaterArtist.class)
+                .value(updated -> {
+                    assertThat(updated).isNotNull();
+                    assertThat(updated.getArtistCode()).isEqualTo("TART01");
+                    assertThat(updated.getArtistFullName()).isEqualTo("Alice Performer");
+                    assertThat(updated.getArtistActive()).isFalse();
+                });
+    }
+
+    @Test
+    void testPatchActive_NotFound() {
+        PatchActiveDto dto = new PatchActiveDto(true);
+
+        webTestClient.patch()
+                .uri(TheaterArtistResource.ARTISTS + TheaterArtistResource.ARTIST_CODE + TheaterArtistResource.ACTIVE, "NONEXISTENT")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(dto)
                 .exchange()
                 .expectStatus().isNotFound();
     }
