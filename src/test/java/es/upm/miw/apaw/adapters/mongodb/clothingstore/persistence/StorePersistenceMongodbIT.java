@@ -45,14 +45,29 @@ class StorePersistenceMongodbIT {
 
         assertThat(storeRepository.findById(id)).isEmpty();
     }
+
     @Test
-    void testUpdate_PartialAddress_KeepOtherFields() {
+    void testUpdate_ok() {
+        Store store = Store.builder()
+                .name("Madrid Fashion Updated")
+                .address("Calle Actualizada 456")
+                .build();
+
+        Store updated = storePersistenceMongodb.update(SEEDED_ID, store);
+
+        assertThat(updated.getId()).isEqualTo(SEEDED_ID);
+        assertThat(updated.getName()).isEqualTo("Madrid Fashion Updated");
+        assertThat(updated.getAddress()).isEqualTo("Calle Actualizada 456");
+    }
+
+    @Test
+    void testPatch_UpdateOnlyAddress() {
         StoreEntity before = storeRepository.findById(SEEDED_ID).orElseThrow();
         String originalName = before.getName();
 
         Store partial = Store.builder().address("Calle Nueva 123").build();
 
-        Store updated = storePersistenceMongodb.update(SEEDED_ID, partial);
+        Store updated = storePersistenceMongodb.patch(SEEDED_ID, partial);
 
         assertThat(updated.getId()).isEqualTo(SEEDED_ID);
         assertThat(updated.getAddress()).isEqualTo("Calle Nueva 123");
