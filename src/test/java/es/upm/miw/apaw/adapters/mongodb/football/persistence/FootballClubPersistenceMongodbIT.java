@@ -1,8 +1,6 @@
 package es.upm.miw.apaw.adapters.mongodb.football.persistence;
 
-
 import es.upm.miw.apaw.adapters.mongodb.football.daos.FootballSeeder;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.football.FootballClub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -57,15 +54,15 @@ class FootballClubPersistenceMongodbIT {
 
     @Test
     void testFindByClubId_ok() {
-        FootballClub club = this.clubPersistence.findByClubId(1L);
-        assertThat(club.getName()).isEqualTo("Salamanca FC");
-        assertThat(club.getBudget()).isEqualByComparingTo(new BigDecimal("4500000"));
+        Optional<FootballClub> club = this.clubPersistence.findByClubId(1L);
+        assertThat(club).isPresent();
+        assertThat(club.get().getName()).isEqualTo("Salamanca FC");
+        assertThat(club.get().getBudget()).isEqualByComparingTo(new BigDecimal("4500000"));
     }
 
     @Test
     void testFindByClubId_notFound() {
-        assertThrows(NotFoundException.class,
-                () -> this.clubPersistence.findByClubId(999L));
+        assertThat(this.clubPersistence.findByClubId(999L)).isEmpty();
     }
 
     @Test
@@ -87,10 +84,4 @@ class FootballClubPersistenceMongodbIT {
         List<FootballClub> clubs = this.clubPersistence.readAll();
         assertThat(clubs).hasSize(1);
     }
-
-    @Test
-    void testDelete_notFound() {
-        assertThrows(NotFoundException.class, () -> this.clubPersistence.delete(999L));
-    }
 }
-

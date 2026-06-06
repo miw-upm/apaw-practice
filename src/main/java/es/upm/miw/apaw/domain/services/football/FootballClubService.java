@@ -27,7 +27,8 @@ public class FootballClubService {
     }
 
     public FootballClub patchBudget(Long clubId, BigDecimal newBudget) {
-        FootballClub club = this.clubPersistence.findByClubId(clubId);
+        FootballClub club = this.clubPersistence.findByClubId(clubId)
+                .orElseThrow(() -> new NotFoundException("Football club id: " + clubId));
         club.setBudget(newBudget);
         return this.clubPersistence.save(club);
     }

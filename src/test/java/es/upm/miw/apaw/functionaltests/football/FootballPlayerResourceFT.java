@@ -13,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.List;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.adapters.resources.football.FootballPlayerResource.PLAYERS;
@@ -61,12 +60,8 @@ class FootballPlayerResourceFT {
                 .expectStatus().isNotFound();
     }
 
-    // ============================================================
-    // ✅ TEST: búsqueda de móviles asociados sin repetición
-    // ============================================================
     @Test
     void testGetMobilesByNickname_ok() {
-        // 🔹 Mock del UserRestClient
         BDDMockito.given(this.userRestClient.readById(any(UUID.class)))
                 .willReturn(mockUser());
 
@@ -75,11 +70,9 @@ class FootballPlayerResourceFT {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(List.class)
-                .value(mobiles -> {
-                    assertThat(mobiles).isNotEmpty();
-                    assertThat(mobiles).contains("600123456");
-                });
+                .expectBody()
+                .jsonPath("$.mobiles").isArray()
+                .jsonPath("$.mobiles[0]").isEqualTo("600123456");
     }
 
     @Test
