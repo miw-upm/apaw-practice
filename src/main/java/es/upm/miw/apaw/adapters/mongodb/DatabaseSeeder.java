@@ -10,6 +10,7 @@ import es.upm.miw.apaw.adapters.mongodb.shop.daos.ShopSeeder;
 import es.upm.miw.apaw.adapters.mongodb.studentcouncil.daos.StudentCouncilSeeder;
 import es.upm.miw.apaw.adapters.mongodb.sports.academy.daos.SportsAcademySeeder;
 import es.upm.miw.apaw.adapters.mongodb.vehicle.daos.VehicleSeeder;
+import es.upm.miw.apaw.adapters.mongodb.theater.daos.TheaterSeeder;
 import es.upm.miw.apaw.adapters.mongodb.apiary.daos.ApiarySeeder;
 import es.upm.miw.apaw.adapters.mongodb.university.daos.UniversitySeeder;
 import es.upm.miw.apaw.adapters.mongodb.recipes.daos.RecipesSeeder;
@@ -54,6 +55,7 @@ public class DatabaseSeeder {
     private final MusicSeeder musicSeeder;
     private final MartialArtsGymSeeder martialArtsGymSeeder;
     private final ClinicSeeder clinicSeeder;
+    private final TheaterSeeder theaterSeeder;
 
     @Autowired
     public DatabaseSeeder(
@@ -76,7 +78,7 @@ public class DatabaseSeeder {
             FootballSeeder footballSeeder,
             MetroSeeder metroSeeder,
             MusicSeeder musicSeeder, MartialArtsGymSeeder martialArtsGymSeeder,
-            ClinicSeeder clinicSeeder
+            ClinicSeeder clinicSeeder, TheaterSeeder theaterSeeder
     ) {
 
         this.shopSeeder = shopSeeder;
@@ -100,6 +102,7 @@ public class DatabaseSeeder {
         this.musicSeeder = musicSeeder;
         this.martialArtsGymSeeder = martialArtsGymSeeder;
         this.clinicSeeder = clinicSeeder;
+        this.theaterSeeder = theaterSeeder;
         this.seedDatabase();
 
     }
@@ -126,6 +129,7 @@ public class DatabaseSeeder {
         this.musicSeeder.seedDatabase();
         this.martialArtsGymSeeder.seedDatabase();
         this.clinicSeeder.seedDatabase();
+        this.theaterSeeder.seedDatabase();
     }
 
     public void deleteAll() {
@@ -150,6 +154,7 @@ public class DatabaseSeeder {
         this.musicSeeder.deleteAll();
         this.martialArtsGymSeeder.deleteAll();
         this.clinicSeeder.deleteAll();
+        this.theaterSeeder.deleteAll();
     }
 
     public void reSeedDatabase() {
