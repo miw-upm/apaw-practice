@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.functionaltests.football;
 
+import es.upm.miw.apaw.adapters.resources.football.FootballClubBudgetDto;
 import es.upm.miw.apaw.adapters.resources.football.FootballClubResource;
 import es.upm.miw.apaw.domain.models.football.FootballClub;
 import org.junit.jupiter.api.Test;
@@ -23,19 +24,15 @@ class FootballClubResourceFT {
     private WebTestClient webTestClient;
 
     @Test
-        void testReadByName_ok() {
-            this.webTestClient
-                    .get()
-                    .uri(FootballClubResource.FOOTBALL_CLUBS + FootballClubResource.NAME_ID, "Salamanca FC")
-                    .exchange()
-                    .expectStatus().isOk()
-                    .expectBody(String.class)
-                    .value(json -> {
-                        System.out.println("🔹 JSON devuelto por el endpoint:");
-                        System.out.println(json);
-                    });
-        }
-
+    void testReadByName_ok() {
+        this.webTestClient
+                .get()
+                .uri(FootballClubResource.FOOTBALL_CLUBS + FootballClubResource.NAME_ID, "Salamanca FC")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(FootballClub.class)
+                .value(club -> assertThat(club.getName()).isEqualTo("Salamanca FC"));
+    }
 
     @Test
     void testReadByName_notFound() {
@@ -52,7 +49,7 @@ class FootballClubResourceFT {
                 .patch()
                 .uri(FootballClubResource.FOOTBALL_CLUBS + FootballClubResource.CLUB_ID, 1L)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new BigDecimal("9999999"))
+                .bodyValue(new FootballClubBudgetDto(new BigDecimal("9999999")))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(FootballClub.class)

@@ -124,7 +124,7 @@ class FootballClubServiceIT {
                 .founded(LocalDate.of(1985, 6, 12))
                 .build();
 
-        BDDMockito.given(this.footballClubPersistence.findByClubId(1L)).willReturn(club);
+        BDDMockito.given(this.footballClubPersistence.findByClubId(1L)).willReturn(Optional.of(club));
         BDDMockito.given(this.footballClubPersistence.save(BDDMockito.any(FootballClub.class))).willReturn(updated);
 
         FootballClub result = this.footballClubService.patchBudget(1L, new BigDecimal("9999999"));
@@ -135,7 +135,7 @@ class FootballClubServiceIT {
     @Test
     void testPatchBudget_notFound() {
         BDDMockito.given(this.footballClubPersistence.findByClubId(999L))
-                .willThrow(new NotFoundException("Football club id: 999"));
+                .willReturn(Optional.empty());
 
         assertThrows(NotFoundException.class,
                 () -> this.footballClubService.patchBudget(999L, new BigDecimal("12345")));

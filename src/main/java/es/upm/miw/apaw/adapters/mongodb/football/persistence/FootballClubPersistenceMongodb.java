@@ -2,7 +2,6 @@ package es.upm.miw.apaw.adapters.mongodb.football.persistence;
 
 import es.upm.miw.apaw.adapters.mongodb.football.daos.FootballClubRepository;
 import es.upm.miw.apaw.adapters.mongodb.football.entities.FootballClubEntity;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.football.FootballClub;
 import es.upm.miw.apaw.domain.persistenceports.football.FootballClubPersistence;
 import org.springframework.stereotype.Repository;
@@ -14,7 +13,6 @@ import java.util.Optional;
 public class FootballClubPersistenceMongodb implements FootballClubPersistence {
 
     private final FootballClubRepository clubRepository;
-    private static final String CLUB_ID = "Football club id: ";
 
     public FootballClubPersistenceMongodb(FootballClubRepository clubRepository) {
         this.clubRepository = clubRepository;
@@ -40,16 +38,12 @@ public class FootballClubPersistenceMongodb implements FootballClubPersistence {
 
     @Override
     public void delete(Long clubId) {
-        if (!this.clubRepository.existsByClubId(clubId)) {
-            throw new NotFoundException(CLUB_ID + clubId);
-        }
         this.clubRepository.deleteById(clubId);
     }
 
     @Override
-    public FootballClub findByClubId(Long clubId) {
+    public Optional<FootballClub> findByClubId(Long clubId) {
         return this.clubRepository.findById(clubId)
-                .map(FootballClubEntity::toFootballClub)
-                .orElseThrow(() -> new NotFoundException(CLUB_ID + clubId));
+                .map(FootballClubEntity::toFootballClub);
     }
 }

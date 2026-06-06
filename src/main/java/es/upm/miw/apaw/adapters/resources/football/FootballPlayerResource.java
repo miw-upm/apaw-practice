@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(FootballPlayerResource.PLAYERS)
@@ -27,7 +28,7 @@ public class FootballPlayerResource {
     }
 
     @GetMapping(NICKNAME_ID + "/mobiles")
-    public List<String> getMobilesByNickname(@PathVariable String nickname) {
-        return this.footballPlayerService.getMobilesByNickname(nickname);
+    public Map<String, List<String>> getMobilesByNickname(@PathVariable String nickname) {
+        return Map.of("mobiles", this.footballPlayerService.getMobilesByNickname(nickname));
     }
 }

@@ -5,8 +5,6 @@ import es.upm.miw.apaw.domain.services.football.FootballClubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequestMapping(FootballClubResource.FOOTBALL_CLUBS)
 public class FootballClubResource {
@@ -28,7 +26,8 @@ public class FootballClubResource {
     }
 
     @PatchMapping(CLUB_ID)
-    public FootballClub patchBudget(@PathVariable Long clubId, @RequestBody BigDecimal newBudget) {
-        return this.footballClubService.patchBudget(clubId, newBudget);
+    public FootballClub patchBudget(@PathVariable Long clubId, @RequestBody FootballClubBudgetDto dto) {
+        return this.footballClubService.patchBudget(clubId, dto.budget());
     }
 }
+

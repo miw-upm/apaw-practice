@@ -1,8 +1,6 @@
 package es.upm.miw.apaw.domain.services.football;
 
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw.domain.models.UserDto;
-import es.upm.miw.apaw.domain.models.football.FootballClub;
 import es.upm.miw.apaw.domain.models.football.FootballPlayer;
 import es.upm.miw.apaw.domain.persistenceports.football.FootballClubPersistence;
 import es.upm.miw.apaw.domain.persistenceports.football.FootballPlayerPersistence;
@@ -30,16 +28,14 @@ public class FootballPlayerService {
         FootballPlayer player = this.playerPersistence.findByNickname(nickname)
                 .orElseThrow(() -> new NotFoundException("Football player not found: " + nickname));
 
-        List<FootballClub> clubs = this.clubPersistence.readAll().stream()
-                .filter(club -> club.getPlayers().stream()
-                        .anyMatch(p -> p.getNickname().equals(player.getNickname())))
-                .toList();
-
-        return clubs.stream()
+        return this.clubPersistence.readAll().stream()
+                .filter(club -> club.getPlayers() != null && club.getPlayers().stream()
+                        .anyMatch(p -> player.getNickname().equals(p.getNickname())))
                 .map(club -> this.userRestClient.readById(club.getUserId()).getMobile())
                 .distinct()
                 .toList();
     }
+
     public FootballPlayer readByNickname(String nickname) {
         return this.playerPersistence.findByNickname(nickname)
                 .orElseThrow(() -> new NotFoundException("Football player not found: " + nickname));
