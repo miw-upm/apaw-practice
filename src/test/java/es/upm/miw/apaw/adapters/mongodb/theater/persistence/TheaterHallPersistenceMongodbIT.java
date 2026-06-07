@@ -106,7 +106,7 @@ class TheaterHallPersistenceMongodbIT extends BaseTheaterTests {
 
     @Test
     void testFindByMinCapacity_NoResults() {
-        var results = theaterHallPersistenceMongodb.findByMinCapacity(10000).toList();
+        var results = theaterHallPersistenceMongodb.findByMinCapacity(400).toList();
         assertThat(results).isEmpty();
     }
 }

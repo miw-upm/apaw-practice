@@ -90,9 +90,9 @@ class TheaterHallResourceFT extends BaseTheaterTests {
                 .expectStatus().isOk()
                 .expectBodyList(TheaterHall.class)
                 .value((List<TheaterHall> results) -> {
-                    assertThat(results).isNotEmpty();
-                    assertThat(results).allSatisfy(hall ->
-                            assertThat(hall.getHallCapacity()).isGreaterThanOrEqualTo(150));
+                    assertThat(results).hasSize(1);
+                    assertThat(results.getFirst().getHallCode()).isEqualTo("THAL01");
+                    assertThat(results.getFirst().getHallCapacity()).isEqualTo(300);
                 });
     }
 
@@ -103,17 +103,13 @@ class TheaterHallResourceFT extends BaseTheaterTests {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(TheaterHall.class)
-                .value((List<TheaterHall> results) -> {
-                    assertThat(results).isNotEmpty();
-                    assertThat(results).allSatisfy(hall ->
-                            assertThat(hall.getHallCapacity()).isGreaterThanOrEqualTo(100));
-                });
+                .value((List<TheaterHall> results) -> assertThat(results).hasSize(2));
     }
 
     @Test
     void testFindByMinCapacity_NoResults() {
         webTestClient.get()
-                .uri(TheaterHallResource.HALLS + TheaterHallResource.SEARCH + "?minCapacity=10000")
+                .uri(TheaterHallResource.HALLS + TheaterHallResource.SEARCH + "?minCapacity=400")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(TheaterHall.class)
