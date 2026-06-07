@@ -44,8 +44,4 @@ public class TheaterArtistEntity {
         BeanUtils.copyProperties(this, theaterArtist);
         return theaterArtist;
     }
-
-    public void patchActive(Boolean artistActive) {
-        this.artistActive = artistActive;
-    }
 }
