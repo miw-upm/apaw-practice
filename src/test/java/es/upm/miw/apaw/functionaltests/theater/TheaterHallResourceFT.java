@@ -11,8 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -80,39 +78,5 @@ class TheaterHallResourceFT extends BaseTheaterTests {
                 .bodyValue(hall)
                 .exchange()
                 .expectStatus().isBadRequest();
-    }
-
-    @Test
-    void testFindByMinCapacity() {
-        webTestClient.get()
-                .uri(TheaterHallResource.HALLS + TheaterHallResource.SEARCH + "?minCapacity=150")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(TheaterHall.class)
-                .value((List<TheaterHall> results) -> {
-                    assertThat(results).hasSize(1);
-                    assertThat(results.getFirst().getHallCode()).isEqualTo("THAL01");
-                    assertThat(results.getFirst().getHallCapacity()).isEqualTo(300);
-                });
-    }
-
-    @Test
-    void testFindByMinCapacity_Boundary() {
-        webTestClient.get()
-                .uri(TheaterHallResource.HALLS + TheaterHallResource.SEARCH + "?minCapacity=100")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(TheaterHall.class)
-                .value((List<TheaterHall> results) -> assertThat(results).hasSize(2));
-    }
-
-    @Test
-    void testFindByMinCapacity_NoResults() {
-        webTestClient.get()
-                .uri(TheaterHallResource.HALLS + TheaterHallResource.SEARCH + "?minCapacity=400")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(TheaterHall.class)
-                .value((List<TheaterHall> results) -> assertThat(results).isEmpty());
     }
 }

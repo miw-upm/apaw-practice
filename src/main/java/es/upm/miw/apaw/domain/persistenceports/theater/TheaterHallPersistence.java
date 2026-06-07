@@ -17,6 +17,4 @@ public interface TheaterHallPersistence {
     Stream<TheaterHall> readAll();
 
     boolean existsByHallCode(String hallCode);
-
-    Stream<TheaterHall> findByMinCapacity(Integer minCapacity);
 }

@@ -89,24 +89,4 @@ class TheaterHallPersistenceMongodbIT extends BaseTheaterTests {
         assertThat(theaterHallPersistenceMongodb.existsByHallCode(halls[0].getHallCode())).isTrue();
         assertThat(theaterHallPersistenceMongodb.existsByHallCode("NONEXISTENT")).isFalse();
     }
-
-    @Test
-    void testFindByMinCapacity() {
-        var results = theaterHallPersistenceMongodb.findByMinCapacity(150).toList();
-        assertThat(results).hasSize(1);
-        assertThat(results.getFirst().getHallCode()).isEqualTo("THAL01");
-        assertThat(results.getFirst().getHallCapacity()).isEqualTo(300);
-    }
-
-    @Test
-    void testFindByMinCapacity_Boundary() {
-        var results = theaterHallPersistenceMongodb.findByMinCapacity(100).toList();
-        assertThat(results).hasSize(2);
-    }
-
-    @Test
-    void testFindByMinCapacity_NoResults() {
-        var results = theaterHallPersistenceMongodb.findByMinCapacity(400).toList();
-        assertThat(results).isEmpty();
-    }
 }
