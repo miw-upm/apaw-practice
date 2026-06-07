@@ -6,6 +6,9 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.theater.TheaterHall;
 import es.upm.miw.apaw.domain.persistenceports.theater.TheaterHallPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.stream.Stream;
@@ -14,10 +17,13 @@ import java.util.stream.Stream;
 public class TheaterHallPersistenceMongodb implements TheaterHallPersistence {
 
     private final TheaterHallRepository theaterHallRepository;
+    private final MongoTemplate mongoTemplate;
 
     @Autowired
-    public TheaterHallPersistenceMongodb(TheaterHallRepository theaterHallRepository) {
+    public TheaterHallPersistenceMongodb(TheaterHallRepository theaterHallRepository,
+                                          MongoTemplate mongoTemplate) {
         this.theaterHallRepository = theaterHallRepository;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -49,5 +55,13 @@ public class TheaterHallPersistenceMongodb implements TheaterHallPersistence {
     @Override
     public boolean existsByHallCode(String hallCode) {
         return this.theaterHallRepository.findByHallCode(hallCode).isPresent();
+    }
+
+    @Override
+    public Stream<TheaterHall> findByMinCapacity(Integer minCapacity) {
+        Query query = new Query(Criteria.where("hallCapacity").gte(minCapacity));
+        return this.mongoTemplate.find(query, TheaterHallEntity.class)
+                .stream()
+                .map(TheaterHallEntity::toTheaterHall);
     }
 }

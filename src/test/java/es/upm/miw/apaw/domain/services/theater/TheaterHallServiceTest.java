@@ -14,6 +14,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
+import java.util.stream.Stream;
+
 @SpringBootTest
 @ActiveProfiles("test")
 class TheaterHallServiceTest {
@@ -57,5 +60,36 @@ class TheaterHallServiceTest {
         assertThatThrownBy(() -> this.theaterHallService.update("NONEXISTENT", hall))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("NONEXISTENT");
+    }
+
+    @Test
+    void testFindByMinCapacity() {
+        TheaterHall hall = TheaterHall.builder()
+                .hallCode("THAL01")
+                .hallName("Theater Hall A")
+                .hallCapacity(300)
+                .hallAccessible(true)
+                .build();
+        BDDMockito.given(this.theaterHallPersistence.findByMinCapacity(Mockito.eq(150)))
+                .willReturn(Stream.of(hall));
+
+        Stream<TheaterHall> result = this.theaterHallService.findByMinCapacity(150);
+        List<TheaterHall> list = result.toList();
+
+        assertThat(list).hasSize(1);
+        assertThat(list.getFirst().getHallCode()).isEqualTo("THAL01");
+        assertThat(list.getFirst().getHallCapacity()).isEqualTo(300);
+        BDDMockito.then(this.theaterHallPersistence).should().findByMinCapacity(150);
+    }
+
+    @Test
+    void testFindByMinCapacity_NoResults() {
+        BDDMockito.given(this.theaterHallPersistence.findByMinCapacity(Mockito.any(Integer.class)))
+                .willReturn(Stream.empty());
+
+        Stream<TheaterHall> result = this.theaterHallService.findByMinCapacity(500);
+        List<TheaterHall> list = result.toList();
+
+        assertThat(list).isEmpty();
     }
 }
