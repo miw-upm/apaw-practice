@@ -12,12 +12,8 @@ import es.upm.miw.apaw.domain.models.theater.TheaterHall;
 import es.upm.miw.apaw.domain.models.theater.TheaterPerformance;
 import es.upm.miw.apaw.domain.persistenceports.theater.TheaterPerformancePersistence;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,18 +25,15 @@ public class TheaterPerformancePersistenceMongodb implements TheaterPerformanceP
     private final TheaterPerformanceRepository theaterPerformanceRepository;
     private final TheaterHallRepository theaterHallRepository;
     private final TheaterArtistRepository theaterArtistRepository;
-    private final MongoTemplate mongoTemplate;
 
     @Autowired
     public TheaterPerformancePersistenceMongodb(
             TheaterPerformanceRepository theaterPerformanceRepository,
             TheaterHallRepository theaterHallRepository,
-            TheaterArtistRepository theaterArtistRepository,
-            MongoTemplate mongoTemplate) {
+            TheaterArtistRepository theaterArtistRepository) {
         this.theaterPerformanceRepository = theaterPerformanceRepository;
         this.theaterHallRepository = theaterHallRepository;
         this.theaterArtistRepository = theaterArtistRepository;
-        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -116,13 +109,5 @@ public class TheaterPerformancePersistenceMongodb implements TheaterPerformanceP
                 .getPerformanceArtists()
                 .stream()
                 .map(TheaterArtistEntity::toTheaterArtist);
-    }
-
-    @Override
-    public Stream<TheaterPerformance> findByMinDate(LocalDate minDate) {
-        Query query = new Query(Criteria.where("performanceDate").gte(minDate));
-        return this.mongoTemplate.find(query, TheaterPerformanceEntity.class)
-                .stream()
-                .map(TheaterPerformanceEntity::toTheaterPerformance);
     }
 }

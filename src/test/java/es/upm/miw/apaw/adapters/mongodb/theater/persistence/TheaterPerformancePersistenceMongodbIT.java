@@ -124,30 +124,6 @@ class TheaterPerformancePersistenceMongodbIT extends BaseTheaterTests {
     }
 
     @Test
-    void testFindByMinDate() {
-        LocalDate minDate = LocalDate.of(2026, 11, 1);
-        var results = theaterPerformancePersistenceMongodb.findByMinDate(minDate).toList();
-        assertThat(results).hasSize(1);
-        assertThat(results.getFirst().getPerformanceCode()).isEqualTo("TPER01");
-        assertThat(results.getFirst().getPerformanceDate()).isEqualTo(LocalDate.of(2026, 12, 1));
-    }
-
-    @Test
-    void testFindByMinDate_NoResults() {
-        LocalDate minDate = LocalDate.of(2027, 1, 1);
-        var results = theaterPerformancePersistenceMongodb.findByMinDate(minDate).toList();
-        assertThat(results).isEmpty();
-    }
-
-    @Test
-    void testFindByMinDate_AllPerformances() {
-        LocalDate minDate = LocalDate.of(2026, 1, 1);
-        var results = theaterPerformancePersistenceMongodb.findByMinDate(minDate).toList();
-        assertThat(results).hasSize(1);
-        assertThat(results.getFirst().getPerformanceCode()).isEqualTo("TPER01");
-    }
-
-    @Test
     void testPerformanceToHallUnidirectionalRelationship() {
         TheaterPerformance read = theaterPerformancePersistenceMongodb.read(performances[0].getPerformanceCode());
         TheaterHall hall = read.getPerformanceHall();

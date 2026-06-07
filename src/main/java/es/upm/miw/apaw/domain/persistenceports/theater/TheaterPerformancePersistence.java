@@ -4,7 +4,6 @@ import es.upm.miw.apaw.domain.models.theater.TheaterArtist;
 import es.upm.miw.apaw.domain.models.theater.TheaterPerformance;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.stream.Stream;
 
 @Repository
@@ -21,6 +20,4 @@ public interface TheaterPerformancePersistence {
     boolean existsByPerformanceCode(String performanceCode);
 
     Stream<TheaterArtist> findArtistsByPerformanceCode(String performanceCode);
-
-    Stream<TheaterPerformance> findByMinDate(LocalDate minDate);
 }
