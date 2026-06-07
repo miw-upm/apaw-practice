@@ -50,12 +50,4 @@ public class TheaterArtistPersistenceMongodb implements TheaterArtistPersistence
     public boolean existsByArtistCode(String artistCode) {
         return this.theaterArtistRepository.findByArtistCode(artistCode).isPresent();
     }
-
-    @Override
-    public void delete(String artistCode) {
-        int deleted = this.theaterArtistRepository.deleteByArtistCode(artistCode);
-        if (deleted == 0) {
-            throw new NotFoundException("TheaterArtist artistCode: " + artistCode);
-        }
-    }
 }

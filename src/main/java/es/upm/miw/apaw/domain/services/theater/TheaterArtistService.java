@@ -22,8 +22,4 @@ public class TheaterArtistService {
         }
         return this.theaterArtistPersistence.create(theaterArtist);
     }
-
-    public void delete(String artistCode) {
-        this.theaterArtistPersistence.delete(artistCode);
-    }
 }

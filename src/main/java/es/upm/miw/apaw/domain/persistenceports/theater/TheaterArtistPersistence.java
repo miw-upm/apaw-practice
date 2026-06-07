@@ -17,6 +17,4 @@ public interface TheaterArtistPersistence {
     Stream<TheaterArtist> readAll();
 
     boolean existsByArtistCode(String artistCode);
-
-    void delete(String artistCode);
 }
