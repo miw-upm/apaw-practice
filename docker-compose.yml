@@ -18,3 +18,7 @@ networks:
 
 #> docker network create apawnet
 #> docker compose up --build -d
+
+# CONSOLA & COMANDOS Postgres
+#> docker exec -it postgres  psql -U postgres
+#> create database apawpracticedb;
