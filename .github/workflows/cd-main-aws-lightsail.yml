@@ -1,0 +1,98 @@
+name: CD. AWS Lightsail
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cd:
+    name: Build & Push GitHub Package & Deploy on AWS Lightsail
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ☕ Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: 🏷️ Prepare container registry metadata (repository, artifact, version...)
+        run: |
+          echo "REPOSITORY=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+          echo "ARTIFACT=$(mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout)" >> $GITHUB_ENV          
+          echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: 📦 Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }}
+
+      - name: 🐳 Build & Push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ env.REPOSITORY }}:${{ env.VERSION }}
+            ghcr.io/${{ env.REPOSITORY }}:latest
+
+#      - name: 🚀 Deploy to AWS Lightsail
+#        uses: appleboy/ssh-action@v1.2.1
+#        with:
+#          host: ${{ secrets.AWS_LIGHTSAIL_IP_MAIN }}
+#          username: ${{ secrets.AWS_LIGHTSAIL_USER_MAIN }}
+#          key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY_MAIN }}
+#          script: |
+#            echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+#
+#            docker pull ghcr.io/${{ env.REPOSITORY }}:latest
+#            docker rm -f ${{ env.ARTIFACT }} || true
+#            docker run -d \
+#              --name ${{ env.ARTIFACT }} \
+#              --restart always \
+#              --network goa \
+#              --memory 512m \
+#              --memory-swap 1024m \
+#              -e SPRING_PROFILES_ACTIVE=prod \
+#              -e EUREKA_USER=${{ secrets.EUREKA_USER }} \
+#              -e EUREKA_PASSWORD=${{ secrets.EUREKA_PASSWORD }} \
+#              ghcr.io/${{ env.REPOSITORY }}:latest
+#
+#            docker stop goa-gateway goa-engagement goa-user goa-support goa-billing || true
+#
+#            echo "⏳ Esperando a GOA Eureka"
+#            for i in $(seq 1 12); do
+#              sleep 10
+#              EUREKA_STATUS=$(docker inspect --format='{{.State.Health.Status}}' goa-eureka 2>/dev/null || echo "error")
+#              echo "Eureka intento $i: $EUREKA_STATUS"
+#              [ "$EUREKA_STATUS" = "healthy" ] && break
+#            done
+#            if [ "$EUREKA_STATUS" != "healthy" ]; then
+#              echo "❌ Eureka no está healthy"
+#              exit 1
+#            fi
+#
+#            echo "🚀 Levantando servicios"
+#            docker start goa-user goa-engagement goa-support
+#            echo "⏳ Esperando a GOA User"
+#            for i in $(seq 1 12); do
+#              sleep 10
+#              USER_STATUS=$(docker inspect --format='{{.State.Health.Status}}' goa-user 2>/dev/null || echo "error")
+#              echo "User intento $i: $USER_STATUS"
+#              [ "$USER_STATUS" = "healthy" ] && break
+#            done
+#            if [ "$USER_STATUS" != "healthy" ]; then
+#              echo "⚠️ User no healthy, continuando..."
+#            fi
+#            docker start goa-gateway
+#
+#            echo "✅ Deploy exitoso"
+#            docker image prune --filter "until=12h" -f
