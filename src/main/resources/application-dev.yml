@@ -1,7 +1,9 @@
-server:
-  port: 8080
-
 spring:
-  data:
-    mongodb:
-      uri: "mongodb://mongo:mongo@localhost:27017/apaw?authSource=admin"
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/apawpracticedb
+    username: postgres
+    password: postgres

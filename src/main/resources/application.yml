@@ -1,15 +1,5 @@
-spring:
-  profiles:
-    # Profile ----------------------------------------
-    active: dev
-  # ------------------------------------------------
-  output:
-    ansi:
-      enabled: ALWAYS
-  cache:
-    type: none
-  jackson:
-    default-property-inclusion: NON_NULL
+server:
+  port: 8082
 
 info:
   app:
@@ -17,20 +7,43 @@ info:
     version: "@project.version@"
     build: "@maven.build.timestamp@"
 
-logging:
-  level:
-    root: WARN
-    es.upm.miw: DEBUG
+spring:
+  application:
+    name: apaw-practice
+  profiles:
+    default: dev
+  output:
+    ansi:
+      enabled: ALWAYS
+  cache:
+    type: none
+  jackson:
+    default-property-inclusion: NON_NULL
+  jpa:
+    open-in-view: false
+
+app:
+  hosting: localhost
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info
-  info:
-    env:
-      enabled: true
+        include: health
+  endpoint:
+    health:
+      show-details: never
 
-miw:
-  apaw:
-    user: "http://localhost:8081/users"
+logging:
+  level:
+    root: WARN
+    es.upm: DEBUG
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

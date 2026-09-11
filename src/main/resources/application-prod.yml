@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://postgres:5432/apawpracticedb
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://apaw-eureka:8761/eureka/
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+app:
+  hosting: AWS

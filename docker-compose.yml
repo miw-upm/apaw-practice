@@ -5,10 +5,10 @@ services:
     image: apaw-practice:latest
     restart: always
     ports:
-      - "8080:8080"
+      - "8082:8082"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:mongo@host.docker.internal:27017/apawdb?authSource=admin
-      MIW_APAW_USER: http://host.docker.internal:8081/users
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/apawpracticedb
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://apaw-eureka:8761/eureka/
     networks:
       - apawnet
 
@@ -16,4 +16,5 @@ networks:
   apawnet:
     external: true
 
+#> docker network create apawnet
 #> docker compose up --build -d
