@@ -1,10 +1,8 @@
 package es.upm.miw.apaw.adapters.in.exceptionshandler;
 
 import es.upm.miw.apaw.domain.exceptions.*;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.Profiles;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -16,14 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
+@Log4j2
 public class ApiExceptionHandler {
-
-    private final Environment environment;
-
-    @Autowired
-    public ApiExceptionHandler(Environment environment) {
-        this.environment = environment;
-    }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({
@@ -116,11 +108,9 @@ public class ApiExceptionHandler {
     @ExceptionHandler({
             Exception.class
     })
-    @ResponseBody
-    public ErrorMessage exception(Exception exception) { //WARNING!!!. It is caught for unforeseen cases.The error must be properly handled or caught.
-        if (environment.acceptsProfiles(Profiles.of("dev", "test"))) {
-            exception.printStackTrace();
-        }
+    @ResponseBody //WARNING!!!. It is caught for unforeseen cases.The error must be properly handled or caught.
+    public ErrorMessage exception(Exception exception) {
+        log.error("Unexpected exception", exception);
         return new ErrorMessage(exception);
     }
 
