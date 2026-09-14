@@ -44,41 +44,41 @@ jobs:
             ghcr.io/${{ env.REPOSITORY }}:${{ env.VERSION }}
             ghcr.io/${{ env.REPOSITORY }}:latest
 
-#      - name: 🚀 Deploy to AWS Lightsail
-#        uses: appleboy/ssh-action@v1.2.1
-#        with:
-#          host: ${{ secrets.AWS_LIGHTSAIL_IP_STAGING }}
-#          username: ${{ secrets.AWS_LIGHTSAIL_USER_STAGING }}
-#          key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY_STAGING }}
-#          script: |
-#            echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-#
-#            docker pull ghcr.io/${{ env.REPOSITORY }}:latest
-#            docker rm -f ${{ env.ARTIFACT }} || true
-#            docker run -d \
-#              --name ${{ env.ARTIFACT }} \
-#              --restart always \
-#              --memory 512m \
-#              --memory-swap 1024m \
-#              --network apawnet \
-#              -e SPRING_PROFILES_ACTIVE=prod \
-#              -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-#              -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-#              ghcr.io/${{ env.REPOSITORY }}:latest
-#
-#            echo "⏳ Esperando a que se levante"
-#            for i in $(seq 1 12); do
-#              sleep 15
-#              STATUS=$(docker inspect --format='{{.State.Health.Status}}' ${{ env.ARTIFACT }} 2>/dev/null || echo "no-existe")
-#              echo "Intento $i: $STATUS"
-#              [ "$STATUS" = "healthy" ] && break
-#            done
-#
-#            if [ "$STATUS" != "healthy" ]; then
-#              echo "❌ Deploy fallido"
-#              docker logs --tail 50 ${{ env.ARTIFACT }}
-#              exit 1
-#            fi
-#
-#            echo "✅ Deploy exitoso"
-#            docker image prune --filter "until=12h" -f
+      - name: 🚀 Deploy to AWS Lightsail
+        uses: appleboy/ssh-action@v1.2.1
+        with:
+          host: ${{ secrets.AWS_LIGHTSAIL_IP_STAGING }}
+          username: ${{ secrets.AWS_LIGHTSAIL_USER_STAGING }}
+          key: ${{ secrets.AWS_LIGHTSAIL_SSH_KEY_STAGING }}
+          script: |
+            echo ${{ secrets.GHCR_PERSONAL_ACCESS_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            docker pull ghcr.io/${{ env.REPOSITORY }}:latest
+            docker rm -f ${{ env.ARTIFACT }} || true
+            docker run -d \
+              --name ${{ env.ARTIFACT }} \
+              --restart always \
+              --memory 512m \
+              --memory-swap 1024m \
+              --network apawnet \
+              -e SPRING_PROFILES_ACTIVE=prod \
+              -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+              -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+              ghcr.io/${{ env.REPOSITORY }}:latest
+
+            echo "⏳ Esperando a que se levante"
+            for i in $(seq 1 12); do
+              sleep 15
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' ${{ env.ARTIFACT }} 2>/dev/null || echo "no-existe")
+              echo "Intento $i: $STATUS"
+              [ "$STATUS" = "healthy" ] && break
+            done
+
+            if [ "$STATUS" != "healthy" ]; then
+              echo "❌ Deploy fallido"
+              docker logs --tail 50 ${{ env.ARTIFACT }}
+              exit 1
+            fi
+
+            echo "✅ Deploy exitoso"
+            docker image prune --filter "until=12h" -f
