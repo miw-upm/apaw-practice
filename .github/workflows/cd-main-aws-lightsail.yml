@@ -59,7 +59,6 @@ jobs:
 #              --name ${{ env.ARTIFACT }} \
 #              --restart always \
 #              --memory 512m \
-#              --memory-swap 1024m \
 #              --network apawnet \
 #              -e SPRING_PROFILES_ACTIVE=prod \
 #              -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
