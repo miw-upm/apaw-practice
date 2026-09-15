@@ -65,4 +65,11 @@ public class LegalProcedureEntity {
         legalProcedure.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
         return legalProcedure;
     }
+
+    public LegalProcedure toSummary() {
+        LegalProcedure legalProcedure = new LegalProcedure();
+        BeanUtils.copyProperties(this, legalProcedure, "legalTasks", "userId");
+        legalProcedure.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
+        return legalProcedure.ofSummary();
+    }
 }

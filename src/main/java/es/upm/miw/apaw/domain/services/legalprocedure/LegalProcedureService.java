@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.UserSnapshot;
 import es.upm.miw.apaw.domain.models.legalprocedure.CreationLegalProcedure;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalProcedureGateway;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalTaskGateway;
@@ -14,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,6 +37,15 @@ public class LegalProcedureService {
         legalProcedure.setUserSnapshot(this.userFinder.read(creation.getUserId()));
         legalProcedure.doDefault();
         return this.legalProcedureGateway.create(legalProcedure);
+    }
+
+    public List<LegalProcedure> find(LegalProcedureFindCriteria criteria) {
+        if (!criteria.hasUserMobile()) {
+            return this.legalProcedureGateway.find(criteria, null);
+        }
+        Optional<UserSnapshot> user = this.userFinder.findByMobile(criteria.getUserMobile());
+        return user.map(snapshot -> this.legalProcedureGateway.find(criteria, snapshot.getId()))
+                .orElseGet(List::of);
     }
 
     private LegalTask readLegalTask(UUID id) {

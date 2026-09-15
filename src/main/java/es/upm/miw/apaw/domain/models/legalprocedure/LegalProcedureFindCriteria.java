@@ -17,7 +17,23 @@ public class LegalProcedureFindCriteria {
     private String userMobile;
 
     public boolean isAll() {
-        return this.vatIncluded == null && this.opened == null
-                && this.taskStatus == null && this.userMobile == null;
+        return !this.hasVatIncluded() && !this.hasOpened()
+                && !this.hasTaskStatus() && !this.hasUserMobile();
+    }
+
+    public boolean hasVatIncluded() {
+        return this.vatIncluded != null;
+    }
+
+    public boolean hasOpened() {
+        return this.opened != null;
+    }
+
+    public boolean hasTaskStatus() {
+        return this.taskStatus != null;
+    }
+
+    public boolean hasUserMobile() {
+        return this.userMobile != null && !this.userMobile.isBlank();
     }
 }

@@ -51,4 +51,16 @@ public class LegalProcedure {
             this.vatIncluded = false;
         }
     }
+
+    public LegalProcedure ofSummary() {
+        return LegalProcedure.builder()
+                .id(this.id)
+                .title(this.title)
+                .startedDate(this.startedDate)
+                .closingDate(this.closingDate)
+                .budget(this.budget)
+                .vatIncluded(this.vatIncluded)
+                .userSnapshot(UserSnapshot.builder().id(this.userSnapshot.getId()).build())
+                .build();
+    }
 }

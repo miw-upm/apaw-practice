@@ -4,7 +4,9 @@ import es.upm.miw.apaw.domain.models.UserSnapshot;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.UUID;
 
 @FeignClient(name = "apaw-user", path = ApawUserClient.USERS)
@@ -13,4 +15,7 @@ public interface ApawUserClient {
 
     @GetMapping("/{id}")
     UserSnapshot read(@PathVariable("id") UUID id);
+
+    @GetMapping
+    List<UserSnapshot> findByMobile(@RequestParam("mobile") String mobile);
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 @Repository
@@ -20,6 +21,12 @@ public class UserFinderAdapter implements UserFinder {
     @Override
     public UserSnapshot read(UUID id) {
         return this.call(() -> this.apawUserClient.read(id), " on read user by id " + id );
+    }
+
+    @Override
+    public Optional<UserSnapshot> findByMobile(String mobile) {
+        return this.call(() -> this.apawUserClient.findByMobile(mobile).stream().findFirst(),
+                " on find user by mobile " + mobile);
     }
 
     private <T> T call(Supplier<T> supplier, String operation) {

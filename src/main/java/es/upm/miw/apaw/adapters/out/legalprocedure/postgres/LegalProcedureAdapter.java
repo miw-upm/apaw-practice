@@ -1,13 +1,18 @@
 package es.upm.miw.apaw.adapters.out.legalprocedure.postgres;
 
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
+import es.upm.miw.apaw.domain.models.legalprocedure.TaskStatus;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalProcedureGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,6 +30,43 @@ public class LegalProcedureAdapter implements LegalProcedureGateway {
         legalProcedureEntity.setLegalTasks(legalTaskEntities);
         this.legalProcedureRepository.save(legalProcedureEntity);
         return legalProcedure;
+    }
+
+    @Override
+    public List<LegalProcedure> find(LegalProcedureFindCriteria criteria, UUID userId) {
+        Specification<LegalProcedureEntity> specification = this.buildSpecification(criteria, userId);
+        return this.legalProcedureRepository.findAll(specification, Sort.by("title")).stream()
+                .map(LegalProcedureEntity::toSummary)
+                .toList();
+    }
+
+    private Specification<LegalProcedureEntity> buildSpecification(
+            LegalProcedureFindCriteria criteria, UUID userId) {
+        Specification<LegalProcedureEntity> specification = (root, query, builder) -> builder.conjunction();
+        if (criteria.hasVatIncluded()) {
+            specification = specification.and((root, query, builder) ->
+                    builder.equal(root.get("vatIncluded"), criteria.getVatIncluded()));
+        }
+        if (criteria.hasOpened()) {
+            specification = specification.and((root, query, builder) -> criteria.getOpened()
+                    ? builder.isNull(root.get("closingDate")) : builder.isNotNull(root.get("closingDate")));
+        }
+        specification = this.addTaskStatus(specification, criteria.getTaskStatus());
+        if (userId != null) {
+            specification = specification.and((root, query, builder) -> builder.equal(root.get("userId"), userId));
+        }
+        return specification;
+    }
+
+    private Specification<LegalProcedureEntity> addTaskStatus(
+            Specification<LegalProcedureEntity> specification, TaskStatus taskStatus) {
+        if (taskStatus == null) {
+            return specification;
+        }
+        return specification.and((root, query, builder) -> {
+            query.distinct(true);
+            return builder.equal(root.join("legalTasks").get("taskStatus"), taskStatus);
+        });
     }
 
     @Override
