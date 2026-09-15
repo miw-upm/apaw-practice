@@ -41,7 +41,7 @@ public class LegalTaskAdapter implements LegalTaskGateway {
 
     @Override
     public boolean isReferenced(UUID id) {
-        return this.legalProcedureRepository.existsByLegalTasks_Id(id);
+        return this.legalProcedureRepository.existsByLegalTasksId(id);
     }
 
     @Override
