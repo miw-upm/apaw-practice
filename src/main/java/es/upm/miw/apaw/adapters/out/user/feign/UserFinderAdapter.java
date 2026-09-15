@@ -21,7 +21,7 @@ public class UserFinderAdapter implements UserFinder {
 
     @Override
     public UserSnapshot read(UUID id) {
-        return this.call(() -> this.apawUserClient.read(id), " on read user by id " + id );
+        return this.call(() -> this.apawUserClient.read(id), " on read user by id " + id);
     }
 
     @Override
