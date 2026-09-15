@@ -41,8 +41,7 @@ public class LegalProcedureEntity {
     @Column(nullable = false)
     private Boolean vatIncluded;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "legal_procedure_id")
+    @ManyToMany
     private List<LegalTaskEntity> legalTasks;
 
     @Column(nullable = false)
@@ -66,10 +65,4 @@ public class LegalProcedureEntity {
         return legalProcedure;
     }
 
-    public LegalProcedure toSummary() {
-        LegalProcedure legalProcedure = new LegalProcedure();
-        BeanUtils.copyProperties(this, legalProcedure, "legalTasks", "userId");
-        legalProcedure.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
-        return legalProcedure.ofSummary();
-    }
 }
