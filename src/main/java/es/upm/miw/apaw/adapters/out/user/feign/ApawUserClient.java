@@ -17,6 +17,6 @@ public interface ApawUserClient {
     @GetMapping("/{id}")
     UserSnapshot read(@PathVariable("id") UUID id);
 
-    @GetMapping
+    @GetMapping("/by-ids")
     List<UserSnapshot> findByIds(@RequestParam("ids") Set<UUID> ids);
 }
