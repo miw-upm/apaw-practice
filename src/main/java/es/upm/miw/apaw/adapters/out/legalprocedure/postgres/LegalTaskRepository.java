@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface LegalTaskRepository extends JpaRepository<LegalTaskEntity, UUID> {
-    List<LegalTaskEntity> findAllByOrderByTitleAscIdAsc();
+    List<LegalTaskEntity> findAllByOrderByTitleAsc();
 
     boolean existsByTitle(String title);
 }

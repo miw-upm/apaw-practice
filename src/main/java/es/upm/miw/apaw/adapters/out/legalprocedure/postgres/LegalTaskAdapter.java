@@ -24,7 +24,7 @@ public class LegalTaskAdapter implements LegalTaskGateway {
 
     @Override
     public List<LegalTask> findAll() {
-        return this.legalTaskRepository.findAllByOrderByTitleAscIdAsc().stream()
+        return this.legalTaskRepository.findAllByOrderByTitleAsc().stream()
                 .map(LegalTaskEntity::toDomain)
                 .toList();
     }
