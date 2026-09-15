@@ -37,4 +37,11 @@ public class LegalTaskService {
         storedLegalTask.setTaskStatus(legalTask.getTaskStatus());
         return this.legalTaskGateway.update(storedLegalTask);
     }
+
+    public void delete(UUID id) {
+        if (this.legalTaskGateway.isReferenced(id)) {
+            throw new ConflictException("Legal task is referenced by a legal procedure: " + id);
+        }
+        this.legalTaskGateway.delete(id);
+    }
 }

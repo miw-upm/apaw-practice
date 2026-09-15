@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.services.legalprocedure.LegalTaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,5 +40,11 @@ public class LegalTaskResource {
     @PutMapping(ID)
     public LegalTask update(@PathVariable UUID id, @Valid @RequestBody LegalTask legalTask) {
         return this.legalTaskService.update(id, legalTask);
+    }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.legalTaskService.delete(id);
     }
 }

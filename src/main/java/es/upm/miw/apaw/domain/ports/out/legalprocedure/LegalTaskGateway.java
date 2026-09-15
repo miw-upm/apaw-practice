@@ -12,5 +12,9 @@ public interface LegalTaskGateway {
 
     LegalTask update(LegalTask legalTask);
 
+    void delete(UUID id);
+
+    boolean isReferenced(UUID id);
+
     boolean existsByTitle(String title);
 }

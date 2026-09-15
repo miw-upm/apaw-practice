@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LegalTaskAdapter implements LegalTaskGateway {
     private final LegalTaskRepository legalTaskRepository;
+    private final LegalProcedureRepository legalProcedureRepository;
 
     @Override
     public LegalTask create(LegalTask legalTask) {
@@ -31,6 +32,16 @@ public class LegalTaskAdapter implements LegalTaskGateway {
         return this.legalTaskRepository
                 .save(new LegalTaskEntity(legalTask))
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.legalTaskRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.legalProcedureRepository.existsByLegalTasks_Id(id);
     }
 
     @Override
