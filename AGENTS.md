@@ -341,3 +341,4 @@ mvn -B verify
 - Excepciones técnicas de integraciones filtradas a los contratos del dominio.
 - Activación masiva de marcadores `.txt`, nuevas abstracciones o cambios de tecnología sin relación con la tarea.
 - Tests dependientes del orden, de datos globales mutables o del tamaño completo de un futuro seeder.
+
