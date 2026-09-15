@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -20,6 +22,11 @@ public class UserFinderAdapter implements UserFinder {
     @Override
     public UserSnapshot read(UUID id) {
         return this.call(() -> this.apawUserClient.read(id), " on read user by id " + id );
+    }
+
+    @Override
+    public List<UserSnapshot> findByIds(Set<UUID> ids) {
+        return this.call(() -> this.apawUserClient.findByIds(ids), " on find users by ids " + ids);
     }
 
     private <T> T call(Supplier<T> supplier, String operation) {
