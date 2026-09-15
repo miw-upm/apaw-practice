@@ -5,17 +5,22 @@ import es.upm.miw.apaw.domain.services.legalprocedure.LegalTaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(LegalTaskResource.LEGAL_TASKS)
 @RequiredArgsConstructor
 public class LegalTaskResource {
     public static final String LEGAL_TASKS = "/legal-tasks";
+    public static final String ID = "/{id}";
 
     private final LegalTaskService legalTaskService;
 
@@ -23,5 +28,10 @@ public class LegalTaskResource {
     @ResponseStatus(HttpStatus.CREATED)
     public LegalTask create(@Valid @RequestBody LegalTask legalTask) {
         return this.legalTaskService.create(legalTask);
+    }
+
+    @GetMapping(ID)
+    public LegalTask read(@PathVariable UUID id) {
+        return this.legalTaskService.read(id);
     }
 }

@@ -5,6 +5,9 @@ import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalTaskGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class LegalTaskAdapter implements LegalTaskGateway {
@@ -15,6 +18,12 @@ public class LegalTaskAdapter implements LegalTaskGateway {
         return this.legalTaskRepository
                 .save(new LegalTaskEntity(legalTask))
                 .toDomain();
+    }
+
+    @Override
+    public Optional<LegalTask> read(UUID id) {
+        return this.legalTaskRepository.findById(id)
+                .map(LegalTaskEntity::toDomain);
     }
 
     @Override

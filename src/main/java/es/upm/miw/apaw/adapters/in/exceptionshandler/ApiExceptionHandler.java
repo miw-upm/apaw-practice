@@ -58,6 +58,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler({
             BadRequestException.class,
             org.springframework.web.bind.MethodArgumentNotValidException.class,
+            org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
             org.springframework.http.converter.HttpMessageNotReadableException.class,
             org.springframework.beans.FatalBeanException.class
     })
