@@ -25,4 +25,16 @@ public class LegalTaskService {
         return this.legalTaskGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Legal task id not found: " + id));
     }
+
+    public LegalTask update(UUID id, LegalTask legalTask) {
+        LegalTask storedLegalTask = this.read(id);
+        if (!storedLegalTask.getTitle().equals(legalTask.getTitle())
+                && this.legalTaskGateway.existsByTitle(legalTask.getTitle())) {
+            throw new ConflictException("Legal task title already exists: " + legalTask.getTitle());
+        }
+        storedLegalTask.setTitle(legalTask.getTitle());
+        storedLegalTask.setNotes(legalTask.getNotes());
+        storedLegalTask.setTaskStatus(legalTask.getTaskStatus());
+        return this.legalTaskGateway.update(storedLegalTask);
+    }
 }

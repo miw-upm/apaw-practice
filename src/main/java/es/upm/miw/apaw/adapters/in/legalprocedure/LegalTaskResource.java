@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -33,5 +34,10 @@ public class LegalTaskResource {
     @GetMapping(ID)
     public LegalTask read(@PathVariable UUID id) {
         return this.legalTaskService.read(id);
+    }
+
+    @PutMapping(ID)
+    public LegalTask update(@PathVariable UUID id, @Valid @RequestBody LegalTask legalTask) {
+        return this.legalTaskService.update(id, legalTask);
     }
 }

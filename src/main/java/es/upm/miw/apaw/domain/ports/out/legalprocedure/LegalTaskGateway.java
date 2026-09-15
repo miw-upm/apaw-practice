@@ -10,5 +10,7 @@ public interface LegalTaskGateway {
 
     Optional<LegalTask> read(UUID id);
 
+    LegalTask update(LegalTask legalTask);
+
     boolean existsByTitle(String title);
 }

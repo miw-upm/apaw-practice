@@ -27,6 +27,13 @@ public class LegalTaskAdapter implements LegalTaskGateway {
     }
 
     @Override
+    public LegalTask update(LegalTask legalTask) {
+        return this.legalTaskRepository
+                .save(new LegalTaskEntity(legalTask))
+                .toDomain();
+    }
+
+    @Override
     public boolean existsByTitle(String title) {
         return this.legalTaskRepository.existsByTitle(title);
     }
