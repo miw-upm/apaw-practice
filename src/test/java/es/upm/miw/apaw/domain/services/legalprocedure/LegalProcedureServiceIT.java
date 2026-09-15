@@ -6,6 +6,7 @@ import es.upm.miw.apaw.adapters.out.legalprocedure.postgres.LegalTaskEntity;
 import es.upm.miw.apaw.domain.models.UserSnapshot;
 import es.upm.miw.apaw.domain.models.legalprocedure.CreationLegalProcedure;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.LegalTaskSeederForDev.ID_0;
@@ -62,5 +64,44 @@ class LegalProcedureServiceIT {
         assertThat(entity.getTitle()).isEqualTo(creation.getTitle());
         assertThat(entity.getLegalTasks()).extracting(LegalTaskEntity::getId).containsExactly(ID_0, ID_1);
         assertThat(entity.getUserId()).isEqualTo(user.getId());
+    }
+
+    @Test
+    @Transactional
+    void testFindByUserMobile() {
+        UserSnapshot firstUser = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .mobile("600000100")
+                .firstName("cliente0")
+                .build();
+        UserSnapshot secondUser = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                .mobile("600000101")
+                .firstName("cliente1")
+                .build();
+        when(this.userFinder.read(firstUser.getId())).thenReturn(firstUser);
+        when(this.userFinder.read(secondUser.getId())).thenReturn(secondUser);
+        LegalProcedure first = this.legalProcedureService.create(this.creation(firstUser.getId()));
+        LegalProcedure second = this.legalProcedureService.create(this.creation(secondUser.getId()));
+        when(this.userFinder.findByIds(Set.of(firstUser.getId(), secondUser.getId())))
+                .thenReturn(List.of(firstUser, secondUser));
+
+        List<LegalProcedure> legalProcedures = this.legalProcedureService.find(
+                LegalProcedureFindCriteria.builder().vatIncluded(true).userMobile(firstUser.getMobile()).build());
+
+        assertThat(legalProcedures).extracting(LegalProcedure::getId)
+                .contains(first.getId()).doesNotContain(second.getId());
+        assertThat(legalProcedures).filteredOn(legalProcedure -> legalProcedure.getId().equals(first.getId()))
+                .singleElement().extracting(LegalProcedure::getUserSnapshot).isEqualTo(firstUser);
+    }
+
+    private CreationLegalProcedure creation(UUID userId) {
+        return CreationLegalProcedure.builder()
+                .title("Legal procedure " + UUID.randomUUID())
+                .budget(BigDecimal.TEN)
+                .vatIncluded(true)
+                .legalTaskIds(List.of(ID_0))
+                .userId(userId)
+                .build();
     }
 }
