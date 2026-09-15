@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.domain.services.legalprocedure;
 
-import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
+import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskStatusUpdate;
@@ -24,6 +24,7 @@ public class LegalTaskService {
         if (this.legalTaskGateway.existsByTitle(legalTask.getTitle())) {
             throw new ConflictException("Legal task title already exists: " + legalTask.getTitle());
         }
+        legalTask.doDefault();
         return this.legalTaskGateway.create(legalTask);
     }
 

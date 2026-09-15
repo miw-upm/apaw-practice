@@ -312,6 +312,10 @@ del adaptador. Esta convención distingue el acceso a datos propios de las capac
 - Los tests de integración con contexto DEBEN usar `@SpringBootTest` y `@ActiveProfiles("test")` cuando corresponda.
 - Los funcionales HTTP DEBEN seguir `SystemResourceFT`: `RANDOM_PORT`, `@LocalServerPort`, perfil `test` y
   `RestTestClient.bindToServer()`. DEBEN situarse en `functionaltests/<funcionalidad>`.
+- Los funcionales DEBEN tratar la aplicación como caja negra: preparar datos, ejercitar el caso y comprobar
+  el resultado únicamente a través de los endpoints. NO DEBEN usar repositorios, entidades JPA, servicios ni
+  ningún componente interno, ni para montar el escenario ni para verificar el estado final. Si un escenario no
+  es alcanzable por la API, DEBE cubrirse con un `*IT`.
 - DEBE probarse negocio en servicios, comportamiento técnico en adaptadores y contrato HTTP en funcionales,
   incluidos los errores relevantes. DEBERÍA usarse `assertThatThrownBy` para excepciones de servicios.
 - Los tests ordinarios NO DEBEN requerir un Eureka activo ni el servicio real de usuarios; DEBEN aislar esa integración.
