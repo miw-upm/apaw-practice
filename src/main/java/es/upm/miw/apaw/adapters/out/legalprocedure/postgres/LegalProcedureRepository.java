@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface LegalProcedureRepository extends JpaRepository<LegalProcedureEntity, UUID> {
     boolean existsByLegalTasksId(UUID id);
+
+    boolean existsByTitle(String title);
 }

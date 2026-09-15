@@ -29,7 +29,7 @@ public class CreationLegalProcedure {
     private Boolean vatIncluded;
 
     @NotEmpty
-    private List<UUID> legalTaskIds;
+    private List<@NotNull UUID> legalTaskIds;
 
     @NotNull
     private UUID userId;
