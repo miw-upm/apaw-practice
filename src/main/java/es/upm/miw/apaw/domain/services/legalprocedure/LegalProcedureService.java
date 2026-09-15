@@ -10,6 +10,7 @@ import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalProcedureGateway;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalTaskGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,26 +27,14 @@ public class LegalProcedureService {
         if (this.legalProcedureGateway.existsByTitle(creation.getTitle())) {
             throw new ConflictException("Legal procedure title already exists: " + creation.getTitle());
         }
-        List<LegalTask> legalTasks = creation.getLegalTaskIds().stream()
+        LegalProcedure legalProcedure = new LegalProcedure();
+        BeanUtils.copyProperties(creation, legalProcedure);
+        legalProcedure.setLegalTasks(creation.getLegalTaskIds().stream()
                 .map(this::readLegalTask)
-                .toList();
-        UserSnapshot userSnapshot = this.userFinder.read(creation.getUserId());
-        LegalProcedure legalProcedure = this.buildLegalProcedure(creation, legalTasks, userSnapshot);
+                .toList());
+        legalProcedure.setUserSnapshot(this.userFinder.read(creation.getUserId()));
         legalProcedure.doDefault();
         return this.legalProcedureGateway.create(legalProcedure);
-    }
-
-    private LegalProcedure buildLegalProcedure(CreationLegalProcedure creation, List<LegalTask> legalTasks,
-                                               UserSnapshot userSnapshot) {
-        return LegalProcedure.builder()
-                .title(creation.getTitle())
-                .closingDate(creation.getClosingDate())
-                .budget(creation.getBudget())
-                .budgetProposal(creation.getBudgetProposal())
-                .vatIncluded(creation.getVatIncluded())
-                .legalTasks(legalTasks)
-                .userSnapshot(userSnapshot)
-                .build();
     }
 
     private LegalTask readLegalTask(UUID id) {
