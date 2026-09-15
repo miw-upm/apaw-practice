@@ -240,6 +240,8 @@ del adaptador. Esta convención distingue el acceso a datos propios de las capac
 - DEBE realizarse la carga necesaria para convertir el resultado dentro del ámbito de persistencia apropiado:
   la configuración mantiene `spring.jpa.open-in-view: false`.
 - NO DEBE dependerse de una sesión JPA abierta durante la serialización HTTP.
+- DEBE dejar que `DataIntegrityViolationException` llegue al manejador HTTP común, sin añadir capturas
+  en cada adaptador para traducirla. Esta es una excepción explícita a la traducción de errores técnicos en la frontera.
 
 ## Adaptadores HTTP salientes (c-d)
 
@@ -268,6 +270,9 @@ del adaptador. Esta convención distingue el acceso a datos propios de las capac
 - DEBE conservarse el estado y las cabeceras de `ResponseStatusException`.
 - El manejador general de `Exception` con 500 DEBE reservarse para errores imprevistos y registrarlos con nivel `error`.
 - Los errores conocidos DEBEN tener tratamiento explícito acorde al contrato, con pruebas del mapeo afectado.
+- DEBE convertir `DataIntegrityViolationException`, incluida su subclase `DuplicateKeyException`, en 409 mediante
+  el manejador de conflictos y `new ErrorMessage(exception)`, conservando `exception.getMessage()` en `message`.
+  Esta decisión del ejercicio se aplica a todas las violaciones de integridad, no solo a duplicados.
 - NO DEBE atribuirse toda violación de integridad a un duplicado concreto sin comprobar su causa.
 - Los detalles devueltos o registrados NO DEBEN incluir secretos ni información sensible innecesaria.
 
@@ -293,6 +298,11 @@ del adaptador. Esta convención distingue el acceso a datos propios de las capac
 
 ## Tests (e-f)
 
+- NO DEBE añadir tests salvo petición explícita del usuario.
+- DEBE añadir los tests cuando el código de la funcionalidad esté terminado y su comportamiento definido.
+  Durante el desarrollo, los cambios frecuentes obligan a rectificar tests repetidamente y consumen tiempo innecesario.
+- Las reglas de cobertura de esta guía DEBEN aplicarse en esa fase de tests; NO DEBEN interpretarse como una
+  obligación de crear tests durante cada cambio de implementación.
 - DEBE seguirse JUnit Jupiter y AssertJ, con tests independientes y nombres `testXxx` en nuevas pruebas de comportamiento.
 - `*Test`: unitarios o carga de contexto, como `ApplicationTest`; `*IT`: integración; `*FT`: funcionales HTTP.
 - Los nuevos tests unitarios de servicios DEBERÍAN sustituir los puertos con dobles, sin necesitar HTTP ni base de datos.
@@ -338,7 +348,7 @@ mvn -B verify
 - Entidades JPA utilizadas como modelos de dominio o respuestas HTTP.
 - Modelos que consultan repositorios o conocen DTOs y servicios.
 - Reglas de negocio en DTOs, mappers, clientes HTTP o configuración.
-- Excepciones técnicas de integraciones filtradas a los contratos del dominio.
+- Excepciones técnicas de integraciones filtradas a los contratos del dominio, salvo la propagación acordada
+  de `DataIntegrityViolationException` al manejador HTTP común.
 - Activación masiva de marcadores `.txt`, nuevas abstracciones o cambios de tecnología sin relación con la tarea.
 - Tests dependientes del orden, de datos globales mutables o del tamaño completo de un futuro seeder.
-
