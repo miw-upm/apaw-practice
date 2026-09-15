@@ -57,7 +57,6 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
             BadRequestException.class,
-            org.springframework.dao.DuplicateKeyException.class,
             org.springframework.web.bind.MethodArgumentNotValidException.class,
             org.springframework.http.converter.HttpMessageNotReadableException.class,
             org.springframework.beans.FatalBeanException.class
@@ -80,6 +79,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler({
             ConflictException.class,
             ClientBusinessException.class,
+            org.springframework.dao.DataIntegrityViolationException.class,
     })
     @ResponseBody
     public ErrorMessage conflict(Exception exception) {
