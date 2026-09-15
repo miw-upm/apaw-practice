@@ -4,12 +4,11 @@ import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface LegalProcedureGateway {
     LegalProcedure create(LegalProcedure legalProcedure);
 
-    List<LegalProcedure> find(LegalProcedureFindCriteria criteria, UUID userId);
+    List<LegalProcedure> find(LegalProcedureFindCriteria criteria);
 
     boolean existsByTitle(String title);
 }

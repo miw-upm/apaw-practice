@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @FeignClient(name = "apaw-user", path = ApawUserClient.USERS)
@@ -17,5 +18,5 @@ public interface ApawUserClient {
     UserSnapshot read(@PathVariable("id") UUID id);
 
     @GetMapping
-    List<UserSnapshot> findByMobile(@RequestParam("mobile") String mobile);
+    List<UserSnapshot> findByIds(@RequestParam("ids") Set<UUID> ids);
 }

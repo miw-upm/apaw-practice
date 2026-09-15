@@ -52,6 +52,10 @@ public class LegalProcedure {
         }
     }
 
+    public boolean isOpened() {
+        return this.closingDate == null;
+    }
+
     public LegalProcedure ofSummary() {
         return LegalProcedure.builder()
                 .id(this.id)
@@ -60,7 +64,11 @@ public class LegalProcedure {
                 .closingDate(this.closingDate)
                 .budget(this.budget)
                 .vatIncluded(this.vatIncluded)
-                .userSnapshot(UserSnapshot.builder().id(this.userSnapshot.getId()).build())
+                .userSnapshot(UserSnapshot.builder()
+                        .id(this.userSnapshot.getId())
+                        .mobile(this.userSnapshot.getMobile())
+                        .firstName(this.userSnapshot.getFirstName())
+                        .build())
                 .build();
     }
 }

@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -35,8 +34,8 @@ public class LegalProcedureAdapter implements LegalProcedureGateway {
     }
 
     @Override
-    public List<LegalProcedure> find(LegalProcedureFindCriteria criteria, UUID userId) {
-        Specification<LegalProcedureEntity> specification = this.buildSpecification(criteria, userId);
+    public List<LegalProcedure> find(LegalProcedureFindCriteria criteria) {
+        Specification<LegalProcedureEntity> specification = this.buildSpecification(criteria);
         return this.legalProcedureRepository.findAll(specification, Sort.by("title")).stream()
                 .map(this::toDomainWithoutLegalTasks)
                 .toList();
@@ -49,8 +48,7 @@ public class LegalProcedureAdapter implements LegalProcedureGateway {
         return legalProcedure;
     }
 
-    private Specification<LegalProcedureEntity> buildSpecification(
-            LegalProcedureFindCriteria criteria, UUID userId) {
+    private Specification<LegalProcedureEntity> buildSpecification(LegalProcedureFindCriteria criteria) {
         Specification<LegalProcedureEntity> specification = (root, query, builder) -> builder.conjunction();
         if (criteria.hasVatIncluded()) {
             specification = specification.and((root, query, builder) ->
@@ -61,9 +59,6 @@ public class LegalProcedureAdapter implements LegalProcedureGateway {
                     ? builder.isNull(root.get("closingDate")) : builder.isNotNull(root.get("closingDate")));
         }
         specification = this.addTaskStatus(specification, criteria.getTaskStatus());
-        if (userId != null) {
-            specification = specification.and((root, query, builder) -> builder.equal(root.get("userId"), userId));
-        }
         return specification;
     }
 
