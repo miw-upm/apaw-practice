@@ -15,7 +15,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -41,11 +40,19 @@ public class LegalProcedureService {
 
     public List<LegalProcedure> find(LegalProcedureFindCriteria criteria) {
         if (!criteria.hasUserMobile()) {
-            return this.legalProcedureGateway.find(criteria, null);
+            return this.findSummaries(criteria, null);
         }
-        Optional<UserSnapshot> user = this.userFinder.findByMobile(criteria.getUserMobile());
-        return user.map(snapshot -> this.legalProcedureGateway.find(criteria, snapshot.getId()))
-                .orElseGet(List::of);
+        UserSnapshot user = this.userFinder.findByMobile(criteria.getUserMobile()).orElse(null);
+        if (user == null) {
+            return List.of();
+        }
+        return this.findSummaries(criteria, user.getId());
+    }
+
+    private List<LegalProcedure> findSummaries(LegalProcedureFindCriteria criteria, UUID userId) {
+        return this.legalProcedureGateway.find(criteria, userId).stream()
+                .map(LegalProcedure::ofSummary)
+                .toList();
     }
 
     private LegalTask readLegalTask(UUID id) {

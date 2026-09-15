@@ -1,14 +1,16 @@
 package es.upm.miw.apaw.adapters.out.legalprocedure.postgres;
 
+import es.upm.miw.apaw.domain.models.UserSnapshot;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
 import es.upm.miw.apaw.domain.models.legalprocedure.TaskStatus;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalProcedureGateway;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +38,15 @@ public class LegalProcedureAdapter implements LegalProcedureGateway {
     public List<LegalProcedure> find(LegalProcedureFindCriteria criteria, UUID userId) {
         Specification<LegalProcedureEntity> specification = this.buildSpecification(criteria, userId);
         return this.legalProcedureRepository.findAll(specification, Sort.by("title")).stream()
-                .map(LegalProcedureEntity::toSummary)
+                .map(this::toDomainWithoutLegalTasks)
                 .toList();
+    }
+
+    private LegalProcedure toDomainWithoutLegalTasks(LegalProcedureEntity entity) {
+        LegalProcedure legalProcedure = new LegalProcedure();
+        BeanUtils.copyProperties(entity, legalProcedure, "legalTasks", "userId");
+        legalProcedure.setUserSnapshot(UserSnapshot.builder().id(entity.getUserId()).build());
+        return legalProcedure;
     }
 
     private Specification<LegalProcedureEntity> buildSpecification(
