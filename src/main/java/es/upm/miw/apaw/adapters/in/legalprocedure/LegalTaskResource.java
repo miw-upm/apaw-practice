@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,6 +31,11 @@ public class LegalTaskResource {
     @ResponseStatus(HttpStatus.CREATED)
     public LegalTask create(@Valid @RequestBody LegalTask legalTask) {
         return this.legalTaskService.create(legalTask);
+    }
+
+    @GetMapping
+    public List<LegalTask> findAll() {
+        return this.legalTaskService.findAll();
     }
 
     @GetMapping(ID)

@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalTaskGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,6 +20,10 @@ public class LegalTaskService {
             throw new ConflictException("Legal task title already exists: " + legalTask.getTitle());
         }
         return this.legalTaskGateway.create(legalTask);
+    }
+
+    public List<LegalTask> findAll() {
+        return this.legalTaskGateway.findAll();
     }
 
     public LegalTask read(UUID id) {
