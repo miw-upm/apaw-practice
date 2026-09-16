@@ -28,7 +28,7 @@ public class LegalTask {
         this.id = UUID.randomUUID();
         this.creatingDate = LocalDateTime.now();
         if (this.taskStatus == null) {
-            this.taskStatus = TaskStatus.PENDING;
+            this.taskStatus = TaskStatus.CURRENT;
         }
     }
 }

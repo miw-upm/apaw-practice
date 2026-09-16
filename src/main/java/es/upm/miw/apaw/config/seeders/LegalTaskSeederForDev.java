@@ -30,7 +30,7 @@ public class LegalTaskSeederForDev implements ApplicationRunner {
             .title("Review documentation")
             .creatingDate(LocalDateTime.of(2025, 1, 10, 9, 0))
             .notes("Review the documents provided by the client")
-            .taskStatus(TaskStatus.PENDING)
+            .taskStatus(TaskStatus.CURRENT)
             .build();
     public static final UUID ID_1 = UUID.fromString(PREFIX + "0001");
     public static final LegalTask TASK_1 = LegalTask.builder()
@@ -38,7 +38,7 @@ public class LegalTaskSeederForDev implements ApplicationRunner {
             .title("Draft claim")
             .creatingDate(LocalDateTime.of(2025, 2, 10, 10, 0))
             .notes("Prepare the initial claim")
-            .taskStatus(TaskStatus.IN_PROGRESS)
+            .taskStatus(TaskStatus.CURRENT)
             .build();
     public static final UUID ID_2 = UUID.fromString(PREFIX + "0002");
     public static final LegalTask TASK_2 = LegalTask.builder()
@@ -46,7 +46,7 @@ public class LegalTaskSeederForDev implements ApplicationRunner {
             .title("Obtain expert report")
             .creatingDate(LocalDateTime.of(2025, 3, 10, 11, 0))
             .notes("Waiting for the expert report")
-            .taskStatus(TaskStatus.BLOCKED)
+            .taskStatus(TaskStatus.DEPRECATED)
             .build();
     public static final UUID ID_3 = UUID.fromString(PREFIX + "0003");
     public static final LegalTask TASK_3 = LegalTask.builder()
@@ -54,21 +54,21 @@ public class LegalTaskSeederForDev implements ApplicationRunner {
             .title("Submit evidence")
             .creatingDate(LocalDateTime.of(2025, 4, 10, 12, 0))
             .notes("Evidence submitted to the court")
-            .taskStatus(TaskStatus.DONE)
+            .taskStatus(TaskStatus.WITHDRAWN)
             .build();
     public static final UUID ID_4 = UUID.fromString(PREFIX + "0004");
     public static final LegalTask TASK_4 = LegalTask.builder()
             .id(ID_4)
             .title("Prepare hearing")
             .creatingDate(LocalDateTime.of(2025, 5, 10, 9, 30))
-            .taskStatus(TaskStatus.PENDING)
+            .taskStatus(TaskStatus.CURRENT)
             .build();
     public static final UUID ID_5 = UUID.fromString(PREFIX + "0005");
     public static final LegalTask TASK_5 = LegalTask.builder()
             .id(ID_5)
             .title("Review settlement agreement")
             .creatingDate(LocalDateTime.of(2025, 6, 10, 10, 30))
-            .taskStatus(TaskStatus.IN_PROGRESS)
+            .taskStatus(TaskStatus.CURRENT)
             .build();
 
     private final LegalTaskRepository legalTaskRepository;

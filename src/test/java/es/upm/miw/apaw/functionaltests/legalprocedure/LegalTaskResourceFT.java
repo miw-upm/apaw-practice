@@ -62,14 +62,14 @@ class LegalTaskResourceFT {
     }
 
     @Test
-    void testCreateDefaultsToPending() {
+    void testCreateDefaultsToCurrent() {
         this.restTestClient.post().uri(LegalTaskResource.LEGAL_TASKS)
                 .body(LegalTask.builder().title("Task " + UUID.randomUUID()).build())
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(LegalTask.class)
                 .value(body -> assertThat(body).isNotNull().extracting(LegalTask::getTaskStatus)
-                        .isEqualTo(TaskStatus.PENDING));
+                        .isEqualTo(TaskStatus.CURRENT));
     }
 
     @Test
@@ -92,14 +92,14 @@ class LegalTaskResourceFT {
     void testUpdate() {
         LegalTask task = this.createTask();
         this.restTestClient.put().uri(LegalTaskResource.LEGAL_TASKS + "/" + task.getId())
-                .body(LegalTask.builder().title(task.getTitle()).taskStatus(TaskStatus.DONE).build())
+                .body(LegalTask.builder().title(task.getTitle()).taskStatus(TaskStatus.WITHDRAWN).build())
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(LegalTask.class).value(body -> {
                     assertThat(body).isNotNull();
                     assertThat(body.getId()).isEqualTo(task.getId());
                     assertThat(body.getTitle()).isEqualTo(task.getTitle());
-                    assertThat(body.getTaskStatus()).isEqualTo(TaskStatus.DONE);
+                    assertThat(body.getTaskStatus()).isEqualTo(TaskStatus.WITHDRAWN);
                 });
     }
 
@@ -137,13 +137,13 @@ class LegalTaskResourceFT {
         LegalTask first = this.createTask();
         LegalTask second = this.createTask();
         this.restTestClient.patch().uri(LegalTaskResource.LEGAL_TASKS)
-                .body(List.of(new LegalTaskStatusUpdate(first.getId(), TaskStatus.DONE),
-                        new LegalTaskStatusUpdate(second.getId(), TaskStatus.BLOCKED)))
+                .body(List.of(new LegalTaskStatusUpdate(first.getId(), TaskStatus.WITHDRAWN),
+                        new LegalTaskStatusUpdate(second.getId(), TaskStatus.DEPRECATED)))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody().isEmpty();
-        this.assertStatus(first.getId(), TaskStatus.DONE);
-        this.assertStatus(second.getId(), TaskStatus.BLOCKED);
+        this.assertStatus(first.getId(), TaskStatus.WITHDRAWN);
+        this.assertStatus(second.getId(), TaskStatus.DEPRECATED);
     }
 
     @Test
@@ -151,22 +151,22 @@ class LegalTaskResourceFT {
         LegalTask task = this.createTask();
         UUID missingId = UUID.randomUUID();
         this.restTestClient.patch().uri(LegalTaskResource.LEGAL_TASKS)
-                .body(List.of(new LegalTaskStatusUpdate(task.getId(), TaskStatus.DONE),
-                        new LegalTaskStatusUpdate(missingId, TaskStatus.BLOCKED)))
+                .body(List.of(new LegalTaskStatusUpdate(task.getId(), TaskStatus.WITHDRAWN),
+                        new LegalTaskStatusUpdate(missingId, TaskStatus.DEPRECATED)))
                 .exchange()
                 .expectStatus().isNotFound();
-        this.assertStatus(task.getId(), TaskStatus.PENDING);
+        this.assertStatus(task.getId(), TaskStatus.CURRENT);
     }
 
     @Test
     void testPatchRepeatedIdChangesNothing() {
         LegalTask task = this.createTask();
         this.restTestClient.patch().uri(LegalTaskResource.LEGAL_TASKS)
-                .body(List.of(new LegalTaskStatusUpdate(task.getId(), TaskStatus.DONE),
-                        new LegalTaskStatusUpdate(task.getId(), TaskStatus.BLOCKED)))
+                .body(List.of(new LegalTaskStatusUpdate(task.getId(), TaskStatus.WITHDRAWN),
+                        new LegalTaskStatusUpdate(task.getId(), TaskStatus.DEPRECATED)))
                 .exchange()
                 .expectStatus().isBadRequest();
-        this.assertStatus(task.getId(), TaskStatus.PENDING);
+        this.assertStatus(task.getId(), TaskStatus.CURRENT);
     }
 
     @Test
@@ -180,7 +180,7 @@ class LegalTaskResourceFT {
     @Test
     void testPatchMissingId() {
         this.restTestClient.patch().uri(LegalTaskResource.LEGAL_TASKS)
-                .body(List.of(new LegalTaskStatusUpdate(null, TaskStatus.DONE)))
+                .body(List.of(new LegalTaskStatusUpdate(null, TaskStatus.WITHDRAWN)))
                 .exchange()
                 .expectStatus().isBadRequest();
     }
