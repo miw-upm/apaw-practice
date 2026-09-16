@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.legalprocedure;
 
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskStatusUpdate;
+import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskUsageReport;
 import es.upm.miw.apaw.domain.services.legalprocedure.LegalTaskService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class LegalTaskResource {
     public static final String LEGAL_TASKS = "/legal-tasks";
     public static final String ID = "/{id}";
+    public static final String REPORT = "/report";
 
     private final LegalTaskService legalTaskService;
 
@@ -31,6 +33,11 @@ public class LegalTaskResource {
     @GetMapping
     public List<LegalTask> findAll() {
         return this.legalTaskService.findAll();
+    }
+
+    @GetMapping(REPORT)
+    public List<LegalTaskUsageReport> findUsageReport() {
+        return this.legalTaskService.findUsageReport();
     }
 
     @GetMapping(ID)
