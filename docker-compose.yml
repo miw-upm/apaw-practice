@@ -5,7 +5,7 @@ services:
     image: apaw-practice:latest
     restart: always
 # Para levantar mas de una instancia, no se puede exponer un solo puerto: ["0:8082"], se expone uno libre aleatorio
-    ports: ["0:8082"]
+    ports: ["8282:8082"]
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/apawpracticedb
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://apaw-eureka:8761/eureka/
@@ -18,7 +18,7 @@ networks:
 
 #> docker network create apawnet
 #> docker compose up --build -d
-#> docker compose up --build -d --scale apaw-pracice=2
+#> docker compose up --build -d --scale apaw-practice=2
 
 # CONSOLA & COMANDOS Postgres
 #> docker exec -it postgres  psql -U postgres
