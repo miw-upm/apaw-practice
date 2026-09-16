@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.LegalTaskSeederForDev.ID_0;
-import static es.upm.miw.apaw.config.seeders.LegalTaskSeederForDev.ID_1;
+import static es.upm.miw.apaw.config.seeders.LegalProcedureSeederForDev.ID_0;
+import static es.upm.miw.apaw.config.seeders.LegalProcedureSeederForDev.ID_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 

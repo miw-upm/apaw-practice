@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.LegalTaskSeederForDev.*;
+import static es.upm.miw.apaw.config.seeders.LegalProcedureSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -60,7 +60,7 @@ class LegalTaskServiceIT {
         LegalTask task = this.createTask();
         LegalTask stored = this.legalTaskService.read(task.getId());
         assertThat(stored).usingRecursiveComparison().ignoringFields("creatingDate").isEqualTo(task);
-        assertThat(stored.getTaskStatus()).isEqualTo(TaskStatus.PENDING);
+        assertThat(stored.getTaskStatus()).isEqualTo(TaskStatus.CURRENT);
     }
 
     @Test
@@ -74,12 +74,12 @@ class LegalTaskServiceIT {
     void testUpdateReplacesMutableFields() {
         LegalTask original = this.createTask();
         LegalTask replacement = LegalTask.builder().title("Updated " + UUID.randomUUID())
-                .taskStatus(TaskStatus.DONE).build();
+                .taskStatus(TaskStatus.WITHDRAWN).build();
         this.legalTaskService.update(original.getId(), replacement);
         LegalTask updated = this.legalTaskService.read(original.getId());
         assertThat(updated.getTitle()).isEqualTo(replacement.getTitle());
         assertThat(updated.getNotes()).isNull();
-        assertThat(updated.getTaskStatus()).isEqualTo(TaskStatus.DONE);
+        assertThat(updated.getTaskStatus()).isEqualTo(TaskStatus.WITHDRAWN);
         assertThat(updated.getId()).isEqualTo(original.getId());
     }
 
@@ -139,10 +139,10 @@ class LegalTaskServiceIT {
         LegalTask first = this.createTask();
         LegalTask second = this.createTask();
         this.legalTaskService.updateTaskStatuses(List.of(
-                new LegalTaskStatusUpdate(first.getId(), TaskStatus.DONE),
-                new LegalTaskStatusUpdate(second.getId(), TaskStatus.BLOCKED)));
-        assertThat(this.legalTaskService.read(first.getId()).getTaskStatus()).isEqualTo(TaskStatus.DONE);
-        assertThat(this.legalTaskService.read(second.getId()).getTaskStatus()).isEqualTo(TaskStatus.BLOCKED);
+                new LegalTaskStatusUpdate(first.getId(), TaskStatus.WITHDRAWN),
+                new LegalTaskStatusUpdate(second.getId(), TaskStatus.DEPRECATED)));
+        assertThat(this.legalTaskService.read(first.getId()).getTaskStatus()).isEqualTo(TaskStatus.WITHDRAWN);
+        assertThat(this.legalTaskService.read(second.getId()).getTaskStatus()).isEqualTo(TaskStatus.DEPRECATED);
     }
 
     @Test
@@ -150,20 +150,20 @@ class LegalTaskServiceIT {
         LegalTask task = this.createTask();
         UUID missingId = UUID.randomUUID();
         assertThatThrownBy(() -> this.legalTaskService.updateTaskStatuses(List.of(
-                new LegalTaskStatusUpdate(task.getId(), TaskStatus.DONE),
-                new LegalTaskStatusUpdate(missingId, TaskStatus.BLOCKED))))
+                new LegalTaskStatusUpdate(task.getId(), TaskStatus.WITHDRAWN),
+                new LegalTaskStatusUpdate(missingId, TaskStatus.DEPRECATED))))
                 .isInstanceOf(NotFoundException.class).hasMessageContaining(missingId.toString());
-        assertThat(this.legalTaskService.read(task.getId()).getTaskStatus()).isEqualTo(TaskStatus.PENDING);
+        assertThat(this.legalTaskService.read(task.getId()).getTaskStatus()).isEqualTo(TaskStatus.CURRENT);
     }
 
     @Test
     void testUpdateTaskStatusesDuplicateIdChangesNothing() {
         LegalTask task = this.createTask();
         assertThatThrownBy(() -> this.legalTaskService.updateTaskStatuses(List.of(
-                new LegalTaskStatusUpdate(task.getId(), TaskStatus.DONE),
-                new LegalTaskStatusUpdate(task.getId(), TaskStatus.BLOCKED))))
+                new LegalTaskStatusUpdate(task.getId(), TaskStatus.WITHDRAWN),
+                new LegalTaskStatusUpdate(task.getId(), TaskStatus.DEPRECATED))))
                 .isInstanceOf(BadRequestException.class).hasMessageContaining(task.getId().toString());
-        assertThat(this.legalTaskService.read(task.getId()).getTaskStatus()).isEqualTo(TaskStatus.PENDING);
+        assertThat(this.legalTaskService.read(task.getId()).getTaskStatus()).isEqualTo(TaskStatus.CURRENT);
     }
 
     private LegalTask createTask() {
