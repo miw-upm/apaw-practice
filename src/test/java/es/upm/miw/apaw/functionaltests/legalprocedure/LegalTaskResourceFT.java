@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.LegalTaskSeederForDev.*;
+import static es.upm.miw.apaw.config.seeders.LegalProcedureSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.LegalTaskSeederForDev.*;
+import static es.upm.miw.apaw.config.seeders.LegalProcedureSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
