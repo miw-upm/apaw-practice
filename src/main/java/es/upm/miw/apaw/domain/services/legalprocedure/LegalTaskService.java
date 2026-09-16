@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
 import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskStatusUpdate;
+import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskUsageReport;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalTaskGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class LegalTaskService {
 
     public List<LegalTask> findAll() {
         return this.legalTaskGateway.findAll();
+    }
+
+    public List<LegalTaskUsageReport> findUsageReport() {
+        return this.legalTaskGateway.findUsageReport();
     }
 
     public LegalTask read(UUID id) {
