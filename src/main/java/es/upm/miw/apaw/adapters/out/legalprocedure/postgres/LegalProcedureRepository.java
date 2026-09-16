@@ -18,8 +18,7 @@ public interface LegalProcedureRepository extends JpaRepository<LegalProcedureEn
             select new es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskUsageReport(
                 task.title,
                 count(procedure),
-                sum(case when task.taskStatus = es.upm.miw.apaw.domain.models.legalprocedure.TaskStatus.CURRENT
-                    then 1 else 0 end)
+                sum(case when procedure.closingDate is null then 1 else 0 end)
             )
             from LegalProcedureEntity procedure
             join procedure.legalTasks task

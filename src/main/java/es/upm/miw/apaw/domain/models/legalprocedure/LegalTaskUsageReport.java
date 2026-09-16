@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class LegalTaskUsageReport {
     private String taskTitle;
     private long totalUsageCount;
-    private long currentUsageCount;
+    private long activeUsageCount;
 }

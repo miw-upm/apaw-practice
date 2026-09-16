@@ -88,4 +88,3 @@ public class LegalProcedureService {
                 .orElseThrow(() -> new NotFoundException("Legal task id not found: " + id));
     }
 }
-
