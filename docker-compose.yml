@@ -7,7 +7,7 @@ services:
 # Para levantar mas de una instancia, no se puede exponer un solo puerto: ["0:8082"], se expone uno libre aleatorio
     ports: ["8282:8082"]
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/apawpracticedb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/dbapawpractice
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://apaw-eureka:8761/eureka/
     networks:
       - apawnet

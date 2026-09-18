@@ -3,7 +3,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://postgres:5432/apawpracticedb
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/dbapawpractice
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
 

@@ -61,8 +61,9 @@ jobs:
 #              --memory 512m \
 #              --network apawnet \
 #              -e SPRING_PROFILES_ACTIVE=prod \
-#              -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-#              -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+#              -e POSTGRES_URL=${{ secrets.POSTGRES_URL_MAIN }} \
+#              -e POSTGRES_USER=${{ secrets.POSTGRES_MAIN }} \
+#              -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_MAIN }} \
 #              ghcr.io/${{ env.REPOSITORY }}:latest
 #
 #            echo "⏳ Esperando a que se levante"
