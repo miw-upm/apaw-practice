@@ -22,5 +22,5 @@ networks:
 
 # CONSOLA & COMANDOS Postgres
 #> docker exec -it postgres  psql -U postgres
-#> create database apawpracticedb;
+#> create database dbapawpractice;
 
