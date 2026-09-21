@@ -15,7 +15,7 @@ public interface LegalProcedureRepository extends JpaRepository<LegalProcedureEn
     boolean existsByTitle(String title);
 
     @Query("""
-            select new es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskUsageReport(
+            select new es.upm.miw.apaw.domain.model.legalprocedure.LegalTaskUsageReport(
                 task.title,
                 count(procedure),
                 sum(case when procedure.closingDate is null then 1 else 0 end)
