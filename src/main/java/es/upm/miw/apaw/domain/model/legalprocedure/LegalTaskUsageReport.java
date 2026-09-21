@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models.legalprocedure;
+package es.upm.miw.apaw.domain.model.legalprocedure;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

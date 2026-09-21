@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.adapters.out.legalprocedure.postgres;
 
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
-import es.upm.miw.apaw.domain.models.legalprocedure.TaskStatus;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTask;
+import es.upm.miw.apaw.domain.model.legalprocedure.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;

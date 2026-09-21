@@ -4,10 +4,10 @@ import es.upm.miw.apaw.adapters.out.legalprocedure.postgres.LegalProcedureEntity
 import es.upm.miw.apaw.adapters.out.legalprocedure.postgres.LegalProcedureRepository;
 import es.upm.miw.apaw.adapters.out.legalprocedure.postgres.LegalTaskEntity;
 import es.upm.miw.apaw.adapters.out.legalprocedure.postgres.LegalTaskRepository;
-import es.upm.miw.apaw.domain.models.UserSnapshot;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
-import es.upm.miw.apaw.domain.models.legalprocedure.TaskStatus;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTask;
+import es.upm.miw.apaw.domain.model.legalprocedure.TaskStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.ApplicationArguments;

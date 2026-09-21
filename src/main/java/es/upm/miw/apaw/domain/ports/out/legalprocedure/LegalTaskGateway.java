@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.domain.ports.out.legalprocedure;
 
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskUsageReport;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTask;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTaskUsageReport;
 
 import java.util.List;
 import java.util.Optional;

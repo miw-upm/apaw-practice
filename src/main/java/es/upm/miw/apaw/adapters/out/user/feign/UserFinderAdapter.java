@@ -2,7 +2,7 @@ package es.upm.miw.apaw.adapters.out.user.feign;
 
 import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw.domain.models.UserSnapshot;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;

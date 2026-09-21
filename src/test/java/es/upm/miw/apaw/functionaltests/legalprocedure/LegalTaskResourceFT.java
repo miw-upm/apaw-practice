@@ -1,9 +1,9 @@
 package es.upm.miw.apaw.functionaltests.legalprocedure;
 
 import es.upm.miw.apaw.adapters.in.legalprocedure.LegalTaskResource;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskStatusUpdate;
-import es.upm.miw.apaw.domain.models.legalprocedure.TaskStatus;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTask;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTaskStatusUpdate;
+import es.upm.miw.apaw.domain.model.legalprocedure.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

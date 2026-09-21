@@ -1,8 +1,8 @@
 package es.upm.miw.apaw.adapters.in.legalprocedure;
 
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskStatusUpdate;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskUsageReport;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTask;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTaskStatusUpdate;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTaskUsageReport;
 import es.upm.miw.apaw.domain.services.legalprocedure.LegalTaskService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;

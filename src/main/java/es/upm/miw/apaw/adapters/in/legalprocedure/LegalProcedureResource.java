@@ -1,8 +1,8 @@
 package es.upm.miw.apaw.adapters.in.legalprocedure;
 
-import es.upm.miw.apaw.domain.models.legalprocedure.CreationLegalProcedure;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
+import es.upm.miw.apaw.domain.model.legalprocedure.CreationLegalProcedure;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedureFindCriteria;
 import es.upm.miw.apaw.domain.services.legalprocedure.LegalProcedureService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

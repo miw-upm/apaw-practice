@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.out.user.feign;
 
-import es.upm.miw.apaw.domain.models.UserSnapshot;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

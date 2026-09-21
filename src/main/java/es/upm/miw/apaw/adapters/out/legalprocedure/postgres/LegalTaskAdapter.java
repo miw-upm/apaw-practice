@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.adapters.out.legalprocedure.postgres;
 
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskUsageReport;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTask;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTaskUsageReport;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalTaskGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

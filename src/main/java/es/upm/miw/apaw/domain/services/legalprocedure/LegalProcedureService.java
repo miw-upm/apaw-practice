@@ -2,11 +2,11 @@ package es.upm.miw.apaw.domain.services.legalprocedure;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw.domain.models.UserSnapshot;
-import es.upm.miw.apaw.domain.models.legalprocedure.CreationLegalProcedure;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTask;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.legalprocedure.CreationLegalProcedure;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedureFindCriteria;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTask;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalProcedureGateway;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalTaskGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;

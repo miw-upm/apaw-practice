@@ -1,6 +1,6 @@
-package es.upm.miw.apaw.domain.models.legalprocedure;
+package es.upm.miw.apaw.domain.model.legalprocedure;
 
-import es.upm.miw.apaw.domain.models.UserSnapshot;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import lombok.*;
 
 import java.math.BigDecimal;

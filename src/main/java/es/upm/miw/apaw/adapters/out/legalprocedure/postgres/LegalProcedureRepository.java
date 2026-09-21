@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.out.legalprocedure.postgres;
 
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalTaskUsageReport;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalTaskUsageReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

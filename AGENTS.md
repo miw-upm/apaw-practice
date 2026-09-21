@@ -242,6 +242,11 @@ del adaptador. Esta convención distingue el acceso a datos propios de las capac
 - NO DEBE dependerse de una sesión JPA abierta durante la serialización HTTP.
 - DEBE dejar que `DataIntegrityViolationException` llegue al manejador HTTP común, sin añadir capturas
   en cada adaptador para traducirla. Esta es una excepción explícita a la traducción de errores técnicos en la frontera.
+- PUEDE usar `@Transactional` para acceder a relaciones `LAZY` cuando se esperen menos de 10 entidades principales.
+- Para 10 o más entidades principales, o tamaños desconocidos, DEBERÍA usar un método específico del repositorio
+  con `@EntityGraph` o `JOIN FETCH` para evitar consultas N + 1.
+- El umbral es orientativo. En operaciones frecuentes o críticas, DEBERÍA revisar el SQL generado incluso
+  con resultados pequeños.
 
 ## Adaptadores HTTP salientes (c-d)
 

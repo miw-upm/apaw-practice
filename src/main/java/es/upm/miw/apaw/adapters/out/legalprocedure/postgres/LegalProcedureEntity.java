@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.adapters.out.legalprocedure.postgres;
 
-import es.upm.miw.apaw.domain.models.UserSnapshot;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedure;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

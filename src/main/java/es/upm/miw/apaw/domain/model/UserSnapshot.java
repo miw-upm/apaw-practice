@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.models;
+package es.upm.miw.apaw.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

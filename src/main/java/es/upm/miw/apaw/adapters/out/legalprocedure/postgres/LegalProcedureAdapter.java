@@ -1,9 +1,9 @@
 package es.upm.miw.apaw.adapters.out.legalprocedure.postgres;
 
-import es.upm.miw.apaw.domain.models.UserSnapshot;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
-import es.upm.miw.apaw.domain.models.legalprocedure.TaskStatus;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedureFindCriteria;
+import es.upm.miw.apaw.domain.model.legalprocedure.TaskStatus;
 import es.upm.miw.apaw.domain.ports.out.legalprocedure.LegalProcedureGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;

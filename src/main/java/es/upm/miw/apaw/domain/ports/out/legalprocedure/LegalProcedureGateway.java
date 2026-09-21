@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.domain.ports.out.legalprocedure;
 
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedure;
-import es.upm.miw.apaw.domain.models.legalprocedure.LegalProcedureFindCriteria;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedure;
+import es.upm.miw.apaw.domain.model.legalprocedure.LegalProcedureFindCriteria;
 
 import java.util.List;
 
