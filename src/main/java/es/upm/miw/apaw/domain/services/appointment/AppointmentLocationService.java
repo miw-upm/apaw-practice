@@ -46,6 +46,7 @@ public class AppointmentLocationService {
     }
 
     public void delete(UUID id) {
+        this.read(id);
         if (this.appointmentLocationGateway.isReferenced(id)) {
             throw new ConflictException("Appointment location is referenced by an appointment: " + id);
         }
