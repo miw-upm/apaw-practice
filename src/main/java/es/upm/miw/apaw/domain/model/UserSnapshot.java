@@ -15,4 +15,6 @@ public class UserSnapshot {
     private UUID id;
     private String mobile;
     private String firstName;
+    private String familyName;
+    private String email;
 }
