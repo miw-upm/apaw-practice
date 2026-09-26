@@ -5,6 +5,7 @@ import es.upm.miw.apaw.adapters.out.appointment.postgres.AppointmentRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.appointment.Appointment;
+import es.upm.miw.apaw.domain.model.appointment.AppointmentCityReport;
 import es.upm.miw.apaw.domain.model.appointment.AppointmentStatus;
 import es.upm.miw.apaw.domain.model.appointment.CreationAppointment;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -16,9 +17,11 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.AppointmentLocationSeederForDev.ID_0;
+import static es.upm.miw.apaw.config.seeders.AppointmentLocationSeederForDev.ID_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
@@ -118,5 +121,55 @@ class AppointmentServiceIT {
 
         assertThatThrownBy(() -> this.appointmentService.create(creation))
                 .isInstanceOf(NotFoundException.class);
+    }
+
+    @Test
+    @Transactional
+    void testFindCityReport() {
+        UserSnapshot user1 = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .mobile("600000100")
+                .firstName("cliente0")
+                .build();
+        UserSnapshot user2 = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                .mobile("600000101")
+                .firstName("cliente1")
+                .build();
+        when(this.userFinder.read(user1.getId())).thenReturn(user1);
+        when(this.userFinder.read(user2.getId())).thenReturn(user2);
+        // user1: 2 appointments in Madrid (ID_0), user2: 1 appointment in Barcelona (ID_1)
+        this.appointmentService.create(creation(user1.getId(), ID_0));
+        this.appointmentService.create(creation(user1.getId(), ID_0));
+        this.appointmentService.create(creation(user2.getId(), ID_1));
+        when(this.userFinder.findByIds(org.mockito.ArgumentMatchers.anySet()))
+                .thenReturn(List.of(user1, user2));
+
+        List<AppointmentCityReport> report = this.appointmentService.findCityReport();
+
+        assertThat(report).isNotEmpty();
+        AppointmentCityReport first = report.get(0);
+        assertThat(first.getTotalAppointments()).isGreaterThanOrEqualTo(2);
+        assertThat(first.getClient()).isNotNull();
+        assertThat(report).allSatisfy(r -> assertThat(r.getClient()).isNotNull());
+        assertThat(report).extracting(AppointmentCityReport::getTotalAppointments)
+                .isSortedAccordingTo((a, b) -> Long.compare(b, a));
+    }
+
+    @Test
+    @Transactional
+    void testFindCityReportEmpty() {
+        List<AppointmentCityReport> report = this.appointmentService.findCityReport();
+
+        assertThat(report).isEmpty();
+    }
+
+    private CreationAppointment creation(UUID userId, UUID locationId) {
+        return CreationAppointment.builder()
+                .title("Appointment " + UUID.randomUUID())
+                .scheduledDate(LocalDateTime.now().plusDays(1))
+                .userId(userId)
+                .locationId(locationId)
+                .build();
     }
 }
