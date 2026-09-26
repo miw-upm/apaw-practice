@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity, UUID>,
         JpaSpecificationExecutor<AppointmentEntity> {
+    boolean existsByLocationId(UUID locationId);
 }
