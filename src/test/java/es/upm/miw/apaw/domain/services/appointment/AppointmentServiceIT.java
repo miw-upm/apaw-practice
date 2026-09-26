@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.appointment.Appointment;
 import es.upm.miw.apaw.domain.model.appointment.AppointmentCityReport;
+import es.upm.miw.apaw.domain.model.appointment.AppointmentFindCriteria;
 import es.upm.miw.apaw.domain.model.appointment.AppointmentStatus;
 import es.upm.miw.apaw.domain.model.appointment.CreationAppointment;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -24,6 +25,7 @@ import static es.upm.miw.apaw.config.seeders.AppointmentLocationSeederForDev.ID_
 import static es.upm.miw.apaw.config.seeders.AppointmentLocationSeederForDev.ID_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -164,6 +166,101 @@ class AppointmentServiceIT {
         assertThat(report).isEmpty();
     }
 
+    @Test
+    @Transactional
+    void testFindByStatus() {
+        UserSnapshot user = user();
+        when(this.userFinder.read(user.getId())).thenReturn(user);
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(user));
+        Appointment created = this.appointmentService.create(CreationAppointment.builder()
+                .title("Appointment " + UUID.randomUUID())
+                .scheduledDate(LocalDateTime.now().plusDays(1))
+                .userId(user.getId())
+                .build());
+
+        List<Appointment> scheduled = this.appointmentService.find(
+                AppointmentFindCriteria.builder().status(AppointmentStatus.SCHEDULED).build());
+        List<Appointment> cancelled = this.appointmentService.find(
+                AppointmentFindCriteria.builder().status(AppointmentStatus.CANCELLED).build());
+
+        assertThat(scheduled).extracting(Appointment::getId).contains(created.getId());
+        assertThat(cancelled).extracting(Appointment::getId).doesNotContain(created.getId());
+    }
+
+    @Test
+    @Transactional
+    void testFindUpcoming() {
+        UserSnapshot user = user();
+        when(this.userFinder.read(user.getId())).thenReturn(user);
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(user));
+        Appointment future = this.appointmentService.create(CreationAppointment.builder()
+                .title("Future " + UUID.randomUUID())
+                .scheduledDate(LocalDateTime.now().plusDays(1))
+                .userId(user.getId())
+                .build());
+        AppointmentEntity past = buildEntity(user.getId(), LocalDateTime.now().minusDays(1));
+        this.appointmentRepository.save(past);
+
+        List<Appointment> upcoming = this.appointmentService.find(
+                AppointmentFindCriteria.builder().upcoming(true).build());
+        List<Appointment> notUpcoming = this.appointmentService.find(
+                AppointmentFindCriteria.builder().upcoming(false).build());
+
+        assertThat(upcoming).extracting(Appointment::getId)
+                .contains(future.getId()).doesNotContain(past.getId());
+        assertThat(notUpcoming).extracting(Appointment::getId)
+                .contains(past.getId()).doesNotContain(future.getId());
+    }
+
+    @Test
+    @Transactional
+    void testFindByCity() {
+        UserSnapshot user = user();
+        when(this.userFinder.read(user.getId())).thenReturn(user);
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(user));
+        Appointment withMadrid = this.appointmentService.create(creation(user.getId(), ID_0));
+
+        List<Appointment> inMadrid = this.appointmentService.find(
+                AppointmentFindCriteria.builder().city("Madrid").build());
+        List<Appointment> inBarcelona = this.appointmentService.find(
+                AppointmentFindCriteria.builder().city("Barcelona").build());
+
+        assertThat(inMadrid).extracting(Appointment::getId).contains(withMadrid.getId());
+        assertThat(inBarcelona).extracting(Appointment::getId).doesNotContain(withMadrid.getId());
+    }
+
+    @Test
+    @Transactional
+    void testFindByClientMobile() {
+        UserSnapshot user1 = user();
+        UserSnapshot user2 = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                .mobile("600000101")
+                .firstName("cliente1")
+                .build();
+        when(this.userFinder.read(user1.getId())).thenReturn(user1);
+        when(this.userFinder.read(user2.getId())).thenReturn(user2);
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(user1, user2));
+        Appointment appt1 = this.appointmentService.create(CreationAppointment.builder()
+                .title("Appointment " + UUID.randomUUID())
+                .scheduledDate(LocalDateTime.now().plusDays(1))
+                .userId(user1.getId())
+                .build());
+        Appointment appt2 = this.appointmentService.create(CreationAppointment.builder()
+                .title("Appointment " + UUID.randomUUID())
+                .scheduledDate(LocalDateTime.now().plusDays(1))
+                .userId(user2.getId())
+                .build());
+
+        List<Appointment> result = this.appointmentService.find(
+                AppointmentFindCriteria.builder().clientMobile(user1.getMobile()).build());
+
+        assertThat(result).extracting(Appointment::getId)
+                .contains(appt1.getId()).doesNotContain(appt2.getId());
+        assertThat(result).allSatisfy(a ->
+                assertThat(a.getClient().getMobile()).isEqualTo(user1.getMobile()));
+    }
+
     private CreationAppointment creation(UUID userId, UUID locationId) {
         return CreationAppointment.builder()
                 .title("Appointment " + UUID.randomUUID())
@@ -171,5 +268,18 @@ class AppointmentServiceIT {
                 .userId(userId)
                 .locationId(locationId)
                 .build();
+    }
+
+    private AppointmentEntity buildEntity(UUID clientId, LocalDateTime scheduledDate) {
+        AppointmentEntity entity = new AppointmentEntity();
+        entity.setId(UUID.randomUUID());
+        entity.setTitle("Appointment " + UUID.randomUUID());
+        entity.setScheduledDate(scheduledDate);
+        entity.setDurationMinutes(30);
+        entity.setCreationDate(LocalDateTime.now());
+        entity.setVirtual(false);
+        entity.setStatus(AppointmentStatus.SCHEDULED);
+        entity.setClientId(clientId);
+        return entity;
     }
 }
