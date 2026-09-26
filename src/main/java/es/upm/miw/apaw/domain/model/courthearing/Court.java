@@ -31,12 +31,26 @@ public class Court {
     private LocalTime openingTime;
 
     private LocalTime closingTime;
-
-    private CourtType courtType;
+    
+    private CourtType type;
 
     private List<CourtHearing> courtHearings;
 
     public void doDefault() {
         this.id = UUID.randomUUID();
     }
+
+    public Court ofSummary() {
+        return Court.builder()
+                .id(this.id)
+                .name(this.name)
+                .address(this.address)
+                .city(this.city)
+                .phone(this.phone)
+                .openingTime(this.openingTime)
+                .closingTime(this.closingTime)
+                .type(this.type)
+                .build();
+    }
+
 }

@@ -30,31 +30,46 @@ public class CourtHearing {
 
     private Integer durationMinutes;
 
-    private Boolean isPublic;
+    private Boolean openToPublic;
 
-    private Boolean isRemote;
+    private Boolean remote;
 
-    private CourtHearingType courtHearingType;
+    private CourtHearingType type;
 
-    private CourtHearingStatus courtHearingStatus;
+    private CourtHearingStatus status;
 
     @NotEmpty
     private List<UserSnapshot> attendees;
 
     public void doDefault() {
         this.id = UUID.randomUUID();
-        if (this.isPublic == null) {
-            this.isPublic = false;
+        if (this.openToPublic == null) {
+            this.openToPublic = false;
         }
-        if (this.isRemote == null) {
-            this.isRemote = false;
+        if (this.remote == null) {
+            this.remote = false;
         }
-        if (this.courtHearingStatus == null) {
-            this.courtHearingStatus = CourtHearingStatus.SCHEDULED;
+        if (this.status == null) {
+            this.status = CourtHearingStatus.SCHEDULED;
         }
     }
 
-    public boolean isScheduled() {
-        return this.courtHearingStatus == CourtHearingStatus.SCHEDULED;
+    public CourtHearing ofSummary() {
+        return CourtHearing.builder()
+                .id(this.id)
+                .date(this.date)
+                .roomNumber(this.roomNumber)
+                .type(this.type)
+                .status(this.status)
+                .openToPublic(this.openToPublic)
+                .remote(this.remote)
+                .attendees(this.attendees == null ? null : this.attendees.stream()
+                        .map(attendee -> UserSnapshot.builder()
+                                .id(attendee.getId())
+                                .mobile(attendee.getMobile())
+                                .firstName(attendee.getFirstName())
+                                .build())
+                        .toList())
+                .build();
     }
 }
