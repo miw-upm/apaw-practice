@@ -2,12 +2,14 @@ package es.upm.miw.apaw.adapters.in.appointment;
 
 import es.upm.miw.apaw.domain.model.appointment.Appointment;
 import es.upm.miw.apaw.domain.model.appointment.AppointmentCityReport;
+import es.upm.miw.apaw.domain.model.appointment.AppointmentFindCriteria;
 import es.upm.miw.apaw.domain.model.appointment.CreationAppointment;
 import es.upm.miw.apaw.domain.services.appointment.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,11 @@ public class AppointmentResource {
     public static final String REPORT = "/report";
 
     private final AppointmentService appointmentService;
+
+    @GetMapping
+    public List<Appointment> find(@ModelAttribute AppointmentFindCriteria criteria) {
+        return this.appointmentService.find(criteria);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

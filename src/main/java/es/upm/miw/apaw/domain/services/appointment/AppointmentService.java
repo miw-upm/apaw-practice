@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.appointment.Appointment;
 import es.upm.miw.apaw.domain.model.appointment.AppointmentCityReport;
+import es.upm.miw.apaw.domain.model.appointment.AppointmentFindCriteria;
 import es.upm.miw.apaw.domain.model.appointment.CreationAppointment;
 import es.upm.miw.apaw.domain.ports.out.appointment.AppointmentGateway;
 import es.upm.miw.apaw.domain.ports.out.appointment.AppointmentLocationGateway;
@@ -52,5 +53,37 @@ public class AppointmentService {
                 .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
         report.forEach(r -> r.setClient(usersById.get(r.getClientId())));
         return report;
+    }
+
+    public List<Appointment> find(AppointmentFindCriteria criteria) {
+        List<Appointment> appointments = this.appointmentGateway.find(criteria);
+        if (appointments.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> clientIds = appointments.stream()
+                .map(a -> a.getClient().getId())
+                .collect(Collectors.toSet());
+        Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(clientIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        return appointments.stream()
+                .map(a -> this.enrichClient(a, usersById))
+                .filter(a -> this.matchesClientMobile(criteria, a))
+                .map(Appointment::ofSummary)
+                .toList();
+    }
+
+    private Appointment enrichClient(Appointment appointment, Map<UUID, UserSnapshot> usersById) {
+        UUID clientId = appointment.getClient().getId();
+        UserSnapshot user = usersById.get(clientId);
+        if (user == null) {
+            throw new NotFoundException("User id not found: " + clientId);
+        }
+        appointment.setClient(user);
+        return appointment;
+    }
+
+    private boolean matchesClientMobile(AppointmentFindCriteria criteria, Appointment appointment) {
+        return !criteria.hasClientMobile()
+                || criteria.getClientMobile().equals(appointment.getClient().getMobile());
     }
 }
