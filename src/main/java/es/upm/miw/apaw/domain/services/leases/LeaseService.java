@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.leases.Amendment;
 import es.upm.miw.apaw.domain.model.leases.CreationLease;
 import es.upm.miw.apaw.domain.model.leases.Lease;
+import es.upm.miw.apaw.domain.model.leases.LeaseAmendmentReport;
 import es.upm.miw.apaw.domain.model.leases.LeaseFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.leases.AmendmentGateway;
 import es.upm.miw.apaw.domain.ports.out.leases.LeaseGateway;
@@ -59,6 +60,10 @@ public class LeaseService {
                 .filter(lease -> this.matchesUserMobile(criteria, lease))
                 .map(Lease::ofSummary)
                 .toList();
+    }
+
+    public List<LeaseAmendmentReport> findAmendmentReport() {
+        return this.leaseGateway.findAmendmentReport();
     }
 
     private Lease enrichUserSnapshot(Lease lease, Map<UUID, UserSnapshot> usersById) {
