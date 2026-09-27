@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.out.leases.postgres;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.leases.AmendmentType;
 import es.upm.miw.apaw.domain.model.leases.Lease;
+import es.upm.miw.apaw.domain.model.leases.LeaseAmendmentReport;
 import es.upm.miw.apaw.domain.model.leases.LeaseFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.leases.LeaseGateway;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,11 @@ public class LeaseAdapter implements LeaseGateway {
         return this.leaseRepository.findAll(this.buildSpecification(criteria), Sort.by("leaseNumber")).stream()
                 .map(this::toDomainWithoutAmendments)
                 .toList();
+    }
+
+    @Override
+    public List<LeaseAmendmentReport> findAmendmentReport() {
+        return this.leaseRepository.findLeaseAmendmentReport();
     }
 
     private Lease toDomainWithoutAmendments(LeaseEntity entity) {
