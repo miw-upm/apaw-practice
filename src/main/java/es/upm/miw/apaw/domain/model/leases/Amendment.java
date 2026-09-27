@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 @Builder
@@ -39,5 +40,14 @@ public class Amendment {
         if (this.approved == null) {
             this.approved = false;
         }
+    }
+
+    public void patch(AmendmentUpdate update) {
+        Optional.ofNullable(update.amendmentNumber()).ifPresent(this::setAmendmentNumber);
+        Optional.ofNullable(update.description()).ifPresent(this::setDescription);
+        Optional.ofNullable(update.effectiveDate()).ifPresent(this::setEffectiveDate);
+        Optional.ofNullable(update.additionalAmount()).ifPresent(this::setAdditionalAmount);
+        Optional.ofNullable(update.approved()).ifPresent(this::setApproved);
+        Optional.ofNullable(update.amendmentType()).ifPresent(this::setAmendmentType);
     }
 }
