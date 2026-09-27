@@ -39,9 +39,9 @@ import static org.mockito.Mockito.*;
 @Transactional
 class LeaseServiceIT {
     private static final UserSnapshot USER = UserSnapshot.builder()
-            .id(UUID.fromString("ffffffff-aaaa-bbbb-cccc-ddddeeee0000"))
-            .mobile("600000200")
-            .firstName("tenant0")
+            .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0005"))
+            .mobile("600000105")
+            .firstName("cliente5")
             .build();
 
     @Autowired

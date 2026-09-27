@@ -82,7 +82,7 @@ public class LeaseSeederForDev implements ApplicationRunner {
             .amendmentType(AmendmentType.TERMINATION)
             .build();
 
-    private static final String USER_PREFIX = "ffffffff-aaaa-bbbb-cccc-ddddeeee";
+    private static final String USER_PREFIX = "aaaaaaaa-bbbb-cccc-dddd-eeeeffff";
     private static final String LEASE_PREFIX = "eeeeeeee-ffff-aaaa-bbbb-ccccdddd";
     public static final UUID LEASE_ID_0 = UUID.fromString(LEASE_PREFIX + "0000");
     public static final Lease LEASE_0 = Lease.builder()
@@ -98,7 +98,7 @@ public class LeaseSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2023, 12, 15, 10, 0))
             .leaseType(LeaseType.RESIDENTIAL)
             .amendments(List.of(AMENDMENT_0, AMENDMENT_1))
-            .userSnapshot(user("0000"))
+            .userSnapshot(user("0005"))
             .build();
     public static final UUID LEASE_ID_1 = UUID.fromString(LEASE_PREFIX + "0001");
     public static final Lease LEASE_1 = Lease.builder()
@@ -111,7 +111,7 @@ public class LeaseSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2024, 2, 20, 12, 30))
             .leaseType(LeaseType.COMMERCIAL)
             .amendments(List.of(AMENDMENT_2))
-            .userSnapshot(user("0001"))
+            .userSnapshot(user("0006"))
             .build();
     public static final UUID LEASE_ID_2 = UUID.fromString(LEASE_PREFIX + "0002");
     public static final Lease LEASE_2 = Lease.builder()
@@ -127,7 +127,7 @@ public class LeaseSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2025, 5, 2, 9, 15))
             .leaseType(LeaseType.SEASONAL)
             .amendments(List.of())
-            .userSnapshot(user("0002"))
+            .userSnapshot(user("0007"))
             .build();
 
     private final AmendmentRepository amendmentRepository;
