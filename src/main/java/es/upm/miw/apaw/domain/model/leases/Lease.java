@@ -58,4 +58,25 @@ public class Lease {
             this.active = true;
         }
     }
+
+    public Lease ofSummary() {
+        return Lease.builder()
+                .id(this.id)
+                .leaseNumber(this.leaseNumber)
+                .cadastralReference(this.cadastralReference)
+                .propertyAddress(this.propertyAddress)
+                .startDate(this.startDate)
+                .endDate(this.endDate)
+                .monthlyRent(this.monthlyRent)
+                .deposit(this.deposit)
+                .active(this.active)
+                .createdAt(this.createdAt)
+                .leaseType(this.leaseType)
+                .userSnapshot(UserSnapshot.builder()
+                        .id(this.userSnapshot.getId())
+                        .mobile(this.userSnapshot.getMobile())
+                        .firstName(this.userSnapshot.getFirstName())
+                        .build())
+                .build();
+    }
 }
