@@ -11,6 +11,7 @@ import es.upm.miw.apaw.domain.model.leases.Amendment;
 import es.upm.miw.apaw.domain.model.leases.AmendmentType;
 import es.upm.miw.apaw.domain.model.leases.CreationLease;
 import es.upm.miw.apaw.domain.model.leases.Lease;
+import es.upm.miw.apaw.domain.model.leases.LeaseFindCriteria;
 import es.upm.miw.apaw.domain.model.leases.LeaseType;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,6 +56,10 @@ class LeaseServiceIT {
     @BeforeEach
     void setUp() {
         when(this.userFinder.read(USER.getId())).thenReturn(USER);
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Collection<UUID> ids = invocation.getArgument(0);
+            return ids.stream().map(this::userOf).toList();
+        });
     }
 
     @Test
@@ -141,6 +147,99 @@ class LeaseServiceIT {
         assertThatThrownBy(() -> this.leaseService.create(creation))
                 .isInstanceOf(NotFoundException.class).hasMessageContaining(missingUserId.toString());
         assertThat(this.leaseRepository.existsByLeaseNumber(creation.getLeaseNumber())).isFalse();
+    }
+
+    @Test
+    void testFindAllWithoutCriteria() {
+        List<Lease> leases = this.leaseService.find(new LeaseFindCriteria());
+        assertThat(leases).extracting(Lease::getId).contains(LEASE_ID_0, LEASE_ID_1, LEASE_ID_2);
+        assertThat(leases).extracting(Lease::getLeaseNumber).isSorted();
+        verify(this.userFinder, times(1)).findByIds(any());
+    }
+
+    @Test
+    void testFindReturnsSummariesWithUser() {
+        List<Lease> leases = this.leaseService.find(new LeaseFindCriteria());
+        Lease lease = leases.stream().filter(found -> found.getId().equals(LEASE_ID_0)).findFirst().orElseThrow();
+        assertThat(lease.getAmendments()).isNull();
+        assertThat(lease.getLeaseNumber()).isEqualTo(LEASE_0.getLeaseNumber());
+        assertThat(lease.getUserSnapshot()).isEqualTo(USER);
+    }
+
+    @Test
+    void testFindByLeaseType() {
+        List<Lease> leases = this.leaseService.find(LeaseFindCriteria.builder().leaseType(LeaseType.COMMERCIAL).build());
+        assertThat(leases).extracting(Lease::getId).contains(LEASE_ID_1).doesNotContain(LEASE_ID_0, LEASE_ID_2);
+        assertThat(leases).extracting(Lease::getLeaseType).containsOnly(LeaseType.COMMERCIAL);
+    }
+
+    @Test
+    void testFindInForce() {
+        Lease future = this.leaseService.create(this.creationStartingAt(LocalDate.now().plusMonths(1)));
+        List<Lease> leases = this.leaseService.find(LeaseFindCriteria.builder().inForce(true).build());
+        assertThat(leases).extracting(Lease::getId).contains(LEASE_ID_1).doesNotContain(LEASE_ID_2, future.getId());
+    }
+
+    @Test
+    void testFindNotInForce() {
+        Lease future = this.leaseService.create(this.creationStartingAt(LocalDate.now().plusMonths(1)));
+        List<Lease> leases = this.leaseService.find(LeaseFindCriteria.builder().inForce(false).build());
+        assertThat(leases).extracting(Lease::getId).contains(LEASE_ID_2, future.getId()).doesNotContain(LEASE_ID_1);
+    }
+
+    @Test
+    void testFindByAmendmentType() {
+        List<Lease> leases = this.leaseService.find(
+                LeaseFindCriteria.builder().amendmentType(AmendmentType.SCOPE_CHANGE).build());
+        assertThat(leases).extracting(Lease::getId).contains(LEASE_ID_1).doesNotContain(LEASE_ID_0, LEASE_ID_2);
+    }
+
+    @Test
+    void testFindByAmendmentTypeWithoutDuplicates() {
+        Amendment first = this.createAmendment();
+        Amendment second = this.createAmendment();
+        Lease lease = this.leaseService.create(this.creation(List.of(first.getId(), second.getId())));
+        List<Lease> leases = this.leaseService.find(
+                LeaseFindCriteria.builder().amendmentType(AmendmentType.OTHER).build());
+        assertThat(leases).extracting(Lease::getId).containsOnlyOnce(lease.getId());
+    }
+
+    @Test
+    void testFindByUserMobile() {
+        List<Lease> leases = this.leaseService.find(
+                LeaseFindCriteria.builder().userMobile(USER.getMobile()).build());
+        assertThat(leases).extracting(Lease::getId).contains(LEASE_ID_0).doesNotContain(LEASE_ID_1, LEASE_ID_2);
+        assertThat(leases).extracting(lease -> lease.getUserSnapshot().getMobile()).containsOnly(USER.getMobile());
+        verify(this.userFinder, times(1)).findByIds(any());
+    }
+
+    @Test
+    void testFindCombinedCriteria() {
+        List<Lease> leases = this.leaseService.find(LeaseFindCriteria.builder()
+                .leaseType(LeaseType.RESIDENTIAL).amendmentType(AmendmentType.PRICE_CHANGE)
+                .userMobile(USER.getMobile()).build());
+        assertThat(leases).extracting(Lease::getId).contains(LEASE_ID_0).doesNotContain(LEASE_ID_1, LEASE_ID_2);
+    }
+
+    @Test
+    void testFindWithoutResultsDoesNotCallUsers() {
+        List<Lease> leases = this.leaseService.find(LeaseFindCriteria.builder()
+                .leaseType(LeaseType.INDUSTRIAL).amendmentType(AmendmentType.TERMINATION).build());
+        assertThat(leases).isEmpty();
+        verify(this.userFinder, never()).findByIds(any());
+    }
+
+    private CreationLease creationStartingAt(LocalDate startDate) {
+        CreationLease creation = this.creation(List.of());
+        creation.setStartDate(startDate);
+        return creation;
+    }
+
+    private UserSnapshot userOf(UUID id) {
+        if (USER.getId().equals(id)) {
+            return USER;
+        }
+        return UserSnapshot.builder().id(id).mobile("699" + id.toString().substring(30)).firstName("other").build();
     }
 
     private CreationLease creation(List<UUID> amendmentIds) {
