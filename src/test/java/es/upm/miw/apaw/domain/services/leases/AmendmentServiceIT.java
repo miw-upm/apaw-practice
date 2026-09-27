@@ -104,9 +104,9 @@ class AmendmentServiceIT {
 
     @Test
     void testDelete() {
-        Amendment amendment = this.createAmendment();
-        this.amendmentService.delete(amendment.getId());
-        assertThatThrownBy(() -> this.amendmentService.read(amendment.getId()))
+        UUID id = this.createAmendment().getId();
+        this.amendmentService.delete(id);
+        assertThatThrownBy(() -> this.amendmentService.read(id))
                 .isInstanceOf(NotFoundException.class);
     }
 
@@ -126,9 +126,10 @@ class AmendmentServiceIT {
                 .createdAt(LocalDateTime.now()).leaseType(LeaseType.OTHER).userId(UUID.randomUUID())
                 .amendments(List.of(new AmendmentEntity(amendment))).build();
         this.leaseRepository.saveAndFlush(lease);
-        assertThatThrownBy(() -> this.amendmentService.delete(amendment.getId()))
-                .isInstanceOf(ConflictException.class).hasMessageContaining(amendment.getId().toString());
-        assertThat(this.amendmentService.read(amendment.getId()).getId()).isEqualTo(amendment.getId());
+        UUID id = amendment.getId();
+        assertThatThrownBy(() -> this.amendmentService.delete(id))
+                .isInstanceOf(ConflictException.class).hasMessageContaining(id.toString());
+        assertThat(this.amendmentService.read(id).getId()).isEqualTo(id);
     }
 
     private Amendment createAmendment() {

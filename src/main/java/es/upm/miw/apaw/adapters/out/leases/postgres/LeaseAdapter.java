@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.model.leases.Lease;
 import es.upm.miw.apaw.domain.model.leases.LeaseAmendmentReport;
 import es.upm.miw.apaw.domain.model.leases.LeaseFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.leases.LeaseGateway;
+import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
@@ -70,10 +71,10 @@ public class LeaseAdapter implements LeaseGateway {
     private Specification<LeaseEntity> inForce(boolean inForce) {
         return (root, query, builder) -> {
             LocalDate today = LocalDate.now();
-            var started = builder.lessThanOrEqualTo(root.get("startDate"), today);
-            var notEnded = builder.or(builder.isNull(root.get("endDate")),
+            Predicate started = builder.lessThanOrEqualTo(root.get("startDate"), today);
+            Predicate notEnded = builder.or(builder.isNull(root.get("endDate")),
                     builder.greaterThanOrEqualTo(root.get("endDate"), today));
-            var current = builder.and(started, notEnded);
+            Predicate current = builder.and(started, notEnded);
             return inForce ? current : builder.not(current);
         };
     }

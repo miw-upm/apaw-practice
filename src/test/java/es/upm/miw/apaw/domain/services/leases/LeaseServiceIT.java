@@ -168,7 +168,8 @@ class LeaseServiceIT {
 
     @Test
     void testFindByLeaseType() {
-        List<Lease> leases = this.leaseService.find(LeaseFindCriteria.builder().leaseType(LeaseType.COMMERCIAL).build());
+        List<Lease> leases = this.leaseService.find(
+                LeaseFindCriteria.builder().leaseType(LeaseType.COMMERCIAL).build());
         assertThat(leases).extracting(Lease::getId).contains(LEASE_ID_1).doesNotContain(LEASE_ID_0, LEASE_ID_2);
         assertThat(leases).extracting(Lease::getLeaseType).containsOnly(LeaseType.COMMERCIAL);
     }
