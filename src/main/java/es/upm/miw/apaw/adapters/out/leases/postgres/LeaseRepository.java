@@ -6,4 +6,8 @@ import java.util.UUID;
 
 public interface LeaseRepository extends JpaRepository<LeaseEntity, UUID> {
     boolean existsByAmendmentsId(UUID id);
+
+    boolean existsByLeaseNumber(String leaseNumber);
+
+    boolean existsByCadastralReference(String cadastralReference);
 }
