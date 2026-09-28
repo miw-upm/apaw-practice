@@ -4,7 +4,13 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.courthearing.Court;
 import es.upm.miw.apaw.domain.ports.out.courthearing.CourtGateway;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+
+import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +24,11 @@ public class CourtService {
         return this.courtGateway.create(court);
     }
 
+    public Court read(UUID id) {
+        return this.courtGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Court id not found: " + id));
+    }
+
     private void assertNameNotExists(String name) {
         if (this.courtGateway.existsByName(name)) {
             throw new ConflictException("Court name already exists: " + name);
@@ -28,5 +39,34 @@ public class CourtService {
         if (phone != null && this.courtGateway.existsByPhone(phone)) {
             throw new ConflictException("Court phone already exists: " + phone);
         }
+    }
+
+    public Court update(UUID id, Court update) {
+        Court storedCourt = this.read(id);
+        this.assertUniqueOnUpdate(storedCourt, update);
+        storedCourt.setName(update.getName());
+        storedCourt.setAddress(update.getAddress());
+        storedCourt.setCity(update.getCity());
+        storedCourt.setPhone(update.getPhone());
+        storedCourt.setOpeningTime(update.getOpeningTime());
+        storedCourt.setClosingTime(update.getClosingTime());
+        storedCourt.setType(update.getType());
+        return this.courtGateway.update(storedCourt);
+    }
+
+    private void assertUniqueOnUpdate(Court storedCourt, Court update) {
+        if (!storedCourt.getName().equals(update.getName())) {
+            this.assertNameNotExists(update.getName());
+        }
+        if (!Objects.equals(storedCourt.getPhone(), update.getPhone())) {
+            this.assertPhoneNotExists(update.getPhone());
+        }
+    }
+
+    public void delete(UUID id) {
+        if (this.courtGateway.isReferenced(id)) {
+            throw new ConflictException("Court is referenced by a court hearing: " + id);
+        }
+        this.courtGateway.delete(id);
     }
 }
