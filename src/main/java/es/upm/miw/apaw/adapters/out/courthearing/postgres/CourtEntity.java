@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.out.courthearing.postgres;
 
+import es.upm.miw.apaw.domain.model.courthearing.Court;
 import es.upm.miw.apaw.domain.model.courthearing.CourtType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +17,7 @@ import lombok.Setter;
 import java.time.LocalTime;
 import java.util.UUID;
 
-import org.springframework.beans.BeanUtils;Time;
+import org.springframework.beans.BeanUtils;
 import java.util.UUID;
 
 @Entity
