@@ -13,4 +13,6 @@ public interface CourtGateway {
     boolean existsByPhone(String phone);
 
     Optional<Court> read(UUID id);
+
+    Court update(Court court);
 }

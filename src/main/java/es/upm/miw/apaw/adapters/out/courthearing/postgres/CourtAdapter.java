@@ -34,4 +34,11 @@ public class CourtAdapter implements CourtGateway {
         return this.courtRepository.findById(id)
                 .map(CourtEntity::toDomain);
     }
+
+    @Override
+    public Court update(Court court) {
+        return this.courtRepository
+                .save(new CourtEntity(court))
+                .toDomain();
+    }
 }

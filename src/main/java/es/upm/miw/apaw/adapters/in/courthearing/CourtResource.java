@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,5 +35,11 @@ public class CourtResource {
     @GetMapping(ID)
     public Court read(@PathVariable UUID id) {
         return this.courtService.read(id);
+    }
+
+
+    @PutMapping(ID)
+    public Court update(@PathVariable UUID id, @Valid @RequestBody Court update) {
+        return this.courtService.update(id, update);
     }
 }
