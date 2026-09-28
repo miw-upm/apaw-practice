@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.out.courthearing.postgres;
 
+import es.upm.miw.apaw.domain.model.courthearing.Court;
 import es.upm.miw.apaw.domain.model.courthearing.CourtType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +15,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
+import java.util.UUID;
+
+import org.springframework.beans.BeanUtils;
 import java.util.UUID;
 
 @Entity
@@ -47,4 +51,14 @@ public class CourtEntity {
 
     @Enumerated(EnumType.STRING)
     private CourtType type;
+
+        public CourtEntity(Court court) {
+        BeanUtils.copyProperties(court, this);
+    }
+
+    public Court toDomain() {
+        Court court = new Court();
+        BeanUtils.copyProperties(this, court);
+        return court;
+    }
 }
