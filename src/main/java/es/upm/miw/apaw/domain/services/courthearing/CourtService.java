@@ -2,7 +2,9 @@ package es.upm.miw.apaw.domain.services.courthearing;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.courthearing.Court;
+import es.upm.miw.apaw.domain.model.courthearing.CourtUpdate;
 import es.upm.miw.apaw.domain.ports.out.courthearing.CourtGateway;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.BeanUtils;
@@ -11,6 +13,8 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
 import java.util.UUID;
 
 @Service
@@ -74,5 +78,27 @@ public class CourtService {
 
     public List<Court> findAll() {
         return this.courtGateway.findAll();
+    }
+
+    public Court patch(UUID id, CourtUpdate patch) {
+        Court storedCourt = this.read(id);
+        this.assertUniqueOnPatch(storedCourt, patch);
+        Optional.ofNullable(patch.name()).ifPresent(storedCourt::setName);
+        Optional.ofNullable(patch.address()).ifPresent(storedCourt::setAddress);
+        Optional.ofNullable(patch.city()).ifPresent(storedCourt::setCity);
+        Optional.ofNullable(patch.phone()).ifPresent(storedCourt::setPhone);
+        Optional.ofNullable(patch.openingTime()).ifPresent(storedCourt::setOpeningTime);
+        Optional.ofNullable(patch.closingTime()).ifPresent(storedCourt::setClosingTime);
+        Optional.ofNullable(patch.type()).ifPresent(storedCourt::setType);
+        return this.courtGateway.update(storedCourt);
+    }
+
+    private void assertUniqueOnPatch(Court storedCourt, CourtUpdate patch) {
+        if (patch.name() != null && !patch.name().equals(storedCourt.getName())) {
+            this.assertNameNotExists(patch.name());
+        }
+        if (patch.phone() != null && !patch.phone().equals(storedCourt.getPhone())) {
+            this.assertPhoneNotExists(patch.phone());
+        }
     }
 }
