@@ -44,7 +44,13 @@ public class CourtService {
     public Court update(UUID id, Court update) {
         Court storedCourt = this.read(id);
         this.assertUniqueOnUpdate(storedCourt, update);
-        BeanUtils.copyProperties(update, storedCourt);
+        storedCourt.setName(update.getName());
+        storedCourt.setAddress(update.getAddress());
+        storedCourt.setCity(update.getCity());
+        storedCourt.setPhone(update.getPhone());
+        storedCourt.setOpeningTime(update.getOpeningTime());
+        storedCourt.setClosingTime(update.getClosingTime());
+        storedCourt.setType(update.getType());
         return this.courtGateway.update(storedCourt);
     }
 
