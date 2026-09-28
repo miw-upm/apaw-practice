@@ -11,7 +11,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CourtAdapter implements CourtGateway {
     private final CourtRepository courtRepository;
-
+    private final CourtHearingRepository courtHearingRepository;
+    
     @Override
     public Court create(Court court) {
         return this.courtRepository
@@ -40,5 +41,15 @@ public class CourtAdapter implements CourtGateway {
         return this.courtRepository
                 .save(new CourtEntity(court))
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.courtRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.courtHearingRepository.existsByCourtId(id);
     }
 }

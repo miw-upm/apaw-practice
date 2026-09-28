@@ -62,4 +62,11 @@ public class CourtService {
             this.assertPhoneNotExists(update.getPhone());
         }
     }
+
+    public void delete(UUID id) {
+        if (this.courtGateway.isReferenced(id)) {
+            throw new ConflictException("Court is referenced by a court hearing: " + id);
+        }
+        this.courtGateway.delete(id);
+    }
 }

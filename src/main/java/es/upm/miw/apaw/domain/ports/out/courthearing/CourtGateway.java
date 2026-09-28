@@ -15,4 +15,8 @@ public interface CourtGateway {
     Optional<Court> read(UUID id);
 
     Court update(Court court);
+
+    void delete(UUID id);
+
+    boolean isReferenced(UUID id);
 }
