@@ -33,9 +33,6 @@ public class LegalExpertProfile {
 
     private LocalDate partnershipDate;
 
-    // Relaciones N a 1 (Agregación)
-    private ExpertServiceSchedule expertServiceSchedule;
-
     private UserSnapshot userSnapshot;
 
     public void doDefault() {

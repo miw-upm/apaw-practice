@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -32,6 +33,8 @@ public class ExpertServiceSchedule {
     private String specialCondition;
 
     private LocalDate creationDate;
+
+    private List<LegalExpertProfile> legalExpertProfiles;
 
     public void doDefault() {
         if (this.id == null) {
