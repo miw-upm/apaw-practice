@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
+
+import java.util.List;
 import java.util.UUID;
 
 
@@ -49,5 +51,11 @@ public class CourtResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.courtService.delete(id);
+    }
+
+
+    @GetMapping
+    public List<Court> findAll() {
+        return this.courtService.findAll();
     }
 }
