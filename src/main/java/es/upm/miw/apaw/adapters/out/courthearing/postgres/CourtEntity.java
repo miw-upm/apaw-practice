@@ -16,6 +16,9 @@ import lombok.Setter;
 import java.time.LocalTime;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;Time;
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -47,4 +50,14 @@ public class CourtEntity {
 
     @Enumerated(EnumType.STRING)
     private CourtType type;
+
+        public CourtEntity(Court court) {
+        BeanUtils.copyProperties(court, this);
+    }
+
+    public Court toDomain() {
+        Court court = new Court();
+        BeanUtils.copyProperties(this, court);
+        return court;
+    }
 }
