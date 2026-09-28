@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -68,5 +69,10 @@ public class CourtService {
             throw new ConflictException("Court is referenced by a court hearing: " + id);
         }
         this.courtGateway.delete(id);
+    }
+
+
+    public List<Court> findAll() {
+        return this.courtGateway.findAll();
     }
 }
