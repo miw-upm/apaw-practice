@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.model.courthearing.Court;
 import es.upm.miw.apaw.domain.ports.out.courthearing.CourtGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +18,11 @@ public class CourtService {
         this.assertPhoneNotExists(court.getPhone());
         court.doDefault();
         return this.courtGateway.create(court);
+    }
+
+    public Court read(UUID id) {
+        return this.courtGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Court id not found: " + id));
     }
 
     private void assertNameNotExists(String name) {
