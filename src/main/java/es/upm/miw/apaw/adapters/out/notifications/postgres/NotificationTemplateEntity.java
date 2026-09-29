@@ -30,7 +30,7 @@ public class NotificationTemplateEntity {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String eventType;
 
     @Column(nullable = false)
