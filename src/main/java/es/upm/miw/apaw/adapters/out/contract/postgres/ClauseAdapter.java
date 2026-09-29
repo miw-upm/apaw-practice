@@ -47,7 +47,7 @@ public class ClauseAdapter implements ClauseGateway {
 
     @Override
     public List<Clause> findAll() {
-        return this.clauseRepository.findAllByOrderByIdAsc()
+        return this.clauseRepository.findAllByOrderByTitleAscIdAsc()
                 .stream()
                 .map(ClauseEntity::toDomain)
                 .toList();
