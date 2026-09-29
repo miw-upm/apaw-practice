@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.adapters.out.notifications.postgres;
 
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.notifications.Notification;
 import es.upm.miw.apaw.domain.model.notifications.NotificationStatus;
 import es.upm.miw.apaw.domain.model.notifications.Priority;
 import jakarta.persistence.Column;
@@ -16,6 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -58,4 +61,18 @@ public class NotificationEntity {
 
     @Column(nullable = false)
     private UUID recipientId;
+
+    public NotificationEntity(Notification notification) {
+        BeanUtils.copyProperties(notification, this, "notificationTemplate", "recipient");
+        this.notificationTemplate = new NotificationTemplateEntity(notification.getNotificationTemplate());
+        this.recipientId = notification.getRecipient().getId();
+    }
+
+    public Notification toDomain() {
+        Notification notification = new Notification();
+        BeanUtils.copyProperties(this, notification, "notificationTemplate", "recipientId");
+        notification.setNotificationTemplate(this.notificationTemplate.toDomain());
+        notification.setRecipient(UserSnapshot.builder().id(this.recipientId).build());
+        return notification;
+    }
 }
