@@ -5,6 +5,9 @@ import es.upm.miw.apaw.domain.ports.out.contract.ClauseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class ClauseAdapter implements ClauseGateway {
@@ -15,5 +18,11 @@ public class ClauseAdapter implements ClauseGateway {
         return this.clauseRepository
                 .save(new ClauseEntity(clause))
                 .toDomain();
+    }
+
+    @Override
+    public Optional<Clause> read(UUID id) {
+        return this.clauseRepository.findById(id)
+                .map(ClauseEntity::toDomain);
     }
 }
