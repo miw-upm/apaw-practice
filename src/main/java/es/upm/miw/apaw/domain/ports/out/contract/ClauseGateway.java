@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.domain.ports.out.contract;
 
-public interface ClauseGateway {
+import es.upm.miw.apaw.domain.model.contract.Clause;
 
+public interface ClauseGateway {
+    Clause create(Clause clause);
 }
