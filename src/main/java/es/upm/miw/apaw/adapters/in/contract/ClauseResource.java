@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,4 +35,7 @@ public class ClauseResource {
     @DeleteMapping(ID)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {this.clauseService.delete(id);}
+
+    @GetMapping
+    public List<Clause> findAll() {return this.clauseService.findAll();}
 }
