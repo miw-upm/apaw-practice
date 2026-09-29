@@ -1,0 +1,27 @@
+package es.upm.miw.apaw.adapters.in.notifications;
+
+import es.upm.miw.apaw.domain.model.notifications.NotificationTemplate;
+import es.upm.miw.apaw.domain.services.notifications.NotificationTemplateService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(NotificationTemplateResource.NOTIFICATION_TEMPLATES)
+@RequiredArgsConstructor
+public class NotificationTemplateResource {
+    public static final String NOTIFICATION_TEMPLATES = "/notification-templates";
+
+    private final NotificationTemplateService notificationTemplateService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public NotificationTemplate create(@Valid @RequestBody NotificationTemplate notificationTemplate) {
+        return this.notificationTemplateService.create(notificationTemplate);
+    }
+}
