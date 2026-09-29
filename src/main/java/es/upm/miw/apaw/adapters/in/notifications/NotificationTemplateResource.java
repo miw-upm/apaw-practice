@@ -1,0 +1,37 @@
+package es.upm.miw.apaw.adapters.in.notifications;
+
+import es.upm.miw.apaw.domain.model.notifications.NotificationTemplate;
+import es.upm.miw.apaw.domain.services.notifications.NotificationTemplateService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+
+@RestController
+@RequestMapping(NotificationTemplateResource.NOTIFICATION_TEMPLATE)
+@RequiredArgsConstructor
+public class NotificationTemplateResource {
+    public static final String NOTIFICATION_TEMPLATE = "/notification-template";
+    public static final String ID = "/{id}";
+
+    private final NotificationTemplateService notificationTemplateService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public NotificationTemplate create(@Valid @RequestBody NotificationTemplate notificationTemplate) {
+        return this.notificationTemplateService.create(notificationTemplate);
+    }
+
+    @GetMapping(ID)
+    public NotificationTemplate read(@PathVariable UUID id) {
+        return this.notificationTemplateService.read(id);
+    }
+}
