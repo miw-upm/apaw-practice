@@ -1,0 +1,85 @@
+package es.upm.miw.apaw.config.seeders;
+
+import es.upm.miw.apaw.adapters.out.roombooking.postgres.RoomEntity;
+import es.upm.miw.apaw.adapters.out.roombooking.postgres.RoomRepository;
+import es.upm.miw.apaw.domain.model.roombooking.Room;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+@Log4j2
+@Component
+@Profile({"dev", "test"})
+@Order(1)
+@RequiredArgsConstructor
+public class RoomBookingSeederForDev implements ApplicationRunner {
+
+    public static final String PREFIX = "11111111-2222-3333-4444-55555555";
+
+    public static final UUID ROOM_ID_0 = UUID.fromString(PREFIX + "0000");
+    public static final Room ROOM_0 = Room.builder()
+            .id(ROOM_ID_0)
+            .name("Auditorium A")
+            .capacity(100)
+            .floor(1)
+            .videoconferenceEquipped(true)
+            .createdAt(LocalDateTime.of(2025, 1, 10, 8, 0))
+            .build();
+
+    public static final UUID ROOM_ID_1 = UUID.fromString(PREFIX + "0001");
+    public static final Room ROOM_1 = Room.builder()
+            .id(ROOM_ID_1)
+            .name("Boardroom B")
+            .capacity(12)
+            .floor(2)
+            .videoconferenceEquipped(true)
+            .createdAt(LocalDateTime.of(2025, 1, 11, 9, 30))
+            .build();
+
+    public static final UUID ROOM_ID_2 = UUID.fromString(PREFIX + "0002");
+    public static final Room ROOM_2 = Room.builder()
+            .id(ROOM_ID_2)
+            .name("Classroom C")
+            .capacity(30)
+            .floor(3)
+            .videoconferenceEquipped(false)
+            .createdAt(LocalDateTime.of(2025, 1, 12, 10, 15))
+            .build();
+
+    public static final UUID ROOM_ID_3 = UUID.fromString(PREFIX + "0003");
+    public static final Room ROOM_3 = Room.builder()
+            .id(ROOM_ID_3)
+            .name("Meeting Room D")
+            .capacity(8)
+            .floor(1)
+            .videoconferenceEquipped(false)
+            .createdAt(LocalDateTime.of(2025, 1, 13, 11, 0))
+            .build();
+
+    private final RoomRepository roomRepository;
+
+    @Override
+    @Transactional
+    public void run(ApplicationArguments args) {
+        log.warn("------- Initial Load RoomBooking from JAVA -----------");
+        this.seedRooms();
+    }
+
+    private void seedRooms() {
+        List<RoomEntity> rooms = List.of(ROOM_0, ROOM_1, ROOM_2, ROOM_3).stream()
+                .filter(room -> !this.roomRepository.existsById(room.getId()))
+                .map(RoomEntity::new)
+                .toList();
+        this.roomRepository.saveAll(rooms);
+        log.warn("        ------- rooms: {} added", rooms.size());
+    }
+}
