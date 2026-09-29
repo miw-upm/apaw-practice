@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClauseAdapter implements ClauseGateway {
     private final ClauseRepository clauseRepository;
+    private final ContractRepository contractRepository;
 
     @Override
     public Clause create(Clause clause) {
@@ -31,5 +32,15 @@ public class ClauseAdapter implements ClauseGateway {
         return this.clauseRepository
                 .save(new ClauseEntity(clause))
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.clauseRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.contractRepository.existsByClauses_Id(id);
     }
 }

@@ -11,4 +11,7 @@ public interface ClauseGateway {
     Optional<Clause> read(UUID id);
 
     Clause update(Clause clause);
+
+    void delete(UUID id);
+    boolean isReferenced(UUID id);
 }
