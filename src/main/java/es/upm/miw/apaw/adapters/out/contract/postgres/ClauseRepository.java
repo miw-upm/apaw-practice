@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ClauseRepository extends JpaRepository<ClauseEntity, UUID> {
-    List<ClauseEntity> findAllByOrderByIdAsc();
+    List<ClauseEntity> findAllByOrderByTitleAscIdAsc();
 }
