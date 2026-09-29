@@ -9,4 +9,6 @@ public interface ClauseGateway {
     Clause create(Clause clause);
 
     Optional<Clause> read(UUID id);
+
+    Clause update(Clause clause);
 }
