@@ -46,6 +46,26 @@ public class RoomService {
         return this.roomGateway.update(storedRoom);
     }
 
+    public Room patch(UUID id, Room room) {
+        Room storedRoom = this.read(id);
+        if (room.getName() != null && !storedRoom.getName().equals(room.getName())) {
+            if (this.roomGateway.existsByName(room.getName())) {
+                throw new ConflictException("Room name already exists: " + room.getName());
+            }
+            storedRoom.setName(room.getName());
+        }
+        if (room.getCapacity() != null) {
+            storedRoom.setCapacity(room.getCapacity());
+        }
+        if (room.getFloor() != null) {
+            storedRoom.setFloor(room.getFloor());
+        }
+        if (room.getVideoconferenceEquipped() != null) {
+            storedRoom.setVideoconferenceEquipped(room.getVideoconferenceEquipped());
+        }
+        return this.roomGateway.update(storedRoom);
+    }
+
     public void delete(UUID id) {
         if (this.roomGateway.isReferenced(id)) {
             throw new ConflictException("Room is referenced by a booking: " + id);
