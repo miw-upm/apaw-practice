@@ -1,10 +1,13 @@
 package es.upm.miw.apaw.domain.services.roombooking;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.roombooking.Room;
 import es.upm.miw.apaw.domain.ports.out.roombooking.RoomGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +21,10 @@ public class RoomService {
         }
         room.doDefault();
         return this.roomGateway.create(room);
+    }
+
+    public Room read(UUID id) {
+        return this.roomGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Room id not found: " + id));
     }
 }

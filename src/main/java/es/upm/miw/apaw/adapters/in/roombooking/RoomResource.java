@@ -7,12 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(RoomResource.ROOMS)
 @RequiredArgsConstructor
 public class RoomResource {
 
     public static final String ROOMS = "/room-booking/rooms";
+    public static final String ID = "/{id}";
 
     private final RoomService roomService;
 
@@ -20,5 +23,10 @@ public class RoomResource {
     @ResponseStatus(HttpStatus.CREATED)
     public Room create(@Valid @RequestBody Room room) {
         return this.roomService.create(room);
+    }
+
+    @GetMapping(ID)
+    public Room read(@PathVariable UUID id) {
+        return this.roomService.read(id);
     }
 }
