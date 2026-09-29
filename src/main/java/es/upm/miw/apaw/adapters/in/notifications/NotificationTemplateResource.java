@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(NotificationTemplateResource.NOTIFICATION_TEMPLATES)
+@RequestMapping(NotificationTemplateResource.NOTIFICATION_TEMPLATE)
 @RequiredArgsConstructor
 public class NotificationTemplateResource {
-    public static final String NOTIFICATION_TEMPLATES = "/notification-templates";
+    public static final String NOTIFICATION_TEMPLATE = "/notification-template";
 
     private final NotificationTemplateService notificationTemplateService;
 

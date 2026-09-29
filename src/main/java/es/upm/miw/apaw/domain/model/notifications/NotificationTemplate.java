@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.domain.model.notifications;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,12 +24,13 @@ public class NotificationTemplate {
     private String eventType;
 
     @NotBlank
+    @Size(max = 60, message = "subjectTemplate must not exceed 60 characters")
     private String subjectTemplate;
 
     @NotBlank
+    @Size(max = 500, message = "bodyTemplate must not exceed 500 characters")
     private String bodyTemplate;
 
-    @NotNull
     private Channel channel;
 
     public void doDefault() {
