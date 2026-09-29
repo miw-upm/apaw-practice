@@ -34,4 +34,10 @@ public class RoomResource {
     public Room update(@PathVariable UUID id, @Valid @RequestBody Room room) {
         return this.roomService.update(id, room);
     }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.roomService.delete(id);
+    }
 }

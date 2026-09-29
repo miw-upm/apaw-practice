@@ -10,4 +10,6 @@ public interface RoomGateway {
     Room create(Room room);
     Optional<Room> read(UUID id);
     Room update(Room room);
+    boolean isReferenced(UUID id);
+    void delete(UUID id);
 }

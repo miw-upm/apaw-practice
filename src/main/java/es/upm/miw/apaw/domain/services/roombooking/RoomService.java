@@ -40,4 +40,11 @@ public class RoomService {
         storedRoom.setVideoconferenceEquipped(room.getVideoconferenceEquipped());
         return this.roomGateway.update(storedRoom);
     }
+
+    public void delete(UUID id) {
+        if (this.roomGateway.isReferenced(id)) {
+            throw new ConflictException("Room is referenced by a booking: " + id);
+        }
+        this.roomGateway.delete(id);
+    }
 }

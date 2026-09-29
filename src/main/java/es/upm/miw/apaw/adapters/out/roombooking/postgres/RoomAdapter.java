@@ -13,6 +13,7 @@ import java.util.UUID;
 public class RoomAdapter implements RoomGateway {
 
     private final RoomRepository roomRepository;
+    private final BookingRepository bookingRepository;
 
     @Override
     public boolean existsByName(String name) {
@@ -32,5 +33,15 @@ public class RoomAdapter implements RoomGateway {
     @Override
     public Room update(Room room) {
         return this.roomRepository.save(new RoomEntity(room)).toDomain();
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.bookingRepository.existsByRoomId(id);
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.roomRepository.deleteById(id);
     }
 }
