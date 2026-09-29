@@ -31,6 +31,11 @@ public class Room {
 
     private LocalDateTime createdAt;
 
+    public void doDefault() {
+        this.id = UUID.randomUUID();
+        this.createdAt = LocalDateTime.now();
+    }
+
     public Room ofSummary() {
         return Room.builder()
                 .id(this.id)

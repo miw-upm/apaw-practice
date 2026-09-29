@@ -1,0 +1,24 @@
+package es.upm.miw.apaw.adapters.in.roombooking;
+
+import es.upm.miw.apaw.domain.model.roombooking.Room;
+import es.upm.miw.apaw.domain.services.roombooking.RoomService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(RoomResource.ROOMS)
+@RequiredArgsConstructor
+public class RoomResource {
+
+    public static final String ROOMS = "/room-booking/rooms";
+
+    private final RoomService roomService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Room create(@Valid @RequestBody Room room) {
+        return this.roomService.create(room);
+    }
+}
