@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.contract;
 
+import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.contract.Clause;
 import es.upm.miw.apaw.domain.ports.out.contract.ClauseGateway;
@@ -36,5 +37,17 @@ public class ClauseService {
         storedClause.setVersion(clause.getVersion());
 
         return this.clauseGateway.update(storedClause);
+    }
+
+    public void delete(UUID id) {
+        this.read(id);
+
+        if (this.clauseGateway.isReferenced(id)) {
+            throw new ConflictException(
+                    "Clause is referenced by a contract: " + id
+            );
+        }
+
+        this.clauseGateway.delete(id);
     }
 }
