@@ -1,0 +1,43 @@
+package es.upm.miw.apaw.adapters.out.notifications.postgres;
+
+import es.upm.miw.apaw.domain.model.notifications.Channel;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.UUID;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class NotificationTemplateEntity {
+
+    @Id
+    @EqualsAndHashCode.Include
+    private UUID id;
+
+    @Column(nullable = false)
+    private String eventType;
+
+    @Column(nullable = false)
+    private String subjectTemplate;
+
+    @Column(nullable = false)
+    private String bodyTemplate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Channel channel;
+}
