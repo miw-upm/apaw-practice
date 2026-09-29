@@ -1,10 +1,13 @@
 package es.upm.miw.apaw.domain.services.notifications;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.notifications.NotificationTemplate;
 import es.upm.miw.apaw.domain.ports.out.notifications.NotificationTemplateGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +21,10 @@ public class NotificationTemplateService {
         }
         notificationTemplate.doDefault();
         return this.notificationTemplateGateway.create(notificationTemplate);
+    }
+
+    public NotificationTemplate read(UUID id) {
+        return this.notificationTemplateGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Notification template id not found: " + id));
     }
 }
