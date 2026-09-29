@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.contract;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.contract.Clause;
+import es.upm.miw.apaw.domain.model.contract.ClauseUpdate;
 import es.upm.miw.apaw.domain.ports.out.contract.ClauseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,23 @@ public class ClauseService {
         this.clauseGateway.delete(id);
     }
 
-    public List<Clause> findAll() {
-        return this.clauseGateway.findAll();
+    public List<Clause> findAll() {return this.clauseGateway.findAll();}
+
+    public Clause patch(UUID id, ClauseUpdate patch) {
+        Clause storedClause = this.read(id);
+
+        if (patch.type() != null) {
+            storedClause.setType(patch.type());
+        }
+
+        if (patch.notes() != null) {
+            storedClause.setNotes(patch.notes());
+        }
+
+        if (patch.effectiveUntil() != null) {
+            storedClause.setEffectiveUntil(patch.effectiveUntil());
+        }
+
+        return this.clauseGateway.update(storedClause);
     }
 }

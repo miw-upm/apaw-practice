@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.contract;
 
 import es.upm.miw.apaw.domain.model.contract.Clause;
+import es.upm.miw.apaw.domain.model.contract.ClauseUpdate;
 import es.upm.miw.apaw.domain.services.contract.ClauseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,4 +39,9 @@ public class ClauseResource {
 
     @GetMapping
     public List<Clause> findAll() {return this.clauseService.findAll();}
+
+    @PatchMapping(ID)
+    public Clause patch(@PathVariable UUID id, @RequestBody ClauseUpdate patch) {
+        return this.clauseService.patch(id, patch);
+    }
 }
