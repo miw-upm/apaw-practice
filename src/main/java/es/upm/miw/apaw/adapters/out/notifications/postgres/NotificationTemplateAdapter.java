@@ -5,6 +5,9 @@ import es.upm.miw.apaw.domain.ports.out.notifications.NotificationTemplateGatewa
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class NotificationTemplateAdapter implements NotificationTemplateGateway {
@@ -20,5 +23,11 @@ public class NotificationTemplateAdapter implements NotificationTemplateGateway 
     @Override
     public boolean existsByEventType(String eventType) {
         return this.notificationTemplateRepository.existsByEventType(eventType);
+    }
+
+    @Override
+    public Optional<NotificationTemplate> read(UUID id) {
+        return this.notificationTemplateRepository.findById(id)
+                .map(NotificationTemplateEntity::toDomain);
     }
 }
