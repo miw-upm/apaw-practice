@@ -7,12 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(ClauseResource.CLAUSES)
 @RequiredArgsConstructor
 public class ClauseResource {
 
     public static final String CLAUSES = "/clauses";
+    public static final String ID = "/{id}";
 
     private final ClauseService clauseService;
 
@@ -21,4 +24,7 @@ public class ClauseResource {
     public Clause create(@Valid @RequestBody Clause clause) {
         return this.clauseService.create(clause);
     }
+
+    @GetMapping(ID)
+    public Clause read(@PathVariable UUID id) {return this.clauseService.read(id);}
 }
