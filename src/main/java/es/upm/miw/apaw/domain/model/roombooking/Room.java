@@ -2,10 +2,7 @@ package es.upm.miw.apaw.domain.model.roombooking;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,8 +11,10 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Room {
 
+    @EqualsAndHashCode.Include
     private UUID id;
 
     @NotBlank
@@ -31,4 +30,13 @@ public class Room {
     private Boolean videoconferenceEquipped = false;
 
     private LocalDateTime createdAt;
+
+    public Room ofSummary() {
+        return Room.builder()
+                .id(this.id)
+                .name(this.name)
+                .capacity(this.capacity)
+                .floor(this.floor)
+                .build();
+    }
 }
