@@ -23,4 +23,18 @@ public class ClauseService {
         return this.clauseGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Clause id not found: " + id));
     }
+
+    public Clause update(UUID id, Clause clause) {
+        Clause storedClause = this.read(id);
+
+        storedClause.setTitle(clause.getTitle());
+        storedClause.setType(clause.getType());
+        storedClause.setContent(clause.getContent());
+        storedClause.setEffectiveFrom(clause.getEffectiveFrom());
+        storedClause.setEffectiveUntil(clause.getEffectiveUntil());
+        storedClause.setNotes(clause.getNotes());
+        storedClause.setVersion(clause.getVersion());
+
+        return this.clauseGateway.update(storedClause);
+    }
 }

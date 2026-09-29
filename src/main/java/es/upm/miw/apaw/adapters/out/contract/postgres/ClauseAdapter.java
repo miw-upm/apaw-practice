@@ -25,4 +25,11 @@ public class ClauseAdapter implements ClauseGateway {
         return this.clauseRepository.findById(id)
                 .map(ClauseEntity::toDomain);
     }
+
+    @Override
+    public Clause update(Clause clause) {
+        return this.clauseRepository
+                .save(new ClauseEntity(clause))
+                .toDomain();
+    }
 }

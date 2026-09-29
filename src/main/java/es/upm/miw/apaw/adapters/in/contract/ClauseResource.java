@@ -27,4 +27,7 @@ public class ClauseResource {
 
     @GetMapping(ID)
     public Clause read(@PathVariable UUID id) {return this.clauseService.read(id);}
+
+    @PutMapping(ID)
+    public Clause update(@PathVariable UUID id, @Valid @RequestBody Clause clause) {return this.clauseService.update(id, clause);}
 }
