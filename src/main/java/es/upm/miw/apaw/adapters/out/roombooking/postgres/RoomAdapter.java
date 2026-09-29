@@ -28,4 +28,9 @@ public class RoomAdapter implements RoomGateway {
     public Optional<Room> read(UUID id) {
         return this.roomRepository.findById(id).map(RoomEntity::toDomain);
     }
+
+    @Override
+    public Room update(Room room) {
+        return this.roomRepository.save(new RoomEntity(room)).toDomain();
+    }
 }

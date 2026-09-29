@@ -29,4 +29,9 @@ public class RoomResource {
     public Room read(@PathVariable UUID id) {
         return this.roomService.read(id);
     }
+
+    @PutMapping(ID)
+    public Room update(@PathVariable UUID id, @Valid @RequestBody Room room) {
+        return this.roomService.update(id, room);
+    }
 }

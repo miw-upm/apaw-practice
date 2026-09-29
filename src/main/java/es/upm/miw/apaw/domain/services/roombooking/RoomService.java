@@ -27,4 +27,17 @@ public class RoomService {
         return this.roomGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Room id not found: " + id));
     }
+
+    public Room update(UUID id, Room room) {
+        Room storedRoom = this.read(id);
+        if (!storedRoom.getName().equals(room.getName())
+                && this.roomGateway.existsByName(room.getName())) {
+            throw new ConflictException("Room name already exists: " + room.getName());
+        }
+        storedRoom.setName(room.getName());
+        storedRoom.setCapacity(room.getCapacity());
+        storedRoom.setFloor(room.getFloor());
+        storedRoom.setVideoconferenceEquipped(room.getVideoconferenceEquipped());
+        return this.roomGateway.update(storedRoom);
+    }
 }

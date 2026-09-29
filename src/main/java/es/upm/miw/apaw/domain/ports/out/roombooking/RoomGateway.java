@@ -9,4 +9,5 @@ public interface RoomGateway {
     boolean existsByName(String name);
     Room create(Room room);
     Optional<Room> read(UUID id);
+    Room update(Room room);
 }
