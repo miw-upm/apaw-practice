@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.roombooking.RoomGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +29,13 @@ public class RoomAdapter implements RoomGateway {
     @Override
     public Optional<Room> read(UUID id) {
         return this.roomRepository.findById(id).map(RoomEntity::toDomain);
+    }
+
+    @Override
+    public List<Room> findAll() {
+        return this.roomRepository.findAllByOrderByNameAsc().stream()
+                .map(RoomEntity::toDomain)
+                .toList();
     }
 
     @Override

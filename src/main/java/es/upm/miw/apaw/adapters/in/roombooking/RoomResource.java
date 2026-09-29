@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,6 +24,11 @@ public class RoomResource {
     @ResponseStatus(HttpStatus.CREATED)
     public Room create(@Valid @RequestBody Room room) {
         return this.roomService.create(room);
+    }
+
+    @GetMapping
+    public List<Room> findAll() {
+        return this.roomService.findAll();
     }
 
     @GetMapping(ID)

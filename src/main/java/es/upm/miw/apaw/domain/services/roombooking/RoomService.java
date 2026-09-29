@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.roombooking.RoomGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,6 +27,10 @@ public class RoomService {
     public Room read(UUID id) {
         return this.roomGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Room id not found: " + id));
+    }
+
+    public List<Room> findAll() {
+        return this.roomGateway.findAll();
     }
 
     public Room update(UUID id, Room room) {
