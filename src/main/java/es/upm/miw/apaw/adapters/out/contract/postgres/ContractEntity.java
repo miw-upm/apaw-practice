@@ -47,7 +47,7 @@ public class ContractEntity {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<ClauseEntity> clauses;
 
     @Column(nullable = false)
