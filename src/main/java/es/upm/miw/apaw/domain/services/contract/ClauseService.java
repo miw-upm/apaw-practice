@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.contract.ClauseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -49,5 +50,9 @@ public class ClauseService {
         }
 
         this.clauseGateway.delete(id);
+    }
+
+    public List<Clause> findAll() {
+        return this.clauseGateway.findAll();
     }
 }
