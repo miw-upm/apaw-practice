@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.contract.ClauseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,5 +43,13 @@ public class ClauseAdapter implements ClauseGateway {
     @Override
     public boolean isReferenced(UUID id) {
         return this.contractRepository.existsByClauses_Id(id);
+    }
+
+    @Override
+    public List<Clause> findAll() {
+        return this.clauseRepository.findAllByOrderByIdAsc()
+                .stream()
+                .map(ClauseEntity::toDomain)
+                .toList();
     }
 }
