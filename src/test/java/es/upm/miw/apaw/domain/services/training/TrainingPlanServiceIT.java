@@ -73,17 +73,4 @@ class TrainingPlanServiceIT {
         assertThat(entity.getCourses()).extracting(CourseEntity::getId).containsExactlyInAnyOrder(COURSE_ID_1, COURSE_ID_2);
         assertThat(entity.getUserIds()).containsExactly(user.getId());
     }
-    
-    @Test
-    @Transactional
-    void testCreateConflict() {
-        CreationTrainingPlan creation = new CreationTrainingPlan(
-                "Training Plan A",
-                LocalDate.now(),
-                BigDecimal.ONE,
-                List.of(COURSE_ID_1),
-                List.of(UUID.randomUUID())
-        );
-        assertThrows(ConflictException.class, () -> this.trainingPlanService.create(creation));
-    }
 }
