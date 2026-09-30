@@ -10,4 +10,6 @@ public interface CourseGateway {
     boolean existsByName(String name);
     Optional<Course> read(UUID id);
     Course update(Course course);
+    void delete(UUID id);
+    boolean isReferenced(UUID id);
 }
