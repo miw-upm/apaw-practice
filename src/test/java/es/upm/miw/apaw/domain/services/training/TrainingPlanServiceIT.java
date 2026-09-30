@@ -1,4 +1,4 @@
-﻿package es.upm.miw.apaw.domain.services.training;
+package es.upm.miw.apaw.domain.services.training;
 
 import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanEntity;
 import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanRepository;
