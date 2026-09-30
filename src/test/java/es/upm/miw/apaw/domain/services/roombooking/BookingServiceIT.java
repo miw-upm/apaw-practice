@@ -5,6 +5,7 @@ import es.upm.miw.apaw.adapters.out.roombooking.postgres.BookingRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.roombooking.Booking;
+import es.upm.miw.apaw.domain.model.roombooking.BookingFindCriteria;
 import es.upm.miw.apaw.domain.model.roombooking.CreationBooking;
 import es.upm.miw.apaw.domain.model.roombooking.UserBookingReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -16,8 +17,11 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
 
+import static es.upm.miw.apaw.config.seeders.RoomBookingSeederForDev.BOOKING_ID_0;
 import static es.upm.miw.apaw.config.seeders.RoomBookingSeederForDev.ROOM_ID_0;
 import static es.upm.miw.apaw.config.seeders.RoomBookingSeederForDev.USER_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -153,5 +157,35 @@ class BookingServiceIT {
                     assertThat(report.getTotalAttendees()).isGreaterThanOrEqualTo(50L);
                     assertThat(report.getUserSnapshot().getFirstName()).isEqualTo("Admin");
                 });
+    }
+
+    @Test
+    void testFind() {
+        UserSnapshot userSnapshot = UserSnapshot.builder()
+                .id(USER_ID_0)
+                .firstName("Admin")
+                .familyName("System")
+                .email("admin@email.com")
+                .mobile("600999999")
+                .build();
+
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(userSnapshot));
+
+        BookingFindCriteria criteria = BookingFindCriteria.builder()
+                .estimatedAttendees(50)
+                .ongoing(false)
+                .videoconferenceEquipped(true)
+                .userEmail("admin@email.com")
+                .build();
+
+        List<Booking> bookings = this.bookingService.find(criteria);
+
+        assertThat(bookings)
+                .extracting(Booking::getId)
+                .contains(BOOKING_ID_0);
+
+        assertThat(bookings).filteredOn(b -> b.getId().equals(BOOKING_ID_0))
+                .singleElement()
+                .satisfies(b -> assertThat(b.getUserSnapshot().getId()).isEqualTo(USER_ID_0));
     }
 }
