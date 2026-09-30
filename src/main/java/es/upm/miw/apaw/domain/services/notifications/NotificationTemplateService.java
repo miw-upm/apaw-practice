@@ -8,6 +8,7 @@ import es.upm.miw.apaw.domain.ports.out.notifications.NotificationTemplateGatewa
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +27,10 @@ public class NotificationTemplateService {
     public NotificationTemplate read(UUID id) {
         return this.notificationTemplateGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Notification template id not found: " + id));
+    }
+
+    public List<NotificationTemplate> findAll() {
+        return this.notificationTemplateGateway.findAll();
     }
 
     public NotificationTemplate update(UUID id, NotificationTemplate update) {
