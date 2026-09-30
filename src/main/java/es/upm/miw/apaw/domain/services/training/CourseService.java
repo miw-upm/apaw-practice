@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.training.CourseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -49,5 +50,9 @@ public class CourseService {
             throw new ConflictException("Course is referenced by a training plan: " + id);
         }
         this.courseGateway.delete(id);
+    }
+
+    public List<Course> findAll() {
+        return this.courseGateway.findAll();
     }
 }
