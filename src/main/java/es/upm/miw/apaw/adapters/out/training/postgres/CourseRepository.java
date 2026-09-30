@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.adapters.out.training.postgres;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
-public interface CourseRepository extends CrudRepository<CourseEntity, UUID> {
+public interface CourseRepository extends JpaRepository<CourseEntity, UUID> {
 }

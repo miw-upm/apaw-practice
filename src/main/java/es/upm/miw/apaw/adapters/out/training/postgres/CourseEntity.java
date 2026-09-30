@@ -21,13 +21,13 @@ public class CourseEntity {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @Column
+    @Column(unique = true)
     private String certificateReference;
 
-    @Column
+    @Column(nullable = false)
     private Integer durationHours;
 
     @Column

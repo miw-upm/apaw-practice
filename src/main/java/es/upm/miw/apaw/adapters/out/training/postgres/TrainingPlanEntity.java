@@ -1,9 +1,6 @@
 package es.upm.miw.apaw.adapters.out.training.postgres;
 
-import es.upm.miw.apaw.domain.model.UserSnapshot;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -11,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,7 +21,7 @@ public class TrainingPlanEntity {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String planCode;
 
     @Column
@@ -35,9 +33,9 @@ public class TrainingPlanEntity {
     @Column
     private BigDecimal evaluationScore;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<CourseEntity> courses;
 
-    @OneToMany
-    private List<UserSnapshot> userSnapshots;
+    @ElementCollection
+    private List<UUID> userIds;
 }
