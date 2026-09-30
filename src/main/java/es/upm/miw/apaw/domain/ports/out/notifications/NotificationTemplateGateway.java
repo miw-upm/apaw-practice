@@ -10,6 +10,10 @@ public interface NotificationTemplateGateway {
 
     NotificationTemplate update(NotificationTemplate notificationTemplate);
 
+    void delete(UUID id);
+
+    boolean isReferenced(UUID id);
+
     boolean existsByEventType(String eventType);
 
     Optional<NotificationTemplate> read(UUID id);

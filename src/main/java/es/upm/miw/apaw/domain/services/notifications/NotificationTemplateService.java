@@ -45,6 +45,14 @@ public class NotificationTemplateService {
         return this.notificationTemplateGateway.update(storedTemplate);
     }
 
+    public void delete(UUID id) {
+        this.read(id);
+        if (this.notificationTemplateGateway.isReferenced(id)) {
+            throw new ConflictException("Notification template is referenced by a notification: " + id);
+        }
+        this.notificationTemplateGateway.delete(id);
+    }
+
     private void validate(NotificationTemplate notificationTemplate) {
         this.validateEventType(notificationTemplate.getEventType());
         if (notificationTemplate.getSubjectTemplate() == null
