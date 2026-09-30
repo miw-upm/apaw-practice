@@ -61,8 +61,8 @@ class CourseResourceFT {
                 .expectStatus().isOk()
                 .expectBody(Course[].class)
                 .value(courses -> {
-                    assertEquals(4, courses.length);
-                    assertEquals("AWS Advanced", courses[0].getName());
+                    assertThat(courses).extracting(Course::getId)
+                        .containsSubsequence(COURSE_ID_3, COURSE_ID_1, COURSE_ID_2, COURSE_ID_0);
                 });
     }
 
@@ -86,7 +86,7 @@ class CourseResourceFT {
         this.restTestClient.post().uri(CourseResource.COURSES)
                 .body(course)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
 
     @Test
@@ -118,7 +118,7 @@ class CourseResourceFT {
         this.restTestClient.put().uri(CourseResource.COURSES + "/" + COURSE_ID_1)
                 .body(course)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
 
     @Test
@@ -183,5 +183,6 @@ class CourseResourceFT {
                 .expectStatus().isNoContent();
     }
 }
+
 
 
