@@ -17,10 +17,8 @@ public class NotificationTemplateService {
     private final NotificationTemplateGateway notificationTemplateGateway;
 
     public NotificationTemplate create(NotificationTemplate notificationTemplate) {
-        if (this.notificationTemplateGateway.existsByEventType(notificationTemplate.getEventType())) {
-            throw new ConflictException(
-                    "Notification template event type already exists: " + notificationTemplate.getEventType());
-        }
+        this.validateEventType(notificationTemplate.getEventType());
+        this.assertEventTypeIsAvailable(notificationTemplate.getEventType());
         notificationTemplate.doDefault();
         return this.notificationTemplateGateway.create(notificationTemplate);
     }
@@ -41,19 +39,14 @@ public class NotificationTemplateService {
 
         this.validate(storedTemplate);
 
-        if (update.getEventType() != null
-                && !update.getEventType().equals(storedEventType)
-                && this.notificationTemplateGateway.existsByEventType(update.getEventType())) {
-            throw new ConflictException(
-                    "Notification template event type already exists: " + update.getEventType());
+        if (!storedTemplate.getEventType().equals(storedEventType)) {
+            this.assertEventTypeIsAvailable(storedTemplate.getEventType());
         }
         return this.notificationTemplateGateway.update(storedTemplate);
     }
 
     private void validate(NotificationTemplate notificationTemplate) {
-        if (notificationTemplate.getEventType() == null || notificationTemplate.getEventType().isBlank()) {
-            throw new BadRequestException("Notification template event type must not be blank");
-        }
+        this.validateEventType(notificationTemplate.getEventType());
         if (notificationTemplate.getSubjectTemplate() == null
                 || notificationTemplate.getSubjectTemplate().isBlank()) {
             throw new BadRequestException("Notification template subject must not be blank");
@@ -66,6 +59,21 @@ public class NotificationTemplateService {
         }
         if (notificationTemplate.getBodyTemplate().length() > 500) {
             throw new BadRequestException("Notification template body must not exceed 500 characters");
+        }
+    }
+
+    private void validateEventType(String eventType) {
+        if (eventType == null || eventType.isBlank()) {
+            throw new BadRequestException("Notification template event type must not be blank");
+        }
+        if (eventType.length() > 60) {
+            throw new BadRequestException("Notification template event type must not exceed 60 characters");
+        }
+    }
+
+    private void assertEventTypeIsAvailable(String eventType) {
+        if (this.notificationTemplateGateway.existsByEventType(eventType)) {
+            throw new ConflictException("Notification template event type already exists: " + eventType);
         }
     }
 }
