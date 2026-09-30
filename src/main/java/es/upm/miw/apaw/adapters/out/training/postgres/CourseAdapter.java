@@ -35,4 +35,9 @@ public class CourseAdapter implements CourseGateway {
         CourseEntity entity = new CourseEntity(course);
         return this.courseRepository.save(entity).toDomain();
     }
+
+    @Override
+    public void delete(UUID id) {
+        this.courseRepository.deleteById(id);
+    }
 }

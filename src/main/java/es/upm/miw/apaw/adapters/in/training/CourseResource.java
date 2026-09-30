@@ -31,4 +31,9 @@ public class CourseResource {
     public Course update(@PathVariable UUID id, @Valid @RequestBody Course course) {
         return this.courseService.update(id, course);
     }
+
+    @DeleteMapping(ID)
+    public void delete(@PathVariable UUID id) {
+        this.courseService.delete(id);
+    }
 }

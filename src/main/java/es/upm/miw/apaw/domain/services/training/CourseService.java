@@ -43,4 +43,8 @@ public class CourseService {
         
         return this.courseGateway.update(storedCourse);
     }
+
+    public void delete(UUID id) {
+        this.courseGateway.delete(id);
+    }
 }
