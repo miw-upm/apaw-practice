@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.adapters.out.expertdirectoryservices.postgres;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.expertDirectoryServices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;

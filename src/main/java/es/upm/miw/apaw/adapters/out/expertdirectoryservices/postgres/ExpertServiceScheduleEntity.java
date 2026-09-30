@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.out.expertdirectoryservices.postgres;
 
-import es.upm.miw.apaw.domain.model.expertDirectoryServices.ExpertServiceSchedule;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.ExpertServiceSchedule;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
