@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.in.notifications;
 
+import es.upm.miw.apaw.domain.model.notifications.CreationNotification;
 import es.upm.miw.apaw.domain.model.notifications.Notification;
 import es.upm.miw.apaw.domain.services.notifications.NotificationService;
 import jakarta.validation.Valid;
@@ -21,7 +22,7 @@ public class NotificationResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Notification create(@Valid @RequestBody CreationNotificationDto creation) {
-        return this.notificationService.create(creation.toDomain());
+    public Notification create(@Valid @RequestBody CreationNotification creation) {
+        return this.notificationService.create(creation);
     }
 }

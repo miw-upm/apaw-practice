@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.model.notifications;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,9 +24,11 @@ public class Notification {
     private UUID id;
 
     @NotBlank
+    @Size(max = 255)
     private String title;
 
     @NotBlank
+    @Size(max = 255)
     private String message;
 
     @NotNull

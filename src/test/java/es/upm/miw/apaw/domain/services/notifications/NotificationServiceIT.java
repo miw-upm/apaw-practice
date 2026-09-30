@@ -1,11 +1,11 @@
 package es.upm.miw.apaw.domain.services.notifications;
 
-import es.upm.miw.apaw.adapters.in.notifications.CreationNotificationDto;
 import es.upm.miw.apaw.adapters.out.notifications.postgres.NotificationEntity;
 import es.upm.miw.apaw.adapters.out.notifications.postgres.NotificationRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.notifications.Channel;
+import es.upm.miw.apaw.domain.model.notifications.CreationNotification;
 import es.upm.miw.apaw.domain.model.notifications.Notification;
 import es.upm.miw.apaw.domain.model.notifications.NotificationStatus;
 import es.upm.miw.apaw.domain.model.notifications.NotificationTemplate;
@@ -55,10 +55,14 @@ class NotificationServiceIT {
                 .firstName("recipient")
                 .build();
         when(this.userFinder.read(user.getId())).thenReturn(user);
-        CreationNotificationDto creation = new CreationNotificationDto(
-                "Notification title", "Notification message", template.getId(), null, user.getId());
+        CreationNotification creation = CreationNotification.builder()
+                .title("Notification title")
+                .message("Notification message")
+                .notificationTemplateId(template.getId())
+                .userId(user.getId())
+                .build();
 
-        Notification notification = this.notificationService.create(creation.toDomain());
+        Notification notification = this.notificationService.create(creation);
 
         assertThat(notification.getId()).isNotNull();
         assertThat(notification.getCreatedAt()).isEqualTo(LocalDate.now());
@@ -68,8 +72,8 @@ class NotificationServiceIT {
         assertThat(notification.getNotificationTemplate().getId()).isEqualTo(template.getId());
         assertThat(notification.getRecipient()).isEqualTo(user);
         NotificationEntity stored = this.notificationRepository.findById(notification.getId()).orElseThrow();
-        assertThat(stored.getTitle()).isEqualTo(creation.title());
-        assertThat(stored.getMessage()).isEqualTo(creation.message());
+        assertThat(stored.getTitle()).isEqualTo(creation.getTitle());
+        assertThat(stored.getMessage()).isEqualTo(creation.getMessage());
         assertThat(stored.getNotificationTemplate().getId()).isEqualTo(template.getId());
         assertThat(stored.getRecipientId()).isEqualTo(user.getId());
         verify(this.userFinder, times(1)).read(user.getId());
@@ -102,8 +106,10 @@ class NotificationServiceIT {
 
     @Test
     void testCreationInputRequiresContentAndReferences() {
-        CreationNotificationDto invalidCreation = new CreationNotificationDto(
-                " ", null, null, null, null);
+        CreationNotification invalidCreation = CreationNotification.builder()
+                .title(" ")
+                .message(null)
+                .build();
 
         Set<String> invalidProperties = this.validator.validate(invalidCreation).stream()
                 .map(violation -> violation.getPropertyPath().toString())
@@ -111,6 +117,22 @@ class NotificationServiceIT {
 
         assertThat(invalidProperties).containsExactlyInAnyOrder(
                 "title", "message", "notificationTemplateId", "userId");
+    }
+
+    @Test
+    void testCreationInputRejectsContentOverColumnLength() {
+        CreationNotification invalidCreation = CreationNotification.builder()
+                .title("t".repeat(256))
+                .message("m".repeat(256))
+                .notificationTemplateId(UUID.randomUUID())
+                .userId(UUID.randomUUID())
+                .build();
+
+        Set<String> invalidProperties = this.validator.validate(invalidCreation).stream()
+                .map(violation -> violation.getPropertyPath().toString())
+                .collect(Collectors.toSet());
+
+        assertThat(invalidProperties).containsExactlyInAnyOrder("title", "message");
     }
 
     private NotificationTemplate createTemplate() {
@@ -122,8 +144,13 @@ class NotificationServiceIT {
                 .build());
     }
 
-    private CreationNotificationDto creation(UUID templateId, UUID userId) {
-        return new CreationNotificationDto(
-                "Notification title", "Notification message", templateId, Priority.HIGH, userId);
+    private CreationNotification creation(UUID templateId, UUID userId) {
+        return CreationNotification.builder()
+                .title("Notification title")
+                .message("Notification message")
+                .notificationTemplateId(templateId)
+                .priority(Priority.HIGH)
+                .userId(userId)
+                .build();
     }
 }

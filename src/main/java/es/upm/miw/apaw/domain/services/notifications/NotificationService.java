@@ -9,6 +9,7 @@ import es.upm.miw.apaw.domain.ports.out.notifications.NotificationGateway;
 import es.upm.miw.apaw.domain.ports.out.notifications.NotificationTemplateGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,13 +28,10 @@ public class NotificationService {
         if (recipient == null) {
             throw new NotFoundException("User id not found: " + creation.getUserId());
         }
-        Notification notification = Notification.builder()
-                .title(creation.getTitle())
-                .message(creation.getMessage())
-                .notificationTemplate(notificationTemplate)
-                .priority(creation.getPriority())
-                .recipient(recipient)
-                .build();
+        Notification notification = new Notification();
+        BeanUtils.copyProperties(creation, notification, "notificationTemplateId", "userId");
+        notification.setNotificationTemplate(notificationTemplate);
+        notification.setRecipient(recipient);
         notification.doDefault();
         return this.notificationGateway.create(notification);
     }
