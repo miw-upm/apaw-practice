@@ -8,6 +8,7 @@ import es.upm.miw.apaw.domain.ports.out.roombooking.BookingGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class BookingService {
     private final RoomService roomService;
     private final UserFinder userFinder;
 
+    @Transactional
     public Booking create(CreationBooking creationBooking) {
         UserSnapshot userSnapshot = this.userFinder.read(creationBooking.getUserId());
         Room room = this.roomService.read(creationBooking.getRoomId());
