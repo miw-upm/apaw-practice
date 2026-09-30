@@ -37,8 +37,7 @@ public class NotificationTemplateResource {
     }
 
     @PutMapping(ID)
-    public NotificationTemplate update(@PathVariable UUID id,
-                                       @Valid @RequestBody NotificationTemplateUpdateDto update) {
-        return this.notificationTemplateService.update(id, update.toDomain());
+    public NotificationTemplate update(@PathVariable UUID id, @RequestBody NotificationTemplate update) {
+        return this.notificationTemplateService.update(id, update);
     }
 }
