@@ -1,13 +1,18 @@
 package es.upm.miw.apaw.domain.services.training;
 
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.training.Course;
+import es.upm.miw.apaw.domain.model.training.CourseDurationUpdate;
 import es.upm.miw.apaw.domain.ports.out.training.CourseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -54,5 +59,27 @@ public class CourseService {
 
     public List<Course> findAll() {
         return this.courseGateway.findAll();
+    }
+
+    @Transactional
+    public void updateDurationHours(List<CourseDurationUpdate> updates) {
+        this.assertUniqueIds(updates);
+        List<Course> courses = updates.stream()
+                .map(update -> {
+                    Course course = this.read(update.id());
+                    course.setDurationHours(update.durationHours());
+                    return course;
+                })
+                .toList();
+        courses.forEach(this.courseGateway::update);
+    }
+
+    private void assertUniqueIds(List<CourseDurationUpdate> updates) {
+        Set<UUID> ids = new HashSet<>();
+        for (CourseDurationUpdate update : updates) {
+            if (!ids.add(update.id())) {
+                throw new BadRequestException("Repeated course id: " + update.id());
+            }
+        }
     }
 }
