@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.ports.out.training.CourseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class CourseAdapter implements CourseGateway {
@@ -19,5 +21,10 @@ public class CourseAdapter implements CourseGateway {
     @Override
     public boolean existsByName(String name) {
         return this.courseRepository.existsByName(name);
+    }
+
+    @Override
+    public Course read(UUID id) {
+        return this.courseRepository.findById(id).get().toDomain();
     }
 }

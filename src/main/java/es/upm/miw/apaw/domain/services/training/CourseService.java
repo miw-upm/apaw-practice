@@ -6,6 +6,8 @@ import es.upm.miw.apaw.domain.ports.out.training.CourseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CourseService {
@@ -17,5 +19,9 @@ public class CourseService {
         }
         course.doDefault();
         return this.courseGateway.create(course);
+    }
+
+    public Course read(UUID id) {
+        return this.courseGateway.read(id);
     }
 }
