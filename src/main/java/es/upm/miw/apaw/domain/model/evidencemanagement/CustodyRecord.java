@@ -1,31 +1,39 @@
 package es.upm.miw.apaw.domain.model.evidencemanagement;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import lombok.Getter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class CustodyRecord {
 
+    @EqualsAndHashCode.Include
     private UUID id;
+
     private LocalDateTime recordedAt;
+
     private Integer durationMinutes;
+
+    @NotBlank
     private String action;
+
     private String location;
+
     private String notes;
+
+    @NotNull
     private UserSnapshot custodian;
 
-    public CustodyRecord(UUID id, LocalDateTime recordedAt, Integer durationMinutes,
-                         String action, String location, String notes,
-                         UserSnapshot custodian) {
-        this.id = id;
-        this.recordedAt = recordedAt;
-        this.durationMinutes = durationMinutes;
-        this.action = action;
-        this.location = location;
-        this.notes = notes;
-        this.custodian = custodian;
+    public void doDefault() {
+        this.id = UUID.randomUUID();
+        this.recordedAt = LocalDateTime.now();
     }
 }

@@ -1,40 +1,48 @@
 package es.upm.miw.apaw.domain.model.evidencemanagement;
 
-import lombok.Getter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Evidence {
 
+    @EqualsAndHashCode.Include
     private UUID id;
+
+    @NotBlank
     private String title;
+
     private String description;
+
+    @NotNull
     private EvidenceType evidenceType;
+
     private EvidenceStatus status;
+
     private LocalDateTime collectionDate;
+
     private String source;
-    private boolean confidential;
-    private final List<CustodyRecord> custodyRecords = new ArrayList<>();
 
-    public Evidence(UUID id, String title, String description, EvidenceType evidenceType,
-                    EvidenceStatus status, LocalDateTime collectionDate, String source,
-                    boolean confidential) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.evidenceType = evidenceType;
-        this.status = status;
-        this.collectionDate = collectionDate;
-        this.source = source;
-        this.confidential = confidential;
-    }
+    private Boolean confidential;
 
-    public void addCustodyRecord(CustodyRecord custodyRecord) {
-        this.custodyRecords.add(custodyRecord);
+    private List<CustodyRecord> custodyRecords;
+
+    public void doDefault() {
+        this.id = UUID.randomUUID();
+        if (this.status == null) {
+            this.status = EvidenceStatus.REGISTERED;
+        }
+        if (this.confidential == null) {
+            this.confidential = false;
+        }
     }
 }
-
