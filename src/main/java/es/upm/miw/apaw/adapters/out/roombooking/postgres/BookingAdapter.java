@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class BookingAdapter implements BookingGateway {
@@ -18,5 +20,10 @@ public class BookingAdapter implements BookingGateway {
         BookingEntity bookingEntity = new BookingEntity(booking);
         BookingEntity saved = this.bookingRepository.save(bookingEntity);
         return saved.toDomain();
+    }
+
+    @Override
+    public List<UserBookingStat> findUserBookingStats() {
+        return this.bookingRepository.findUserBookingStats();
     }
 }
