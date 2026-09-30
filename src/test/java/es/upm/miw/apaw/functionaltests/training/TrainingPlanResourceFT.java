@@ -52,7 +52,7 @@ class TrainingPlanResourceFT {
 
         CreationTrainingPlan creation = CreationTrainingPlan.builder()
                 .planCode("TP-" + UUID.randomUUID().toString())
-                .courseIds(List.of(TrainingSeederForDev.COURSE_ID_0))
+                .courseIds(List.of(TrainingSeederForDev.COURSE_ID_1))
                 .userIds(List.of(mockUserId))
                 .build();
 
@@ -78,7 +78,7 @@ class TrainingPlanResourceFT {
 
         CreationTrainingPlan creation = CreationTrainingPlan.builder()
                 .planCode("TP-CONFLICT")
-                .courseIds(List.of(TrainingSeederForDev.COURSE_ID_0))
+                .courseIds(List.of(TrainingSeederForDev.COURSE_ID_1))
                 .userIds(List.of(mockUserId))
                 .build();
 
@@ -93,3 +93,4 @@ class TrainingPlanResourceFT {
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
 }
+
