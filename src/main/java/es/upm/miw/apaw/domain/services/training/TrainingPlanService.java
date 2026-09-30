@@ -1,4 +1,4 @@
-﻿package es.upm.miw.apaw.domain.services.training;
+package es.upm.miw.apaw.domain.services.training;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
@@ -24,6 +24,9 @@ public class TrainingPlanService {
     private final UserFinder userFinder;
 
     public TrainingPlan create(CreationTrainingPlan creation) {
+        if (this.trainingPlanGateway.existsByPlanCode(creation.getPlanCode())) {
+            throw new es.upm.miw.apaw.domain.exceptions.ConflictException("TrainingPlan planCode already exists: " + creation.getPlanCode());
+        }
         TrainingPlan trainingPlan = new TrainingPlan();
         BeanUtils.copyProperties(creation, trainingPlan);
         
@@ -42,3 +45,5 @@ public class TrainingPlanService {
                 .orElseThrow(() -> new NotFoundException("Course id not found: " + courseId));
     }
 }
+
+

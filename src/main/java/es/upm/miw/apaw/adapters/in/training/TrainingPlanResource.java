@@ -1,4 +1,4 @@
-﻿package es.upm.miw.apaw.adapters.in.training;
+package es.upm.miw.apaw.adapters.in.training;
 
 import es.upm.miw.apaw.domain.model.training.TrainingPlan;
 import es.upm.miw.apaw.domain.model.training.CreationTrainingPlan;

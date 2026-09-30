@@ -1,6 +1,7 @@
-﻿package es.upm.miw.apaw.domain.model.training;
+package es.upm.miw.apaw.domain.model.training;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,9 @@ public class CreationTrainingPlan {
 
     private BigDecimal evaluationScore;
 
+    @NotEmpty
     private List<UUID> courseIds;
 
+    @NotEmpty
     private List<UUID> userIds;
 }

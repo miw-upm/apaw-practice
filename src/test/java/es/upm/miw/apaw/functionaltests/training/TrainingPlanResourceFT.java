@@ -1,4 +1,4 @@
-﻿package es.upm.miw.apaw.functionaltests.training;
+package es.upm.miw.apaw.functionaltests.training;
 
 import es.upm.miw.apaw.adapters.in.training.TrainingPlanResource;
 import es.upm.miw.apaw.config.seeders.TrainingSeederForDev;

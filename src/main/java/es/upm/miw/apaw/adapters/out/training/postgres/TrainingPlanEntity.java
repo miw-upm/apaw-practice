@@ -1,4 +1,4 @@
-﻿package es.upm.miw.apaw.adapters.out.training.postgres;
+package es.upm.miw.apaw.adapters.out.training.postgres;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.training.TrainingPlan;
@@ -57,7 +57,7 @@ public class TrainingPlanEntity {
         TrainingPlan trainingPlan = new TrainingPlan();
         BeanUtils.copyProperties(this, trainingPlan, "courses", "userIds");
         trainingPlan.setCourses(new ArrayList<>(this.courses.stream()
-                .map(CourseEntity::toCourse)
+                .map(CourseEntity::toDomain)
                 .toList()));
         trainingPlan.setUserSnapshots(this.userIds.stream()
                 .map(id -> UserSnapshot.builder().id(id).build())
@@ -65,3 +65,4 @@ public class TrainingPlanEntity {
         return trainingPlan;
     }
 }
+
