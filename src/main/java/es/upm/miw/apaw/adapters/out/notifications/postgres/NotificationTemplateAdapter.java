@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.notifications.NotificationTemplateGatewa
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,12 +13,30 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NotificationTemplateAdapter implements NotificationTemplateGateway {
     private final NotificationTemplateRepository notificationTemplateRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
     public NotificationTemplate create(NotificationTemplate notificationTemplate) {
         return this.notificationTemplateRepository
                 .save(new NotificationTemplateEntity(notificationTemplate))
                 .toDomain();
+    }
+
+    @Override
+    public NotificationTemplate update(NotificationTemplate notificationTemplate) {
+        return this.notificationTemplateRepository
+                .save(new NotificationTemplateEntity(notificationTemplate))
+                .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.notificationTemplateRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.notificationRepository.existsByNotificationTemplateId(id);
     }
 
     @Override
@@ -29,5 +48,12 @@ public class NotificationTemplateAdapter implements NotificationTemplateGateway 
     public Optional<NotificationTemplate> read(UUID id) {
         return this.notificationTemplateRepository.findById(id)
                 .map(NotificationTemplateEntity::toDomain);
+    }
+
+    @Override
+    public List<NotificationTemplate> findAll() {
+        return this.notificationTemplateRepository.findAllByOrderByEventTypeAscIdAsc().stream()
+                .map(NotificationTemplateEntity::toDomain)
+                .toList();
     }
 }

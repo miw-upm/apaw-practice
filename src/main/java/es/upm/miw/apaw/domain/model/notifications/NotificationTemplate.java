@@ -21,6 +21,7 @@ public class NotificationTemplate {
     private UUID id;
 
     @NotBlank
+    @Size(max = 60, message = "eventType must not exceed 60 characters")
     private String eventType;
 
     @NotBlank
