@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.training;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.training.Course;
 import es.upm.miw.apaw.domain.ports.out.training.CourseGateway;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class CourseService {
     }
 
     public Course read(UUID id) {
-        return this.courseGateway.read(id);
+        return this.courseGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Course id not found: " + id));
     }
 }

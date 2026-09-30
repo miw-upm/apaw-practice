@@ -21,8 +21,8 @@ public class CourseResource {
         return this.courseService.create(course);
     }
 
-    @GetMapping
-    public Course read(UUID id) {
+    @GetMapping(ID)
+    public Course read(@PathVariable UUID id) {
         return this.courseService.read(id);
     }
 }
