@@ -45,6 +45,9 @@ public class CourseService {
     }
 
     public void delete(UUID id) {
+        if (this.courseGateway.isReferenced(id)) {
+            throw new ConflictException("Course is referenced by a training plan: " + id);
+        }
         this.courseGateway.delete(id);
     }
 }

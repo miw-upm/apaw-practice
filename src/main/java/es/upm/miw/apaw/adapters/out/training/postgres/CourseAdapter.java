@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CourseAdapter implements CourseGateway {
     private final CourseRepository courseRepository;
+    private final TrainingPlanRepository trainingPlanRepository;
 
     @Override
     public Course create(Course course) {
@@ -39,5 +40,10 @@ public class CourseAdapter implements CourseGateway {
     @Override
     public void delete(UUID id) {
         this.courseRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.trainingPlanRepository.existsByCoursesId(id);
     }
 }

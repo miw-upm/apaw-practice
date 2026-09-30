@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.model.training.Course;
 import es.upm.miw.apaw.domain.services.training.CourseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -33,6 +34,7 @@ public class CourseResource {
     }
 
     @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.courseService.delete(id);
     }
