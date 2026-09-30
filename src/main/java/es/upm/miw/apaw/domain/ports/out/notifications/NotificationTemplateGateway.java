@@ -8,6 +8,8 @@ import java.util.UUID;
 public interface NotificationTemplateGateway {
     NotificationTemplate create(NotificationTemplate notificationTemplate);
 
+    NotificationTemplate update(NotificationTemplate notificationTemplate);
+
     boolean existsByEventType(String eventType);
 
     Optional<NotificationTemplate> read(UUID id);
