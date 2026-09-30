@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,6 +31,11 @@ public class NotificationTemplateResource {
     @ResponseStatus(HttpStatus.CREATED)
     public NotificationTemplate create(@Valid @RequestBody NotificationTemplate notificationTemplate) {
         return this.notificationTemplateService.create(notificationTemplate);
+    }
+
+    @GetMapping
+    public List<NotificationTemplate> findAll() {
+        return this.notificationTemplateService.findAll();
     }
 
     @GetMapping(ID)
