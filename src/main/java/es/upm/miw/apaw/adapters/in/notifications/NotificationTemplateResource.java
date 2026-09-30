@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.services.notifications.NotificationTemplateService
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,5 +40,11 @@ public class NotificationTemplateResource {
     @PutMapping(ID)
     public NotificationTemplate update(@PathVariable UUID id, @RequestBody NotificationTemplate update) {
         return this.notificationTemplateService.update(id, update);
+    }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.notificationTemplateService.delete(id);
     }
 }

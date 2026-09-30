@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NotificationTemplateAdapter implements NotificationTemplateGateway {
     private final NotificationTemplateRepository notificationTemplateRepository;
+    private final NotificationRepository notificationRepository;
 
     @Override
     public NotificationTemplate create(NotificationTemplate notificationTemplate) {
@@ -25,6 +26,16 @@ public class NotificationTemplateAdapter implements NotificationTemplateGateway 
         return this.notificationTemplateRepository
                 .save(new NotificationTemplateEntity(notificationTemplate))
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.notificationTemplateRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.notificationRepository.existsByNotificationTemplateId(id);
     }
 
     @Override
