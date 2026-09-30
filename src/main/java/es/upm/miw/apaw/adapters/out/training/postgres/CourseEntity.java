@@ -1,9 +1,11 @@
 package es.upm.miw.apaw.adapters.out.training.postgres;
 
+import es.upm.miw.apaw.domain.model.training.Course;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -35,4 +37,14 @@ public class CourseEntity {
 
     @Column
     private LocalDate launchDate;
+
+    public CourseEntity(Course course) {
+        BeanUtils.copyProperties(course, this);
+    }
+
+    public Course toDomain() {
+        Course course = new Course();
+        BeanUtils.copyProperties(this, course);
+        return course;
+    }
 }
