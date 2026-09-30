@@ -35,18 +35,29 @@ public class NotificationTemplateService {
 
     public NotificationTemplate update(UUID id, NotificationTemplate update) {
         NotificationTemplate storedTemplate = this.read(id);
-        String storedEventType = storedTemplate.getEventType();
 
-        Optional.ofNullable(update.getEventType()).ifPresent(storedTemplate::setEventType);
-        Optional.ofNullable(update.getSubjectTemplate()).ifPresent(storedTemplate::setSubjectTemplate);
-        Optional.ofNullable(update.getBodyTemplate()).ifPresent(storedTemplate::setBodyTemplate);
-        Optional.ofNullable(update.getChannel()).ifPresent(storedTemplate::setChannel);
+        this.validate(update);
+        this.assertEventTypeIsAvailable(update.getEventType(), storedTemplate.getEventType());
+
+        storedTemplate.setEventType(update.getEventType());
+        storedTemplate.setSubjectTemplate(update.getSubjectTemplate());
+        storedTemplate.setBodyTemplate(update.getBodyTemplate());
+        storedTemplate.setChannel(update.getChannel());
+
+        return this.notificationTemplateGateway.update(storedTemplate);
+    }
+
+    public NotificationTemplate patch(UUID id, NotificationTemplate patch) {
+        NotificationTemplate storedTemplate = this.read(id);
+        String currentEventType = storedTemplate.getEventType();
+
+        Optional.ofNullable(patch.getEventType()).ifPresent(storedTemplate::setEventType);
+        Optional.ofNullable(patch.getSubjectTemplate()).ifPresent(storedTemplate::setSubjectTemplate);
+        Optional.ofNullable(patch.getBodyTemplate()).ifPresent(storedTemplate::setBodyTemplate);
+        Optional.ofNullable(patch.getChannel()).ifPresent(storedTemplate::setChannel);
 
         this.validate(storedTemplate);
-
-        if (!storedTemplate.getEventType().equals(storedEventType)) {
-            this.assertEventTypeIsAvailable(storedTemplate.getEventType());
-        }
+        this.assertEventTypeIsAvailable(storedTemplate.getEventType(), currentEventType);
         return this.notificationTemplateGateway.update(storedTemplate);
     }
 
@@ -73,6 +84,9 @@ public class NotificationTemplateService {
         if (notificationTemplate.getBodyTemplate().length() > 500) {
             throw new BadRequestException("Notification template body must not exceed 500 characters");
         }
+        if (notificationTemplate.getChannel() == null) {
+            throw new BadRequestException("Notification template channel must not be null");
+        }
     }
 
     private void validateEventType(String eventType) {
@@ -87,6 +101,12 @@ public class NotificationTemplateService {
     private void assertEventTypeIsAvailable(String eventType) {
         if (this.notificationTemplateGateway.existsByEventType(eventType)) {
             throw new ConflictException("Notification template event type already exists: " + eventType);
+        }
+    }
+
+    private void assertEventTypeIsAvailable(String eventType, String currentEventType) {
+        if (!eventType.equals(currentEventType)) {
+            this.assertEventTypeIsAvailable(eventType);
         }
     }
 }
