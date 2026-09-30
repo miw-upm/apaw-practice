@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.model.expertDirectoryServices;
+package es.upm.miw.apaw.domain.model.expertdirectoryservices;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import jakarta.validation.constraints.NotBlank;

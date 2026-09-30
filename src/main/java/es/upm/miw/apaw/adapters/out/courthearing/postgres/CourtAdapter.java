@@ -4,6 +4,8 @@ import es.upm.miw.apaw.domain.model.courthearing.Court;
 import es.upm.miw.apaw.domain.ports.out.courthearing.CourtGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -51,5 +53,12 @@ public class CourtAdapter implements CourtGateway {
     @Override
     public boolean isReferenced(UUID id) {
         return this.courtHearingRepository.existsByCourtId(id);
+    }
+
+    @Override
+    public List<Court> findAll() {
+        return this.courtRepository.findAllByOrderByNameAsc().stream()
+                .map(CourtEntity::toDomain)
+                .toList();
     }
 }

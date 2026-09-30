@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.courthearing;
 
 import es.upm.miw.apaw.domain.model.courthearing.Court;
+import es.upm.miw.apaw.domain.model.courthearing.CourtUpdate;
 import es.upm.miw.apaw.domain.services.courthearing.CourtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
+
+import java.util.List;
 import java.util.UUID;
 
 
@@ -49,5 +53,16 @@ public class CourtResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.courtService.delete(id);
+    }
+
+
+    @GetMapping
+    public List<Court> findAll() {
+        return this.courtService.findAll();
+    }
+
+    @PatchMapping(ID)
+    public Court patch(@PathVariable UUID id, @Valid @RequestBody CourtUpdate patch) {
+        return this.courtService.patch(id, patch);
     }
 }

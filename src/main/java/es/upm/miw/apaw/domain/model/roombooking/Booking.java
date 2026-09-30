@@ -3,10 +3,7 @@ package es.upm.miw.apaw.domain.model.roombooking;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -15,8 +12,10 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Booking {
 
+    @EqualsAndHashCode.Include
     private UUID id;
 
     @NotBlank
@@ -38,4 +37,24 @@ public class Booking {
 
     @NotNull
     private UserSnapshot userSnapshot;
+
+    public void doDefault() {
+        this.id = UUID.randomUUID();
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public Booking ofSummary() {
+        return Booking.builder()
+                .id(this.id)
+                .name(this.name)
+                .startDateTime(this.startDateTime)
+                .endDateTime(this.endDateTime)
+                .room(this.room != null ? this.room.ofSummary() : null)
+                .userSnapshot(this.userSnapshot != null ? UserSnapshot.builder()
+                        .id(this.userSnapshot.getId())
+                        .mobile(this.userSnapshot.getMobile())
+                        .firstName(this.userSnapshot.getFirstName())
+                        .build() : null)
+                .build();
+    }
 }
