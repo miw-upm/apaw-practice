@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.roombooking;
 
 import es.upm.miw.apaw.domain.model.roombooking.Booking;
+import es.upm.miw.apaw.domain.model.roombooking.BookingFindCriteria;
 import es.upm.miw.apaw.domain.model.roombooking.CreationBooking;
 import es.upm.miw.apaw.domain.model.roombooking.UserBookingReport;
 import es.upm.miw.apaw.domain.services.roombooking.BookingService;
@@ -20,6 +21,11 @@ public class BookingResource {
     public static final String REPORT = "/report";
 
     private final BookingService bookingService;
+
+    @GetMapping
+    public List<Booking> find(@ModelAttribute BookingFindCriteria criteria) {
+        return this.bookingService.find(criteria);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
