@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,5 +38,9 @@ public class CourseResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.courseService.delete(id);
+    }
+
+    public List<Course> findAll() {
+        return this.courseService.findAll();
     }
 }

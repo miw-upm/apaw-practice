@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.training.CourseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,5 +46,12 @@ public class CourseAdapter implements CourseGateway {
     @Override
     public boolean isReferenced(UUID id) {
         return this.trainingPlanRepository.existsByCoursesId(id);
+    }
+
+    @Override
+    public List<Course> findAll() {
+        return this.courseRepository.findAll().stream()
+                .map(CourseEntity::toDomain)
+                .toList();
     }
 }
