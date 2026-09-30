@@ -29,4 +29,10 @@ public class CourseAdapter implements CourseGateway {
         return this.courseRepository.findById(id)
                 .map(CourseEntity::toDomain);
     }
+
+    @Override
+    public Course update(Course course) {
+        CourseEntity entity = new CourseEntity(course);
+        return this.courseRepository.save(entity).toDomain();
+    }
 }

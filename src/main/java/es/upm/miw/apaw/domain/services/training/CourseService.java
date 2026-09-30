@@ -26,4 +26,21 @@ public class CourseService {
         return this.courseGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Course id not found: " + id));
     }
+
+    public Course update(UUID id, Course course) {
+        Course storedCourse = this.read(id);
+        
+        if (!storedCourse.getName().equals(course.getName())
+                && this.courseGateway.existsByName(course.getName())) {
+            throw new ConflictException("Course name already exists: " + course.getName());
+        }
+        
+        storedCourse.setName(course.getName());
+        storedCourse.setCertificateReference(course.getCertificateReference());
+        storedCourse.setDurationHours(course.getDurationHours());
+        storedCourse.setOnline(course.getOnline());
+        storedCourse.setLaunchDate(course.getLaunchDate());
+        
+        return this.courseGateway.update(storedCourse);
+    }
 }

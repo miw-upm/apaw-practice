@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.training;
 
 import es.upm.miw.apaw.domain.model.training.Course;
 import es.upm.miw.apaw.domain.services.training.CourseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,5 +25,10 @@ public class CourseResource {
     @GetMapping(ID)
     public Course read(@PathVariable UUID id) {
         return this.courseService.read(id);
+    }
+
+    @PutMapping(ID)
+    public Course update(@PathVariable UUID id, @Valid @RequestBody Course course) {
+        return this.courseService.update(id, course);
     }
 }
