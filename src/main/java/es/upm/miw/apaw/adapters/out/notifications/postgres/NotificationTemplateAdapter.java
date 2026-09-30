@@ -21,6 +21,13 @@ public class NotificationTemplateAdapter implements NotificationTemplateGateway 
     }
 
     @Override
+    public NotificationTemplate update(NotificationTemplate notificationTemplate) {
+        return this.notificationTemplateRepository
+                .save(new NotificationTemplateEntity(notificationTemplate))
+                .toDomain();
+    }
+
+    @Override
     public boolean existsByEventType(String eventType) {
         return this.notificationTemplateRepository.existsByEventType(eventType);
     }
