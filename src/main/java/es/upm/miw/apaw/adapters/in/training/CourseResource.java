@@ -40,6 +40,7 @@ public class CourseResource {
         this.courseService.delete(id);
     }
 
+    @GetMapping
     public List<Course> findAll() {
         return this.courseService.findAll();
     }

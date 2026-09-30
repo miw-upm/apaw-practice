@@ -50,7 +50,7 @@ public class CourseAdapter implements CourseGateway {
 
     @Override
     public List<Course> findAll() {
-        return this.courseRepository.findAll().stream()
+        return this.courseRepository.findAllByOrderByNameAsc().stream()
                 .map(CourseEntity::toDomain)
                 .toList();
     }
