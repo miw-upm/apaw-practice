@@ -25,4 +25,9 @@ public class CourseResource {
     public Course read(@PathVariable UUID id) {
         return this.courseService.read(id);
     }
+
+    @PutMapping
+    public Course update(@PathVariable UUID id, @RequestBody Course course) {
+        return this.courseService.update(id, course);
+    }
 }

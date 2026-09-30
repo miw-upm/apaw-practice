@@ -9,4 +9,5 @@ public interface CourseGateway {
     Course create(Course course);
     boolean existsByName(String name);
     Optional<Course> read(UUID id);
+    Course update(Course course);
 }
