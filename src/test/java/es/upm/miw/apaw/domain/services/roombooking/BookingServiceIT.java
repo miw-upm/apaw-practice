@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.roombooking.Booking;
 import es.upm.miw.apaw.domain.model.roombooking.CreationBooking;
+import es.upm.miw.apaw.domain.model.roombooking.UserBookingReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,13 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.*;
 
 import static es.upm.miw.apaw.config.seeders.RoomBookingSeederForDev.ROOM_ID_0;
+import static es.upm.miw.apaw.config.seeders.RoomBookingSeederForDev.USER_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -123,5 +126,32 @@ class BookingServiceIT {
         assertThatThrownBy(() -> this.bookingService.create(creationBooking))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining(missingRoomId.toString());
+    }
+
+    @Test
+    void testFindUserBookingReports() {
+        UserSnapshot userSnapshot = UserSnapshot.builder()
+                .id(USER_ID_0)
+                .firstName("Admin")
+                .familyName("System")
+                .email("admin@email.com")
+                .mobile("600999999")
+                .build();
+
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(userSnapshot));
+
+        List<UserBookingReport> reports = this.bookingService.findUserBookingReports();
+
+        assertThat(reports).extracting(UserBookingReport::getTotalBookings)
+                .isSortedAccordingTo(Comparator.reverseOrder());
+
+        assertThat(reports).filteredOn(report -> report.getUserSnapshot() != null
+                        && report.getUserSnapshot().getId().equals(USER_ID_0))
+                .singleElement()
+                .satisfies(report -> {
+                    assertThat(report.getTotalBookings()).isGreaterThanOrEqualTo(1L);
+                    assertThat(report.getTotalAttendees()).isGreaterThanOrEqualTo(50L);
+                    assertThat(report.getUserSnapshot().getFirstName()).isEqualTo("Admin");
+                });
     }
 }
