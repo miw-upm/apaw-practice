@@ -1,8 +1,11 @@
 package es.upm.miw.apaw.adapters.in.training;
 
 import es.upm.miw.apaw.domain.model.training.Course;
+import es.upm.miw.apaw.domain.model.training.CourseDurationUpdate;
 import es.upm.miw.apaw.domain.services.training.CourseService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +46,11 @@ public class CourseResource {
     @GetMapping
     public List<Course> findAll() {
         return this.courseService.findAll();
+    }
+
+    @PostMapping("/duration-hours")
+    public void updateDurationHours(
+            @RequestBody @NotEmpty List<@NotNull @Valid CourseDurationUpdate> updates) {
+        this.courseService.updateDurationHours(updates);
     }
 }
