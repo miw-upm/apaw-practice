@@ -48,7 +48,7 @@ public class CourseResource {
         return this.courseService.findAll();
     }
 
-    @PostMapping("/duration-hours")
+    @PatchMapping
     public void updateDurationHours(
             @RequestBody @NotEmpty List<@NotNull @Valid CourseDurationUpdate> updates) {
         this.courseService.updateDurationHours(updates);

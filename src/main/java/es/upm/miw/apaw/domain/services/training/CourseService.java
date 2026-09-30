@@ -8,6 +8,7 @@ import es.upm.miw.apaw.domain.model.training.CourseDurationUpdate;
 import es.upm.miw.apaw.domain.ports.out.training.CourseGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -60,6 +61,7 @@ public class CourseService {
         return this.courseGateway.findAll();
     }
 
+    @Transactional
     public void updateDurationHours(List<CourseDurationUpdate> updates) {
         this.assertUniqueIds(updates);
         List<Course> courses = updates.stream()
