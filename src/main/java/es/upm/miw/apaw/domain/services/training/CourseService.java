@@ -30,6 +30,11 @@ public class CourseService {
     public Course update(UUID id, Course course) {
         Course storedCourse = this.read(id);
         
+        if (!storedCourse.getName().equals(course.getName())
+                && this.courseGateway.existsByName(course.getName())) {
+            throw new ConflictException("Course name already exists: " + course.getName());
+        }
+        
         storedCourse.setName(course.getName());
         storedCourse.setCertificateReference(course.getCertificateReference());
         storedCourse.setDurationHours(course.getDurationHours());
