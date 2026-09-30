@@ -1,11 +1,9 @@
 package es.upm.miw.apaw.domain.services.roombooking;
 
 import es.upm.miw.apaw.adapters.out.roombooking.postgres.UserBookingStat;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.roombooking.Booking;
-import es.upm.miw.apaw.domain.model.roombooking.CreationBooking;
-import es.upm.miw.apaw.domain.model.roombooking.Room;
-import es.upm.miw.apaw.domain.model.roombooking.UserBookingReport;
+import es.upm.miw.apaw.domain.model.roombooking.*;
 import es.upm.miw.apaw.domain.ports.out.roombooking.BookingGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
@@ -61,5 +59,44 @@ public class BookingService {
                         .totalAttendees(stat.getTotalAttendees())
                         .build())
                 .toList();
+    }
+
+    public List<Booking> find(BookingFindCriteria criteria) {
+        List<Booking> bookings = this.bookingGateway.find(criteria);
+        if (bookings.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = bookings.stream()
+                .map(booking -> booking.getUserSnapshot().getId())
+                .collect(Collectors.toSet());
+        return this.toSummaries(criteria, bookings, this.userFinder.findByIds(userIds));
+    }
+
+    private List<Booking> toSummaries(
+            BookingFindCriteria criteria,
+            List<Booking> bookings,
+            List<UserSnapshot> users) {
+        Map<UUID, UserSnapshot> usersById = users.stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        return bookings.stream()
+                .map(booking -> this.enrichUserSnapshot(booking, usersById))
+                .filter(booking -> this.matchesUserEmail(criteria, booking))
+                .map(Booking::ofSummary)
+                .toList();
+    }
+
+    private Booking enrichUserSnapshot(Booking booking, Map<UUID, UserSnapshot> usersById) {
+        UUID userId = booking.getUserSnapshot().getId();
+        UserSnapshot user = usersById.get(userId);
+        if (user == null) {
+            throw new NotFoundException("User id not found: " + userId);
+        }
+        booking.setUserSnapshot(user);
+        return booking;
+    }
+
+    private boolean matchesUserEmail(BookingFindCriteria criteria, Booking booking) {
+        return !criteria.hasUserEmail()
+                || criteria.getUserEmail().equalsIgnoreCase(booking.getUserSnapshot().getEmail());
     }
 }

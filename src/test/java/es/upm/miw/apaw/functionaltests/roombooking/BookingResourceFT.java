@@ -20,6 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+import static es.upm.miw.apaw.config.seeders.RoomBookingSeederForDev.BOOKING_ID_0;
 import static es.upm.miw.apaw.config.seeders.RoomBookingSeederForDev.ROOM_ID_0;
 import static es.upm.miw.apaw.config.seeders.RoomBookingSeederForDev.USER_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class BookingResourceIT {
+class BookingResourceFT {
 
     @LocalServerPort
     private int port;
@@ -143,6 +144,35 @@ class BookingResourceIT {
                                 assertThat(report.getTotalAttendees()).isGreaterThanOrEqualTo(50L);
                                 assertThat(report.getUserSnapshot().getFirstName()).isEqualTo("John");
                             });
+                });
+    }
+
+    @Test
+    void testFind() {
+        UserSnapshot userSnapshot = UserSnapshot.builder()
+                .id(USER_ID_0)
+                .firstName("John")
+                .familyName("Doe")
+                .email("john.doe@email.com")
+                .mobile("600000100")
+                .build();
+
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(userSnapshot));
+
+        this.restTestClient.get().uri(uriBuilder -> uriBuilder
+                        .path(BookingResource.BOOKINGS)
+                        .queryParam("estimatedAttendees", 50)
+                        .queryParam("ongoing", false)
+                        .queryParam("videoconferenceEquipped", true)
+                        .queryParam("userEmail", "john.doe@email.com")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Booking[].class)
+                .value(bookings -> {
+                    assertThat(bookings)
+                            .extracting(Booking::getId)
+                            .contains(BOOKING_ID_0);
                 });
     }
 }

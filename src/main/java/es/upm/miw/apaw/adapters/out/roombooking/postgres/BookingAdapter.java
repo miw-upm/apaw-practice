@@ -1,11 +1,13 @@
 package es.upm.miw.apaw.adapters.out.roombooking.postgres;
 
 import es.upm.miw.apaw.domain.model.roombooking.Booking;
+import es.upm.miw.apaw.domain.model.roombooking.BookingFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.roombooking.BookingGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -25,5 +27,18 @@ public class BookingAdapter implements BookingGateway {
     @Override
     public List<UserBookingStat> findUserBookingStats() {
         return this.bookingRepository.findUserBookingStats();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Booking> find(BookingFindCriteria criteria) {
+        return this.bookingRepository.findByCriteria(
+                        criteria.getEstimatedAttendees(),
+                        criteria.getOngoing(),
+                        LocalDateTime.now(),
+                        criteria.getVideoconferenceEquipped()
+                ).stream()
+                .map(BookingEntity::toDomain)
+                .toList();
     }
 }
