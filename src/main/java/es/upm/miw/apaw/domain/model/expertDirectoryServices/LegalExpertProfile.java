@@ -52,6 +52,8 @@ public class LegalExpertProfile {
                 .id(this.id)
                 .taxIdCode(this.taxIdCode)
                 .specialtyArea(this.specialtyArea)
+                .professionalLicense(this.professionalLicense)
+                .yearsOfExperience(this.yearsOfExperience)
                 .userSnapshot(UserSnapshot.builder()
                         .id(this.userSnapshot.getId())
                         .mobile(this.userSnapshot.getMobile())
