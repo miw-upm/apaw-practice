@@ -30,4 +30,8 @@ public class LegalExpertProfileService {
         legalExpertProfile.doDefault();
         return this.legalExpertProfileGateway.create(legalExpertProfile);
     }
+
+    public LegalExpertProfile read(String id) {
+        return this.legalExpertProfileGateway.read(id);
+    }
 }

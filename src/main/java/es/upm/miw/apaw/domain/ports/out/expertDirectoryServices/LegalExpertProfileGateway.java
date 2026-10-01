@@ -9,4 +9,6 @@ public interface LegalExpertProfileGateway {
     boolean existsByTaxIdCode(String taxIdCode);
 
     boolean existsByProfessionalLicense(String professionalLicense);
+
+    LegalExpertProfile read(String id);
 }
