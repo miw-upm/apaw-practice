@@ -11,4 +11,6 @@ public interface LegalExpertProfileGateway {
     boolean existsByProfessionalLicense(String professionalLicense);
 
     LegalExpertProfile read(String id);
+
+    LegalExpertProfile update(LegalExpertProfile legalExpertProfile);
 }
