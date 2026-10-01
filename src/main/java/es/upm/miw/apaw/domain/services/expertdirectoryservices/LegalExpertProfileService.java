@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfi
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -64,5 +65,9 @@ public class LegalExpertProfileService {
 
     public void delete(String id) {
         this.legalExpertProfileGateway.delete(id);
+    }
+
+    public Stream<LegalExpertProfile> findAll() {
+        return this.legalExpertProfileGateway.findAll();
     }
 }

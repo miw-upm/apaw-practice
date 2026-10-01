@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.ports.out.expertdirectoryservices;
 
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import java.util.stream.Stream;
 
 public interface LegalExpertProfileGateway {
 
@@ -15,4 +16,6 @@ public interface LegalExpertProfileGateway {
     LegalExpertProfile update(LegalExpertProfile legalExpertProfile);
 
     void delete(String id);
+
+    Stream<LegalExpertProfile> findAll();
 }

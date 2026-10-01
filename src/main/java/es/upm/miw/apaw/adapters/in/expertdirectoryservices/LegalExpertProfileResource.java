@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(LegalExpertProfileResource.LEGAL_EXPERT_PROFILES)
@@ -43,5 +44,10 @@ public class LegalExpertProfileResource {
     @DeleteMapping(ID_ID)
     public void delete(@PathVariable String id) {
         this.legalExpertProfileService.delete(id);
+    }
+
+    @GetMapping
+    public Stream<LegalExpertProfile> findAll() {
+        return this.legalExpertProfileService.findAll();
     }
 }

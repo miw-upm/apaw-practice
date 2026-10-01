@@ -5,11 +5,12 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfileGateway;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 import java.util.UUID;
+import java.util.stream.Stream;
+import org.springframework.data.domain.Sort;
 
 @Repository
 @RequiredArgsConstructor
@@ -62,5 +63,12 @@ public class LegalExpertProfileAdapter implements LegalExpertProfileGateway {
             throw new ConflictException(
                     "No se puede eliminar el perfil porque está siendo referenciado por una entidad principal.");
         }
+    }
+
+    @Override
+    public Stream<LegalExpertProfile> findAll() {
+        return this.legalExpertProfileRepository.findAll(Sort.by(Sort.Direction.ASC, "taxIdCode"))
+                .stream()
+                .map(LegalExpertProfileEntity::toDomain);
     }
 }
