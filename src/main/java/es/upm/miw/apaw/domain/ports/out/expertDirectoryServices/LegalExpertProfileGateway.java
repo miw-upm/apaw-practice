@@ -13,4 +13,6 @@ public interface LegalExpertProfileGateway {
     LegalExpertProfile read(String id);
 
     LegalExpertProfile update(LegalExpertProfile legalExpertProfile);
+
+    void delete(String id);
 }

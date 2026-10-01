@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.in.expertdirectoryservices;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
 import es.upm.miw.apaw.domain.services.expertdirectoryservices.LegalExpertProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +38,10 @@ public class LegalExpertProfileResource {
     @PutMapping(ID_ID)
     public LegalExpertProfile update(@PathVariable String id, @RequestBody LegalExpertProfile legalExpertProfile) {
         return this.legalExpertProfileService.update(id, legalExpertProfile);
+    }
+
+    @DeleteMapping(ID_ID)
+    public void delete(@PathVariable String id) {
+        this.legalExpertProfileService.delete(id);
     }
 }

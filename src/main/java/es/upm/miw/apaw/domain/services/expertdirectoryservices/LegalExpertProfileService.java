@@ -61,4 +61,8 @@ public class LegalExpertProfileService {
 
         return this.legalExpertProfileGateway.update(legalExpertProfile);
     }
+
+    public void delete(String id) {
+        this.legalExpertProfileGateway.delete(id);
+    }
 }
