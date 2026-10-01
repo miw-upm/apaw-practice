@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class LegalExpertProfileService {
     }
 
     public LegalExpertProfile read(String id) {
-        return this.legalExpertProfileGateway.read(id);
+        return this.legalExpertProfileGateway.read(id).ofSummary();
     }
 
     public LegalExpertProfile update(String id, LegalExpertProfile legalExpertProfile) {
@@ -68,46 +70,68 @@ public class LegalExpertProfileService {
     }
 
     public Stream<LegalExpertProfile> findAll() {
-        return this.legalExpertProfileGateway.findAll();
+        return this.legalExpertProfileGateway.findAll()
+                .map(LegalExpertProfile::ofSummary);
     }
 
-    public LegalExpertProfile updatePartial(String id, LegalExpertProfile patchProfile) {
-        LegalExpertProfile existingProfile = this.legalExpertProfileGateway.read(id);
+    public void updatePartial(List<LegalExpertProfile> updates) {
+        this.assertUniqueIds(updates);
 
-        if (patchProfile.getTaxIdCode() != null) {
-            if (!existingProfile.getTaxIdCode().equals(patchProfile.getTaxIdCode())
-                    && this.legalExpertProfileGateway.existsByTaxIdCode(patchProfile.getTaxIdCode())) {
-                throw new ConflictException("Ya existe otro perfil con este taxIdCode: " + patchProfile.getTaxIdCode());
-            }
-            existingProfile.setTaxIdCode(patchProfile.getTaxIdCode());
+        List<LegalExpertProfile> profilesToUpdate = updates.stream()
+                .map(patchProfile -> {
+                    LegalExpertProfile existingProfile = this.legalExpertProfileGateway
+                            .read(patchProfile.getId().toString());
+
+                    if (patchProfile.getTaxIdCode() != null) {
+                        if (!existingProfile.getTaxIdCode().equals(patchProfile.getTaxIdCode())
+                                && this.legalExpertProfileGateway.existsByTaxIdCode(patchProfile.getTaxIdCode())) {
+                            throw new ConflictException(
+                                    "Ya existe otro perfil con este taxIdCode: " + patchProfile.getTaxIdCode());
+                        }
+                        existingProfile.setTaxIdCode(patchProfile.getTaxIdCode());
+                    }
+
+                    if (patchProfile.getProfessionalLicense() != null
+                            && !patchProfile.getProfessionalLicense().isBlank()) {
+                        if (!patchProfile.getProfessionalLicense().equals(existingProfile.getProfessionalLicense())
+                                && this.legalExpertProfileGateway
+                                        .existsByProfessionalLicense(patchProfile.getProfessionalLicense())) {
+                            throw new ConflictException("Ya existe otro perfil con esta professionalLicense: "
+                                    + patchProfile.getProfessionalLicense());
+                        }
+                        existingProfile.setProfessionalLicense(patchProfile.getProfessionalLicense());
+                    }
+
+                    if (patchProfile.getSpecialtyArea() != null) {
+                        existingProfile.setSpecialtyArea(patchProfile.getSpecialtyArea());
+                    }
+
+                    if (patchProfile.getYearsOfExperience() != null) {
+                        existingProfile.setYearsOfExperience(patchProfile.getYearsOfExperience());
+                    }
+
+                    if (patchProfile.getRequiresPrepayment() != null) {
+                        existingProfile.setRequiresPrepayment(patchProfile.getRequiresPrepayment());
+                    }
+
+                    if (patchProfile.getUserSnapshot() != null) {
+                        existingProfile.setUserSnapshot(patchProfile.getUserSnapshot());
+                    }
+
+                    return existingProfile;
+                })
+                .toList();
+
+        profilesToUpdate.forEach(this.legalExpertProfileGateway::update);
+    }
+
+    private void assertUniqueIds(List<LegalExpertProfile> updates) {
+        long uniqueIdsCount = updates.stream()
+                .map(LegalExpertProfile::getId)
+                .distinct()
+                .count();
+        if (uniqueIdsCount != updates.size()) {
+            throw new ConflictException("IDs duplicados en la petición de actualización parcial");
         }
-
-        if (patchProfile.getProfessionalLicense() != null && !patchProfile.getProfessionalLicense().isBlank()) {
-            if (!patchProfile.getProfessionalLicense().equals(existingProfile.getProfessionalLicense())
-                    && this.legalExpertProfileGateway
-                            .existsByProfessionalLicense(patchProfile.getProfessionalLicense())) {
-                throw new ConflictException(
-                        "Ya existe otro perfil con esta professionalLicense: " + patchProfile.getProfessionalLicense());
-            }
-            existingProfile.setProfessionalLicense(patchProfile.getProfessionalLicense());
-        }
-
-        if (patchProfile.getSpecialtyArea() != null) {
-            existingProfile.setSpecialtyArea(patchProfile.getSpecialtyArea());
-        }
-
-        if (patchProfile.getYearsOfExperience() != null) {
-            existingProfile.setYearsOfExperience(patchProfile.getYearsOfExperience());
-        }
-
-        if (patchProfile.getRequiresPrepayment() != null) {
-            existingProfile.setRequiresPrepayment(patchProfile.getRequiresPrepayment());
-        }
-
-        if (patchProfile.getUserSnapshot() != null) {
-            existingProfile.setUserSnapshot(patchProfile.getUserSnapshot());
-        }
-
-        return this.legalExpertProfileGateway.update(existingProfile);
     }
 }

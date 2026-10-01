@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.stream.Stream;
+import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping(LegalExpertProfileResource.LEGAL_EXPERT_PROFILES)
@@ -43,8 +45,10 @@ public class LegalExpertProfileResource {
     }
 
     @DeleteMapping(ID_ID)
-    public void delete(@PathVariable String id) {
+    public Map<String, String> delete(@PathVariable String id) {
         this.legalExpertProfileService.delete(id);
+
+        return Map.of("message", "El perfil fue eliminado de manera exitosa");
     }
 
     @GetMapping
@@ -52,9 +56,8 @@ public class LegalExpertProfileResource {
         return this.legalExpertProfileService.findAll();
     }
 
-    @PatchMapping(ID_ID)
-    public LegalExpertProfile updatePartial(@PathVariable String id,
-            @RequestBody LegalExpertProfile legalExpertProfile) {
-        return this.legalExpertProfileService.updatePartial(id, legalExpertProfile);
+    @PatchMapping
+    public void updatePartial(@RequestBody List<LegalExpertProfile> updates) {
+        this.legalExpertProfileService.updatePartial(updates);
     }
 }
