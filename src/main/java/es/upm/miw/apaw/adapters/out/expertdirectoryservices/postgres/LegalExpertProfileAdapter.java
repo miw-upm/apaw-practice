@@ -8,12 +8,22 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class LegalExpertProfileAdapter implements LegalExpertProfileGateway {
+
     private final LegalExpertProfileRepository legalExpertProfileRepository;
 
     @Override
     public LegalExpertProfile create(LegalExpertProfile legalExpertProfile) {
         LegalExpertProfileEntity entity = new LegalExpertProfileEntity(legalExpertProfile);
-
         return this.legalExpertProfileRepository.save(entity).toDomain();
+    }
+
+    @Override
+    public boolean existsByTaxIdCode(String taxIdCode) {
+        return this.legalExpertProfileRepository.existsByTaxIdCode(taxIdCode);
+    }
+
+    @Override
+    public boolean existsByProfessionalLicense(String professionalLicense) {
+        return this.legalExpertProfileRepository.existsByProfessionalLicense(professionalLicense);
     }
 }
