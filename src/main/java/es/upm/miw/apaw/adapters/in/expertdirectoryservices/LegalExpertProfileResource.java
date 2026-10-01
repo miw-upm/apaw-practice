@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(LegalExpertProfileResource.LEGAL_EXPERT_PROFILES)
 public class LegalExpertProfileResource {
 
-    public static final String LEGAL_EXPERT_PROFILES = "/expertdirectory-services/legal-expert-profiles";
+    public static final String LEGAL_EXPERT_PROFILES = "/expert-directory-services/legal-expert-profiles";
 
     private final LegalExpertProfileService legalExpertProfileService;
 
