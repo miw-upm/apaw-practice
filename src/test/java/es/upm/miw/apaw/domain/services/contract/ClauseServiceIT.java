@@ -114,6 +114,20 @@ class ClauseServiceIT {
     }
 
     @Test
+    void testCreateDefaultVersion() {
+        Clause clause = this.clauseService.create(
+                Clause.builder()
+                        .title("Clause without version")
+                        .content("Test content")
+                        .effectiveFrom(LocalDate.of(2026, 1, 1))
+                        .version(null)
+                        .build()
+        );
+
+        assertThat(clause.getVersion()).isEqualTo(1);
+    }
+
+    @Test
     void testUpdateAttributes() {
         Clause clause = this.createClause();
 
