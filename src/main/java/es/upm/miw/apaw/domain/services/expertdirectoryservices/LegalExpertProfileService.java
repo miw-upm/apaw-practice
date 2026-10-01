@@ -70,4 +70,44 @@ public class LegalExpertProfileService {
     public Stream<LegalExpertProfile> findAll() {
         return this.legalExpertProfileGateway.findAll();
     }
+
+    public LegalExpertProfile updatePartial(String id, LegalExpertProfile patchProfile) {
+        LegalExpertProfile existingProfile = this.legalExpertProfileGateway.read(id);
+
+        if (patchProfile.getTaxIdCode() != null) {
+            if (!existingProfile.getTaxIdCode().equals(patchProfile.getTaxIdCode())
+                    && this.legalExpertProfileGateway.existsByTaxIdCode(patchProfile.getTaxIdCode())) {
+                throw new ConflictException("Ya existe otro perfil con este taxIdCode: " + patchProfile.getTaxIdCode());
+            }
+            existingProfile.setTaxIdCode(patchProfile.getTaxIdCode());
+        }
+
+        if (patchProfile.getProfessionalLicense() != null && !patchProfile.getProfessionalLicense().isBlank()) {
+            if (!patchProfile.getProfessionalLicense().equals(existingProfile.getProfessionalLicense())
+                    && this.legalExpertProfileGateway
+                            .existsByProfessionalLicense(patchProfile.getProfessionalLicense())) {
+                throw new ConflictException(
+                        "Ya existe otro perfil con esta professionalLicense: " + patchProfile.getProfessionalLicense());
+            }
+            existingProfile.setProfessionalLicense(patchProfile.getProfessionalLicense());
+        }
+
+        if (patchProfile.getSpecialtyArea() != null) {
+            existingProfile.setSpecialtyArea(patchProfile.getSpecialtyArea());
+        }
+
+        if (patchProfile.getYearsOfExperience() != null) {
+            existingProfile.setYearsOfExperience(patchProfile.getYearsOfExperience());
+        }
+
+        if (patchProfile.getRequiresPrepayment() != null) {
+            existingProfile.setRequiresPrepayment(patchProfile.getRequiresPrepayment());
+        }
+
+        if (patchProfile.getUserSnapshot() != null) {
+            existingProfile.setUserSnapshot(patchProfile.getUserSnapshot());
+        }
+
+        return this.legalExpertProfileGateway.update(existingProfile);
+    }
 }
