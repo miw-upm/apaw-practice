@@ -22,4 +22,14 @@ public class ClaimResource {
     public Claim create(@Valid @RequestBody ClaimCreation claimCreation) {
         return this.claimService.create(claimCreation);
     }
+
+    @GetMapping(ID)
+    public Claim read(@PathVariable UUID id) {
+        return this.claimService.read(id);
+    }
+
+    @PutMapping(ID)
+    public Claim update(@PathVariable UUID id, @Valid @RequestBody Claim claim) {
+        return this.claimService.update(id, claim);
+    }
 }

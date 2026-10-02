@@ -1,10 +1,13 @@
 package es.upm.miw.apaw.adapters.out.copyright.postgres;
 
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.copyright.Claim;
 import es.upm.miw.apaw.domain.ports.out.copyright.ClaimGateway;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -23,5 +26,20 @@ public class ClaimAdapter implements ClaimGateway {
     @Override
     public boolean existsByNumber(String number) {
         return this.claimRepository.existsByNumber(number);
+    }
+
+    @Override
+    public Optional<Claim> read(UUID id) {
+        return this.claimRepository.findById(id)
+                .map(ClaimEntity::toDomain);
+    }
+
+    @Override
+    public Claim update(Claim claim) {
+        ClaimEntity claimEntity = this.claimRepository.findById(claim.getId())
+                .orElseThrow(() -> new NotFoundException("Claim entity not found: " + claim.getId()));
+        BeanUtils.copyProperties(claim, claimEntity, "userSnapshot");
+        claimEntity.setUserId(claim.getUserSnapshot().getId());
+        return this.claimRepository.save(claimEntity).toDomain();
     }
 }

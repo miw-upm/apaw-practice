@@ -39,4 +39,29 @@ public class ClaimService {
 
         return this.claimGateway.create(claim, claimCreation.getCreativeWorkId());
     }
+
+    public Claim read(UUID id) {
+        return this.claimGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Claim id not found: " + id));
+    }
+
+    public Claim update(UUID id, Claim claim) {
+        Claim storedClaim = this.read(id);
+        
+        if (!storedClaim.getNumber().equals(claim.getNumber())
+                && this.claimGateway.existsByNumber(claim.getNumber())) {
+            throw new ConflictException("Claim number already exists: " + claim.getNumber());
+        }
+
+        storedClaim.setNumber(claim.getNumber());
+        storedClaim.setRequestedCompensation(claim.getRequestedCompensation());
+        storedClaim.setUrgent(claim.getUrgent());
+        storedClaim.setResolutionNotes(claim.getResolutionNotes());
+        storedClaim.setTaskStatus(claim.getTaskStatus());
+
+        UserSnapshot defendant = this.userFinder.read(claim.getUserSnapshot().getId());
+        storedClaim.setUserSnapshot(defendant);
+
+        return this.claimGateway.update(storedClaim);
+    }
 }
