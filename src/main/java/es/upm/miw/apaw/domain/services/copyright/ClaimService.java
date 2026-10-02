@@ -41,7 +41,7 @@ public class ClaimService {
                 .requestedCompensation(claimCreation.getRequestedCompensation())
                 .urgent(claimCreation.getUrgent())
                 .resolutionNotes(claimCreation.getResolutionNotes())
-                .userSnapshot(defendant)
+                .defendant(defendant)
                 .build();
         claim.doDefault();
 
@@ -67,8 +67,8 @@ public class ClaimService {
         storedClaim.setResolutionNotes(claim.getResolutionNotes());
         storedClaim.setTaskStatus(claim.getTaskStatus());
 
-        UserSnapshot defendant = this.userFinder.read(claim.getUserSnapshot().getId());
-        storedClaim.setUserSnapshot(defendant);
+        UserSnapshot defendant = this.userFinder.read(claim.getDefendant().getId());
+        storedClaim.setDefendant(defendant);
 
         return this.claimGateway.update(storedClaim);
     }

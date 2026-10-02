@@ -51,9 +51,9 @@ public class ClaimEntity {
     private UUID userId;
 
     public ClaimEntity(Claim claim) {
-        BeanUtils.copyProperties(claim, this, "userSnapshot");
-        if (claim.getUserSnapshot() != null) {
-            this.userId = claim.getUserSnapshot().getId();
+        BeanUtils.copyProperties(claim, this, "defendant");
+        if (claim.getDefendant() != null) {
+            this.userId = claim.getDefendant().getId();
         }
     }
 
@@ -61,7 +61,7 @@ public class ClaimEntity {
         Claim claim = new Claim();
         BeanUtils.copyProperties(this, claim, "creativeWork", "userId");
         if (this.userId != null) {
-            claim.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
+            claim.setDefendant(UserSnapshot.builder().id(this.userId).build());
         }
         return claim;
     }
