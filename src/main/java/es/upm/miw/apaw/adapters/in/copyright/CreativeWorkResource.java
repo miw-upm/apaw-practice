@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.services.copyright.CreativeWorkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(CreativeWorkResource.CREATIVE_WORKS)
@@ -20,8 +21,8 @@ public class CreativeWorkResource {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public CreativeWork create(@RequestBody CreativeWorkCreation creation) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreativeWork create(@Valid @RequestBody CreativeWorkCreation creation) {
         return this.creativeWorkService.create(creation);
     }
 }
