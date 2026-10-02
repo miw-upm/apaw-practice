@@ -18,7 +18,7 @@ public class Debt {
     private UUID id;
 
     @NotNull
-    private LocalDate date;
+    private LocalDate issueDate;
 
     @NotBlank
     private String creditorName;

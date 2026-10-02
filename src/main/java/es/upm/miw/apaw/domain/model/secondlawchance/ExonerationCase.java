@@ -2,10 +2,8 @@ package es.upm.miw.apaw.domain.model.secondlawchance;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -26,9 +24,6 @@ public class ExonerationCase {
     private LocalDate filingDate;
 
     private LocalDate resolutionDate;
-
-    @NotNull
-    private BigDecimal totalAmount;
 
     private String lawyer;
 
