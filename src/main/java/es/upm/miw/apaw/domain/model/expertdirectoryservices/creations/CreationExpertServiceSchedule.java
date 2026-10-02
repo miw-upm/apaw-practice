@@ -1,7 +1,9 @@
-package es.upm.miw.apaw.domain.model.expertdirectoryservices;
+package es.upm.miw.apaw.domain.model.expertdirectoryservices.creations;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -21,8 +23,10 @@ public class CreationExpertServiceSchedule {
     private String description;
 
     @NotNull
+    @Positive
     private BigDecimal rateAmount;
 
+    @Pattern(regexp = "[A-Z]{3}")
     private String currency;
 
     private String specialCondition;
