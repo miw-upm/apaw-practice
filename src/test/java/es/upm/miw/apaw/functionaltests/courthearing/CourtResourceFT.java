@@ -15,7 +15,7 @@ import java.time.LocalTime;
 import java.util.Map;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.CourtSeederForDev.*;
+import static es.upm.miw.apaw.config.seeders.CourtHearingSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

@@ -46,5 +46,8 @@ public class CreativeWork {
         if (this.formatType == null) {
             this.formatType = FormatType.LITERATURE;
         }
+        if (this.claims == null) {
+            this.claims = new java.util.ArrayList<>();
+        }
     }
 }
