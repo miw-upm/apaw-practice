@@ -41,8 +41,8 @@ public class ExpertServiceScheduleEntity {
     @Column(nullable = false)
     private LocalDate creationDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "expert_service_schedule_id")
+    @OneToMany
+    @JoinColumn(name = "expert_service_schedule_id", nullable = false)
     private List<LegalExpertProfileEntity> legalExpertProfiles;
 
     public ExpertServiceScheduleEntity(ExpertServiceSchedule expertServiceSchedule) {
