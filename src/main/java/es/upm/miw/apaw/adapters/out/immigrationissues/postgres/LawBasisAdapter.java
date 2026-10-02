@@ -5,6 +5,9 @@ import es.upm.miw.apaw.domain.ports.out.immigrationissues.LawBasisGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class LawBasisAdapter implements LawBasisGateway {
@@ -21,5 +24,11 @@ public class LawBasisAdapter implements LawBasisGateway {
     @Override
     public boolean existsByLawCode(String lawCode) {
         return this.lawBasisRepository.existsByLawCode(lawCode);
+    }
+
+    @Override
+    public Optional<LawBasis> read(UUID id) {
+        return this.lawBasisRepository.findById(id)
+                .map(LawBasisEntity::toDomain);
     }
 }

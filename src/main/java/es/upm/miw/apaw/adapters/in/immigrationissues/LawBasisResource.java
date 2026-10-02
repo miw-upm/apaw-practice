@@ -5,11 +5,9 @@ import es.upm.miw.apaw.domain.services.immigrationissues.LawBasisService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping(LawBasisResource.LAW_BASES)
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LawBasisResource {
 
     public static final String LAW_BASES = "/law-bases";
+    public static final String ID = "/{id}";
 
     private final LawBasisService lawBasisService;
 
@@ -24,5 +23,10 @@ public class LawBasisResource {
     @ResponseStatus(HttpStatus.CREATED)
     public LawBasis create(@Valid @RequestBody LawBasis lawBasis) {
         return this.lawBasisService.create(lawBasis);
+    }
+
+    @GetMapping(ID)
+    public LawBasis read(@PathVariable UUID id) {
+        return this.lawBasisService.read(id);
     }
 }
