@@ -1,10 +1,13 @@
 package es.upm.miw.apaw.adapters.out.copyright.postgres;
 
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.copyright.Claim;
 import es.upm.miw.apaw.domain.model.copyright.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -45,6 +48,22 @@ public class ClaimEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private CreativeWorkEntity creativeWork;
 
-    @Column(nullable = false)
     private UUID userId;
+
+    public ClaimEntity(Claim claim) {
+        BeanUtils.copyProperties(claim, this, "userSnapshot");
+        if (claim.getUserSnapshot() != null) {
+            this.userId = claim.getUserSnapshot().getId();
+        }
+    }
+
+    public Claim toDomain() {
+        Claim claim = new Claim();
+        BeanUtils.copyProperties(this, claim, "creativeWork", "userId");
+        if (this.userId != null) {
+            claim.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
+        }
+        return claim;
+    }
 }
+
