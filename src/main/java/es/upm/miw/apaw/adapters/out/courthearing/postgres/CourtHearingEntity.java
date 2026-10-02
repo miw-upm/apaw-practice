@@ -23,6 +23,12 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+import es.upm.miw.apaw.domain.model.courthearing.CourtHearing;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import org.springframework.beans.BeanUtils;
+import java.util.HashSet;
+import java.util.stream.Collectors;
+
 @Entity
 @Getter
 @Setter
@@ -69,4 +75,11 @@ public class CourtHearingEntity {
     @CollectionTable(name = "court_hearing_attendee", joinColumns = @JoinColumn(name = "court_hearing_id"))
     @Column(name = "user_id", nullable = false)
     private Set<UUID> attendeeIds;
+
+    public CourtHearingEntity(CourtHearing courtHearing) {
+        BeanUtils.copyProperties(courtHearing, this, "attendees");
+        this.attendeeIds = courtHearing.getAttendees().stream()
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toCollection(HashSet::new));
+    }
 }
