@@ -31,4 +31,11 @@ public class LawBasisAdapter implements LawBasisGateway {
         return this.lawBasisRepository.findById(id)
                 .map(LawBasisEntity::toDomain);
     }
+
+    @Override
+    public LawBasis update(LawBasis lawBasis) {
+        return this.lawBasisRepository
+                .save(new LawBasisEntity(lawBasis))
+                .toDomain();
+    }
 }

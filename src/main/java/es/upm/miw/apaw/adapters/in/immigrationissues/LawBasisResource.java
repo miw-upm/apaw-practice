@@ -29,4 +29,9 @@ public class LawBasisResource {
     public LawBasis read(@PathVariable UUID id) {
         return this.lawBasisService.read(id);
     }
+
+    @PutMapping(ID)
+    public LawBasis update(@PathVariable UUID id, @Valid @RequestBody LawBasis lawBasis) {
+        return this.lawBasisService.update(id, lawBasis);
+    }
 }

@@ -12,4 +12,6 @@ public interface LawBasisGateway {
     boolean existsByLawCode(String lawCode);
 
     Optional<LawBasis> read(UUID id);
+
+    LawBasis update(LawBasis lawBasis);
 }

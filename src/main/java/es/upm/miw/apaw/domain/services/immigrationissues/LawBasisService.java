@@ -27,4 +27,21 @@ public class LawBasisService {
         return this.lawBasisGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Law basis id not found: " + id));
     }
+
+    public LawBasis update(UUID id, LawBasis lawBasis) {
+        LawBasis storedLawBasis = this.read(id);
+
+        if (!storedLawBasis.getLawCode().equals(lawBasis.getLawCode())
+                && this.lawBasisGateway.existsByLawCode(lawBasis.getLawCode())) {
+            throw new ConflictException("Law basis law code already exists: " + lawBasis.getLawCode());
+        }
+
+        storedLawBasis.setLawCode(lawBasis.getLawCode());
+        storedLawBasis.setLawName(lawBasis.getLawName());
+        storedLawBasis.setArticleNumber(lawBasis.getArticleNumber());
+        storedLawBasis.setPublishedOn(lawBasis.getPublishedOn());
+        storedLawBasis.setActive(lawBasis.getActive());
+
+        return this.lawBasisGateway.update(storedLawBasis);
+    }
 }
