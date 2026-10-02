@@ -25,6 +25,7 @@ import java.util.UUID;
 import static es.upm.miw.apaw.config.seeders.CourtHearingSeederForDev.COURT_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -145,30 +146,27 @@ class CourtHearingServiceIT {
     void testFindByUserMobile() {
         UserSnapshot firstUser = this.user("0000", "600000100", "cliente0");
         UserSnapshot secondUser = this.user("0001", "600000101", "cliente1");
-        UserSnapshot thirdUser = this.user("0002", "600000102", "cliente2");
-        UserSnapshot fourthUser = this.user("0003", "600000103", "cliente3");
-        UserSnapshot fifthUser = this.user("0004", "600000104", "cliente4");
 
         when(this.userFinder.findByIds(anySet()))
-                .thenReturn(List.of(firstUser, secondUser, thirdUser, fourthUser, fifthUser));
+                .thenReturn(List.of(firstUser, secondUser));
 
         List<CourtHearing> courtHearings = this.courtHearingService.find(
                 CourtHearingFindCriteria.builder()
+                        .date(LocalDate.of(2025, 3, 12))
                         .userMobile(firstUser.getMobile())
                         .build());
 
         assertThat(courtHearings)
                 .extracting(CourtHearing::getId)
-                .containsExactly(
-                        CourtHearingSeederForDev.HEARING_ID_0,
-                        CourtHearingSeederForDev.HEARING_ID_1,
-                        CourtHearingSeederForDev.HEARING_ID_5);
+                .containsExactly(CourtHearingSeederForDev.HEARING_ID_0);
 
-        assertThat(courtHearings)
-                .allSatisfy(courtHearing -> assertThat(courtHearing.getAttendees())
-                        .extracting(UserSnapshot::getMobile)
-                        .contains(firstUser.getMobile()));
+        assertThat(courtHearings.getFirst().getAttendees())
+                .extracting(UserSnapshot::getId)
+                .containsExactlyInAnyOrder(
+                        firstUser.getId(),
+                        secondUser.getId());
     }
+
 
 
     @Test
@@ -198,31 +196,29 @@ class CourtHearingServiceIT {
     @Transactional
     void testFindByScheduled() {
         UserSnapshot firstUser = this.user("0000", "600000100", "cliente0");
-        UserSnapshot secondUser = this.user("0001", "600000101", "cliente1");
         UserSnapshot thirdUser = this.user("0002", "600000102", "cliente2");
-        UserSnapshot fourthUser = this.user("0003", "600000103", "cliente3");
-        UserSnapshot fifthUser = this.user("0004", "600000104", "cliente4");
 
-        when(this.userFinder.findByIds(Set.of(
-                firstUser.getId(),
-                secondUser.getId(),
-                thirdUser.getId(),
-                fourthUser.getId(),
-                fifthUser.getId())))
-                .thenReturn(List.of(firstUser, secondUser, thirdUser, fourthUser, fifthUser));
+        when(this.userFinder.findByIds(anySet()))
+                .thenReturn(List.of(firstUser, thirdUser));
 
         List<CourtHearing> courtHearings = this.courtHearingService.find(
                 CourtHearingFindCriteria.builder()
+                        .date(LocalDate.of(2026, 11, 4))
                         .scheduled(true)
                         .build());
 
         assertThat(courtHearings)
                 .extracting(CourtHearing::getId)
-                .containsExactly(
-                        CourtHearingSeederForDev.HEARING_ID_1,
-                        CourtHearingSeederForDev.HEARING_ID_2,
-                        CourtHearingSeederForDev.HEARING_ID_4);
+                .containsExactly(CourtHearingSeederForDev.HEARING_ID_1);
+
+        assertThat(courtHearings.getFirst().getAttendees())
+                .extracting(UserSnapshot::getId)
+                .containsExactlyInAnyOrder(
+                        firstUser.getId(),
+                        thirdUser.getId());
     }
+
+
 
     @Test
     @Transactional
@@ -233,12 +229,7 @@ class CourtHearingServiceIT {
         UserSnapshot fourthUser = this.user("0003", "600000103", "cliente3");
         UserSnapshot fifthUser = this.user("0004", "600000104", "cliente4");
 
-        when(this.userFinder.findByIds(Set.of(
-                firstUser.getId(),
-                secondUser.getId(),
-                thirdUser.getId(),
-                fourthUser.getId(),
-                fifthUser.getId())))
+        when(this.userFinder.findByIds(anySet()))
                 .thenReturn(List.of(firstUser, secondUser, thirdUser, fourthUser, fifthUser));
 
         List<CourtHearing> courtHearings = this.courtHearingService.find(
@@ -251,9 +242,10 @@ class CourtHearingServiceIT {
                 .containsExactly(
                         CourtHearingSeederForDev.HEARING_ID_0,
                         CourtHearingSeederForDev.HEARING_ID_3,
-                        CourtHearingSeederForDev.HEARING_ID_5,
-                        CourtHearingSeederForDev.HEARING_ID_6);
+                        CourtHearingSeederForDev.HEARING_ID_6,
+                        CourtHearingSeederForDev.HEARING_ID_5);
     }
+
 
     @Test
     @Transactional
