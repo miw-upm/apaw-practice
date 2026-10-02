@@ -62,7 +62,6 @@ public class NotificationTemplateService {
     }
 
     public void delete(UUID id) {
-        this.read(id);
         if (this.notificationTemplateGateway.isReferenced(id)) {
             throw new ConflictException("Notification template is referenced by a notification: " + id);
         }
