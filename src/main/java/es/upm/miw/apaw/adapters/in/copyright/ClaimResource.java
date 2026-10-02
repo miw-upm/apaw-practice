@@ -1,0 +1,24 @@
+package es.upm.miw.apaw.adapters.in.copyright;
+
+import es.upm.miw.apaw.domain.model.copyright.Claim;
+import es.upm.miw.apaw.domain.services.copyright.ClaimService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(ClaimResource.CLAIMS)
+@RequiredArgsConstructor
+public class ClaimResource {
+    public static final String CLAIMS = "/claims";
+    public static final String ID = "/{id}";
+
+    private final ClaimService claimService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Claim create(@Valid @RequestBody Claim claim) {
+        return this.claimService.create(claim);
+    }
+}
