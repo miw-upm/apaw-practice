@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.expertdirectoryservices;
 
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
 import es.upm.miw.apaw.domain.services.expertdirectoryservices.LegalExpertProfileService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ public class LegalExpertProfileResource {
     }
 
     @PostMapping
-    public LegalExpertProfile create(@RequestBody LegalExpertProfile legalExpertProfile) {
+    public LegalExpertProfile create(@Valid @RequestBody LegalExpertProfile legalExpertProfile) {
         return this.legalExpertProfileService.create(legalExpertProfile);
     }
 

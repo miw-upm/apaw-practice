@@ -1,8 +1,10 @@
 package es.upm.miw.apaw.domain.services.expertdirectoryservices;
 
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.ExpertServiceScheduleGateway;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfileGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.stream.Stream;
 public class LegalExpertProfileService {
 
     private final LegalExpertProfileGateway legalExpertProfileGateway;
+    private final ExpertServiceScheduleGateway expertServiceScheduleGateway;
     private final UserFinder userFinder;
 
     public LegalExpertProfile create(LegalExpertProfile legalExpertProfile) {
@@ -43,10 +46,12 @@ public class LegalExpertProfileService {
     }
 
     public LegalExpertProfile read(String id) {
+        this.assertValidId(id);
         return this.legalExpertProfileGateway.read(id).ofSummary();
     }
 
     public LegalExpertProfile update(String id, LegalExpertProfile legalExpertProfile) {
+        this.assertValidId(id);
         LegalExpertProfile existingProfile = this.legalExpertProfileGateway.read(id);
 
         if (!existingProfile.getTaxIdCode().equals(legalExpertProfile.getTaxIdCode())
@@ -75,6 +80,20 @@ public class LegalExpertProfileService {
         }
 
         return this.legalExpertProfileGateway.update(legalExpertProfile);
+    }
+
+    public void delete(String id) {
+        UUID profileId = this.assertValidId(id);
+        if (this.expertServiceScheduleGateway.existsByLegalExpertProfileIds(List.of(profileId))) {
+            throw new ConflictException("No se puede eliminar el perfil " + id
+                    + " porque está asociado a una tarifa (ExpertServiceSchedule)");
+        }
+        this.legalExpertProfileGateway.delete(id);
+    }
+
+    public Stream<LegalExpertProfile> findAll() {
+        return this.legalExpertProfileGateway.findAll()
+                .map(LegalExpertProfile::ofSummary);
     }
 
     public void updatePartial(List<LegalExpertProfile> updates) {
@@ -129,13 +148,12 @@ public class LegalExpertProfileService {
         profilesToUpdate.forEach(this.legalExpertProfileGateway::update);
     }
 
-    public void delete(String id) {
-        this.legalExpertProfileGateway.delete(id);
-    }
-
-    public Stream<LegalExpertProfile> findAll() {
-        return this.legalExpertProfileGateway.findAll()
-                .map(LegalExpertProfile::ofSummary);
+    private UUID assertValidId(String id) {
+        try {
+            return UUID.fromString(id);
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Identificador no válido: " + id, e);
+        }
     }
 
     private void assertUniqueIds(List<LegalExpertProfile> updates) {
