@@ -1,20 +1,22 @@
 package es.upm.miw.apaw.domain.services.expertdirectoryservices;
 
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.ExpertServiceScheduleGateway;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfileGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 import java.util.stream.Stream;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class LegalExpertProfileService {
 
     private final LegalExpertProfileGateway legalExpertProfileGateway;
+    private final ExpertServiceScheduleGateway expertServiceScheduleGateway;
 
     public LegalExpertProfile create(LegalExpertProfile legalExpertProfile) {
 
@@ -36,10 +38,12 @@ public class LegalExpertProfileService {
     }
 
     public LegalExpertProfile read(String id) {
+        this.assertValidId(id);
         return this.legalExpertProfileGateway.read(id).ofSummary();
     }
 
     public LegalExpertProfile update(String id, LegalExpertProfile legalExpertProfile) {
+        this.assertValidId(id);
         LegalExpertProfile existingProfile = this.legalExpertProfileGateway.read(id);
 
         if (!existingProfile.getTaxIdCode().equals(legalExpertProfile.getTaxIdCode())
@@ -66,6 +70,11 @@ public class LegalExpertProfileService {
     }
 
     public void delete(String id) {
+        UUID profileId = this.assertValidId(id);
+        if (this.expertServiceScheduleGateway.existsByLegalExpertProfileIds(List.of(profileId))) {
+            throw new ConflictException("No se puede eliminar el perfil " + id
+                    + " porque está asociado a una tarifa (ExpertServiceSchedule)");
+        }
         this.legalExpertProfileGateway.delete(id);
     }
 
@@ -123,6 +132,14 @@ public class LegalExpertProfileService {
                 .toList();
 
         profilesToUpdate.forEach(this.legalExpertProfileGateway::update);
+    }
+
+    private UUID assertValidId(String id) {
+        try {
+            return UUID.fromString(id);
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Identificador no válido: " + id, e);
+        }
     }
 
     private void assertUniqueIds(List<LegalExpertProfile> updates) {

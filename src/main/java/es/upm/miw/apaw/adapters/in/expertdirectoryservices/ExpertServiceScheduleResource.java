@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ExpertServiceScheduleResource {
 
-    public static final String EXPERT_SERVICE_SCHEDULES = "/expertdirectory-services/expert-service-schedules";
+    public static final String EXPERT_SERVICE_SCHEDULES = "/expert-directory-services/expert-service-schedules";
 
     private final ExpertServiceScheduleService expertServiceScheduleService;
 
