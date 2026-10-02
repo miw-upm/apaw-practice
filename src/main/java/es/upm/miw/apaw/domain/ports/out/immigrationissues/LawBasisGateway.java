@@ -14,4 +14,8 @@ public interface LawBasisGateway {
     Optional<LawBasis> read(UUID id);
 
     LawBasis update(LawBasis lawBasis);
+
+    void delete(UUID id);
+
+    boolean isReferenced(UUID id);
 }

@@ -44,4 +44,14 @@ public class LawBasisService {
 
         return this.lawBasisGateway.update(storedLawBasis);
     }
+
+    public void delete(UUID id) {
+        this.read(id);
+
+        if (this.lawBasisGateway.isReferenced(id)) {
+            throw new ConflictException("Law basis is referenced by an immigration issue: " + id);
+        }
+
+        this.lawBasisGateway.delete(id);
+    }
 }

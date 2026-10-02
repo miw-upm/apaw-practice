@@ -13,6 +13,7 @@ import java.util.UUID;
 public class LawBasisAdapter implements LawBasisGateway {
 
     private final LawBasisRepository lawBasisRepository;
+    private final ImmigrationIssueRepository immigrationIssueRepository;
 
     @Override
     public LawBasis create(LawBasis lawBasis) {
@@ -37,5 +38,15 @@ public class LawBasisAdapter implements LawBasisGateway {
         return this.lawBasisRepository
                 .save(new LawBasisEntity(lawBasis))
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.lawBasisRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.immigrationIssueRepository.existsByLawBases_Id(id);
     }
 }
