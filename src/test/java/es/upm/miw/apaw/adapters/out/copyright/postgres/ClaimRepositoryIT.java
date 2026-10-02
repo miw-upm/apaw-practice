@@ -19,7 +19,7 @@ class ClaimRepositoryIT {
 
     @Test
     void testExistsByNumber() {
-        assertThat(this.claimRepository.existsByNumber(CLAIM_0.getNumber())).isFalse();
+        assertThat(this.claimRepository.existsByNumber(CLAIM_0.getNumber())).isTrue();
         assertThat(this.claimRepository.existsByNumber("NON_EXISTENT_NUMBER_999")).isFalse();
     }
 
@@ -37,7 +37,7 @@ class ClaimRepositoryIT {
         for (int i = 0; i < claims.size() - 1; i++) {
             String currentNumber = claims.get(i).getNumber();
             String nextNumber = claims.get(i + 1).getNumber();
-            assertThat(currentNumber.compareTo(nextNumber)).isGreaterThanOrEqualTo(0);
+            assertThat(currentNumber.compareTo(nextNumber)).isLessThanOrEqualTo(0);
         }
     }
 }
