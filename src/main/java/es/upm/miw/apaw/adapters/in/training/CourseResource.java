@@ -53,4 +53,9 @@ public class CourseResource {
             @RequestBody @NotEmpty List<@NotNull @Valid CourseDurationUpdate> updates) {
         this.courseService.updateDurationHours(updates);
     }
+
+    @org.springframework.web.bind.annotation.GetMapping("/modality-report")
+    public java.util.List<es.upm.miw.apaw.domain.model.training.TrainingModalityReport> findModalityReport() {
+        return this.courseService.findModalityReport();
+    }
 }
