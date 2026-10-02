@@ -10,4 +10,16 @@ import org.springframework.stereotype.Repository;
 public class LawBasisAdapter implements LawBasisGateway {
 
     private final LawBasisRepository lawBasisRepository;
+
+    @Override
+    public LawBasis create(LawBasis lawBasis) {
+        return this.lawBasisRepository
+                .save(new LawBasisEntity(lawBasis))
+                .toDomain();
+    }
+
+    @Override
+    public boolean existsByLawCode(String lawCode) {
+        return this.lawBasisRepository.existsByLawCode(lawCode);
+    }
 }

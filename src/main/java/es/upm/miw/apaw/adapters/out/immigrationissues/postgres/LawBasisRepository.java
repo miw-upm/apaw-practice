@@ -6,4 +6,5 @@ import java.util.UUID;
 
 public interface LawBasisRepository extends JpaRepository<LawBasisEntity, UUID> {
 
+    boolean existsByLawCode(String lawCode);
 }
