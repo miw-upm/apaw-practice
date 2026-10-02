@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CreativeWorkCreation {
 
+    @NotBlank
     private String registrationCode;
 
     @NotBlank
@@ -29,6 +30,6 @@ public class CreativeWorkCreation {
 
     private FormatType formatType;
 
-    @NotBlank
+    @NotNull
     private UUID authorId;
 }
