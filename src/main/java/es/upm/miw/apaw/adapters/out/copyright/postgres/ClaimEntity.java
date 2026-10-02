@@ -44,10 +44,6 @@ public class ClaimEntity {
     @Column(nullable = false)
     private TaskStatus taskStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private CreativeWorkEntity creativeWork;
-
     private UUID userId;
 
     public ClaimEntity(Claim claim) {
@@ -59,7 +55,7 @@ public class ClaimEntity {
 
     public Claim toDomain() {
         Claim claim = new Claim();
-        BeanUtils.copyProperties(this, claim, "creativeWork", "userId");
+        BeanUtils.copyProperties(this, claim, "userId");
         if (this.userId != null) {
             claim.setDefendant(UserSnapshot.builder().id(this.userId).build());
         }

@@ -20,8 +20,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
+
+import es.upm.miw.apaw.domain.model.courthearing.CourtHearing;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import org.springframework.beans.BeanUtils;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -69,4 +76,20 @@ public class CourtHearingEntity {
     @CollectionTable(name = "court_hearing_attendee", joinColumns = @JoinColumn(name = "court_hearing_id"))
     @Column(name = "user_id", nullable = false)
     private Set<UUID> attendeeIds;
+
+    public CourtHearingEntity(CourtHearing courtHearing) {
+        BeanUtils.copyProperties(courtHearing, this, "attendees");
+        this.attendeeIds = courtHearing.getAttendees().stream()
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toCollection(HashSet::new));
+    }
+
+    public CourtHearing toDomain() {
+        CourtHearing courtHearing = new CourtHearing();
+        BeanUtils.copyProperties(this, courtHearing);
+        courtHearing.setAttendees(this.attendeeIds.stream()
+                .map(id -> UserSnapshot.builder().id(id).build())
+                .collect(Collectors.toCollection(ArrayList::new)));
+        return courtHearing;
+    }
 }

@@ -2,14 +2,17 @@ package es.upm.miw.apaw.domain.services.expertdirectoryservices;
 
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.ExpertServiceScheduleGateway;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfileGateway;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +20,7 @@ public class LegalExpertProfileService {
 
     private final LegalExpertProfileGateway legalExpertProfileGateway;
     private final ExpertServiceScheduleGateway expertServiceScheduleGateway;
+    private final UserFinder userFinder;
 
     public LegalExpertProfile create(LegalExpertProfile legalExpertProfile) {
 
@@ -32,6 +36,10 @@ public class LegalExpertProfileService {
                         + legalExpertProfile.getProfessionalLicense());
             }
         }
+
+        UUID userId = legalExpertProfile.getUserSnapshot().getId();
+        UserSnapshot validatedUser = this.userFinder.read(userId);
+        legalExpertProfile.setUserSnapshot(validatedUser);
 
         legalExpertProfile.doDefault();
         return this.legalExpertProfileGateway.create(legalExpertProfile);
@@ -59,6 +67,11 @@ public class LegalExpertProfileService {
                         .existsByProfessionalLicense(legalExpertProfile.getProfessionalLicense())) {
             throw new ConflictException("Ya existe otro perfil con esta professionalLicense: "
                     + legalExpertProfile.getProfessionalLicense());
+        }
+
+        if (legalExpertProfile.getUserSnapshot() != null && legalExpertProfile.getUserSnapshot().getId() != null) {
+            UserSnapshot validatedUser = this.userFinder.read(legalExpertProfile.getUserSnapshot().getId());
+            legalExpertProfile.setUserSnapshot(validatedUser);
         }
 
         legalExpertProfile.setId(UUID.fromString(id));
@@ -123,8 +136,9 @@ public class LegalExpertProfileService {
                         existingProfile.setRequiresPrepayment(patchProfile.getRequiresPrepayment());
                     }
 
-                    if (patchProfile.getUserSnapshot() != null) {
-                        existingProfile.setUserSnapshot(patchProfile.getUserSnapshot());
+                    if (patchProfile.getUserSnapshot() != null && patchProfile.getUserSnapshot().getId() != null) {
+                        UserSnapshot newValidatedUser = this.userFinder.read(patchProfile.getUserSnapshot().getId());
+                        existingProfile.setUserSnapshot(newValidatedUser);
                     }
 
                     return existingProfile;
