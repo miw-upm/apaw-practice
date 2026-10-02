@@ -21,7 +21,7 @@ public class DebtEntity {
     private UUID id;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDate issueDate;
 
     @Column(nullable = false)
     private String creditorName;
