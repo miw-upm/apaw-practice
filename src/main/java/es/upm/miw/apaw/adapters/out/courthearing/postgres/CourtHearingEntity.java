@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -81,5 +82,14 @@ public class CourtHearingEntity {
         this.attendeeIds = courtHearing.getAttendees().stream()
                 .map(UserSnapshot::getId)
                 .collect(Collectors.toCollection(HashSet::new));
+    }
+
+    public CourtHearing toDomain() {
+        CourtHearing courtHearing = new CourtHearing();
+        BeanUtils.copyProperties(this, courtHearing);
+        courtHearing.setAttendees(this.attendeeIds.stream()
+                .map(id -> UserSnapshot.builder().id(id).build())
+                .collect(Collectors.toCollection(ArrayList::new)));
+        return courtHearing;
     }
 }

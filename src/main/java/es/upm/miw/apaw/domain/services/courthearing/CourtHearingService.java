@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.courthearing;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.courthearing.CourtHearing;
+import es.upm.miw.apaw.domain.model.courthearing.CourtHearingFindCriteria;
 import es.upm.miw.apaw.domain.model.courthearing.CreationCourtHearing;
 import es.upm.miw.apaw.domain.ports.out.courthearing.CourtGateway;
 import es.upm.miw.apaw.domain.ports.out.courthearing.CourtHearingGateway;
@@ -11,10 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,5 +50,50 @@ public class CourtHearingService {
             throw new NotFoundException("User ids not found: " + missingIds);
         }
         return users;
+    }
+
+    public List<CourtHearing> find(CourtHearingFindCriteria criteria) {
+        List<CourtHearing> courtHearings = this.courtHearingGateway.find(criteria);
+        if (courtHearings.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = courtHearings.stream()
+                .flatMap(courtHearing -> courtHearing.getAttendees().stream())
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toSet());
+        return this.toSummaries(criteria, courtHearings, this.userFinder.findByIds(userIds));
+    }
+
+    private List<CourtHearing> toSummaries(
+            CourtHearingFindCriteria criteria,
+            List<CourtHearing> courtHearings,
+            List<UserSnapshot> users) {
+        Map<UUID, UserSnapshot> usersById = users.stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        return courtHearings.stream()
+                .map(courtHearing -> this.enrichAttendees(courtHearing, usersById))
+                .filter(courtHearing -> this.matchesUserMobile(criteria, courtHearing))
+                .map(CourtHearing::ofSummary)
+                .toList();
+    }
+
+    private CourtHearing enrichAttendees(CourtHearing courtHearing, Map<UUID, UserSnapshot> usersById) {
+        courtHearing.setAttendees(courtHearing.getAttendees().stream()
+                .map(attendee -> this.findUser(attendee.getId(), usersById))
+                .toList());
+        return courtHearing;
+    }
+
+    private UserSnapshot findUser(UUID userId, Map<UUID, UserSnapshot> usersById) {
+        UserSnapshot user = usersById.get(userId);
+        if (user == null) {
+            throw new NotFoundException("User id not found: " + userId);
+        }
+        return user;
+    }
+
+    private boolean matchesUserMobile(CourtHearingFindCriteria criteria, CourtHearing courtHearing) {
+        return !criteria.hasUserMobile() || courtHearing.getAttendees().stream()
+                .anyMatch(attendee -> criteria.getUserMobile().equals(attendee.getMobile()));
     }
 }
