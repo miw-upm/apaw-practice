@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,6 +22,13 @@ public class ClaimAdapter implements ClaimGateway {
         ClaimEntity claimEntity = new ClaimEntity(claim);
         claimEntity.setCreativeWork(this.creativeWorkRepository.getReferenceById(creativeWorkId));
         return this.claimRepository.save(claimEntity).toDomain();
+    }
+
+    @Override
+    public List<Claim> findAll() {
+        return this.claimRepository.findAllByOrderByNumberAsc().stream()
+                .map(ClaimEntity::toDomain)
+                .toList();
     }
 
     @Override
@@ -41,5 +49,10 @@ public class ClaimAdapter implements ClaimGateway {
         BeanUtils.copyProperties(claim, claimEntity, "userSnapshot");
         claimEntity.setUserId(claim.getUserSnapshot().getId());
         return this.claimRepository.save(claimEntity).toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.claimRepository.deleteById(id);
     }
 }
