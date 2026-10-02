@@ -3,6 +3,8 @@ package es.upm.miw.apaw.adapters.out.copyright.postgres;
 import es.upm.miw.apaw.domain.model.copyright.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -40,6 +42,7 @@ public class ClaimEntity {
     private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private CreativeWorkEntity creativeWork;
 
     @Column(nullable = false)
