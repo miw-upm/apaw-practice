@@ -236,7 +236,7 @@ class NotificationTemplateResourceFT {
         this.restTestClient.delete()
                 .uri(NotificationTemplateResource.NOTIFICATION_TEMPLATE + "/" + UUID.randomUUID())
                 .exchange()
-                .expectStatus().isNotFound();
+                .expectStatus().isNoContent();
     }
 
     private NotificationTemplate createTemplate() {
