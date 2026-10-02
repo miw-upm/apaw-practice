@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.model.copyright;
 
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -36,6 +37,8 @@ public class CreativeWork {
     private FormatType formatType;
 
     private List<Claim> claims;
+
+    private UserSnapshot author;
 
     public void doDefault() {
         this.id = UUID.randomUUID();

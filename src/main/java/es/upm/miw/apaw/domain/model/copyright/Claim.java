@@ -33,9 +33,7 @@ public class Claim {
 
     private TaskStatus taskStatus;
 
-    private UserSnapshot claimantSnapshot;
-
-    private UserSnapshot defendantSnapshot;
+    private UserSnapshot defendant;
 
     public void doDefault() {
         this.id = UUID.randomUUID();
