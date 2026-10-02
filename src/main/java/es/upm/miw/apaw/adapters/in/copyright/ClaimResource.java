@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.copyright;
 
 import es.upm.miw.apaw.domain.model.copyright.Claim;
+import es.upm.miw.apaw.domain.model.copyright.ClaimCreation;
 import es.upm.miw.apaw.domain.services.copyright.ClaimService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class ClaimResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Claim create(@Valid @RequestBody Claim claim) {
-        return this.claimService.create(claim);
+    public Claim create(@Valid @RequestBody ClaimCreation claimCreation) {
+        return this.claimService.create(claimCreation);
     }
 }
