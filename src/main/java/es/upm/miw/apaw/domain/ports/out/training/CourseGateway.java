@@ -14,4 +14,6 @@ public interface CourseGateway {
     void delete(UUID id);
     boolean isReferenced(UUID id);
     List<Course> findAll();
+
+    java.util.List<es.upm.miw.apaw.domain.model.training.TrainingModalityReport> findModalityReport();
 }

@@ -3,7 +3,6 @@ package es.upm.miw.apaw.domain.services.training;
 import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanEntity;
 import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanRepository;
 import es.upm.miw.apaw.adapters.out.training.postgres.CourseEntity;
-import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.training.Course;
 import es.upm.miw.apaw.domain.model.training.CreationTrainingPlan;
@@ -24,7 +23,6 @@ import java.util.UUID;
 import static es.upm.miw.apaw.config.seeders.TrainingSeederForDev.COURSE_ID_1;
 import static es.upm.miw.apaw.config.seeders.TrainingSeederForDev.COURSE_ID_2;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 

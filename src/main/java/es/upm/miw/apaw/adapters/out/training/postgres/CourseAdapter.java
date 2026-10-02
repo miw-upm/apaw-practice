@@ -54,5 +54,9 @@ public class CourseAdapter implements CourseGateway {
                 .map(CourseEntity::toDomain)
                 .toList();
     }
-}
 
+    @Override
+    public java.util.List<es.upm.miw.apaw.domain.model.training.TrainingModalityReport> findModalityReport() {
+        return this.trainingPlanRepository.findTrainingModalityReport();
+    }
+}

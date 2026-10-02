@@ -82,4 +82,8 @@ public class CourseService {
             }
         }
     }
+
+    public java.util.List<es.upm.miw.apaw.domain.model.training.TrainingModalityReport> findModalityReport() {
+        return this.courseGateway.findModalityReport();
+    }
 }

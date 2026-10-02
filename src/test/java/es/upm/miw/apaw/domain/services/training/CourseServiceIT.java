@@ -177,4 +177,11 @@ class CourseServiceIT {
                 .launchDate(LocalDate.now())
                 .build());
     }
+
+    @org.junit.jupiter.api.Test
+    void testFindModalityReport() {
+        java.util.List<es.upm.miw.apaw.domain.model.training.TrainingModalityReport> reports = this.courseService.findModalityReport();
+        org.junit.jupiter.api.Assertions.assertFalse(reports.isEmpty());
+        org.junit.jupiter.api.Assertions.assertNotNull(reports.get(0).getPlanCount());
+    }
 }
