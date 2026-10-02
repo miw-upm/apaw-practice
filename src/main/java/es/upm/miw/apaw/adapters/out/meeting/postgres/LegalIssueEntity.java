@@ -1,9 +1,11 @@
 package es.upm.miw.apaw.adapters.out.meeting.postgres;
 
+import es.upm.miw.apaw.domain.model.meeting.LegalIssue;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -33,4 +35,14 @@ public class LegalIssueEntity {
 
     @Column(nullable = false)
     private LocalDateTime creationDate;
+
+    public LegalIssueEntity(LegalIssue legalIssue) {
+        BeanUtils.copyProperties(legalIssue, this);
+    }
+
+    public LegalIssue toDomain() {
+        LegalIssue legalIssue = new LegalIssue();
+        BeanUtils.copyProperties(this, legalIssue);
+        return legalIssue;
+    }
 }
