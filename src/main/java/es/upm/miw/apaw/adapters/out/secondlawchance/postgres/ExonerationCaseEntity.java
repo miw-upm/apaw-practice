@@ -3,7 +3,6 @@ package es.upm.miw.apaw.adapters.out.secondlawchance.postgres;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -28,9 +27,6 @@ public class ExonerationCaseEntity {
     private LocalDate filingDate;
 
     private LocalDate resolutionDate;
-
-    @Column(nullable = false)
-    private BigDecimal totalAmount;
 
     private String lawyer;
 
