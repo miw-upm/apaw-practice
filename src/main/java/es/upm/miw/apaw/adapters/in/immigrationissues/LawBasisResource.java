@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.immigrationissues;
 
 import es.upm.miw.apaw.domain.model.immigrationissues.LawBasis;
+import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUpdate;
 import es.upm.miw.apaw.domain.services.immigrationissues.LawBasisService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,11 @@ public class LawBasisResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.lawBasisService.delete(id);
+    }
+
+    @PatchMapping(ID)
+    public LawBasis patch(@PathVariable UUID id, @RequestBody LawBasisUpdate patch) {
+        return this.lawBasisService.patch(id, patch);
     }
 
     @GetMapping

@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.immigrationissues;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.immigrationissues.LawBasis;
+import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUpdate;
 import es.upm.miw.apaw.domain.ports.out.immigrationissues.LawBasisGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,36 @@ public class LawBasisService {
         storedLawBasis.setArticleNumber(lawBasis.getArticleNumber());
         storedLawBasis.setPublishedOn(lawBasis.getPublishedOn());
         storedLawBasis.setActive(lawBasis.getActive());
+
+        return this.lawBasisGateway.update(storedLawBasis);
+    }
+
+    public LawBasis patch(UUID id, LawBasisUpdate patch) {
+        LawBasis storedLawBasis = this.read(id);
+
+        if (patch.lawCode() != null) {
+            if (!storedLawBasis.getLawCode().equals(patch.lawCode())
+                    && this.lawBasisGateway.existsByLawCode(patch.lawCode())) {
+                throw new ConflictException("Law basis law code already exists: " + patch.lawCode());
+            }
+            storedLawBasis.setLawCode(patch.lawCode());
+        }
+
+        if (patch.lawName() != null) {
+            storedLawBasis.setLawName(patch.lawName());
+        }
+
+        if (patch.articleNumber() != null) {
+            storedLawBasis.setArticleNumber(patch.articleNumber());
+        }
+
+        if (patch.publishedOn() != null) {
+            storedLawBasis.setPublishedOn(patch.publishedOn());
+        }
+
+        if (patch.active() != null) {
+            storedLawBasis.setActive(patch.active());
+        }
 
         return this.lawBasisGateway.update(storedLawBasis);
     }
