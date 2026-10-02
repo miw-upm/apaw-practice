@@ -10,10 +10,13 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.ExpertServiceSchedule;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.CreationExpertServiceSchedule;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -23,6 +26,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -37,6 +42,15 @@ class ExpertServiceScheduleServiceIT {
 
     @Autowired
     private ExpertServiceScheduleRepository expertServiceScheduleRepository;
+
+    @MockitoBean
+    private UserFinder userFinder;
+
+    @BeforeEach
+    void setUp() {
+        when(this.userFinder.read(any(UUID.class))).thenAnswer(invocation ->
+                UserSnapshot.builder().id(invocation.getArgument(0)).build());
+    }
 
     @Test
     void testCreate() {
