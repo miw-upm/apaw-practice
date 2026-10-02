@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.immigrationissues.LawBasisGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -53,5 +54,9 @@ public class LawBasisService {
         }
 
         this.lawBasisGateway.delete(id);
+    }
+
+    public List<LawBasis> findAll() {
+        return this.lawBasisGateway.findAll();
     }
 }

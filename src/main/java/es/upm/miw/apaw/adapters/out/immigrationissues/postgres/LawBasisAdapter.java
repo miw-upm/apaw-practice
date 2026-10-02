@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.immigrationissues.LawBasisGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -48,5 +49,13 @@ public class LawBasisAdapter implements LawBasisGateway {
     @Override
     public boolean isReferenced(UUID id) {
         return this.immigrationIssueRepository.existsByLawBases_Id(id);
+    }
+
+    @Override
+    public List<LawBasis> findAll() {
+        return this.lawBasisRepository.findAllByOrderByLawCodeAscIdAsc()
+                .stream()
+                .map(LawBasisEntity::toDomain)
+                .toList();
     }
 }

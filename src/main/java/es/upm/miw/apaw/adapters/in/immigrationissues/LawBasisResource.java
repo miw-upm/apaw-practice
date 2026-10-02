@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -39,5 +40,10 @@ public class LawBasisResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.lawBasisService.delete(id);
+    }
+
+    @GetMapping
+    public List<LawBasis> findAll() {
+        return this.lawBasisService.findAll();
     }
 }
