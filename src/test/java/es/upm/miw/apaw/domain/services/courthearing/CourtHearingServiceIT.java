@@ -23,13 +23,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.CourtSeederForDev.COURT_ID_0;
+import static es.upm.miw.apaw.config.seeders.CourtHearingSeederForDev.COURT_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest

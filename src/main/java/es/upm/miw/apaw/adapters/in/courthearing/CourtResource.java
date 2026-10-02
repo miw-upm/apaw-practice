@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.courthearing;
 
 import es.upm.miw.apaw.domain.model.courthearing.Court;
+import es.upm.miw.apaw.domain.model.courthearing.CourtHearingByCourtReport;
 import es.upm.miw.apaw.domain.model.courthearing.CourtUpdate;
 import es.upm.miw.apaw.domain.services.courthearing.CourtService;
 import jakarta.validation.Valid;
@@ -28,6 +29,7 @@ public class CourtResource {
     public static final String COURTS = "/courts";
 
     private final CourtService courtService;
+    public static final String REPORT = "/report";
 
     public static final String ID = "/{id}";
 
@@ -65,4 +67,10 @@ public class CourtResource {
     public Court patch(@PathVariable UUID id, @Valid @RequestBody CourtUpdate patch) {
         return this.courtService.patch(id, patch);
     }
+
+    @GetMapping(REPORT)
+    public List<CourtHearingByCourtReport> findHearingByCourtReport() {
+        return this.courtService.findHearingByCourtReport();
+    }
+
 }

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.CourtSeederForDev.*;
+import static es.upm.miw.apaw.config.seeders.CourtHearingSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

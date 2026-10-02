@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.List;
 
 import es.upm.miw.apaw.domain.model.courthearing.Court;
+import es.upm.miw.apaw.domain.model.courthearing.CourtHearingByCourtReport;
 
 public interface CourtGateway {
     Court create(Court court);
@@ -22,4 +23,6 @@ public interface CourtGateway {
     boolean isReferenced(UUID id);
 
     List<Court> findAll();
+
+    List<CourtHearingByCourtReport> findHearingByCourtReport();
 }

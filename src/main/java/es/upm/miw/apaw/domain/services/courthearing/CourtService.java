@@ -2,12 +2,12 @@ package es.upm.miw.apaw.domain.services.courthearing;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.courthearing.Court;
+import es.upm.miw.apaw.domain.model.courthearing.CourtHearingByCourtReport;
 import es.upm.miw.apaw.domain.model.courthearing.CourtUpdate;
 import es.upm.miw.apaw.domain.ports.out.courthearing.CourtGateway;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 
@@ -100,5 +100,9 @@ public class CourtService {
         if (patch.phone() != null && !patch.phone().equals(storedCourt.getPhone())) {
             this.assertPhoneNotExists(patch.phone());
         }
+    }
+
+    public List<CourtHearingByCourtReport> findHearingByCourtReport() {
+        return this.courtGateway.findHearingByCourtReport();
     }
 }

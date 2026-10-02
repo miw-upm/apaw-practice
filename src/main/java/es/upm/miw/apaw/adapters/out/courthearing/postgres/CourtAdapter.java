@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.out.courthearing.postgres;
 
 import es.upm.miw.apaw.domain.model.courthearing.Court;
+import es.upm.miw.apaw.domain.model.courthearing.CourtHearingByCourtReport;
 import es.upm.miw.apaw.domain.ports.out.courthearing.CourtGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -60,5 +61,10 @@ public class CourtAdapter implements CourtGateway {
         return this.courtRepository.findAllByOrderByNameAsc().stream()
                 .map(CourtEntity::toDomain)
                 .toList();
+    }
+
+    @Override
+    public List<CourtHearingByCourtReport> findHearingByCourtReport() {
+        return this.courtHearingRepository.findHearingByCourtReport();
     }
 }
