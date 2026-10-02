@@ -46,13 +46,35 @@ public class LegalExpertProfileService {
         return this.legalExpertProfileGateway.read(id).ofSummary();
     }
 
-    public void delete(String id) {
-        this.legalExpertProfileGateway.delete(id);
-    }
+    public LegalExpertProfile update(String id, LegalExpertProfile legalExpertProfile) {
+        LegalExpertProfile existingProfile = this.legalExpertProfileGateway.read(id);
 
-    public Stream<LegalExpertProfile> findAll() {
-        return this.legalExpertProfileGateway.findAll()
-                .map(LegalExpertProfile::ofSummary);
+        if (!existingProfile.getTaxIdCode().equals(legalExpertProfile.getTaxIdCode())
+                && this.legalExpertProfileGateway.existsByTaxIdCode(legalExpertProfile.getTaxIdCode())) {
+            throw new ConflictException(
+                    "Ya existe otro perfil con este taxIdCode: " + legalExpertProfile.getTaxIdCode());
+        }
+
+        if (legalExpertProfile.getProfessionalLicense() != null
+                && !legalExpertProfile.getProfessionalLicense().isBlank()
+                && !legalExpertProfile.getProfessionalLicense().equals(existingProfile.getProfessionalLicense())
+                && this.legalExpertProfileGateway
+                        .existsByProfessionalLicense(legalExpertProfile.getProfessionalLicense())) {
+            throw new ConflictException("Ya existe otro perfil con esta professionalLicense: "
+                    + legalExpertProfile.getProfessionalLicense());
+        }
+
+        if (legalExpertProfile.getUserSnapshot() != null && legalExpertProfile.getUserSnapshot().getId() != null) {
+            UserSnapshot validatedUser = this.userFinder.read(legalExpertProfile.getUserSnapshot().getId());
+            legalExpertProfile.setUserSnapshot(validatedUser);
+        }
+
+        legalExpertProfile.setId(UUID.fromString(id));
+        if (legalExpertProfile.getRequiresPrepayment() == null) {
+            legalExpertProfile.setRequiresPrepayment(false);
+        }
+
+        return this.legalExpertProfileGateway.update(legalExpertProfile);
     }
 
     public void updatePartial(List<LegalExpertProfile> updates) {
@@ -105,6 +127,15 @@ public class LegalExpertProfileService {
                 .toList();
 
         profilesToUpdate.forEach(this.legalExpertProfileGateway::update);
+    }
+
+    public void delete(String id) {
+        this.legalExpertProfileGateway.delete(id);
+    }
+
+    public Stream<LegalExpertProfile> findAll() {
+        return this.legalExpertProfileGateway.findAll()
+                .map(LegalExpertProfile::ofSummary);
     }
 
     private void assertUniqueIds(List<LegalExpertProfile> updates) {
