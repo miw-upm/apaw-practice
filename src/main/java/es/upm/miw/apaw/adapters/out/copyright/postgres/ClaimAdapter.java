@@ -46,8 +46,8 @@ public class ClaimAdapter implements ClaimGateway {
     public Claim update(Claim claim) {
         ClaimEntity claimEntity = this.claimRepository.findById(claim.getId())
                 .orElseThrow(() -> new NotFoundException("Claim entity not found: " + claim.getId()));
-        BeanUtils.copyProperties(claim, claimEntity, "userSnapshot");
-        claimEntity.setUserId(claim.getUserSnapshot().getId());
+        BeanUtils.copyProperties(claim, claimEntity, "defendant");
+        claimEntity.setUserId(claim.getDefendant().getId());
         return this.claimRepository.save(claimEntity).toDomain();
     }
 

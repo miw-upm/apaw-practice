@@ -43,7 +43,7 @@ public class CopyrightSeederForDev implements ApplicationRunner {
             .registrationDate(LocalDate.of(2025, 1, 10))
             .authorPenName("CervantesModerno")
             .formatType(FormatType.LITERATURE)
-            .userSnapshot(user("0000", "600000100", "cliente0"))
+            .author(user("0000", "600000100", "cliente0"))
             .build();
 
     public static final UUID WORK_ID_1 = UUID.fromString(PREFIX + "0001");
@@ -55,7 +55,7 @@ public class CopyrightSeederForDev implements ApplicationRunner {
             .registrationDate(LocalDate.of(2025, 2, 15))
             .authorPenName("BeethovenTech")
             .formatType(FormatType.MUSIC)
-            .userSnapshot(user("0001", "600000101", "cliente1"))
+            .author(user("0001", "600000101", "cliente1"))
             .build();
 
     // Denuncias (Claims)
@@ -68,7 +68,7 @@ public class CopyrightSeederForDev implements ApplicationRunner {
             .urgent(true)
             .resolutionNotes("En proceso de revisión pericial.")
             .taskStatus(TaskStatus.CURRENT)
-            .userSnapshot(user("0002", "600000102", "cliente2"))
+            .defendant(user("0002", "600000102", "cliente2"))
             .build();
 
     public static final UUID CLAIM_ID_1 = UUID.fromString(PREFIX + "1001");
@@ -79,7 +79,7 @@ public class CopyrightSeederForDev implements ApplicationRunner {
             .requestedCompensation(new BigDecimal("1000.00"))
             .urgent(false)
             .taskStatus(TaskStatus.WITHDRAWN)
-            .userSnapshot(user("0003", "600000103", "cliente3"))
+            .defendant(user("0003", "600000103", "cliente3"))
             .build();
 
     public static final UUID CLAIM_ID_2 = UUID.fromString(PREFIX + "1002");
@@ -91,7 +91,7 @@ public class CopyrightSeederForDev implements ApplicationRunner {
             .urgent(true)
             .resolutionNotes("Desestimada por falta de pruebas.")
             .taskStatus(TaskStatus.DEPRECATED)
-            .userSnapshot(user("0004", "600000104", "cliente4"))
+            .defendant(user("0004", "600000104", "cliente4"))
             .build();
 
     private final CreativeWorkRepository creativeWorkRepository;
