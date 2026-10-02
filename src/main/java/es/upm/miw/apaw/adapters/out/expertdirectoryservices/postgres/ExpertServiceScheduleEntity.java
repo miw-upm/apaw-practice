@@ -42,7 +42,7 @@ public class ExpertServiceScheduleEntity {
     private LocalDate creationDate;
 
     @OneToMany
-    @JoinColumn(name = "expert_service_schedule_id", nullable = false)
+    @JoinColumn(name = "expert_service_schedule_id")
     private List<LegalExpertProfileEntity> legalExpertProfiles;
 
     public ExpertServiceScheduleEntity(ExpertServiceSchedule expertServiceSchedule) {
