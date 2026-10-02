@@ -45,18 +45,36 @@ public class CreativeWorkEntity {
     @Column(nullable = false)
     private UUID userId;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "creative_work_id")
+    private java.util.List<ClaimEntity> claims;
+
     public CreativeWorkEntity(CreativeWork creativeWork) {
         BeanUtils.copyProperties(creativeWork, this, "author", "claims");
         if (creativeWork.getAuthor() != null) {
             this.userId = creativeWork.getAuthor().getId();
         }
+        if (creativeWork.getClaims() != null) {
+            this.claims = creativeWork.getClaims().stream()
+                    .map(ClaimEntity::new)
+                    .collect(java.util.stream.Collectors.toList());
+        } else {
+            this.claims = new java.util.ArrayList<>();
+        }
     }
 
     public CreativeWork toDomain() {
         CreativeWork creativeWork = new CreativeWork();
-        BeanUtils.copyProperties(this, creativeWork, "userId");
+        BeanUtils.copyProperties(this, creativeWork, "userId", "claims");
         if (this.userId != null) {
             creativeWork.setAuthor(es.upm.miw.apaw.domain.model.UserSnapshot.builder().id(this.userId).build());
+        }
+        if (this.claims != null) {
+            creativeWork.setClaims(this.claims.stream()
+                    .map(ClaimEntity::toDomain)
+                    .collect(java.util.stream.Collectors.toList()));
+        } else {
+            creativeWork.setClaims(new java.util.ArrayList<>());
         }
         return creativeWork;
     }
