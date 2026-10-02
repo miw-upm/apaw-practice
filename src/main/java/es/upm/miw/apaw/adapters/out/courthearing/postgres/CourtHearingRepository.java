@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.out.courthearing.postgres;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.UUID;
 import es.upm.miw.apaw.domain.model.courthearing.CourtHearingByCourtReport;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +22,5 @@ public interface CourtHearingRepository extends JpaRepository<CourtHearingEntity
             group by court.name
             order by count(hearing) desc, court.name asc
             """)
-    List<CourtHearingByCourtReport> findCourtUsageReport();
+    List<CourtHearingByCourtReport> findHearingByCourtReport();
 }
