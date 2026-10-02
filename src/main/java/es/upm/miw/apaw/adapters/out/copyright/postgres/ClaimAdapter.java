@@ -19,9 +19,11 @@ public class ClaimAdapter implements ClaimGateway {
 
     @Override
     public Claim create(Claim claim, UUID creativeWorkId) {
+        CreativeWorkEntity creativeWorkEntity = this.creativeWorkRepository.findById(creativeWorkId)
+                .orElseThrow(() -> new NotFoundException("CreativeWork not found: " + creativeWorkId));
         ClaimEntity claimEntity = new ClaimEntity(claim);
-        claimEntity.setCreativeWork(this.creativeWorkRepository.getReferenceById(creativeWorkId));
-        this.claimRepository.save(claimEntity);
+        creativeWorkEntity.getClaims().add(claimEntity);
+        this.creativeWorkRepository.save(creativeWorkEntity);
         return claim;
     }
 

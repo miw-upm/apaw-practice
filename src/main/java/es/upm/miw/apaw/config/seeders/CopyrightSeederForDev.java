@@ -139,8 +139,9 @@ public class CopyrightSeederForDev implements ApplicationRunner {
 
     private void saveClaimWithWork(Claim claim, UUID workId) {
         ClaimEntity entity = new ClaimEntity(claim);
-        entity.setCreativeWork(this.creativeWorkRepository.getReferenceById(workId));
-        this.claimRepository.save(entity);
+        CreativeWorkEntity work = this.creativeWorkRepository.findById(workId).orElseThrow();
+        work.getClaims().add(entity);
+        this.creativeWorkRepository.save(work);
         log.warn("        ------- claim: {} added", claim.getNumber());
     }
 }
