@@ -61,7 +61,7 @@ class CreativeWorkServiceIT {
         assertThat(created.getTitle()).isEqualTo("New Test Work");
         assertThat(created.getAuthor()).isEqualTo(mockUser);
 
-        verify(this.userFinder, times(2)).read(authorId);
+        verify(this.userFinder, times(1)).read(authorId);
     }
 
     @Test
@@ -74,6 +74,6 @@ class CreativeWorkServiceIT {
                 .authorId(UUID.randomUUID())
                 .build();
 
-        assertThrows(NotFoundException.class, () -> this.creativeWorkService.create(creation));
+        assertThrows(ConflictException.class, () -> this.creativeWorkService.create(creation));
     }
 }
