@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.carreservation.CarGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -48,5 +49,13 @@ public class CarAdapter implements CarGateway {
     @Override
     public boolean isUsedByReservation(UUID id) {
         return this.reservationRepository.existsByCarId(id);
+    }
+
+    @Override
+    public List<Car> readAll() {
+        return this.carRepository.findAllByOrderByLicensePlateAsc()
+                .stream()
+                .map(CarEntity::toDomain)
+                .toList();
     }
 }
