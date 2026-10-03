@@ -1,13 +1,16 @@
 package es.upm.miw.apaw.adapters.out.secondlawchance.postgres;
 
 import es.upm.miw.apaw.domain.model.secondlawchance.Debt;
+import es.upm.miw.apaw.domain.model.secondlawchance.SharedDebtReport;
 import es.upm.miw.apaw.domain.ports.out.secondlawchance.DebtGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -55,5 +58,22 @@ public class DebtAdapter implements DebtGateway {
     @Override
     public boolean existsByContractNumber(String contractNumber) {
         return this.debtRepository.existsByContractNumber(contractNumber);
+    }
+
+    @Override
+    public List<SharedDebtReport> findSharedReport() {
+        List<SharedDebtReport> report = this.exonerationCaseRepository.findSharedDebtReport();
+        if (report.isEmpty()) {
+            return report;
+        }
+        List<UUID> debtIds = report.stream()
+                .map(SharedDebtReport::getDebtId)
+                .toList();
+        Map<UUID, List<UUID>> debtorIdsByDebtId = this.exonerationCaseRepository.findDebtorRowsByDebtIds(debtIds)
+                .stream()
+                .collect(Collectors.groupingBy(ExonerationCaseRepository.DebtorRow::getDebtId,
+                        Collectors.mapping(ExonerationCaseRepository.DebtorRow::getUserId, Collectors.toList())));
+        report.forEach(item -> item.setDebtorIds(debtorIdsByDebtId.get(item.getDebtId())));
+        return report;
     }
 }

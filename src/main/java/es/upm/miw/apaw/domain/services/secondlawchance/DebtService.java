@@ -2,19 +2,27 @@ package es.upm.miw.apaw.domain.services.secondlawchance;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.secondlawchance.Debt;
 import es.upm.miw.apaw.domain.model.secondlawchance.DebtPatch;
+import es.upm.miw.apaw.domain.model.secondlawchance.SharedDebtReport;
 import es.upm.miw.apaw.domain.ports.out.secondlawchance.DebtGateway;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class DebtService {
     private final DebtGateway debtGateway;
+    private final UserFinder userFinder;
 
     public Debt create(Debt debt) {
         this.assertContractNumberAvailable(null, debt.getContractNumber());
@@ -68,6 +76,30 @@ public class DebtService {
             throw new ConflictException("Debt is referenced by an exoneration case: " + id);
         }
         this.debtGateway.delete(id);
+    }
+
+    public List<SharedDebtReport> findSharedReport() {
+        List<SharedDebtReport> report = this.debtGateway.findSharedReport();
+        if (report.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = report.stream()
+                .flatMap(item -> item.getDebtorIds().stream())
+                .collect(Collectors.toSet());
+        Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(userIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        report.forEach(item -> item.setDebtors(item.getDebtorIds().stream()
+                .map(userId -> this.readUser(usersById, userId))
+                .toList()));
+        return report;
+    }
+
+    private UserSnapshot readUser(Map<UUID, UserSnapshot> usersById, UUID userId) {
+        UserSnapshot user = usersById.get(userId);
+        if (user == null) {
+            throw new NotFoundException("User id not found: " + userId);
+        }
+        return user;
     }
 
     private void assertContractNumberAvailable(String storedContractNumber, String contractNumber) {
