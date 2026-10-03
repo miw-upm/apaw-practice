@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.ports.out.secondlawchance;
 
 import es.upm.miw.apaw.domain.model.secondlawchance.Debt;
+import es.upm.miw.apaw.domain.model.secondlawchance.SharedDebtReport;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +21,6 @@ public interface DebtGateway {
     boolean isReferenced(UUID id);
 
     boolean existsByContractNumber(String contractNumber);
+
+    List<SharedDebtReport> findSharedReport();
 }

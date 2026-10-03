@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.secondlawchance;
 
 import es.upm.miw.apaw.domain.model.secondlawchance.Debt;
 import es.upm.miw.apaw.domain.model.secondlawchance.DebtPatch;
+import es.upm.miw.apaw.domain.model.secondlawchance.SharedDebtReport;
 import es.upm.miw.apaw.domain.services.secondlawchance.DebtService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class DebtResource {
     public static final String DEBTS = "/debts";
     public static final String ID = "/{id}";
+    public static final String REPORT = "/report";
 
     private final DebtService debtService;
 
@@ -29,6 +31,11 @@ public class DebtResource {
     @GetMapping
     public List<Debt> findAll() {
         return this.debtService.findAll();
+    }
+
+    @GetMapping(REPORT)
+    public List<SharedDebtReport> findSharedReport() {
+        return this.debtService.findSharedReport();
     }
 
     @GetMapping(ID)

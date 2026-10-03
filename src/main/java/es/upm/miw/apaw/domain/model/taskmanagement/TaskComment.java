@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.model.taskManagement;
+package es.upm.miw.apaw.domain.model.taskmanagement;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import jakarta.validation.constraints.NotBlank;
@@ -9,10 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Builder
@@ -20,35 +17,37 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Task {
+public class TaskComment {
 
     @EqualsAndHashCode.Include
     private UUID id;
 
     @NotBlank
-    private String title;
-
-    private String description;
-
-    private LocalDate dueDate;
+    private String content;
 
     @NotNull
-    private Integer priority;
+    private LocalDateTime creationDate;
 
     @NotNull
-    private Boolean completed;
-
-    private BigDecimal estimatedHours;
-
-    private List<TaskComment> comments;
+    private Boolean edited;
 
     @NotNull
-    private UserSnapshot assignedTo;
+    private Boolean hasAttachment;
+
+    @NotNull
+    private CommentType type;
+
+    @NotNull
+    private UserSnapshot author;
 
     public void doDefault() {
         this.id = UUID.randomUUID();
-        this.priority = 3;
-        this.completed = false;
-        this.comments = new ArrayList<>();
+        this.creationDate = LocalDateTime.now();
+        this.edited = false;
+        this.hasAttachment = false;
+
+        if (this.type == null) {
+            this.type = CommentType.GENERAL;
+        }
     }
 }
