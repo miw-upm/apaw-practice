@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,7 @@ public class ExonerationCaseService {
         if (this.exonerationCaseGateway.existsByCaseNumber(creation.getCaseNumber())) {
             throw new ConflictException("Exoneration case number already exists: " + creation.getCaseNumber());
         }
+        this.assertResolutionDate(creation.getResolutionDate());
         this.assertUniqueDebtIds(creation.getDebtIds());
         ExonerationCase exonerationCase = new ExonerationCase();
         BeanUtils.copyProperties(creation, exonerationCase);
@@ -38,6 +40,12 @@ public class ExonerationCaseService {
         exonerationCase.setUserSnapshot(this.userFinder.read(creation.getUserId()));
         exonerationCase.doDefault();
         return this.exonerationCaseGateway.create(exonerationCase);
+    }
+
+    private void assertResolutionDate(LocalDate resolutionDate) {
+        if (resolutionDate != null && resolutionDate.isBefore(LocalDate.now())) {
+            throw new BadRequestException("Resolution date cannot be before the filing date: " + resolutionDate);
+        }
     }
 
     private void assertUniqueDebtIds(List<UUID> debtIds) {

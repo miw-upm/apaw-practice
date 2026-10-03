@@ -40,9 +40,6 @@ public class ExonerationCaseEntity {
 
     public ExonerationCaseEntity(ExonerationCase exonerationCase) {
         BeanUtils.copyProperties(exonerationCase, this, "debts", "userSnapshot");
-        this.debts = exonerationCase.getDebts().stream()
-                .map(DebtEntity::new)
-                .toList();
         this.userId = exonerationCase.getUserSnapshot().getId();
     }
 }
