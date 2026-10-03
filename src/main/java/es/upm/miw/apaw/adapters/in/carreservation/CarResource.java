@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.model.carreservation.Car;
 import es.upm.miw.apaw.domain.services.carreservation.CarService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +15,7 @@ public class CarResource {
     private final CarService carService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Car create(@Valid @RequestBody Car car) {
         return this.carService.create(car);
     }

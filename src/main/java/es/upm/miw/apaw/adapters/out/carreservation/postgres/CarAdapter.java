@@ -19,7 +19,6 @@ public class CarAdapter implements CarGateway {
 
     @Override
     public boolean existsByLicensePlate(String licensePlate) {
-        return this.carRepository.findByLicensePlate(licensePlate)
-                .isPresent();
+        return this.carRepository.existsByLicensePlate(licensePlate);
     }
 }
