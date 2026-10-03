@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-import lombok.extern.log4j.Log4j2;
-
-@Log4j2
 @Service
 public class SupplierService {
 
@@ -30,12 +27,17 @@ public class SupplierService {
         return this.supplierGateway.create(supplier);
     }
 
-    public Supplier read(final UUID id) {
-        log.debug("Reading supplier with ID: {}", id);
+    public Supplier read(UUID id) {
         return this.supplierGateway.readById(id)
-                .orElseThrow(() -> {
-                    log.warn("Supplier not found with ID: {}", id);
-                    return new NotFoundException("Supplier id not found: " + id);
-                });
+                .orElseThrow(() -> new NotFoundException("Supplier id not found: " + id));
+    }
+
+    public Supplier update(UUID id, Supplier supplier) {
+        Supplier existing = this.read(id);
+        if (this.supplierGateway.existsByTaxIdAndIdNot(supplier.getTaxId(), id)) {
+            throw new ConflictException("TaxId already exists for another supplier: " + supplier.getTaxId());
+        }
+        supplier.setId(existing.getId());
+        return this.supplierGateway.update(supplier);
     }
 }
