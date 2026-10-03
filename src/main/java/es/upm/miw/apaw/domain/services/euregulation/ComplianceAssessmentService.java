@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentPatch;
 import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
 import es.upm.miw.apaw.domain.ports.out.euregulation.ComplianceAssessmentGateway;
 import es.upm.miw.apaw.domain.ports.out.euregulation.EURegulationGateway;
@@ -60,6 +61,48 @@ public class ComplianceAssessmentService {
         update.setUserSnapshot(this.userFinder.read(userId));
         update.setEuRegulations(this.readEURegulations(euRegulationIds));
         return this.complianceAssessmentGateway.update(update);
+    }
+
+    public ComplianceAssessment patch(
+            UUID id, ComplianceAssessmentPatch patch, UUID userId, List<UUID> euRegulationIds) {
+        ComplianceAssessment storedAssessment = this.read(id);
+
+        if (patch.responsibleLawyer() != null) {
+            storedAssessment.setResponsibleLawyer(patch.responsibleLawyer());
+        }
+        if (patch.complianceDeadline() != null) {
+            storedAssessment.setComplianceDeadline(patch.complianceDeadline());
+        }
+        if (patch.nextReviewDate() != null) {
+            storedAssessment.setNextReviewDate(patch.nextReviewDate());
+        }
+        if (patch.correctiveActions() != null) {
+            storedAssessment.setCorrectiveActions(patch.correctiveActions());
+        }
+        if (patch.supportingDocumentation() != null) {
+            storedAssessment.setSupportingDocumentation(patch.supportingDocumentation());
+        }
+        if (patch.notes() != null) {
+            storedAssessment.setNotes(patch.notes());
+        }
+        if (patch.aiGenerated() != null) {
+            storedAssessment.setAiGenerated(patch.aiGenerated());
+        }
+        if (patch.complianceLevel() != null) {
+            storedAssessment.setComplianceLevel(patch.complianceLevel());
+        }
+        if (patch.riskLevel() != null) {
+            storedAssessment.setRiskLevel(patch.riskLevel());
+        }
+        if (userId != null) {
+            storedAssessment.setUserSnapshot(this.userFinder.read(userId));
+        }
+        if (euRegulationIds != null) {
+            this.assertUniqueEURegulationIds(euRegulationIds);
+            storedAssessment.setEuRegulations(this.readEURegulations(euRegulationIds));
+        }
+
+        return this.complianceAssessmentGateway.update(storedAssessment);
     }
 
     public void delete(UUID id) {
