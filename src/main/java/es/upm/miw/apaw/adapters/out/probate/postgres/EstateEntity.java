@@ -2,7 +2,9 @@ package es.upm.miw.apaw.adapters.out.probate.postgres;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.probate.Estate;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -33,22 +35,28 @@ public class EstateEntity {
     @EqualsAndHashCode.Include
     private UUID id;
 
+    @Column(nullable = false, unique = true)
     private String fileNumber;
 
+    @Column(nullable = false)
     private LocalDate openedDate;
 
+    @Column(nullable = false)
     private String deceasedName;
 
+    @Column(nullable = false)
     private BigDecimal netValue;
 
+    @Column(nullable = false)
     private Boolean lastWill;
 
     private LocalDate closingDate;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "estate_id")
     private List<HeirEntity> heirs;
 
+    @Column(nullable = false)
     private UUID userId;
 
     public EstateEntity(Estate estate) {
