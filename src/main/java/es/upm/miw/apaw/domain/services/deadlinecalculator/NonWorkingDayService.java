@@ -2,10 +2,13 @@ package es.upm.miw.apaw.domain.services.deadlinecalculator;
 
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.NonWorkingDay;
 import es.upm.miw.apaw.domain.ports.out.deadlinecalculator.NonWorkingDayGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +30,10 @@ public class NonWorkingDayService {
         }
         nonWorkingDay.doDefault();
         return this.nonWorkingDayGateway.create(nonWorkingDay);
+    }
+
+    public NonWorkingDay read(UUID id) {
+        return this.nonWorkingDayGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Non working day id not found: " + id));
     }
 }
