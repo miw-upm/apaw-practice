@@ -178,7 +178,7 @@ class CourseResourceFT {
 
     @Test
     void testDelete() {
-        this.restTestClient.delete().uri(CourseResource.COURSES + "/" + COURSE_ID_0)
+        this.restTestClient.delete().uri(CourseResource.COURSES + "/" + COURSE_ID_2)
                 .exchange()
                 .expectStatus().isNoContent();
     }
