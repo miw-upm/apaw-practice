@@ -48,11 +48,12 @@ public class CreativeWorkAdapter implements CreativeWorkGateway {
                     : builder.lessThanOrEqualTo(root.get("estimatedValuation"), new java.math.BigDecimal("10000")));
         }
 
-        // FALLO 1: Falta el if (criteria.getClaimUrgent() != null). Esto rompe la regla null-safe y petará la consulta.
-        spec = spec.and((root, query, builder) -> {
-            query.distinct(true);
-            return builder.equal(root.join("claims").get("urgent"), criteria.getClaimUrgent());
-        });
+        if (criteria.getClaimUrgent() != null) {
+            spec = spec.and((root, query, builder) -> {
+                query.distinct(true);
+                return builder.equal(root.join("claims").get("urgent"), criteria.getClaimUrgent());
+            });
+        }
 
         return this.creativeWorkRepository.findAll(spec).stream()
                 .map(CreativeWorkEntity::toDomain)

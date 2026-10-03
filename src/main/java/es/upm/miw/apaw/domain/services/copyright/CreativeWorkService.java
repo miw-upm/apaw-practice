@@ -72,7 +72,7 @@ public class CreativeWorkService {
     }
 
     private boolean matchesAuthorFirstName(es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria, CreativeWork work) {
-        // FALLO 2: Sin control de null en el criterio del usuario, rompe la ejecución si el cliente no lo envía
-        return criteria.getAuthorFirstName().equals(work.getAuthor().getFirstName());
+        return criteria.getAuthorFirstName() == null || 
+               criteria.getAuthorFirstName().equals(work.getAuthor().getFirstName());
     }
 }
