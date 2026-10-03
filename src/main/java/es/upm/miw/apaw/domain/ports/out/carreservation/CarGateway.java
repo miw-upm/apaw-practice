@@ -11,4 +11,6 @@ public interface CarGateway {
     boolean existsByLicensePlate(String licensePlate);
 
     Optional<Car> read(UUID id);
+
+    Car update(UUID id, Car car);
 }

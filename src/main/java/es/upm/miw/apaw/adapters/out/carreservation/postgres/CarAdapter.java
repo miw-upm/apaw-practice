@@ -30,4 +30,13 @@ public class CarAdapter implements CarGateway {
         return this.carRepository.findById(id)
                 .map(CarEntity::toDomain);
     }
+
+    @Override
+    public Car update(UUID id, Car car) {
+        CarEntity carEntity = new CarEntity(car);
+        carEntity.setId(id);
+
+        return this.carRepository.save(carEntity)
+                .toDomain();
+    }
 }

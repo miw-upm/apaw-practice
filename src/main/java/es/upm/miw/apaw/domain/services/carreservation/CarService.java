@@ -31,4 +31,21 @@ public class CarService {
                 .orElseThrow(() ->
                         new NotFoundException("Car id not found: " + id));
     }
+
+    public Car update(UUID id, Car car) {
+
+        Car storedCar = this.carGateway.read(id)
+                .orElseThrow(() ->
+                        new NotFoundException("Car id not found: " + id));
+
+        if (!storedCar.getLicensePlate().equals(car.getLicensePlate())
+                && this.carGateway.existsByLicensePlate(car.getLicensePlate())) {
+
+            throw new ConflictException(
+                    "License plate already exists: " + car.getLicensePlate()
+            );
+        }
+
+        return this.carGateway.update(id, car);
+    }
 }

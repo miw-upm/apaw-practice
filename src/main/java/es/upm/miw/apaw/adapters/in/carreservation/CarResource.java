@@ -26,4 +26,10 @@ public class CarResource {
     public Car read(@PathVariable UUID id) {
         return this.carService.read(id);
     }
+
+    @PutMapping("/{id}")
+    public Car update(@PathVariable UUID id,
+                      @Valid @RequestBody Car car) {
+        return this.carService.update(id, car);
+    }
 }
