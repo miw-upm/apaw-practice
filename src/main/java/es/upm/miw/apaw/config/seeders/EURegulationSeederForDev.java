@@ -25,6 +25,9 @@ import java.util.List;
 @Order(6)
 @RequiredArgsConstructor
 public class EURegulationSeederForDev implements ApplicationRunner {
+    public static final String REFERENCE_NUMBER_0 = "Regulation (EU) 2016/679";
+    public static final String REFERENCE_NUMBER_1 = "Regulation (EU) 2024/1689";
+    public static final String REFERENCE_NUMBER_2 = "Directive (EU) 2022/2555";
 
     private final EURegulationGateway euRegulationGateway;
     private final EURegulationService euRegulationService;
@@ -46,7 +49,7 @@ public class EURegulationSeederForDev implements ApplicationRunner {
         return List.of(
                 EURegulation.builder()
                         .regulationName("General Data Protection Regulation")
-                        .officialReferenceNumber("Regulation (EU) 2016/679")
+                        .officialReferenceNumber(REFERENCE_NUMBER_0)
                         .instrumentType(LegalInstrumentType.REGULATION)
                         .applicationArea(ApplicationArea.DATA_PROTECTION)
                         .legalStatus(LegalStatus.IN_FORCE)
@@ -57,7 +60,7 @@ public class EURegulationSeederForDev implements ApplicationRunner {
                         .build(),
                 EURegulation.builder()
                         .regulationName("Artificial Intelligence Act")
-                        .officialReferenceNumber("Regulation (EU) 2024/1689")
+                        .officialReferenceNumber(REFERENCE_NUMBER_1)
                         .instrumentType(LegalInstrumentType.REGULATION)
                         .applicationArea(ApplicationArea.DIGITAL_TECHNOLOGY)
                         .legalStatus(LegalStatus.IN_FORCE)
@@ -68,7 +71,7 @@ public class EURegulationSeederForDev implements ApplicationRunner {
                         .build(),
                 EURegulation.builder()
                         .regulationName("NIS2 Directive")
-                        .officialReferenceNumber("Directive (EU) 2022/2555")
+                        .officialReferenceNumber(REFERENCE_NUMBER_2)
                         .instrumentType(LegalInstrumentType.DIRECTIVE)
                         .applicationArea(ApplicationArea.DIGITAL_TECHNOLOGY)
                         .legalStatus(LegalStatus.IN_FORCE)
