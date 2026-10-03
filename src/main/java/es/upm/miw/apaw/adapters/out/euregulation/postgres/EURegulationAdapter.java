@@ -22,13 +22,19 @@ public class EURegulationAdapter implements EURegulationGateway {
     }
 
     @Override
+    public boolean existsByOfficialReferenceNumber(String officialReferenceNumber) {
+        return this.euRegulationRepository.existsByOfficialReferenceNumber(officialReferenceNumber);
+    }
+
+    @Override
+    public boolean existsBySequentialId(Integer sequentialId) {
+        return this.euRegulationRepository.existsBySequentialId(sequentialId);
+    }
+
+    @Override
     @Transactional
     public EURegulation create(EURegulation euRegulation) {
         EURegulationEntity euRegulationEntity = new EURegulationEntity(euRegulation);
-        if (euRegulationEntity.getSequentialId() == null
-                || this.euRegulationRepository.existsBySequentialId(euRegulationEntity.getSequentialId())) {
-            euRegulationEntity.setSequentialId(this.getNextSequentialId());
-        }
         return this.euRegulationRepository.save(euRegulationEntity).toDomain();
     }
 
@@ -47,8 +53,4 @@ public class EURegulationAdapter implements EURegulationGateway {
                 .toList();
     }
 
-    private Integer getNextSequentialId() {
-        Integer highestSequentialId = this.euRegulationRepository.findMaxSequentialId();
-        return highestSequentialId == null ? 1 : Math.addExact(highestSequentialId, 1);
-    }
 }
