@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {"date", "scope_level", "region", "city"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,20 +33,30 @@ public class NonWorkingDayEntity {
     @Column(nullable = false)
     private ScopeLevel scopeLevel;
 
+    @Column(nullable = false)
     private String region;
 
+    @Column(nullable = false)
     private String city;
 
     @Column(nullable = false)
     private Boolean recurring;
 
     public NonWorkingDayEntity(NonWorkingDay nonWorkingDay) {
-        BeanUtils.copyProperties(nonWorkingDay, this);
+        BeanUtils.copyProperties(nonWorkingDay, this, "region", "city");
+        this.region = orEmpty(nonWorkingDay.getRegion());
+        this.city = orEmpty(nonWorkingDay.getCity());
     }
 
     public NonWorkingDay toDomain() {
         NonWorkingDay nonWorkingDay = new NonWorkingDay();
-        BeanUtils.copyProperties(this, nonWorkingDay);
+        BeanUtils.copyProperties(this, nonWorkingDay, "region", "city");
+        nonWorkingDay.setRegion(this.region.isEmpty() ? null : this.region);
+        nonWorkingDay.setCity(this.city.isEmpty() ? null : this.city);
         return nonWorkingDay;
+    }
+
+    private static String orEmpty(String value) {
+        return value == null || value.isBlank() ? "" : value;
     }
 }

@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanEntity;
+import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanRepository;
+import java.math.BigDecimal;
 
 @Log4j2
 @Component
@@ -41,12 +44,14 @@ public class TrainingSeederForDev implements ApplicationRunner {
     );
 
     private final CourseRepository courseRepository;
+    private final TrainingPlanRepository trainingPlanRepository;
 
     @Override
     @Transactional
     public void run(ApplicationArguments args) {
         log.info("======== Seeding Training ========");
         this.seedCourses();
+        this.seedTrainingPlans();
     }
 
     private void seedCourses() {
@@ -57,6 +62,24 @@ public class TrainingSeederForDev implements ApplicationRunner {
                 new CourseEntity(COURSE_2),
                 new CourseEntity(COURSE_3)
             ));
+        }
+    }
+
+    private void seedTrainingPlans() {
+        if (this.trainingPlanRepository.count() == 0) {
+            CourseEntity course0 = this.courseRepository.findById(COURSE_ID_0).orElseThrow();
+            CourseEntity course1 = this.courseRepository.findById(COURSE_ID_1).orElseThrow();
+            
+            TrainingPlanEntity plan = new TrainingPlanEntity();
+            plan.setId(UUID.randomUUID());
+            plan.setPlanCode("plan-seeder-1");
+            plan.setApprovalDate(LocalDate.now());
+            plan.setEndDate(LocalDate.now().plusMonths(6));
+            plan.setEvaluationScore(new BigDecimal("9.5"));
+            plan.setCourses(List.of(course0, course1));
+            plan.setUserIds(List.of(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")));
+            
+            this.trainingPlanRepository.save(plan);
         }
     }
 }

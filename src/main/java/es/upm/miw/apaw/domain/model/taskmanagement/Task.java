@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.model.taskManagement;
+package es.upm.miw.apaw.domain.model.taskmanagement;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import jakarta.validation.constraints.NotBlank;
@@ -36,19 +36,19 @@ public class Task {
     private Integer priority;
 
     @NotNull
-    private Boolean completed;
+    private Boolean completion;
 
     private BigDecimal estimatedHours;
 
     private List<TaskComment> comments;
 
     @NotNull
-    private UserSnapshot assignedTo;
+    private UserSnapshot owner;
 
     public void doDefault() {
         this.id = UUID.randomUUID();
         this.priority = 3;
-        this.completed = false;
+        this.completion = false;
         this.comments = new ArrayList<>();
     }
 }

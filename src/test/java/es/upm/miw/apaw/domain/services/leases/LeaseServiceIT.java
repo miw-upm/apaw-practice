@@ -96,6 +96,23 @@ class LeaseServiceIT {
     }
 
     @Test
+    void testCreateEndDateBeforeStartDate() {
+        CreationLease creation = this.creation(List.of());
+        creation.setEndDate(creation.getStartDate().minusDays(1));
+        assertThatThrownBy(() -> this.leaseService.create(creation))
+                .isInstanceOf(BadRequestException.class).hasMessageContaining(creation.getEndDate().toString());
+        assertThat(this.leaseRepository.existsByLeaseNumber(creation.getLeaseNumber())).isFalse();
+        verifyNoInteractions(this.userFinder);
+    }
+
+    @Test
+    void testCreateEndDateEqualToStartDate() {
+        CreationLease creation = this.creation(List.of());
+        creation.setEndDate(creation.getStartDate());
+        assertThat(this.leaseService.create(creation).getEndDate()).isEqualTo(creation.getStartDate());
+    }
+
+    @Test
     void testCreateDuplicateLeaseNumber() {
         CreationLease creation = this.creation(List.of());
         creation.setLeaseNumber(LEASE_0.getLeaseNumber());

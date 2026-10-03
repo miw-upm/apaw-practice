@@ -38,4 +38,17 @@ public class NonWorkingDay {
             this.recurring = false;
         }
     }
+
+    public boolean hasConsistentScope() {
+        if (this.scopeLevel == null) {
+            return false;
+        }
+        boolean hasRegion = this.region != null && !this.region.isBlank();
+        boolean hasCity = this.city != null && !this.city.isBlank();
+        return switch (this.scopeLevel) {
+            case NATIONAL -> !hasRegion && !hasCity;
+            case REGIONAL -> hasRegion && !hasCity;
+            case LOCAL -> hasRegion && hasCity;
+        };
+    }
 }
