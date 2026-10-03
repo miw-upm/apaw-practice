@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.euregulation;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
+import es.upm.miw.apaw.domain.model.euregulation.EURegulationPatch;
 import es.upm.miw.apaw.domain.ports.out.euregulation.EURegulationGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,47 @@ public class EURegulationService {
         storedEURegulation.setTranspositionDeadline(update.getTranspositionDeadline());
         storedEURegulation.setOfficialJournalLink(update.getOfficialJournalLink());
         storedEURegulation.setSummary(update.getSummary());
+
+        return this.euRegulationGateway.update(storedEURegulation);
+    }
+
+    public EURegulation patch(UUID id, EURegulationPatch patch) {
+        EURegulation storedEURegulation = this.read(id);
+        String officialReferenceNumber = patch.officialReferenceNumber();
+        if (officialReferenceNumber != null
+                && !storedEURegulation.getOfficialReferenceNumber().equals(officialReferenceNumber)
+                && this.euRegulationGateway.existsByOfficialReferenceNumber(officialReferenceNumber)) {
+            throw new ConflictException(
+                    "EU regulation official reference number already exists: " + officialReferenceNumber);
+        }
+
+        if (patch.regulationName() != null) {
+            storedEURegulation.setRegulationName(patch.regulationName());
+        }
+        if (officialReferenceNumber != null) {
+            storedEURegulation.setOfficialReferenceNumber(officialReferenceNumber);
+        }
+        if (patch.instrumentType() != null) {
+            storedEURegulation.setInstrumentType(patch.instrumentType());
+        }
+        if (patch.applicationArea() != null) {
+            storedEURegulation.setApplicationArea(patch.applicationArea());
+        }
+        if (patch.legalStatus() != null) {
+            storedEURegulation.setLegalStatus(patch.legalStatus());
+        }
+        if (patch.issuingBody() != null) {
+            storedEURegulation.setIssuingBody(patch.issuingBody());
+        }
+        if (patch.transpositionDeadline() != null) {
+            storedEURegulation.setTranspositionDeadline(patch.transpositionDeadline());
+        }
+        if (patch.officialJournalLink() != null) {
+            storedEURegulation.setOfficialJournalLink(patch.officialJournalLink());
+        }
+        if (patch.summary() != null) {
+            storedEURegulation.setSummary(patch.summary());
+        }
 
         return this.euRegulationGateway.update(storedEURegulation);
     }
