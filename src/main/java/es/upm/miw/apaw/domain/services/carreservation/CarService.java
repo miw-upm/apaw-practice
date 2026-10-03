@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.carreservation;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.carreservation.Car;
+import es.upm.miw.apaw.domain.model.carreservation.CarSeatsAndFuelUpdate;
 import es.upm.miw.apaw.domain.ports.out.carreservation.CarGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,18 @@ public class CarService {
 
     public List<Car> findAll() {
         return this.carGateway.findAll();
+    }
+
+    public Car updateSeatsAndFuel(UUID id, CarSeatsAndFuelUpdate carUpdate) {
+            Car car = this.read(id);
+
+            if (carUpdate.numberOfSeats() != null) {
+                car.setNumberOfSeats(carUpdate.numberOfSeats());
+            }
+            if (carUpdate.fuelType() != null) {
+                car.setFuelType(carUpdate.fuelType());
+            }
+
+            return this.carGateway.update(car);
     }
 }

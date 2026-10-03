@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.carreservation;
 
 import es.upm.miw.apaw.domain.model.carreservation.Car;
+import es.upm.miw.apaw.domain.model.carreservation.CarSeatsAndFuelUpdate;
 import es.upm.miw.apaw.domain.services.carreservation.CarService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,5 +45,11 @@ public class CarResource {
     @GetMapping
     public List<Car> findAll() {
         return this.carService.findAll();
+    }
+
+    @PatchMapping(ID)
+    public Car updateSeatsAndFuel(@PathVariable UUID id,
+                                  @Valid @RequestBody CarSeatsAndFuelUpdate update) {
+        return this.carService.updateSeatsAndFuel(id, update);
     }
 }
