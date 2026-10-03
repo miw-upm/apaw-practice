@@ -43,9 +43,13 @@ class CreativeWorkResourceFT {
     @Test
     void testFindWithAllCriteria() {
         java.util.List<UserSnapshot> mockUsers = java.util.List.of(
-                UserSnapshot.builder().id(java.util.UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).firstName("cliente0").build()
+                UserSnapshot.builder()
+                        .id(java.util.UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .firstName("cliente0")
+                        .build()
         );
-        org.mockito.BDDMockito.given(this.userFinder.findByIds(org.mockito.ArgumentMatchers.any())).willReturn(mockUsers);
+        org.mockito.BDDMockito.given(this.userFinder.findByIds(org.mockito.ArgumentMatchers.any()))
+                .willReturn(mockUsers);
 
         this.restTestClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -65,10 +69,17 @@ class CreativeWorkResourceFT {
     @Test
     void testGenerateClaimSummaries() {
         java.util.List<UserSnapshot> mockUsers = java.util.List.of(
-                UserSnapshot.builder().id(java.util.UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).firstName("cliente0").build(),
-                UserSnapshot.builder().id(java.util.UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")).firstName("cliente1").build()
+                UserSnapshot.builder()
+                        .id(java.util.UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .firstName("cliente0")
+                        .build(),
+                UserSnapshot.builder()
+                        .id(java.util.UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .firstName("cliente1")
+                        .build()
         );
-        org.mockito.BDDMockito.given(this.userFinder.findByIds(org.mockito.ArgumentMatchers.any())).willReturn(mockUsers);
+        org.mockito.BDDMockito.given(this.userFinder.findByIds(org.mockito.ArgumentMatchers.any()))
+                .willReturn(mockUsers);
 
         this.restTestClient.get()
                 .uri(CreativeWorkResource.CREATIVE_WORKS + "/claim-summaries")
@@ -80,12 +91,14 @@ class CreativeWorkResourceFT {
                     // El primero (RW-002) tiene 12500
                     assertThat(summaries[0].getRegistrationCode()).isEqualTo(WORK_1.getRegistrationCode());
                     assertThat(summaries[0].getClaimCount()).isEqualTo(1L);
-                    assertThat(summaries[0].getTotalRequestedCompensation()).isEqualByComparingTo(new BigDecimal("12500.00"));
+                    assertThat(summaries[0].getTotalRequestedCompensation())
+                            .isEqualByComparingTo(new BigDecimal("12500.00"));
                     
                     // El segundo (RW-001) tiene 6000
                     assertThat(summaries[1].getRegistrationCode()).isEqualTo(WORK_0.getRegistrationCode());
                     assertThat(summaries[1].getClaimCount()).isEqualTo(2L);
-                    assertThat(summaries[1].getTotalRequestedCompensation()).isEqualByComparingTo(new BigDecimal("6000.00"));
+                    assertThat(summaries[1].getTotalRequestedCompensation())
+                            .isEqualByComparingTo(new BigDecimal("6000.00"));
                 });
     }
 
