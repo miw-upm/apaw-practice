@@ -2,11 +2,14 @@ package es.upm.miw.apaw.adapters.in.expertdirectoryservices;
 
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.CreationExpertServiceSchedule;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.ExpertServiceSchedule;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.criteria.ExpertServiceScheduleFindCriteria;
 import es.upm.miw.apaw.domain.services.expertdirectoryservices.ExpertServiceScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ExpertServiceScheduleResource.EXPERT_SERVICE_SCHEDULES)
@@ -16,6 +19,11 @@ public class ExpertServiceScheduleResource {
     public static final String EXPERT_SERVICE_SCHEDULES = "/expert-directory-services/expert-service-schedules";
 
     private final ExpertServiceScheduleService expertServiceScheduleService;
+
+    @GetMapping
+    public List<ExpertServiceSchedule> find(@ModelAttribute ExpertServiceScheduleFindCriteria criteria) {
+        return this.expertServiceScheduleService.find(criteria);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
