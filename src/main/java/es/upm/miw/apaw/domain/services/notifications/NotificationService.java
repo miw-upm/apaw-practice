@@ -37,11 +37,10 @@ public class NotificationService {
         if (notifications.isEmpty()) {
             return List.of();
         }
-        Map<UUID, UserSnapshot> usersById = this.findUsersById(notifications);
-        return notifications.stream()
-                .map(notification -> this.enrichRecipient(notification, usersById))
-                .filter(notification -> this.matchesRecipientEmail(criteria, notification))
-                .toList();
+        Set<UUID> userIds = notifications.stream()
+                .map(notification -> notification.getRecipient().getId())
+                .collect(Collectors.toSet());
+        return this.toNotifications(criteria, notifications, this.userFinder.findByIds(userIds));
     }
 
     public Notification create(CreationNotification creation) {
@@ -61,12 +60,14 @@ public class NotificationService {
         return this.notificationGateway.create(notification);
     }
 
-    private Map<UUID, UserSnapshot> findUsersById(List<Notification> notifications) {
-        Set<UUID> userIds = notifications.stream()
-                .map(notification -> notification.getRecipient().getId())
-                .collect(Collectors.toSet());
-        return this.userFinder.findByIds(userIds).stream()
+    private List<Notification> toNotifications(
+            NotificationFindCriteria criteria, List<Notification> notifications, List<UserSnapshot> users) {
+        Map<UUID, UserSnapshot> usersById = users.stream()
                 .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        return notifications.stream()
+                .map(notification -> this.enrichRecipient(notification, usersById))
+                .filter(notification -> this.matchesRecipientEmail(criteria, notification))
+                .toList();
     }
 
     private Notification enrichRecipient(Notification notification, Map<UUID, UserSnapshot> usersById) {
