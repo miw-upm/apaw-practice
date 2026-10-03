@@ -3,6 +3,7 @@ package es.upm.miw.apaw.functionaltests.expertdirectoryservices;
 import es.upm.miw.apaw.adapters.in.expertdirectoryservices.LegalExpertProfileResource;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.reports.LegalExpertProfileSpecialtyReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.ExpertDirectoryServicesSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -141,6 +145,33 @@ class LegalExpertProfileResourceFT {
         this.restTestClient.get().uri(LegalExpertProfileResource.LEGAL_EXPERT_PROFILES + "/" + created.getId())
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    void testFindSpecialtyReport() {
+        when(this.userFinder.findByIds(anySet())).thenAnswer(invocation -> {
+            Set<UUID> ids = invocation.getArgument(0);
+            return ids.stream().map(id -> UserSnapshot.builder().id(id).firstName("Hydrated").build()).toList();
+        });
+
+        this.restTestClient.get().uri(LegalExpertProfileResource.LEGAL_EXPERT_PROFILES
+                        + LegalExpertProfileResource.REPORT)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(LegalExpertProfileSpecialtyReport[].class)
+                .value(body -> {
+                    assertThat(body).isNotNull();
+                    assertThat(body).extracting(LegalExpertProfileSpecialtyReport::getTotalSchedules)
+                            .isSortedAccordingTo(Comparator.reverseOrder());
+                    assertThat(body).filteredOn(item -> item.getSpecialtyArea().equals(PROFILE_0.getSpecialtyArea()))
+                            .singleElement()
+                            .satisfies(item -> {
+                                assertThat(item.getTotalProfiles()).isGreaterThanOrEqualTo(2);
+                                assertThat(item.getMostVeteranExpert().getId())
+                                        .isEqualTo(PROFILE_3.getUserSnapshot().getId());
+                                assertThat(item.getMostVeteranExpert().getFirstName()).isEqualTo("Hydrated");
+                            });
+                });
     }
 
     private UserSnapshot mockUser() {

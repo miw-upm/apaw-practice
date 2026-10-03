@@ -163,19 +163,10 @@ public class MeetingSeederForDev implements ApplicationRunner {
     }
 
     private MeetingEntity toEntity(Meeting meeting) {
-        return MeetingEntity.builder()
-                .id(meeting.getId())
-                .title(meeting.getTitle())
-                .meetingDate(meeting.getMeetingDate())
-                .location(meeting.getLocation())
-                .durationMinutes(meeting.getDurationMinutes())
-                .online(meeting.getOnline())
-                .description(meeting.getDescription())
-                .meetingStatus(meeting.getMeetingStatus())
-                .legalIssues(meeting.getLegalIssues().stream()
-                        .map(issue -> this.legalIssueRepository.getReferenceById(issue.getId()))
-                        .collect(Collectors.toCollection(ArrayList::new)))
-                .participantIds(meeting.getParticipants().stream().map(UserSnapshot::getId).toList())
-                .build();
+        MeetingEntity entity = new MeetingEntity(meeting);
+        entity.setLegalIssues(meeting.getLegalIssues().stream()
+                .map(issue -> this.legalIssueRepository.getReferenceById(issue.getId()))
+                .collect(Collectors.toCollection(ArrayList::new)));
+        return entity;
     }
 }
