@@ -55,8 +55,20 @@ public class EURegulationAdapter implements EURegulationGateway {
 
     @Override
     @Transactional(readOnly = true)
+    public boolean isReferenced(UUID id) {
+        return this.euRegulationRepository.existsByComplianceAssessments_Id(id);
+    }
+
+    @Override
+    @Transactional
+    public void delete(UUID id) {
+        this.euRegulationRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<EURegulation> findAll() {
-        return this.euRegulationRepository.findAllByOrderByRegulationNameAsc().stream()
+        return this.euRegulationRepository.findAllByOrderByRegulationNameAscIdAsc().stream()
                 .map(EURegulationEntity::toDomain)
                 .toList();
     }

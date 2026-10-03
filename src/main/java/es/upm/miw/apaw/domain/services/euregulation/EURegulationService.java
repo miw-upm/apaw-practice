@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.euregulation.EURegulationGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,6 +35,10 @@ public class EURegulationService {
                 .orElseThrow(() -> new NotFoundException("EU regulation id not found: " + id));
     }
 
+    public List<EURegulation> findAll() {
+        return this.euRegulationGateway.findAll();
+    }
+
     public EURegulation update(UUID id, EURegulation update) {
         EURegulation storedEURegulation = this.read(id);
         if (!storedEURegulation.getOfficialReferenceNumber().equals(update.getOfficialReferenceNumber())
@@ -54,5 +59,13 @@ public class EURegulationService {
         storedEURegulation.setSummary(update.getSummary());
 
         return this.euRegulationGateway.update(storedEURegulation);
+    }
+
+    public void delete(UUID id) {
+        this.read(id);
+        if (this.euRegulationGateway.isReferenced(id)) {
+            throw new ConflictException("EU regulation is referenced by a compliance assessment: " + id);
+        }
+        this.euRegulationGateway.delete(id);
     }
 }

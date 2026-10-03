@@ -44,4 +44,5 @@ public class ClauseResource {
     public Clause patch(@PathVariable UUID id, @RequestBody ClauseUpdate patch) {
         return this.clauseService.patch(id, patch);
     }
+
 }
