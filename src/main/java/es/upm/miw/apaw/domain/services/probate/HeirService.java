@@ -5,7 +5,6 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +34,12 @@ public class HeirService {
 
     public Heir update(UUID id, Heir heir) {
         Heir storedHeir = this.read(id);
-        BeanUtils.copyProperties(heir, storedHeir);
+        storedHeir.setFullName(heir.getFullName());
+        storedHeir.setNationalId(heir.getNationalId());
+        storedHeir.setBirthDate(heir.getBirthDate());
+        storedHeir.setSharePercentage(heir.getSharePercentage());
+        storedHeir.setHeirStatus(heir.getHeirStatus());
+        storedHeir.setContactEmail(heir.getContactEmail());
         return this.heirGateway.update(storedHeir);
     }
 }
