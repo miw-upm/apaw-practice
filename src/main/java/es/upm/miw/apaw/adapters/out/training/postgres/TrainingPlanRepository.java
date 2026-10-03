@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import es.upm.miw.apaw.domain.model.training.TrainingModalityReport;
 public interface TrainingPlanRepository extends JpaRepository<TrainingPlanEntity, UUID>, JpaSpecificationExecutor<TrainingPlanEntity> {
     boolean existsByPlanCode(String planCode);
     boolean existsByCoursesId(UUID id);
@@ -19,5 +20,5 @@ public interface TrainingPlanRepository extends JpaRepository<TrainingPlanEntity
             join plan.courses course
             group by course.online
             """)
-    java.util.List<es.upm.miw.apaw.domain.model.training.TrainingModalityReport> findTrainingModalityReport();
+    java.util.List<TrainingModalityReport> findTrainingModalityReport();
 }
