@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -56,20 +57,28 @@ public class ComplianceAssessmentEntity {
     @Column(nullable = false)
     private UUID userId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "eu_regulation_id", nullable = false)
-    private EURegulationEntity euRegulation;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "compliance_assessment_eu_regulations",
+            joinColumns = @JoinColumn(name = "compliance_assessment_id"),
+            inverseJoinColumns = @JoinColumn(name = "eu_regulation_id")
+    )
+    private List<EURegulationEntity> euRegulations;
 
-    public ComplianceAssessmentEntity(ComplianceAssessment complianceAssessment, EURegulationEntity euRegulation) {
-        BeanUtils.copyProperties(complianceAssessment, this, "userSnapshot", "euRegulation");
+    public ComplianceAssessmentEntity(
+            ComplianceAssessment complianceAssessment, List<EURegulationEntity> euRegulations) {
+        BeanUtils.copyProperties(complianceAssessment, this, "userSnapshot", "euRegulations");
         this.userId = complianceAssessment.getUserSnapshot().getId();
-        this.euRegulation = euRegulation;
+        this.euRegulations = euRegulations;
     }
 
     public ComplianceAssessment toDomain() {
         ComplianceAssessment complianceAssessment = new ComplianceAssessment();
-        BeanUtils.copyProperties(this, complianceAssessment, "userId", "euRegulation");
+        BeanUtils.copyProperties(this, complianceAssessment, "userId", "euRegulations");
         complianceAssessment.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
+        complianceAssessment.setEuRegulations(this.euRegulations.stream()
+                .map(EURegulationEntity::toDomain)
+                .toList());
         return complianceAssessment;
     }
 }

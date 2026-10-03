@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface ExonerationCaseRepository extends JpaRepository<ExonerationCaseEntity, UUID> {
     boolean existsByDebtsId(UUID id);
+
+    boolean existsByCaseNumber(String caseNumber);
 }
