@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.out.euregulation.postgres;
 
 import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
 import es.upm.miw.apaw.domain.ports.out.euregulation.EURegulationGateway;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,14 @@ public class EURegulationAdapter implements EURegulationGateway {
 
     @Override
     @Transactional
-    public EURegulation create(EURegulation euRegulation) {
+    public EURegulation create(@Valid EURegulation euRegulation) {
+        EURegulationEntity euRegulationEntity = new EURegulationEntity(euRegulation);
+        return this.euRegulationRepository.save(euRegulationEntity).toDomain();
+    }
+
+    @Override
+    @Transactional
+    public EURegulation update(@Valid EURegulation euRegulation) {
         EURegulationEntity euRegulationEntity = new EURegulationEntity(euRegulation);
         return this.euRegulationRepository.save(euRegulationEntity).toDomain();
     }
@@ -43,6 +51,18 @@ public class EURegulationAdapter implements EURegulationGateway {
     public Optional<EURegulation> read(UUID id) {
         return this.euRegulationRepository.findById(id)
                 .map(EURegulationEntity::toDomain);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isReferenced(UUID id) {
+        return this.euRegulationRepository.existsByComplianceAssessments_Id(id);
+    }
+
+    @Override
+    @Transactional
+    public void delete(UUID id) {
+        this.euRegulationRepository.deleteById(id);
     }
 
     @Override

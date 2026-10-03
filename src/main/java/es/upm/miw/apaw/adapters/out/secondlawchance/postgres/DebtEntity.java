@@ -20,6 +20,9 @@ public class DebtEntity {
     @EqualsAndHashCode.Include
     private UUID id;
 
+    @Column(nullable = false, unique = true)
+    private String contractNumber;
+
     @Column(nullable = false)
     private LocalDate issueDate;
 
