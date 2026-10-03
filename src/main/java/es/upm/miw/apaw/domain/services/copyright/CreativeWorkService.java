@@ -72,7 +72,9 @@ public class CreativeWorkService {
     }
 
     private boolean matchesAuthorFirstName(es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria, CreativeWork work) {
-        return criteria.getAuthorFirstName() == null || 
-               criteria.getAuthorFirstName().equals(work.getAuthor().getFirstName());
+        if (criteria.getAuthorFirstName() == null) {
+            return true;
+        }
+        return work.getAuthor() != null && criteria.getAuthorFirstName().equals(work.getAuthor().getFirstName());
     }
 }
