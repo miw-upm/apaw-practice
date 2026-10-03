@@ -19,8 +19,8 @@ public class NonWorkingDayAdapter implements NonWorkingDayGateway {
 
     @Override
     public boolean exists(NonWorkingDay nonWorkingDay) {
+        NonWorkingDayEntity entity = new NonWorkingDayEntity(nonWorkingDay);
         return this.nonWorkingDayRepository.existsByDateAndScopeLevelAndRegionAndCity(
-                nonWorkingDay.getDate(), nonWorkingDay.getScopeLevel(),
-                nonWorkingDay.getRegion(), nonWorkingDay.getCity());
+                entity.getDate(), entity.getScopeLevel(), entity.getRegion(), entity.getCity());
     }
 }
