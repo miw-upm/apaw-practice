@@ -20,7 +20,8 @@ public class NotificationFindCriteria {
     private String recipientEmail;
 
     public boolean isAll() {
-        return !this.hasPriority() && !this.hasSent() && !this.hasEventType() && !this.hasRecipientEmail();
+        return !this.hasPriority() && !this.hasSent()
+                && !this.hasEventType() && !this.hasRecipientEmail();
     }
 
     public boolean hasPriority() {
