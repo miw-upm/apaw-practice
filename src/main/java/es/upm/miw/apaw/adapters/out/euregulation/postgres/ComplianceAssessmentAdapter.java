@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -29,5 +30,12 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
                 .toList();
         ComplianceAssessmentEntity entity = new ComplianceAssessmentEntity(complianceAssessment, euRegulationEntities);
         return this.complianceAssessmentRepository.save(entity).toDomain();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ComplianceAssessment> read(UUID id) {
+        return this.complianceAssessmentRepository.findById(id)
+                .map(ComplianceAssessmentEntity::toDomain);
     }
 }
