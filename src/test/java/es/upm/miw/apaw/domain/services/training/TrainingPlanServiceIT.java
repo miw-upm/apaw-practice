@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.training;
 
 import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanEntity;
 import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanRepository;
+import es.upm.miw.apaw.domain.model.training.TrainingPlanFindCriteria;
 import es.upm.miw.apaw.adapters.out.training.postgres.CourseEntity;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.training.Course;
@@ -43,7 +44,7 @@ class TrainingPlanServiceIT {
     @Transactional
     void testCreate() {
         UserSnapshot user = UserSnapshot.builder()
-                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                 .mobile("600000100")
                 .firstName("cliente0")
                 .build();
@@ -70,5 +71,42 @@ class TrainingPlanServiceIT {
         assertThat(entity.getPlanCode()).isEqualTo(creation.getPlanCode());
         assertThat(entity.getCourses()).extracting(CourseEntity::getId).containsExactlyInAnyOrder(COURSE_ID_1, COURSE_ID_2);
         assertThat(entity.getUserIds()).containsExactly(user.getId());
+    }
+    
+    @Test
+    @Transactional
+    void testFindWithCriteria() {
+        UserSnapshot mockUser = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                .firstName("cliente1")
+                .build();
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(mockUser));
+
+        TrainingPlanFindCriteria criteria = new TrainingPlanFindCriteria();
+        criteria.setCourseName("Curso de prueba");
+        criteria.setUserFirstName("cliente1");
+
+        List<TrainingPlan> result = this.trainingPlanService.find(criteria);
+        
+        assertThat(result).isEmpty();
+    }
+    
+    @Test
+    @Transactional
+    void testFindWithCriteriaPositive() {
+        UserSnapshot user = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .firstName("cliente0")
+                .build();
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(user));
+
+        TrainingPlanFindCriteria criteria = new TrainingPlanFindCriteria();
+        criteria.setCourseName("Angular");
+        criteria.setUserFirstName("cliente0");
+
+        List<TrainingPlan> result = this.trainingPlanService.find(criteria);
+        
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getPlanCode()).isEqualTo("plan-seeder-1");
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -29,5 +30,34 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
                 .toList();
         ComplianceAssessmentEntity entity = new ComplianceAssessmentEntity(complianceAssessment, euRegulationEntities);
         return this.complianceAssessmentRepository.save(entity).toDomain();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ComplianceAssessment> read(UUID id) {
+        return this.complianceAssessmentRepository.findById(id)
+                .map(ComplianceAssessmentEntity::toDomain);
+    }
+
+    @Override
+    @Transactional
+    public ComplianceAssessment update(ComplianceAssessment complianceAssessment) {
+        List<EURegulationEntity> euRegulationEntities = complianceAssessment.getEuRegulations().stream()
+                .map(euRegulation -> this.euRegulationRepository.getReferenceById(euRegulation.getId()))
+                .toList();
+        ComplianceAssessmentEntity entity = new ComplianceAssessmentEntity(complianceAssessment, euRegulationEntities);
+        return this.complianceAssessmentRepository.save(entity).toDomain();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isReferenced(UUID id) {
+        return this.euRegulationRepository.existsByComplianceAssessments_Id(id);
+    }
+
+    @Override
+    @Transactional
+    public void delete(UUID id) {
+        this.complianceAssessmentRepository.deleteById(id);
     }
 }
