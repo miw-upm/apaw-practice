@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.probate;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.probate.Heir;
+import es.upm.miw.apaw.domain.model.probate.HeirUpdate;
 import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,17 @@ public class HeirService {
         storedHeir.setSharePercentage(heir.getSharePercentage());
         storedHeir.setHeirStatus(heir.getHeirStatus());
         storedHeir.setContactEmail(heir.getContactEmail());
+        return this.heirGateway.update(storedHeir);
+    }
+
+    public Heir patch(UUID id, HeirUpdate update) {
+        Heir storedHeir = this.read(id);
+        storedHeir.setFullName(update.fullName());
+        storedHeir.setNationalId(update.nationalId());
+        storedHeir.setBirthDate(update.birthDate());
+        storedHeir.setSharePercentage(update.sharePercentage());
+        storedHeir.setHeirStatus(update.heirStatus());
+        storedHeir.setContactEmail(update.contactEmail());
         return this.heirGateway.update(storedHeir);
     }
 }
