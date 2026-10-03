@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(SupplierResource.SUPPLIERS)
 public class SupplierResource {
     public static final String SUPPLIERS = "/expense/suppliers";
+    public static final String ID_ID = "/{id}";
 
     private final SupplierService supplierService;
 
@@ -23,5 +26,10 @@ public class SupplierResource {
     @ResponseStatus(HttpStatus.CREATED)
     public Supplier create(@Valid @RequestBody Supplier supplier) {
         return this.supplierService.create(supplier);
+    }
+
+    @GetMapping(ID_ID)
+    public Supplier read(@PathVariable final UUID id) {
+        return this.supplierService.read(id);
     }
 }
