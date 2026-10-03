@@ -1,8 +1,10 @@
 package es.upm.miw.apaw.adapters.out.secondlawchance.postgres;
 
 import es.upm.miw.apaw.domain.model.secondlawchance.CreditorType;
+import es.upm.miw.apaw.domain.model.secondlawchance.Debt;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,6 +22,9 @@ public class DebtEntity {
     @EqualsAndHashCode.Include
     private UUID id;
 
+    @Column(nullable = false, unique = true)
+    private String contractNumber;
+
     @Column(nullable = false)
     private LocalDate issueDate;
 
@@ -35,4 +40,14 @@ public class DebtEntity {
 
     @Column(nullable = false)
     private Boolean guarantee;
+
+    public DebtEntity(Debt debt) {
+        BeanUtils.copyProperties(debt, this);
+    }
+
+    public Debt toDomain() {
+        Debt debt = new Debt();
+        BeanUtils.copyProperties(this, debt);
+        return debt;
+    }
 }
