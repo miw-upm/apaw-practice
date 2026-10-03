@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface ExonerationCaseRepository extends JpaRepository<ExonerationCaseEntity, UUID> {
+    boolean existsByDebtsId(UUID id);
 }
