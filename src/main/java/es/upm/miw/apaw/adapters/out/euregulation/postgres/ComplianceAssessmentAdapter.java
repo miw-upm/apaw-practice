@@ -38,4 +38,14 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
         return this.complianceAssessmentRepository.findById(id)
                 .map(ComplianceAssessmentEntity::toDomain);
     }
+
+    @Override
+    @Transactional
+    public ComplianceAssessment update(ComplianceAssessment complianceAssessment) {
+        List<EURegulationEntity> euRegulationEntities = complianceAssessment.getEuRegulations().stream()
+                .map(euRegulation -> this.euRegulationRepository.getReferenceById(euRegulation.getId()))
+                .toList();
+        ComplianceAssessmentEntity entity = new ComplianceAssessmentEntity(complianceAssessment, euRegulationEntities);
+        return this.complianceAssessmentRepository.save(entity).toDomain();
+    }
 }

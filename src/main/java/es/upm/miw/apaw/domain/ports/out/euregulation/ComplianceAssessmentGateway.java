@@ -11,4 +11,6 @@ public interface ComplianceAssessmentGateway {
     ComplianceAssessment create(ComplianceAssessment complianceAssessment);
 
     Optional<ComplianceAssessment> read(UUID id);
+
+    ComplianceAssessment update(ComplianceAssessment complianceAssessment);
 }
