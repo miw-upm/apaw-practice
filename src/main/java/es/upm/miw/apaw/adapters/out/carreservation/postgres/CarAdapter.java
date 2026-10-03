@@ -1,11 +1,11 @@
 package es.upm.miw.apaw.adapters.out.carreservation.postgres;
 
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.carreservation.Car;
 import es.upm.miw.apaw.domain.ports.out.carreservation.CarGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -26,9 +26,8 @@ public class CarAdapter implements CarGateway {
     }
 
     @Override
-    public Car read(UUID id) {
+    public Optional<Car> read(UUID id) {
         return this.carRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Car id:" + id))
-                .toDomain();
+                .map(CarEntity::toDomain);
     }
 }

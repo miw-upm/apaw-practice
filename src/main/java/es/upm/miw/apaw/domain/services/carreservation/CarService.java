@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.carreservation;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.carreservation.Car;
 import es.upm.miw.apaw.domain.ports.out.carreservation.CarGateway;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ public class CarService {
     }
 
     public Car read(UUID id) {
-        return this.carGateway.read(id);
+        return this.carGateway.read(id)
+                .orElseThrow(() ->
+                        new NotFoundException("Car id not found: " + id));
     }
 }

@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.ports.out.carreservation;
 
 import es.upm.miw.apaw.domain.model.carreservation.Car;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface CarGateway {
@@ -9,5 +10,5 @@ public interface CarGateway {
 
     boolean existsByLicensePlate(String licensePlate);
 
-    Car read(UUID id);
+    Optional<Car> read(UUID id);
 }
