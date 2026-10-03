@@ -6,6 +6,8 @@ import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class HeirService {
@@ -17,5 +19,9 @@ public class HeirService {
         }
         heir.doDefault();
         return this.heirGateway.create(heir);
+    }
+
+    public List<Heir> findAll() {
+        return this.heirGateway.findAll();
     }
 }

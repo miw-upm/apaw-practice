@@ -17,6 +17,9 @@ public class Debt {
     @EqualsAndHashCode.Include
     private UUID id;
 
+    @NotBlank
+    private String contractNumber;
+
     @NotNull
     private LocalDate issueDate;
 
