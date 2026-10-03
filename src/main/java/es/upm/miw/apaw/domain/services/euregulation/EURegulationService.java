@@ -33,4 +33,26 @@ public class EURegulationService {
         return this.euRegulationGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("EU regulation id not found: " + id));
     }
+
+    public EURegulation update(UUID id, EURegulation update) {
+        EURegulation storedEURegulation = this.read(id);
+        if (!storedEURegulation.getOfficialReferenceNumber().equals(update.getOfficialReferenceNumber())
+                && this.euRegulationGateway.existsByOfficialReferenceNumber(update.getOfficialReferenceNumber())) {
+            throw new ConflictException(
+                    "EU regulation official reference number already exists: "
+                            + update.getOfficialReferenceNumber());
+        }
+
+        storedEURegulation.setRegulationName(update.getRegulationName());
+        storedEURegulation.setOfficialReferenceNumber(update.getOfficialReferenceNumber());
+        storedEURegulation.setInstrumentType(update.getInstrumentType());
+        storedEURegulation.setApplicationArea(update.getApplicationArea());
+        storedEURegulation.setLegalStatus(update.getLegalStatus());
+        storedEURegulation.setIssuingBody(update.getIssuingBody());
+        storedEURegulation.setTranspositionDeadline(update.getTranspositionDeadline());
+        storedEURegulation.setOfficialJournalLink(update.getOfficialJournalLink());
+        storedEURegulation.setSummary(update.getSummary());
+
+        return this.euRegulationGateway.update(storedEURegulation);
+    }
 }

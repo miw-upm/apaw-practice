@@ -15,6 +15,8 @@ public interface EURegulationGateway {
 
     EURegulation create(EURegulation euRegulation);
 
+    EURegulation update(EURegulation euRegulation);
+
     Optional<EURegulation> read(UUID id);
 
     List<EURegulation> findAll();

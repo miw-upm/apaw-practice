@@ -40,6 +40,13 @@ public class EURegulationAdapter implements EURegulationGateway {
     }
 
     @Override
+    @Transactional
+    public EURegulation update(@Valid EURegulation euRegulation) {
+        EURegulationEntity euRegulationEntity = new EURegulationEntity(euRegulation);
+        return this.euRegulationRepository.save(euRegulationEntity).toDomain();
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<EURegulation> read(UUID id) {
         return this.euRegulationRepository.findById(id)
