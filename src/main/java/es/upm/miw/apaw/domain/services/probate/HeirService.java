@@ -15,6 +15,7 @@ public class HeirService {
         if (this.heirGateway.existsByNationalId(heir.getNationalId())) {
             throw new ConflictException("Heir nationalId already exists: " + heir.getNationalId());
         }
+        heir.doDefault();
         return this.heirGateway.create(heir);
     }
 }
