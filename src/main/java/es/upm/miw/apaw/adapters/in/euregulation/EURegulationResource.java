@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.euregulation;
 
 import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
+import es.upm.miw.apaw.domain.model.euregulation.EURegulationPatch;
 import es.upm.miw.apaw.domain.services.euregulation.EURegulationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +48,11 @@ public class EURegulationResource {
     @PutMapping(ID)
     public EURegulation update(@Valid @PathVariable UUID id, @Valid @RequestBody EURegulationCreationDto update) {
         return this.euRegulationService.update(id, update.toDomain());
+    }
+
+    @PatchMapping(ID)
+    public EURegulation patch(@PathVariable UUID id, @Valid @RequestBody EURegulationPatch patch) {
+        return this.euRegulationService.patch(id, patch);
     }
 
     @DeleteMapping(ID)
