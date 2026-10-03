@@ -41,12 +41,14 @@ public class CustodyRecordEntity {
     private UUID custodianId;
 
     public CustodyRecordEntity(CustodyRecord custodyRecord) {
-        BeanUtils.copyProperties(custodyRecord,this);
+        BeanUtils.copyProperties(custodyRecord, this);
+        this.custodianId = custodyRecord.getCustodian().getId();
     }
 
     public CustodyRecord toDomain() {
         CustodyRecord custodyRecord = new CustodyRecord();
         BeanUtils.copyProperties(this, custodyRecord);
+        custodyRecord.setCustodian(UserSnapshot.builder().id(this.custodianId).build());
         return custodyRecord;
     }
 }
