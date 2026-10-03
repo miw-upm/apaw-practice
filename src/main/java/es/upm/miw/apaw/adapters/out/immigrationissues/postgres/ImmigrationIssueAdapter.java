@@ -1,12 +1,14 @@
 package es.upm.miw.apaw.adapters.out.immigrationissues.postgres;
 
 import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssue;
+import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUsageReport;
 import es.upm.miw.apaw.domain.ports.out.immigrationissues.ImmigrationIssueGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
@@ -30,5 +32,10 @@ public class ImmigrationIssueAdapter implements ImmigrationIssueGateway {
     @Override
     public boolean existsBySubject(String subject) {
         return this.immigrationIssueRepository.existsBySubject(subject);
+    }
+
+    @Override
+    public List<LawBasisUsageReport> findLawBasisUsageReport() {
+        return this.immigrationIssueRepository.findLawBasisUsageReport();
     }
 }
