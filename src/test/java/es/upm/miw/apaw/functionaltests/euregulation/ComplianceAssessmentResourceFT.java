@@ -99,7 +99,7 @@ class ComplianceAssessmentResourceFT {
                 .contains(ComplianceAssessmentSeederForDev.ID_0, ComplianceAssessmentSeederForDev.ID_1);
         assertThat(assessments).isSortedAccordingTo(Comparator
                 .comparing(ComplianceAssessment::getAssessmentDate)
-                .thenComparing(ComplianceAssessment::getId));
+                .thenComparing(assessment -> assessment.getId().toString()));
         assertThat(assessmentsAgain).extracting(ComplianceAssessment::getId)
                 .containsExactlyElementsOf(assessments.stream().map(ComplianceAssessment::getId).toList());
     }
