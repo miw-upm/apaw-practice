@@ -13,4 +13,8 @@ public interface ComplianceAssessmentGateway {
     Optional<ComplianceAssessment> read(UUID id);
 
     ComplianceAssessment update(ComplianceAssessment complianceAssessment);
+
+    boolean isReferenced(UUID id);
+
+    void delete(UUID id);
 }
