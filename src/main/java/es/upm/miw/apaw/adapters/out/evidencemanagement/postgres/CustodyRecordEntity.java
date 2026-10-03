@@ -1,9 +1,13 @@
 package es.upm.miw.apaw.adapters.out.evidencemanagement.postgres;
 
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -35,4 +39,14 @@ public class CustodyRecordEntity {
 
     @Column(nullable = false)
     private UUID custodianId;
+
+    public CustodyRecordEntity(CustodyRecord custodyRecord) {
+        BeanUtils.copyProperties(custodyRecord,this);
+    }
+
+    public CustodyRecord toDomain() {
+        CustodyRecord custodyRecord = new CustodyRecord();
+        BeanUtils.copyProperties(this, custodyRecord);
+        return custodyRecord;
+    }
 }
