@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -40,24 +41,12 @@ public class CustodyRecordEntity {
     private UUID custodianId;
 
     public CustodyRecordEntity(CustodyRecord custodyRecord) {
-        this.id = custodyRecord.getId();
-        this.recordedAt = custodyRecord.getRecordedAt();
-        this.durationMinutes = custodyRecord.getDurationMinutes();
-        this.action = custodyRecord.getAction();
-        this.location = custodyRecord.getLocation();
-        this.notes = custodyRecord.getNotes();
-        this.custodianId = custodyRecord.getCustodian().getId();
+        BeanUtils.copyProperties(custodyRecord,this);
     }
 
     public CustodyRecord toDomain() {
-        return CustodyRecord.builder()
-                .id(this.id)
-                .recordedAt(this.recordedAt)
-                .durationMinutes(this.durationMinutes)
-                .action(this.action)
-                .location(this.location)
-                .notes(this.notes)
-                .custodian(UserSnapshot.builder().id(this.custodianId).build())
-                .build();
+        CustodyRecord custodyRecord = new CustodyRecord();
+        BeanUtils.copyProperties(this, custodyRecord);
+        return custodyRecord;
     }
 }
