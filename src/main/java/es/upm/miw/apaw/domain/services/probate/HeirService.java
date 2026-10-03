@@ -34,6 +34,10 @@ public class HeirService {
 
     public Heir update(UUID id, Heir heir) {
         Heir storedHeir = this.read(id);
+        if (!storedHeir.getNationalId().equals(heir.getNationalId())
+                && this.heirGateway.existsByNationalId(heir.getNationalId())) {
+            throw new ConflictException("Heir nationalId already exists: " + heir.getNationalId());
+        }
         storedHeir.setFullName(heir.getFullName());
         storedHeir.setNationalId(heir.getNationalId());
         storedHeir.setBirthDate(heir.getBirthDate());
