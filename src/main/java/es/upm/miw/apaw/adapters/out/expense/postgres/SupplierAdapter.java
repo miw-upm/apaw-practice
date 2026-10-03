@@ -6,6 +6,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 public class SupplierAdapter implements SupplierGateway {
 
@@ -29,5 +32,15 @@ public class SupplierAdapter implements SupplierGateway {
     @Override
     public boolean existsByTaxId(String taxId) {
         return this.supplierRepository.existsByTaxId(taxId);
+    }
+
+    @Override
+    public Optional<Supplier> readById(UUID id) {
+        return this.supplierRepository.findById(id)
+                .map(entity -> {
+                    Supplier domain = new Supplier();
+                    BeanUtils.copyProperties(entity, domain);
+                    return domain;
+                });
     }
 }
