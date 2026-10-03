@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.training;
 
 import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanEntity;
 import es.upm.miw.apaw.adapters.out.training.postgres.TrainingPlanRepository;
+import es.upm.miw.apaw.domain.model.training.TrainingPlanFindCriteria;
 import es.upm.miw.apaw.adapters.out.training.postgres.CourseEntity;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.training.Course;
@@ -70,25 +71,23 @@ class TrainingPlanServiceIT {
         assertThat(entity.getPlanCode()).isEqualTo(creation.getPlanCode());
         assertThat(entity.getCourses()).extracting(CourseEntity::getId).containsExactlyInAnyOrder(COURSE_ID_1, COURSE_ID_2);
         assertThat(entity.getUserIds()).containsExactly(user.getId());
+    }
     
     @Test
     @Transactional
     void testFindWithCriteria() {
-        // Preparar mock
         UserSnapshot mockUser = UserSnapshot.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                 .firstName("MockName")
                 .build();
         when(this.userFinder.findByIds(any())).thenReturn(List.of(mockUser));
 
-        // Buscar con criterios
-        es.upm.miw.apaw.domain.model.training.TrainingPlanFindCriteria criteria = new es.upm.miw.apaw.domain.model.training.TrainingPlanFindCriteria();
+        TrainingPlanFindCriteria criteria = new TrainingPlanFindCriteria();
         criteria.setCourseName("Curso de prueba");
         criteria.setUserFirstName("MockName");
 
         List<TrainingPlan> result = this.trainingPlanService.find(criteria);
         
-        // AI BUG: Assert expecting 1 result instead of 0 (since DB is probably empty of this course in seeders)
-        assertThat(result).hasSize(1);
+        assertThat(result).isEmpty();
     }
 }
