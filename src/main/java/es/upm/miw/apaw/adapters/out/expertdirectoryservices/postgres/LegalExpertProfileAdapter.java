@@ -1,7 +1,9 @@
 package es.upm.miw.apaw.adapters.out.expertdirectoryservices.postgres;
 
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.reports.LegalExpertProfileSpecialtyReport;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfileGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Sort;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -18,6 +22,7 @@ import java.util.stream.Stream;
 public class LegalExpertProfileAdapter implements LegalExpertProfileGateway {
 
     private final LegalExpertProfileRepository legalExpertProfileRepository;
+    private final ExpertServiceScheduleRepository expertServiceScheduleRepository;
 
     @Override
     public LegalExpertProfile create(LegalExpertProfile legalExpertProfile) {
@@ -74,5 +79,16 @@ public class LegalExpertProfileAdapter implements LegalExpertProfileGateway {
         return this.legalExpertProfileRepository.findAll(Sort.by(Sort.Direction.ASC, "taxIdCode"))
                 .stream()
                 .map(LegalExpertProfileEntity::toDomain);
+    }
+
+    @Override
+    public List<LegalExpertProfileSpecialtyReport> findSpecialtyReport() {
+        Map<String, UUID> veteranUserIds = new HashMap<>();
+        this.expertServiceScheduleRepository.findSpecialtyVeteranRows()
+                .forEach(row -> veteranUserIds.putIfAbsent(row.specialtyArea(), row.userId()));
+        return this.expertServiceScheduleRepository.findSpecialtyReportRows().stream()
+                .map(row -> row.toDomain(
+                        UserSnapshot.builder().id(veteranUserIds.get(row.specialtyArea())).build()))
+                .toList();
     }
 }

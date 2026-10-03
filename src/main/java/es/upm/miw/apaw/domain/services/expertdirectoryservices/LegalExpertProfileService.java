@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.reports.LegalExpertProfileSpecialtyReport;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.ExpertServiceScheduleGateway;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfileGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -11,7 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -146,6 +151,21 @@ public class LegalExpertProfileService {
                 .toList();
 
         profilesToUpdate.forEach(this.legalExpertProfileGateway::update);
+    }
+
+    public List<LegalExpertProfileSpecialtyReport> findSpecialtyReport() {
+        List<LegalExpertProfileSpecialtyReport> reports = this.legalExpertProfileGateway.findSpecialtyReport();
+        if (reports.isEmpty()) {
+            return reports;
+        }
+        Set<UUID> userIds = reports.stream()
+                .map(report -> report.getMostVeteranExpert().getId())
+                .collect(Collectors.toSet());
+        Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(userIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        reports.forEach(report -> report.setMostVeteranExpert(
+                usersById.getOrDefault(report.getMostVeteranExpert().getId(), report.getMostVeteranExpert())));
+        return reports;
     }
 
     private UUID assertValidId(String id) {
