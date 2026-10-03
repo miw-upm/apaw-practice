@@ -12,7 +12,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -25,6 +27,7 @@ public class ComplianceAssessmentService {
 
     public ComplianceAssessment create(@Valid
             ComplianceAssessment complianceAssessment, UUID userId, List<UUID> euRegulationIds) {
+        this.assertUniqueEURegulationIds(euRegulationIds);
         UserSnapshot userSnapshot = this.userFinder.read(userId);
         complianceAssessment.setUserSnapshot(userSnapshot);
         complianceAssessment.setEuRegulations(this.readEURegulations(euRegulationIds));
@@ -38,6 +41,28 @@ public class ComplianceAssessmentService {
     public ComplianceAssessment read(UUID id) {
         return this.complianceAssessmentGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Compliance assessment id not found: " + id));
+    }
+
+    public ComplianceAssessment update(
+            UUID id, ComplianceAssessment update, UUID userId, List<UUID> euRegulationIds) {
+        ComplianceAssessment storedAssessment = this.read(id);
+        this.assertUniqueEURegulationIds(euRegulationIds);
+
+        update.setId(storedAssessment.getId());
+        update.setAssessmentDate(storedAssessment.getAssessmentDate());
+        if (update.getAiGenerated() == null) {
+            update.setAiGenerated(false);
+        }
+        update.setUserSnapshot(this.userFinder.read(userId));
+        update.setEuRegulations(this.readEURegulations(euRegulationIds));
+        return this.complianceAssessmentGateway.update(update);
+    }
+
+    private void assertUniqueEURegulationIds(List<UUID> euRegulationIds) {
+        Set<UUID> uniqueIds = new HashSet<>(euRegulationIds);
+        if (uniqueIds.size() != euRegulationIds.size()) {
+            throw new ConflictException("Compliance assessment contains repeated EU regulation IDs");
+        }
     }
 
     private List<EURegulation> readEURegulations(List<UUID> euRegulationIds) {

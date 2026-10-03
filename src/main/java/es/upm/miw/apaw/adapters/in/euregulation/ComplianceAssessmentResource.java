@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,5 +35,12 @@ public class ComplianceAssessmentResource {
     @GetMapping(ID)
     public ComplianceAssessment read(@PathVariable UUID id) {
         return this.complianceAssessmentService.read(id);
+    }
+
+    @PutMapping(ID)
+    public ComplianceAssessment update(
+            @PathVariable UUID id, @Valid @RequestBody ComplianceAssessmentCreationDto update) {
+        return this.complianceAssessmentService.update(
+                id, update.toDomain(), update.userId(), update.euRegulationIds());
     }
 }
