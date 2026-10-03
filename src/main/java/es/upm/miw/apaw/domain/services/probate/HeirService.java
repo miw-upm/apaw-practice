@@ -1,10 +1,14 @@
 package es.upm.miw.apaw.domain.services.probate;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,5 +21,14 @@ public class HeirService {
         }
         heir.doDefault();
         return this.heirGateway.create(heir);
+    }
+
+    public List<Heir> findAll() {
+        return this.heirGateway.findAll();
+    }
+
+    public Heir read(UUID id) {
+        return this.heirGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
     }
 }
