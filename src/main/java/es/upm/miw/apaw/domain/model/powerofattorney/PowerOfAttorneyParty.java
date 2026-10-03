@@ -1,67 +1,44 @@
 package es.upm.miw.apaw.domain.model.powerofattorney;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 import java.util.UUID;
 
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PowerOfAttorneyParty {
 
-    private final UUID id;
+    @EqualsAndHashCode.Include
+    private UUID id;
+
+    @NotNull
     private Integer age;
+
+    @NotNull
     private Boolean fullMentalCapacity;
+
     private String companyName;
+
+    @NotNull
     private Boolean representationCompany;
+
+    @NotNull
     private UserSnapshot userSnapshot;
 
-    public PowerOfAttorneyParty(Integer age, UserSnapshot userSnapshot) {
+    public void doDefault() {
         this.id = UUID.randomUUID();
-        this.age = age;
-        this.fullMentalCapacity = true;
-        this.companyName = null;
-        this.representationCompany = false;
-        this.userSnapshot = userSnapshot;
-    }
 
-    public UUID getId() {
-        return this.id;
-    }
+        if (this.fullMentalCapacity == null) {
+            this.fullMentalCapacity = true;
+        }
 
-    public Integer getAge() {
-        return this.age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public Boolean getFullMentalCapacity() {
-        return this.fullMentalCapacity;
-    }
-
-    public void setFullMentalCapacity(Boolean fullMentalCapacity) {
-        this.fullMentalCapacity = fullMentalCapacity;
-    }
-
-    public String getCompanyName() {
-        return this.companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public Boolean getRepresentationCompany() {
-        return this.representationCompany;
-    }
-
-    public void setRepresentationCompany(Boolean representationCompany) {
-        this.representationCompany = representationCompany;
-    }
-
-    public UserSnapshot getUserSnapshot() {
-        return this.userSnapshot;
-    }
-
-    public void setUserSnapshot(UserSnapshot userSnapshot) {
-        this.userSnapshot = userSnapshot;
+        if (this.representationCompany == null) {
+            this.representationCompany = false;
+        }
     }
 }
