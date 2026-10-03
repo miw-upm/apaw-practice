@@ -48,4 +48,16 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
         ComplianceAssessmentEntity entity = new ComplianceAssessmentEntity(complianceAssessment, euRegulationEntities);
         return this.complianceAssessmentRepository.save(entity).toDomain();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isReferenced(UUID id) {
+        return this.euRegulationRepository.existsByComplianceAssessments_Id(id);
+    }
+
+    @Override
+    @Transactional
+    public void delete(UUID id) {
+        this.complianceAssessmentRepository.deleteById(id);
+    }
 }
