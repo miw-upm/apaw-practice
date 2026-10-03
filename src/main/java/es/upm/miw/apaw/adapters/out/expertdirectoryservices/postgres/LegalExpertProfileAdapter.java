@@ -1,16 +1,17 @@
 package es.upm.miw.apaw.adapters.out.expertdirectoryservices.postgres;
 
-import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfileGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Sort;
+
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
-import org.springframework.data.domain.Sort;
 
 @Repository
 @RequiredArgsConstructor
@@ -42,6 +43,14 @@ public class LegalExpertProfileAdapter implements LegalExpertProfileGateway {
     }
 
     @Override
+    public List<LegalExpertProfile> readAllByIds(List<UUID> ids) {
+        return this.legalExpertProfileRepository.findAllById(ids).stream()
+                .sorted(Comparator.comparingInt(entity -> ids.indexOf(entity.getId())))
+                .map(LegalExpertProfileEntity::toDomain)
+                .toList();
+    }
+
+    @Override
     public LegalExpertProfile update(LegalExpertProfile legalExpertProfile) {
         LegalExpertProfileEntity entity = this.legalExpertProfileRepository.findById(legalExpertProfile.getId())
                 .orElseThrow(() -> new NotFoundException("Legal expert profile id: " + legalExpertProfile.getId()));
@@ -57,12 +66,7 @@ public class LegalExpertProfileAdapter implements LegalExpertProfileGateway {
 
     @Override
     public void delete(String id) {
-        try {
-            this.legalExpertProfileRepository.deleteById(UUID.fromString(id));
-        } catch (DataIntegrityViolationException e) {
-            throw new ConflictException(
-                    "No se puede eliminar el perfil porque está siendo referenciado por una entidad principal.");
-        }
+        this.legalExpertProfileRepository.deleteById(UUID.fromString(id));
     }
 
     @Override

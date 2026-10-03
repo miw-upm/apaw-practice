@@ -33,6 +33,7 @@ public class LegalExpertProfile {
 
     private LocalDate partnershipDate;
 
+    @NotNull
     private UserSnapshot userSnapshot;
 
     public void doDefault() {

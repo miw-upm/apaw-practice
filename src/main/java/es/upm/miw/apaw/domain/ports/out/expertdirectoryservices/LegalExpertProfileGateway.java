@@ -1,6 +1,8 @@
 package es.upm.miw.apaw.domain.ports.out.expertdirectoryservices;
 
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 public interface LegalExpertProfileGateway {
@@ -12,6 +14,8 @@ public interface LegalExpertProfileGateway {
     boolean existsByProfessionalLicense(String professionalLicense);
 
     LegalExpertProfile read(String id);
+
+    List<LegalExpertProfile> readAllByIds(List<UUID> ids);
 
     LegalExpertProfile update(LegalExpertProfile legalExpertProfile);
 
