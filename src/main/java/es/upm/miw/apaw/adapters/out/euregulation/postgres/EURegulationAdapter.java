@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class EURegulationAdapter implements EURegulationGateway {
@@ -26,6 +30,21 @@ public class EURegulationAdapter implements EURegulationGateway {
             euRegulationEntity.setSequentialId(this.getNextSequentialId());
         }
         return this.euRegulationRepository.save(euRegulationEntity).toDomain();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<EURegulation> read(UUID id) {
+        return this.euRegulationRepository.findById(id)
+                .map(EURegulationEntity::toDomain);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<EURegulation> findAll() {
+        return this.euRegulationRepository.findAllByOrderByRegulationNameAsc().stream()
+                .map(EURegulationEntity::toDomain)
+                .toList();
     }
 
     private Integer getNextSequentialId() {
