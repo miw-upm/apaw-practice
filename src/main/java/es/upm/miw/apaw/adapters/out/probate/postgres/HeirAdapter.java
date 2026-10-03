@@ -32,6 +32,11 @@ public class HeirAdapter implements HeirGateway {
     }
 
     @Override
+    public Heir update(Heir heir) {
+        return this.heirRepository.save(new HeirEntity(heir)).toDomain();
+    }
+
+    @Override
     public boolean existsByNationalId(String nationalId) {
         return this.heirRepository.existsByNationalId(nationalId);
     }

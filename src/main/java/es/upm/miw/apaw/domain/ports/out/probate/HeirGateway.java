@@ -13,5 +13,7 @@ public interface HeirGateway {
 
     Optional<Heir> read(UUID id);
 
+    Heir update(Heir heir);
+
     boolean existsByNationalId(String nationalId);
 }

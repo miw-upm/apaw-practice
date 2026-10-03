@@ -31,4 +31,19 @@ public class HeirService {
         return this.heirGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
     }
+
+    public Heir update(UUID id, Heir heir) {
+        Heir storedHeir = this.read(id);
+        if (!storedHeir.getNationalId().equals(heir.getNationalId())
+                && this.heirGateway.existsByNationalId(heir.getNationalId())) {
+            throw new ConflictException("Heir nationalId already exists: " + heir.getNationalId());
+        }
+        storedHeir.setFullName(heir.getFullName());
+        storedHeir.setNationalId(heir.getNationalId());
+        storedHeir.setBirthDate(heir.getBirthDate());
+        storedHeir.setSharePercentage(heir.getSharePercentage());
+        storedHeir.setHeirStatus(heir.getHeirStatus());
+        storedHeir.setContactEmail(heir.getContactEmail());
+        return this.heirGateway.update(storedHeir);
+    }
 }
