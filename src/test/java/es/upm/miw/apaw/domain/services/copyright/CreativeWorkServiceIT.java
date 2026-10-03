@@ -113,4 +113,42 @@ class CreativeWorkServiceIT {
         assertThat(summaries.get(1).getClaimCount()).isEqualTo(2L);
         assertThat(summaries.get(1).getTotalRequestedCompensation()).isEqualByComparingTo(new BigDecimal("6000.00"));
     }
+
+    @Test
+    void testFindByCriteriaLocalFields() {
+        // En Seeder: WORK_0 ("CervantesModerno") tiene claimUrgent=false (CLAIM_1) y claimUrgent=true (CLAIM_0).
+        // Búsqueda: Seudónimo "CervantesModerno" y claimUrgent = false. Debería encontrar solo 1 (WORK_0).
+        
+        java.util.List<UserSnapshot> mockUsers = java.util.List.of(
+                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).firstName("cliente0").build()
+        );
+        given(this.userFinder.findByIds(any())).willReturn(mockUsers);
+
+        es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria = 
+                new es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria();
+        criteria.setAuthorPenName("CervantesModerno");
+        criteria.setClaimUrgent(false);
+
+        java.util.List<CreativeWork> works = this.creativeWorkService.find(criteria);
+
+        assertThat(works).hasSize(2);
+        assertThat(works.get(0).getRegistrationCode()).isEqualTo("RW-001");
+    }
+
+    @Test
+    void testFindByCriteriaUserField() {
+        java.util.List<UserSnapshot> mockUsers = java.util.List.of(
+                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")).firstName("cliente0").build()
+        );
+        given(this.userFinder.findByIds(any())).willReturn(mockUsers);
+
+        es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria = 
+                new es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria();
+        criteria.setAuthorFirstName("cliente1");
+
+        java.util.List<CreativeWork> works = this.creativeWorkService.find(criteria);
+
+        assertThat(works).hasSize(1);
+        assertThat(works.get(0).getRegistrationCode()).isEqualTo("RW-002");
+    }
 }
