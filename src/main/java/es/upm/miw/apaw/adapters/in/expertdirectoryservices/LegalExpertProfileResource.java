@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.expertdirectoryservices;
 
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.reports.LegalExpertProfileSpecialtyReport;
 import es.upm.miw.apaw.domain.services.expertdirectoryservices.LegalExpertProfileService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class LegalExpertProfileResource {
 
     public static final String LEGAL_EXPERT_PROFILES = "/expert-directory-services/legal-expert-profiles";
     public static final String ID_ID = "/{id}";
+    public static final String REPORT = "/report";
     private final LegalExpertProfileService legalExpertProfileService;
 
     @Autowired
@@ -33,6 +35,11 @@ public class LegalExpertProfileResource {
     @PostMapping
     public LegalExpertProfile create(@Valid @RequestBody LegalExpertProfile legalExpertProfile) {
         return this.legalExpertProfileService.create(legalExpertProfile);
+    }
+
+    @GetMapping(REPORT)
+    public List<LegalExpertProfileSpecialtyReport> findSpecialtyReport() {
+        return this.legalExpertProfileService.findSpecialtyReport();
     }
 
     @GetMapping(ID_ID)

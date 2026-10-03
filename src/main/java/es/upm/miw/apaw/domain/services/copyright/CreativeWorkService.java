@@ -47,4 +47,34 @@ public class CreativeWorkService {
 
         return summaries;
     }
+
+    public java.util.List<CreativeWork> find(es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria) {
+        java.util.List<CreativeWork> works = this.creativeWorkGateway.find(criteria);
+        if (works.isEmpty()) {
+            return java.util.List.of();
+        }
+
+        java.util.Set<UUID> authorIds = works.stream()
+                .map(work -> work.getAuthor().getId())
+                .collect(java.util.stream.Collectors.toSet());
+
+        java.util.List<es.upm.miw.apaw.domain.model.UserSnapshot> users = this.userFinder.findByIds(authorIds);
+        java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById = users.stream()
+                .collect(java.util.stream.Collectors.toMap(es.upm.miw.apaw.domain.model.UserSnapshot::getId, user -> user));
+
+        return works.stream()
+                .map(work -> {
+                    work.setAuthor(usersById.get(work.getAuthor().getId()));
+                    return work;
+                })
+                .filter(work -> this.matchesAuthorFirstName(criteria, work))
+                .toList();
+    }
+
+    private boolean matchesAuthorFirstName(es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria, CreativeWork work) {
+        if (criteria.getAuthorFirstName() == null) {
+            return true;
+        }
+        return work.getAuthor() != null && criteria.getAuthorFirstName().equals(work.getAuthor().getFirstName());
+    }
 }
