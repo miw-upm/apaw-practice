@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 @Builder
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class TrainingPlanFindCriteria {
 
     private BigDecimal evaluationScore;
@@ -32,4 +33,10 @@ public class TrainingPlanFindCriteria {
         return this.isCompleted != null;
     }
 
+    public boolean hasCourseName() {
+        return this.courseName != null && !this.courseName.isBlank();
+    }
+    public boolean hasUserActive() {
+        return this.userActive != null;
+    }
 }
