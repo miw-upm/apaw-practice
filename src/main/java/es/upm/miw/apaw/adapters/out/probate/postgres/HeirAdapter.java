@@ -19,7 +19,7 @@ public class HeirAdapter implements HeirGateway {
 
     @Override
     public List<Heir> findAll() {
-        return this.heirRepository.findAll().stream()
+        return this.heirRepository.findAllByOrderByNationalIdAsc().stream()
                 .map(HeirEntity::toDomain)
                 .toList();
     }
