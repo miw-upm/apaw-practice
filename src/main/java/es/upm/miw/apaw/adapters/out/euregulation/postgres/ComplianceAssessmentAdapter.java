@@ -60,4 +60,12 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
     public void delete(UUID id) {
         this.complianceAssessmentRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ComplianceAssessment> findAll() {
+        return this.complianceAssessmentRepository.findAllByOrderByAssessmentDateAscIdAsc().stream()
+                .map(ComplianceAssessmentEntity::toDomain)
+                .toList();
+    }
 }
