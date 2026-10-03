@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,6 +31,11 @@ public class EURegulationResource {
     @ResponseStatus(HttpStatus.CREATED)
     public EURegulation create(@Valid @RequestBody EURegulationCreationDto creation) {
         return this.euRegulationService.create(creation.toDomain());
+    }
+
+    @GetMapping
+    public List<EURegulation> findAll() {
+        return this.euRegulationService.findAll();
     }
 
     @GetMapping(ID)
