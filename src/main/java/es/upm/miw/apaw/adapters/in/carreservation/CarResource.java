@@ -42,7 +42,7 @@ public class CarResource {
     }
 
     @GetMapping
-    public List<Car> readAll() {
-        return this.carService.readAll();
+    public List<Car> findAll() {
+        return this.carService.findAll();
     }
 }

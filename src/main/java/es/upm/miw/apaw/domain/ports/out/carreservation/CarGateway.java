@@ -19,5 +19,5 @@ public interface CarGateway {
 
     boolean isUsedByReservation(UUID id);
 
-    List<Car> readAll();
+    List<Car> findAll();
 }

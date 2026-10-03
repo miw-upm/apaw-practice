@@ -52,7 +52,7 @@ public class CarAdapter implements CarGateway {
     }
 
     @Override
-    public List<Car> readAll() {
+    public List<Car> findAll() {
         return this.carRepository.findAllByOrderByLicensePlateAsc()
                 .stream()
                 .map(CarEntity::toDomain)

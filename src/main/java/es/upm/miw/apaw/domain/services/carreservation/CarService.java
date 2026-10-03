@@ -67,7 +67,7 @@ public class CarService {
         this.carGateway.delete(id);
     }
 
-    public List<Car> readAll() {
-        return this.carGateway.readAll();
+    public List<Car> findAll() {
+        return this.carGateway.findAll();
     }
 }
