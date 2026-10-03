@@ -1,10 +1,13 @@
 package es.upm.miw.apaw.domain.services.euregulation;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
 import es.upm.miw.apaw.domain.ports.out.euregulation.EURegulationGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +27,10 @@ public class EURegulationService {
                     "EU regulation sequential ID already exists: " + euRegulation.getSequentialId());
         }
         return this.euRegulationGateway.create(euRegulation);
+    }
+
+    public EURegulation read(UUID id) {
+        return this.euRegulationGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("EU regulation id not found: " + id));
     }
 }
