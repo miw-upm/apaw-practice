@@ -76,4 +76,41 @@ class CreativeWorkServiceIT {
 
         assertThrows(ConflictException.class, () -> this.creativeWorkService.create(creation));
     }
+
+    @Test
+    void testGenerateClaimSummaries() {
+        // En el Seeder:
+        // WORK_0 (RW-001) tiene CLAIM_0 (5000.00) y CLAIM_1 (1000.00) -> SUM = 6000.00, COUNT = 2, autor "cliente0"
+        // WORK_1 (RW-002) tiene CLAIM_2 (12500.00) -> SUM = 12500.00, COUNT = 1, autor "cliente1"
+        // El de mayor suma es RW-002.
+
+        // Mock del UserFinder para las llamadas por lotes
+        java.util.List<UserSnapshot> mockUsers = java.util.List.of(
+                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).firstName("cliente0").build(),
+                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")).firstName("cliente1").build()
+        );
+        given(this.userFinder.findByIds(any())).willReturn(mockUsers);
+
+        java.util.List<es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary> summaries = 
+                this.creativeWorkService.generateClaimSummaries();
+
+        assertThat(summaries).hasSize(2);
+        
+        // Verifica la hidratación del autor
+        assertThat(summaries).allSatisfy(summary -> assertThat(summary.getAuthor()).isNotNull());
+
+        // Verifica que estén ordenados por SUM de mayor a menor (esto fallará por culpa del ASC)
+        assertThat(summaries.get(0).getTotalRequestedCompensation())
+                .isGreaterThan(summaries.get(1).getTotalRequestedCompensation());
+        
+        // El primero debería ser RW-002 (suma 12500.00)
+        assertThat(summaries.get(0).getRegistrationCode()).isEqualTo("RW-002");
+        assertThat(summaries.get(0).getClaimCount()).isEqualTo(1L);
+        assertThat(summaries.get(0).getTotalRequestedCompensation()).isEqualByComparingTo(new BigDecimal("12500.00"));
+
+        // El segundo debería ser RW-001 (suma 6000.00)
+        assertThat(summaries.get(1).getRegistrationCode()).isEqualTo("RW-001");
+        assertThat(summaries.get(1).getClaimCount()).isEqualTo(2L);
+        assertThat(summaries.get(1).getTotalRequestedCompensation()).isEqualByComparingTo(new BigDecimal("6000.00"));
+    }
 }

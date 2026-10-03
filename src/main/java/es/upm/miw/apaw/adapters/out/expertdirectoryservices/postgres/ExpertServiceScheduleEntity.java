@@ -41,19 +41,13 @@ public class ExpertServiceScheduleEntity {
     @Column(nullable = false)
     private LocalDate creationDate;
 
-    @OneToMany
-    @JoinColumn(name = "expert_service_schedule_id", nullable = false)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expert_service_schedule_id")
     private List<LegalExpertProfileEntity> legalExpertProfiles;
 
     public ExpertServiceScheduleEntity(ExpertServiceSchedule expertServiceSchedule) {
         BeanUtils.copyProperties(expertServiceSchedule, this, "legalExpertProfiles");
-        if (expertServiceSchedule.getLegalExpertProfiles() != null) {
-            this.legalExpertProfiles = expertServiceSchedule.getLegalExpertProfiles().stream()
-                    .map(LegalExpertProfileEntity::new)
-                    .toList();
-        } else {
-            this.legalExpertProfiles = new ArrayList<>();
-        }
+        this.legalExpertProfiles = new ArrayList<>();
     }
 
     public ExpertServiceSchedule toDomain() {

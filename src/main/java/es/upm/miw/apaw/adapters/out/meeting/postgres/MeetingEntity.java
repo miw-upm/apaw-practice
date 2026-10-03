@@ -42,7 +42,7 @@ public class MeetingEntity {
     private MeetingStatus meetingStatus;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meeting_id", nullable = false)
+    @JoinColumn(name = "meeting_id")
     private List<LegalIssueEntity> legalIssues;
 
     @ElementCollection(fetch = FetchType.LAZY)
