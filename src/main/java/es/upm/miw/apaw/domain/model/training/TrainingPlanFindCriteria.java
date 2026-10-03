@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.model.training;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
