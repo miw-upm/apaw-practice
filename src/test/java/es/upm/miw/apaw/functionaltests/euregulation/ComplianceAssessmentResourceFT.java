@@ -2,12 +2,13 @@ package es.upm.miw.apaw.functionaltests.euregulation;
 
 import es.upm.miw.apaw.adapters.in.euregulation.ComplianceAssessmentCreationDto;
 import es.upm.miw.apaw.adapters.in.euregulation.ComplianceAssessmentResource;
+import es.upm.miw.apaw.adapters.in.euregulation.EURegulationResource;
 import es.upm.miw.apaw.config.seeders.ComplianceAssessmentSeederForDev;
 import es.upm.miw.apaw.config.seeders.EURegulationSeederForDev;
-import es.upm.miw.apaw.adapters.in.euregulation.EURegulationResource;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceLevel;
+import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
 import es.upm.miw.apaw.domain.model.euregulation.RiskLevel;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.BeforeEach;
