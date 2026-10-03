@@ -86,8 +86,22 @@ class CreativeWorkServiceIT {
 
         // Mock del UserFinder para las llamadas por lotes
         java.util.List<UserSnapshot> mockUsers = java.util.List.of(
-                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).firstName("cliente0").build(),
-                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")).firstName("cliente1").build()
+                UserSnapshot.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .mobile("600000100")
+                        .firstName("cliente0")
+                        .familyName("García López")
+                        .email("cliente0@example.com")
+                        .identity("00000000T")
+                        .build(),
+                UserSnapshot.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .mobile("600000101")
+                        .firstName("cliente1")
+                        .familyName("Pérez Sánchez")
+                        .email("cliente1@example.com")
+                        .identity("11111111T")
+                        .build()
         );
         given(this.userFinder.findByIds(any())).willReturn(mockUsers);
 
@@ -120,7 +134,14 @@ class CreativeWorkServiceIT {
         // Búsqueda: Seudónimo "CervantesModerno" y claimUrgent = false. Debería encontrar solo 1 (WORK_0).
         
         java.util.List<UserSnapshot> mockUsers = java.util.List.of(
-                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).firstName("cliente0").build()
+                UserSnapshot.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .mobile("600000100")
+                        .firstName("cliente0")
+                        .familyName("García López")
+                        .email("cliente0@example.com")
+                        .identity("00000000T")
+                        .build()
         );
         given(this.userFinder.findByIds(any())).willReturn(mockUsers);
 
@@ -138,8 +159,22 @@ class CreativeWorkServiceIT {
     @Test
     void testFindByCriteriaUserField() {
         java.util.List<UserSnapshot> mockUsers = java.util.List.of(
-                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000")).firstName("cliente0").build(),
-                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")).firstName("cliente1").build()
+                UserSnapshot.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .mobile("600000100")
+                        .firstName("cliente0")
+                        .familyName("García López")
+                        .email("cliente0@example.com")
+                        .identity("00000000T")
+                        .build(),
+                UserSnapshot.builder()
+                        .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                        .mobile("600000101")
+                        .firstName("cliente1")
+                        .familyName("Pérez Sánchez")
+                        .email("cliente1@example.com")
+                        .identity("11111111T")
+                        .build()
         );
         given(this.userFinder.findByIds(any())).willReturn(mockUsers);
 
