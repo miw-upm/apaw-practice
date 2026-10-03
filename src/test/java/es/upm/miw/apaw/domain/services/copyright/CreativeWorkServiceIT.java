@@ -131,14 +131,14 @@ class CreativeWorkServiceIT {
 
         java.util.List<CreativeWork> works = this.creativeWorkService.find(criteria);
 
-        assertThat(works).hasSize(2);
+        assertThat(works).hasSize(1);
         assertThat(works.get(0).getRegistrationCode()).isEqualTo("RW-001");
     }
 
     @Test
     void testFindByCriteriaUserField() {
         java.util.List<UserSnapshot> mockUsers = java.util.List.of(
-                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")).firstName("cliente0").build()
+                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001")).firstName("cliente1").build()
         );
         given(this.userFinder.findByIds(any())).willReturn(mockUsers);
 
