@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,5 +31,11 @@ public class HeirService {
     public Heir read(UUID id) {
         return this.heirGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
+    }
+
+    public Heir update(UUID id, Heir heir) {
+        Heir storedHeir = this.read(id);
+        BeanUtils.copyProperties(heir, storedHeir);
+        return this.heirGateway.update(storedHeir);
     }
 }
