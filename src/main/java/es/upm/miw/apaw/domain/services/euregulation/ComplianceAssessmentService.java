@@ -35,6 +35,11 @@ public class ComplianceAssessmentService {
         return this.complianceAssessmentGateway.create(complianceAssessment);
     }
 
+    public ComplianceAssessment read(UUID id) {
+        return this.complianceAssessmentGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Compliance assessment id not found: " + id));
+    }
+
     private List<EURegulation> readEURegulations(List<UUID> euRegulationIds) {
         return euRegulationIds.stream()
                 .map(id -> this.euRegulationGateway.read(id)
