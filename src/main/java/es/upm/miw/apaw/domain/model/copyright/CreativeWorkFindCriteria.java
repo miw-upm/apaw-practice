@@ -14,4 +14,8 @@ public class CreativeWorkFindCriteria {
     private Boolean isHighlyValued;
     private Boolean claimUrgent;
     private String authorFirstName;
+
+    public boolean hasAuthorFirstName() {
+        return this.authorFirstName != null;
+    }
 }

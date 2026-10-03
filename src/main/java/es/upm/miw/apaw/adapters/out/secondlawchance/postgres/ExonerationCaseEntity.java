@@ -1,7 +1,9 @@
 package es.upm.miw.apaw.adapters.out.secondlawchance.postgres;
 
+import es.upm.miw.apaw.domain.model.secondlawchance.ExonerationCase;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,4 +37,9 @@ public class ExonerationCaseEntity {
 
     @Column(nullable = false)
     private UUID userId;
+
+    public ExonerationCaseEntity(ExonerationCase exonerationCase) {
+        BeanUtils.copyProperties(exonerationCase, this, "debts", "userSnapshot");
+        this.userId = exonerationCase.getUserSnapshot().getId();
+    }
 }

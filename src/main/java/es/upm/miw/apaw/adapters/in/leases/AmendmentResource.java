@@ -42,7 +42,7 @@ public class AmendmentResource {
     }
 
     @PatchMapping(ID)
-    public Amendment patch(@PathVariable UUID id, @RequestBody AmendmentUpdate update) {
+    public Amendment patch(@PathVariable UUID id, @Valid @RequestBody AmendmentUpdate update) {
         return this.amendmentService.patch(id, update);
     }
 
