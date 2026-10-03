@@ -35,6 +35,10 @@ public class Debt {
 
     public void doDefault() {
         this.id = UUID.randomUUID();
+        this.applyDefaults();
+    }
+
+    public void applyDefaults() {
         if (this.type == null) {
             this.type = CreditorType.PRIVATE;
         }
