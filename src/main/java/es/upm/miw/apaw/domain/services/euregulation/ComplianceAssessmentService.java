@@ -58,6 +58,14 @@ public class ComplianceAssessmentService {
         return this.complianceAssessmentGateway.update(update);
     }
 
+    public void delete(UUID id) {
+        this.read(id);
+        if (this.complianceAssessmentGateway.isReferenced(id)) {
+            throw new ConflictException("Compliance assessment is referenced by an EU regulation: " + id);
+        }
+        this.complianceAssessmentGateway.delete(id);
+    }
+
     private void assertUniqueEURegulationIds(List<UUID> euRegulationIds) {
         Set<UUID> uniqueIds = new HashSet<>(euRegulationIds);
         if (uniqueIds.size() != euRegulationIds.size()) {

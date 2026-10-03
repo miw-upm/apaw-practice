@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.services.euregulation.ComplianceAssessmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,5 +43,11 @@ public class ComplianceAssessmentResource {
             @PathVariable UUID id, @Valid @RequestBody ComplianceAssessmentCreationDto update) {
         return this.complianceAssessmentService.update(
                 id, update.toDomain(), update.userId(), update.euRegulationIds());
+    }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.complianceAssessmentService.delete(id);
     }
 }
