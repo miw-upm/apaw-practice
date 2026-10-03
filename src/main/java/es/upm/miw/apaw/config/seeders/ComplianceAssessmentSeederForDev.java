@@ -29,7 +29,7 @@ import java.util.UUID;
 public class ComplianceAssessmentSeederForDev implements ApplicationRunner {
 
     private static final String ASSESSMENT_ID_PREFIX = "eeeeeeee-1111-2222-3333-44445555";
-    private static final UUID USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+    public static final UUID USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
     public static final UUID ID_0 = UUID.fromString(ASSESSMENT_ID_PREFIX + "0000");
     public static final UUID ID_1 = UUID.fromString(ASSESSMENT_ID_PREFIX + "0001");
 
