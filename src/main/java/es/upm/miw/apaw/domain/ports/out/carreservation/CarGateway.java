@@ -12,5 +12,5 @@ public interface CarGateway {
 
     Optional<Car> read(UUID id);
 
-    Car update(UUID id, Car car);
+    Car update(Car car);
 }

@@ -32,9 +32,8 @@ public class CarAdapter implements CarGateway {
     }
 
     @Override
-    public Car update(UUID id, Car car) {
+    public Car update(Car car) {
         CarEntity carEntity = new CarEntity(car);
-        carEntity.setId(id);
 
         return this.carRepository.save(carEntity)
                 .toDomain();

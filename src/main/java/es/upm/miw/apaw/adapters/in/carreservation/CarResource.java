@@ -14,6 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CarResource {
     public static final String CARS = "/cars";
+    public static final String ID = "/{id}";
     private final CarService carService;
 
     @PostMapping
@@ -22,12 +23,12 @@ public class CarResource {
         return this.carService.create(car);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(ID)
     public Car read(@PathVariable UUID id) {
         return this.carService.read(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(ID)
     public Car update(@PathVariable UUID id,
                       @Valid @RequestBody Car car) {
         return this.carService.update(id, car);

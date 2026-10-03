@@ -34,9 +34,7 @@ public class CarService {
 
     public Car update(UUID id, Car car) {
 
-        Car storedCar = this.carGateway.read(id)
-                .orElseThrow(() ->
-                        new NotFoundException("Car id not found: " + id));
+        Car storedCar = this.read(id);
 
         if (!storedCar.getLicensePlate().equals(car.getLicensePlate())
                 && this.carGateway.existsByLicensePlate(car.getLicensePlate())) {
@@ -46,6 +44,12 @@ public class CarService {
             );
         }
 
-        return this.carGateway.update(id, car);
+        storedCar.setBrand(car.getBrand());
+        storedCar.setModel(car.getModel());
+        storedCar.setLicensePlate(car.getLicensePlate());
+        storedCar.setNumberOfSeats(car.getNumberOfSeats());
+        storedCar.setFuelType(car.getFuelType());
+
+        return this.carGateway.update(storedCar);
     }
 }
