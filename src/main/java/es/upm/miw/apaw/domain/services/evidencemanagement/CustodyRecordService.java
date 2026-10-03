@@ -2,8 +2,10 @@ package es.upm.miw.apaw.domain.services.evidencemanagement;
 
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.ports.out.evidencemanagement.CustodyRecordGateway;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
 @Service
@@ -17,6 +19,7 @@ public class CustodyRecordService {
     }
 
     public CustodyRecord read(UUID id) {
-        return this.custodyRecordGateway.readById(id);
+        return this.custodyRecordGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Custody record id not found: " + id));
     }
 }

@@ -6,8 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.UUID;
 
 @RestController
@@ -15,6 +14,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustodyRecordResource {
     public static final String CUSTODY_RECORDS = "/custody-records";
+    public static final String ID = "/{id}";
 
     private final CustodyRecordService custodyRecordService;
 
@@ -24,9 +24,7 @@ public class CustodyRecordResource {
         return this.custodyRecordService.create(custodyRecord);
     }
 
-    public static final String ID_ID = "/{id}";
-
-    @GetMapping(ID_ID)
+    @GetMapping(ID)
     public CustodyRecord read(@PathVariable UUID id) {
         return this.custodyRecordService.read(id);
     }

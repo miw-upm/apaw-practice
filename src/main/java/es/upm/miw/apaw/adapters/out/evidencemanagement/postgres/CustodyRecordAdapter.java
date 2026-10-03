@@ -2,9 +2,10 @@ package es.upm.miw.apaw.adapters.out.evidencemanagement.postgres;
 
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.ports.out.evidencemanagement.CustodyRecordGateway;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -21,10 +22,9 @@ public class CustodyRecordAdapter implements CustodyRecordGateway {
     }
 
     @Override
-    public CustodyRecord readById(UUID id) {
+    public Optional<CustodyRecord> read(UUID id) {
         return this.custodyRecordRepository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException("Custody record id not found: " + id))
-                .toDomain();
+                .map(CustodyRecordEntity::toDomain);
     }
 }
