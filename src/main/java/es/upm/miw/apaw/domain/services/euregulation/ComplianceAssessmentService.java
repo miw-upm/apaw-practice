@@ -43,6 +43,10 @@ public class ComplianceAssessmentService {
                 .orElseThrow(() -> new NotFoundException("Compliance assessment id not found: " + id));
     }
 
+    public List<ComplianceAssessment> findAll() {
+        return this.complianceAssessmentGateway.findAll();
+    }
+
     public ComplianceAssessment update(
             UUID id, ComplianceAssessment update, UUID userId, List<UUID> euRegulationIds) {
         ComplianceAssessment storedAssessment = this.read(id);

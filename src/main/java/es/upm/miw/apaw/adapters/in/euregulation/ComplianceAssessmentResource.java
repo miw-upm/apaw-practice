@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,6 +32,11 @@ public class ComplianceAssessmentResource {
     public ComplianceAssessment create(@Valid @RequestBody ComplianceAssessmentCreationDto creation) {
         return this.complianceAssessmentService.create(
                 creation.toDomain(), creation.userId(), creation.euRegulationIds());
+    }
+
+    @GetMapping
+    public List<ComplianceAssessment> findAll() {
+        return this.complianceAssessmentService.findAll();
     }
 
     @GetMapping(ID)
