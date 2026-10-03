@@ -8,7 +8,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
@@ -34,31 +39,31 @@ public class TaskCommentEntity {
     private LocalDateTime creationDate;
 
     @Column(nullable = false)
-    private Boolean edited;
+    private Boolean edition;
 
     @Column(nullable = false)
-    private Boolean hasAttachment;
+    private Boolean attachment;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CommentType type;
 
     @Column(nullable = false)
-    private UUID userId;
+    private UUID authorId;
 
     public TaskCommentEntity(TaskComment taskComment) {
         BeanUtils.copyProperties(taskComment, this, "author");
-        this.userId = taskComment.getAuthor().getId();
+        this.authorId = taskComment.getAuthor().getId();
     }
 
     public TaskComment toDomain() {
         TaskComment taskComment = new TaskComment();
 
-        BeanUtils.copyProperties(this, taskComment, "userId");
+        BeanUtils.copyProperties(this, taskComment, "authorId");
 
         taskComment.setAuthor(
                 UserSnapshot.builder()
-                        .id(this.userId)
+                        .id(this.authorId)
                         .build()
         );
 

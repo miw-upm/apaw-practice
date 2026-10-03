@@ -36,19 +36,19 @@ public class Task {
     private Integer priority;
 
     @NotNull
-    private Boolean completed;
+    private Boolean completion;
 
     private BigDecimal estimatedHours;
 
     private List<TaskComment> comments;
 
     @NotNull
-    private UserSnapshot assignedTo;
+    private UserSnapshot owner;
 
     public void doDefault() {
         this.id = UUID.randomUUID();
         this.priority = 3;
-        this.completed = false;
+        this.completion = false;
         this.comments = new ArrayList<>();
     }
 }
