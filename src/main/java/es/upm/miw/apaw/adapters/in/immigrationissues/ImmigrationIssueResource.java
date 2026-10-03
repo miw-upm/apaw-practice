@@ -2,11 +2,14 @@ package es.upm.miw.apaw.adapters.in.immigrationissues;
 
 import es.upm.miw.apaw.domain.model.immigrationissues.CreationImmigrationIssue;
 import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssue;
+import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUsageReport;
 import es.upm.miw.apaw.domain.services.immigrationissues.ImmigrationIssueService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ImmigrationIssueResource.IMMIGRATION_ISSUES)
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ImmigrationIssueResource {
 
     public static final String IMMIGRATION_ISSUES = "/immigration-issues";
+    public static final String REPORT = "/report";
 
     private final ImmigrationIssueService immigrationIssueService;
 
@@ -21,5 +25,10 @@ public class ImmigrationIssueResource {
     @ResponseStatus(HttpStatus.CREATED)
     public ImmigrationIssue create(@Valid @RequestBody CreationImmigrationIssue creation) {
         return this.immigrationIssueService.create(creation);
+    }
+
+    @GetMapping(REPORT)
+    public List<LawBasisUsageReport> findLawBasisUsageReport() {
+        return this.immigrationIssueService.findLawBasisUsageReport();
     }
 }

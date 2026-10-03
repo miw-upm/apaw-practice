@@ -10,6 +10,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.immigrationissues.CreationImmigrationIssue;
 import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssue;
 import es.upm.miw.apaw.domain.model.immigrationissues.LawBasis;
+import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUsageReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -171,6 +173,17 @@ class ImmigrationIssueServiceIT {
         assertThatThrownBy(() -> this.immigrationIssueService.create(second))
                 .isInstanceOf(ConflictException.class)
                 .hasMessageContaining(subject);
+    }
+
+    @Test
+    @Transactional
+    void testFindLawBasisUsageReportDoesNotCallApawUser() {
+        List<LawBasisUsageReport> reports = this.immigrationIssueService.findLawBasisUsageReport();
+
+        assertThat(reports).isNotEmpty();
+        assertThat(reports).extracting(LawBasisUsageReport::getLawCode)
+                .contains(LAW_BASIS_0.getLawCode(), LAW_BASIS_4.getLawCode());
+        verifyNoInteractions(this.userFinder);
     }
 
     private CreationImmigrationIssue creation(List<UUID> lawBasisIds) {
