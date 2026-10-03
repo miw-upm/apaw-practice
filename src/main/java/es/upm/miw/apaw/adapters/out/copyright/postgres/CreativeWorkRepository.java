@@ -14,6 +14,6 @@ public interface CreativeWorkRepository extends JpaRepository<CreativeWorkEntity
            "cw.registrationCode, cw.userId, COUNT(c), SUM(c.requestedCompensation)) " +
            "FROM CreativeWorkEntity cw JOIN cw.claims c " +
            "GROUP BY cw.registrationCode, cw.userId " +
-           "ORDER BY SUM(c.requestedCompensation) ASC")
+           "ORDER BY SUM(c.requestedCompensation) DESC")
     List<CreativeWorkClaimSummary> generateClaimSummaries();
 }

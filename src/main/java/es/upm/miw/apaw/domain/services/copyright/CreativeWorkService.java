@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CreativeWorkService {
@@ -32,11 +34,16 @@ public class CreativeWorkService {
         java.util.List<es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary> summaries = 
                 this.creativeWorkGateway.generateClaimSummaries();
 
-        // FALLO 2: Violación de la regla de hidratación masiva. Llamada N+1 a apaw-user
-        summaries.forEach(summary -> {
-            es.upm.miw.apaw.domain.model.UserSnapshot user = this.userFinder.read(summary.getAuthorId());
-            summary.setAuthor(user);
-        });
+        java.util.Set<UUID> authorIds = summaries.stream()
+                .map(es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary::getAuthorId)
+                .collect(java.util.stream.Collectors.toSet());
+
+        if (!authorIds.isEmpty()) {
+            java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById = this.userFinder.findByIds(authorIds).stream()
+                    .collect(java.util.stream.Collectors.toMap(es.upm.miw.apaw.domain.model.UserSnapshot::getId, user -> user));
+
+            summaries.forEach(summary -> summary.setAuthor(usersById.get(summary.getAuthorId())));
+        }
 
         return summaries;
     }
