@@ -84,8 +84,9 @@ public class TrainingPlanService {
         trainingPlan.setUserSnapshots(enrichedUsers);
     }
 
-    private boolean matchesUserFirstName(TrainingPlanFindCriteria criteria, TrainingPlan trainingPlan) {
-        return trainingPlan.getUserSnapshots().stream()
+        private boolean matchesUserFirstName(TrainingPlanFindCriteria criteria, TrainingPlan trainingPlan) {
+        return !criteria.hasUserFirstName() || trainingPlan.getUserSnapshots().stream()
                 .anyMatch(user -> criteria.getUserFirstName().equals(user.getFirstName()));
     }
+
 }
