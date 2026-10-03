@@ -53,7 +53,7 @@ public class LawBasisAdapter implements LawBasisGateway {
 
     @Override
     public List<LawBasis> findAll() {
-        return this.lawBasisRepository.findAllByOrderByLawCodeAscIdAsc()
+        return this.lawBasisRepository.findAllByOrderByLawCodeAsc()
                 .stream()
                 .map(LawBasisEntity::toDomain)
                 .toList();

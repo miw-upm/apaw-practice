@@ -9,5 +9,5 @@ public interface LawBasisRepository extends JpaRepository<LawBasisEntity, UUID> 
 
     boolean existsByLawCode(String lawCode);
 
-    List<LawBasisEntity> findAllByOrderByLawCodeAscIdAsc();
+    List<LawBasisEntity> findAllByOrderByLawCodeAsc();
 }
