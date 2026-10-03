@@ -25,6 +25,8 @@ public class CarService {
             );
         }
 
+        car.doDefault();
+
         return this.carGateway.create(car);
     }
 
