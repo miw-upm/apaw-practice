@@ -1,5 +1,7 @@
 package es.upm.miw.apaw.domain.model.probate;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -16,15 +18,26 @@ public class Heir {
     @EqualsAndHashCode.Include
     private UUID id;
 
+    @NotBlank
     private String fullName;
 
+    @NotBlank
     private String nationalId;
 
+    @NotNull
     private LocalDate birthDate;
 
+    @NotNull
     private BigDecimal sharePercentage;
 
-    private HeirStatus status;
+    private HeirStatus heirStatus;
 
     private String contactEmail;
+
+    public void doDefault() {
+        this.id = UUID.randomUUID();
+        if (this.heirStatus == null) {
+            this.heirStatus = HeirStatus.PENDING;
+        }
+    }
 }
