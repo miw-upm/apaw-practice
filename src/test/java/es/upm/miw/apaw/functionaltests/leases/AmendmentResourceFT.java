@@ -137,6 +137,20 @@ class AmendmentResourceFT {
     }
 
     @Test
+    void testPatchBlankDescription() {
+        Amendment amendment = this.createAmendment();
+        this.restTestClient.patch().uri(AmendmentResource.AMENDMENTS + "/" + amendment.getId())
+                .body(new AmendmentUpdate(null, " ", null, null, null, null))
+                .exchange()
+                .expectStatus().isBadRequest();
+        this.restTestClient.get().uri(AmendmentResource.AMENDMENTS + "/" + amendment.getId())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Amendment.class)
+                .value(body -> assertThat(body.getDescription()).isEqualTo(amendment.getDescription()));
+    }
+
+    @Test
     void testPatchNotFound() {
         this.restTestClient.patch().uri(AmendmentResource.AMENDMENTS + "/" + UUID.randomUUID())
                 .body(new AmendmentUpdate(null, null, null, null, true, null))
