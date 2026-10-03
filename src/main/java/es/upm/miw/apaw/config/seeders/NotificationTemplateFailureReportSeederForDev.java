@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Log4j2
 @Component
@@ -27,10 +28,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NotificationTemplateFailureReportSeederForDev implements ApplicationRunner {
     private static final String ID_PREFIX = "eeeeeeee-aaaa-bbbb-cccc-ddddeeee";
+    private static final String USER_ID_PREFIX = "aaaaaaaa-bbbb-cccc-dddd-eeeeffff";
     public static final String EVENT_TYPE_PREFIX = "DEMO_FAILURE_REPORT_";
     public static final String MOST_FAILED_EVENT_TYPE = EVENT_TYPE_PREFIX + "MOST_FAILED";
     public static final String SECOND_EVENT_TYPE = EVENT_TYPE_PREFIX + "SECOND";
     public static final String NO_FAILURE_EVENT_TYPE = EVENT_TYPE_PREFIX + "NONE";
+
+    public static final List<UUID> USER_IDS = List.of(
+            UUID.fromString(USER_ID_PREFIX + "0000"),
+            UUID.fromString(USER_ID_PREFIX + "0001"),
+            UUID.fromString(USER_ID_PREFIX + "0002"),
+            UUID.fromString(USER_ID_PREFIX + "0003"),
+            UUID.fromString(USER_ID_PREFIX + "0004"),
+            UUID.fromString(USER_ID_PREFIX + "0005"));
 
     private static final UUID MOST_FAILED_TEMPLATE_ID = UUID.fromString(ID_PREFIX + "0001");
     private static final UUID SECOND_TEMPLATE_ID = UUID.fromString(ID_PREFIX + "0002");
@@ -55,11 +65,10 @@ public class NotificationTemplateFailureReportSeederForDev implements Applicatio
     }
 
     private void seedTemplates() {
-        List<NotificationTemplateEntity> templates = List.of(
+        List<NotificationTemplateEntity> templates = Stream.of(
                 this.createTemplate(MOST_FAILED_TEMPLATE_ID, MOST_FAILED_EVENT_TYPE, Channel.EMAIL),
                 this.createTemplate(SECOND_TEMPLATE_ID, SECOND_EVENT_TYPE, Channel.SMS),
                 this.createTemplate(NO_FAILURE_TEMPLATE_ID, NO_FAILURE_EVENT_TYPE, Channel.PUSH))
-                .stream()
                 .filter(template -> !this.notificationTemplateRepository.existsById(template.getId()))
                 .toList();
         this.notificationTemplateRepository.saveAll(templates);
@@ -74,17 +83,26 @@ public class NotificationTemplateFailureReportSeederForDev implements Applicatio
         NotificationTemplateEntity noFailureTemplate =
                 this.notificationTemplateRepository.getReferenceById(NO_FAILURE_TEMPLATE_ID);
         List<NotificationEntity> notifications = List.of(
-                this.createNotification(NOTIFICATION_IDS.get(0), mostFailedTemplate, NotificationStatus.FAILED),
-                this.createNotification(NOTIFICATION_IDS.get(1), mostFailedTemplate, NotificationStatus.FAILED),
-                this.createNotification(NOTIFICATION_IDS.get(2), mostFailedTemplate, NotificationStatus.PENDING),
-                this.createNotification(NOTIFICATION_IDS.get(3), secondTemplate, NotificationStatus.FAILED),
-                this.createNotification(NOTIFICATION_IDS.get(4), secondTemplate, NotificationStatus.DELIVERED),
-                this.createNotification(NOTIFICATION_IDS.get(5), noFailureTemplate, NotificationStatus.PENDING))
-                .stream()
-                .filter(notification -> !this.notificationRepository.existsById(notification.getId()))
-                .toList();
+                this.createNotification(
+                        NOTIFICATION_IDS.get(0), USER_IDS.get(0), mostFailedTemplate,
+                        NotificationStatus.FAILED, Priority.HIGH, null),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(1), USER_IDS.get(1), mostFailedTemplate,
+                        NotificationStatus.FAILED, Priority.LOW, null),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(2), USER_IDS.get(2), mostFailedTemplate,
+                        NotificationStatus.PENDING, Priority.MEDIUM, null),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(3), USER_IDS.get(3), secondTemplate,
+                        NotificationStatus.FAILED, Priority.MEDIUM, null),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(4), USER_IDS.get(4), secondTemplate,
+                        NotificationStatus.DELIVERED, Priority.HIGH, LocalDate.now()),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(5), USER_IDS.get(5), noFailureTemplate,
+                        NotificationStatus.PENDING, Priority.MEDIUM, null));
         this.notificationRepository.saveAll(notifications);
-        log.info("Notification failure report notifications seeded: {}", notifications.size());
+        log.info("Notification failure report notifications synchronized: {}", notifications.size());
     }
 
     private NotificationTemplateEntity createTemplate(UUID id, String eventType, Channel channel) {
@@ -98,16 +116,22 @@ public class NotificationTemplateFailureReportSeederForDev implements Applicatio
     }
 
     private NotificationEntity createNotification(
-            UUID id, NotificationTemplateEntity template, NotificationStatus status) {
+            UUID id,
+            UUID recipientId,
+            NotificationTemplateEntity template,
+            NotificationStatus status,
+            Priority priority,
+            LocalDate sentAt) {
         return NotificationEntity.builder()
                 .id(id)
                 .title("Delivery report demonstration")
                 .message("Demonstration notification for delivery failure reporting.")
                 .createdAt(LocalDate.now())
+                .sentAt(sentAt)
                 .notificationTemplate(template)
-                .priority(Priority.MEDIUM)
+                .priority(priority)
                 .notificationStatus(status)
-                .recipientId(id)
+                .recipientId(recipientId)
                 .build();
     }
 }
