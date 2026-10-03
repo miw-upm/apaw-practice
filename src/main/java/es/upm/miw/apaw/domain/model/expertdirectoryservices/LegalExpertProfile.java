@@ -59,6 +59,7 @@ public class LegalExpertProfile {
                         .id(this.userSnapshot.getId())
                         .mobile(this.userSnapshot.getMobile())
                         .firstName(this.userSnapshot.getFirstName())
+                        .email(this.userSnapshot.getEmail())
                         .build())
                 .build();
     }
