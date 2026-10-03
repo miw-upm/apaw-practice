@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.notifications.CreationNotification;
 import es.upm.miw.apaw.domain.model.notifications.Notification;
 import es.upm.miw.apaw.domain.model.notifications.NotificationTemplate;
+import es.upm.miw.apaw.domain.model.notifications.NotificationTemplateFailureReport;
 import es.upm.miw.apaw.domain.ports.out.notifications.NotificationGateway;
 import es.upm.miw.apaw.domain.ports.out.notifications.NotificationTemplateGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -12,12 +13,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
     private final NotificationGateway notificationGateway;
     private final NotificationTemplateGateway notificationTemplateGateway;
     private final UserFinder userFinder;
+
+    public List<NotificationTemplateFailureReport> findTemplateFailureReport() {
+        return this.notificationGateway.findTemplateFailureReport();
+    }
 
     public Notification create(CreationNotification creation) {
         NotificationTemplate notificationTemplate = this.notificationTemplateGateway
