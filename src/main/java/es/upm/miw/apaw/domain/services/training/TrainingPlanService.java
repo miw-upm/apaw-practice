@@ -45,6 +45,7 @@ public class TrainingPlanService {
     private Course readCourse(UUID courseId) {
         return this.courseGateway.read(courseId)
                 .orElseThrow(() -> new NotFoundException("Course id not found: " + courseId));
+    }
     
     public List<TrainingPlan> find(TrainingPlanFindCriteria criteria) {
         List<TrainingPlan> trainingPlans = this.trainingPlanGateway.find(criteria);
