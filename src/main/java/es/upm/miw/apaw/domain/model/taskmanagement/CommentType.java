@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.domain.model.taskManagement;
+package es.upm.miw.apaw.domain.model.taskmanagement;
 
 public enum CommentType {
     GENERAL,
