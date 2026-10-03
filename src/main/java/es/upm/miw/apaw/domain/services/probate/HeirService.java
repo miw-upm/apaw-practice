@@ -51,6 +51,11 @@ public class HeirService {
 
     public Heir patch(UUID id, HeirUpdate update) {
         Heir storedHeir = this.read(id);
+        if (update.nationalId() != null
+                && !storedHeir.getNationalId().equals(update.nationalId())
+                && this.heirGateway.existsByNationalId(update.nationalId())) {
+            throw new ConflictException("Heir nationalId already exists: " + update.nationalId());
+        }
         Optional.ofNullable(update.fullName()).ifPresent(storedHeir::setFullName);
         Optional.ofNullable(update.nationalId()).ifPresent(storedHeir::setNationalId);
         Optional.ofNullable(update.birthDate()).ifPresent(storedHeir::setBirthDate);
