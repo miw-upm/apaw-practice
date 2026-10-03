@@ -5,10 +5,7 @@ import es.upm.miw.apaw.adapters.out.contract.postgres.ContractEntity;
 import es.upm.miw.apaw.adapters.out.contract.postgres.ContractRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.contract.Clause;
-import es.upm.miw.apaw.domain.model.contract.Contract;
-import es.upm.miw.apaw.domain.model.contract.ContractType;
-import es.upm.miw.apaw.domain.model.contract.CreationContract;
+import es.upm.miw.apaw.domain.model.contract.*;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-import static es.upm.miw.apaw.config.seeders.ContractSeederForDev.ID_0;
-import static es.upm.miw.apaw.config.seeders.ContractSeederForDev.ID_1;
+import static es.upm.miw.apaw.config.seeders.ContractSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
@@ -105,5 +103,42 @@ class ContractServiceIT {
         assertThatThrownBy(() -> this.contractService.create(creation))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining(missingId.toString());
+    }
+
+    @Test
+    void testFindExpirationReport() {
+        List<UserSnapshot> users = List.of(
+                CONTRACT_0.getUserSnapshot(),
+                CONTRACT_2.getUserSnapshot(),
+                CONTRACT_3.getUserSnapshot(),
+                CONTRACT_6.getUserSnapshot(),
+                CONTRACT_7.getUserSnapshot()
+        );
+
+        Set<UUID> userIds = users.stream()
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toSet());
+
+        when(this.userFinder.findByIds(userIds)).thenReturn(users);
+
+        List<ContractExpirationReport> report =
+                this.contractService.findExpirationReport();
+
+        assertThat(report).hasSize(5);
+
+        assertThat(report)
+                .filteredOn(item -> item.userId().equals(CONTRACT_0.getUserSnapshot().getId()))
+                .singleElement()
+                .satisfies(item -> {
+                    assertThat(item.userSnapshot())
+                            .isEqualTo(CONTRACT_0.getUserSnapshot());
+                    assertThat(item.expiringContractCount()).isEqualTo(2);
+                    assertThat(item.activeClauseCount()).isEqualTo(3);
+                });
+
+        assertThat(report)
+                .allSatisfy(item ->
+                        assertThat(item.userSnapshot()).isNotNull()
+                );
     }
 }
