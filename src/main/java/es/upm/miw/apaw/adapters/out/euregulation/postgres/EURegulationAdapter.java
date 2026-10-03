@@ -68,7 +68,7 @@ public class EURegulationAdapter implements EURegulationGateway {
     @Override
     @Transactional(readOnly = true)
     public List<EURegulation> findAll() {
-        return this.euRegulationRepository.findAllByOrderByRegulationNameAsc().stream()
+        return this.euRegulationRepository.findAllByOrderByRegulationNameAscIdAsc().stream()
                 .map(EURegulationEntity::toDomain)
                 .toList();
     }

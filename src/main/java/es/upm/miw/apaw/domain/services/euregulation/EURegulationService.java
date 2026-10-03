@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.euregulation.EURegulationGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,6 +33,10 @@ public class EURegulationService {
     public EURegulation read(UUID id) {
         return this.euRegulationGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("EU regulation id not found: " + id));
+    }
+
+    public List<EURegulation> findAll() {
+        return this.euRegulationGateway.findAll();
     }
 
     public EURegulation update(UUID id, EURegulation update) {
