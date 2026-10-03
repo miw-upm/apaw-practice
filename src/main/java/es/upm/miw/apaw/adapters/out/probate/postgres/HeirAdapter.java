@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,6 +24,11 @@ public class HeirAdapter implements HeirGateway {
         return this.heirRepository.findAllByOrderByNationalIdAsc().stream()
                 .map(HeirEntity::toDomain)
                 .toList();
+    }
+
+    @Override
+    public Optional<Heir> read(UUID id) {
+        return this.heirRepository.findById(id).map(HeirEntity::toDomain);
     }
 
     @Override

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +24,9 @@ public class HeirService {
 
     public List<Heir> findAll() {
         return this.heirGateway.findAll();
+    }
+
+    public Heir read(UUID id) {
+        return this.heirGateway.read(id).orElseThrow();
     }
 }
