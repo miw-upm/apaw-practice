@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.training.Course;
 import es.upm.miw.apaw.domain.model.training.TrainingPlan;
 import es.upm.miw.apaw.domain.model.training.CreationTrainingPlan;
+import es.upm.miw.apaw.domain.model.training.TrainingPlanFindCriteria;
+import java.util.List;
 import es.upm.miw.apaw.domain.ports.out.training.CourseGateway;
 import es.upm.miw.apaw.domain.ports.out.training.TrainingPlanGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -43,7 +45,46 @@ public class TrainingPlanService {
     private Course readCourse(UUID courseId) {
         return this.courseGateway.read(courseId)
                 .orElseThrow(() -> new NotFoundException("Course id not found: " + courseId));
+    
+    public List<TrainingPlan> find(TrainingPlanFindCriteria criteria) {
+        List<TrainingPlan> trainingPlans = this.trainingPlanGateway.find(criteria);
+        if (trainingPlans.isEmpty()) {
+            return List.of();
+        }
+        java.util.Set<UUID> userIds = trainingPlans.stream()
+                .flatMap(plan -> plan.getUserSnapshots().stream())
+                .map(es.upm.miw.apaw.domain.model.UserSnapshot::getId)
+                .collect(java.util.stream.Collectors.toSet());
+        return this.toSummaries(criteria, trainingPlans, this.userFinder.findByIds(userIds));
+    }
+
+    private List<TrainingPlan> toSummaries(
+            TrainingPlanFindCriteria criteria,
+            List<TrainingPlan> trainingPlans,
+            List<es.upm.miw.apaw.domain.model.UserSnapshot> users) {
+        java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById = users.stream()
+                .collect(java.util.stream.Collectors.toMap(es.upm.miw.apaw.domain.model.UserSnapshot::getId, java.util.function.Function.identity()));
+        return trainingPlans.stream()
+                .peek(plan -> this.enrichUserSnapshots(plan, usersById))
+                .filter(plan -> this.matchesUserFirstName(criteria, plan))
+                .toList();
+    }
+
+    private void enrichUserSnapshots(TrainingPlan trainingPlan, java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById) {
+        List<es.upm.miw.apaw.domain.model.UserSnapshot> enrichedUsers = trainingPlan.getUserSnapshots().stream()
+                .map(user -> {
+                    es.upm.miw.apaw.domain.model.UserSnapshot realUser = usersById.get(user.getId());
+                    if (realUser == null) {
+                        throw new NotFoundException("User id not found: " + user.getId());
+                    }
+                    return realUser;
+                })
+                .toList();
+        trainingPlan.setUserSnapshots(enrichedUsers);
+    }
+
+    private boolean matchesUserFirstName(TrainingPlanFindCriteria criteria, TrainingPlan trainingPlan) {
+        return trainingPlan.getUserSnapshots().stream()
+                .anyMatch(user -> criteria.getUserFirstName().equals(user.getFirstName()));
     }
 }
-
-

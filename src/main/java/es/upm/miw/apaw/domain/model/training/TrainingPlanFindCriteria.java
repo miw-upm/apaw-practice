@@ -19,11 +19,11 @@ public class TrainingPlanFindCriteria {
     
     private String courseName;
     
-    private Boolean userActive;
+    private String userFirstName;
 
     public boolean isAll() {
         return !this.hasEvaluationScore() && !this.hasIsCompleted()
-                && !this.hasCourseName() && !this.hasUserActive();
+                && !this.hasCourseName() && !this.hasUserFirstName();
     }
 
     public boolean hasEvaluationScore() {
@@ -37,7 +37,7 @@ public class TrainingPlanFindCriteria {
     public boolean hasCourseName() {
         return this.courseName != null && !this.courseName.isBlank();
     }
-    public boolean hasUserActive() {
-        return this.userActive != null;
+    public boolean hasUserFirstName() {
+        return this.userFirstName != null && !this.userFirstName.isBlank();
     }
 }
