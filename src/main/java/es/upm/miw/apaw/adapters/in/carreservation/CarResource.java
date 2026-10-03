@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(CarResource.CARS)
 @RequiredArgsConstructor
@@ -18,5 +20,10 @@ public class CarResource {
     @ResponseStatus(HttpStatus.CREATED)
     public Car create(@Valid @RequestBody Car car) {
         return this.carService.create(car);
+    }
+
+    @GetMapping("/{id}")
+    public Car read(@PathVariable UUID id) {
+        return this.carService.read(id);
     }
 }

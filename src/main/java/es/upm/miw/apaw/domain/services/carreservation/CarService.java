@@ -6,6 +6,8 @@ import es.upm.miw.apaw.domain.ports.out.carreservation.CarGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CarService {
@@ -21,5 +23,9 @@ public class CarService {
         }
 
         return this.carGateway.create(car);
+    }
+
+    public Car read(UUID id) {
+        return this.carGateway.read(id);
     }
 }
