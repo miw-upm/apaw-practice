@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+        columnNames = {"date", "scope_level", "region", "city"}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
