@@ -90,4 +90,23 @@ class TrainingPlanServiceIT {
         
         assertThat(result).isEmpty();
     }
+    
+    @Test
+    @Transactional
+    void testFindWithCriteriaPositive() {
+        UserSnapshot user = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .firstName("cliente0")
+                .build();
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(user));
+
+        TrainingPlanFindCriteria criteria = new TrainingPlanFindCriteria();
+        criteria.setCourseName("Angular");
+        criteria.setUserFirstName("cliente0");
+
+        List<TrainingPlan> result = this.trainingPlanService.find(criteria);
+        
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getPlanCode()).isEqualTo("plan-seeder-1");
+    }
 }
