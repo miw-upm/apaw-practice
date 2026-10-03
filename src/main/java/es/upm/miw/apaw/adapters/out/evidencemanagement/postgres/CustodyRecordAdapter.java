@@ -27,4 +27,11 @@ public class CustodyRecordAdapter implements CustodyRecordGateway {
                 .findById(id)
                 .map(CustodyRecordEntity::toDomain);
     }
+
+    @Override
+    public CustodyRecord update(CustodyRecord custodyRecord) {
+        return this.custodyRecordRepository
+                .save(new CustodyRecordEntity(custodyRecord))
+                .toDomain();
+    }
 }

@@ -28,4 +28,9 @@ public class CustodyRecordResource {
     public CustodyRecord read(@PathVariable UUID id) {
         return this.custodyRecordService.read(id);
     }
+
+    @PutMapping(ID)
+    public CustodyRecord update(@PathVariable UUID id, @Valid @RequestBody CustodyRecord custodyRecord) {
+        return this.custodyRecordService.update(id, custodyRecord);
+    }
 }

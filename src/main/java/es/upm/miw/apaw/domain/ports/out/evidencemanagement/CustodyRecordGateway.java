@@ -8,4 +8,6 @@ public interface CustodyRecordGateway {
     CustodyRecord create(CustodyRecord custodyRecord);
 
     Optional <CustodyRecord> read(UUID id);
+
+    CustodyRecord update(CustodyRecord custodyRecord);
 }

@@ -22,4 +22,14 @@ public class CustodyRecordService {
         return this.custodyRecordGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Custody record id not found: " + id));
     }
+
+    public CustodyRecord update(UUID id, CustodyRecord custodyRecord) {
+        CustodyRecord existing = this.read(id);
+        existing.setDurationMinutes(custodyRecord.getDurationMinutes());
+        existing.setAction(custodyRecord.getAction());
+        existing.setLocation(custodyRecord.getLocation());
+        existing.setNotes(custodyRecord.getNotes());
+        existing.setCustodian(custodyRecord.getCustodian());
+        return this.custodyRecordGateway.update(existing);
+    }
 }
