@@ -4,6 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface PowerOfAttorneyRepository
-        extends JpaRepository<PowerOfAttorneyEntity, UUID> {
+public interface PowerOfAttorneyRepository extends JpaRepository<PowerOfAttorneyEntity, UUID> {
 }

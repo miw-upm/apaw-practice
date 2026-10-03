@@ -6,7 +6,6 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "power_of_attorney_party")
 @Builder
 @Data
 @NoArgsConstructor
@@ -15,7 +14,6 @@ import java.util.UUID;
 public class PowerOfAttorneyPartyEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @EqualsAndHashCode.Include
     private UUID id;
 

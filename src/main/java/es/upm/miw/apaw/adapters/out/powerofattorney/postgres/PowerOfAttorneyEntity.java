@@ -1,4 +1,6 @@
 package es.upm.miw.apaw.adapters.out.powerofattorney.postgres;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyStatus;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyType;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,7 +9,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "power_of_attorney")
 @Builder
 @Data
 @NoArgsConstructor
@@ -16,7 +17,6 @@ import java.util.UUID;
 public class PowerOfAttorneyEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @EqualsAndHashCode.Include
     private UUID id;
 
@@ -51,9 +51,9 @@ public class PowerOfAttorneyEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PowerOfAttorneyTypeEntity type;
+    private PowerOfAttorneyType type;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PowerOfAttorneyStatusEntity status;
+    private PowerOfAttorneyStatus status;
 }
