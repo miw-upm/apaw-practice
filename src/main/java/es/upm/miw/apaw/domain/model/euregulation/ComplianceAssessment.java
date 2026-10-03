@@ -1,11 +1,12 @@
 package es.upm.miw.apaw.domain.model.euregulation;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -18,7 +19,7 @@ public class ComplianceAssessment {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @NotBlank
+    @NotNull
     private String responsibleLawyer;
 
     @NotNull
@@ -41,10 +42,14 @@ public class ComplianceAssessment {
     private String notes;
 
     @NotNull
-    private Boolean aiGenerated;
+    @Builder.Default
+    private Boolean aiGenerated = false;
 
     @NotNull
     private UserSnapshot userSnapshot;
+
+    @Builder.Default
+    private List<EURegulation> euRegulations = new ArrayList<>();
 
     public void doDefault() {
         this.id = UUID.randomUUID();

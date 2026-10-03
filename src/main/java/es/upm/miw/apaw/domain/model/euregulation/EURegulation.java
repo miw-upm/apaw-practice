@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.domain.model.euregulation;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -17,13 +16,13 @@ public class EURegulation {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @NotBlank
+    @NotNull
     private String regulationName;
 
     @NotNull
-    private Long sequentialId;
+    private Integer sequentialId;
 
-    @NotBlank
+    @NotNull
     private String officialReferenceNumber;
 
     @NotNull
@@ -38,6 +37,7 @@ public class EURegulation {
     @NotNull
     private LocalDate entryIntoForceDate;
 
+    @NotNull
     private IssuingBody issuingBody;
 
     private LocalDate transpositionDeadline;
@@ -46,7 +46,7 @@ public class EURegulation {
 
     private String summary;
 
-    public void doDefault(Long highestSequentialId) {
+    public void doDefault(Integer highestSequentialId) {
         this.id = UUID.randomUUID();
         this.sequentialId = highestSequentialId == null ? 1 : Math.addExact(highestSequentialId, 1);
         if (this.entryIntoForceDate == null) {

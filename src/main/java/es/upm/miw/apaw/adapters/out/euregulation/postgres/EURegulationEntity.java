@@ -30,7 +30,7 @@ public class EURegulationEntity {
     private String regulationName;
 
     @Column(nullable = false, unique = true)
-    private Long sequentialId;
+    private Integer sequentialId;
 
     @Column(nullable = false, unique = true)
     private String officialReferenceNumber;
@@ -51,6 +51,7 @@ public class EURegulationEntity {
     private LocalDate entryIntoForceDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private IssuingBody issuingBody;
 
     private LocalDate transpositionDeadline;

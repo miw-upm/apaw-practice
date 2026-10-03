@@ -13,7 +13,7 @@ public class EURegulationAdapter implements EURegulationGateway {
     private final EURegulationRepository euRegulationRepository;
 
     @Override
-    public Long findMaxSequentialId() {
+    public Integer findMaxSequentialId() {
         return this.euRegulationRepository.findMaxSequentialId();
     }
 
@@ -28,8 +28,8 @@ public class EURegulationAdapter implements EURegulationGateway {
         return this.euRegulationRepository.save(euRegulationEntity).toDomain();
     }
 
-    private Long getNextSequentialId() {
-        Long highestSequentialId = this.euRegulationRepository.findMaxSequentialId();
+    private Integer getNextSequentialId() {
+        Integer highestSequentialId = this.euRegulationRepository.findMaxSequentialId();
         return highestSequentialId == null ? 1 : Math.addExact(highestSequentialId, 1);
     }
 }

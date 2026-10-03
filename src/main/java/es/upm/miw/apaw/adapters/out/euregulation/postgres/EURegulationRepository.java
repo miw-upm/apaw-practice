@@ -8,8 +8,8 @@ import java.util.UUID;
 public interface EURegulationRepository extends JpaRepository<EURegulationEntity, UUID> {
     boolean existsByOfficialReferenceNumber(String officialReferenceNumber);
 
-    boolean existsBySequentialId(Long sequentialId);
+    boolean existsBySequentialId(Integer sequentialId);
 
     @Query("select max(euRegulation.sequentialId) from EURegulationEntity euRegulation")
-    Long findMaxSequentialId();
+    Integer findMaxSequentialId();
 }

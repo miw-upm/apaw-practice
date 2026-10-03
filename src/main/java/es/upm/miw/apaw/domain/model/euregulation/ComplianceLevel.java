@@ -7,7 +7,9 @@ public enum ComplianceLevel {
     COMPLIANT("Compliant"),
     PARTIALLY_COMPLIANT("PartiallyCompliant"),
     NON_COMPLIANT("NonCompliant"),
-    PENDING_REVIEW("PendingReview");
+    PENDING_REVIEW("PendingReview"),
+    DRAFT_REVIEW("DraftReview"),
+    DEPRECATED("Deprecated");
 
     private final String value;
 
