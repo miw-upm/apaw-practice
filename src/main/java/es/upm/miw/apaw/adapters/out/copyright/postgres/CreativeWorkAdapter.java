@@ -35,6 +35,7 @@ public class CreativeWorkAdapter implements CreativeWorkGateway {
     }
 
     @Override
+    @org.springframework.transaction.annotation.Transactional
     public java.util.List<CreativeWork> find(es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria) {
         org.springframework.data.jpa.domain.Specification<CreativeWorkEntity> spec = (root, query, builder) -> builder.conjunction();
 

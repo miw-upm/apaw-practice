@@ -6,5 +6,7 @@ import java.util.UUID;
 
 public interface ImmigrationIssueRepository extends JpaRepository<ImmigrationIssueEntity, UUID> {
 
+    boolean existsBySubject(String subject);
+
     boolean existsByLawBases_Id(UUID id);
 }

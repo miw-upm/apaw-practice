@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface MeetingRepository extends JpaRepository<MeetingEntity, UUID> {
     boolean existsByLegalIssuesId(UUID id);
+
+    boolean existsByTitle(String title);
 }
