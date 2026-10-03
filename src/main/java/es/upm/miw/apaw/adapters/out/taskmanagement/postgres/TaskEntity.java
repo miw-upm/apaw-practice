@@ -46,7 +46,7 @@ public class TaskEntity {
     private Integer priority;
 
     @Column(nullable = false)
-    private Boolean completed;
+    private Boolean completion;
 
     private BigDecimal estimatedHours;
 
@@ -55,30 +55,30 @@ public class TaskEntity {
     private List<TaskCommentEntity> comments;
 
     @Column(nullable = false)
-    private UUID assignedUserId;
+    private UUID ownerId;
 
     public TaskEntity(Task task) {
-        BeanUtils.copyProperties(task, this, "comments", "assignedTo");
+        BeanUtils.copyProperties(task, this, "comments", "owner");
 
         this.comments = task.getComments().stream()
                 .map(TaskCommentEntity::new)
                 .toList();
 
-        this.assignedUserId = task.getAssignedTo().getId();
+        this.ownerId = task.getOwner().getId();
     }
 
     public Task toDomain() {
         Task task = new Task();
 
-        BeanUtils.copyProperties(this, task, "comments", "assignedUserId");
+        BeanUtils.copyProperties(this, task, "comments", "ownerId");
 
         task.setComments(new ArrayList<>(this.comments.stream()
                 .map(TaskCommentEntity::toDomain)
                 .toList()));
 
-        task.setAssignedTo(
+        task.setOwner(
                 UserSnapshot.builder()
-                        .id(this.assignedUserId)
+                        .id(this.ownerId)
                         .build()
         );
 

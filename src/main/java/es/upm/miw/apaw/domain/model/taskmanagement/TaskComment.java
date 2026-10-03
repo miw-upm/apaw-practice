@@ -29,10 +29,10 @@ public class TaskComment {
     private LocalDateTime creationDate;
 
     @NotNull
-    private Boolean edited;
+    private Boolean edition;
 
     @NotNull
-    private Boolean hasAttachment;
+    private Boolean attachment;
 
     @NotNull
     private CommentType type;
@@ -43,8 +43,8 @@ public class TaskComment {
     public void doDefault() {
         this.id = UUID.randomUUID();
         this.creationDate = LocalDateTime.now();
-        this.edited = false;
-        this.hasAttachment = false;
+        this.edition = false;
+        this.attachment = false;
 
         if (this.type == null) {
             this.type = CommentType.GENERAL;
