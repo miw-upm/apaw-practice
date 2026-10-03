@@ -44,7 +44,7 @@ class TrainingPlanServiceIT {
     @Transactional
     void testCreate() {
         UserSnapshot user = UserSnapshot.builder()
-                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
                 .mobile("600000100")
                 .firstName("cliente0")
                 .build();
@@ -77,14 +77,14 @@ class TrainingPlanServiceIT {
     @Transactional
     void testFindWithCriteria() {
         UserSnapshot mockUser = UserSnapshot.builder()
-                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
-                .firstName("MockName")
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                .firstName("cliente1")
                 .build();
         when(this.userFinder.findByIds(any())).thenReturn(List.of(mockUser));
 
         TrainingPlanFindCriteria criteria = new TrainingPlanFindCriteria();
         criteria.setCourseName("Curso de prueba");
-        criteria.setUserFirstName("MockName");
+        criteria.setUserFirstName("cliente1");
 
         List<TrainingPlan> result = this.trainingPlanService.find(criteria);
         
