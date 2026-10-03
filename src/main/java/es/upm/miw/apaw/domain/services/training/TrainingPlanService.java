@@ -66,12 +66,12 @@ public class TrainingPlanService {
         java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById = users.stream()
                 .collect(java.util.stream.Collectors.toMap(es.upm.miw.apaw.domain.model.UserSnapshot::getId, java.util.function.Function.identity()));
         return trainingPlans.stream()
-                .peek(plan -> this.enrichUserSnapshots(plan, usersById))
+                .map(plan -> this.enrichUserSnapshots(plan, usersById))
                 .filter(plan -> this.matchesUserFirstName(criteria, plan))
                 .toList();
     }
 
-    private void enrichUserSnapshots(TrainingPlan trainingPlan, java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById) {
+    private TrainingPlan enrichUserSnapshots(TrainingPlan trainingPlan, java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById) {
         List<es.upm.miw.apaw.domain.model.UserSnapshot> enrichedUsers = trainingPlan.getUserSnapshots().stream()
                 .map(user -> {
                     es.upm.miw.apaw.domain.model.UserSnapshot realUser = usersById.get(user.getId());
@@ -82,6 +82,7 @@ public class TrainingPlanService {
                 })
                 .toList();
         trainingPlan.setUserSnapshots(enrichedUsers);
+        return trainingPlan;
     }
 
         private boolean matchesUserFirstName(TrainingPlanFindCriteria criteria, TrainingPlan trainingPlan) {
