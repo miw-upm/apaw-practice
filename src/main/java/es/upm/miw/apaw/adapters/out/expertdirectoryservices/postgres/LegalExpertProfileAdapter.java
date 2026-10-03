@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.out.expertdirectoryservices.postgres;
 
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.reports.LegalExpertProfileSpecialtyReport;
 import es.upm.miw.apaw.domain.ports.out.expertdirectoryservices.LegalExpertProfileGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 public class LegalExpertProfileAdapter implements LegalExpertProfileGateway {
 
     private final LegalExpertProfileRepository legalExpertProfileRepository;
+    private final ExpertServiceScheduleRepository expertServiceScheduleRepository;
 
     @Override
     public LegalExpertProfile create(LegalExpertProfile legalExpertProfile) {
@@ -74,5 +76,12 @@ public class LegalExpertProfileAdapter implements LegalExpertProfileGateway {
         return this.legalExpertProfileRepository.findAll(Sort.by(Sort.Direction.ASC, "taxIdCode"))
                 .stream()
                 .map(LegalExpertProfileEntity::toDomain);
+    }
+
+    @Override
+    public List<LegalExpertProfileSpecialtyReport> findSpecialtyReport() {
+        return this.expertServiceScheduleRepository.findSpecialtyReportRows().stream()
+                .map(SpecialtyReportRow::toDomain)
+                .toList();
     }
 }

@@ -33,4 +33,31 @@ public class CreativeWorkAdapter implements CreativeWorkGateway {
     public java.util.List<es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary> generateClaimSummaries() {
         return this.creativeWorkRepository.generateClaimSummaries();
     }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public java.util.List<CreativeWork> find(es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria) {
+        org.springframework.data.jpa.domain.Specification<CreativeWorkEntity> spec = (root, query, builder) -> builder.conjunction();
+
+        if (criteria.getAuthorPenName() != null) {
+            spec = spec.and((root, query, builder) -> builder.equal(root.get("authorPenName"), criteria.getAuthorPenName()));
+        }
+
+        if (criteria.getIsHighlyValued() != null) {
+            spec = spec.and((root, query, builder) -> criteria.getIsHighlyValued()
+                    ? builder.greaterThan(root.get("estimatedValuation"), new java.math.BigDecimal("10000"))
+                    : builder.lessThanOrEqualTo(root.get("estimatedValuation"), new java.math.BigDecimal("10000")));
+        }
+
+        if (criteria.getClaimUrgent() != null) {
+            spec = spec.and((root, query, builder) -> {
+                query.distinct(true);
+                return builder.equal(root.join("claims").get("urgent"), criteria.getClaimUrgent());
+            });
+        }
+
+        return this.creativeWorkRepository.findAll(spec).stream()
+                .map(CreativeWorkEntity::toDomain)
+                .toList();
+    }
 }
