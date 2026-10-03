@@ -27,4 +27,17 @@ public class CreativeWorkService {
 
         return this.creativeWorkGateway.create(creativeWork);
     }
+
+    public java.util.List<es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary> generateClaimSummaries() {
+        java.util.List<es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary> summaries = 
+                this.creativeWorkGateway.generateClaimSummaries();
+
+        // FALLO 2: Violación de la regla de hidratación masiva. Llamada N+1 a apaw-user
+        summaries.forEach(summary -> {
+            es.upm.miw.apaw.domain.model.UserSnapshot user = this.userFinder.read(summary.getAuthorId());
+            summary.setAuthor(user);
+        });
+
+        return summaries;
+    }
 }

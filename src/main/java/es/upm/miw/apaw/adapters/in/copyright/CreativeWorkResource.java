@@ -25,4 +25,10 @@ public class CreativeWorkResource {
     public CreativeWork create(@Valid @RequestBody CreativeWorkCreation creation) {
         return this.creativeWorkService.create(creation);
     }
+
+    // FALLO 1: Usar POST para una proyección de lectura en lugar de GET
+    @PostMapping("/claim-summaries")
+    public java.util.List<es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary> generateClaimSummaries() {
+        return this.creativeWorkService.generateClaimSummaries();
+    }
 }

@@ -28,4 +28,9 @@ public class CreativeWorkAdapter implements CreativeWorkGateway {
         this.creativeWorkRepository.save(creativeWorkEntity);
         return creativeWork;
     }
+
+    @Override
+    public java.util.List<es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary> generateClaimSummaries() {
+        return this.creativeWorkRepository.generateClaimSummaries();
+    }
 }
