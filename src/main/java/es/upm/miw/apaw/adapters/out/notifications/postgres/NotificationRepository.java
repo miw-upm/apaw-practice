@@ -1,14 +1,22 @@
 package es.upm.miw.apaw.adapters.out.notifications.postgres;
 
 import es.upm.miw.apaw.domain.model.notifications.NotificationTemplateFailureReport;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface NotificationRepository extends JpaRepository<NotificationEntity, UUID> {
+public interface NotificationRepository extends JpaRepository<NotificationEntity, UUID>,
+        JpaSpecificationExecutor<NotificationEntity> {
     boolean existsByNotificationTemplateId(UUID notificationTemplateId);
+
+    @Override
+    @EntityGraph(attributePaths = "notificationTemplate")
+    List<NotificationEntity> findAll(Specification<NotificationEntity> specification);
 
     @Query("""
             select new es.upm.miw.apaw.domain.model.notifications.NotificationTemplateFailureReport(
