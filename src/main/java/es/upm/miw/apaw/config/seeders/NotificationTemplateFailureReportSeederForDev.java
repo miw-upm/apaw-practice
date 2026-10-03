@@ -27,10 +27,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NotificationTemplateFailureReportSeederForDev implements ApplicationRunner {
     private static final String ID_PREFIX = "eeeeeeee-aaaa-bbbb-cccc-ddddeeee";
+    private static final String USER_ID_PREFIX = "aaaaaaaa-bbbb-cccc-dddd-eeeeffff";
     public static final String EVENT_TYPE_PREFIX = "DEMO_FAILURE_REPORT_";
     public static final String MOST_FAILED_EVENT_TYPE = EVENT_TYPE_PREFIX + "MOST_FAILED";
     public static final String SECOND_EVENT_TYPE = EVENT_TYPE_PREFIX + "SECOND";
     public static final String NO_FAILURE_EVENT_TYPE = EVENT_TYPE_PREFIX + "NONE";
+
+    private static final List<UUID> USER_IDS = List.of(
+            UUID.fromString(USER_ID_PREFIX + "0000"),
+            UUID.fromString(USER_ID_PREFIX + "0001"),
+            UUID.fromString(USER_ID_PREFIX + "0002"),
+            UUID.fromString(USER_ID_PREFIX + "0003"),
+            UUID.fromString(USER_ID_PREFIX + "0004"),
+            UUID.fromString(USER_ID_PREFIX + "0005"));
 
     private static final UUID MOST_FAILED_TEMPLATE_ID = UUID.fromString(ID_PREFIX + "0001");
     private static final UUID SECOND_TEMPLATE_ID = UUID.fromString(ID_PREFIX + "0002");
@@ -74,12 +83,18 @@ public class NotificationTemplateFailureReportSeederForDev implements Applicatio
         NotificationTemplateEntity noFailureTemplate =
                 this.notificationTemplateRepository.getReferenceById(NO_FAILURE_TEMPLATE_ID);
         List<NotificationEntity> notifications = List.of(
-                this.createNotification(NOTIFICATION_IDS.get(0), mostFailedTemplate, NotificationStatus.FAILED),
-                this.createNotification(NOTIFICATION_IDS.get(1), mostFailedTemplate, NotificationStatus.FAILED),
-                this.createNotification(NOTIFICATION_IDS.get(2), mostFailedTemplate, NotificationStatus.PENDING),
-                this.createNotification(NOTIFICATION_IDS.get(3), secondTemplate, NotificationStatus.FAILED),
-                this.createNotification(NOTIFICATION_IDS.get(4), secondTemplate, NotificationStatus.DELIVERED),
-                this.createNotification(NOTIFICATION_IDS.get(5), noFailureTemplate, NotificationStatus.PENDING))
+                this.createNotification(
+                        NOTIFICATION_IDS.get(0), USER_IDS.get(0), mostFailedTemplate, NotificationStatus.FAILED),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(1), USER_IDS.get(1), mostFailedTemplate, NotificationStatus.FAILED),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(2), USER_IDS.get(2), mostFailedTemplate, NotificationStatus.PENDING),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(3), USER_IDS.get(3), secondTemplate, NotificationStatus.FAILED),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(4), USER_IDS.get(4), secondTemplate, NotificationStatus.DELIVERED),
+                this.createNotification(
+                        NOTIFICATION_IDS.get(5), USER_IDS.get(5), noFailureTemplate, NotificationStatus.PENDING))
                 .stream()
                 .filter(notification -> !this.notificationRepository.existsById(notification.getId()))
                 .toList();
@@ -98,7 +113,7 @@ public class NotificationTemplateFailureReportSeederForDev implements Applicatio
     }
 
     private NotificationEntity createNotification(
-            UUID id, NotificationTemplateEntity template, NotificationStatus status) {
+            UUID id, UUID recipientId, NotificationTemplateEntity template, NotificationStatus status) {
         return NotificationEntity.builder()
                 .id(id)
                 .title("Delivery report demonstration")
@@ -107,7 +122,7 @@ public class NotificationTemplateFailureReportSeederForDev implements Applicatio
                 .notificationTemplate(template)
                 .priority(Priority.MEDIUM)
                 .notificationStatus(status)
-                .recipientId(id)
+                .recipientId(recipientId)
                 .build();
     }
 }
