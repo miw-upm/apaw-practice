@@ -6,6 +6,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.immigrationissues.CreationImmigrationIssue;
 import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssue;
 import es.upm.miw.apaw.domain.model.immigrationissues.LawBasis;
+import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUsageReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -27,6 +29,7 @@ import static es.upm.miw.apaw.config.seeders.ImmigrationIssuesSeederForDev.ID_0;
 import static es.upm.miw.apaw.config.seeders.ImmigrationIssuesSeederForDev.ID_1;
 import static es.upm.miw.apaw.config.seeders.ImmigrationIssuesSeederForDev.LAW_BASIS_0;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -212,6 +215,44 @@ class ImmigrationIssueResourceFT {
                 .expectBody(Map.class)
                 .value(body -> assertThat((String) body.get("message"))
                         .contains(creation.getSubject()));
+    }
+
+    @Test
+    void testFindLawBasisUsageReport() {
+        this.create(this.creation(List.of(ID_0)));
+
+        this.restTestClient.get().uri(ImmigrationIssueResource.IMMIGRATION_ISSUES
+                        + ImmigrationIssueResource.REPORT)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(LawBasisUsageReport[].class)
+                .value(reports -> {
+                    assertThat(reports).isNotEmpty();
+                    assertThat(reports).extracting(LawBasisUsageReport::getLawCode)
+                            .contains(LAW_BASIS_0.getLawCode());
+                    assertThat(reports).allSatisfy(report -> {
+                        assertThat(report.getLawCode()).isNotBlank();
+                        assertThat(report.getTotalIssues()).isGreaterThanOrEqualTo(1);
+                    });
+                    assertThat(reports).isSortedAccordingTo(
+                            Comparator.comparingLong(LawBasisUsageReport::getTotalIssues).reversed());
+                });
+    }
+
+    @Test
+    void testFindLawBasisUsageReportCombinesStatusAndLawCode() {
+        this.create(this.creation(List.of(ID_0, ID_1)));
+
+        this.restTestClient.get().uri(ImmigrationIssueResource.IMMIGRATION_ISSUES
+                        + ImmigrationIssueResource.REPORT)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(LawBasisUsageReport[].class)
+                .value(reports -> assertThat(reports)
+                        .extracting(LawBasisUsageReport::getClientImmigrationStatus,
+                                LawBasisUsageReport::getLawCode)
+                        .contains(tuple("Permiso en vigor", LAW_BASIS_0.getLawCode()),
+                                tuple("Permiso en vigor", "ES-LB-002")));
     }
 
     private CreationImmigrationIssue creation(List<UUID> lawBasisIds) {

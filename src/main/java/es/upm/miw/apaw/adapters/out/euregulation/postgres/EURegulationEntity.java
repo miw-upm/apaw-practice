@@ -61,7 +61,7 @@ public class EURegulationEntity {
     @Column(columnDefinition = "TEXT")
     private String summary;
 
-    @OneToMany(mappedBy = "euRegulation", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "euRegulations", fetch = FetchType.LAZY)
     private List<ComplianceAssessmentEntity> complianceAssessments;
 
     public EURegulationEntity(EURegulation euRegulation) {
