@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -50,12 +51,12 @@ public class HeirService {
 
     public Heir patch(UUID id, HeirUpdate update) {
         Heir storedHeir = this.read(id);
-        storedHeir.setFullName(update.fullName());
-        storedHeir.setNationalId(update.nationalId());
-        storedHeir.setBirthDate(update.birthDate());
-        storedHeir.setSharePercentage(update.sharePercentage());
-        storedHeir.setHeirStatus(update.heirStatus());
-        storedHeir.setContactEmail(update.contactEmail());
+        Optional.ofNullable(update.fullName()).ifPresent(storedHeir::setFullName);
+        Optional.ofNullable(update.nationalId()).ifPresent(storedHeir::setNationalId);
+        Optional.ofNullable(update.birthDate()).ifPresent(storedHeir::setBirthDate);
+        Optional.ofNullable(update.sharePercentage()).ifPresent(storedHeir::setSharePercentage);
+        Optional.ofNullable(update.heirStatus()).ifPresent(storedHeir::setHeirStatus);
+        Optional.ofNullable(update.contactEmail()).ifPresent(storedHeir::setContactEmail);
         return this.heirGateway.update(storedHeir);
     }
 }
