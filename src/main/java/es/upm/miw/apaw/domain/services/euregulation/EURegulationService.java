@@ -55,4 +55,12 @@ public class EURegulationService {
 
         return this.euRegulationGateway.update(storedEURegulation);
     }
+
+    public void delete(UUID id) {
+        this.read(id);
+        if (this.euRegulationGateway.isReferenced(id)) {
+            throw new ConflictException("EU regulation is referenced by a compliance assessment: " + id);
+        }
+        this.euRegulationGateway.delete(id);
+    }
 }

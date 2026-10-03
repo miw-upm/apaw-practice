@@ -11,6 +11,8 @@ public interface EURegulationRepository extends JpaRepository<EURegulationEntity
 
     boolean existsBySequentialId(Integer sequentialId);
 
+    boolean existsByComplianceAssessments_Id(UUID id);
+
     List<EURegulationEntity> findAllByOrderByRegulationNameAsc();
 
     @Query("select max(euRegulation.sequentialId) from EURegulationEntity euRegulation")

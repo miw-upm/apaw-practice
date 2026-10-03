@@ -19,5 +19,9 @@ public interface EURegulationGateway {
 
     Optional<EURegulation> read(UUID id);
 
+    boolean isReferenced(UUID id);
+
+    void delete(UUID id);
+
     List<EURegulation> findAll();
 }
