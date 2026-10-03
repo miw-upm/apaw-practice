@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.expertdirectoryservices.LegalExpertProfile;
+import es.upm.miw.apaw.domain.model.expertdirectoryservices.reports.LegalExpertProfileSpecialtyReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.ExpertDirectoryServicesSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -139,6 +145,48 @@ class LegalExpertProfileServiceIT {
 
         assertThatThrownBy(() -> this.legalExpertProfileService.read(created.getId().toString()))
                 .isInstanceOf(NotFoundException.class);
+    }
+
+    @Test
+    void testFindSpecialtyReport() {
+        when(this.userFinder.findByIds(anySet())).thenAnswer(invocation -> {
+            Set<UUID> ids = invocation.getArgument(0);
+            return ids.stream().map(id -> UserSnapshot.builder().id(id).firstName("Hydrated").build()).toList();
+        });
+
+        List<LegalExpertProfileSpecialtyReport> report = this.legalExpertProfileService.findSpecialtyReport();
+
+        assertThat(report).extracting(LegalExpertProfileSpecialtyReport::getTotalSchedules)
+                .isSortedAccordingTo(Comparator.reverseOrder());
+        assertThat(report).filteredOn(item -> item.getSpecialtyArea().equals(PROFILE_0.getSpecialtyArea()))
+                .singleElement()
+                .satisfies(item -> {
+                    assertThat(item.getTotalProfiles()).isGreaterThanOrEqualTo(2);
+                    assertThat(item.getTotalSchedules()).isGreaterThanOrEqualTo(2);
+                    assertThat(item.getAverageRateAmount()).isPositive();
+                    assertThat(item.getAverageYearsOfExperience()).isPositive();
+                    assertThat(item.getMostVeteranExpert().getId()).isEqualTo(PROFILE_3.getUserSnapshot().getId());
+                    assertThat(item.getMostVeteranExpert().getFirstName()).isEqualTo("Hydrated");
+                });
+        assertThat(report).filteredOn(item -> item.getSpecialtyArea().equals(PROFILE_1.getSpecialtyArea()))
+                .singleElement()
+                .satisfies(item -> assertThat(item.getMostVeteranExpert().getId())
+                        .isEqualTo(PROFILE_1.getUserSnapshot().getId()));
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    void testFindSpecialtyReportUserNotReturned() {
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of());
+
+        List<LegalExpertProfileSpecialtyReport> report = this.legalExpertProfileService.findSpecialtyReport();
+
+        assertThat(report).filteredOn(item -> item.getSpecialtyArea().equals(PROFILE_0.getSpecialtyArea()))
+                .singleElement()
+                .satisfies(item -> {
+                    assertThat(item.getMostVeteranExpert().getId()).isEqualTo(PROFILE_3.getUserSnapshot().getId());
+                    assertThat(item.getMostVeteranExpert().getFirstName()).isNull();
+                });
     }
 
     private UserSnapshot mockUser() {
