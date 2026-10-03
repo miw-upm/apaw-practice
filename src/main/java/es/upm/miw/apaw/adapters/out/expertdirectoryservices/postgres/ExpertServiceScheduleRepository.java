@@ -19,7 +19,13 @@ public interface ExpertServiceScheduleRepository extends JpaRepository<ExpertSer
                 count(profile),
                 count(distinct schedule),
                 avg(schedule.rateAmount),
-                avg(profile.yearsOfExperience)
+                avg(profile.yearsOfExperience),
+                (select veteran.userId
+                    from ExpertServiceScheduleEntity veteranSchedule
+                    join veteranSchedule.legalExpertProfiles veteran
+                    where veteran.specialtyArea = profile.specialtyArea
+                    order by veteran.yearsOfExperience desc, veteran.taxIdCode asc
+                    limit 1)
             )
             from ExpertServiceScheduleEntity schedule
             join schedule.legalExpertProfiles profile
@@ -27,15 +33,4 @@ public interface ExpertServiceScheduleRepository extends JpaRepository<ExpertSer
             order by count(distinct schedule) desc, profile.specialtyArea asc
             """)
     List<SpecialtyReportRow> findSpecialtyReportRows();
-
-    @Query("""
-            select new es.upm.miw.apaw.adapters.out.expertdirectoryservices.postgres.SpecialtyVeteranRow(
-                profile.specialtyArea,
-                profile.userId
-            )
-            from ExpertServiceScheduleEntity schedule
-            join schedule.legalExpertProfiles profile
-            order by profile.specialtyArea asc, profile.yearsOfExperience desc, profile.taxIdCode asc
-            """)
-    List<SpecialtyVeteranRow> findSpecialtyVeteranRows();
 }
