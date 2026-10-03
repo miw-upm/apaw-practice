@@ -9,6 +9,10 @@ import java.util.UUID;
 public interface EURegulationGateway {
     Integer findMaxSequentialId();
 
+    boolean existsByOfficialReferenceNumber(String officialReferenceNumber);
+
+    boolean existsBySequentialId(Integer sequentialId);
+
     EURegulation create(EURegulation euRegulation);
 
     Optional<EURegulation> read(UUID id);
