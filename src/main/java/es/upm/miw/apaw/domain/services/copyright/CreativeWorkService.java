@@ -38,12 +38,8 @@ public class CreativeWorkService {
                 .map(es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary::getAuthorId)
                 .collect(java.util.stream.Collectors.toSet());
 
-        if (!authorIds.isEmpty()) {
-            java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById = this.userFinder.findByIds(authorIds).stream()
-                    .collect(java.util.stream.Collectors.toMap(es.upm.miw.apaw.domain.model.UserSnapshot::getId, user -> user));
-
-            summaries.forEach(summary -> summary.setAuthor(usersById.get(summary.getAuthorId())));
-        }
+        java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById = this.fetchUsersMap(authorIds);
+        summaries.forEach(summary -> this.enrichAuthor(summary, usersById));
 
         return summaries;
     }
@@ -58,21 +54,39 @@ public class CreativeWorkService {
                 .map(work -> work.getAuthor().getId())
                 .collect(java.util.stream.Collectors.toSet());
 
-        java.util.List<es.upm.miw.apaw.domain.model.UserSnapshot> users = this.userFinder.findByIds(authorIds);
-        java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById = users.stream()
-                .collect(java.util.stream.Collectors.toMap(es.upm.miw.apaw.domain.model.UserSnapshot::getId, user -> user));
+        java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById = this.fetchUsersMap(authorIds);
 
         return works.stream()
-                .map(work -> {
-                    work.setAuthor(usersById.get(work.getAuthor().getId()));
-                    return work;
-                })
+                .map(work -> this.enrichAuthor(work, usersById))
                 .filter(work -> this.matchesAuthorFirstName(criteria, work))
                 .toList();
     }
 
+    private java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> fetchUsersMap(java.util.Set<UUID> userIds) {
+        if (userIds.isEmpty()) {
+            return java.util.Map.of();
+        }
+        return this.userFinder.findByIds(userIds).stream()
+                .collect(java.util.stream.Collectors.toMap(es.upm.miw.apaw.domain.model.UserSnapshot::getId, user -> user));
+    }
+
+    private void enrichAuthor(es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary summary, java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById) {
+        es.upm.miw.apaw.domain.model.UserSnapshot user = usersById.get(summary.getAuthorId());
+        if (user != null) {
+            summary.setAuthor(user);
+        }
+    }
+
+    private CreativeWork enrichAuthor(CreativeWork work, java.util.Map<UUID, es.upm.miw.apaw.domain.model.UserSnapshot> usersById) {
+        es.upm.miw.apaw.domain.model.UserSnapshot user = usersById.get(work.getAuthor().getId());
+        if (user != null) {
+            work.setAuthor(user);
+        }
+        return work;
+    }
+
     private boolean matchesAuthorFirstName(es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria, CreativeWork work) {
-        if (criteria.getAuthorFirstName() == null) {
+        if (!criteria.hasAuthorFirstName()) {
             return true;
         }
         return work.getAuthor() != null && criteria.getAuthorFirstName().equals(work.getAuthor().getFirstName());
