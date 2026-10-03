@@ -30,4 +30,9 @@ public class CreativeWorkResource {
     public java.util.List<es.upm.miw.apaw.domain.model.copyright.CreativeWorkClaimSummary> generateClaimSummaries() {
         return this.creativeWorkService.generateClaimSummaries();
     }
+
+    @GetMapping("/search")
+    public java.util.List<CreativeWork> find(es.upm.miw.apaw.domain.model.copyright.CreativeWorkFindCriteria criteria) {
+        return this.creativeWorkService.find(criteria);
+    }
 }
