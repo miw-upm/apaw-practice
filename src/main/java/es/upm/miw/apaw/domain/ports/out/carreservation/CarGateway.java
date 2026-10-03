@@ -13,4 +13,8 @@ public interface CarGateway {
     Optional<Car> read(UUID id);
 
     Car update(Car car);
+
+    void delete(UUID id);
+
+    boolean isUsedByReservation(UUID id);
 }

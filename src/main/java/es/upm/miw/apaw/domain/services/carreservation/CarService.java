@@ -52,4 +52,17 @@ public class CarService {
 
         return this.carGateway.update(storedCar);
     }
+
+    public void delete(UUID id) {
+
+        this.read(id);
+
+        if (this.carGateway.isUsedByReservation(id)) {
+            throw new ConflictException(
+                    "Car is used by a reservation: " + id
+            );
+        }
+
+        this.carGateway.delete(id);
+    }
 }

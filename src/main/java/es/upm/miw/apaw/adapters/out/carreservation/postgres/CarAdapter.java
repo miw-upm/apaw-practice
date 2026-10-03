@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CarAdapter implements CarGateway {
     private final CarRepository carRepository;
+    private final ReservationRepository reservationRepository;
 
     @Override
     public Car create(Car car) {
@@ -37,5 +38,15 @@ public class CarAdapter implements CarGateway {
 
         return this.carRepository.save(carEntity)
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.carRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isUsedByReservation(UUID id) {
+        return this.reservationRepository.existsByCarId(id);
     }
 }

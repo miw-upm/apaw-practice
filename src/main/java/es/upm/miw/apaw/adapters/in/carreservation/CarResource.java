@@ -33,4 +33,10 @@ public class CarResource {
                       @Valid @RequestBody Car car) {
         return this.carService.update(id, car);
     }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.carService.delete(id);
+    }
 }
