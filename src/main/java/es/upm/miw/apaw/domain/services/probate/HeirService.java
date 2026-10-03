@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.probate;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class HeirService {
     }
 
     public Heir read(UUID id) {
-        return this.heirGateway.read(id).orElseThrow();
+        return this.heirGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
     }
 }
