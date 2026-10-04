@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.stucktaskdetector;
 
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlert;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertCreation;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertPatch;
 import es.upm.miw.apaw.domain.services.stucktaskdetector.StuckTaskAlertService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +47,10 @@ public class StuckTaskAlertResource {
     @GetMapping
     public List<StuckTaskAlert> findAll() {
         return this.stuckTaskAlertService.findAll();
+    }
+
+    @PatchMapping(ID)
+    public StuckTaskAlert patch(@PathVariable UUID id, @RequestBody StuckTaskAlertPatch patch) {
+        return this.stuckTaskAlertService.patch(id, patch);
     }
 }

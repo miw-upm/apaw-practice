@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlert;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertCreation;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertPatch;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRule;
 import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskAlertGateway;
 import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskRuleGateway;
@@ -70,5 +71,25 @@ public class StuckTaskAlertService {
 
     public List<StuckTaskAlert> findAll() {
         return this.stuckTaskAlertGateway.findAll();
+    }
+
+    public StuckTaskAlert patch(UUID id, StuckTaskAlertPatch patch) {
+        StuckTaskAlert stored = this.read(id);
+        if (patch.reference() != null) {
+            if (!patch.reference().equals(stored.getReference())) {
+                this.assertReferenceNotExists(patch.reference());
+            }
+            stored.setReference(patch.reference());
+        }
+        if (patch.resolvedAt() != null) {
+            stored.setResolvedAt(patch.resolvedAt());
+        }
+        if (patch.escalated() != null) {
+            stored.setEscalated(patch.escalated());
+        }
+        if (patch.resolutionNotes() != null) {
+            stored.setResolutionNotes(patch.resolutionNotes());
+        }
+        return this.stuckTaskAlertGateway.update(stored);
     }
 }
