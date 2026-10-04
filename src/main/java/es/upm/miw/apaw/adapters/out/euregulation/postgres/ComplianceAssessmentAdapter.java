@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.out.euregulation.postgres;
 
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.ports.out.euregulation.ComplianceAssessmentGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -67,5 +68,25 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
         return this.complianceAssessmentRepository.findAllByOrderByAssessmentDateAscIdAsc().stream()
                 .map(ComplianceAssessmentEntity::toDomain)
                 .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ComplianceByAreaReport> findComplianceByAreaReport() {
+        return this.complianceAssessmentRepository.findComplianceByAreaReport().stream()
+                .map(this::toComplianceByAreaReport)
+                .toList();
+    }
+
+    private ComplianceByAreaReport toComplianceByAreaReport(ComplianceByAreaReportProjection projection) {
+        return ComplianceByAreaReport.builder()
+                .applicationArea(projection.getApplicationArea())
+                .totalAssessments(projection.getTotalAssessments())
+                .compliantCount(projection.getCompliantCount())
+                .partiallyCompliantCount(projection.getPartiallyCompliantCount())
+                .nonCompliantCount(projection.getNonCompliantCount())
+                .pendingReviewCount(projection.getPendingReviewCount())
+                .complianceRate(projection.getComplianceRate())
+                .build();
     }
 }
