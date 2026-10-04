@@ -42,4 +42,9 @@ public class StuckTaskAlertAdapter implements StuckTaskAlertGateway {
         StuckTaskAlertEntity entity = this.stuckTaskAlertRepository.save(new StuckTaskAlertEntity(stuckTaskAlert));
         return entity.toDomain();
     }
+
+    @Override
+    public void delete(UUID id) {
+        this.stuckTaskAlertRepository.deleteById(id);
+    }
 }

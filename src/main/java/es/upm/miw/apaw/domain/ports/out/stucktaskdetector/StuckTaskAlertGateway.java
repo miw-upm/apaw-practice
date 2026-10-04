@@ -13,4 +13,6 @@ public interface StuckTaskAlertGateway {
     Optional<StuckTaskAlert> read(UUID id);
 
     StuckTaskAlert update(StuckTaskAlert stuckTaskAlert);
+
+    void delete(UUID id);
 }

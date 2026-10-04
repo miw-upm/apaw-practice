@@ -61,4 +61,8 @@ public class StuckTaskAlertService {
         return this.stuckTaskRuleGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Stuck task rule id not found: " + id));
     }
+
+    public void delete(UUID id) {
+        this.stuckTaskAlertGateway.delete(id);
+    }
 }

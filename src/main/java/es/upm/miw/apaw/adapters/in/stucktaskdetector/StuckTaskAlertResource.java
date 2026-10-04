@@ -35,4 +35,10 @@ public class StuckTaskAlertResource {
     public StuckTaskAlert update(@PathVariable UUID id, @Valid @RequestBody StuckTaskAlert stuckTaskAlert) {
         return this.stuckTaskAlertService.update(id, stuckTaskAlert);
     }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.stuckTaskAlertService.delete(id);
+    }
 }
