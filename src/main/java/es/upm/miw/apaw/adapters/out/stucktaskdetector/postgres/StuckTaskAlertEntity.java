@@ -39,6 +39,7 @@ public class StuckTaskAlertEntity {
 
     public StuckTaskAlertEntity(StuckTaskAlert stuckTaskAlert) {
         BeanUtils.copyProperties(stuckTaskAlert, this, "stuckTaskRule");
+        this.stuckTaskRule = new StuckTaskRuleEntity(stuckTaskAlert.getStuckTaskRule());
     }
 
     public StuckTaskAlert toDomain() {
