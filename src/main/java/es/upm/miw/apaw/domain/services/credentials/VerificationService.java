@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.credentials;
 
+import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.credentials.Verification;
 import es.upm.miw.apaw.domain.ports.out.credentials.VerificationGateway;
@@ -36,5 +37,14 @@ public class VerificationService {
         storedVerification.setVerificationStatus(verification.getVerificationStatus());
 
         return this.verificationGateway.update(storedVerification);
+    }
+
+    public void delete(UUID id) {
+        if (this.verificationGateway.isAssociatedWithCredential(id)) {
+            throw new ConflictException(
+                    "Verification is associated with a credential: " + id);
+        }
+
+        this.verificationGateway.delete(id);
     }
 }

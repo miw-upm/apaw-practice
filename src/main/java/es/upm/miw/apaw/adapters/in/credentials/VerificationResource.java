@@ -35,4 +35,10 @@ public class VerificationResource {
                                @Valid @RequestBody Verification verification) {
         return this.verificationService.update(id, verification);
     }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.verificationService.delete(id);
+    }
 }

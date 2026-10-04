@@ -12,4 +12,8 @@ public interface VerificationGateway {
     Optional<Verification> read(UUID id);
 
     Verification update(Verification verification);
+
+    void delete(UUID id);
+
+    boolean isAssociatedWithCredential(UUID verificationId);
 }

@@ -13,6 +13,7 @@ import java.util.UUID;
 public class VerificationAdapter implements VerificationGateway {
 
     private final VerificationRepository verificationRepository;
+    private final CredentialRepository credentialRepository;
 
     @Override
     public Verification create(Verification verification) {
@@ -32,5 +33,15 @@ public class VerificationAdapter implements VerificationGateway {
         return this.verificationRepository
                 .save(new VerificationEntity(verification))
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.verificationRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isAssociatedWithCredential(UUID verificationId) {
+        return this.credentialRepository.existsByVerificationsId(verificationId);
     }
 }
