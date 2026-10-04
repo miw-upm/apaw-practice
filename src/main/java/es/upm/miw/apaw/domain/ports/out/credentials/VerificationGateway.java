@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.ports.out.credentials;
 
 import es.upm.miw.apaw.domain.model.credentials.Verification;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,4 +17,6 @@ public interface VerificationGateway {
     void delete(UUID id);
 
     boolean isAssociatedWithCredential(UUID verificationId);
+
+    List<Verification> findAll();
 }

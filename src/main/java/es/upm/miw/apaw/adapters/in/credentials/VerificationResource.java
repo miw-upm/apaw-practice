@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -40,5 +41,10 @@ public class VerificationResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.verificationService.delete(id);
+    }
+
+    @GetMapping
+    public List<Verification> findAll() {
+        return this.verificationService.findAll();
     }
 }

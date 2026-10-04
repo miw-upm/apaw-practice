@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.credentials.VerificationGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,5 +44,13 @@ public class VerificationAdapter implements VerificationGateway {
     @Override
     public boolean isAssociatedWithCredential(UUID verificationId) {
         return this.credentialRepository.existsByVerificationsId(verificationId);
+    }
+
+    @Override
+    public List<Verification> findAll() {
+        return this.verificationRepository.findAllByOrderByCreatedAtAscIdAsc()
+                .stream()
+                .map(VerificationEntity::toDomain)
+                .toList();
     }
 }
