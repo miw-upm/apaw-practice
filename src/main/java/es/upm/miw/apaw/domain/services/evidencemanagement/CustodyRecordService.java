@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.evidencemanagement;
 
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.ports.out.evidencemanagement.CustodyRecordGateway;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -45,4 +47,18 @@ public class CustodyRecordService {
     public List<CustodyRecord> findAll() {
         return this.custodyRecordGateway.findAll();
     }
+
+    public CustodyRecord patch(UUID id, CustodyRecord custodyRecord) {
+        if (custodyRecord.getAction() != null && custodyRecord.getAction().isBlank()) {
+            throw new BadRequestException("Custody record action must not be blank");
+        }
+        CustodyRecord existing = this.read(id);
+        Optional.ofNullable(custodyRecord.getDurationMinutes()).ifPresent(existing::setDurationMinutes);
+        Optional.ofNullable(custodyRecord.getAction()).ifPresent(existing::setAction);
+        Optional.ofNullable(custodyRecord.getLocation()).ifPresent(existing::setLocation);
+        Optional.ofNullable(custodyRecord.getNotes()).ifPresent(existing::setNotes);
+        Optional.ofNullable(custodyRecord.getCustodian()).ifPresent(existing::setCustodian);
+        return this.custodyRecordGateway.update(existing);
+    }
+
 }

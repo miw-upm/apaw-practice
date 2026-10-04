@@ -25,6 +25,11 @@ public class CustodyRecordResource {
         return this.custodyRecordService.create(custodyRecord);
     }
 
+    @GetMapping
+    public List<CustodyRecord> findAll() {
+        return this.custodyRecordService.findAll();
+    }
+
     @GetMapping(ID)
     public CustodyRecord read(@PathVariable UUID id) {
         return this.custodyRecordService.read(id);
@@ -41,8 +46,8 @@ public class CustodyRecordResource {
         this.custodyRecordService.delete(id);
     }
 
-    @GetMapping
-    public List<CustodyRecord> findAll() {
-        return this.custodyRecordService.findAll();
+    @PatchMapping(ID)
+    public CustodyRecord patch(@PathVariable UUID id, @RequestBody CustodyRecord custodyRecord) {
+        return this.custodyRecordService.patch(id, custodyRecord);
     }
 }
