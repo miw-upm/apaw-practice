@@ -34,4 +34,9 @@ public class CustodyRecordAdapter implements CustodyRecordGateway {
                 .save(new CustodyRecordEntity(custodyRecord))
                 .toDomain();
     }
+
+    @Override
+    public void deleteById(UUID id) {
+        this.custodyRecordRepository.deleteById(id);
+    }
 }

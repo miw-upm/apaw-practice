@@ -33,4 +33,10 @@ public class CustodyRecordResource {
     public CustodyRecord update(@PathVariable UUID id, @Valid @RequestBody CustodyRecord custodyRecord) {
         return this.custodyRecordService.update(id, custodyRecord);
     }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.custodyRecordService.delete(id);
+    }
 }

@@ -10,4 +10,6 @@ public interface CustodyRecordGateway {
     Optional <CustodyRecord> read(UUID id);
 
     CustodyRecord update(CustodyRecord custodyRecord);
+
+    void deleteById(UUID id);
 }
