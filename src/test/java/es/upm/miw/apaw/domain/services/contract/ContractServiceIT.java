@@ -21,10 +21,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static es.upm.miw.apaw.config.seeders.ContractSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -237,78 +239,22 @@ class ContractServiceIT {
         assertThat(contracts).isEmpty();
     }
 
+
     @Test
     void testFindByUserCity() {
-        UserSnapshot user0 = UserSnapshot.builder()
-                .id(CONTRACT_0.getUserSnapshot().getId())
-                .mobile("600000100")
-                .firstName("cliente0")
-                .city("Madrid")
-                .build();
-
-        UserSnapshot user1 = UserSnapshot.builder()
-                .id(CONTRACT_2.getUserSnapshot().getId())
-                .mobile("600000101")
-                .firstName("cliente1")
-                .city("Sevilla")
-                .build();
-
-        UserSnapshot user2 = UserSnapshot.builder()
-                .id(CONTRACT_3.getUserSnapshot().getId())
-                .mobile("600000102")
-                .firstName("cliente2")
-                .city("Cádiz")
-                .build();
-
-        UserSnapshot user3 = UserSnapshot.builder()
-                .id(CONTRACT_4.getUserSnapshot().getId())
-                .mobile("600000103")
-                .firstName("cliente3")
-                .city("Madrid")
-                .build();
-
-        UserSnapshot user4 = UserSnapshot.builder()
-                .id(CONTRACT_5.getUserSnapshot().getId())
-                .mobile("600000104")
-                .firstName("cliente4")
-                .city("Sevilla")
-                .build();
-
-        UserSnapshot user5 = UserSnapshot.builder()
-                .id(CONTRACT_6.getUserSnapshot().getId())
-                .mobile("600000105")
-                .firstName("cliente5")
-                .city("Cádiz")
-                .build();
-
-        UserSnapshot user6 = UserSnapshot.builder()
-                .id(CONTRACT_7.getUserSnapshot().getId())
-                .mobile("600000106")
-                .firstName("cliente6")
-                .build();
-
-        UserSnapshot user7 = UserSnapshot.builder()
-                .id(CONTRACT_8.getUserSnapshot().getId())
-                .mobile("600000107")
-                .firstName("cliente7")
-                .build();
-
-        UserSnapshot user8 = UserSnapshot.builder()
-                .id(CONTRACT_9.getUserSnapshot().getId())
-                .mobile("600000108")
-                .firstName("cliente8")
-                .build();
-
-        List<UserSnapshot> users = List.of(
-                user0, user1, user2, user3, user4,
-                user5, user6, user7, user8);
-
-        Set<UUID> userIds = users.stream()
-                .map(UserSnapshot::getId)
+        Set<UUID> sevillaUserIds = Stream.of(CONTRACT_2, CONTRACT_5, CONTRACT_11, CONTRACT_14, CONTRACT_17)
+                .map(contract -> contract.getUserSnapshot().getId())
                 .collect(Collectors.toSet());
 
-        when(this.userFinder.findByIds(userIds))
-                .thenReturn(users);
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Set<UUID> requestedIds = invocation.getArgument(0);
+            return requestedIds.stream()
+                    .map(id -> UserSnapshot.builder()
+                            .id(id)
+                            .city(sevillaUserIds.contains(id) ? "Sevilla" : "Madrid")
+                            .build())
+                    .toList();
+        });
 
         List<Contract> contracts = this.contractService.find(
                 ContractFindCriteria.builder()
