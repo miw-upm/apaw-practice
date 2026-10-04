@@ -1,5 +1,9 @@
 package es.upm.miw.apaw.adapters.out.euregulation.postgres;
 
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
+import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
+import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
+import es.upm.miw.apaw.domain.model.euregulation.RiskExposureReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
@@ -11,55 +15,88 @@ public interface ComplianceAssessmentRepository extends JpaRepository<Compliance
     @EntityGraph(attributePaths = "euRegulations")
     List<ComplianceAssessmentEntity> findAllByOrderByAssessmentDateAscIdAsc();
 
-    @Query(value = """
-            SELECT er.application_area AS "applicationArea",
-                   COUNT(DISTINCT ca.id) AS "totalAssessments",
-                   COUNT(DISTINCT ca.id) FILTER (WHERE ca.compliance_level = 'COMPLIANT') AS "compliantCount",
-                   COUNT(DISTINCT ca.id) FILTER (WHERE ca.compliance_level = 'PARTIALLY_COMPLIANT')
-                       AS "partiallyCompliantCount",
-                   COUNT(DISTINCT ca.id) FILTER (WHERE ca.compliance_level = 'NON_COMPLIANT')
-                       AS "nonCompliantCount",
-                   COUNT(DISTINCT ca.id) FILTER (WHERE ca.compliance_level = 'PENDING_REVIEW')
-                       AS "pendingReviewCount",
-                   (COUNT(DISTINCT ca.id) FILTER (WHERE ca.compliance_level = 'COMPLIANT'))::numeric
-                       / NULLIF(COUNT(DISTINCT ca.id), 0)::numeric AS "complianceRate"
-            FROM compliance_assessment_entity ca
-            JOIN compliance_assessment_eu_regulations caer
-                 ON caer.compliance_assessment_id = ca.id
-            JOIN eu_regulation_entity er
-                 ON er.id = caer.eu_regulation_id
-            GROUP BY er.application_area
-            ORDER BY "complianceRate" ASC, er.application_area ASC
-            """, nativeQuery = true)
-    List<ComplianceByAreaReportProjection> findComplianceByAreaReport();
+    @Query("""
+            select new es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport(
+                regulation.applicationArea,
+                count(distinct assessment.id),
+                count(distinct case when assessment.complianceLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.ComplianceLevel.COMPLIANT
+                    then assessment.id else null end),
+                count(distinct case when assessment.complianceLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.ComplianceLevel.PARTIALLY_COMPLIANT
+                    then assessment.id else null end),
+                count(distinct case when assessment.complianceLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.ComplianceLevel.NON_COMPLIANT
+                    then assessment.id else null end),
+                count(distinct case when assessment.complianceLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.ComplianceLevel.PENDING_REVIEW
+                    then assessment.id else null end)
+            )
+            from ComplianceAssessmentEntity assessment
+            join assessment.euRegulations regulation
+            group by regulation.applicationArea
+            order by (1.0 * count(distinct case when assessment.complianceLevel =
+                es.upm.miw.apaw.domain.model.euregulation.ComplianceLevel.COMPLIANT
+                then assessment.id else null end) / count(distinct assessment.id)) asc,
+                regulation.applicationArea asc
+            """)
+    List<ComplianceByAreaReport> findComplianceByAreaReport();
 
-    @Query(value = """
-            SELECT ca.user_id AS "userSnapshotId",
-                   COUNT(ca.id) AS "totalAssessments",
-                   COUNT(ca.id) FILTER (WHERE ca.compliance_deadline < CURRENT_DATE) AS "overdueCount",
-                   COUNT(ca.id) FILTER (
-                       WHERE ca.compliance_deadline >= CURRENT_DATE
-                         AND ca.compliance_deadline <= CURRENT_DATE + 30
-                   ) AS "dueSoonCount",
-                   MIN(ca.compliance_deadline) AS "nearestDeadline",
-                   MIN(ca.compliance_deadline) - CURRENT_DATE AS "daysToNearestDeadline"
-            FROM compliance_assessment_entity ca
-            WHERE ca.compliance_deadline IS NOT NULL
-            GROUP BY ca.user_id
-            ORDER BY "overdueCount" DESC, "daysToNearestDeadline" ASC, "userSnapshotId" ASC
-            """, nativeQuery = true)
-    List<OverdueAssessmentProjection> findOverdueAssessmentReport();
+    @Query("""
+            select new es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport(
+                assessment.userId,
+                count(assessment.id),
+                sum(case when assessment.complianceDeadline < current_date then 1L else 0L end),
+                sum(case when assessment.complianceDeadline >= current_date
+                    and assessment.complianceDeadline <= current_date + 30 then 1L else 0L end),
+                min(assessment.complianceDeadline)
+            )
+            from ComplianceAssessmentEntity assessment
+            where assessment.complianceDeadline is not null
+            group by assessment.userId
+            order by sum(case when assessment.complianceDeadline < current_date then 1L else 0L end) desc,
+                min(assessment.complianceDeadline) asc,
+                assessment.userId asc
+            """)
+    List<OverdueAssessmentReport> findOverdueAssessmentReport();
 
-    @Query(value = """
-            SELECT ca.responsible_lawyer AS "responsibleLawyer",
-                   COUNT(ca.id) AS "totalAssessments",
-                   COUNT(ca.id) FILTER (WHERE ca.ai_generated = TRUE) AS "aiGeneratedCount",
-                   COUNT(ca.id) FILTER (WHERE ca.ai_generated = FALSE) AS "manualCount",
-                   (COUNT(ca.id) FILTER (WHERE ca.ai_generated = TRUE))::numeric
-                       / NULLIF(COUNT(ca.id), 0)::numeric AS "aiRatio"
-            FROM compliance_assessment_entity ca
-            GROUP BY ca.responsible_lawyer
-            ORDER BY "totalAssessments" DESC, ca.responsible_lawyer ASC
-            """, nativeQuery = true)
-    List<LawyerProductivityProjection> findLawyerProductivityReport();
+    @Query("""
+            select new es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport(
+                assessment.responsibleLawyer,
+                count(assessment.id),
+                sum(case when assessment.aiGenerated = true then 1L else 0L end),
+                sum(case when assessment.aiGenerated = false then 1L else 0L end)
+            )
+            from ComplianceAssessmentEntity assessment
+            group by assessment.responsibleLawyer
+            order by count(assessment.id) desc, assessment.responsibleLawyer asc
+            """)
+    List<LawyerProductivityReport> findLawyerProductivityReport();
+
+    @Query("""
+            select new es.upm.miw.apaw.domain.model.euregulation.RiskExposureReport(
+                assessment.userId,
+                count(assessment.id),
+                sum(case when assessment.riskLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.RiskLevel.HIGH then 1L else 0L end),
+                sum(case when assessment.riskLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.RiskLevel.MEDIUM then 1L else 0L end),
+                sum(case when assessment.riskLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.RiskLevel.LOW then 1L else 0L end),
+                sum(case when assessment.complianceLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.ComplianceLevel.NON_COMPLIANT
+                    then 1L else 0L end)
+            )
+            from ComplianceAssessmentEntity assessment
+            group by assessment.userId
+            order by (
+                3 * sum(case when assessment.riskLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.RiskLevel.HIGH then 1L else 0L end)
+                + 2 * sum(case when assessment.riskLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.RiskLevel.MEDIUM then 1L else 0L end)
+                + sum(case when assessment.riskLevel =
+                    es.upm.miw.apaw.domain.model.euregulation.RiskLevel.LOW then 1L else 0L end)
+            ) desc, assessment.userId asc
+            """)
+    List<RiskExposureReport> findRiskExposureReport();
 }

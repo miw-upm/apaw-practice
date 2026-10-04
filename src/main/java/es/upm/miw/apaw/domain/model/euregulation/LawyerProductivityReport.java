@@ -17,4 +17,18 @@ public class LawyerProductivityReport {
     private long aiGeneratedCount;
     private long manualCount;
     private BigDecimal aiRatio;
+
+    public LawyerProductivityReport(
+            String responsibleLawyer,
+            Long totalAssessments,
+            Long aiGeneratedCount,
+            Long manualCount) {
+        this.responsibleLawyer = responsibleLawyer;
+        this.totalAssessments = totalAssessments;
+        this.aiGeneratedCount = aiGeneratedCount;
+        this.manualCount = manualCount;
+        this.aiRatio = BigDecimal.valueOf(aiGeneratedCount)
+                .divide(BigDecimal.valueOf(totalAssessments), 10, RoundingMode.HALF_UP)
+                .stripTrailingZeros();
+    }
 }

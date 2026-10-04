@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
 import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
+import es.upm.miw.apaw.domain.model.euregulation.RiskExposureReport;
 import es.upm.miw.apaw.domain.ports.out.euregulation.ComplianceAssessmentGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -75,57 +76,24 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
     @Override
     @Transactional(readOnly = true)
     public List<ComplianceByAreaReport> findComplianceByAreaReport() {
-        return this.complianceAssessmentRepository.findComplianceByAreaReport().stream()
-                .map(this::toComplianceByAreaReport)
-                .toList();
-    }
-
-    private ComplianceByAreaReport toComplianceByAreaReport(ComplianceByAreaReportProjection projection) {
-        return ComplianceByAreaReport.builder()
-                .applicationArea(projection.getApplicationArea())
-                .totalAssessments(projection.getTotalAssessments())
-                .compliantCount(projection.getCompliantCount())
-                .partiallyCompliantCount(projection.getPartiallyCompliantCount())
-                .nonCompliantCount(projection.getNonCompliantCount())
-                .pendingReviewCount(projection.getPendingReviewCount())
-                .complianceRate(projection.getComplianceRate())
-                .build();
+        return this.complianceAssessmentRepository.findComplianceByAreaReport();
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<OverdueAssessmentReport> findOverdueAssessmentReport() {
-        return this.complianceAssessmentRepository.findOverdueAssessmentReport().stream()
-                .map(this::toOverdueAssessmentReport)
-                .toList();
-    }
-
-    private OverdueAssessmentReport toOverdueAssessmentReport(OverdueAssessmentProjection projection) {
-        return OverdueAssessmentReport.builder()
-                .userSnapshotId(projection.getUserSnapshotId())
-                .totalAssessments(projection.getTotalAssessments())
-                .overdueCount(projection.getOverdueCount())
-                .dueSoonCount(projection.getDueSoonCount())
-                .nearestDeadline(projection.getNearestDeadline())
-                .daysToNearestDeadline(projection.getDaysToNearestDeadline())
-                .build();
+        return this.complianceAssessmentRepository.findOverdueAssessmentReport();
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<LawyerProductivityReport> findLawyerProductivityReport() {
-        return this.complianceAssessmentRepository.findLawyerProductivityReport().stream()
-                .map(this::toLawyerProductivityReport)
-                .toList();
+        return this.complianceAssessmentRepository.findLawyerProductivityReport();
     }
 
-    private LawyerProductivityReport toLawyerProductivityReport(LawyerProductivityProjection projection) {
-        return LawyerProductivityReport.builder()
-                .responsibleLawyer(projection.getResponsibleLawyer())
-                .totalAssessments(projection.getTotalAssessments())
-                .aiGeneratedCount(projection.getAiGeneratedCount())
-                .manualCount(projection.getManualCount())
-                .aiRatio(projection.getAiRatio())
-                .build();
+    @Override
+    @Transactional(readOnly = true)
+    public List<RiskExposureReport> findRiskExposureReport() {
+        return this.complianceAssessmentRepository.findRiskExposureReport();
     }
 }
