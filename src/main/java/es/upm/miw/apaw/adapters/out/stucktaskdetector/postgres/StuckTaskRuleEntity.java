@@ -37,6 +37,11 @@ public class StuckTaskRuleEntity {
     @Column(nullable = false)
     private UUID createdByUserId;   // plano
 
+    public StuckTaskRuleEntity(StuckTaskRule stuckTaskRule) {
+        BeanUtils.copyProperties(stuckTaskRule, this, "createdByUser");
+        this.createdByUserId = stuckTaskRule.getCreatedByUser().getId();
+    }
+
     public StuckTaskRule toDomain() {
         StuckTaskRule stuckTaskRule = new StuckTaskRule();
         BeanUtils.copyProperties(this, stuckTaskRule, "createdByUserId");
