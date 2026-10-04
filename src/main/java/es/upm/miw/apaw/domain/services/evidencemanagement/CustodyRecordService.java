@@ -4,7 +4,6 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.ports.out.evidencemanagement.CustodyRecordGateway;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw.domain.ports.out.evidencemanagement.EvidenceGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustodyRecordService {
     private final CustodyRecordGateway custodyRecordGateway;
-    private final EvidenceGateway evidenceGateway;
 
     public CustodyRecord create(CustodyRecord custodyRecord) {
         custodyRecord.doDefault();
@@ -37,8 +35,8 @@ public class CustodyRecordService {
     }
 
     public void delete(UUID id) {
-        if (this.evidenceGateway.existsByCustodyRecordId(id)) {
-            throw new ConflictException("Custody record is used by an evidence: " + id);
+        if (this.custodyRecordGateway.isReferenced(id)) {
+            throw new ConflictException("Custody record is referenced by an evidence: " + id);
         }
         this.custodyRecordGateway.deleteById(id);
     }

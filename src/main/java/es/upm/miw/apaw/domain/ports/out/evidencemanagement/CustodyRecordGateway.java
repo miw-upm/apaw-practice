@@ -11,5 +11,7 @@ public interface CustodyRecordGateway {
 
     CustodyRecord update(CustodyRecord custodyRecord);
 
+    boolean isReferenced(UUID id);
+
     void deleteById(UUID id);
 }

@@ -13,6 +13,7 @@ import java.util.UUID;
 public class CustodyRecordAdapter implements CustodyRecordGateway {
 
     private final CustodyRecordRepository custodyRecordRepository;
+    private final EvidenceRepository evidenceRepository;
 
     @Override
     public CustodyRecord create(CustodyRecord custodyRecord) {
@@ -36,7 +37,13 @@ public class CustodyRecordAdapter implements CustodyRecordGateway {
     }
 
     @Override
+    public boolean isReferenced(UUID id) {
+        return this.evidenceRepository.existsByCustodyRecordsId(id);
+    }
+
+    @Override
     public void deleteById(UUID id) {
         this.custodyRecordRepository.deleteById(id);
     }
+
 }
