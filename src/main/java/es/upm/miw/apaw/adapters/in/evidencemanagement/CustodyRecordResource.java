@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -38,5 +39,10 @@ public class CustodyRecordResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.custodyRecordService.delete(id);
+    }
+
+    @GetMapping
+    public List<CustodyRecord> findAll() {
+        return this.custodyRecordService.findAll();
     }
 }

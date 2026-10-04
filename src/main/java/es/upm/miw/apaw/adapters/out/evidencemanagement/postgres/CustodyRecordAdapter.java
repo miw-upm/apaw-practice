@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.evidencemanagement.CustodyRecordGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,6 +45,15 @@ public class CustodyRecordAdapter implements CustodyRecordGateway {
     @Override
     public void deleteById(UUID id) {
         this.custodyRecordRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CustodyRecord> findAll() {
+        return this.custodyRecordRepository
+                .findAllByOrderByRecordedAtAscIdAsc()
+                .stream()
+                .map(CustodyRecordEntity::toDomain)
+                .toList();
     }
 
 }

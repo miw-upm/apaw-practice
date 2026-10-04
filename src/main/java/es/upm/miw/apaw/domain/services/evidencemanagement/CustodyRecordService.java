@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,5 +40,9 @@ public class CustodyRecordService {
             throw new ConflictException("Custody record is referenced by an evidence: " + id);
         }
         this.custodyRecordGateway.deleteById(id);
+    }
+
+    public List<CustodyRecord> findAll() {
+        return this.custodyRecordGateway.findAll();
     }
 }
