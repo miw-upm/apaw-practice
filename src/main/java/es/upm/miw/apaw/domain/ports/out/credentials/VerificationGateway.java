@@ -10,4 +10,6 @@ public interface VerificationGateway {
     Verification create(Verification verification);
 
     Optional<Verification> read(UUID id);
+
+    Verification update(Verification verification);
 }

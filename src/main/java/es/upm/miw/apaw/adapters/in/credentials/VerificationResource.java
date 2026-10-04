@@ -29,4 +29,10 @@ public class VerificationResource {
     public Verification read(@PathVariable UUID id) {
         return this.verificationService.read(id);
     }
+
+    @PutMapping(ID)
+    public Verification update(@PathVariable UUID id,
+                               @Valid @RequestBody Verification verification) {
+        return this.verificationService.update(id, verification);
+    }
 }

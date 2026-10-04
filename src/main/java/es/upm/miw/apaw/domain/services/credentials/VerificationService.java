@@ -24,4 +24,17 @@ public class VerificationService {
                 .orElseThrow(() ->
                         new NotFoundException("Verification id not found: " + id));
     }
+
+    public Verification update(UUID id, Verification verification) {
+        Verification storedVerification = this.read(id);
+
+        storedVerification.setVerifiedAt(verification.getVerifiedAt());
+        storedVerification.setMethod(verification.getMethod());
+        storedVerification.setName(verification.getName());
+        storedVerification.setNotes(verification.getNotes());
+        storedVerification.setScore(verification.getScore());
+        storedVerification.setVerificationStatus(verification.getVerificationStatus());
+
+        return this.verificationGateway.update(storedVerification);
+    }
 }

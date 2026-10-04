@@ -26,4 +26,11 @@ public class VerificationAdapter implements VerificationGateway {
         return this.verificationRepository.findById(id)
                 .map(VerificationEntity::toDomain);
     }
+
+    @Override
+    public Verification update(Verification verification) {
+        return this.verificationRepository
+                .save(new VerificationEntity(verification))
+                .toDomain();
+    }
 }
