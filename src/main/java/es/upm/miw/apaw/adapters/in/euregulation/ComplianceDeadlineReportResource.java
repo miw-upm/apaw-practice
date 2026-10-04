@@ -1,5 +1,6 @@
-package es.upm.miw.apaw.adapters.in.reports;
+package es.upm.miw.apaw.adapters.in.euregulation;
 
+import es.upm.miw.apaw.domain.model.euregulation.OverdueComplianceReport;
 import es.upm.miw.apaw.domain.services.euregulation.ComplianceDeadlineReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +19,7 @@ public class ComplianceDeadlineReportResource {
     private final ComplianceDeadlineReportService complianceDeadlineReportService;
 
     @GetMapping(COMPLIANCE_DEADLINES)
-    public List<OverdueComplianceReportDto> findReport() {
-        return this.complianceDeadlineReportService.findReport().stream()
-                .map(OverdueComplianceReportDto::fromDomain)
-                .toList();
+    public List<OverdueComplianceReport> findReport() {
+        return this.complianceDeadlineReportService.findReport();
     }
 }

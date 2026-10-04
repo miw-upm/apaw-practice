@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,6 +36,7 @@ import static org.mockito.Mockito.when;
 class ComplianceAssessmentResourceFT {
 
     private static final UUID USER_ID = ComplianceAssessmentSeederForDev.USER_ID;
+    private static final UUID USER_ID_1 = ComplianceAssessmentSeederForDev.USER_ID_1;
 
     @LocalServerPort
     private int port;
@@ -49,11 +51,19 @@ class ComplianceAssessmentResourceFT {
         this.restTestClient = RestTestClient.bindToServer()
                 .baseUrl("http://localhost:" + this.port)
                 .build();
-        when(this.userFinder.read(USER_ID)).thenReturn(UserSnapshot.builder()
+        UserSnapshot user0 = UserSnapshot.builder()
                 .id(USER_ID)
                 .mobile("600000100")
                 .firstName("cliente0")
-                .build());
+                .build();
+        UserSnapshot user1 = UserSnapshot.builder()
+                .id(USER_ID_1)
+                .mobile("600000101")
+                .firstName("cliente1")
+                .build();
+        when(this.userFinder.read(USER_ID)).thenReturn(user0);
+        when(this.userFinder.read(USER_ID_1)).thenReturn(user1);
+        when(this.userFinder.findByIds(Set.of(USER_ID, USER_ID_1))).thenReturn(List.of(user0, user1));
     }
 
     @Test

@@ -19,4 +19,22 @@ public class ComplianceByAreaReport {
     private long nonCompliantCount;
     private long pendingReviewCount;
     private BigDecimal complianceRate;
+
+    public ComplianceByAreaReport(
+            ApplicationArea applicationArea,
+            Long totalAssessments,
+            Long compliantCount,
+            Long partiallyCompliantCount,
+            Long nonCompliantCount,
+            Long pendingReviewCount) {
+        this.applicationArea = applicationArea;
+        this.totalAssessments = totalAssessments;
+        this.compliantCount = compliantCount;
+        this.partiallyCompliantCount = partiallyCompliantCount;
+        this.nonCompliantCount = nonCompliantCount;
+        this.pendingReviewCount = pendingReviewCount;
+        this.complianceRate = BigDecimal.valueOf(compliantCount)
+                .divide(BigDecimal.valueOf(totalAssessments), 10, RoundingMode.HALF_UP)
+                .stripTrailingZeros();
+    }
 }
