@@ -18,4 +18,5 @@ public class UserSnapshot {
     private String familyName;
     private String email;
     private String identity;
+    private String city;
 }

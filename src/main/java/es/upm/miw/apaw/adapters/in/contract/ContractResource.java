@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.contract;
 
 import es.upm.miw.apaw.domain.model.contract.Contract;
 import es.upm.miw.apaw.domain.model.contract.ContractExpirationReport;
+import es.upm.miw.apaw.domain.model.contract.ContractFindCriteria;
 import es.upm.miw.apaw.domain.model.contract.CreationContract;
 import es.upm.miw.apaw.domain.services.contract.ContractService;
 import jakarta.validation.Valid;
@@ -29,5 +30,10 @@ public class ContractResource {
     @GetMapping(REPORT)
     public List<ContractExpirationReport> findExpirationReport() {
         return this.contractService.findExpirationReport();
+    }
+
+    @GetMapping
+    public List<Contract> find(@ModelAttribute ContractFindCriteria criteria) {
+        return this.contractService.find(criteria);
     }
 }
