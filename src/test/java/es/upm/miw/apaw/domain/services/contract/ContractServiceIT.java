@@ -6,6 +6,7 @@ import es.upm.miw.apaw.adapters.out.contract.postgres.ContractRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.contract.*;
+import es.upm.miw.apaw.domain.ports.out.contract.ContractGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
 import static es.upm.miw.apaw.config.seeders.ContractSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -107,43 +107,221 @@ class ContractServiceIT {
     }
 
     @Test
-    void testFindExpirationReport() {
+    void testFindByTitle() {
+        UserSnapshot user = CONTRACT_0.getUserSnapshot();
+
+        when(this.userFinder.findByIds(Set.of(user.getId())))
+                .thenReturn(List.of(user));
+
+        List<Contract> contracts = this.contractService.find(
+                ContractFindCriteria.builder()
+                        .title("Contrato de servicios de consultoría")
+                        .build());
+
+        assertThat(contracts)
+                .extracting(Contract::getId)
+                .containsExactlyInAnyOrder(
+                        CONTRACT_0.getId(),
+                        CONTRACT_10.getId());
+    }
+
+    @Test
+    void testFindNoResults() {
+        when(this.userFinder.findByIds(Set.of()))
+                .thenReturn(List.of());
+
+        List<Contract> contracts = this.contractService.find(
+                ContractFindCriteria.builder()
+                        .title("Título que no existe")
+                        .build());
+
+        assertThat(contracts).isEmpty();
+    }
+
+    @Test
+    void testFindByClauseType() {
         List<UserSnapshot> users = List.of(
-                CONTRACT_0.getUserSnapshot(),
-                CONTRACT_2.getUserSnapshot(),
                 CONTRACT_3.getUserSnapshot(),
-                CONTRACT_6.getUserSnapshot(),
-                CONTRACT_7.getUserSnapshot()
+                CONTRACT_8.getUserSnapshot(),
+                CONTRACT_10.getUserSnapshot(),
+                CONTRACT_13.getUserSnapshot(),
+                CONTRACT_17.getUserSnapshot(),
+                CONTRACT_19.getUserSnapshot()
         );
 
-        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
-            Set<UUID> requestedIds = invocation.getArgument(0);
-            return users.stream()
-                    .filter(user -> requestedIds.contains(user.getId()))
-                    .toList();
-        });
+        Set<UUID> userIds = users.stream()
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toSet());
 
-        List<ContractExpirationReport> report =
-                this.contractService.findExpirationReport();
+        when(this.userFinder.findByIds(userIds))
+                .thenReturn(users);
 
-        // Verify that we have at least the users we're testing
-        assertThat(report)
-                .filteredOn(item -> item.userId().equals(CONTRACT_0.getUserSnapshot().getId()))
-                .isNotEmpty();
+        List<Contract> contracts = this.contractService.find(
+                ContractFindCriteria.builder()
+                        .clauseType(ClauseType.PAYMENT)
+                        .build());
 
-        assertThat(report)
-                .filteredOn(item -> item.userId().equals(CONTRACT_0.getUserSnapshot().getId()))
-                .singleElement()
-                .satisfies(item -> {
-                    assertThat(item.userSnapshot())
-                            .isEqualTo(CONTRACT_0.getUserSnapshot());
-                    assertThat(item.expiringContractCount()).isEqualTo(2);
-                    assertThat(item.activeClauseCount()).isEqualTo(3);
-                });
+        assertThat(contracts)
+                .extracting(Contract::getId)
+                .containsExactlyInAnyOrder(
+                        CONTRACT_3.getId(),
+                        CONTRACT_8.getId(),
+                        CONTRACT_10.getId(),
+                        CONTRACT_13.getId(),
+                        CONTRACT_17.getId(),
+                        CONTRACT_19.getId());
+    }
 
-        assertThat(report)
-                .allSatisfy(item ->
-                        assertThat(item.userSnapshot()).isNotNull()
-                );
+    @Test
+    void testFindByActive() {
+        List<UserSnapshot> users = List.of(
+                CONTRACT_6.getUserSnapshot(),
+                CONTRACT_9.getUserSnapshot(),
+                CONTRACT_10.getUserSnapshot(),
+                CONTRACT_11.getUserSnapshot(),
+                CONTRACT_12.getUserSnapshot(),
+                CONTRACT_14.getUserSnapshot()
+        );
+
+        Set<UUID> userIds = users.stream()
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toSet());
+
+        when(this.userFinder.findByIds(userIds))
+                .thenReturn(users);
+
+        List<Contract> contracts = this.contractService.find(
+                ContractFindCriteria.builder()
+                        .active(false)
+                        .build());
+
+        assertThat(contracts)
+                .extracting(Contract::getId)
+                .containsExactlyInAnyOrder(
+                        CONTRACT_6.getId(),
+                        CONTRACT_9.getId(),
+                        CONTRACT_10.getId(),
+                        CONTRACT_11.getId(),
+                        CONTRACT_12.getId(),
+                        CONTRACT_14.getId(),
+                        CONTRACT_17.getId(),
+                        CONTRACT_19.getId());
+    }
+
+    @Test
+    void testFindByCombinedCriteria() {
+        UserSnapshot user = CONTRACT_10.getUserSnapshot();
+
+        when(this.userFinder.findByIds(Set.of(user.getId())))
+                .thenReturn(List.of(user));
+
+        List<Contract> contracts = this.contractService.find(
+                ContractFindCriteria.builder()
+                        .title("Contrato de servicios de consultoría")
+                        .clauseType(ClauseType.PAYMENT)
+                        .build());
+
+        assertThat(contracts)
+                .extracting(Contract::getId)
+                .containsExactly(CONTRACT_10.getId());
+    }
+
+    @Test
+    void testFindByCombinedCriteriaNoResults() {
+        List<Contract> contracts = this.contractService.find(
+                ContractFindCriteria.builder()
+                        .title("Contrato de servicios de consultoría")
+                        .clauseType(ClauseType.TERMINATION)
+                        .build());
+
+        assertThat(contracts).isEmpty();
+    }
+
+    @Test
+    void testFindByUserCity() {
+        UserSnapshot user0 = UserSnapshot.builder()
+                .id(CONTRACT_0.getUserSnapshot().getId())
+                .mobile("600000100")
+                .firstName("cliente0")
+                .city("Madrid")
+                .build();
+
+        UserSnapshot user1 = UserSnapshot.builder()
+                .id(CONTRACT_2.getUserSnapshot().getId())
+                .mobile("600000101")
+                .firstName("cliente1")
+                .city("Sevilla")
+                .build();
+
+        UserSnapshot user2 = UserSnapshot.builder()
+                .id(CONTRACT_3.getUserSnapshot().getId())
+                .mobile("600000102")
+                .firstName("cliente2")
+                .city("Cádiz")
+                .build();
+
+        UserSnapshot user3 = UserSnapshot.builder()
+                .id(CONTRACT_4.getUserSnapshot().getId())
+                .mobile("600000103")
+                .firstName("cliente3")
+                .city("Madrid")
+                .build();
+
+        UserSnapshot user4 = UserSnapshot.builder()
+                .id(CONTRACT_5.getUserSnapshot().getId())
+                .mobile("600000104")
+                .firstName("cliente4")
+                .city("Sevilla")
+                .build();
+
+        UserSnapshot user5 = UserSnapshot.builder()
+                .id(CONTRACT_6.getUserSnapshot().getId())
+                .mobile("600000105")
+                .firstName("cliente5")
+                .city("Cádiz")
+                .build();
+
+        UserSnapshot user6 = UserSnapshot.builder()
+                .id(CONTRACT_7.getUserSnapshot().getId())
+                .mobile("600000106")
+                .firstName("cliente6")
+                .build();
+
+        UserSnapshot user7 = UserSnapshot.builder()
+                .id(CONTRACT_8.getUserSnapshot().getId())
+                .mobile("600000107")
+                .firstName("cliente7")
+                .build();
+
+        UserSnapshot user8 = UserSnapshot.builder()
+                .id(CONTRACT_9.getUserSnapshot().getId())
+                .mobile("600000108")
+                .firstName("cliente8")
+                .build();
+
+        List<UserSnapshot> users = List.of(
+                user0, user1, user2, user3, user4,
+                user5, user6, user7, user8);
+
+        Set<UUID> userIds = users.stream()
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toSet());
+
+        when(this.userFinder.findByIds(userIds))
+                .thenReturn(users);
+
+        List<Contract> contracts = this.contractService.find(
+                ContractFindCriteria.builder()
+                        .userCity("Sevilla")
+                        .build());
+
+        assertThat(contracts)
+                .extracting(Contract::getId)
+                .containsExactlyInAnyOrder(
+                        CONTRACT_2.getId(),
+                        CONTRACT_5.getId(),
+                        CONTRACT_11.getId(),
+                        CONTRACT_14.getId(),
+                        CONTRACT_17.getId());
     }
 }
