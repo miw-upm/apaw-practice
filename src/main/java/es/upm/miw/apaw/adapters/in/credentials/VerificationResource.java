@@ -1,0 +1,24 @@
+package es.upm.miw.apaw.adapters.in.credentials;
+
+import es.upm.miw.apaw.domain.model.credentials.Verification;
+import es.upm.miw.apaw.domain.services.credentials.VerificationService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(VerificationResource.VERIFICATIONS)
+@RequiredArgsConstructor
+public class VerificationResource {
+
+    public static final String VERIFICATIONS = "/verifications";
+
+    private final VerificationService verificationService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Verification create(@Valid @RequestBody Verification verification) {
+        return this.verificationService.create(verification);
+    }
+}
