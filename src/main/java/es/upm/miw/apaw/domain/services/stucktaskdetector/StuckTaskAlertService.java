@@ -10,6 +10,7 @@ import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskRuleGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -63,6 +64,11 @@ public class StuckTaskAlertService {
     }
 
     public void delete(UUID id) {
+        this.read(id);
         this.stuckTaskAlertGateway.delete(id);
+    }
+
+    public List<StuckTaskAlert> findAll() {
+        return this.stuckTaskAlertGateway.findAll();
     }
 }

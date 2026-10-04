@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -40,5 +41,10 @@ public class StuckTaskAlertResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.stuckTaskAlertService.delete(id);
+    }
+
+    @GetMapping
+    public List<StuckTaskAlert> findAll() {
+        return this.stuckTaskAlertService.findAll();
     }
 }
