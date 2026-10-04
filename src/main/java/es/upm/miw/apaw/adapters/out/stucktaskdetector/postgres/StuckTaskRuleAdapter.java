@@ -19,4 +19,15 @@ public class StuckTaskRuleAdapter implements StuckTaskRuleGateway {
     public Optional<StuckTaskRule> read(UUID id) {
         return this.stuckTaskRuleRepository.findById(id).map(StuckTaskRuleEntity::toDomain);
     }
+
+    @Override
+    public StuckTaskRule create(StuckTaskRule stuckTaskRule) {
+        this.stuckTaskRuleRepository.save(new StuckTaskRuleEntity(stuckTaskRule));
+        return stuckTaskRule;
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return this.stuckTaskRuleRepository.existsByName(name);
+    }
 }

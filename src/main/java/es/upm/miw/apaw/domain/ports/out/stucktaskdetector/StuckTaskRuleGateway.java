@@ -7,4 +7,8 @@ import java.util.UUID;
 
 public interface StuckTaskRuleGateway {
     Optional<StuckTaskRule> read(UUID id);
+
+    StuckTaskRule create(StuckTaskRule stuckTaskRule);
+
+    boolean existsByName(String name);
 }
