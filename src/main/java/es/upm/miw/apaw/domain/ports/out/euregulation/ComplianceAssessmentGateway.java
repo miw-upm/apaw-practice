@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.ports.out.euregulation;
 
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
+import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +24,6 @@ public interface ComplianceAssessmentGateway {
     List<ComplianceAssessment> findAll();
 
     List<ComplianceByAreaReport> findComplianceByAreaReport();
+
+    List<OverdueAssessmentReport> findOverdueAssessmentReport();
 }

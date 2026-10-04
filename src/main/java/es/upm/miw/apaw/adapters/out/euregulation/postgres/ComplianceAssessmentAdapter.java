@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.out.euregulation.postgres;
 
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
+import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
 import es.upm.miw.apaw.domain.ports.out.euregulation.ComplianceAssessmentGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -87,6 +88,25 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
                 .nonCompliantCount(projection.getNonCompliantCount())
                 .pendingReviewCount(projection.getPendingReviewCount())
                 .complianceRate(projection.getComplianceRate())
+                .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OverdueAssessmentReport> findOverdueAssessmentReport() {
+        return this.complianceAssessmentRepository.findOverdueAssessmentReport().stream()
+                .map(this::toOverdueAssessmentReport)
+                .toList();
+    }
+
+    private OverdueAssessmentReport toOverdueAssessmentReport(OverdueAssessmentProjection projection) {
+        return OverdueAssessmentReport.builder()
+                .userSnapshotId(projection.getUserSnapshotId())
+                .totalAssessments(projection.getTotalAssessments())
+                .overdueCount(projection.getOverdueCount())
+                .dueSoonCount(projection.getDueSoonCount())
+                .nearestDeadline(projection.getNearestDeadline())
+                .daysToNearestDeadline(projection.getDaysToNearestDeadline())
                 .build();
     }
 }

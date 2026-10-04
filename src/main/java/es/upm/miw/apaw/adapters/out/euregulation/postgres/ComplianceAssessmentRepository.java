@@ -32,4 +32,21 @@ public interface ComplianceAssessmentRepository extends JpaRepository<Compliance
             ORDER BY "complianceRate" ASC, er.application_area ASC
             """, nativeQuery = true)
     List<ComplianceByAreaReportProjection> findComplianceByAreaReport();
+
+    @Query(value = """
+            SELECT ca.user_id AS "userSnapshotId",
+                   COUNT(ca.id) AS "totalAssessments",
+                   COUNT(ca.id) FILTER (WHERE ca.compliance_deadline < CURRENT_DATE) AS "overdueCount",
+                   COUNT(ca.id) FILTER (
+                       WHERE ca.compliance_deadline >= CURRENT_DATE
+                         AND ca.compliance_deadline <= CURRENT_DATE + 30
+                   ) AS "dueSoonCount",
+                   MIN(ca.compliance_deadline) AS "nearestDeadline",
+                   MIN(ca.compliance_deadline) - CURRENT_DATE AS "daysToNearestDeadline"
+            FROM compliance_assessment_entity ca
+            WHERE ca.compliance_deadline IS NOT NULL
+            GROUP BY ca.user_id
+            ORDER BY "overdueCount" DESC, "daysToNearestDeadline" ASC, "userSnapshotId" ASC
+            """, nativeQuery = true)
+    List<OverdueAssessmentProjection> findOverdueAssessmentReport();
 }
