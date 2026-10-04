@@ -35,4 +35,11 @@ public class StuckTaskAlertAdapter implements StuckTaskAlertGateway {
     public boolean existsByReference(String reference) {
         return this.stuckTaskAlertRepository.existsByReference(reference);
     }
+
+    @Override
+    @Transactional
+    public StuckTaskAlert update(StuckTaskAlert stuckTaskAlert) {
+        StuckTaskAlertEntity entity = this.stuckTaskAlertRepository.save(new StuckTaskAlertEntity(stuckTaskAlert));
+        return entity.toDomain();
+    }
 }

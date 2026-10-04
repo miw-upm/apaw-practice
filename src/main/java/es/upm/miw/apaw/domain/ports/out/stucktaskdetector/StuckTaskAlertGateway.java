@@ -11,4 +11,6 @@ public interface StuckTaskAlertGateway {
     boolean existsByReference(String reference);
 
     Optional<StuckTaskAlert> read(UUID id);
+
+    StuckTaskAlert update(StuckTaskAlert stuckTaskAlert);
 }

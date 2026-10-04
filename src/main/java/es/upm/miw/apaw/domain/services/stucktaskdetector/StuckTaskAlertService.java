@@ -10,6 +10,7 @@ import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskRuleGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -42,5 +43,22 @@ public class StuckTaskAlertService {
         if (reference != null && this.stuckTaskAlertGateway.existsByReference(reference)) {
             throw new ConflictException("Stuck task alert reference already exists: " + reference);
         }
+    }
+
+    public StuckTaskAlert update(UUID id, StuckTaskAlert stuckTaskAlert) {
+        StuckTaskAlert stored = this.read(id);
+        if (!Objects.equals(stored.getReference(), stuckTaskAlert.getReference())) {
+            this.assertReferenceNotExists(stuckTaskAlert.getReference());
+        }
+        stored.setReference(stuckTaskAlert.getReference());
+        stored.setResolvedAt(stuckTaskAlert.getResolvedAt());
+        stored.setEscalated(Boolean.TRUE.equals(stuckTaskAlert.getEscalated()));
+        stored.setResolutionNotes(stuckTaskAlert.getResolutionNotes());
+        return this.stuckTaskAlertGateway.update(stored);
+    }
+
+    private StuckTaskRule readStuckTaskRule(UUID id) {
+        return this.stuckTaskRuleGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Stuck task rule id not found: " + id));
     }
 }

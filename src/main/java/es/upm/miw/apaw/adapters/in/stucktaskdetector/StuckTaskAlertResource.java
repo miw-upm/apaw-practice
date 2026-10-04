@@ -30,4 +30,9 @@ public class StuckTaskAlertResource {
     public StuckTaskAlert read(@PathVariable UUID id) {
         return this.stuckTaskAlertService.read(id);
     }
+
+    @PutMapping(ID)
+    public StuckTaskAlert update(@PathVariable UUID id, @Valid @RequestBody StuckTaskAlert stuckTaskAlert) {
+        return this.stuckTaskAlertService.update(id, stuckTaskAlert);
+    }
 }
