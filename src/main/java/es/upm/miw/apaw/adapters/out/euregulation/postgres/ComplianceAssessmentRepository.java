@@ -49,4 +49,17 @@ public interface ComplianceAssessmentRepository extends JpaRepository<Compliance
             ORDER BY "overdueCount" DESC, "daysToNearestDeadline" ASC, "userSnapshotId" ASC
             """, nativeQuery = true)
     List<OverdueAssessmentProjection> findOverdueAssessmentReport();
+
+    @Query(value = """
+            SELECT ca.responsible_lawyer AS "responsibleLawyer",
+                   COUNT(ca.id) AS "totalAssessments",
+                   COUNT(ca.id) FILTER (WHERE ca.ai_generated = TRUE) AS "aiGeneratedCount",
+                   COUNT(ca.id) FILTER (WHERE ca.ai_generated = FALSE) AS "manualCount",
+                   (COUNT(ca.id) FILTER (WHERE ca.ai_generated = TRUE))::numeric
+                       / NULLIF(COUNT(ca.id), 0)::numeric AS "aiRatio"
+            FROM compliance_assessment_entity ca
+            GROUP BY ca.responsible_lawyer
+            ORDER BY "totalAssessments" DESC, ca.responsible_lawyer ASC
+            """, nativeQuery = true)
+    List<LawyerProductivityProjection> findLawyerProductivityReport();
 }
