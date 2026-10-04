@@ -48,7 +48,7 @@ public interface ComplianceAssessmentRepository extends JpaRepository<Compliance
                 count(assessment.id),
                 sum(case when assessment.complianceDeadline < current_date then 1L else 0L end),
                 sum(case when assessment.complianceDeadline >= current_date
-                    and assessment.complianceDeadline <= current_date + 30 then 1L else 0L end),
+                    and assessment.complianceDeadline <= current_date + 30 day then 1L else 0L end),
                 min(assessment.complianceDeadline)
             )
             from ComplianceAssessmentEntity assessment
