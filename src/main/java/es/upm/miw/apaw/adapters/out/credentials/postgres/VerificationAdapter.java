@@ -5,6 +5,9 @@ import es.upm.miw.apaw.domain.ports.out.credentials.VerificationGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class VerificationAdapter implements VerificationGateway {
@@ -16,5 +19,11 @@ public class VerificationAdapter implements VerificationGateway {
         return this.verificationRepository
                 .save(new VerificationEntity(verification))
                 .toDomain();
+    }
+
+    @Override
+    public Optional<Verification> read(UUID id) {
+        return this.verificationRepository.findById(id)
+                .map(VerificationEntity::toDomain);
     }
 }

@@ -7,12 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(VerificationResource.VERIFICATIONS)
 @RequiredArgsConstructor
 public class VerificationResource {
 
     public static final String VERIFICATIONS = "/verifications";
+    public static final String ID = "/{id}";
 
     private final VerificationService verificationService;
 
@@ -20,5 +23,10 @@ public class VerificationResource {
     @ResponseStatus(HttpStatus.CREATED)
     public Verification create(@Valid @RequestBody Verification verification) {
         return this.verificationService.create(verification);
+    }
+
+    @GetMapping(ID)
+    public Verification read(@PathVariable UUID id) {
+        return this.verificationService.read(id);
     }
 }
