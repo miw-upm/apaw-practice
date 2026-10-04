@@ -10,6 +10,8 @@ import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskRuleGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class StuckTaskAlertService {
@@ -29,6 +31,11 @@ public class StuckTaskAlertService {
                 .build();
         stuckTaskAlert.doDefault();
         return this.stuckTaskAlertGateway.create(stuckTaskAlert);
+    }
+
+    public StuckTaskAlert read(UUID id) {
+        return this.stuckTaskAlertGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Stuck task alert id not found: " + id));
     }
 
     private void assertReferenceNotExists(String reference) {

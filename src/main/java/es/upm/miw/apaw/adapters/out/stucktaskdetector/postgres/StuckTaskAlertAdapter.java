@@ -3,9 +3,13 @@ import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlert;
 import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskAlertGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+import java.util.Optional;
+import java.util.UUID;
+
+@Repository
 @RequiredArgsConstructor
 public class StuckTaskAlertAdapter implements StuckTaskAlertGateway {
 
@@ -19,6 +23,12 @@ public class StuckTaskAlertAdapter implements StuckTaskAlertGateway {
         entity.setStuckTaskRule(this.stuckTaskRuleRepository.getReferenceById(stuckTaskAlert.getStuckTaskRule().getId()));
         this.stuckTaskAlertRepository.save(entity);
         return stuckTaskAlert;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<StuckTaskAlert> read(UUID id) {
+        return this.stuckTaskAlertRepository.findById(id).map(StuckTaskAlertEntity::toDomain);
     }
 
     @Override

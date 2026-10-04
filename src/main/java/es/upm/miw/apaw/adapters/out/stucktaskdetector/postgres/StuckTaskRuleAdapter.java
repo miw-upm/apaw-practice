@@ -4,11 +4,12 @@ import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRule;
 import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskRuleGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@Component
+@Repository
 @RequiredArgsConstructor
 public class StuckTaskRuleAdapter implements StuckTaskRuleGateway {
 
