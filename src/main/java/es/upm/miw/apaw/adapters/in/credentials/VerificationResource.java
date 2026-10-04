@@ -46,7 +46,7 @@ public class VerificationResource {
     @PatchMapping(ID)
     public Verification patch(
             @PathVariable UUID id,
-            @RequestBody VerificationPatch patch) {
+            @Valid @RequestBody VerificationPatch patch) {
         return this.verificationService.patch(id, patch);
     }
 

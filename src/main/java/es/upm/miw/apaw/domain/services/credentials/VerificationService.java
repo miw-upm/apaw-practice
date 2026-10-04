@@ -55,27 +55,27 @@ public class VerificationService {
     }
 
     public Verification patch(UUID id, VerificationPatch patch) {
-        Verification verification = this.read(id);
+        Verification storedVerification = this.read(id);
 
-        if (patch.isVerifiedAtPresent()) {
-            verification.setVerifiedAt(patch.getVerifiedAt());
+        if (patch.verifiedAt() != null) {
+            storedVerification.setVerifiedAt(patch.verifiedAt());
         }
-        if (patch.isMethodPresent()) {
-            verification.setMethod(patch.getMethod());
+        if (patch.method() != null) {
+            storedVerification.setMethod(patch.method());
         }
-        if (patch.isNamePresent()) {
-            verification.setName(patch.getName());
+        if (patch.name() != null) {
+            storedVerification.setName(patch.name());
         }
-        if (patch.isNotesPresent()) {
-            verification.setNotes(patch.getNotes());
+        if (patch.notes() != null) {
+            storedVerification.setNotes(patch.notes());
         }
-        if (patch.isScorePresent()) {
-            verification.setScore(patch.getScore());
+        if (patch.score() != null) {
+            storedVerification.setScore(patch.score());
         }
-        if (patch.isVerificationStatusPresent()) {
-            verification.setVerificationStatus(patch.getVerificationStatus());
+        if (patch.verificationStatus() != null) {
+            storedVerification.setVerificationStatus(patch.verificationStatus());
         }
 
-        return this.verificationGateway.update(verification);
+        return this.verificationGateway.update(storedVerification);
     }
 }
