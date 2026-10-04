@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.out.euregulation.postgres;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
+import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
 import es.upm.miw.apaw.domain.ports.out.euregulation.ComplianceAssessmentGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -107,6 +108,24 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
                 .dueSoonCount(projection.getDueSoonCount())
                 .nearestDeadline(projection.getNearestDeadline())
                 .daysToNearestDeadline(projection.getDaysToNearestDeadline())
+                .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<LawyerProductivityReport> findLawyerProductivityReport() {
+        return this.complianceAssessmentRepository.findLawyerProductivityReport().stream()
+                .map(this::toLawyerProductivityReport)
+                .toList();
+    }
+
+    private LawyerProductivityReport toLawyerProductivityReport(LawyerProductivityProjection projection) {
+        return LawyerProductivityReport.builder()
+                .responsibleLawyer(projection.getResponsibleLawyer())
+                .totalAssessments(projection.getTotalAssessments())
+                .aiGeneratedCount(projection.getAiGeneratedCount())
+                .manualCount(projection.getManualCount())
+                .aiRatio(projection.getAiRatio())
                 .build();
     }
 }
