@@ -97,7 +97,6 @@ public class CarReservationSeederForDev implements ApplicationRunner {
     private void seed() {
         log.warn("------- Initial Load from JAVA (Car & Reservation) -----------");
 
-        // 1. Guardar coches si no existen
         List<CarEntity> cars = List.of(CAR_0, CAR_1, CAR_2, CAR_3, CAR_4).stream()
                 .filter(car -> !this.carRepository.existsById(car.getId()))
                 .map(CarEntity::new)
@@ -105,7 +104,6 @@ public class CarReservationSeederForDev implements ApplicationRunner {
         this.carRepository.saveAll(cars);
         log.warn("        ------- cars: {} added", cars.size());
 
-        // 2. Guardar reservas de prueba asociadas a los coches
         if (this.reservationRepository.count() == 0) {
             CarEntity car0Entity = this.carRepository.findById(ID_0).orElseThrow();
             CarEntity car1Entity = this.carRepository.findById(ID_1).orElseThrow();

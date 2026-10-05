@@ -125,7 +125,7 @@ class ReservationServiceIT {
 
         assertThat(report)
                 .extracting(CarUsageReport::getTotalDurationMinutes)
-                .isSortedAccordingTo(Comparator.reverseOrder());
+                .isSortedAccordingTo(Comparator.nullsLast(Comparator.reverseOrder()));
 
         assertThat(report).filteredOn(item -> item.getCarRegistration().equals(CAR_0.getLicensePlate()))
                 .singleElement()
