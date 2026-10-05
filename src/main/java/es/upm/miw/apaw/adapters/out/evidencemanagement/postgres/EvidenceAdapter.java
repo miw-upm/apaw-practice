@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public class EvidenceAdapter implements EvidenceGateway {
 
     private final EvidenceRepository evidenceRepository;
+
 }
