@@ -7,4 +7,8 @@ import java.util.UUID;
 public interface CredentialRepository extends JpaRepository<CredentialEntity, UUID> {
 
     boolean existsByVerificationsId(UUID verificationId);
+
+    boolean existsByNumber(String number);
+
+    boolean existsByRegistryCode(String registryCode);
 }

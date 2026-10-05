@@ -40,6 +40,7 @@ public class TaskEntity {
 
     private String description;
 
+    @Column(nullable = false)
     private LocalDate dueDate;
 
     @Column(nullable = false)
