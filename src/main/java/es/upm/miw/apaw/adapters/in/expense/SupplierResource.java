@@ -37,4 +37,10 @@ public class SupplierResource {
     public Supplier update(@PathVariable UUID id, @Valid @RequestBody Supplier supplier) {
         return this.supplierService.update(id, supplier);
     }
+
+    @DeleteMapping(ID_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.supplierService.delete(id);
+    }
 }

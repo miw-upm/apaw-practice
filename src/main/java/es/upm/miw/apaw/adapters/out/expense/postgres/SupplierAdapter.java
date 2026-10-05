@@ -60,4 +60,10 @@ public class SupplierAdapter implements SupplierGateway {
     public boolean existsByTaxIdAndIdNot(String taxId, UUID id) {
         return this.supplierRepository.existsByTaxIdAndIdNot(taxId, id);
     }
+
+    @Override
+    public void deleteById(UUID id) {
+        this.supplierRepository.deleteById(id);
+    }
+
 }
