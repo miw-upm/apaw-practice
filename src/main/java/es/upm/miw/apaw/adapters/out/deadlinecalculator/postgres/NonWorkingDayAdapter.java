@@ -36,7 +36,7 @@ public class NonWorkingDayAdapter implements NonWorkingDayGateway {
 
     @Override
     public List<NonWorkingDay> findAll() {
-        return this.nonWorkingDayRepository.findAllByOrderByDateAscDescriptionAsc().stream()
+        return this.nonWorkingDayRepository.findAllByOrderByDateAscDescriptionAscIdAsc().stream()
                 .map(NonWorkingDayEntity::toDomain)
                 .toList();
     }
