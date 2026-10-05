@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,5 +32,26 @@ public class SupplierResource {
     @GetMapping(ID_ID)
     public Supplier read(@PathVariable final UUID id) {
         return this.supplierService.read(id);
+    }
+
+    @PutMapping(ID_ID)
+    public Supplier update(@PathVariable UUID id, @Valid @RequestBody Supplier supplier) {
+        return this.supplierService.update(id, supplier);
+    }
+
+    @DeleteMapping(ID_ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.supplierService.delete(id);
+    }
+
+    @GetMapping
+    public List<Supplier> findAll() {
+        return this.supplierService.findAll();
+    }
+
+    @PatchMapping(ID_ID)
+    public Supplier patch(@PathVariable UUID id, @RequestBody Supplier supplier) {
+        return this.supplierService.patch(id, supplier);
     }
 }
