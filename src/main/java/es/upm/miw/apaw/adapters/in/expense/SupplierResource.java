@@ -1,9 +1,10 @@
 package es.upm.miw.apaw.adapters.in.expense;
 
 import es.upm.miw.apaw.domain.model.expense.Supplier;
+import es.upm.miw.apaw.domain.model.expense.SupplierExpenseReport;
 import es.upm.miw.apaw.domain.services.expense.SupplierService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,16 +13,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(SupplierResource.SUPPLIERS)
+@RequiredArgsConstructor
 public class SupplierResource {
     public static final String SUPPLIERS = "/expense/suppliers";
     public static final String ID_ID = "/{id}";
+    public static final String REPORT = "/report";
 
     private final SupplierService supplierService;
-
-    @Autowired
-    public SupplierResource(SupplierService supplierService) {
-        this.supplierService = supplierService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -30,7 +28,7 @@ public class SupplierResource {
     }
 
     @GetMapping(ID_ID)
-    public Supplier read(@PathVariable final UUID id) {
+    public Supplier read(@PathVariable UUID id) {
         return this.supplierService.read(id);
     }
 
@@ -53,5 +51,10 @@ public class SupplierResource {
     @PatchMapping(ID_ID)
     public Supplier patch(@PathVariable UUID id, @RequestBody Supplier supplier) {
         return this.supplierService.patch(id, supplier);
+    }
+
+    @GetMapping(REPORT)
+    public List<SupplierExpenseReport> findExpenseReport() {
+        return this.supplierService.findExpenseReport();
     }
 }
