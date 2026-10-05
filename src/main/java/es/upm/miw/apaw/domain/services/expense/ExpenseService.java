@@ -35,9 +35,6 @@ public class ExpenseService {
                 .orElseThrow(() -> new NotFoundException("Supplier not found with id: " + dto.getSupplierId()));
 
         UserSnapshot applicant = this.userFinder.read(dto.getApplicantId());
-        if (applicant == null) {
-            throw new NotFoundException("User not found with id: " + dto.getApplicantId());
-        }
 
         Expense expense = Expense.builder()
                 .reference(dto.getReference())
