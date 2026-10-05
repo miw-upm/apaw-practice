@@ -30,12 +30,11 @@ public class Task {
 
     private String description;
 
+    @NotNull
     private LocalDate dueDate;
 
-    @NotNull
     private Integer priority;
 
-    @NotNull
     private Boolean completion;
 
     private BigDecimal estimatedHours;
@@ -47,8 +46,17 @@ public class Task {
 
     public void doDefault() {
         this.id = UUID.randomUUID();
-        this.priority = 3;
-        this.completion = false;
-        this.comments = new ArrayList<>();
+
+        if (this.priority == null) {
+            this.priority = 3;
+        }
+
+        if (this.completion == null) {
+            this.completion = false;
+        }
+
+        if (this.comments == null) {
+            this.comments = new ArrayList<>();
+        }
     }
 }
