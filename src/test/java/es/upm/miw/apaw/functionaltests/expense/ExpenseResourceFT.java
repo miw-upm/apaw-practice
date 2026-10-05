@@ -38,16 +38,13 @@ class ExpenseResourceFT {
                 .baseUrl("http://localhost:" + this.port)
                 .build();
 
-        UserSnapshot user = UserSnapshot.builder()
-                .id(ExpenseSeederForDev.USER_1_ID)
-                .mobile("600000100")
-                .firstName("cliente0")
-                .build();
+        UserSnapshot user0 = ExpenseSeederForDev.EXPENSE_0.getUserSnapshot();
+        UserSnapshot user1 = ExpenseSeederForDev.EXPENSE_1.getUserSnapshot();
 
-        when(this.userFinder.findByIds(Set.of(ExpenseSeederForDev.USER_1_ID)))
-                .thenReturn(List.of(user));
+        when(this.userFinder.findByIds(Set.of(user0.getId(), user1.getId())))
+                .thenReturn(List.of(user0, user1));
         when(this.userFinder.findByIds(any()))
-                .thenReturn(List.of(user));
+                .thenReturn(List.of(user0, user1));
     }
 
     @Test
@@ -57,7 +54,7 @@ class ExpenseResourceFT {
                         .path(ExpenseResource.EXPENSES)
                         .queryParam("category", "Office")
                         .queryParam("unpaid", true)
-                        .queryParam("supplierTaxId", "B12345678")
+                        .queryParam("supplierTaxId", ExpenseSeederForDev.SUPPLIER_0.getTaxId())
                         .queryParam("userMobile", "600000100")
                         .build())
                 .exchange()
@@ -66,8 +63,8 @@ class ExpenseResourceFT {
                 .value(expenses -> {
                     assertThat(expenses).isNotNull();
                     assertThat(expenses).extracting(Expense::getReference)
-                            .contains("EXP-SEED-001")
-                            .doesNotContain("EXP-SEED-002");
+                            .contains(ExpenseSeederForDev.EXPENSE_0.getReference())
+                            .doesNotContain(ExpenseSeederForDev.EXPENSE_1.getReference());
                 });
     }
 
@@ -80,7 +77,7 @@ class ExpenseResourceFT {
                 .expectBody(Expense[].class)
                 .value(expenses -> {
                     assertThat(expenses).isNotNull();
-                    assertThat(expenses.length).isGreaterThanOrEqualTo(2);
+                    assertThat(expenses.length).isGreaterThanOrEqualTo(3);
                 });
     }
 }
