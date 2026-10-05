@@ -2,14 +2,8 @@ package es.upm.miw.apaw.adapters.out.powerofattorney.postgres;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.beans.BeanUtils;
 
 import java.util.UUID;

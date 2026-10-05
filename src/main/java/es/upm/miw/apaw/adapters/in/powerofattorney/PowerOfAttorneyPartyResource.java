@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.in.powerofattorney;
 
+import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.services.powerofattorney.PowerOfAttorneyPartyService;
 import jakarta.validation.Valid;
@@ -18,7 +19,7 @@ public class PowerOfAttorneyPartyResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PowerOfAttorneyParty create(@Valid @RequestBody PowerOfAttorneyParty party) {
+    public PowerOfAttorneyParty create(@Valid @RequestBody CreationPowerOfAttorneyParty party) {
         return this.powerOfAttorneyPartyService.create(party);
     }
 }
