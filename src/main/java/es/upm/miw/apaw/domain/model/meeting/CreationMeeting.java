@@ -36,6 +36,6 @@ public class CreationMeeting {
     @NotEmpty
     private List<@NotNull UUID> legalIssueIds;
 
-    @NotEmpty
+    @NotNull
     private List<@NotNull UUID> participantIds;
 }
