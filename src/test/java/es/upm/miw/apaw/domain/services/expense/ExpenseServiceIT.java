@@ -104,7 +104,12 @@ class ExpenseServiceIT {
         assertThat(expenses).extracting(Expense::getId)
                 .contains(first.getId()).doesNotContain(second.getId());
         assertThat(expenses).filteredOn(expense -> expense.getId().equals(first.getId()))
-                .singleElement().extracting(Expense::getUserSnapshot).isEqualTo(firstUser);
+                .singleElement().extracting(Expense::getUserSnapshot)
+                .isEqualTo(UserSnapshot.builder()
+                        .id(firstUser.getId())
+                        .mobile(firstUser.getMobile())
+                        .firstName(firstUser.getFirstName())
+                        .build());
     }
 
     @Test
