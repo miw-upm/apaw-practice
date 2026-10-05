@@ -69,6 +69,7 @@ public class SupplierService {
     }
 
     public List<Supplier> findAll() {
+        log.debug("Fetching all suppliers ordered by companyName");
         return this.supplierGateway.findAll().stream()
                 .sorted(Comparator.comparing(Supplier::getCompanyName))
                 .toList();
