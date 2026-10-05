@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.ports.out.evidencemanagement.CustodyRecordGateway;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustodyRecordService {
     private final CustodyRecordGateway custodyRecordGateway;
+    private final UserFinder userFinder;
 
     public CustodyRecord create(CustodyRecord custodyRecord) {
+        this.assertCustodianExists(custodyRecord.getCustodian());
         custodyRecord.doDefault();
         return this.custodyRecordGateway.create(custodyRecord);
     }
@@ -29,6 +33,7 @@ public class CustodyRecordService {
 
     public CustodyRecord update(UUID id, CustodyRecord custodyRecord) {
         CustodyRecord existing = this.read(id);
+        this.assertCustodianExists(custodyRecord.getCustodian());
         existing.setDurationMinutes(custodyRecord.getDurationMinutes());
         existing.setAction(custodyRecord.getAction());
         existing.setLocation(custodyRecord.getLocation());
@@ -49,16 +54,28 @@ public class CustodyRecordService {
     }
 
     public CustodyRecord patch(UUID id, CustodyRecord custodyRecord) {
-        if (custodyRecord.getAction() != null && custodyRecord.getAction().isBlank()) {
-            throw new BadRequestException("Custody record action must not be blank");
-        }
         CustodyRecord existing = this.read(id);
-        Optional.ofNullable(custodyRecord.getDurationMinutes()).ifPresent(existing::setDurationMinutes);
-        Optional.ofNullable(custodyRecord.getAction()).ifPresent(existing::setAction);
-        Optional.ofNullable(custodyRecord.getLocation()).ifPresent(existing::setLocation);
-        Optional.ofNullable(custodyRecord.getNotes()).ifPresent(existing::setNotes);
-        Optional.ofNullable(custodyRecord.getCustodian()).ifPresent(existing::setCustodian);
+        if (custodyRecord.getDurationMinutes() != null) {
+            existing.setDurationMinutes(custodyRecord.getDurationMinutes());
+        }
+        if (custodyRecord.getAction() != null) {
+            existing.setAction(custodyRecord.getAction());
+        }
+        if (custodyRecord.getLocation() != null) {
+            existing.setLocation(custodyRecord.getLocation());
+        }
+        if (custodyRecord.getNotes() != null) {
+            existing.setNotes(custodyRecord.getNotes());
+        }
+        if (custodyRecord.getCustodian() != null) {
+            this.assertCustodianExists(custodyRecord.getCustodian());
+            existing.setCustodian(custodyRecord.getCustodian());
+        }
         return this.custodyRecordGateway.update(existing);
+    }
+
+    private void assertCustodianExists(UserSnapshot custodian) {
+        this.userFinder.read(custodian.getId());
     }
 
 }
