@@ -76,6 +76,7 @@ public class SupplierService {
     }
 
     public Supplier patch(UUID id, Supplier patchSupplier) {
+        log.info("Patching supplier with ID: {}", id);
         Supplier supplier = this.read(id);
         if (patchSupplier.getCompanyName() != null) {
             supplier.setCompanyName(patchSupplier.getCompanyName());
