@@ -14,12 +14,12 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
             car.licensePlate,
             r.userId,
             COUNT(r),
-            SUM(r.durationMinutes)
+            COALESCE(SUM(r.durationMinutes), 0L)
         )
         FROM ReservationEntity r
         JOIN r.car car
         GROUP BY car.licensePlate, r.userId
-        ORDER BY SUM(r.durationMinutes) DESC
+        ORDER BY COALESCE(SUM(r.durationMinutes), 0L) DESC
     """)
     List<CarUsageRawReport> findRawCarUsageReport();
 }
