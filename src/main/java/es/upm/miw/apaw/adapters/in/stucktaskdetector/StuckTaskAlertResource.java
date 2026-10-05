@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.stucktaskdetector;
 
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlert;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertCreation;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertFindCriteria;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertPatch;
 import es.upm.miw.apaw.domain.services.stucktaskdetector.StuckTaskAlertService;
 import jakarta.validation.Valid;
@@ -21,6 +22,7 @@ public class StuckTaskAlertResource {
 
     private final StuckTaskAlertService stuckTaskAlertService;
     public static final String ID = "/{id}";
+    public static final String SEARCH = "/search";
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -52,5 +54,10 @@ public class StuckTaskAlertResource {
     @PatchMapping(ID)
     public StuckTaskAlert patch(@PathVariable UUID id, @RequestBody StuckTaskAlertPatch patch) {
         return this.stuckTaskAlertService.patch(id, patch);
+    }
+
+    @GetMapping(SEARCH)
+    public List<StuckTaskAlert> find(@ModelAttribute StuckTaskAlertFindCriteria criteria) {
+        return this.stuckTaskAlertService.find(criteria);
     }
 }
