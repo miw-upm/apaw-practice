@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -64,6 +65,17 @@ public class SupplierAdapter implements SupplierGateway {
     @Override
     public void deleteById(UUID id) {
         this.supplierRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Supplier> findAll() {
+        return this.supplierRepository.findAll().stream()
+                .map(entity -> {
+                    Supplier domain = new Supplier();
+                    BeanUtils.copyProperties(entity, domain);
+                    return domain;
+                })
+                .toList();
     }
 
 }
