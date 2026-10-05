@@ -1,6 +1,5 @@
 package es.upm.miw.apaw.adapters.in.evidencemanagement;
 
-import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
