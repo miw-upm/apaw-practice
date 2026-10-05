@@ -16,13 +16,13 @@ public class MeetingParticipantReport {
     private UserSnapshot userSnapshot;
     private long meetingCount;
     private long legalIssueCount;
-    private long unresolvedLegalIssueCount;
+    private double averageLegalIssuePriority;
 
     public MeetingParticipantReport(
-            UUID userId, long meetingCount, long legalIssueCount, long unresolvedLegalIssueCount) {
+            UUID userId, long meetingCount, long legalIssueCount, double averageLegalIssuePriority) {
         this.userSnapshot = UserSnapshot.builder().id(userId).build();
         this.meetingCount = meetingCount;
         this.legalIssueCount = legalIssueCount;
-        this.unresolvedLegalIssueCount = unresolvedLegalIssueCount;
+        this.averageLegalIssuePriority = averageLegalIssuePriority;
     }
 }
