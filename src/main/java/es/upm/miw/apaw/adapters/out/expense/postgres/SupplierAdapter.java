@@ -45,4 +45,19 @@ public class SupplierAdapter implements SupplierGateway {
         BeanUtils.copyProperties(entity, domain);
         return domain;
     }
+
+    @Override
+    public Supplier update(Supplier supplier) {
+        SupplierEntity entity = new SupplierEntity();
+        BeanUtils.copyProperties(supplier, entity);
+        SupplierEntity saved = this.supplierRepository.save(entity);
+        Supplier result = new Supplier();
+        BeanUtils.copyProperties(saved, result);
+        return result;
+    }
+
+    @Override
+    public boolean existsByTaxIdAndIdNot(String taxId, UUID id) {
+        return this.supplierRepository.existsByTaxIdAndIdNot(taxId, id);
+    }
 }

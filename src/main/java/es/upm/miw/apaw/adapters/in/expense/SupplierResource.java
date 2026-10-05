@@ -32,4 +32,9 @@ public class SupplierResource {
     public Supplier read(@PathVariable final UUID id) {
         return this.supplierService.read(id);
     }
+
+    @PutMapping(ID_ID)
+    public Supplier update(@PathVariable UUID id, @Valid @RequestBody Supplier supplier) {
+        return this.supplierService.update(id, supplier);
+    }
 }

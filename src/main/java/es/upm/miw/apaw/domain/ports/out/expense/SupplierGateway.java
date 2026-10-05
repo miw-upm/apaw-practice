@@ -9,4 +9,6 @@ public interface SupplierGateway {
     Supplier create(Supplier supplier);
     boolean existsByTaxId(String taxId);
     Optional<Supplier> readById(UUID id);
+    Supplier update(Supplier supplier);
+    boolean existsByTaxIdAndIdNot(String taxId, UUID id);
 }
