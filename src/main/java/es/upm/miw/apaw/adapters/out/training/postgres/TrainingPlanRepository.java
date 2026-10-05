@@ -19,6 +19,7 @@ public interface TrainingPlanRepository extends JpaRepository<TrainingPlanEntity
             from TrainingPlanEntity plan
             join plan.courses course
             group by course.online
+            order by sum(course.durationHours) desc
             """)
     java.util.List<TrainingModalityReport> findTrainingModalityReport();
 }
