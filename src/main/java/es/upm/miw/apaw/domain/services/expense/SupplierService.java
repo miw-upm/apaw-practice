@@ -59,8 +59,10 @@ public class SupplierService {
     public void delete(UUID id) {
         this.read(id);
         if (this.expenseGateway.isSupplierInUse(id)) {
+            log.warn("Cannot delete supplier {}: currently referenced by expenses", id);
             throw new ConflictException("Cannot delete supplier in use by an expense: " + id);
         }
+        log.info("Deleting supplier with ID: {}", id);
         this.supplierGateway.deleteById(id);
     }
 }
