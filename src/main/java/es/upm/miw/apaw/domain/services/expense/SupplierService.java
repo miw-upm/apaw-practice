@@ -74,4 +74,25 @@ public class SupplierService {
                 .sorted(Comparator.comparing(Supplier::getCompanyName))
                 .toList();
     }
+
+    public Supplier patch(UUID id, Supplier patchSupplier) {
+        log.info("Patching supplier with ID: {}", id);
+        Supplier supplier = this.read(id);
+        if (patchSupplier.getCompanyName() != null) {
+            supplier.setCompanyName(patchSupplier.getCompanyName());
+        }
+        if (patchSupplier.getAddress() != null) {
+            supplier.setAddress(patchSupplier.getAddress());
+        }
+        if (patchSupplier.getContactEmail() != null) {
+            supplier.setContactEmail(patchSupplier.getContactEmail());
+        }
+        if (patchSupplier.getCorporatePhone() != null) {
+            supplier.setCorporatePhone(patchSupplier.getCorporatePhone());
+        }
+        if (patchSupplier.getPaymentTermsDays() != null) {
+            supplier.setPaymentTermsDays(patchSupplier.getPaymentTermsDays());
+        }
+        return this.supplierGateway.update(supplier);
+    }
 }

@@ -49,4 +49,9 @@ public class SupplierResource {
     public List<Supplier> findAll() {
         return this.supplierService.findAll();
     }
+
+    @PatchMapping(ID_ID)
+    public Supplier patch(@PathVariable UUID id, @RequestBody Supplier supplier) {
+        return this.supplierService.patch(id, supplier);
+    }
 }
