@@ -12,8 +12,8 @@ public class SurveyQuestionAdapter implements SurveyQuestionGateway {
 
     @Override
     public SurveyQuestion create(SurveyQuestion surveyQuestion) {
-        SurveyQuestionEntity entity = new SurveyQuestionEntity(surveyQuestion);
-        SurveyQuestionEntity saved = this.surveyQuestionRepository.save(entity);
-        return saved.toDomain();
+        return this.surveyQuestionRepository
+                .save(new SurveyQuestionEntity(surveyQuestion))
+                .toDomain();
     }
 }
