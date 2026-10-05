@@ -10,15 +10,15 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     boolean existsByCarId(UUID carId);
 
     @Query("""
-        SELECT new es.upm.miw.apaw.adapters.out.carreservation.postgres.UserReservationAggregation(
-            c.registration,
+        SELECT new es.upm.miw.apaw.adapters.out.carreservation.postgres.CarUsageRawReport(
+            car.licensePlate,
             r.userId,
             COUNT(r),
             SUM(r.durationMinutes)
         )
         FROM ReservationEntity r
-        JOIN r.car c
-        GROUP BY c.registration, r.userId
+        JOIN r.car car
+        GROUP BY car.licensePlate, r.userId
         ORDER BY SUM(r.durationMinutes) DESC
     """)
     List<CarUsageRawReport> findRawCarUsageReport();

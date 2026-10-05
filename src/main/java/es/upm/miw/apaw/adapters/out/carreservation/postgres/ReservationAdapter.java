@@ -50,7 +50,10 @@ public class ReservationAdapter implements ReservationGateway {
         return rawResults.stream()
                 .map(raw -> CarUsageReport.builder()
                         .carRegistration(raw.getCarRegistration())
-                        .userSnapshot(userMap.get(raw.getUserId()))
+                        .userSnapshot(userMap.getOrDefault(
+                                raw.getUserId(),
+                                UserSnapshot.builder().id(raw.getUserId()).build()
+                        ))
                         .totalReservations(raw.getTotalReservations())
                         .totalDurationMinutes(raw.getTotalDurationMinutes())
                         .build())
