@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Service
 public class SupplierService {
 
@@ -19,25 +22,34 @@ public class SupplierService {
         this.supplierGateway = supplierGateway;
     }
 
-    public Supplier create(Supplier supplier) {
+    public Supplier create(final Supplier supplier) {
         if (this.supplierGateway.existsByTaxId(supplier.getTaxId())) {
+            log.warn("Attempted to create supplier with existing taxId: {}", supplier.getTaxId());
             throw new ConflictException("Supplier taxId already exists: " + supplier.getTaxId());
         }
         supplier.doDefault();
-        return this.supplierGateway.create(supplier);
+        Supplier created = this.supplierGateway.create(supplier);
+        log.info("Successfully created supplier with ID: {}", created.getId());
+        return created;
     }
 
-    public Supplier read(UUID id) {
+    public Supplier read(final UUID id) {
+        log.debug("Reading supplier with ID: {}", id);
         return this.supplierGateway.readById(id)
-                .orElseThrow(() -> new NotFoundException("Supplier id not found: " + id));
+                .orElseThrow(() -> {
+                    log.warn("Supplier not found with ID: {}", id);
+                    return new NotFoundException("Supplier id not found: " + id);
+                });
     }
 
     public Supplier update(UUID id, Supplier supplier) {
         Supplier existing = this.read(id);
         if (this.supplierGateway.existsByTaxIdAndIdNot(supplier.getTaxId(), id)) {
+            log.warn("Cannot update supplier {}: taxId {} already used by another entity", id, supplier.getTaxId());
             throw new ConflictException("TaxId already exists for another supplier: " + supplier.getTaxId());
         }
         supplier.setId(existing.getId());
+        log.info("Updating supplier with ID: {}", id);
         return this.supplierGateway.update(supplier);
     }
 }

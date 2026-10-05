@@ -37,11 +37,13 @@ public class SupplierAdapter implements SupplierGateway {
     @Override
     public Optional<Supplier> readById(UUID id) {
         return this.supplierRepository.findById(id)
-                .map(entity -> {
-                    Supplier domain = new Supplier();
-                    BeanUtils.copyProperties(entity, domain);
-                    return domain;
-                });
+                .map(this::toDomain);
+    }
+
+    private Supplier toDomain(SupplierEntity entity) {
+        Supplier domain = new Supplier();
+        BeanUtils.copyProperties(entity, domain);
+        return domain;
     }
 
     @Override
