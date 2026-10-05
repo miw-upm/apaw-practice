@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.functionaltests.expense;
 
 import es.upm.miw.apaw.adapters.in.expense.SupplierResource;
+import es.upm.miw.apaw.config.seeders.ExpenseSeederForDev;
 import es.upm.miw.apaw.domain.model.expense.Supplier;
 import es.upm.miw.apaw.domain.model.expense.SupplierExpenseReport;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,7 @@ class SupplierResourceFT {
     @Test
     void testReadSuccess() {
         this.webTestClient.get()
-                .uri(SupplierResource.SUPPLIERS + SupplierResource.ID_ID, SupplierSeederForDev.SUPPLIER_1_ID)
+                .uri(SupplierResource.SUPPLIERS + SupplierResource.ID_ID, ExpenseSeederForDev.SUPPLIER_ID_0)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Supplier.class)
@@ -88,7 +89,7 @@ class SupplierResourceFT {
                 .build();
 
         this.webTestClient.patch()
-                .uri(SupplierResource.SUPPLIERS + SupplierResource.ID_ID, SupplierSeederForDev.SUPPLIER_2_ID)
+                .uri(SupplierResource.SUPPLIERS + SupplierResource.ID_ID, ExpenseSeederForDev.SUPPLIER_ID_1)
                 .bodyValue(patchSupplier)
                 .exchange()
                 .expectStatus().isOk()

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.SupplierSeederForDev.SUPPLIER_1_ID;
+import static es.upm.miw.apaw.config.seeders.ExpenseSeederForDev.SUPPLIER_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
@@ -54,7 +54,7 @@ class ExpenseServiceIT {
                 .amount(new BigDecimal("150.50"))
                 .description("Office supplies purchase")
                 .category("Supplies")
-                .supplierId(SUPPLIER_1_ID)
+                .supplierId(SUPPLIER_ID_0)
                 .applicantId(user.getId())
                 .build();
 
@@ -66,12 +66,12 @@ class ExpenseServiceIT {
         assertThat(expense.getReference()).isEqualTo(creation.getReference());
         assertThat(expense.getExpenseDate()).isEqualTo(LocalDate.now());
         assertThat(expense.getIsPaid()).isFalse();
-        assertThat(expense.getSupplier().getId()).isEqualTo(SUPPLIER_1_ID);
+        assertThat(expense.getSupplier().getId()).isEqualTo(SUPPLIER_ID_0);
         assertThat(expense.getUserSnapshot()).isEqualTo(user);
 
         ExpenseEntity entity = this.expenseRepository.findById(expense.getId()).orElseThrow();
         assertThat(entity.getReference()).isEqualTo(creation.getReference());
-        assertThat(entity.getSupplierEntity().getId()).isEqualTo(SUPPLIER_1_ID);
+        assertThat(entity.getSupplierEntity().getId()).isEqualTo(SUPPLIER_ID_0);
         assertThat(entity.getUserId()).isEqualTo(user.getId());
     }
 
@@ -123,7 +123,7 @@ class ExpenseServiceIT {
                 .reference("EXP-DUP-REF")
                 .amount(BigDecimal.TEN)
                 .description("Duplicate test")
-                .supplierId(SUPPLIER_1_ID)
+                .supplierId(SUPPLIER_ID_0)
                 .applicantId(user.getId())
                 .build();
 
@@ -164,7 +164,7 @@ class ExpenseServiceIT {
                 .reference("EXP-" + UUID.randomUUID())
                 .amount(BigDecimal.TEN)
                 .description("Find Criteria test")
-                .supplierId(SUPPLIER_1_ID)
+                .supplierId(SUPPLIER_ID_0)
                 .applicantId(userId)
                 .build();
     }
