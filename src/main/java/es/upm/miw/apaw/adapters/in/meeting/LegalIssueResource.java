@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.meeting;
 
 import es.upm.miw.apaw.domain.model.meeting.LegalIssue;
 import es.upm.miw.apaw.domain.model.meeting.LegalIssueResolvedUpdate;
+import es.upm.miw.apaw.domain.model.meeting.MeetingParticipantReport;
 import es.upm.miw.apaw.domain.services.meeting.LegalIssueService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class LegalIssueResource {
     public static final String LEGAL_ISSUES = "/legal-issues";
     public static final String ID = "/{id}";
+    public static final String REPORT = "/report";
 
     private final LegalIssueService legalIssueService;
 
@@ -31,6 +33,11 @@ public class LegalIssueResource {
     @GetMapping
     public List<LegalIssue> findAll() {
         return this.legalIssueService.findAll();
+    }
+
+    @GetMapping(REPORT)
+    public List<MeetingParticipantReport> findParticipantReport() {
+        return this.legalIssueService.findParticipantReport();
     }
 
     @GetMapping(ID)

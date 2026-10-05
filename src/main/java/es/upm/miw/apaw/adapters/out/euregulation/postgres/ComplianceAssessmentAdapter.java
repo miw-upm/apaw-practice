@@ -1,6 +1,10 @@
 package es.upm.miw.apaw.adapters.out.euregulation.postgres;
 
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
+import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
+import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
+import es.upm.miw.apaw.domain.model.euregulation.RiskExposureReport;
 import es.upm.miw.apaw.domain.ports.out.euregulation.ComplianceAssessmentGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -67,5 +71,29 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
         return this.complianceAssessmentRepository.findAllByOrderByAssessmentDateAscIdAsc().stream()
                 .map(ComplianceAssessmentEntity::toDomain)
                 .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ComplianceByAreaReport> findComplianceByAreaReport() {
+        return this.complianceAssessmentRepository.findComplianceByAreaReport();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OverdueAssessmentReport> findOverdueAssessmentReport() {
+        return this.complianceAssessmentRepository.findOverdueAssessmentReport();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<LawyerProductivityReport> findLawyerProductivityReport() {
+        return this.complianceAssessmentRepository.findLawyerProductivityReport();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RiskExposureReport> findRiskExposureReport() {
+        return this.complianceAssessmentRepository.findRiskExposureReport();
     }
 }

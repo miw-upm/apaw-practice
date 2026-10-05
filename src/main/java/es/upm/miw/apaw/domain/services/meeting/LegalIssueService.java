@@ -3,22 +3,29 @@ package es.upm.miw.apaw.domain.services.meeting;
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.meeting.LegalIssue;
 import es.upm.miw.apaw.domain.model.meeting.LegalIssueResolvedUpdate;
+import es.upm.miw.apaw.domain.model.meeting.MeetingParticipantReport;
 import es.upm.miw.apaw.domain.ports.out.meeting.LegalIssueGateway;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class LegalIssueService {
     private final LegalIssueGateway legalIssueGateway;
+    private final UserFinder userFinder;
 
     public LegalIssue create(LegalIssue legalIssue) {
         if (this.legalIssueGateway.existsByTitle(legalIssue.getTitle())) {
@@ -30,6 +37,37 @@ public class LegalIssueService {
 
     public List<LegalIssue> findAll() {
         return this.legalIssueGateway.findAll();
+    }
+
+    public List<MeetingParticipantReport> findParticipantReport() {
+        List<MeetingParticipantReport> reports = this.legalIssueGateway.findParticipantReport();
+        if (reports.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = reports.stream()
+                .map(report -> report.getUserSnapshot().getId())
+                .collect(Collectors.toSet());
+        return this.toSummaries(reports, this.userFinder.findByIds(userIds));
+    }
+
+    private List<MeetingParticipantReport> toSummaries(
+            List<MeetingParticipantReport> reports, List<UserSnapshot> users) {
+        Map<UUID, UserSnapshot> usersById = users.stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        return reports.stream()
+                .map(report -> this.enrichUserSnapshot(report, usersById))
+                .toList();
+    }
+
+    private MeetingParticipantReport enrichUserSnapshot(
+            MeetingParticipantReport report, Map<UUID, UserSnapshot> usersById) {
+        UUID userId = report.getUserSnapshot().getId();
+        UserSnapshot user = usersById.get(userId);
+        if (user == null) {
+            throw new NotFoundException("User id not found: " + userId);
+        }
+        report.setUserSnapshot(user);
+        return report;
     }
 
     public LegalIssue read(UUID id) {

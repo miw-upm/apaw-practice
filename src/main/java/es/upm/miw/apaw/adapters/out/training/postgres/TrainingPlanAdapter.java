@@ -60,10 +60,6 @@ public class TrainingPlanAdapter implements TrainingPlanGateway {
             specification = specification.and((root, query, builder) ->
                     builder.equal(root.get("evaluationScore"), criteria.getEvaluationScore()));
         }
-        if (criteria.hasIsCompleted()) {
-            specification = specification.and((root, query, builder) ->
-                    builder.equal(root.get("isCompleted"), criteria.getIsCompleted()));
-        }
         specification = this.addCourseName(specification, criteria.getCourseName());
         return specification;
     }

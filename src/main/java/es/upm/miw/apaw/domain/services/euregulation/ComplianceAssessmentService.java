@@ -5,7 +5,9 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentPatch;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
+import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
 import es.upm.miw.apaw.domain.ports.out.euregulation.ComplianceAssessmentGateway;
 import es.upm.miw.apaw.domain.ports.out.euregulation.EURegulationGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -46,6 +48,14 @@ public class ComplianceAssessmentService {
 
     public List<ComplianceAssessment> findAll() {
         return this.complianceAssessmentGateway.findAll();
+    }
+
+    public List<ComplianceByAreaReport> findComplianceByAreaReport() {
+        return this.complianceAssessmentGateway.findComplianceByAreaReport();
+    }
+
+    public List<LawyerProductivityReport> findLawyerProductivityReport() {
+        return this.complianceAssessmentGateway.findLawyerProductivityReport();
     }
 
     public ComplianceAssessment update(

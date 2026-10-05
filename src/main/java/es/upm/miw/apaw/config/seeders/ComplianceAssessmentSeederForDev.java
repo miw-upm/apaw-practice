@@ -29,9 +29,13 @@ import java.util.UUID;
 public class ComplianceAssessmentSeederForDev implements ApplicationRunner {
 
     private static final String ASSESSMENT_ID_PREFIX = "eeeeeeee-1111-2222-3333-44445555";
-    private static final UUID USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+    public static final UUID USER_ID = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000");
+    public static final UUID USER_ID_1 = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
     public static final UUID ID_0 = UUID.fromString(ASSESSMENT_ID_PREFIX + "0000");
     public static final UUID ID_1 = UUID.fromString(ASSESSMENT_ID_PREFIX + "0001");
+    public static final UUID ID_2 = UUID.fromString(ASSESSMENT_ID_PREFIX + "0002");
+    public static final UUID ID_3 = UUID.fromString(ASSESSMENT_ID_PREFIX + "0003");
+    public static final UUID ID_4 = UUID.fromString(ASSESSMENT_ID_PREFIX + "0004");
 
     private final ComplianceAssessmentRepository complianceAssessmentRepository;
     private final EURegulationRepository euRegulationRepository;
@@ -40,7 +44,8 @@ public class ComplianceAssessmentSeederForDev implements ApplicationRunner {
     @Transactional
     public void run(ApplicationArguments args) {
         List<ComplianceAssessmentEntity> assessments = List.of(
-                        this.assessment0(), this.assessment1()).stream()
+                        this.assessment0(), this.assessment1(), this.assessment2(),
+                        this.assessment3(), this.assessment4()).stream()
                 .filter(assessment -> !this.complianceAssessmentRepository.existsById(assessment.getId()))
                 .toList();
         this.complianceAssessmentRepository.saveAll(assessments);
@@ -84,6 +89,62 @@ public class ComplianceAssessmentSeederForDev implements ApplicationRunner {
         List<EURegulationEntity> regulations = List.of(
                 this.getEURegulation(EURegulationSeederForDev.REFERENCE_NUMBER_1),
                 this.getEURegulation(EURegulationSeederForDev.REFERENCE_NUMBER_2));
+        return new ComplianceAssessmentEntity(assessment, regulations);
+    }
+
+    private ComplianceAssessmentEntity assessment2() {
+        ComplianceAssessment assessment = ComplianceAssessment.builder()
+                .id(ID_2)
+                .responsibleLawyer("Laura García")
+                .assessmentDate(LocalDate.now())
+                .complianceDeadline(LocalDate.now().plusDays(10))
+                .correctiveActions("Maintain evidence of GDPR compliance controls.")
+                .supportingDocumentation("GDPR compliance review")
+                .notes("Compliant low-risk follow-up assessment")
+                .aiGenerated(true)
+                .complianceLevel(ComplianceLevel.COMPLIANT)
+                .riskLevel(RiskLevel.LOW)
+                .userSnapshot(UserSnapshot.builder().id(USER_ID).build())
+                .build();
+        List<EURegulationEntity> regulations = List.of(
+                this.getEURegulation(EURegulationSeederForDev.REFERENCE_NUMBER_0));
+        return new ComplianceAssessmentEntity(assessment, regulations);
+    }
+
+    private ComplianceAssessmentEntity assessment3() {
+        ComplianceAssessment assessment = ComplianceAssessment.builder()
+                .id(ID_3)
+                .responsibleLawyer("Miguel Torres")
+                .assessmentDate(LocalDate.now())
+                .complianceDeadline(LocalDate.now().plusDays(5))
+                .correctiveActions("Address outstanding GDPR control deficiencies.")
+                .supportingDocumentation("GDPR remediation review")
+                .notes("Non-compliant high-risk assessment")
+                .aiGenerated(false)
+                .complianceLevel(ComplianceLevel.NON_COMPLIANT)
+                .riskLevel(RiskLevel.HIGH)
+                .userSnapshot(UserSnapshot.builder().id(USER_ID_1).build())
+                .build();
+        List<EURegulationEntity> regulations = List.of(
+                this.getEURegulation(EURegulationSeederForDev.REFERENCE_NUMBER_0));
+        return new ComplianceAssessmentEntity(assessment, regulations);
+    }
+
+    private ComplianceAssessmentEntity assessment4() {
+        ComplianceAssessment assessment = ComplianceAssessment.builder()
+                .id(ID_4)
+                .responsibleLawyer("Miguel Torres")
+                .assessmentDate(LocalDate.now())
+                .correctiveActions("Continue monitoring AI governance obligations.")
+                .supportingDocumentation("AI Act compliance review")
+                .notes("Compliant low-risk AI Act assessment")
+                .aiGenerated(true)
+                .complianceLevel(ComplianceLevel.COMPLIANT)
+                .riskLevel(RiskLevel.LOW)
+                .userSnapshot(UserSnapshot.builder().id(USER_ID_1).build())
+                .build();
+        List<EURegulationEntity> regulations = List.of(
+                this.getEURegulation(EURegulationSeederForDev.REFERENCE_NUMBER_1));
         return new ComplianceAssessmentEntity(assessment, regulations);
     }
 

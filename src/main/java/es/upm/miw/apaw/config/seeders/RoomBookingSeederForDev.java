@@ -28,8 +28,9 @@ import java.util.UUID;
 public class RoomBookingSeederForDev implements ApplicationRunner {
 
     public static final String PREFIX = "11111111-2222-3333-4444-55555555";
+    public static final String USER_PREFIX = "aaaaaaaa-bbbb-cccc-dddd-eeeeffff";
 
-    public static final UUID USER_ID_0 = UUID.fromString(PREFIX + "9000");
+    public static final UUID USER_ID_0 = UUID.fromString(USER_PREFIX + "0000");
 
     public static final UUID ROOM_ID_0 = UUID.fromString(PREFIX + "0000");
     public static final Room ROOM_0 = Room.builder()
@@ -80,11 +81,19 @@ public class RoomBookingSeederForDev implements ApplicationRunner {
             .endDateTime(LocalDateTime.of(2026, 11, 1, 18, 0))
             .createdAt(LocalDateTime.of(2025, 1, 15, 9, 0))
             .room(ROOM_0)
-            .userSnapshot(UserSnapshot.builder().id(USER_ID_0).build())
+            .userSnapshot(user("0000", "600000100", "cliente0"))
             .build();
 
     private final RoomRepository roomRepository;
     private final BookingRepository bookingRepository;
+
+    private static UserSnapshot user(String idSuffix, String mobile, String firstName) {
+        return UserSnapshot.builder()
+                .id(UUID.fromString(USER_PREFIX + idSuffix))
+                .mobile(mobile)
+                .firstName(firstName)
+                .build();
+    }
 
     @Override
     @Transactional

@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.model.survey;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,8 +18,10 @@ public class Survey {
     @EqualsAndHashCode.Include
     private UUID id;
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String description;
 
     private LocalDate createdDate;
@@ -37,10 +40,6 @@ public class Survey {
         if (this.language == null) {
             this.language = "Spanish";
         }
-    }
-
-    public boolean isSubmitted() {
-        return this.submittedDate != null;
     }
 
     public Survey ofSummary() {

@@ -2,10 +2,7 @@ package es.upm.miw.apaw.domain.services.contract;
 
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.contract.Clause;
-import es.upm.miw.apaw.domain.model.contract.Contract;
-import es.upm.miw.apaw.domain.model.contract.ContractExpirationReport;
-import es.upm.miw.apaw.domain.model.contract.CreationContract;
+import es.upm.miw.apaw.domain.model.contract.*;
 import es.upm.miw.apaw.domain.ports.out.contract.ClauseGateway;
 import es.upm.miw.apaw.domain.ports.out.contract.ContractGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -18,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,8 +69,69 @@ public class ContractService {
                 .toList();
     }
 
+    public List<Contract> find(ContractFindCriteria criteria) {
+        List<Contract> contracts = this.contractGateway.find(criteria);
+
+        if (contracts.isEmpty()) {
+            return List.of();
+        }
+
+        Set<UUID> userIds = contracts.stream()
+                .map(contract -> contract.getUserSnapshot().getId())
+                .collect(Collectors.toSet());
+
+        return this.toSummaries(
+                criteria,
+                contracts,
+                this.userFinder.findByIds(userIds)
+        );
+    }
+
     private Clause readClause(UUID id) {
         return this.clauseGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Clause id not found: " + id));
+    }
+
+    private List<Contract> toSummaries(
+            ContractFindCriteria criteria,
+            List<Contract> contracts,
+            List<UserSnapshot> users) {
+
+        Map<UUID, UserSnapshot> usersById = users.stream()
+                .collect(Collectors.toMap(
+                        UserSnapshot::getId,
+                        Function.identity()
+                ));
+
+        return contracts.stream()
+                .map(contract -> this.enrichUserSnapshot(contract, usersById))
+                .filter(contract -> this.matchesUserCity(criteria, contract))
+                .map(Contract::ofSummary)
+                .toList();
+    }
+
+    private Contract enrichUserSnapshot(
+            Contract contract,
+            Map<UUID, UserSnapshot> usersById) {
+
+        UUID userId = contract.getUserSnapshot().getId();
+        UserSnapshot user = usersById.get(userId);
+
+        if (user == null) {
+            throw new NotFoundException("User id not found: " + userId);
+        }
+
+        contract.setUserSnapshot(user);
+
+        return contract;
+    }
+
+    private boolean matchesUserCity(
+            ContractFindCriteria criteria,
+            Contract contract) {
+
+        return !criteria.hasUserCity()
+                || criteria.getUserCity()
+                .equals(contract.getUserSnapshot().getCity());
     }
 }
