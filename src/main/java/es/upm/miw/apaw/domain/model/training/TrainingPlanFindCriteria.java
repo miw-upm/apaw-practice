@@ -15,23 +15,17 @@ public class TrainingPlanFindCriteria {
 
     private BigDecimal evaluationScore;
     
-    private Boolean isCompleted;
-    
     private String courseName;
     
     private String userFirstName;
 
     public boolean isAll() {
-        return !this.hasEvaluationScore() && !this.hasIsCompleted()
+        return !this.hasEvaluationScore()
                 && !this.hasCourseName() && !this.hasUserFirstName();
     }
 
     public boolean hasEvaluationScore() {
         return this.evaluationScore != null;
-    }
-
-    public boolean hasIsCompleted() {
-        return this.isCompleted != null;
     }
 
     public boolean hasCourseName() {

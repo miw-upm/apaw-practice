@@ -2,6 +2,8 @@ package es.upm.miw.apaw.config.seeders;
 
 import es.upm.miw.apaw.adapters.out.carreservation.postgres.CarEntity;
 import es.upm.miw.apaw.adapters.out.carreservation.postgres.CarRepository;
+import es.upm.miw.apaw.adapters.out.carreservation.postgres.ReservationEntity;
+import es.upm.miw.apaw.adapters.out.carreservation.postgres.ReservationRepository;
 import es.upm.miw.apaw.domain.model.carreservation.Car;
 import es.upm.miw.apaw.domain.model.carreservation.FuelType;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,6 +86,8 @@ public class CarReservationSeederForDev implements ApplicationRunner {
 
     private final CarRepository carRepository;
 
+    private final ReservationRepository reservationRepository;
+
     @Override
     @Transactional
     public void run(ApplicationArguments args) {
@@ -90,12 +95,51 @@ public class CarReservationSeederForDev implements ApplicationRunner {
     }
 
     private void seed() {
-        log.warn("------- Initial Load from JAVA (Car) -----------");
+        log.warn("------- Initial Load from JAVA (Car & Reservation) -----------");
+
         List<CarEntity> cars = List.of(CAR_0, CAR_1, CAR_2, CAR_3, CAR_4).stream()
                 .filter(car -> !this.carRepository.existsById(car.getId()))
                 .map(CarEntity::new)
                 .toList();
         this.carRepository.saveAll(cars);
         log.warn("        ------- cars: {} added", cars.size());
+
+        if (this.reservationRepository.count() == 0) {
+            CarEntity car0Entity = this.carRepository.findById(ID_0).orElseThrow();
+            CarEntity car1Entity = this.carRepository.findById(ID_1).orElseThrow();
+
+            UUID user1 = UUID.fromString("00000000-0000-0000-0000-000000000001");
+            UUID user2 = UUID.fromString("00000000-0000-0000-0000-000000000002");
+
+            ReservationEntity res0 = ReservationEntity.builder()
+                    .id(UUID.randomUUID())
+                    .date(LocalDate.now())
+                    .startTime(LocalTime.of(9, 0))
+                    .endTime(LocalTime.of(10, 30))
+                    .durationMinutes(90)
+                    .car(car0Entity)
+                    .userId(user1)
+                    .businessTrip(true)
+                    .passengerCount(2)
+                    .destination("Madrid")
+                    .build();
+
+            ReservationEntity res1 = ReservationEntity.builder()
+                    .id(UUID.randomUUID())
+                    .date(LocalDate.now())
+                    .startTime(LocalTime.of(11, 0))
+                    .endTime(LocalTime.of(12, 0))
+                    .durationMinutes(60)
+                    .car(car1Entity)
+                    .userId(user2)
+                    .businessTrip(false)
+                    .passengerCount(1)
+                    .destination("Barcelona")
+                    .build();
+
+            List<ReservationEntity> reservations = List.of(res0, res1);
+            this.reservationRepository.saveAll(reservations);
+            log.warn("        ------- reservations: {} added", reservations.size());
+        }
     }
 }

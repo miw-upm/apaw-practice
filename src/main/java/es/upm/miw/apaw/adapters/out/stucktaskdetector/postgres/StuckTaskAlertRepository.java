@@ -1,14 +1,18 @@
 package es.upm.miw.apaw.adapters.out.stucktaskdetector.postgres;
 
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRuleAlertReport;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface StuckTaskAlertRepository extends JpaRepository<StuckTaskAlertEntity, UUID> {
+public interface StuckTaskAlertRepository extends JpaRepository<StuckTaskAlertEntity, UUID>,
+        JpaSpecificationExecutor<StuckTaskAlertEntity> {
     boolean existsByReference(String reference);
 
     @EntityGraph(attributePaths = "stuckTaskRule")
@@ -28,4 +32,7 @@ public interface StuckTaskAlertRepository extends JpaRepository<StuckTaskAlertEn
         """)
     List<StuckTaskRuleAlertReport> findStuckTaskRuleAlertReport();
 
+    @Override
+    @EntityGraph(attributePaths = "stuckTaskRule")
+    List<StuckTaskAlertEntity> findAll(Specification<StuckTaskAlertEntity> specification, Sort sort);
 }

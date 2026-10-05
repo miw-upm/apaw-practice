@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.ports.out.stucktaskdetector;
 
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlert;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertFindCriteria;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRuleAlertReport;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface StuckTaskAlertGateway {
     void delete(UUID id);
 
     List<StuckTaskAlert> findAll();
+
+    List<StuckTaskAlert> find(StuckTaskAlertFindCriteria criteria);
 }
