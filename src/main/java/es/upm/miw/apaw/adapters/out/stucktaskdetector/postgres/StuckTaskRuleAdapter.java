@@ -1,11 +1,12 @@
 package es.upm.miw.apaw.adapters.out.stucktaskdetector.postgres;
 
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRule;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRuleAlertReport;
 import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskRuleGateway;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 public class StuckTaskRuleAdapter implements StuckTaskRuleGateway {
 
     private final StuckTaskRuleRepository stuckTaskRuleRepository;
+    private final StuckTaskAlertRepository stuckTaskAlertRepository;
 
     @Override
     public Optional<StuckTaskRule> read(UUID id) {
@@ -29,5 +31,10 @@ public class StuckTaskRuleAdapter implements StuckTaskRuleGateway {
     @Override
     public boolean existsByName(String name) {
         return this.stuckTaskRuleRepository.existsByName(name);
+    }
+
+    @Override
+    public List<StuckTaskRuleAlertReport> findAlertReport() {
+        return this.stuckTaskAlertRepository.findStuckTaskRuleAlertReport();
     }
 }

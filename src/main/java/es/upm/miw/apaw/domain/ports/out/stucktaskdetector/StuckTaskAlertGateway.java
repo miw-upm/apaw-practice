@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.ports.out.stucktaskdetector;
 
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlert;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRuleAlertReport;
 
 import java.util.List;
 import java.util.Optional;
