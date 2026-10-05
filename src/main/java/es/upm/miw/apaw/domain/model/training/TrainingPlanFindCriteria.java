@@ -1,4 +1,4 @@
-﻿package es.upm.miw.apaw.domain.model.training;
+package es.upm.miw.apaw.domain.model.training;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
