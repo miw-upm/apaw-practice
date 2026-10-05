@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.expense.CreationExpense;
 import es.upm.miw.apaw.domain.model.expense.Expense;
+import es.upm.miw.apaw.domain.model.expense.ExpenseFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.SupplierSeederForDev.SUPPLIER_1_ID;
@@ -74,6 +77,38 @@ class ExpenseServiceIT {
 
     @Test
     @Transactional
+    void testFindByUserMobile() {
+        UserSnapshot firstUser = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .mobile("600000100")
+                .firstName("cliente0")
+                .build();
+        UserSnapshot secondUser = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001"))
+                .mobile("600000101")
+                .firstName("cliente1")
+                .build();
+
+        when(this.userFinder.read(firstUser.getId())).thenReturn(firstUser);
+        when(this.userFinder.read(secondUser.getId())).thenReturn(secondUser);
+
+        Expense first = this.expenseService.create(this.creation(firstUser.getId()));
+        Expense second = this.expenseService.create(this.creation(secondUser.getId()));
+
+        when(this.userFinder.findByIds(Set.of(firstUser.getId(), secondUser.getId())))
+                .thenReturn(List.of(firstUser, secondUser));
+
+        List<Expense> expenses = this.expenseService.find(
+                ExpenseFindCriteria.builder().unpaid(true).userMobile(firstUser.getMobile()).build());
+
+        assertThat(expenses).extracting(Expense::getId)
+                .contains(first.getId()).doesNotContain(second.getId());
+        assertThat(expenses).filteredOn(expense -> expense.getId().equals(first.getId()))
+                .singleElement().extracting(Expense::getUserSnapshot).isEqualTo(firstUser);
+    }
+
+    @Test
+    @Transactional
     void testCreateDuplicateReference() {
         UserSnapshot user = UserSnapshot.builder()
                 .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
@@ -117,5 +152,15 @@ class ExpenseServiceIT {
         assertThatThrownBy(() -> this.expenseService.create(creation))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining(missingSupplierId.toString());
+    }
+
+    private CreationExpense creation(UUID userId) {
+        return CreationExpense.builder()
+                .reference("EXP-" + UUID.randomUUID())
+                .amount(BigDecimal.TEN)
+                .description("Find Criteria test")
+                .supplierId(SUPPLIER_1_ID)
+                .applicantId(userId)
+                .build();
     }
 }
