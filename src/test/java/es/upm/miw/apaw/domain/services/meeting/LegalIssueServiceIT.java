@@ -218,7 +218,7 @@ class LegalIssueServiceIT {
                     assertThat(report.getUserSnapshot().getFirstName()).isNotNull();
                     assertThat(report.getMeetingCount()).isGreaterThanOrEqualTo(2);
                 });
-        assertThat(reports).extracting(MeetingParticipantReport::getUnresolvedLegalIssueCount)
+        assertThat(reports).extracting(MeetingParticipantReport::getLegalIssueCount)
                 .isSortedAccordingTo(Comparator.reverseOrder());
         verify(this.userFinder, times(1)).findByIds(any());
         verify(this.userFinder, never()).read(any());
