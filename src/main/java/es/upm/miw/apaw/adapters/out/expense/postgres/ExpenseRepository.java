@@ -6,4 +6,5 @@ import java.util.UUID;
 
 public interface ExpenseRepository extends JpaRepository<ExpenseEntity, UUID> {
     boolean existsBySupplierEntity_Id(UUID supplierId);
+    boolean existsByReference(String reference);
 }

@@ -10,13 +10,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Builder
+@Entity
+@Table(name = "expenses")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "expense")
+@Builder
 public class ExpenseEntity {
+
     @Id
     private UUID id;
 
@@ -30,14 +31,17 @@ public class ExpenseEntity {
     private String description;
 
     private LocalDate expenseDate;
+
     private String category;
+
     private Boolean isPaid;
 
-    // 显式配置 fetch = FetchType.LAZY 遵循老师的硬性要求
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id")
+    @JoinColumn(name = "supplier_id", nullable = false)
     private SupplierEntity supplierEntity;
 
-    // UserSnapshot 属于跨服务微服务数据，在数据库本地只存 userId (UUID)
-    private UUID userId;
+    private UUID applicantId;
+    private String applicantFirstName;
+    private String applicantFamilyName;
+    private String applicantEmail;
 }
