@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.functionaltests.expense;
 
 import es.upm.miw.apaw.adapters.in.expense.SupplierResource;
-import es.upm.miw.apaw.config.seeders.SupplierSeederForDev;
 import es.upm.miw.apaw.domain.model.expense.Supplier;
 import es.upm.miw.apaw.domain.model.expense.SupplierExpenseReport;
 import org.junit.jupiter.api.BeforeEach;
