@@ -8,6 +8,8 @@ import es.upm.miw.apaw.domain.ports.out.expense.SupplierGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 
 import lombok.extern.log4j.Log4j2;
@@ -64,5 +66,11 @@ public class SupplierService {
         }
         log.info("Deleting supplier with ID: {}", id);
         this.supplierGateway.deleteById(id);
+    }
+
+    public List<Supplier> findAll() {
+        return this.supplierGateway.findAll().stream()
+                .sorted(Comparator.comparing(Supplier::getCompanyName))
+                .toList();
     }
 }
