@@ -57,6 +57,7 @@ public class Expense {
                 .isPaid(this.isPaid)
                 .userSnapshot(this.userSnapshot != null ? UserSnapshot.builder()
                         .id(this.userSnapshot.getId())
+                        .mobile(this.userSnapshot.getMobile()) // 👈 补上 mobile 字段
                         .firstName(this.userSnapshot.getFirstName())
                         .build() : null)
                 .build();

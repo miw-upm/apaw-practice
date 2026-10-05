@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.ports.out.expense;
 
 import es.upm.miw.apaw.domain.model.expense.Supplier;
+import es.upm.miw.apaw.domain.model.expense.SupplierExpenseReport;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +15,5 @@ public interface SupplierGateway {
     boolean existsByTaxIdAndIdNot(String taxId, UUID id);
     void deleteById(UUID id);
     List<Supplier> findAll();
+    List<SupplierExpenseReport> findExpenseReport();
 }
