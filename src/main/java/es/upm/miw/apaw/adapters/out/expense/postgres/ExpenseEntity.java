@@ -1,26 +1,30 @@
 package es.upm.miw.apaw.adapters.out.expense.postgres;
 
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.expense.Expense;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Builder
-@Data
+@Entity
+@Table(name = "expenses")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "expense")
+@Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ExpenseEntity {
+
     @Id
+    @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String reference;
 
     @Column(nullable = false)
@@ -30,14 +34,34 @@ public class ExpenseEntity {
     private String description;
 
     private LocalDate expenseDate;
+
     private String category;
+
     private Boolean isPaid;
 
-    // 显式配置 fetch = FetchType.LAZY 遵循老师的硬性要求
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id")
+    @ManyToOne
     private SupplierEntity supplierEntity;
 
-    // UserSnapshot 属于跨服务微服务数据，在数据库本地只存 userId (UUID)
+    @Column(nullable = false)
     private UUID userId;
+
+    public ExpenseEntity(Expense expense) {
+        BeanUtils.copyProperties(expense, this, "supplierEntity", "userSnapshot");
+        if (expense.getSupplier() != null) {
+            this.supplierEntity = new SupplierEntity(expense.getSupplier());
+        }
+        if (expense.getUserSnapshot() != null) {
+            this.userId = expense.getUserSnapshot().getId();
+        }
+    }
+
+    public Expense toDomain() {
+        Expense expense = new Expense();
+        BeanUtils.copyProperties(this, expense, "supplierEntity", "userId");
+        if (this.supplierEntity != null) {
+            expense.setSupplier(this.supplierEntity.toDomain());
+        }
+        expense.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
+        return expense;
+    }
 }

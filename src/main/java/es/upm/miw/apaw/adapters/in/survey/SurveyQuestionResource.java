@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SurveyQuestionResource {
     public static final String SURVEY_QUESTIONS = "/survey-questions";
-    public static final String ID = "/{id}";
 
     private final SurveyQuestionService surveyQuestionService;
 

@@ -13,7 +13,7 @@ public class SurveyQuestionService {
     private final SurveyQuestionGateway surveyQuestionGateway;
 
     public SurveyQuestion create(SurveyQuestion surveyQuestion) {
-        surveyQuestion.setId(UUID.randomUUID());
+        surveyQuestion.doDefault();
         return this.surveyQuestionGateway.create(surveyQuestion);
     }
 }

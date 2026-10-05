@@ -2,26 +2,38 @@ package es.upm.miw.apaw.domain.services.stucktaskdetector;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlert;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertCreation;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertFindCriteria;
 import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertPatch;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.StuckTaskDetectorSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
 class StuckTaskAlertServiceIT {
     private static final String RULE_USER = "stuckTaskRule.createdByUser";
+    private static final String EMAIL_0 = "cliente0@example.com";
+    private static final String EMAIL_1 = "cliente1@example.com";
+
+    @MockitoBean
+    private UserFinder userFinder;
 
     @Autowired
     private StuckTaskAlertService stuckTaskAlertService;
@@ -186,6 +198,105 @@ class StuckTaskAlertServiceIT {
                 .isInstanceOf(NotFoundException.class).hasMessageContaining(id.toString());
     }
 
+
+    @Test
+    void testFindWithoutCriteria() {
+        this.mockUsers();
+
+        List<StuckTaskAlert> alerts = this.stuckTaskAlertService.find(new StuckTaskAlertFindCriteria());
+
+        assertThat(alerts).extracting(StuckTaskAlert::getId)
+                .containsSubsequence(ALERT_ID_0, ALERT_ID_1, ALERT_ID_2, ALERT_ID_3, ALERT_ID_4);
+        assertThat(alerts).filteredOn(alert -> alert.getId().equals(ALERT_ID_0))
+                .singleElement()
+                .satisfies(alert ->
+                        assertThat(alert.getStuckTaskRule().getCreatedByUser().getEmail()).isEqualTo(EMAIL_0));
+        verify(this.userFinder).findByIds(anySet());
+        verifyNoMoreInteractions(this.userFinder);
+    }
+
+    @Test
+    void testFindIgnoresBlankCriteria() {
+        this.mockUsers();
+        StuckTaskAlertFindCriteria criteria = StuckTaskAlertFindCriteria.builder()
+                .procedureKeyword(" ").creatorEmail("").build();
+
+        assertThat(this.findIds(criteria))
+                .contains(ALERT_ID_0, ALERT_ID_1, ALERT_ID_2, ALERT_ID_3, ALERT_ID_4);
+    }
+
+    @Test
+    void testFindByProcedureKeyword() {
+        this.mockUsers();
+        StuckTaskAlertFindCriteria criteria = StuckTaskAlertFindCriteria.builder()
+                .procedureKeyword(RULE_1.getProcedureKeyword()).build();
+
+        assertThat(this.findIds(criteria))
+                .contains(ALERT_ID_2, ALERT_ID_3).doesNotContain(ALERT_ID_0, ALERT_ID_1, ALERT_ID_4);
+    }
+
+    @Test
+    void testFindByWithPenalty() {
+        this.mockUsers();
+
+        assertThat(this.findIds(StuckTaskAlertFindCriteria.builder().withPenalty(true).build()))
+                .contains(ALERT_ID_0, ALERT_ID_1, ALERT_ID_4).doesNotContain(ALERT_ID_2, ALERT_ID_3);
+        assertThat(this.findIds(StuckTaskAlertFindCriteria.builder().withPenalty(false).build()))
+                .contains(ALERT_ID_2, ALERT_ID_3).doesNotContain(ALERT_ID_0, ALERT_ID_1, ALERT_ID_4);
+    }
+
+    @Test
+    void testFindByEscalated() {
+        this.mockUsers();
+        StuckTaskAlertFindCriteria criteria = StuckTaskAlertFindCriteria.builder().escalated(true).build();
+
+        List<StuckTaskAlert> alerts = this.stuckTaskAlertService.find(criteria);
+
+        assertThat(alerts).extracting(StuckTaskAlert::getId)
+                .contains(ALERT_ID_1, ALERT_ID_3).doesNotContain(ALERT_ID_0, ALERT_ID_2, ALERT_ID_4);
+        assertThat(alerts).allMatch(StuckTaskAlert::getEscalated);
+    }
+
+    @Test
+    void testFindByCreatorEmail() {
+        this.mockUsers();
+        StuckTaskAlertFindCriteria criteria = StuckTaskAlertFindCriteria.builder().creatorEmail(EMAIL_1).build();
+
+        assertThat(this.findIds(criteria))
+                .contains(ALERT_ID_2, ALERT_ID_3).doesNotContain(ALERT_ID_0, ALERT_ID_1, ALERT_ID_4);
+    }
+
+    @Test
+    void testFindByAllCriteria() {
+        this.mockUsers();
+        StuckTaskAlertFindCriteria criteria = StuckTaskAlertFindCriteria.builder()
+                .procedureKeyword(RULE_0.getProcedureKeyword())
+                .withPenalty(true)
+                .escalated(true)
+                .creatorEmail(EMAIL_0)
+                .build();
+
+        assertThat(this.findIds(criteria))
+                .contains(ALERT_ID_1).doesNotContain(ALERT_ID_0, ALERT_ID_2, ALERT_ID_3, ALERT_ID_4);
+    }
+
+    @Test
+    void testFindWithoutResultsDoesNotCallUserFinder() {
+        StuckTaskAlertFindCriteria criteria = StuckTaskAlertFindCriteria.builder()
+                .procedureKeyword("missing-" + UUID.randomUUID()).build();
+
+        assertThat(this.stuckTaskAlertService.find(criteria)).isEmpty();
+        verifyNoInteractions(this.userFinder);
+    }
+
+    @Test
+    void testFindUserNotFound() {
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of());
+
+        assertThatThrownBy(() -> this.stuckTaskAlertService.find(new StuckTaskAlertFindCriteria()))
+                .isInstanceOf(NotFoundException.class);
+    }
+
     private StuckTaskAlertCreation newCreation() {
         return StuckTaskAlertCreation.builder()
                 .reference("IT-" + UUID.randomUUID())
@@ -195,5 +306,28 @@ class StuckTaskAlertServiceIT {
 
     private StuckTaskAlert createAlert() {
         return this.stuckTaskAlertService.create(this.newCreation());
+    }
+
+    private void mockUsers() {
+        when(this.userFinder.findByIds(anySet())).thenAnswer(invocation -> {
+            Set<UUID> ids = invocation.getArgument(0);
+            return ids.stream()
+                    .map(id -> UserSnapshot.builder().id(id).email(this.emailOf(id)).build())
+                    .toList();
+        });
+    }
+
+    private String emailOf(UUID userId) {
+        if (userId.equals(RULE_0.getCreatedByUser().getId())) {
+            return EMAIL_0;
+        }
+        if (userId.equals(RULE_1.getCreatedByUser().getId())) {
+            return EMAIL_1;
+        }
+        return "other@example.com";
+    }
+
+    private List<UUID> findIds(StuckTaskAlertFindCriteria criteria) {
+        return this.stuckTaskAlertService.find(criteria).stream().map(StuckTaskAlert::getId).toList();
     }
 }
