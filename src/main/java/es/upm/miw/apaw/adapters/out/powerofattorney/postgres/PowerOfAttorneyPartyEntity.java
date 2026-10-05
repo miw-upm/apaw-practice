@@ -1,7 +1,16 @@
 package es.upm.miw.apaw.adapters.out.powerofattorney.postgres;
 
-import jakarta.persistence.*;
-import lombok.*;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import java.util.UUID;
 
@@ -30,4 +39,16 @@ public class PowerOfAttorneyPartyEntity {
 
     @Column(nullable = false)
     private UUID userId;
+
+    public PowerOfAttorneyPartyEntity(PowerOfAttorneyParty party) {
+        BeanUtils.copyProperties(party, this, "userSnapshot");
+        this.userId = party.getUserSnapshot().getId();
+    }
+
+    public PowerOfAttorneyParty toDomain() {
+        PowerOfAttorneyParty party = new PowerOfAttorneyParty();
+        BeanUtils.copyProperties(this, party, "userId");
+        party.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
+        return party;
+    }
 }
