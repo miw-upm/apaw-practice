@@ -2,18 +2,17 @@ package es.upm.miw.apaw.domain.services.stucktaskdetector;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
-import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlert;
-import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertCreation;
-import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskAlertPatch;
-import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRule;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.*;
 import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskAlertGateway;
 import es.upm.miw.apaw.domain.ports.out.stucktaskdetector.StuckTaskRuleGateway;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +20,7 @@ public class StuckTaskAlertService {
 
     private final StuckTaskAlertGateway stuckTaskAlertGateway;
     private final StuckTaskRuleGateway stuckTaskRuleGateway;
+    private final UserFinder userFinder;
 
     public StuckTaskAlert create(StuckTaskAlertCreation creation) {
         this.assertReferenceNotExists(creation.getReference());
@@ -91,5 +91,37 @@ public class StuckTaskAlertService {
             stored.setResolutionNotes(patch.resolutionNotes());
         }
         return this.stuckTaskAlertGateway.update(stored);
+    }
+
+    public List<StuckTaskAlert> find(StuckTaskAlertFindCriteria criteria) {
+        List<StuckTaskAlert> stuckTaskAlerts = this.stuckTaskAlertGateway.find(criteria);
+        if (stuckTaskAlerts.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = stuckTaskAlerts.stream()
+                .map(stuckTaskAlert -> stuckTaskAlert.getStuckTaskRule().getCreatedByUser().getId())
+                .collect(Collectors.toSet());
+        Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(userIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        return stuckTaskAlerts.stream()
+                .map(stuckTaskAlert -> this.enrichRuleCreator(stuckTaskAlert, usersById))
+                .filter(stuckTaskAlert -> this.matchesCreatorEmail(criteria, stuckTaskAlert))
+                .toList();
+    }
+
+    private StuckTaskAlert enrichRuleCreator(StuckTaskAlert stuckTaskAlert, Map<UUID, UserSnapshot> usersById) {
+        StuckTaskRule stuckTaskRule = stuckTaskAlert.getStuckTaskRule();
+        UUID userId = stuckTaskRule.getCreatedByUser().getId();
+        UserSnapshot user = usersById.get(userId);
+        if (user == null) {
+            throw new NotFoundException("User id not found: " + userId);
+        }
+        stuckTaskRule.setCreatedByUser(user);
+        return stuckTaskAlert;
+    }
+
+    private boolean matchesCreatorEmail(StuckTaskAlertFindCriteria criteria, StuckTaskAlert stuckTaskAlert) {
+        return !criteria.hasCreatorEmail() || criteria.getCreatorEmail()
+                .equals(stuckTaskAlert.getStuckTaskRule().getCreatedByUser().getEmail());
     }
 }
