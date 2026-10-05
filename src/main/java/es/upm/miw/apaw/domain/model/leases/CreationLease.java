@@ -45,4 +45,8 @@ public class CreationLease {
 
     @NotNull
     private UUID userId;
+
+    public boolean hasValidPeriod() {
+        return this.endDate == null || !this.endDate.isBefore(this.startDate);
+    }
 }

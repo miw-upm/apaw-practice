@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.out.contract.postgres;
 
 import es.upm.miw.apaw.domain.model.contract.ContractExpirationReport;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -9,7 +10,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-public interface ContractRepository extends JpaRepository<ContractEntity, UUID> {
+public interface ContractRepository extends JpaRepository<ContractEntity, UUID>,
+        JpaSpecificationExecutor<ContractEntity> {
 
     boolean existsByClauses_Id(UUID id);
 

@@ -53,7 +53,7 @@ public class ContractEntity {
     @Column(nullable = false)
     private UUID userId;
 
-    private String userMobile;
+    private String userCity;
 
     private String userFirstName;
 

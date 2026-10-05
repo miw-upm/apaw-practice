@@ -26,7 +26,7 @@ public class SurveyQuestionEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private SurveyQuestionType type;
+    private SurveyQuestionType surveyQuestionType;
 
     @Column(nullable = false)
     private Boolean required;

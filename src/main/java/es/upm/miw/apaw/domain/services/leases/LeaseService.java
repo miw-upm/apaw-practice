@@ -32,6 +32,9 @@ public class LeaseService {
     private final UserFinder userFinder;
 
     public Lease create(CreationLease creation) {
+        if (!creation.hasValidPeriod()) {
+            throw new BadRequestException("End date is before start date: " + creation.getEndDate());
+        }
         this.assertUniqueAttributes(creation);
         List<UUID> amendmentIds = creation.getAmendmentIds() == null ? List.of() : creation.getAmendmentIds();
         this.assertUniqueIds(amendmentIds);

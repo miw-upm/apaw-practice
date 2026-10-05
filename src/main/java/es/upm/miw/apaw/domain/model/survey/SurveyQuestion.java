@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.model.survey;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class SurveyQuestion {
     @NotBlank
     private String text;
 
-    private SurveyQuestionType type;
+    @NotNull
+    private SurveyQuestionType surveyQuestionType;
 
     private Boolean required;
 
@@ -31,9 +33,6 @@ public class SurveyQuestion {
 
     public void doDefault() {
         this.id = UUID.randomUUID();
-        if (this.type == null) {
-            this.type = SurveyQuestionType.TEXT;
-        }
         if (this.required == null) {
             this.required = true;
         }
