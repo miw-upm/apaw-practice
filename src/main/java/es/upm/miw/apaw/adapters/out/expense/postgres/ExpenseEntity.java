@@ -1,10 +1,10 @@
 package es.upm.miw.apaw.adapters.out.expense.postgres;
 
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.expense.Expense;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,16 +12,19 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "expenses")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ExpenseEntity {
 
     @Id
+    @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String reference;
 
     @Column(nullable = false)
@@ -36,12 +39,29 @@ public class ExpenseEntity {
 
     private Boolean isPaid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "supplier_id", nullable = false)
+    @ManyToOne
     private SupplierEntity supplierEntity;
 
-    private UUID applicantId;
-    private String applicantFirstName;
-    private String applicantFamilyName;
-    private String applicantEmail;
+    @Column(nullable = false)
+    private UUID userId;
+
+    public ExpenseEntity(Expense expense) {
+        BeanUtils.copyProperties(expense, this, "supplierEntity", "userSnapshot");
+        if (expense.getSupplier() != null) {
+            this.supplierEntity = new SupplierEntity(expense.getSupplier());
+        }
+        if (expense.getUserSnapshot() != null) {
+            this.userId = expense.getUserSnapshot().getId();
+        }
+    }
+
+    public Expense toDomain() {
+        Expense expense = new Expense();
+        BeanUtils.copyProperties(this, expense, "supplierEntity", "userId");
+        if (this.supplierEntity != null) {
+            expense.setSupplier(this.supplierEntity.toDomain());
+        }
+        expense.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
+        return expense;
+    }
 }

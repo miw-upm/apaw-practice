@@ -1,24 +1,28 @@
 package es.upm.miw.apaw.domain.services.expense;
 
-import es.upm.miw.apaw.adapters.in.expense.ExpenseCreationDto;
-import es.upm.miw.apaw.config.seeders.SupplierSeederForDev;
+import es.upm.miw.apaw.adapters.out.expense.postgres.ExpenseEntity;
+import es.upm.miw.apaw.adapters.out.expense.postgres.ExpenseRepository;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.expense.CreationExpense;
 import es.upm.miw.apaw.domain.model.expense.Expense;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static es.upm.miw.apaw.config.seeders.SupplierSeederForDev.SUPPLIER_1_ID;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -27,88 +31,91 @@ class ExpenseServiceIT {
     @Autowired
     private ExpenseService expenseService;
 
+    @Autowired
+    private ExpenseRepository expenseRepository;
+
     @MockitoBean
     private UserFinder userFinder;
 
-    private final UUID userId = UUID.fromString("11111111-1111-1111-1111-111111111111");
-
-    @BeforeEach
-    void setUp() {
-        UserSnapshot userSnapshot = UserSnapshot.builder()
-                .id(this.userId)
-                .firstName("TestUser")
-                .familyName("APAW")
-                .email("testuser@apaw.es")
+    @Test
+    @Transactional
+    void testCreate() {
+        UserSnapshot user = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .mobile("600000100")
+                .firstName("cliente0")
                 .build();
 
-        Mockito.when(this.userFinder.read(this.userId))
-                .thenReturn(userSnapshot);
-    }
-
-    @Test
-    void testCreateSuccess() {
-        ExpenseCreationDto dto = ExpenseCreationDto.builder()
-                .reference("EXP-2026-IT01")
+        CreationExpense creation = CreationExpense.builder()
+                .reference("EXP-" + UUID.randomUUID())
                 .amount(new BigDecimal("150.50"))
-                .description("Office chairs purchase")
+                .description("Office supplies purchase")
                 .category("Supplies")
-                .supplierId(SupplierSeederForDev.SUPPLIER_1_ID)
-                .applicantId(this.userId)
+                .supplierId(SUPPLIER_1_ID)
+                .applicantId(user.getId())
                 .build();
 
-        Expense expense = this.expenseService.create(dto);
+        when(this.userFinder.read(user.getId())).thenReturn(user);
 
-        assertNotNull(expense.getId());
-        assertEquals("EXP-2026-IT01", expense.getReference());
-        assertNotNull(expense.getExpenseDate());
-        assertEquals(false, expense.getIsPaid());
-        assertNotNull(expense.getSupplier());
-        assertNotNull(expense.getUserSnapshot());
-        assertEquals(this.userId, expense.getUserSnapshot().getId());
+        Expense expense = this.expenseService.create(creation);
+
+        assertThat(expense.getId()).isNotNull();
+        assertThat(expense.getReference()).isEqualTo(creation.getReference());
+        assertThat(expense.getExpenseDate()).isEqualTo(LocalDate.now());
+        assertThat(expense.getIsPaid()).isFalse();
+        assertThat(expense.getSupplier().getId()).isEqualTo(SUPPLIER_1_ID);
+        assertThat(expense.getUserSnapshot()).isEqualTo(user);
+
+        ExpenseEntity entity = this.expenseRepository.findById(expense.getId()).orElseThrow();
+        assertThat(entity.getReference()).isEqualTo(creation.getReference());
+        assertThat(entity.getSupplierEntity().getId()).isEqualTo(SUPPLIER_1_ID);
+        assertThat(entity.getUserId()).isEqualTo(user.getId());
     }
 
     @Test
+    @Transactional
+    void testCreateDuplicateReference() {
+        UserSnapshot user = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                .build();
+
+        CreationExpense creation = CreationExpense.builder()
+                .reference("EXP-DUP-REF")
+                .amount(BigDecimal.TEN)
+                .description("Duplicate test")
+                .supplierId(SUPPLIER_1_ID)
+                .applicantId(user.getId())
+                .build();
+
+        when(this.userFinder.read(user.getId())).thenReturn(user);
+
+        this.expenseService.create(creation);
+
+        assertThatThrownBy(() -> this.expenseService.create(creation))
+                .isInstanceOf(ConflictException.class)
+                .hasMessageContaining("EXP-DUP-REF");
+    }
+
+    @Test
+    @Transactional
     void testCreateNotFoundSupplier() {
-        ExpenseCreationDto dto = ExpenseCreationDto.builder()
-                .reference("EXP-2026-IT02")
-                .amount(new BigDecimal("50.00"))
-                .description("Unknown supplier test")
-                .supplierId(UUID.fromString("00000000-0000-0000-0000-000000000000"))
-                .applicantId(this.userId)
+        UserSnapshot user = UserSnapshot.builder()
+                .id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
                 .build();
 
-        assertThrows(NotFoundException.class, () -> this.expenseService.create(dto));
-    }
-
-    @Test
-    void testCreateNotFoundUser() {
-        UUID unknownUserId = UUID.fromString("99999999-9999-9999-9999-999999999999");
-        Mockito.when(this.userFinder.read(unknownUserId))
-                .thenThrow(new NotFoundException("User not found: " + unknownUserId));
-
-        ExpenseCreationDto dto = ExpenseCreationDto.builder()
-                .reference("EXP-2026-IT03")
-                .amount(new BigDecimal("50.00"))
-                .description("Unknown user test")
-                .supplierId(SupplierSeederForDev.SUPPLIER_1_ID)
-                .applicantId(unknownUserId)
+        UUID missingSupplierId = UUID.randomUUID();
+        CreationExpense creation = CreationExpense.builder()
+                .reference("EXP-" + UUID.randomUUID())
+                .amount(BigDecimal.TEN)
+                .description("Missing supplier test")
+                .supplierId(missingSupplierId)
+                .applicantId(user.getId())
                 .build();
 
-        assertThrows(NotFoundException.class, () -> this.expenseService.create(dto));
-    }
+        when(this.userFinder.read(user.getId())).thenReturn(user);
 
-    @Test
-    void testCreateConflictReference() {
-        ExpenseCreationDto dto = ExpenseCreationDto.builder()
-                .reference("EXP-2026-DUP")
-                .amount(new BigDecimal("100.00"))
-                .description("Duplicate reference test")
-                .supplierId(SupplierSeederForDev.SUPPLIER_1_ID)
-                .applicantId(this.userId)
-                .build();
-
-        this.expenseService.create(dto);
-
-        assertThrows(ConflictException.class, () -> this.expenseService.create(dto));
+        assertThatThrownBy(() -> this.expenseService.create(creation))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining(missingSupplierId.toString());
     }
 }

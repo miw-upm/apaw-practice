@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -57,18 +57,18 @@ class ExpenseAdapterIT {
 
         Expense created = this.expenseAdapter.create(expense);
 
-        assertNotNull(created);
-        assertEquals("EXP-ADAPTER-001", created.getReference());
-        assertEquals(new BigDecimal("99.99"), created.getAmount());
-        assertNotNull(created.getSupplier());
-        assertEquals(SupplierSeederForDev.SUPPLIER_1_ID, created.getSupplier().getId());
+        assertThat(created).isNotNull();
+        assertThat(created.getReference()).isEqualTo("EXP-ADAPTER-001");
+        assertThat(created.getAmount()).isEqualTo(new BigDecimal("99.99"));
+        assertThat(created.getSupplier()).isNotNull();
+        assertThat(created.getSupplier().getId()).isEqualTo(SupplierSeederForDev.SUPPLIER_1_ID);
 
-        assertTrue(this.expenseAdapter.existsByReference("EXP-ADAPTER-001"));
-        assertTrue(this.expenseAdapter.isSupplierInUse(SupplierSeederForDev.SUPPLIER_1_ID));
+        assertThat(this.expenseAdapter.existsByReference("EXP-ADAPTER-001")).isTrue();
+        assertThat(this.expenseAdapter.isSupplierInUse(SupplierSeederForDev.SUPPLIER_1_ID)).isTrue();
     }
 
     @Test
     void testExistsByReferenceNotFound() {
-        assertFalse(this.expenseAdapter.existsByReference("NON-EXISTENT-REF"));
+        assertThat(this.expenseAdapter.existsByReference("NON-EXISTENT-REF")).isFalse();
     }
 }
