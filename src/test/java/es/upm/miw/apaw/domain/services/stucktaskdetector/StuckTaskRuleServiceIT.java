@@ -13,12 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import es.upm.miw.apaw.domain.model.stucktaskdetector.StuckTaskRuleAlertReport;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.StuckTaskDetectorSeederForDev.RULE_0;
+import static org.mockito.ArgumentMatchers.anySet;
+import static es.upm.miw.apaw.config.seeders.StuckTaskDetectorSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
@@ -104,6 +110,37 @@ class StuckTaskRuleServiceIT {
         assertThatThrownBy(() -> this.stuckTaskRuleService.create(creation))
                 .isInstanceOf(NotFoundException.class).hasMessageContaining(USER.getId().toString());
         assertThat(this.stuckTaskRuleRepository.existsByName(creation.getName())).isFalse();
+    }
+
+    @Test
+    void testFindAlertReport() {
+        when(this.userFinder.findByIds(anySet())).thenAnswer(invocation -> {
+            Set<UUID> ids = invocation.getArgument(0);
+            return ids.stream().map(id -> UserSnapshot.builder().id(id).mobile("600000100").build()).toList();
+        });
+
+        List<StuckTaskRuleAlertReport> report = this.stuckTaskRuleService.findAlertReport();
+
+        assertThat(report).extracting(StuckTaskRuleAlertReport::getRuleName)
+                .contains(RULE_0.getName(), RULE_1.getName(), RULE_2.getName());
+        assertThat(report).extracting(StuckTaskRuleAlertReport::getTotalAlertCount)
+                .isSortedAccordingTo(Comparator.reverseOrder());
+        assertThat(report).filteredOn(item -> item.getRuleName().equals(RULE_0.getName()))
+                .singleElement()
+                .satisfies(item -> {
+                    assertThat(item.getCreatedByUser().getId()).isEqualTo(RULE_0.getCreatedByUser().getId());
+                    assertThat(item.getCreatedByUser().getMobile()).isEqualTo("600000100");
+                });
+        verify(this.userFinder).findByIds(anySet());
+        verifyNoMoreInteractions(this.userFinder);
+    }
+
+    @Test
+    void testFindAlertReportUserNotFound() {
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of());
+
+        assertThatThrownBy(() -> this.stuckTaskRuleService.findAlertReport())
+                .isInstanceOf(NotFoundException.class);
     }
 
     private StuckTaskRuleCreation newCreation() {
