@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.deadlinecalculator.NonWorkingDayGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,5 +32,12 @@ public class NonWorkingDayAdapter implements NonWorkingDayGateway {
     public Optional<NonWorkingDay> read(UUID id) {
         return this.nonWorkingDayRepository.findById(id)
                 .map(NonWorkingDayEntity::toDomain);
+    }
+
+    @Override
+    public List<NonWorkingDay> findAll() {
+        return this.nonWorkingDayRepository.findAllByOrderByDateAscDescriptionAsc().stream()
+                .map(NonWorkingDayEntity::toDomain)
+                .toList();
     }
 }

@@ -8,6 +8,7 @@ import es.upm.miw.apaw.domain.ports.out.deadlinecalculator.NonWorkingDayGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -35,5 +36,9 @@ public class NonWorkingDayService {
     public NonWorkingDay read(UUID id) {
         return this.nonWorkingDayGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Non working day id not found: " + id));
+    }
+
+    public List<NonWorkingDay> findAll() {
+        return this.nonWorkingDayGateway.findAll();
     }
 }
