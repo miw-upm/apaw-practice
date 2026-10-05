@@ -3,6 +3,7 @@ package es.upm.miw.apaw.functionaltests.expense;
 import es.upm.miw.apaw.adapters.in.expense.SupplierResource;
 import es.upm.miw.apaw.config.seeders.SupplierSeederForDev;
 import es.upm.miw.apaw.domain.model.expense.Supplier;
+import es.upm.miw.apaw.domain.model.expense.SupplierExpenseReport;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -93,5 +95,18 @@ class SupplierResourceFT {
                 .expectStatus().isOk()
                 .expectBody(Supplier.class)
                 .value(supplier -> assertEquals("Calle Nueva 99", supplier.getAddress()));
+    }
+
+    @Test
+    void testFindExpenseReport() {
+        this.webTestClient.get()
+                .uri(SupplierResource.SUPPLIERS + SupplierResource.REPORT)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(SupplierExpenseReport[].class)
+                .value(reports -> {
+                    assertThat(reports).isNotNull();
+                    assertThat(reports.length).isGreaterThanOrEqualTo(1);
+                });
     }
 }
