@@ -1,4 +1,4 @@
-package es.upm.miw.apaw.adapters.out.training.postgres;
+﻿package es.upm.miw.apaw.adapters.out.training.postgres;
 
 import es.upm.miw.apaw.domain.model.training.TrainingPlan;
 import es.upm.miw.apaw.domain.ports.out.training.TrainingPlanGateway;
@@ -59,10 +59,6 @@ public class TrainingPlanAdapter implements TrainingPlanGateway {
         if (criteria.hasEvaluationScore()) {
             specification = specification.and((root, query, builder) ->
                     builder.equal(root.get("evaluationScore"), criteria.getEvaluationScore()));
-        }
-        if (criteria.hasIsCompleted()) {
-            specification = specification.and((root, query, builder) ->
-                    builder.equal(root.get("isCompleted"), criteria.getIsCompleted()));
         }
         specification = this.addCourseName(specification, criteria.getCourseName());
         return specification;
