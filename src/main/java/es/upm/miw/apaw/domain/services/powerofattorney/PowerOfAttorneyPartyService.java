@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -33,23 +32,10 @@ public class PowerOfAttorneyPartyService {
     }
 
     public PowerOfAttorneyParty read(UUID id) {
-        PowerOfAttorneyParty party = this.powerOfAttorneyPartyGateway.read(id)
+        PowerOfAttorneyParty powerOfAttorneyParty = this.powerOfAttorneyPartyGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Power of attorney party id not found: " + id));
-        return this.enrichUserSnapshot(party);
-    }
-
-    private PowerOfAttorneyParty enrichUserSnapshot(PowerOfAttorneyParty party) {
-        return this.enrichUserSnapshot(party, Map.of(party.getUserSnapshot().getId(), this.readUser(party.getUserSnapshot().getId())));
-    }
-
-    private PowerOfAttorneyParty enrichUserSnapshot(
-            PowerOfAttorneyParty party, Map<UUID, UserSnapshot> usersById) {
-        UUID userId = party.getUserSnapshot().getId();
-        UserSnapshot user = usersById.get(userId);
-        if (user == null) {
-            throw new NotFoundException("User id not found: " + userId);
-        }
-        party.setUserSnapshot(user);
-        return party;
+        UUID userId = powerOfAttorneyParty.getUserSnapshot().getId();
+        powerOfAttorneyParty.setUserSnapshot(this.readUser(userId));
+        return powerOfAttorneyParty;
     }
 }
