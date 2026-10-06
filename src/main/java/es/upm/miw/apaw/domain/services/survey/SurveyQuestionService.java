@@ -36,7 +36,6 @@ public class SurveyQuestionService {
     }
 
     public void delete(UUID id) {
-        this.read(id);
         if (this.surveyQuestionGateway.isReferenced(id)) {
             throw new ConflictException("Survey question is referenced by a survey: " + id);
         }
