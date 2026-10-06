@@ -36,7 +36,7 @@ public class StuckTaskAlertResource {
     }
 
     @PutMapping(ID)
-    public StuckTaskAlert update(@PathVariable UUID id, @Valid @RequestBody StuckTaskAlert stuckTaskAlert) {
+    public StuckTaskAlert update(@PathVariable UUID id, @RequestBody StuckTaskAlert stuckTaskAlert) {
         return this.stuckTaskAlertService.update(id, stuckTaskAlert);
     }
 
