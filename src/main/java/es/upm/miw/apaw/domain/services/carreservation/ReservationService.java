@@ -50,7 +50,10 @@ public class ReservationService {
         }
 
         Set<UUID> userIds = reservations.stream()
-                .map(reservation -> reservation.getUserSnapshot().getId())
+                .map(reservation -> reservation.getUserSnapshot() != null
+                        ? reservation.getUserSnapshot().getId()
+                        : null)
+                .filter(java.util.Objects::nonNull)
                 .collect(Collectors.toSet());
 
         return this.toSummaries(criteria, reservations, this.userFinder.findByIds(userIds));
@@ -67,6 +70,7 @@ public class ReservationService {
         return reservations.stream()
                 .map(reservation -> this.enrichUserSnapshot(reservation, usersById))
                 .filter(reservation -> this.matchesUserCity(criteria, reservation))
+                .map(Reservation::ofSummary)
                 .toList();
     }
 

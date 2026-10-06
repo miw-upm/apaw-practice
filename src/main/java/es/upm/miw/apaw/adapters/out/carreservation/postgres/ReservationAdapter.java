@@ -6,8 +6,8 @@ import es.upm.miw.apaw.domain.model.carreservation.Reservation;
 import es.upm.miw.apaw.domain.model.carreservation.ReservationFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.carreservation.ReservationGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
+import jakarta.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,21 +65,20 @@ public class ReservationAdapter implements ReservationGateway {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Reservation> find(ReservationFindCriteria criteria) {
         return this.reservationRepository.findAll(this.buildSpecification(criteria)).stream()
-                .map(this::toDomainWithoutUser)
+                .map(ReservationEntity::toDomain)
                 .toList();
     }
 
-    private Reservation toDomainWithoutUser(ReservationEntity entity) {
-        Reservation reservation = new Reservation();
-        BeanUtils.copyProperties(entity, reservation, "userId", "car");
-        reservation.setUserSnapshot(UserSnapshot.builder().id(entity.getUserId()).build());
-        return reservation;
-    }
-
     private Specification<ReservationEntity> buildSpecification(ReservationFindCriteria criteria) {
-        Specification<ReservationEntity> specification = (root, query, builder) -> builder.conjunction();
+        Specification<ReservationEntity> specification = (root, query, builder) -> {
+            if (Long.class != query.getResultType()) {
+                root.fetch("car", JoinType.LEFT);
+            }
+            return builder.conjunction();
+        };
 
         if (criteria.hasDurationMinutes()) {
             specification = specification.and((root, query, builder) ->
