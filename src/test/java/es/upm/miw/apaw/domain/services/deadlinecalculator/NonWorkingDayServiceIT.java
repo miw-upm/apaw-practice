@@ -148,10 +148,13 @@ class NonWorkingDayServiceIT {
     @Test
     @Transactional
     void testCreateLocalOnTheSameDayAsNational() {
-        this.nonWorkingDayService.create(this.national(2, 12).build());
+        NonWorkingDay national = this.nonWorkingDayService.create(this.national(2, 12).build());
         NonWorkingDay local = this.nonWorkingDayService.create(this.national(2, 12)
                 .scopeLevel(ScopeLevel.LOCAL).region(MADRID).city("Leganés").build());
-        assertThat(local.getId()).isNotNull();
+        assertThat(local.getId()).isNotEqualTo(national.getId());
+        assertThat(local).usingRecursiveComparison().ignoringFields("id")
+                .isEqualTo(this.national(2, 12).scopeLevel(ScopeLevel.LOCAL)
+                        .region(MADRID).city("Leganés").recurring(false).build());
     }
 
     // ---------- read ----------
@@ -199,7 +202,7 @@ class NonWorkingDayServiceIT {
     void testUpdateWithoutChanges() {
         NonWorkingDay created = this.nonWorkingDayService.create(this.national(3, 1).build());
         NonWorkingDay updated = this.nonWorkingDayService.update(created.getId(), created);
-        assertThat(updated.getId()).isEqualTo(created.getId());
+        assertThat(updated).usingRecursiveComparison().isEqualTo(created);
     }
 
     @Test
@@ -328,7 +331,7 @@ class NonWorkingDayServiceIT {
 
     @Test
     @Transactional
-    void testUpdateRecurrencesWithUnknownIdAppliesNothing() {
+    void testUpdateRecurrencesWithUnknownIdFailsBeforeAnyWrite() {
         NonWorkingDay created = this.nonWorkingDayService.create(this.national(5, 4).build());
         List<NonWorkingDayRecurringUpdate> updates = List.of(
                 new NonWorkingDayRecurringUpdate(created.getId(), true),
