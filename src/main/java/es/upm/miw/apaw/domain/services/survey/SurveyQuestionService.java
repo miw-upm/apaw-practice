@@ -32,4 +32,9 @@ public class SurveyQuestionService {
         storedSurveyQuestion.setOptions(surveyQuestion.getOptions());
         return this.surveyQuestionGateway.update(storedSurveyQuestion);
     }
+
+    public void delete(UUID id) {
+        this.read(id);
+        this.surveyQuestionGateway.delete(id);
+    }
 }

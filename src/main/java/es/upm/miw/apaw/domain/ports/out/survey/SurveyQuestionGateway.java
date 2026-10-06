@@ -11,4 +11,6 @@ public interface SurveyQuestionGateway {
     Optional<SurveyQuestion> read(UUID id);
 
     SurveyQuestion update(SurveyQuestion surveyQuestion);
+
+    void delete(UUID id);
 }
