@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface JudicialCourtTypeRepository extends JpaRepository<JudicialCourtTypeEntity, UUID> {
-    List<JudicialCourtTypeEntity> findAllByOrderByNameAscCodeAsc();
+    List<JudicialCourtTypeEntity> findAllByOrderByNameAsc();
 
     boolean existsByName(String name);
 

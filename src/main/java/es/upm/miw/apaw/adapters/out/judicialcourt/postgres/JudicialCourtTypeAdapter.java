@@ -24,7 +24,7 @@ public class JudicialCourtTypeAdapter implements JudicialCourtTypeGateway {
 
     @Override
     public List<JudicialCourtType> findAll() {
-        return this.judicialCourtTypeRepository.findAllByOrderByNameAscCodeAsc().stream()
+        return this.judicialCourtTypeRepository.findAllByOrderByNameAsc().stream()
                 .map(JudicialCourtTypeEntity::toDomain)
                 .toList();
     }
