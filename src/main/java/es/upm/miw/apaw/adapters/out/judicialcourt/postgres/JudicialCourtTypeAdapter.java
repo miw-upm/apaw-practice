@@ -27,6 +27,13 @@ public class JudicialCourtTypeAdapter implements JudicialCourtTypeGateway {
     }
 
     @Override
+    public JudicialCourtType update(JudicialCourtType judicialCourtType) {
+        return this.judicialCourtTypeRepository
+                .save(new JudicialCourtTypeEntity(judicialCourtType))
+                .toDomain();
+    }
+
+    @Override
     public boolean existsByName(String name) {
         return this.judicialCourtTypeRepository.existsByName(name);
     }

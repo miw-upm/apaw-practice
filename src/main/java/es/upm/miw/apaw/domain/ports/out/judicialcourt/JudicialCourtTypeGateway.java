@@ -10,6 +10,8 @@ public interface JudicialCourtTypeGateway {
 
     Optional<JudicialCourtType> read(UUID id);
 
+    JudicialCourtType update(JudicialCourtType judicialCourtType);
+
     boolean existsByName(String name);
 
     boolean existsByCode(String code);

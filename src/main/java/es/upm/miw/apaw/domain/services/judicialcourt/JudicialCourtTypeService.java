@@ -36,4 +36,24 @@ public class JudicialCourtTypeService {
         return this.judicialCourtTypeGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Judicial Court type's id not found: " + id));
     }
+
+    public JudicialCourtType update(UUID id, JudicialCourtType judicialCourtType) {
+        JudicialCourtType storedJudicialCourtType = this.read(id);
+
+        if (!storedJudicialCourtType.getName().equals(judicialCourtType.getName())
+                && this.judicialCourtTypeGateway.existsByName(judicialCourtType.getName())) {
+            throw new ConflictException("Judicial Court type's name already exists: " + judicialCourtType.getName());
+        }
+        if (!storedJudicialCourtType.getCode().equals(judicialCourtType.getCode())
+                && this.judicialCourtTypeGateway.existsByCode(judicialCourtType.getCode())) {
+            throw new ConflictException("Judicial Court type's code already exists: " + judicialCourtType.getCode());
+        }
+
+        storedJudicialCourtType.setName(judicialCourtType.getName());
+        storedJudicialCourtType.setDescription(judicialCourtType.getDescription());
+        storedJudicialCourtType.setCode(judicialCourtType.getCode());
+        storedJudicialCourtType.setJurisdiction(judicialCourtType.getJurisdiction());
+        storedJudicialCourtType.setActive(judicialCourtType.getActive());
+        return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
+    }
 }
