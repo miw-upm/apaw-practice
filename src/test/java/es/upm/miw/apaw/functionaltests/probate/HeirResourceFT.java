@@ -43,7 +43,10 @@ class HeirResourceFT {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(Heir.class)
-                .value(body -> assertThat(body).isEqualTo(heir));
+                .value(body -> {
+                    assertThat(body.getId()).isNotNull();
+                    assertThat(body.getNationalId()).isEqualTo(heir.getNationalId());
+                });
     }
 
     @Test
@@ -53,7 +56,7 @@ class HeirResourceFT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Heir.class)
-                .value(body -> assertThat(body).isEqualTo(heir));
+                .value(body -> assertThat(body).usingRecursiveComparison().isEqualTo(heir));
     }
 
     @Test
