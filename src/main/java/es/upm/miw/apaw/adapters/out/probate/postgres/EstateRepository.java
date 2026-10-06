@@ -17,7 +17,8 @@ public interface EstateRepository extends JpaRepository<EstateEntity, UUID> {
                 heir.heirStatus,
                 count(heir),
                 sum(heir.sharePercentage))
-            from HeirEntity heir
+            from EstateEntity estate
+            join estate.heirs heir
             group by heir.heirStatus
             """)
     List<EstateUsageReport> findUsageReport();
