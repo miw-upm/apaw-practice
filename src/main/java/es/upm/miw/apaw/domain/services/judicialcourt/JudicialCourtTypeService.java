@@ -12,11 +12,18 @@ public class JudicialCourtTypeService {
     private final JudicialCourtTypeGateway judicialCourtTypeGateway;
 
     public JudicialCourtType create(JudicialCourtType judicialCourtType) {
-        if (this.judicialCourtTypeGateway.existsByName(judicialCourtType.getName())) {
-            throw new ConflictException("Judicial court type name already exists: " + judicialCourtType.getName());
+        boolean existsByName = this.judicialCourtTypeGateway.existsByName(judicialCourtType.getName());
+        boolean existsByCode = this.judicialCourtTypeGateway.existsByCode(judicialCourtType.getCode());
+
+        if (existsByName && existsByCode) {
+            throw new ConflictException("Judicial Court type's name and code already exist: "
+                    + judicialCourtType.getName() + " / " + judicialCourtType.getCode());
         }
-        if (this.judicialCourtTypeGateway.existsByCode(judicialCourtType.getCode())) {
-            throw new ConflictException("Judicial court type code already exists: " + judicialCourtType.getCode());
+        if (existsByName) {
+            throw new ConflictException("Judicial Court type's name already exists: " + judicialCourtType.getName());
+        }
+        if (existsByCode) {
+            throw new ConflictException("Judicial Court type's code already exists: " + judicialCourtType.getCode());
         }
         judicialCourtType.doDefault();
         return this.judicialCourtTypeGateway.create(judicialCourtType);
