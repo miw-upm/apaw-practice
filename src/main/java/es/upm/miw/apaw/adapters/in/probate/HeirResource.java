@@ -56,6 +56,7 @@ public class HeirResource {
     }
 
     @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.heirService.delete(id);
     }
