@@ -1,12 +1,14 @@
 package es.upm.miw.apaw.adapters.out.probate.postgres;
 
 import es.upm.miw.apaw.domain.model.probate.Estate;
+import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
 import es.upm.miw.apaw.domain.ports.out.probate.EstateGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
@@ -29,5 +31,10 @@ public class EstateAdapter implements EstateGateway {
     @Override
     public boolean existsByFileNumber(String fileNumber) {
         return this.estateRepository.existsByFileNumber(fileNumber);
+    }
+
+    @Override
+    public List<EstateUsageReport> findUsageReport() {
+        return this.estateRepository.findUsageReport();
     }
 }
