@@ -18,5 +18,5 @@ public interface TaskCommentGateway {
 
     List<TaskComment> findAll();
 
-    boolean isUsed(UUID id);
+    boolean isReferenced(UUID id);
 }
