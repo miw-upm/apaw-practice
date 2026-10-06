@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.adapters.in.judicialcourt;
 
 import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtType;
-import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtTypePatch;
+import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtTypeUpdate;
 import es.upm.miw.apaw.domain.services.judicialcourt.JudicialCourtTypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -51,8 +51,8 @@ public class JudicialCourtTypeResource {
     }
 
     @PatchMapping(ID)
-    public JudicialCourtType patch(@PathVariable UUID id, @RequestBody JudicialCourtTypePatch patch) {
-        return this.judicialCourtTypeService.patch(id, patch);
+    public JudicialCourtType patch(@PathVariable UUID id, @RequestBody JudicialCourtTypeUpdate update) {
+        return this.judicialCourtTypeService.patch(id, update);
     }
 
     @DeleteMapping(ID)

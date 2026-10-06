@@ -3,7 +3,7 @@ package es.upm.miw.apaw.domain.services.judicialcourt;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtType;
-import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtTypePatch;
+import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtTypeUpdate;
 import es.upm.miw.apaw.domain.ports.out.judicialcourt.JudicialCourtTypeGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,27 +44,27 @@ public class JudicialCourtTypeService {
         return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
     }
 
-    public JudicialCourtType patch(UUID id, JudicialCourtTypePatch patch) {
+    public JudicialCourtType patch(UUID id, JudicialCourtTypeUpdate update) {
         JudicialCourtType storedJudicialCourtType = this.read(id);
-        String newName = patch.name() != null ? patch.name() : storedJudicialCourtType.getName();
-        String newCode = patch.code() != null ? patch.code() : storedJudicialCourtType.getCode();
+        String newName = update.name() != null ? update.name() : storedJudicialCourtType.getName();
+        String newCode = update.code() != null ? update.code() : storedJudicialCourtType.getCode();
         this.validateNameAndCodeConflict(newName, newCode,
                 storedJudicialCourtType.getName(), storedJudicialCourtType.getCode());
 
-        if (patch.name() != null) {
-            storedJudicialCourtType.setName(patch.name());
+        if (update.name() != null) {
+            storedJudicialCourtType.setName(update.name());
         }
-        if (patch.description() != null) {
-            storedJudicialCourtType.setDescription(patch.description());
+        if (update.description() != null) {
+            storedJudicialCourtType.setDescription(update.description());
         }
-        if (patch.code() != null) {
-            storedJudicialCourtType.setCode(patch.code());
+        if (update.code() != null) {
+            storedJudicialCourtType.setCode(update.code());
         }
-        if (patch.jurisdiction() != null) {
-            storedJudicialCourtType.setJurisdiction(patch.jurisdiction());
+        if (update.jurisdiction() != null) {
+            storedJudicialCourtType.setJurisdiction(update.jurisdiction());
         }
-        if (patch.active() != null) {
-            storedJudicialCourtType.setActive(patch.active());
+        if (update.active() != null) {
+            storedJudicialCourtType.setActive(update.active());
         }
         return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
     }
