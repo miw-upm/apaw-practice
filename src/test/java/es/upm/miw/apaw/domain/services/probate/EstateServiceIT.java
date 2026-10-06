@@ -57,8 +57,9 @@ class EstateServiceIT {
 
     @Test
     void testFindByFileNumber() {
-        when(this.userFinder.read(any(UUID.class))).thenReturn(
-                UserSnapshot.builder().id(UUID.randomUUID()).mobile("600000100").build());
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(
+                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .mobile("600000100").build()));
 
         EstateFindCriteria criteria = EstateFindCriteria.builder()
                 .fileNumber(ESTATE_0.getFileNumber())
