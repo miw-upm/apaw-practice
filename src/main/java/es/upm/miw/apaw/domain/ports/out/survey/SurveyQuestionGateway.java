@@ -13,4 +13,6 @@ public interface SurveyQuestionGateway {
     SurveyQuestion update(SurveyQuestion surveyQuestion);
 
     void delete(UUID id);
+
+    boolean isReferenced(UUID id);
 }

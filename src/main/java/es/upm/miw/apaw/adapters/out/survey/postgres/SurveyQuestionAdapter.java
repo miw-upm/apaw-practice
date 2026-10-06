@@ -37,4 +37,9 @@ public class SurveyQuestionAdapter implements SurveyQuestionGateway {
     public void delete(UUID id) {
         this.surveyQuestionRepository.deleteById(id);
     }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.surveyQuestionRepository.isReferencedInAnySurvey(id);
+    }
 }
