@@ -38,6 +38,13 @@ public class JudicialCourtTypeService {
         return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
     }
 
+    public void delete(UUID id) {
+        if (this.judicialCourtTypeGateway.isReferenced(id)) {
+            throw new ConflictException("Judicial Court type is referenced by a Judicial Court: " + id);
+        }
+        this.judicialCourtTypeGateway.delete(id);
+    }
+
     private void validateNameAndCodeConflict(String newName, String newCode, String existingName, String existingCode) {
         boolean nameChanged = existingName == null || !existingName.equals(newName);
         boolean codeChanged = existingCode == null || !existingCode.equals(newCode);

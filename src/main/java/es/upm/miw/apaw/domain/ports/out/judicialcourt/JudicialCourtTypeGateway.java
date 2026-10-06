@@ -12,6 +12,10 @@ public interface JudicialCourtTypeGateway {
 
     JudicialCourtType update(JudicialCourtType judicialCourtType);
 
+    void delete(UUID id);
+
+    boolean isReferenced(UUID id);
+
     boolean existsByName(String name);
 
     boolean existsByCode(String code);

@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JudicialCourtTypeAdapter implements JudicialCourtTypeGateway {
     private final JudicialCourtTypeRepository judicialCourtTypeRepository;
+    private final JudicialCourtRepository judicialCourtRepository;
 
     @Override
     public JudicialCourtType create(JudicialCourtType judicialCourtType) {
@@ -31,6 +32,16 @@ public class JudicialCourtTypeAdapter implements JudicialCourtTypeGateway {
         return this.judicialCourtTypeRepository
                 .save(new JudicialCourtTypeEntity(judicialCourtType))
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.judicialCourtTypeRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.judicialCourtRepository.existsByTypeId(id);
     }
 
     @Override
