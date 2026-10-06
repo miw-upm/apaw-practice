@@ -12,4 +12,7 @@ public interface NonWorkingDayRepository extends JpaRepository<NonWorkingDayEnti
             LocalDate date, ScopeLevel scopeLevel, String region, String city);
 
     List<NonWorkingDayEntity> findAllByOrderByDateAscDescriptionAscIdAsc();
+
+    boolean existsByDateAndScopeLevelAndRegionAndCityAndIdNot(
+            LocalDate date, ScopeLevel scopeLevel, String region, String city, UUID id);
 }
