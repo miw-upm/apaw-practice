@@ -34,24 +34,27 @@ public class PowerOfAttorneyPartyService {
         return this.userFinder.read(id);
     }
 
+    private PowerOfAttorneyParty findOne(UUID id){
+        return this.powerOfAttorneyPartyGateway.read(id)
+                .orElseThrow(() ->  new NotFoundException("Power of attorney party id not found: " + id));
+    }
+
     public PowerOfAttorneyParty read(UUID id) {
-        PowerOfAttorneyParty powerOfAttorneyParty = this.powerOfAttorneyPartyGateway.read(id)
-                .orElseThrow(() -> new NotFoundException("Power of attorney party id not found: " + id));
+        PowerOfAttorneyParty powerOfAttorneyParty = this.findOne(id);
         UUID userId = powerOfAttorneyParty.getUserSnapshot().getId();
         powerOfAttorneyParty.setUserSnapshot(this.readUser(userId));
         return powerOfAttorneyParty;
     }
 
     public PowerOfAttorneyParty update(UUID id, CreationPowerOfAttorneyParty party) {
-        PowerOfAttorneyParty powerOfAttorneyParty = this.powerOfAttorneyPartyGateway.read(id)
-                .orElseThrow(() ->  new NotFoundException("Power of attorney party id not found: " + id));
+        PowerOfAttorneyParty powerOfAttorneyParty = this.findOne(id);
         BeanUtils.copyProperties(party, powerOfAttorneyParty);
         powerOfAttorneyParty.setUserSnapshot(this.readUser(party.userId()));
         return this.powerOfAttorneyPartyGateway.update(powerOfAttorneyParty);
     }
 
     public void delete(UUID id) {
-        this.read(id);
+        this.findOne(id);
         if (this.powerOfAttorneyGateway.isReferenced(id)) {
             throw new ConflictException("Power of attorney party is referenced by a power of attorney: " + id);
         }
