@@ -12,8 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,16 +64,23 @@ public class PowerOfAttorneyPartyService {
     }
 
     public List<PowerOfAttorneyParty> findAll() {
-        return this.powerOfAttorneyPartyGateway.findAll()
-                .stream()
-                .map(this::enrichUserSnapshot)
-                .toList();
-    }
-
-    private PowerOfAttorneyParty enrichUserSnapshot(
-            PowerOfAttorneyParty party) {
-        UUID userId = party.getUserSnapshot().getId();
-        party.setUserSnapshot(this.readUser(userId));
-        return party;
+        List<PowerOfAttorneyParty> parties = this.powerOfAttorneyPartyGateway.findAll();
+        if (parties.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = parties.stream()
+                .map(party -> party.getUserSnapshot().getId())
+                .collect(Collectors.toSet());
+        Map<UUID, UserSnapshot> users = this.userFinder.findByIds(userIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        for (PowerOfAttorneyParty party : parties) {
+            UUID userId = party.getUserSnapshot().getId();
+            UserSnapshot user = users.get(userId);
+            if (user == null) {
+                throw new NotFoundException("User id not found: " + userId);
+            }
+            party.setUserSnapshot(user);
+        }
+        return parties;
     }
 }
