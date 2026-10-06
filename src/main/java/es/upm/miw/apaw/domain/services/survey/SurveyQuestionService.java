@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.survey.SurveyQuestionGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,5 +40,9 @@ public class SurveyQuestionService {
             throw new ConflictException("Survey question is referenced by a survey: " + id);
         }
         this.surveyQuestionGateway.delete(id);
+    }
+
+    public List<SurveyQuestion> findAll() {
+        return this.surveyQuestionGateway.findAll();
     }
 }

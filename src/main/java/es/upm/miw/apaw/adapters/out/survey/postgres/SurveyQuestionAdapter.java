@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.survey.SurveyQuestionGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,5 +43,12 @@ public class SurveyQuestionAdapter implements SurveyQuestionGateway {
     @Override
     public boolean isReferenced(UUID id) {
         return this.surveyRepository.existsBySurveyQuestionsId(id);
+    }
+
+    @Override
+    public List<SurveyQuestion> findAll() {
+        return this.surveyQuestionRepository.findAllByOrderByTextAsc().stream()
+                .map(SurveyQuestionEntity::toDomain)
+                .toList();
     }
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,6 +23,11 @@ public class SurveyQuestionResource {
     @ResponseStatus(HttpStatus.CREATED)
     public SurveyQuestion create(@Valid @RequestBody SurveyQuestion surveyQuestion) {
         return this.surveyQuestionService.create(surveyQuestion);
+    }
+
+    @GetMapping
+    public List<SurveyQuestion> findAll() {
+        return this.surveyQuestionService.findAll();
     }
 
     @GetMapping(ID)
