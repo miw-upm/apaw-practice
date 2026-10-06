@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,6 +31,11 @@ public class JudicialCourtTypeResource {
     @ResponseStatus(HttpStatus.CREATED)
     public JudicialCourtType create(@Valid @RequestBody JudicialCourtType judicialCourtType) {
         return this.judicialCourtTypeService.create(judicialCourtType);
+    }
+
+    @GetMapping
+    public List<JudicialCourtType> findAll() {
+        return this.judicialCourtTypeService.findAll();
     }
 
     @GetMapping(ID)

@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.ports.out.judicialcourt.JudicialCourtTypeGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,6 +19,10 @@ public class JudicialCourtTypeService {
         this.validateNameAndCodeConflict(judicialCourtType.getName(), judicialCourtType.getCode(), null, null);
         judicialCourtType.doDefault();
         return this.judicialCourtTypeGateway.create(judicialCourtType);
+    }
+
+    public List<JudicialCourtType> findAll() {
+        return this.judicialCourtTypeGateway.findAll();
     }
 
     public JudicialCourtType read(UUID id) {
