@@ -52,7 +52,8 @@ public class EstateService {
         estates.forEach(estate -> estate.setUserSnapshot(
                 this.userFinder.read(estate.getUserSnapshot().getId())));
         return estates.stream()
-                .filter(estate -> criteria.getUserMobile().equals(estate.getUserSnapshot().getMobile()))
+                .filter(estate -> !criteria.appliesUserMobile()
+                        || criteria.getUserMobile().equals(estate.getUserSnapshot().getMobile()))
                 .toList();
     }
 }

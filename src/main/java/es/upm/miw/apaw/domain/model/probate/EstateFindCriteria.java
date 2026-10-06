@@ -14,4 +14,25 @@ public class EstateFindCriteria {
     private Boolean opened;
     private HeirStatus heirStatus;
     private String userMobile;
+
+    public boolean appliesFileNumber() {
+        return this.fileNumber != null && !this.fileNumber.isBlank();
+    }
+
+    public boolean appliesOpened() {
+        return this.opened != null;
+    }
+
+    public boolean appliesHeirStatus() {
+        return this.heirStatus != null;
+    }
+
+    public boolean appliesUserMobile() {
+        return this.userMobile != null && !this.userMobile.isBlank();
+    }
+
+    public boolean isUnfiltered() {
+        return !this.appliesFileNumber() && !this.appliesOpened()
+                && !this.appliesHeirStatus() && !this.appliesUserMobile();
+    }
 }

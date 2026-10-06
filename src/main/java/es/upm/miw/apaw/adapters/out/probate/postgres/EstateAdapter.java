@@ -60,11 +60,15 @@ public class EstateAdapter implements EstateGateway {
 
     private Specification<EstateEntity> buildSpecification(EstateFindCriteria criteria) {
         Specification<EstateEntity> specification = (root, query, builder) -> builder.conjunction();
-        specification = specification.and((root, query, builder) ->
-                builder.equal(root.get("fileNumber"), criteria.getFileNumber()));
-        specification = specification.and((root, query, builder) -> criteria.getOpened()
-                ? builder.isNull(root.get("closingDate"))
-                : builder.isNotNull(root.get("closingDate")));
+        if (criteria.appliesFileNumber()) {
+            specification = specification.and((root, query, builder) ->
+                    builder.equal(root.get("fileNumber"), criteria.getFileNumber()));
+        }
+        if (criteria.appliesOpened()) {
+            specification = specification.and((root, query, builder) -> criteria.getOpened()
+                    ? builder.isNull(root.get("closingDate"))
+                    : builder.isNotNull(root.get("closingDate")));
+        }
         return specification;
     }
 }
