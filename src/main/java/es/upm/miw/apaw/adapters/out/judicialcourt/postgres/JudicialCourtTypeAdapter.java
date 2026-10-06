@@ -5,6 +5,9 @@ import es.upm.miw.apaw.domain.ports.out.judicialcourt.JudicialCourtTypeGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class JudicialCourtTypeAdapter implements JudicialCourtTypeGateway {
@@ -15,6 +18,12 @@ public class JudicialCourtTypeAdapter implements JudicialCourtTypeGateway {
         return this.judicialCourtTypeRepository
                 .save(new JudicialCourtTypeEntity(judicialCourtType))
                 .toDomain();
+    }
+
+    @Override
+    public Optional<JudicialCourtType> read(UUID id) {
+        return this.judicialCourtTypeRepository.findById(id)
+                .map(JudicialCourtTypeEntity::toDomain);
     }
 
     @Override
