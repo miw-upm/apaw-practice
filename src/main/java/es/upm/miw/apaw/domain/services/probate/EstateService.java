@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.probate.CreationEstate;
 import es.upm.miw.apaw.domain.model.probate.Estate;
+import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.probate.EstateGateway;
 import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,5 +40,9 @@ public class EstateService {
     private Heir readHeir(UUID id) {
         return this.heirGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
+    }
+
+    public List<EstateUsageReport> findUsageReport() {
+        return this.estateGateway.findUsageReport();
     }
 }
