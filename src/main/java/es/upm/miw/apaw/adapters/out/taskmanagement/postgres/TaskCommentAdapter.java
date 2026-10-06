@@ -55,7 +55,7 @@ public class TaskCommentAdapter implements TaskCommentGateway {
     }
 
     @Override
-    public boolean isUsed(UUID id) {
+    public boolean isReferenced(UUID id) {
         return this.taskRepository.existsByCommentsId(id);
     }
 }

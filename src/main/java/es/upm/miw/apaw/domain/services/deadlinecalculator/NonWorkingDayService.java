@@ -41,4 +41,26 @@ public class NonWorkingDayService {
     public List<NonWorkingDay> findAll() {
         return this.nonWorkingDayGateway.findAll();
     }
+
+    public NonWorkingDay update(UUID id, NonWorkingDay nonWorkingDay) {
+        NonWorkingDay storedNonWorkingDay = this.read(id);
+        if (!nonWorkingDay.hasConsistentScope()) {
+            throw new BadRequestException("Invalid scope for non working day: "
+                    + nonWorkingDay.getScopeLevel()
+                    + ", region: " + nonWorkingDay.getRegion()
+                    + ", city: " + nonWorkingDay.getCity());
+        }
+        if (this.nonWorkingDayGateway.existsOther(id, nonWorkingDay)) {
+            throw new ConflictException("Non working day already exists: " + nonWorkingDay.getDate()
+                    + ", " + nonWorkingDay.getScopeLevel()
+                    + ", " + nonWorkingDay.getRegion()
+                    + ", " + nonWorkingDay.getCity());
+        }
+        if (!storedNonWorkingDay.getDate().equals(nonWorkingDay.getDate())
+                && this.nonWorkingDayGateway.isReferenced(id)) {
+            throw new ConflictException("Non working day date cannot change, it is used by a deadline: " + id);
+        }
+        storedNonWorkingDay.replaceWith(nonWorkingDay);
+        return this.nonWorkingDayGateway.update(storedNonWorkingDay);
+    }
 }

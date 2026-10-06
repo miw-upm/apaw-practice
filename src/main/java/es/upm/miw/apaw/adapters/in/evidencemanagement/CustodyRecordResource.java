@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,8 +21,13 @@ public class CustodyRecordResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CustodyRecord create(@Valid @RequestBody CustodyRecord custodyRecord) {
-        return this.custodyRecordService.create(custodyRecord);
+    public CustodyRecord create(@Valid @RequestBody CustodyRecordDto custodyRecordDto) {
+        return this.custodyRecordService.create(custodyRecordDto.toDomain());
+    }
+
+    @GetMapping
+    public List<CustodyRecord> findAll() {
+        return this.custodyRecordService.findAll();
     }
 
     @GetMapping(ID)
@@ -30,7 +36,18 @@ public class CustodyRecordResource {
     }
 
     @PutMapping(ID)
-    public CustodyRecord update(@PathVariable UUID id, @Valid @RequestBody CustodyRecord custodyRecord) {
-        return this.custodyRecordService.update(id, custodyRecord);
+    public CustodyRecord update(@PathVariable UUID id, @Valid @RequestBody CustodyRecordDto custodyRecordDto) {
+        return this.custodyRecordService.update(id, custodyRecordDto.toDomain());
+    }
+
+    @PatchMapping(ID)
+    public CustodyRecord patch(@PathVariable UUID id, @Valid @RequestBody CustodyRecordPatchDto custodyRecordPatchDto) {
+        return this.custodyRecordService.patch(id, custodyRecordPatchDto.toDomain());
+    }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.custodyRecordService.delete(id);
     }
 }
