@@ -1,11 +1,13 @@
 package es.upm.miw.apaw.domain.model.powerofattorney;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.util.UUID;
 
 public record CreationPowerOfAttorneyParty (
-        Integer age,
-        Boolean fullMentalCapacity,
+        @NotNull Integer age,
+        @NotNull Boolean fullMentalCapacity,
         String companyName,
-        Boolean representationCompany,
-        UUID userId){
+        @NotNull Boolean representationCompany,
+        @NotNull UUID userId){
 }

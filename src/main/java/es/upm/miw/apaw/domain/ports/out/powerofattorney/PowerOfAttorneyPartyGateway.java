@@ -11,5 +11,7 @@ public interface PowerOfAttorneyPartyGateway {
 
     Optional<PowerOfAttorneyParty> read(UUID id);
 
+    PowerOfAttorneyParty update(PowerOfAttorneyParty party);
+
 
 }
