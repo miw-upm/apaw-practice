@@ -33,4 +33,9 @@ public class PowerOfAttorneyPartyAdapter implements PowerOfAttorneyPartyGateway 
                 .save(new PowerOfAttorneyPartyEntity(party))
                 .toDomain();
     }
+
+    @Override
+    public void delete(UUID id) {
+        this.powerOfAttorneyPartyRepository.deleteById(id);
+    }
 }

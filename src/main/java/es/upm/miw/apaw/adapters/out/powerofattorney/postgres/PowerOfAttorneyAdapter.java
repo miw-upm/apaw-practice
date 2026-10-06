@@ -9,4 +9,10 @@ import org.springframework.stereotype.Component;
 public class PowerOfAttorneyAdapter implements PowerOfAttorneyGateway {
 
     private final PowerOfAttorneyRepository powerOfAttorneyRepository;
+
+    @Override
+    public boolean isReferenced(java.util.UUID partyId) {
+        return this.powerOfAttorneyRepository.existsByPrincipal_Id(partyId)
+                || this.powerOfAttorneyRepository.existsByAttorney_Id(partyId);
+    }
 }
