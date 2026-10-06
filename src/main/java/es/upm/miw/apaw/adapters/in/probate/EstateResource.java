@@ -2,12 +2,14 @@ package es.upm.miw.apaw.adapters.in.probate;
 
 import es.upm.miw.apaw.domain.model.probate.CreationEstate;
 import es.upm.miw.apaw.domain.model.probate.Estate;
+import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
 import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
 import es.upm.miw.apaw.domain.services.probate.EstateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +36,10 @@ public class EstateResource {
     @GetMapping(REPORT)
     public List<EstateUsageReport> findUsageReport() {
         return this.estateService.findUsageReport();
+    }
+
+    @GetMapping
+    public List<Estate> find(@ModelAttribute EstateFindCriteria criteria) {
+        return this.estateService.find(criteria);
     }
 }

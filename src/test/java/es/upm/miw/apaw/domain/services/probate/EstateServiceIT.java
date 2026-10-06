@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.probate;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.probate.CreationEstate;
 import es.upm.miw.apaw.domain.model.probate.Estate;
+import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
@@ -15,9 +16,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+import static es.upm.miw.apaw.config.seeders.ProbateSeederForDev.ESTATE_0;
 import static es.upm.miw.apaw.config.seeders.ProbateSeederForDev.HEIR_ID_0;
 import static es.upm.miw.apaw.config.seeders.ProbateSeederForDev.HEIR_ID_1;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -50,5 +53,20 @@ class EstateServiceIT {
         assertThat(estate.getFileNumber()).isEqualTo(creation.getFileNumber());
         assertThat(estate.getUserSnapshot()).isEqualTo(user);
         assertThat(estate.getHeirs()).extracting(Heir::getId).containsExactly(HEIR_ID_0, HEIR_ID_1);
+    }
+
+    @Test
+    void testFindByFileNumber() {
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(
+                UserSnapshot.builder().id(UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0000"))
+                        .mobile("600000100").build()));
+
+        EstateFindCriteria criteria = EstateFindCriteria.builder()
+                .fileNumber(ESTATE_0.getFileNumber())
+                .build();
+
+        List<Estate> estates = this.estateService.find(criteria);
+
+        assertThat(estates).extracting(Estate::getFileNumber).contains(ESTATE_0.getFileNumber());
     }
 }
