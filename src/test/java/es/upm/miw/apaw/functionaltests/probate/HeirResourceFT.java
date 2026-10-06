@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import static es.upm.miw.apaw.config.seeders.ProbateSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -73,7 +74,8 @@ class HeirResourceFT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Heir[].class)
-                .value(body -> assertThat(body).isNotEmpty());
+                .value(body -> assertThat(body).extracting(Heir::getId)
+                        .containsSubsequence(HEIR_ID_2, HEIR_ID_0, HEIR_ID_1));
     }
 
     @Test
