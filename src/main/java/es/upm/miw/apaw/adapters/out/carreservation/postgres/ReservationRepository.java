@@ -1,12 +1,13 @@
 package es.upm.miw.apaw.adapters.out.carreservation.postgres;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface ReservationRepository extends JpaRepository<ReservationEntity, UUID> {
+public interface ReservationRepository extends JpaRepository<ReservationEntity, UUID>, JpaSpecificationExecutor<ReservationEntity> {
     boolean existsByCarId(UUID carId);
 
     @Query("""
