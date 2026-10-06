@@ -1,9 +1,14 @@
 package es.upm.miw.apaw.adapters.out.probate.postgres;
 
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.probate.Estate;
+import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
 import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
 import es.upm.miw.apaw.domain.ports.out.probate.EstateGateway;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,5 +41,30 @@ public class EstateAdapter implements EstateGateway {
     @Override
     public List<EstateUsageReport> findUsageReport() {
         return this.estateRepository.findUsageReport();
+    }
+
+    @Override
+    public List<Estate> find(EstateFindCriteria criteria) {
+        Specification<EstateEntity> specification = this.buildSpecification(criteria);
+        return this.estateRepository.findAll(specification, Sort.by("fileNumber")).stream()
+                .map(this::toDomain)
+                .toList();
+    }
+
+    private Estate toDomain(EstateEntity entity) {
+        Estate estate = new Estate();
+        BeanUtils.copyProperties(entity, estate, "heirs", "userId");
+        estate.setUserSnapshot(UserSnapshot.builder().id(entity.getUserId()).build());
+        return estate;
+    }
+
+    private Specification<EstateEntity> buildSpecification(EstateFindCriteria criteria) {
+        Specification<EstateEntity> specification = (root, query, builder) -> builder.conjunction();
+        specification = specification.and((root, query, builder) ->
+                builder.equal(root.get("fileNumber"), criteria.getFileNumber()));
+        specification = specification.and((root, query, builder) -> criteria.getOpened()
+                ? builder.isNull(root.get("closingDate"))
+                : builder.isNotNull(root.get("closingDate")));
+        return specification;
     }
 }

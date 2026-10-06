@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.probate.CreationEstate;
 import es.upm.miw.apaw.domain.model.probate.Estate;
+import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
 import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.probate.EstateGateway;
@@ -44,5 +45,14 @@ public class EstateService {
 
     public List<EstateUsageReport> findUsageReport() {
         return this.estateGateway.findUsageReport();
+    }
+
+    public List<Estate> find(EstateFindCriteria criteria) {
+        List<Estate> estates = this.estateGateway.find(criteria);
+        estates.forEach(estate -> estate.setUserSnapshot(
+                this.userFinder.read(estate.getUserSnapshot().getId())));
+        return estates.stream()
+                .filter(estate -> criteria.getUserMobile().equals(estate.getUserSnapshot().getMobile()))
+                .toList();
     }
 }
