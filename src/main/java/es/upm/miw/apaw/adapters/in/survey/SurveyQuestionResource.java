@@ -33,4 +33,10 @@ public class SurveyQuestionResource {
     public SurveyQuestion update(@PathVariable UUID id, @Valid @RequestBody SurveyQuestion surveyQuestion) {
         return this.surveyQuestionService.update(id, surveyQuestion);
     }
+
+    @DeleteMapping(ID)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        this.surveyQuestionService.delete(id);
+    }
 }

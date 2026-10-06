@@ -32,4 +32,9 @@ public class SurveyQuestionAdapter implements SurveyQuestionGateway {
                 .save(new SurveyQuestionEntity(surveyQuestion))
                 .toDomain();
     }
+
+    @Override
+    public void delete(UUID id) {
+        this.surveyQuestionRepository.deleteById(id);
+    }
 }
