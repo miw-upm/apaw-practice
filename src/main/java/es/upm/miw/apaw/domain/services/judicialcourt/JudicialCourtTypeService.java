@@ -1,10 +1,13 @@
 package es.upm.miw.apaw.domain.services.judicialcourt;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtType;
 import es.upm.miw.apaw.domain.ports.out.judicialcourt.JudicialCourtTypeGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +30,10 @@ public class JudicialCourtTypeService {
         }
         judicialCourtType.doDefault();
         return this.judicialCourtTypeGateway.create(judicialCourtType);
+    }
+
+    public JudicialCourtType read(UUID id) {
+        return this.judicialCourtTypeGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Judicial Court type's id not found: " + id));
     }
 }
