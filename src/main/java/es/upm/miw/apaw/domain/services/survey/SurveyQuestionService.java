@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.survey;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
+import es.upm.miw.apaw.domain.model.survey.SurveyQuestionPatch;
 import es.upm.miw.apaw.domain.ports.out.survey.SurveyQuestionGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,27 @@ public class SurveyQuestionService {
 
     public List<SurveyQuestion> findAll() {
         return this.surveyQuestionGateway.findAll();
+    }
+
+    public SurveyQuestion patch(UUID id, SurveyQuestionPatch patch) {
+        SurveyQuestion storedSurveyQuestion = this.read(id);
+
+        if (patch.text() != null) {
+            storedSurveyQuestion.setText(patch.text());
+        }
+        if (patch.surveyQuestionType() != null) {
+            storedSurveyQuestion.setSurveyQuestionType(patch.surveyQuestionType());
+        }
+        if (patch.required() != null) {
+            storedSurveyQuestion.setRequired(patch.required());
+        }
+        if (patch.maxLength() != null) {
+            storedSurveyQuestion.setMaxLength(patch.maxLength());
+        }
+        if (patch.options() != null) {
+            storedSurveyQuestion.setOptions(patch.options());
+        }
+
+        return this.surveyQuestionGateway.update(storedSurveyQuestion);
     }
 }

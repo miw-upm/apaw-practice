@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.in.survey;
 
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
+import es.upm.miw.apaw.domain.model.survey.SurveyQuestionPatch;
 import es.upm.miw.apaw.domain.services.survey.SurveyQuestionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,11 @@ public class SurveyQuestionResource {
     @PutMapping(ID)
     public SurveyQuestion update(@PathVariable UUID id, @Valid @RequestBody SurveyQuestion surveyQuestion) {
         return this.surveyQuestionService.update(id, surveyQuestion);
+    }
+
+    @PatchMapping(ID)
+    public SurveyQuestion patch(@PathVariable UUID id, @Valid @RequestBody SurveyQuestionPatch patch) {
+        return this.surveyQuestionService.patch(id, patch);
     }
 
     @DeleteMapping(ID)
