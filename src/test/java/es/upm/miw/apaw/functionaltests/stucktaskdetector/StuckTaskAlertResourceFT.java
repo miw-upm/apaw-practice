@@ -287,4 +287,5 @@ class StuckTaskAlertResourceFT {
                 .exchange().expectStatus().isCreated()
                 .expectBody(StuckTaskAlert.class).returnResult().getResponseBody();
     }
+
 }

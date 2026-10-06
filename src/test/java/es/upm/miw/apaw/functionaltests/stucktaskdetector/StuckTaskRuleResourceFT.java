@@ -158,4 +158,5 @@ class StuckTaskRuleResourceFT {
                 .userId(USER.getId())
                 .build();
     }
+
 }
