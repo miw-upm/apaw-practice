@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SurveyQuestionAdapter implements SurveyQuestionGateway {
     private final SurveyQuestionRepository surveyQuestionRepository;
+    private final SurveyRepository surveyRepository;
 
     @Override
     public SurveyQuestion create(SurveyQuestion surveyQuestion) {
@@ -40,6 +41,6 @@ public class SurveyQuestionAdapter implements SurveyQuestionGateway {
 
     @Override
     public boolean isReferenced(UUID id) {
-        return this.surveyQuestionRepository.isReferencedInAnySurvey(id);
+        return this.surveyRepository.existsBySurveyQuestionsId(id);
     }
 }
