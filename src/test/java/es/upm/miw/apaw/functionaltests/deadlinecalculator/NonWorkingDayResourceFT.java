@@ -24,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 class NonWorkingDayResourceFT {
     private static final String MADRID = "Madrid";
+    private static final String MESSAGE = "message";
 
     @LocalServerPort
     private int port;
@@ -89,7 +90,7 @@ class NonWorkingDayResourceFT {
                 .exchange()
                 .expectStatus().isEqualTo(409)
                 .expectBody(Map.class)
-                .value(body -> assertThat((String) body.get("message")).contains("already exists"));
+                .value(body -> assertThat((String) body.get(MESSAGE)).contains("already exists"));
     }
 
     @Test
@@ -97,7 +98,10 @@ class NonWorkingDayResourceFT {
         this.restTestClient.post().uri(NonWorkingDayResource.NON_WORKING_DAYS)
                 .body(this.national(1, 4).region(MADRID).build())
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isBadRequest()
+                .expectBody(Map.class)
+                .value(body -> assertThat((String) body.get(MESSAGE))
+                        .contains("Invalid scope for non working day"));
     }
 
     @Test
@@ -105,7 +109,9 @@ class NonWorkingDayResourceFT {
         this.restTestClient.post().uri(NonWorkingDayResource.NON_WORKING_DAYS)
                 .body(Map.of("date", "2030-01-05", "scopeLevel", "NATIONAL"))
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isBadRequest()
+                .expectBody(Map.class)
+                .value(body -> assertThat((String) body.get(MESSAGE)).contains("description"));
     }
 
     // ---------- GET /{id} ----------
@@ -138,7 +144,7 @@ class NonWorkingDayResourceFT {
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody(Map.class)
-                .value(body -> assertThat((String) body.get("message")).contains(id.toString()));
+                .value(body -> assertThat((String) body.get(MESSAGE)).contains(id.toString()));
     }
 
     @Test
@@ -214,7 +220,7 @@ class NonWorkingDayResourceFT {
                 .exchange()
                 .expectStatus().isEqualTo(409)
                 .expectBody(Map.class)
-                .value(body -> assertThat((String) body.get("message")).contains("used by a deadline"));
+                .value(body -> assertThat((String) body.get(MESSAGE)).contains("used by a deadline"));
     }
 
     @Test
@@ -224,7 +230,10 @@ class NonWorkingDayResourceFT {
         this.restTestClient.put().uri(NonWorkingDayResource.NON_WORKING_DAYS + "/" + created.getId())
                 .body(created)
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isBadRequest()
+                .expectBody(Map.class)
+                .value(body -> assertThat((String) body.get(MESSAGE))
+                        .contains("Invalid scope for non working day"));
     }
 
     // ---------- PATCH ----------
@@ -281,6 +290,6 @@ class NonWorkingDayResourceFT {
                 .exchange()
                 .expectStatus().isEqualTo(409)
                 .expectBody(Map.class)
-                .value(body -> assertThat((String) body.get("message")).contains("referenced by a deadline"));
+                .value(body -> assertThat((String) body.get(MESSAGE)).contains("referenced by a deadline"));
     }
 }
