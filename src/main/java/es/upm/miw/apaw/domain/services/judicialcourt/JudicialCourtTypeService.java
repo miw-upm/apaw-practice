@@ -15,19 +15,7 @@ public class JudicialCourtTypeService {
     private final JudicialCourtTypeGateway judicialCourtTypeGateway;
 
     public JudicialCourtType create(JudicialCourtType judicialCourtType) {
-        boolean existsByName = this.judicialCourtTypeGateway.existsByName(judicialCourtType.getName());
-        boolean existsByCode = this.judicialCourtTypeGateway.existsByCode(judicialCourtType.getCode());
-
-        if (existsByName && existsByCode) {
-            throw new ConflictException("Judicial Court type's name and code already exist: "
-                    + judicialCourtType.getName() + " / " + judicialCourtType.getCode());
-        }
-        if (existsByName) {
-            throw new ConflictException("Judicial Court type's name already exists: " + judicialCourtType.getName());
-        }
-        if (existsByCode) {
-            throw new ConflictException("Judicial Court type's code already exists: " + judicialCourtType.getCode());
-        }
+        this.validateNameAndCodeConflict(judicialCourtType.getName(), judicialCourtType.getCode(), null, null);
         judicialCourtType.doDefault();
         return this.judicialCourtTypeGateway.create(judicialCourtType);
     }
@@ -39,15 +27,8 @@ public class JudicialCourtTypeService {
 
     public JudicialCourtType update(UUID id, JudicialCourtType judicialCourtType) {
         JudicialCourtType storedJudicialCourtType = this.read(id);
-
-        if (!storedJudicialCourtType.getName().equals(judicialCourtType.getName())
-                && this.judicialCourtTypeGateway.existsByName(judicialCourtType.getName())) {
-            throw new ConflictException("Judicial Court type's name already exists: " + judicialCourtType.getName());
-        }
-        if (!storedJudicialCourtType.getCode().equals(judicialCourtType.getCode())
-                && this.judicialCourtTypeGateway.existsByCode(judicialCourtType.getCode())) {
-            throw new ConflictException("Judicial Court type's code already exists: " + judicialCourtType.getCode());
-        }
+        this.validateNameAndCodeConflict(judicialCourtType.getName(), judicialCourtType.getCode(),
+                storedJudicialCourtType.getName(), storedJudicialCourtType.getCode());
 
         storedJudicialCourtType.setName(judicialCourtType.getName());
         storedJudicialCourtType.setDescription(judicialCourtType.getDescription());
@@ -55,5 +36,24 @@ public class JudicialCourtTypeService {
         storedJudicialCourtType.setJurisdiction(judicialCourtType.getJurisdiction());
         storedJudicialCourtType.setActive(judicialCourtType.getActive());
         return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
+    }
+
+    private void validateNameAndCodeConflict(String newName, String newCode, String existingName, String existingCode) {
+        boolean nameChanged = existingName == null || !existingName.equals(newName);
+        boolean codeChanged = existingCode == null || !existingCode.equals(newCode);
+
+        boolean existsByName = nameChanged && this.judicialCourtTypeGateway.existsByName(newName);
+        boolean existsByCode = codeChanged && this.judicialCourtTypeGateway.existsByCode(newCode);
+
+        if (existsByName && existsByCode) {
+            throw new ConflictException("Judicial Court type's name and code already exist: "
+                    + newName + " / " + newCode);
+        }
+        if (existsByName) {
+            throw new ConflictException("Judicial Court type's name already exists: " + newName);
+        }
+        if (existsByCode) {
+            throw new ConflictException("Judicial Court type's code already exists: " + newCode);
+        }
     }
 }
