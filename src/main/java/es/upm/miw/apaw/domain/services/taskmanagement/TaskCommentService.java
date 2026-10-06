@@ -4,10 +4,15 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.taskmanagement.CommentType;
 import es.upm.miw.apaw.domain.model.taskmanagement.TaskComment;
-import es.upm.miw.apaw.domain.model.taskmanagement.TaskCommentUpdate;
+import es.upm.miw.apaw.domain.model.taskmanagement.TaskCommentEditionAndTypeUpdate;
 import es.upm.miw.apaw.domain.ports.out.taskmanagement.TaskCommentGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import java.util.List;
 import java.util.UUID;
@@ -62,29 +67,30 @@ public class TaskCommentService {
         return this.taskCommentGateway.findAll();
     }
 
-    public TaskComment update(UUID id, TaskCommentUpdate update) {
-        TaskComment taskComment = this.read(id);
+    @Transactional
+    public void updateEditionAndType(List<TaskCommentEditionAndTypeUpdate> updates) {
+        this.assertUniqueIds(updates);
 
-        if (update.content() != null) {
-            taskComment.setContent(update.content());
+        List<TaskComment> taskComments = updates.stream()
+                .map(update -> {
+                    TaskComment taskComment = this.read(update.id());
+                    taskComment.setEdition(update.edition());
+                    taskComment.setType(update.type());
+                    return taskComment;
+                })
+                .toList();
+
+        taskComments.forEach(this.taskCommentGateway::update);
+    }
+
+    private void assertUniqueIds(List<TaskCommentEditionAndTypeUpdate> updates) {
+        Set<UUID> ids = new HashSet<>();
+        for (TaskCommentEditionAndTypeUpdate update : updates) {
+            if (!ids.add(update.id())) {
+                throw new BadRequestException(
+                        "Repeated task comment id: " + update.id()
+                );
+            }
         }
-
-        if (update.edition() != null) {
-            taskComment.setEdition(update.edition());
-        }
-
-        if (update.attachment() != null) {
-            taskComment.setAttachment(update.attachment());
-        }
-
-        if (update.type() != null) {
-            taskComment.setType(update.type());
-        }
-
-        if (update.author() != null) {
-            taskComment.setAuthor(update.author());
-        }
-
-        return this.taskCommentGateway.update(taskComment);
     }
 }
