@@ -39,10 +39,11 @@ public class PowerOfAttorneyPartyService {
         return powerOfAttorneyParty;
     }
 
-    public PowerOfAttorneyParty update(UUID id, PowerOfAttorneyParty party) {
-        this.read(id);
-        party.setId(id);
-        party.setUserSnapshot(this.readUser(party.getUserSnapshot().getId()));
-        return this.powerOfAttorneyPartyGateway.update(party);
+    public PowerOfAttorneyParty update(UUID id, CreationPowerOfAttorneyParty party) {
+        PowerOfAttorneyParty powerOfAttorneyParty = this.powerOfAttorneyPartyGateway.read(id)
+                .orElseThrow(() ->  new NotFoundException("Power of attorney party id not found: " + id));
+        BeanUtils.copyProperties(party, powerOfAttorneyParty);
+        powerOfAttorneyParty.setUserSnapshot(this.readUser(party.userId()));
+        return this.powerOfAttorneyPartyGateway.update(powerOfAttorneyParty);
     }
 }

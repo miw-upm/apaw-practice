@@ -33,7 +33,7 @@ public class PowerOfAttorneyPartyResource {
     }
 
     @PutMapping(ID)
-    public PowerOfAttorneyParty update(@PathVariable UUID id, @Valid @RequestBody PowerOfAttorneyParty party) {
+    public PowerOfAttorneyParty update(@PathVariable UUID id, @Valid @RequestBody CreationPowerOfAttorneyParty party) {
         return this.powerOfAttorneyPartyService.update(id, party);
     }
 }
