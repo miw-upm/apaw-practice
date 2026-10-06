@@ -3,6 +3,7 @@ package es.upm.miw.apaw.domain.services.judicialcourt;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtType;
+import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtTypePatch;
 import es.upm.miw.apaw.domain.ports.out.judicialcourt.JudicialCourtTypeGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,31 @@ public class JudicialCourtTypeService {
         storedJudicialCourtType.setCode(judicialCourtType.getCode());
         storedJudicialCourtType.setJurisdiction(judicialCourtType.getJurisdiction());
         storedJudicialCourtType.setActive(judicialCourtType.getActive());
+        return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
+    }
+
+    public JudicialCourtType patch(UUID id, JudicialCourtTypePatch patch) {
+        JudicialCourtType storedJudicialCourtType = this.read(id);
+        String newName = patch.name() != null ? patch.name() : storedJudicialCourtType.getName();
+        String newCode = patch.code() != null ? patch.code() : storedJudicialCourtType.getCode();
+        this.validateNameAndCodeConflict(newName, newCode,
+                storedJudicialCourtType.getName(), storedJudicialCourtType.getCode());
+
+        if (patch.name() != null) {
+            storedJudicialCourtType.setName(patch.name());
+        }
+        if (patch.description() != null) {
+            storedJudicialCourtType.setDescription(patch.description());
+        }
+        if (patch.code() != null) {
+            storedJudicialCourtType.setCode(patch.code());
+        }
+        if (patch.jurisdiction() != null) {
+            storedJudicialCourtType.setJurisdiction(patch.jurisdiction());
+        }
+        if (patch.active() != null) {
+            storedJudicialCourtType.setActive(patch.active());
+        }
         return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
     }
 
