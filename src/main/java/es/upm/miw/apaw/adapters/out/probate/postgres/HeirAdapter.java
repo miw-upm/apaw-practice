@@ -37,6 +37,16 @@ public class HeirAdapter implements HeirGateway {
     }
 
     @Override
+    public void delete(UUID id) {
+        this.heirRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return false;
+    }
+
+    @Override
     public boolean existsByNationalId(String nationalId) {
         return this.heirRepository.existsByNationalId(nationalId);
     }

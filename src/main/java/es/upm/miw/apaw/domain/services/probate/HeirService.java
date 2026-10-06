@@ -64,4 +64,8 @@ public class HeirService {
         Optional.ofNullable(update.contactEmail()).ifPresent(storedHeir::setContactEmail);
         return this.heirGateway.update(storedHeir);
     }
+
+    public void delete(UUID id) {
+        this.heirGateway.delete(id);
+    }
 }
