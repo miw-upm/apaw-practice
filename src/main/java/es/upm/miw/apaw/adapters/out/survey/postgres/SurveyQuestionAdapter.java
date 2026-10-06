@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class SurveyQuestionAdapter implements SurveyQuestionGateway {
     private final SurveyQuestionRepository surveyQuestionRepository;
+    private final SurveyRepository surveyRepository;
 
     @Override
     public SurveyQuestion create(SurveyQuestion surveyQuestion) {
@@ -36,5 +37,10 @@ public class SurveyQuestionAdapter implements SurveyQuestionGateway {
     @Override
     public void delete(UUID id) {
         this.surveyQuestionRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.surveyRepository.existsBySurveyQuestionsId(id);
     }
 }

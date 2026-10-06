@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.survey;
 
+import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
 import es.upm.miw.apaw.domain.ports.out.survey.SurveyQuestionGateway;
@@ -34,7 +35,9 @@ public class SurveyQuestionService {
     }
 
     public void delete(UUID id) {
-        this.read(id);
+        if (this.surveyQuestionGateway.isReferenced(id)) {
+            throw new ConflictException("Survey question is referenced by a survey: " + id);
+        }
         this.surveyQuestionGateway.delete(id);
     }
 }
