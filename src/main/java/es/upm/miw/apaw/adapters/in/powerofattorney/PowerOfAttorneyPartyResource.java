@@ -2,8 +2,11 @@ package es.upm.miw.apaw.adapters.in.powerofattorney;
 
 import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyPatch;
 import es.upm.miw.apaw.domain.services.powerofattorney.PowerOfAttorneyPartyService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -49,5 +52,10 @@ public class PowerOfAttorneyPartyResource {
         return this.powerOfAttorneyPartyService.findAll();
     }
 
+    @PatchMapping
+    public void updateLegalRequirements(
+            @RequestBody @NotEmpty List<@NotNull @Valid PowerOfAttorneyPartyPatch> patches) {
+        this.powerOfAttorneyPartyService.patch(patches);
+    }
 
 }
