@@ -58,7 +58,7 @@ public class TaskCommentService {
         this.taskCommentGateway.delete(id);
     }
 
-    public List<TaskComment> find() {
+    public List<TaskComment> findAll() {
         return this.taskCommentGateway.findAll();
     }
 
