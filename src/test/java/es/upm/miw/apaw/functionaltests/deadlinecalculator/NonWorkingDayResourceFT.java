@@ -62,10 +62,8 @@ class NonWorkingDayResourceFT {
                 .expectBody(NonWorkingDay.class)
                 .value(body -> {
                     assertThat(body.getId()).isNotNull();
-                    assertThat(body.getDate()).isEqualTo(LocalDate.of(2030, 1, 2));
-                    assertThat(body.getRecurring()).isFalse();
-                    assertThat(body.getRegion()).isNull();
-                    assertThat(body.getCity()).isNull();
+                    assertThat(body).usingRecursiveComparison().ignoringFields("id")
+                            .isEqualTo(this.national(1, 2).recurring(false).build());
                 });
     }
 
@@ -190,10 +188,7 @@ class NonWorkingDayResourceFT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(NonWorkingDay.class)
-                .value(body -> {
-                    assertThat(body.getId()).isEqualTo(created.getId());
-                    assertThat(body.getDescription()).isEqualTo("Nombre corregido");
-                });
+                .value(body -> assertThat(body).usingRecursiveComparison().isEqualTo(created));
     }
 
     @Test
