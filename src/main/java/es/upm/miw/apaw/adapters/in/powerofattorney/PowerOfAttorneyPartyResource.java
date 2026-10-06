@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,5 +43,11 @@ public class PowerOfAttorneyPartyResource {
     public void delete(@PathVariable UUID id) {
         this.powerOfAttorneyPartyService.delete(id);
     }
+
+    @GetMapping
+    public List<PowerOfAttorneyParty> findAll() {
+        return this.powerOfAttorneyPartyService.findAll();
+    }
+
 
 }

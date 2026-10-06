@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -59,5 +60,19 @@ public class PowerOfAttorneyPartyService {
             throw new ConflictException("Power of attorney party is referenced by a power of attorney: " + id);
         }
         this.powerOfAttorneyPartyGateway.delete(id);
+    }
+
+    public List<PowerOfAttorneyParty> findAll() {
+        return this.powerOfAttorneyPartyGateway.findAll()
+                .stream()
+                .map(this::enrichUserSnapshot)
+                .toList();
+    }
+
+    private PowerOfAttorneyParty enrichUserSnapshot(
+            PowerOfAttorneyParty party) {
+        UUID userId = party.getUserSnapshot().getId();
+        party.setUserSnapshot(this.readUser(userId));
+        return party;
     }
 }
