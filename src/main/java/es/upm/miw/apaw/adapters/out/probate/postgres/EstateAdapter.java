@@ -69,6 +69,12 @@ public class EstateAdapter implements EstateGateway {
                     ? builder.isNull(root.get("closingDate"))
                     : builder.isNotNull(root.get("closingDate")));
         }
+        if (criteria.appliesHeirStatus()) {
+            specification = specification.and((root, query, builder) -> {
+                query.distinct(true);
+                return builder.equal(root.join("heirs").get("heirStatus"), criteria.getHeirStatus());
+            });
+        }
         return specification;
     }
 }
