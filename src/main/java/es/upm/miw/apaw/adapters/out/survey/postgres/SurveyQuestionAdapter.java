@@ -25,4 +25,11 @@ public class SurveyQuestionAdapter implements SurveyQuestionGateway {
         return this.surveyQuestionRepository.findById(id)
                 .map(SurveyQuestionEntity::toDomain);
     }
+
+    @Override
+    public SurveyQuestion update(SurveyQuestion surveyQuestion) {
+        return this.surveyQuestionRepository
+                .save(new SurveyQuestionEntity(surveyQuestion))
+                .toDomain();
+    }
 }

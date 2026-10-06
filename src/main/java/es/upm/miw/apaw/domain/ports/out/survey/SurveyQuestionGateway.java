@@ -9,4 +9,6 @@ public interface SurveyQuestionGateway {
     SurveyQuestion create(SurveyQuestion surveyQuestion);
 
     Optional<SurveyQuestion> read(UUID id);
+
+    SurveyQuestion update(SurveyQuestion surveyQuestion);
 }
