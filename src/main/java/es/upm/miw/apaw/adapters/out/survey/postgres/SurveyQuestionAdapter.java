@@ -5,6 +5,9 @@ import es.upm.miw.apaw.domain.ports.out.survey.SurveyQuestionGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 @RequiredArgsConstructor
 public class SurveyQuestionAdapter implements SurveyQuestionGateway {
@@ -15,5 +18,11 @@ public class SurveyQuestionAdapter implements SurveyQuestionGateway {
         return this.surveyQuestionRepository
                 .save(new SurveyQuestionEntity(surveyQuestion))
                 .toDomain();
+    }
+
+    @Override
+    public Optional<SurveyQuestion> read(UUID id) {
+        return this.surveyQuestionRepository.findById(id)
+                .map(SurveyQuestionEntity::toDomain);
     }
 }
