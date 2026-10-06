@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.powerofattorney;
 
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
@@ -85,14 +86,32 @@ public class PowerOfAttorneyPartyService {
         return parties;
     }
 
-    public PowerOfAttorneyParty patch(UUID id, PowerOfAttorneyPartyPatch patch) {
-        PowerOfAttorneyParty stored = this.read(id);
-        if (patch.age() != null) {
-            stored.setAge(patch.age());
+    public void patch(List<PowerOfAttorneyPartyPatch> patches) {
+        this.assertUniqueIds(patches);
+        patches.forEach(patch -> {
+            if (patch.age() == null && patch.fullMentalCapacity() == null) {
+                throw new BadRequestException(
+                        "At least one of age or fullMentalCapacity is required: " + patch.id());
+            }
+            PowerOfAttorneyParty stored = this.powerOfAttorneyPartyGateway.read(patch.id())
+                    .orElseThrow(() -> new NotFoundException(
+                            "Power of attorney party id not found: " + patch.id()));
+            if (patch.age() != null) {
+                stored.setAge(patch.age());
+            }
+            if (patch.fullMentalCapacity() != null) {
+                stored.setFullMentalCapacity(patch.fullMentalCapacity());
+            }
+            this.powerOfAttorneyPartyGateway.update(stored);
+        });
+    }
+
+    private void assertUniqueIds(List<PowerOfAttorneyPartyPatch> patches) {
+        Set<UUID> ids = new HashSet<>();
+        for (PowerOfAttorneyPartyPatch patch : patches) {
+            if (!ids.add(patch.id())) {
+                throw new BadRequestException("Repeated power of attorney party id: " + patch.id());
+            }
         }
-        if (patch.fullMentalCapacity() != null) {
-            stored.setFullMentalCapacity(patch.fullMentalCapacity());
-        }
-        return this.powerOfAttorneyPartyGateway.update(stored);
     }
 }
