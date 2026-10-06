@@ -41,7 +41,7 @@ class HeirResourceFT {
         this.restTestClient.post().uri(HeirResource.HEIRS)
                 .body(heir)
                 .exchange()
-                .expectStatus().isOk()
+                .expectStatus().isCreated()
                 .expectBody(Heir.class)
                 .value(body -> assertThat(body).isEqualTo(heir));
     }
@@ -106,7 +106,7 @@ class HeirResourceFT {
         Heir heir = this.createHeir();
         this.restTestClient.delete().uri(HeirResource.HEIRS + "/" + heir.getId())
                 .exchange()
-                .expectStatus().isOk();
+                .expectStatus().isNoContent();
         this.restTestClient.get().uri(HeirResource.HEIRS + "/" + heir.getId())
                 .exchange()
                 .expectStatus().isNotFound();
