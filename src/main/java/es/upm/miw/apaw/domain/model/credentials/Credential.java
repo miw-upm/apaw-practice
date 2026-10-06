@@ -46,4 +46,32 @@ public class Credential {
             this.renewable = true;
         }
     }
+
+    public boolean isExpired() {
+        return this.expirationDate != null
+                && this.expirationDate.isBefore(LocalDate.now());
+    }
+
+    public Credential ofSummary() {
+        return Credential.builder()
+                .id(this.id)
+                .number(this.number)
+                .registryCode(this.registryCode)
+                .authority(this.authority)
+                .issueDate(this.issueDate)
+                .expirationDate(this.expirationDate)
+                .renewalCount(this.renewalCount)
+                .renewable(this.renewable)
+                .credentialType(this.credentialType)
+                .user(this.user == null ? null : UserSnapshot.builder()
+                        .id(this.user.getId())
+                        .mobile(this.user.getMobile())
+                        .firstName(this.user.getFirstName())
+                        .familyName(this.user.getFamilyName())
+                        .email(this.user.getEmail())
+                        .identity(this.user.getIdentity())
+                        .city(this.user.getCity())
+                        .build())
+                .build();
+    }
 }

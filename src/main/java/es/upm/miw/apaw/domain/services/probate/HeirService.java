@@ -64,4 +64,11 @@ public class HeirService {
         Optional.ofNullable(update.contactEmail()).ifPresent(storedHeir::setContactEmail);
         return this.heirGateway.update(storedHeir);
     }
+
+    public void delete(UUID id) {
+        if (this.heirGateway.isReferenced(id)) {
+            throw new ConflictException("Heir is referenced by a estate: " + id);
+        }
+        this.heirGateway.delete(id);
+    }
 }

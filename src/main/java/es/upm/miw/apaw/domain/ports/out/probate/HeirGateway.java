@@ -15,5 +15,9 @@ public interface HeirGateway {
 
     Heir update(Heir heir);
 
+    void delete(UUID id);
+
+    boolean isReferenced(UUID id);
+
     boolean existsByNationalId(String nationalId);
 }

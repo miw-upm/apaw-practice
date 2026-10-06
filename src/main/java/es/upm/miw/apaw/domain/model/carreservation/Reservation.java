@@ -63,11 +63,16 @@ public class Reservation {
                 .destination(this.destination)
                 .businessTrip(this.businessTrip)
                 .passengerCount(this.passengerCount)
-                .userSnapshot(UserSnapshot.builder()
+                .car(this.car)
+                .userSnapshot(this.userSnapshot != null ? UserSnapshot.builder()
                         .id(this.userSnapshot.getId())
                         .mobile(this.userSnapshot.getMobile())
                         .firstName(this.userSnapshot.getFirstName())
-                        .build())
+                        .familyName(this.userSnapshot.getFamilyName())
+                        .email(this.userSnapshot.getEmail())
+                        .identity(this.userSnapshot.getIdentity())
+                        .city(this.userSnapshot.getCity())
+                        .build() : null)
                 .build();
     }
 }

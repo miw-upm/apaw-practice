@@ -14,4 +14,12 @@ public interface NonWorkingDayGateway {
     Optional<NonWorkingDay> read(UUID id);
 
     List<NonWorkingDay> findAll();
+
+    boolean existsOther(UUID id, NonWorkingDay nonWorkingDay);
+
+    NonWorkingDay update(NonWorkingDay nonWorkingDay);
+
+    boolean isReferenced(UUID id);
+
+    void delete(UUID id);
 }

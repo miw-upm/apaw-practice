@@ -80,4 +80,13 @@ public class CredentialEntity {
                 .build());
         return credential;
     }
+
+    public Credential toSummary() {
+        Credential credential = new Credential();
+        BeanUtils.copyProperties(this, credential, "verifications", "userId");
+        credential.setUser(UserSnapshot.builder()
+                .id(this.userId)
+                .build());
+        return credential;
+    }
 }

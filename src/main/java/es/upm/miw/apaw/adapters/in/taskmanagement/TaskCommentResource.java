@@ -1,9 +1,11 @@
 package es.upm.miw.apaw.adapters.in.taskmanagement;
 
 import es.upm.miw.apaw.domain.model.taskmanagement.TaskComment;
-import es.upm.miw.apaw.domain.model.taskmanagement.TaskCommentUpdate;
+import es.upm.miw.apaw.domain.model.taskmanagement.TaskCommentEditionAndTypeUpdate;
 import es.upm.miw.apaw.domain.services.taskmanagement.TaskCommentService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,11 +51,12 @@ public class TaskCommentResource {
         return this.taskCommentService.update(id, taskComment);
     }
 
-    @PatchMapping(ID)
-    public TaskComment update(
-            @PathVariable UUID id,
-            @Valid @RequestBody TaskCommentUpdate update) {
-        return this.taskCommentService.update(id, update);
+    @PatchMapping
+    public void updateEditionAndType(
+            @RequestBody @NotEmpty
+            List<@NotNull @Valid TaskCommentEditionAndTypeUpdate> updates) {
+
+        this.taskCommentService.updateEditionAndType(updates);
     }
 
     @DeleteMapping(ID)
@@ -63,7 +66,7 @@ public class TaskCommentResource {
     }
 
     @GetMapping
-    public List<TaskComment> find() {
-        return this.taskCommentService.find();
+    public List<TaskComment> findAll() {
+        return this.taskCommentService.findAll();
     }
 }
