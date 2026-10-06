@@ -18,4 +18,6 @@ public interface NonWorkingDayGateway {
     boolean existsOther(UUID id, NonWorkingDay nonWorkingDay);
 
     NonWorkingDay update(NonWorkingDay nonWorkingDay);
+
+    boolean isReferenced(UUID id);
 }

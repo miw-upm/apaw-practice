@@ -13,6 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NonWorkingDayAdapter implements NonWorkingDayGateway {
     private final NonWorkingDayRepository nonWorkingDayRepository;
+    private final DeadlineRepository deadlineRepository;
 
     @Override
     public NonWorkingDay create(NonWorkingDay nonWorkingDay) {
@@ -53,5 +54,10 @@ public class NonWorkingDayAdapter implements NonWorkingDayGateway {
         return this.nonWorkingDayRepository
                 .save(new NonWorkingDayEntity(nonWorkingDay))
                 .toDomain();
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.deadlineRepository.existsByNonWorkingDaysId(id);
     }
 }

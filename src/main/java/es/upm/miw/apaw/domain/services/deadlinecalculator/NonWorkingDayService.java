@@ -56,6 +56,10 @@ public class NonWorkingDayService {
                     + ", " + nonWorkingDay.getRegion()
                     + ", " + nonWorkingDay.getCity());
         }
+        if (!storedNonWorkingDay.getDate().equals(nonWorkingDay.getDate())
+                && this.nonWorkingDayGateway.isReferenced(id)) {
+            throw new ConflictException("Non working day date cannot change, it is used by a deadline: " + id);
+        }
         storedNonWorkingDay.replaceWith(nonWorkingDay);
         return this.nonWorkingDayGateway.update(storedNonWorkingDay);
     }
