@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.out.expense.postgres;
 
-import es.upm.miw.apaw.config.seeders.SupplierSeederForDev;
+import es.upm.miw.apaw.config.seeders.ExpenseSeederForDev;
 import es.upm.miw.apaw.domain.model.expense.SupplierExpenseReport;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ class ExpenseRepositoryIT {
 
     @Test
     void testFindSupplierExpenseReport() {
-        SupplierEntity supplier = this.supplierRepository.findById(SupplierSeederForDev.SUPPLIER_1_ID).orElseThrow();
+        SupplierEntity supplier = this.supplierRepository.findById(ExpenseSeederForDev.SUPPLIER_ID_0).orElseThrow();
 
         ExpenseEntity expense1 = ExpenseEntity.builder()
                 .id(UUID.randomUUID())

@@ -49,7 +49,10 @@ class CarResourceFT {
                 .exchange()
                 .expectStatus().isNotFound()
                 .expectBody(Map.class)
-                .value(body -> assertThat((String) body.get("message")).contains(id.toString()));
+                .value(body -> {
+                    assert body != null;
+                    assertThat((String) body.get("message")).contains(id.toString());
+                });
     }
 
     @Test
