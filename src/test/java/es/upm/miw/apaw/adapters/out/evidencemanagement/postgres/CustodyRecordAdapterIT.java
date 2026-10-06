@@ -123,4 +123,11 @@ class CustodyRecordAdapterIT {
                 .durationMinutes(20).action("IT action " + UUID.randomUUID()).location("IT location")
                 .notes("IT notes").custodian(UserSnapshot.builder().id(CUSTODIAN_ID_0).build()).build();
     }
+
+    @Test
+    void testDeleteById() {
+        CustodyRecord custodyRecord = this.custodyRecordGateway.create(this.newRecord());
+        this.custodyRecordGateway.deleteById(custodyRecord.getId());
+        assertThat(this.custodyRecordGateway.read(custodyRecord.getId())).isEmpty();
+    }
 }

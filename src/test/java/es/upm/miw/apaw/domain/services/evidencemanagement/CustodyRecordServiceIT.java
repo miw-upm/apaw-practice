@@ -245,4 +245,21 @@ class CustodyRecordServiceIT {
         CustodyRecord created = this.custodyRecordService.create(this.newRecord());
         return this.custodyRecordService.read(created.getId());
     }
+
+    @Test
+    void testPatchAllFields() {
+        CustodyRecord original = this.createRecord();
+        CustodyRecord changes = CustodyRecord.builder().durationMinutes(90).action("Patched action")
+                .location("Patched location").notes("Patched notes")
+                .custodian(UserSnapshot.builder().id(CUSTODIAN_ID_1).build()).build();
+        this.custodyRecordService.patch(original.getId(), changes);
+        CustodyRecord patched = this.custodyRecordService.read(original.getId());
+        assertThat(patched.getId()).isEqualTo(original.getId());
+        assertThat(patched.getRecordedAt()).isEqualTo(original.getRecordedAt());
+        assertThat(patched.getDurationMinutes()).isEqualTo(90);
+        assertThat(patched.getAction()).isEqualTo("Patched action");
+        assertThat(patched.getLocation()).isEqualTo("Patched location");
+        assertThat(patched.getNotes()).isEqualTo("Patched notes");
+        assertThat(patched.getCustodian().getId()).isEqualTo(CUSTODIAN_ID_1);
+    }
 }
