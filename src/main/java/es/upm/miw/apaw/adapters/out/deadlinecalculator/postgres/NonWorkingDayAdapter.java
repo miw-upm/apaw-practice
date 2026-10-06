@@ -40,4 +40,18 @@ public class NonWorkingDayAdapter implements NonWorkingDayGateway {
                 .map(NonWorkingDayEntity::toDomain)
                 .toList();
     }
+
+    @Override
+    public boolean existsOther(UUID id, NonWorkingDay nonWorkingDay) {
+        NonWorkingDayEntity entity = new NonWorkingDayEntity(nonWorkingDay);
+        return this.nonWorkingDayRepository.existsByDateAndScopeLevelAndRegionAndCityAndIdNot(
+                entity.getDate(), entity.getScopeLevel(), entity.getRegion(), entity.getCity(), id);
+    }
+
+    @Override
+    public NonWorkingDay update(NonWorkingDay nonWorkingDay) {
+        return this.nonWorkingDayRepository
+                .save(new NonWorkingDayEntity(nonWorkingDay))
+                .toDomain();
+    }
 }
