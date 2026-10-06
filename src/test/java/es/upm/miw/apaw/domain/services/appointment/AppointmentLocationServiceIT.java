@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -120,6 +121,7 @@ class AppointmentLocationServiceIT {
     }
 
     @Test
+    @Transactional
     void testDeleteReferencedLocation() {
         AppointmentLocation location = this.createLocation();
         AppointmentEntity appointment = AppointmentEntity.builder()
