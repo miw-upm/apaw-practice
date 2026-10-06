@@ -20,6 +20,7 @@ public interface EstateRepository extends JpaRepository<EstateEntity, UUID> {
             from EstateEntity estate
             join estate.heirs heir
             group by heir.heirStatus
+            order by count(heir) desc
             """)
     List<EstateUsageReport> findUsageReport();
 }
