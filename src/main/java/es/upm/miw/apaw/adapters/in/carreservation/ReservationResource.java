@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.in.carreservation;
 import es.upm.miw.apaw.domain.model.carreservation.CarUsageReport;
 import es.upm.miw.apaw.domain.model.carreservation.Reservation;
 import es.upm.miw.apaw.domain.model.carreservation.CreationReservation;
+import es.upm.miw.apaw.domain.model.carreservation.ReservationFindCriteria;
 import es.upm.miw.apaw.domain.services.carreservation.ReservationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +31,10 @@ public class ReservationResource {
     @GetMapping(REPORT)
     public List<CarUsageReport> findCarUsageReport() {
         return this.reservationService.findCarUsageReport();
+    }
+
+    @GetMapping
+    public List<Reservation> find(ReservationFindCriteria criteria) {
+        return this.reservationService.find(criteria);
     }
 }

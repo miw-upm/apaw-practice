@@ -3,12 +3,16 @@ package es.upm.miw.apaw.adapters.out.carreservation.postgres;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.carreservation.CarUsageReport;
 import es.upm.miw.apaw.domain.model.carreservation.Reservation;
+import es.upm.miw.apaw.domain.model.carreservation.ReservationFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.carreservation.ReservationGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -58,5 +62,47 @@ public class ReservationAdapter implements ReservationGateway {
                         .totalDurationMinutes(raw.getTotalDurationMinutes())
                         .build())
                 .toList();
+    }
+
+    @Override
+    public List<Reservation> find(ReservationFindCriteria criteria) {
+        return this.reservationRepository.findAll(this.buildSpecification(criteria)).stream()
+                .map(this::toDomainWithoutUser)
+                .toList();
+    }
+
+    private Reservation toDomainWithoutUser(ReservationEntity entity) {
+        Reservation reservation = new Reservation();
+        BeanUtils.copyProperties(entity, reservation, "userId", "car");
+        reservation.setUserSnapshot(UserSnapshot.builder().id(entity.getUserId()).build());
+        return reservation;
+    }
+
+    private Specification<ReservationEntity> buildSpecification(ReservationFindCriteria criteria) {
+        Specification<ReservationEntity> specification = (root, query, builder) -> builder.conjunction();
+
+        if (criteria.hasDurationMinutes()) {
+            specification = specification.and((root, query, builder) ->
+                    builder.equal(root.get("durationMinutes"), criteria.getDurationMinutes()));
+        }
+
+        if (criteria.hasActive()) {
+            specification = specification.and(this.active(criteria.getActive()));
+        }
+
+        if (criteria.hasCarLicensePlate()) {
+            specification = specification.and((root, query, builder) ->
+                    builder.equal(root.get("car").get("licensePlate"), criteria.getCarLicensePlate()));
+        }
+
+        return specification;
+    }
+
+    private Specification<ReservationEntity> active(boolean active) {
+        return (root, query, builder) -> {
+            LocalDateTime now = LocalDateTime.now();
+            var isFutureOrPresent = builder.greaterThan(root.get("endTime"), now);
+            return active ? isFutureOrPresent : builder.not(isFutureOrPresent);
+        };
     }
 }
