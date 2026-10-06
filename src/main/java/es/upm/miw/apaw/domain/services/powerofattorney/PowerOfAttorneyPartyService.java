@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.powerofattorney;
 
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
@@ -8,6 +9,7 @@ import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
 @Service
@@ -27,5 +29,13 @@ public class PowerOfAttorneyPartyService {
 
     private UserSnapshot readUser(UUID id) {
         return this.userFinder.read(id);
+    }
+
+    public PowerOfAttorneyParty read(UUID id) {
+        PowerOfAttorneyParty powerOfAttorneyParty = this.powerOfAttorneyPartyGateway.read(id)
+                .orElseThrow(() -> new NotFoundException("Power of attorney party id not found: " + id));
+        UUID userId = powerOfAttorneyParty.getUserSnapshot().getId();
+        powerOfAttorneyParty.setUserSnapshot(this.readUser(userId));
+        return powerOfAttorneyParty;
     }
 }
