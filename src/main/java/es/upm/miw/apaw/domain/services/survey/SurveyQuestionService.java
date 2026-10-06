@@ -22,4 +22,14 @@ public class SurveyQuestionService {
         return this.surveyQuestionGateway.read(id)
                 .orElseThrow(() -> new NotFoundException("Survey question id not found: " + id));
     }
+
+    public SurveyQuestion update(UUID id, SurveyQuestion surveyQuestion) {
+        SurveyQuestion storedSurveyQuestion = this.read(id);
+        storedSurveyQuestion.setText(surveyQuestion.getText());
+        storedSurveyQuestion.setSurveyQuestionType(surveyQuestion.getSurveyQuestionType());
+        storedSurveyQuestion.setRequired(surveyQuestion.getRequired());
+        storedSurveyQuestion.setMaxLength(surveyQuestion.getMaxLength());
+        storedSurveyQuestion.setOptions(surveyQuestion.getOptions());
+        return this.surveyQuestionGateway.update(storedSurveyQuestion);
+    }
 }

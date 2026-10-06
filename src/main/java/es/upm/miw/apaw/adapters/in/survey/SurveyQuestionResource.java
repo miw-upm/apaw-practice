@@ -28,4 +28,9 @@ public class SurveyQuestionResource {
     public SurveyQuestion read(@PathVariable UUID id) {
         return this.surveyQuestionService.read(id);
     }
+
+    @PutMapping(ID)
+    public SurveyQuestion update(@PathVariable UUID id, @Valid @RequestBody SurveyQuestion surveyQuestion) {
+        return this.surveyQuestionService.update(id, surveyQuestion);
+    }
 }
