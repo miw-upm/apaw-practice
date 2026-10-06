@@ -1,12 +1,16 @@
 package es.upm.miw.apaw.adapters.in.deadlinecalculator;
 
 import es.upm.miw.apaw.domain.model.deadlinecalculator.NonWorkingDay;
+import es.upm.miw.apaw.domain.model.deadlinecalculator.NonWorkingDayRecurringUpdate;
 import es.upm.miw.apaw.domain.services.deadlinecalculator.NonWorkingDayService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,5 +49,11 @@ public class NonWorkingDayResource {
     @PutMapping(ID)
     public NonWorkingDay update(@PathVariable UUID id, @Valid @RequestBody NonWorkingDay nonWorkingDay) {
         return this.nonWorkingDayService.update(id, nonWorkingDay);
+    }
+
+    @PatchMapping
+    public void updateRecurrences(
+            @RequestBody @NotEmpty List<@NotNull @Valid NonWorkingDayRecurringUpdate> updates) {
+        this.nonWorkingDayService.updateRecurrences(updates);
     }
 }

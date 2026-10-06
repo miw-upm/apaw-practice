@@ -4,11 +4,15 @@ import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.NonWorkingDay;
+import es.upm.miw.apaw.domain.model.deadlinecalculator.NonWorkingDayRecurringUpdate;
 import es.upm.miw.apaw.domain.ports.out.deadlinecalculator.NonWorkingDayGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -62,5 +66,27 @@ public class NonWorkingDayService {
         }
         storedNonWorkingDay.replaceWith(nonWorkingDay);
         return this.nonWorkingDayGateway.update(storedNonWorkingDay);
+    }
+
+    @Transactional
+    public void updateRecurrences(List<NonWorkingDayRecurringUpdate> updates) {
+        this.assertUniqueIds(updates);
+        List<NonWorkingDay> nonWorkingDays = updates.stream()
+                .map(update -> {
+                    NonWorkingDay nonWorkingDay = this.read(update.id());
+                    nonWorkingDay.setRecurring(update.recurring());
+                    return nonWorkingDay;
+                })
+                .toList();
+        nonWorkingDays.forEach(this.nonWorkingDayGateway::update);
+    }
+
+    private void assertUniqueIds(List<NonWorkingDayRecurringUpdate> updates) {
+        Set<UUID> ids = new HashSet<>();
+        for (NonWorkingDayRecurringUpdate update : updates) {
+            if (!ids.add(update.id())) {
+                throw new BadRequestException("Repeated non working day id: " + update.id());
+            }
+        }
     }
 }
