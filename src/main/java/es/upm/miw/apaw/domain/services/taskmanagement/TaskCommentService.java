@@ -50,14 +50,11 @@ public class TaskCommentService {
     }
 
     public void delete(UUID id) {
-        this.read(id);
-
-        if (this.taskCommentGateway.isUsed(id)) {
+        if (this.taskCommentGateway.isReferenced(id)) {
             throw new ConflictException(
-                    "TaskComment is being used by a Task: " + id
+                    "Task comment is referenced by a task: " + id
             );
         }
-
         this.taskCommentGateway.delete(id);
     }
 
