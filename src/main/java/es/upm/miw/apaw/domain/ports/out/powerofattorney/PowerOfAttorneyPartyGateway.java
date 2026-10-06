@@ -13,5 +13,6 @@ public interface PowerOfAttorneyPartyGateway {
 
     PowerOfAttorneyParty update(PowerOfAttorneyParty party);
 
+    void delete(UUID id);
 
 }

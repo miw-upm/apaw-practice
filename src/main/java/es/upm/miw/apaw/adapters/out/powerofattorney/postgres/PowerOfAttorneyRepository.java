@@ -5,4 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface PowerOfAttorneyRepository extends JpaRepository<PowerOfAttorneyEntity, UUID> {
+
+    boolean existsByPrincipal_Id(UUID partyId);
+
+    boolean existsByAttorney_Id(UUID partyId);
 }
