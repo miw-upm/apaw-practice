@@ -20,4 +20,6 @@ public interface NonWorkingDayGateway {
     NonWorkingDay update(NonWorkingDay nonWorkingDay);
 
     boolean isReferenced(UUID id);
+
+    void delete(UUID id);
 }
