@@ -89,4 +89,11 @@ public class NonWorkingDayService {
             }
         }
     }
+
+    public void delete(UUID id) {
+        if (this.nonWorkingDayGateway.isReferenced(id)) {
+            throw new ConflictException("Non working day is referenced by a deadline: " + id);
+        }
+        this.nonWorkingDayGateway.delete(id);
+    }
 }
