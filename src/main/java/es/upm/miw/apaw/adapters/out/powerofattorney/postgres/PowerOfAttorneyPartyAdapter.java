@@ -26,4 +26,11 @@ public class PowerOfAttorneyPartyAdapter implements PowerOfAttorneyPartyGateway 
         return this.powerOfAttorneyPartyRepository.findById(id)
                 .map(PowerOfAttorneyPartyEntity::toDomain);
     }
+
+    @Override
+    public PowerOfAttorneyParty update(PowerOfAttorneyParty party) {
+        return this.powerOfAttorneyPartyRepository
+                .save(new PowerOfAttorneyPartyEntity(party))
+                .toDomain();
+    }
 }

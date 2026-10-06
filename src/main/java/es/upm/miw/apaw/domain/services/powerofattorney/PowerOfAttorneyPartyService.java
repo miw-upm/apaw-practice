@@ -38,4 +38,11 @@ public class PowerOfAttorneyPartyService {
         powerOfAttorneyParty.setUserSnapshot(this.readUser(userId));
         return powerOfAttorneyParty;
     }
+
+    public PowerOfAttorneyParty update(UUID id, PowerOfAttorneyParty party) {
+        this.read(id);
+        party.setId(id);
+        party.setUserSnapshot(this.readUser(party.getUserSnapshot().getId()));
+        return this.powerOfAttorneyPartyGateway.update(party);
+    }
 }

@@ -31,4 +31,9 @@ public class PowerOfAttorneyPartyResource {
     public PowerOfAttorneyParty read(@PathVariable UUID id) {
         return this.powerOfAttorneyPartyService.read(id);
     }
+
+    @PutMapping(ID)
+    public PowerOfAttorneyParty update(@PathVariable UUID id, @Valid @RequestBody PowerOfAttorneyParty party) {
+        return this.powerOfAttorneyPartyService.update(id, party);
+    }
 }
