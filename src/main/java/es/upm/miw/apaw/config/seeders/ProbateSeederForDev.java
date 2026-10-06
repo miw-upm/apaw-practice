@@ -19,8 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Component
@@ -114,9 +116,17 @@ public class ProbateSeederForDev implements ApplicationRunner {
     private void seedEstates() {
         List<EstateEntity> estates = List.of(ESTATE_0, ESTATE_1).stream()
                 .filter(estate -> !this.estateRepository.existsById(estate.getId()))
-                .map(EstateEntity::new)
+                .map(this::toEntity)
                 .toList();
         this.estateRepository.saveAll(estates);
         log.warn("        ------- estates: {} added", estates.size());
+    }
+
+    private EstateEntity toEntity(Estate estate) {
+        EstateEntity entity = new EstateEntity(estate);
+        entity.setHeirs(estate.getHeirs().stream()
+                .map(heir -> this.heirRepository.getReferenceById(heir.getId()))
+                .collect(Collectors.toCollection(ArrayList::new)));
+        return entity;
     }
 }
