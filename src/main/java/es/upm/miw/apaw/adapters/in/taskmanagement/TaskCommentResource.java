@@ -63,7 +63,7 @@ public class TaskCommentResource {
     }
 
     @GetMapping
-    public List<TaskComment> find() {
-        return this.taskCommentService.find();
+    public List<TaskComment> findAll() {
+        return this.taskCommentService.findAll();
     }
 }
