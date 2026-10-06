@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -31,8 +30,6 @@ public class JudicialCourtType {
     private String jurisdiction;
 
     private Boolean active;
-
-    private List<JudicialCourt> judicialCourts;
 
     public void doDefault() {
         this.id = UUID.randomUUID();
