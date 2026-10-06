@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.ports.out.survey;
 
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,4 +16,6 @@ public interface SurveyQuestionGateway {
     void delete(UUID id);
 
     boolean isReferenced(UUID id);
+
+    List<SurveyQuestion> findAll();
 }
