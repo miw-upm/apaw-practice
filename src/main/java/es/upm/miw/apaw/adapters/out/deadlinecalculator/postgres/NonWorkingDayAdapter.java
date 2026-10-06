@@ -60,4 +60,9 @@ public class NonWorkingDayAdapter implements NonWorkingDayGateway {
     public boolean isReferenced(UUID id) {
         return this.deadlineRepository.existsByNonWorkingDaysId(id);
     }
+
+    @Override
+    public void delete(UUID id) {
+        this.nonWorkingDayRepository.deleteById(id);
+    }
 }
