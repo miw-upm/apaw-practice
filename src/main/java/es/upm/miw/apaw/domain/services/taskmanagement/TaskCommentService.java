@@ -2,6 +2,7 @@ package es.upm.miw.apaw.domain.services.taskmanagement;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.model.taskmanagement.CommentType;
 import es.upm.miw.apaw.domain.model.taskmanagement.TaskComment;
 import es.upm.miw.apaw.domain.model.taskmanagement.TaskCommentUpdate;
 import es.upm.miw.apaw.domain.ports.out.taskmanagement.TaskCommentGateway;
@@ -31,11 +32,21 @@ public class TaskCommentService {
 
     public TaskComment update(UUID id, TaskComment taskComment) {
         TaskComment storedTaskComment = this.read(id);
-
-        taskComment.setId(id);
-        taskComment.setCreationDate(storedTaskComment.getCreationDate());
-
-        return this.taskCommentGateway.update(taskComment);
+        if (taskComment.getEdition() == null) {
+            taskComment.setEdition(false);
+        }
+        if (taskComment.getAttachment() == null) {
+            taskComment.setAttachment(false);
+        }
+        if (taskComment.getType() == null) {
+            taskComment.setType(CommentType.GENERAL);
+        }
+        storedTaskComment.setContent(taskComment.getContent());
+        storedTaskComment.setEdition(taskComment.getEdition());
+        storedTaskComment.setAttachment(taskComment.getAttachment());
+        storedTaskComment.setType(taskComment.getType());
+        storedTaskComment.setAuthor(taskComment.getAuthor());
+        return this.taskCommentGateway.update(storedTaskComment);
     }
 
     public void delete(UUID id) {
