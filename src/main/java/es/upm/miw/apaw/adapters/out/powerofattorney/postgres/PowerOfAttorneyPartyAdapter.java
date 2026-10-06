@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.powerofattorney.PowerOfAttorneyPartyGate
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,5 +38,13 @@ public class PowerOfAttorneyPartyAdapter implements PowerOfAttorneyPartyGateway 
     @Override
     public void delete(UUID id) {
         this.powerOfAttorneyPartyRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PowerOfAttorneyParty> findAll() {
+        return this.powerOfAttorneyPartyRepository.findAll()
+                .stream()
+                .map(PowerOfAttorneyPartyEntity::toDomain)
+                .toList();
     }
 }

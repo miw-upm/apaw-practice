@@ -3,10 +3,12 @@ package es.upm.miw.apaw.domain.services.judicialcourt;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtType;
+import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtTypeUpdate;
 import es.upm.miw.apaw.domain.ports.out.judicialcourt.JudicialCourtTypeGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,6 +20,10 @@ public class JudicialCourtTypeService {
         this.validateNameAndCodeConflict(judicialCourtType.getName(), judicialCourtType.getCode(), null, null);
         judicialCourtType.doDefault();
         return this.judicialCourtTypeGateway.create(judicialCourtType);
+    }
+
+    public List<JudicialCourtType> findAll() {
+        return this.judicialCourtTypeGateway.findAll();
     }
 
     public JudicialCourtType read(UUID id) {
@@ -35,6 +41,31 @@ public class JudicialCourtTypeService {
         storedJudicialCourtType.setCode(judicialCourtType.getCode());
         storedJudicialCourtType.setJurisdiction(judicialCourtType.getJurisdiction());
         storedJudicialCourtType.setActive(judicialCourtType.getActive());
+        return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
+    }
+
+    public JudicialCourtType patch(UUID id, JudicialCourtTypeUpdate update) {
+        JudicialCourtType storedJudicialCourtType = this.read(id);
+        String newName = update.name() != null ? update.name() : storedJudicialCourtType.getName();
+        String newCode = update.code() != null ? update.code() : storedJudicialCourtType.getCode();
+        this.validateNameAndCodeConflict(newName, newCode,
+                storedJudicialCourtType.getName(), storedJudicialCourtType.getCode());
+
+        if (update.name() != null) {
+            storedJudicialCourtType.setName(update.name());
+        }
+        if (update.description() != null) {
+            storedJudicialCourtType.setDescription(update.description());
+        }
+        if (update.code() != null) {
+            storedJudicialCourtType.setCode(update.code());
+        }
+        if (update.jurisdiction() != null) {
+            storedJudicialCourtType.setJurisdiction(update.jurisdiction());
+        }
+        if (update.active() != null) {
+            storedJudicialCourtType.setActive(update.active());
+        }
         return this.judicialCourtTypeGateway.update(storedJudicialCourtType);
     }
 
