@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyPatch;
 import es.upm.miw.apaw.domain.ports.out.powerofattorney.PowerOfAttorneyGateway;
 import es.upm.miw.apaw.domain.ports.out.powerofattorney.PowerOfAttorneyPartyGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -82,5 +83,16 @@ public class PowerOfAttorneyPartyService {
             party.setUserSnapshot(user);
         }
         return parties;
+    }
+
+    public PowerOfAttorneyParty patch(UUID id, PowerOfAttorneyPartyPatch patch) {
+        PowerOfAttorneyParty stored = this.read(id);
+        if (patch.age() != null) {
+            stored.setAge(patch.age());
+        }
+        if (patch.fullMentalCapacity() != null) {
+            stored.setFullMentalCapacity(patch.fullMentalCapacity());
+        }
+        return this.powerOfAttorneyPartyGateway.update(stored);
     }
 }

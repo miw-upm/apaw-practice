@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.powerofattorney;
 
 import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyPatch;
 import es.upm.miw.apaw.domain.services.powerofattorney.PowerOfAttorneyPartyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,10 @@ public class PowerOfAttorneyPartyResource {
         return this.powerOfAttorneyPartyService.findAll();
     }
 
+    @PatchMapping(ID)
+    public PowerOfAttorneyParty patch(
+            @PathVariable UUID id, @RequestBody PowerOfAttorneyPartyPatch patch) {
+        return this.powerOfAttorneyPartyService.patch(id, patch);
+    }
 
 }
