@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.probate;
 
+import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.probate.CreationEstate;
 import es.upm.miw.apaw.domain.model.probate.Estate;
@@ -21,6 +22,9 @@ public class EstateService {
     private final UserFinder userFinder;
 
     public Estate create(CreationEstate creation) {
+        if (this.estateGateway.existsByFileNumber(creation.getFileNumber())) {
+            throw new ConflictException("Estate fileNumber already exists: " + creation.getFileNumber());
+        }
         Estate estate = new Estate();
         BeanUtils.copyProperties(creation, estate);
         estate.setHeirs(creation.getHeirIds().stream()

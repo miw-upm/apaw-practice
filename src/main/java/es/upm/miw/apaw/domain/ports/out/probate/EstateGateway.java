@@ -4,4 +4,6 @@ import es.upm.miw.apaw.domain.model.probate.Estate;
 
 public interface EstateGateway {
     Estate create(Estate estate);
+
+    boolean existsByFileNumber(String fileNumber);
 }

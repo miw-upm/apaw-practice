@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface EstateRepository extends JpaRepository<EstateEntity, UUID> {
     boolean existsByHeirsId(UUID id);
+
+    boolean existsByFileNumber(String fileNumber);
 }

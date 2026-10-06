@@ -14,4 +14,9 @@ public class EstateAdapter implements EstateGateway {
     public Estate create(Estate estate) {
         return this.estateRepository.save(new EstateEntity(estate)).toDomain();
     }
+
+    @Override
+    public boolean existsByFileNumber(String fileNumber) {
+        return this.estateRepository.existsByFileNumber(fileNumber);
+    }
 }
