@@ -119,6 +119,18 @@ class DeadlineServiceIT {
 
     @Test
     @Transactional
+    void testCreateWithARepeatedCourtFileNumber() {
+        String courtFileNumber = "456/2035";
+        Deadline first = this.deadlineService.create(
+                this.creation("S", LocalDate.of(2035, 1, 11), 2).courtFileNumber(courtFileNumber).build());
+        Deadline second = this.deadlineService.create(
+                this.creation("S", LocalDate.of(2035, 1, 11), 2).courtFileNumber(courtFileNumber).build());
+        assertThat(second.getId()).isNotEqualTo(first.getId());
+        assertThat(second.getCourtFileNumber()).isEqualTo(first.getCourtFileNumber());
+    }
+
+    @Test
+    @Transactional
     void testCreateWithAnUnknownUser() {
         UUID unknownUserId = UUID.randomUUID();
         when(this.userFinder.read(unknownUserId)).thenThrow(new NotFoundException("User id not found"));
