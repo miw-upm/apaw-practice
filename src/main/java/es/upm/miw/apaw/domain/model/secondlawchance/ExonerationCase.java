@@ -35,4 +35,19 @@ public class ExonerationCase {
         this.id = UUID.randomUUID();
         this.filingDate = LocalDate.now();
     }
+
+    public ExonerationCase ofSummary() {
+        return ExonerationCase.builder()
+                .id(this.id)
+                .caseNumber(this.caseNumber)
+                .filingDate(this.filingDate)
+                .resolutionDate(this.resolutionDate)
+                .lawyer(this.lawyer)
+                .userSnapshot(UserSnapshot.builder()
+                        .id(this.userSnapshot.getId())
+                        .mobile(this.userSnapshot.getMobile())
+                        .firstName(this.userSnapshot.getFirstName())
+                        .build())
+                .build();
+    }
 }

@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.out.secondlawchance.postgres;
 
 import es.upm.miw.apaw.domain.model.secondlawchance.SharedDebtReport;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -9,7 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-public interface ExonerationCaseRepository extends JpaRepository<ExonerationCaseEntity, UUID> {
+public interface ExonerationCaseRepository extends JpaRepository<ExonerationCaseEntity, UUID>,
+        JpaSpecificationExecutor<ExonerationCaseEntity> {
     boolean existsByDebtsId(UUID id);
 
     boolean existsByCaseNumber(String caseNumber);
