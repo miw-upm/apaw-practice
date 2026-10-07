@@ -1,5 +1,8 @@
 package es.upm.miw.apaw.domain.services.deadlinecalculator;
 
+import es.upm.miw.apaw.adapters.out.deadlinecalculator.postgres.DeadlineEntity;
+import es.upm.miw.apaw.adapters.out.deadlinecalculator.postgres.DeadlineRepository;
+import es.upm.miw.apaw.adapters.out.deadlinecalculator.postgres.NonWorkingDayEntity;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
@@ -41,6 +44,8 @@ class DeadlineServiceIT {
     private DeadlineService deadlineService;
     @Autowired
     private NonWorkingDayService nonWorkingDayService;
+    @Autowired
+    private DeadlineRepository deadlineRepository;
     @MockitoBean
     private UserFinder userFinder;
 
@@ -93,6 +98,12 @@ class DeadlineServiceIT {
         assertThat(created.getDueDate()).isEqualTo(LocalDate.of(2035, 1, 19));
         assertThat(created.getUserSnapshot()).usingRecursiveComparison().isEqualTo(USER);
         assertThat(created.getNonWorkingDays()).extracting(NonWorkingDay::getDate)
+                .containsExactly(LocalDate.of(2035, 1, 15));
+        DeadlineEntity entity = this.deadlineRepository.findById(created.getId()).orElseThrow();
+        assertThat(entity.getTitle()).isEqualTo(created.getTitle());
+        assertThat(entity.getDueDate()).isEqualTo(LocalDate.of(2035, 1, 19));
+        assertThat(entity.getUserId()).isEqualTo(USER_ID);
+        assertThat(entity.getNonWorkingDays()).extracting(NonWorkingDayEntity::getDate)
                 .containsExactly(LocalDate.of(2035, 1, 15));
     }
 
@@ -166,7 +177,8 @@ class DeadlineServiceIT {
         Deadline created = this.deadlineService.create(
                 this.creation("I", LocalDate.of(2035, 5, 10), 3).build());
         assertThat(created.getDueDate()).isEqualTo(LocalDate.of(2035, 5, 16));
-        assertThat(created.getNonWorkingDays()).hasSize(1);
+        assertThat(created.getNonWorkingDays()).extracting(NonWorkingDay::getDate)
+                .containsExactly(LocalDate.of(2035, 5, 11));
     }
 
     @Test
