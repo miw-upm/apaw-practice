@@ -7,16 +7,16 @@ import java.util.UUID;
 public record DeadlineWorkloadReport(
         UUID userId,
         UserSnapshot userSnapshot,
-        long expiredCount,
-        long deadlineCount,
-        long holidayAffectedCount
+        long expiredDeadlineCount,
+        long totalDeadlineCount,
+        long holidayAffectedDeadlineCount
 ) {
     public DeadlineWorkloadReport(
             UUID userId,
-            long expiredCount,
-            long deadlineCount,
-            long holidayAffectedCount
+            long expiredDeadlineCount,
+            long totalDeadlineCount,
+            long holidayAffectedDeadlineCount
     ) {
-        this(userId, null, expiredCount, deadlineCount, holidayAffectedCount);
+        this(userId, null, expiredDeadlineCount, totalDeadlineCount, holidayAffectedDeadlineCount);
     }
 }

@@ -25,23 +25,23 @@ class DeadlineRepositoryIT {
     void testFindWorkloadReport() {
         List<DeadlineWorkloadReport> report = this.deadlineRepository.findWorkloadReport(LocalDate.now());
 
-        assertThat(report).extracting(DeadlineWorkloadReport::expiredCount)
+        assertThat(report).extracting(DeadlineWorkloadReport::expiredDeadlineCount)
                 .isSortedAccordingTo(Comparator.reverseOrder());
         assertThat(report).filteredOn(item -> item.userId().equals(USER_ID_0))
                 .singleElement()
                 .satisfies(item -> {
-                    assertThat(item.expiredCount()).isGreaterThanOrEqualTo(4);
-                    assertThat(item.deadlineCount()).isGreaterThanOrEqualTo(5);
-                    assertThat(item.holidayAffectedCount()).isGreaterThanOrEqualTo(2);
-                    assertThat(item.expiredCount()).isLessThanOrEqualTo(item.deadlineCount());
-                    assertThat(item.holidayAffectedCount()).isLessThanOrEqualTo(item.deadlineCount());
+                    assertThat(item.expiredDeadlineCount()).isGreaterThanOrEqualTo(4);
+                    assertThat(item.totalDeadlineCount()).isGreaterThanOrEqualTo(5);
+                    assertThat(item.holidayAffectedDeadlineCount()).isGreaterThanOrEqualTo(2);
+                    assertThat(item.expiredDeadlineCount()).isLessThanOrEqualTo(item.totalDeadlineCount());
+                    assertThat(item.holidayAffectedDeadlineCount()).isLessThanOrEqualTo(item.totalDeadlineCount());
                 });
         assertThat(report).filteredOn(item -> item.userId().equals(USER_ID_1))
                 .singleElement()
                 .satisfies(item -> {
-                    assertThat(item.expiredCount()).isGreaterThanOrEqualTo(2);
-                    assertThat(item.deadlineCount()).isGreaterThanOrEqualTo(3);
-                    assertThat(item.holidayAffectedCount()).isGreaterThanOrEqualTo(1);
+                    assertThat(item.expiredDeadlineCount()).isGreaterThanOrEqualTo(2);
+                    assertThat(item.totalDeadlineCount()).isGreaterThanOrEqualTo(3);
+                    assertThat(item.holidayAffectedDeadlineCount()).isGreaterThanOrEqualTo(1);
                 });
     }
 
@@ -52,8 +52,8 @@ class DeadlineRepositoryIT {
         assertThat(report).filteredOn(item -> item.userId().equals(USER_ID_2))
                 .singleElement()
                 .satisfies(item -> {
-                    assertThat(item.deadlineCount()).isGreaterThanOrEqualTo(2);
-                    assertThat(item.holidayAffectedCount()).isZero();
+                    assertThat(item.totalDeadlineCount()).isGreaterThanOrEqualTo(2);
+                    assertThat(item.holidayAffectedDeadlineCount()).isZero();
                 });
     }
 
@@ -69,6 +69,6 @@ class DeadlineRepositoryIT {
     void testFindWorkloadReportWithADateBeforeEveryDueDate() {
         List<DeadlineWorkloadReport> report = this.deadlineRepository.findWorkloadReport(LocalDate.of(2000, 1, 1));
 
-        assertThat(report).extracting(DeadlineWorkloadReport::expiredCount).containsOnly(0L);
+        assertThat(report).extracting(DeadlineWorkloadReport::expiredDeadlineCount).containsOnly(0L);
     }
 }

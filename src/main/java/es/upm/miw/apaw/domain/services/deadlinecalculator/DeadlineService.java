@@ -67,8 +67,8 @@ public class DeadlineService {
         return new DeadlineWorkloadReport(
                 report.userId(),
                 userSnapshot,
-                report.expiredCount(),
-                report.deadlineCount(),
-                report.holidayAffectedCount());
+                report.expiredDeadlineCount(),
+                report.totalDeadlineCount(),
+                report.holidayAffectedDeadlineCount());
     }
 }
