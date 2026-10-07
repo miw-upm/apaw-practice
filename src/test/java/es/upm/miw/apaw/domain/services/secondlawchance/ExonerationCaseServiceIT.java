@@ -10,6 +10,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.secondlawchance.CreationExonerationCase;
 import es.upm.miw.apaw.domain.model.secondlawchance.Debt;
 import es.upm.miw.apaw.domain.model.secondlawchance.ExonerationCase;
+import es.upm.miw.apaw.domain.model.secondlawchance.ExonerationCaseFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.SecondLawChanceSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
@@ -140,6 +146,93 @@ class ExonerationCaseServiceIT {
         assertThatThrownBy(() -> this.exonerationCaseService.create(creation))
                 .isInstanceOf(NotFoundException.class).hasMessageContaining(USER_ID_0.toString());
         assertThat(this.exonerationCaseRepository.existsByCaseNumber(creation.getCaseNumber())).isFalse();
+    }
+
+    @Test
+    void testFindByUserMobile() {
+        String lawyer = "Lawyer " + UUID.randomUUID();
+        UUID firstUserId = UUID.randomUUID();
+        UUID secondUserId = UUID.randomUUID();
+        ExonerationCaseEntity first = this.saveCase(lawyer, firstUserId);
+        ExonerationCaseEntity second = this.saveCase(lawyer, secondUserId);
+        this.mockUsers(Map.of(firstUserId, "611000001", secondUserId, "611000002"));
+
+        List<ExonerationCase> cases = this.exonerationCaseService.find(
+                ExonerationCaseFindCriteria.builder().lawyer(lawyer).userMobile("611000001").build());
+
+        assertThat(cases).extracting(ExonerationCase::getId)
+                .containsExactly(first.getId())
+                .doesNotContain(second.getId());
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    void testFindHydratesUserAndReturnsSummary() {
+        String lawyer = "Lawyer " + UUID.randomUUID();
+        UUID userId = UUID.randomUUID();
+        this.saveCase(lawyer, userId);
+        this.mockUsers(Map.of(userId, "611000003"));
+
+        List<ExonerationCase> cases = this.exonerationCaseService.find(
+                ExonerationCaseFindCriteria.builder().lawyer(lawyer).build());
+
+        assertThat(cases).singleElement().satisfies(exonerationCase -> {
+            assertThat(exonerationCase.getUserSnapshot().getId()).isEqualTo(userId);
+            assertThat(exonerationCase.getUserSnapshot().getMobile()).isEqualTo("611000003");
+            assertThat(exonerationCase.getUserSnapshot().getFirstName()).isEqualTo("user");
+            assertThat(exonerationCase.getDebts()).isNull();
+        });
+    }
+
+    @Test
+    void testFindUsesOneUserCallForSeveralCases() {
+        String lawyer = "Lawyer " + UUID.randomUUID();
+        this.saveCase(lawyer, UUID.randomUUID());
+        this.saveCase(lawyer, UUID.randomUUID());
+        this.saveCase(lawyer, UUID.randomUUID());
+        this.mockUsers(Map.of());
+
+        List<ExonerationCase> cases = this.exonerationCaseService.find(
+                ExonerationCaseFindCriteria.builder().lawyer(lawyer).build());
+
+        assertThat(cases).hasSize(3);
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    void testFindUserNotFound() {
+        String lawyer = "Lawyer " + UUID.randomUUID();
+        this.saveCase(lawyer, UUID.randomUUID());
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of());
+        ExonerationCaseFindCriteria criteria = ExonerationCaseFindCriteria.builder().lawyer(lawyer).build();
+
+        assertThatThrownBy(() -> this.exonerationCaseService.find(criteria))
+                .isInstanceOf(NotFoundException.class).hasMessageContaining("User id not found");
+    }
+
+    @Test
+    void testFindWithoutResultsDoesNotCallUserFinder() {
+        List<ExonerationCase> cases = this.exonerationCaseService.find(
+                ExonerationCaseFindCriteria.builder().lawyer("Lawyer " + UUID.randomUUID()).build());
+
+        assertThat(cases).isEmpty();
+        verifyNoInteractions(this.userFinder);
+    }
+
+    private ExonerationCaseEntity saveCase(String lawyer, UUID userId) {
+        return this.exonerationCaseRepository.saveAndFlush(ExonerationCaseEntity.builder().id(UUID.randomUUID())
+                .caseNumber("IT-CASE-" + UUID.randomUUID()).filingDate(LocalDate.of(2025, 1, 1))
+                .lawyer(lawyer).debts(List.of(new DebtEntity(DEBT_0))).userId(userId).build());
+    }
+
+    private void mockUsers(Map<UUID, String> mobilesById) {
+        when(this.userFinder.findByIds(anySet())).thenAnswer(invocation -> {
+            Set<UUID> ids = invocation.getArgument(0);
+            return ids.stream()
+                    .map(id -> UserSnapshot.builder().id(id)
+                            .mobile(mobilesById.getOrDefault(id, "600000000")).firstName("user").build())
+                    .toList();
+        });
     }
 
     private CreationExonerationCase.CreationExonerationCaseBuilder buildCreation() {
