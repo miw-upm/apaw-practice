@@ -3,7 +3,6 @@ package es.upm.miw.apaw.domain.model.invoice;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -23,17 +22,14 @@ public class Invoice {
     @EqualsAndHashCode.Include
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
-    @Builder.Default
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @NotNull
-    @Builder.Default
-    private String invoiceNumber = generateInvoiceNumber();
+    private String invoiceNumber;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
-    @Builder.Default
-    private LocalDate issueDate = LocalDate.now();
+    private LocalDate issueDate;
 
     @NotNull
     private BigDecimal taxableBase;
@@ -42,24 +38,25 @@ public class Invoice {
     private BigDecimal vatRate;
 
     @NotNull
-    @Builder.Default
-    private Boolean paid = false;
+    private Boolean paid;
 
     @NotNull
-    @Builder.Default
-    private PaymentType paymentType = PaymentType.CASH;
+    private PaymentType paymentType;
 
-    @NotEmpty
     @Valid
-    @Builder.Default
-    private List<@Valid LegalService> services = new ArrayList<>();
+    private List<@Valid LegalService> services;
 
     @NotNull
     @Valid
     private UserSnapshot customer;
 
-    private static String generateInvoiceNumber() {
-        return "INV-" + LocalDate.now().toString().replace("-", "")
-                + "-" + UUID.randomUUID().toString().substring(0, 8);
+    public void doDefault() {
+        this.id = UUID.randomUUID();
+        this.issueDate = LocalDate.now();
+        this.invoiceNumber = "INV-" + this.issueDate.toString().replace("-", "")
+                + "-" + this.id.toString().substring(0, 8);
+        this.paid = false;
+        this.paymentType = PaymentType.CASH;
+        this.services = new ArrayList<>();
     }
 }
