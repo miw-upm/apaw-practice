@@ -27,6 +27,7 @@ public class DeadlineService {
                 .findApplicable(creation.getRegion(), creation.getCity()));
         deadline.setUserSnapshot(this.userFinder.read(creation.getUserId()));
         deadline.doDefault();
+        deadline.doCalculate();
         return this.deadlineGateway.create(deadline);
     }
 }
