@@ -35,7 +35,7 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("test")
 class ReservationServiceIT {
 
-    private static final UUID SEED_USER_1 = UUID.fromString("00000000-0000-0000-0000-000000000001");
+    private static final UUID SEED_USER_1 = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
 
     @Autowired
     private ReservationService reservationService;

@@ -108,8 +108,8 @@ public class CarReservationSeederForDev implements ApplicationRunner {
             CarEntity car0Entity = this.carRepository.findById(ID_0).orElseThrow();
             CarEntity car1Entity = this.carRepository.findById(ID_1).orElseThrow();
 
-            UUID user1 = UUID.fromString("00000000-0000-0000-0000-000000000001");
-            UUID user2 = UUID.fromString("00000000-0000-0000-0000-000000000002");
+            UUID user1 = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0001");
+            UUID user2 = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeffff0002");
 
             ReservationEntity res0 = ReservationEntity.builder()
                     .id(UUID.randomUUID())
