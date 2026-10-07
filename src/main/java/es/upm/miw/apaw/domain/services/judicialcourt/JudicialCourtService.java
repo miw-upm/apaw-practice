@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.judicialcourt.CreationJudicialCourt;
 import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourt;
+import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtFindCriteria;
 import es.upm.miw.apaw.domain.model.judicialcourt.JudicialCourtType;
 import es.upm.miw.apaw.domain.model.judicialcourt.LawyerCourtRankingReport;
 import es.upm.miw.apaw.domain.model.judicialcourt.LawyerCourtStat;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
@@ -30,6 +32,36 @@ public class JudicialCourtService {
     private final JudicialCourtGateway judicialCourtGateway;
     private final JudicialCourtTypeGateway judicialCourtTypeGateway;
     private final UserFinder userFinder;
+
+    @Transactional(readOnly = true)
+    public List<JudicialCourt> find(JudicialCourtFindCriteria criteria) {
+        if (criteria == null) {
+            return this.judicialCourtGateway.find(new JudicialCourtFindCriteria());
+        }
+        List<JudicialCourt> judicialCourts = this.judicialCourtGateway.find(criteria);
+        if (judicialCourts.isEmpty() || !criteria.isUserIdentitySet()) {
+            return judicialCourts;
+        }
+        Set<UUID> lawyerIds = judicialCourts.stream()
+                .flatMap(judicialCourt -> judicialCourt.getLawyers() == null ? java.util.stream.Stream.empty()
+                        : judicialCourt.getLawyers().stream().map(UserSnapshot::getId))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+        if (lawyerIds.isEmpty()) {
+            return List.of();
+        }
+
+        Set<UUID> matchingUserIds = this.userFinder.findByIds(lawyerIds).stream()
+                .filter(user -> criteria.getUserIdentity().equalsIgnoreCase(user.getIdentity()))
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toSet());
+
+        return judicialCourts.stream()
+                .filter(judicialCourt -> judicialCourt.getLawyers() != null && judicialCourt.getLawyers().stream()
+                        .map(UserSnapshot::getId)
+                        .anyMatch(matchingUserIds::contains))
+                .toList();
+    }
 
     @Transactional
     public JudicialCourt create(CreationJudicialCourt creation) {
