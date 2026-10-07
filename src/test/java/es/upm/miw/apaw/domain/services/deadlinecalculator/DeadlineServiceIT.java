@@ -323,4 +323,29 @@ class DeadlineServiceIT {
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("User id not found");
     }
+
+    @Test
+    @Transactional
+    void testFindWorkloadReportCountsADeadlineWithSeveralHolidaysOnce() {
+        UUID lawyerId = UUID.randomUUID();
+        when(this.userFinder.read(lawyerId)).thenReturn(this.lawyer(lawyerId, "lawyer"));
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(
+                this.lawyer(USER_ID_0, "cliente0"),
+                this.lawyer(USER_ID_1, "cliente1"),
+                this.lawyer(USER_ID_2, "cliente2"),
+                this.lawyer(lawyerId, "lawyer")));
+        this.localHoliday("T", LocalDate.of(2035, 5, 11));
+        this.regionalHoliday("T", LocalDate.of(2035, 5, 11));
+        this.deadlineService.create(this.creation("T", LocalDate.of(2035, 5, 9), 3).userId(lawyerId).build());
+
+        List<DeadlineWorkloadReport> report = this.deadlineService.findWorkloadReport();
+
+        assertThat(report).filteredOn(item -> item.userId().equals(lawyerId))
+                .singleElement()
+                .satisfies(item -> {
+                    assertThat(item.totalDeadlineCount()).isEqualTo(1);
+                    assertThat(item.holidayAffectedDeadlineCount()).isEqualTo(1);
+                    assertThat(item.expiredDeadlineCount()).isZero();
+                });
+    }
 }
