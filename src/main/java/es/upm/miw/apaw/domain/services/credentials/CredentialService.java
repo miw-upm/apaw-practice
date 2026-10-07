@@ -3,10 +3,7 @@ package es.upm.miw.apaw.domain.services.credentials;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.credentials.Credential;
-import es.upm.miw.apaw.domain.model.credentials.CreationCredential;
-import es.upm.miw.apaw.domain.model.credentials.CredentialFindCriteria;
-import es.upm.miw.apaw.domain.model.credentials.Verification;
+import es.upm.miw.apaw.domain.model.credentials.*;
 import es.upm.miw.apaw.domain.ports.out.credentials.CredentialGateway;
 import es.upm.miw.apaw.domain.ports.out.credentials.VerificationGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -106,5 +103,9 @@ public class CredentialService {
         return this.verificationGateway.read(id)
                 .orElseThrow(() ->
                         new NotFoundException("Verification id not found: " + id));
+    }
+
+    public List<CredentialVerificationReport> findVerificationReport() {
+        return this.credentialGateway.findVerificationReport();
     }
 }

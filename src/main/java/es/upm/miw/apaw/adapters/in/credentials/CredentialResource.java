@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.in.credentials;
 import es.upm.miw.apaw.domain.model.credentials.Credential;
 import es.upm.miw.apaw.domain.model.credentials.CreationCredential;
 import es.upm.miw.apaw.domain.model.credentials.CredentialFindCriteria;
+import es.upm.miw.apaw.domain.model.credentials.CredentialVerificationReport;
 import es.upm.miw.apaw.domain.services.credentials.CredentialService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 public class CredentialResource {
 
     public static final String CREDENTIALS = "/credentials";
+    public static final String REPORT = "/report";
 
     private final CredentialService credentialService;
 
@@ -29,5 +31,10 @@ public class CredentialResource {
     @ResponseStatus(HttpStatus.CREATED)
     public Credential create(@Valid @RequestBody CreationCredential creation) {
         return this.credentialService.create(creation);
+    }
+
+    @GetMapping(REPORT)
+    public List<CredentialVerificationReport> findVerificationReport() {
+        return this.credentialService.findVerificationReport();
     }
 }
