@@ -18,8 +18,7 @@ public class LegalService {
     @EqualsAndHashCode.Include
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
-    @Builder.Default
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @NotBlank
     private String name;
@@ -30,12 +29,18 @@ public class LegalService {
     private BigDecimal fee;
 
     @NotNull
-    @Builder.Default
-    private Boolean requiresAppointment = false;
+    private Boolean requiresAppointment;
 
     @NotNull
     private ServiceCategory category;
 
     @NotNull
     private LegalArea legalArea;
+
+    public void doDefault() {
+        this.id = UUID.randomUUID();
+        this.requiresAppointment = false;
+        this.category = ServiceCategory.CONSULTING;
+        this.legalArea = LegalArea.CIVIL;
+    }
 }

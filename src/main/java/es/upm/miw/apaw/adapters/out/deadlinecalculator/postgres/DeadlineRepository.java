@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface DeadlineRepository extends JpaRepository<DeadlineEntity, UUID> {
     boolean existsByNonWorkingDaysId(UUID id);
+
+    boolean existsByTitle(String title);
 }
