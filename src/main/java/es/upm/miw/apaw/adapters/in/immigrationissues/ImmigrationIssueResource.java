@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.in.immigrationissues;
 
 import es.upm.miw.apaw.domain.model.immigrationissues.CreationImmigrationIssue;
 import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssue;
+import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssueFindCriteria;
 import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUsageReport;
 import es.upm.miw.apaw.domain.services.immigrationissues.ImmigrationIssueService;
 import jakarta.validation.Valid;
@@ -25,6 +26,11 @@ public class ImmigrationIssueResource {
     @ResponseStatus(HttpStatus.CREATED)
     public ImmigrationIssue create(@Valid @RequestBody CreationImmigrationIssue creation) {
         return this.immigrationIssueService.create(creation);
+    }
+
+    @GetMapping
+    public List<ImmigrationIssue> find(@ModelAttribute ImmigrationIssueFindCriteria criteria) {
+        return this.immigrationIssueService.find(criteria);
     }
 
     @GetMapping(REPORT)

@@ -9,6 +9,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.immigrationissues.CreationImmigrationIssue;
 import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssue;
+import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssueFindCriteria;
 import es.upm.miw.apaw.domain.model.immigrationissues.LawBasis;
 import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUsageReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -29,6 +30,7 @@ import java.util.UUID;
 import static es.upm.miw.apaw.config.seeders.ImmigrationIssuesSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -173,6 +175,130 @@ class ImmigrationIssueServiceIT {
         assertThatThrownBy(() -> this.immigrationIssueService.create(second))
                 .isInstanceOf(ConflictException.class)
                 .hasMessageContaining(subject);
+    }
+
+    @Test
+    @Transactional
+    void testFindByClientNationality() {
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().clientNationality("Marruecos").build());
+
+        assertThat(issues).extracting(ImmigrationIssue::getId)
+                .contains(ISSUE_ID_1)
+                .doesNotContain(ISSUE_ID_0, ISSUE_ID_2);
+    }
+
+    @Test
+    @Transactional
+    void testFindByClientNationalityWithoutMatches() {
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().clientNationality("Nowhere").build());
+
+        assertThat(issues).isEmpty();
+    }
+
+    @Test
+    @Transactional
+    void testFindOverdue() {
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().overdue(true).build());
+
+        assertThat(issues).extracting(ImmigrationIssue::getId)
+                .contains(ISSUE_ID_0, ISSUE_ID_1, ISSUE_ID_2);
+    }
+
+    @Test
+    @Transactional
+    void testFindNotOverdue() {
+        CreationImmigrationIssue creation = this.creation(List.of(ID_0));
+        creation.setResponseDueDate(LocalDate.of(2099, 1, 1));
+        ImmigrationIssue future = this.immigrationIssueService.create(creation);
+
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().overdue(false).build());
+
+        assertThat(issues).extracting(ImmigrationIssue::getId)
+                .contains(future.getId())
+                .doesNotContain(ISSUE_ID_0, ISSUE_ID_1, ISSUE_ID_2);
+    }
+
+    @Test
+    @Transactional
+    void testFindByLawNameTraversesTheRelation() {
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().lawName("39/2015").build());
+
+        assertThat(issues).extracting(ImmigrationIssue::getId)
+                .contains(ISSUE_ID_1)
+                .doesNotContain(ISSUE_ID_0, ISSUE_ID_2);
+    }
+
+    @Test
+    @Transactional
+    void testFindByLawNameDoesNotRepeatIssuesSharingSeveralLawBases() {
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().lawName("4/2000").build());
+
+        assertThat(issues).extracting(ImmigrationIssue::getId).containsOnlyOnce(ISSUE_ID_0);
+    }
+
+    @Test
+    @Transactional
+    void testFindByLawNameIsCaseInsensitive() {
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().lawName("ley 12/1989").build());
+
+        assertThat(issues).extracting(ImmigrationIssue::getId).contains(ISSUE_ID_1);
+    }
+
+    @Test
+    @Transactional
+    void testFindByFamilyNameCallsApawUserOnce() {
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(this.user));
+
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().familyName("García López").build());
+
+        assertThat(issues).extracting(ImmigrationIssue::getId).contains(ISSUE_ID_0);
+        assertThat(issues).allSatisfy(issue ->
+                assertThat(issue.getUserSnapshot().getFirstName()).isEqualTo("cliente0"));
+        verify(this.userFinder, times(1)).findByIds(any());
+    }
+
+    @Test
+    @Transactional
+    void testFindByFamilyNameWithoutMatches() {
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(this.user));
+
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().familyName("Nadie").build());
+
+        assertThat(issues).isEmpty();
+    }
+
+    @Test
+    @Transactional
+    void testFindCombinesDatabaseAndUserCriteria() {
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(this.user));
+
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder()
+                        .clientNationality("Marruecos")
+                        .lawName("39/2015")
+                        .familyName("García López")
+                        .build());
+
+        assertThat(issues).isEmpty();
+    }
+
+    @Test
+    @Transactional
+    void testFindWithoutCriteriaKeepsSeededIssues() {
+        List<ImmigrationIssue> issues = this.immigrationIssueService.find(
+                ImmigrationIssueFindCriteria.builder().build());
+
+        assertThat(issues).extracting(ImmigrationIssue::getId)
+                .contains(ISSUE_ID_0, ISSUE_ID_1, ISSUE_ID_2);
     }
 
     @Test
