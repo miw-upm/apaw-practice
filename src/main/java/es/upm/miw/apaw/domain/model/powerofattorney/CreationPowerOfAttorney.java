@@ -37,6 +37,10 @@ public class CreationPowerOfAttorney {
 
     private String notes;
 
+    private PowerOfAttorneyStatus status;
+
+    private PowerOfAttorneyType type;
+
     @NotNull
     private UUID principalId;
 

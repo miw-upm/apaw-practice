@@ -21,7 +21,6 @@ public class PowerOfAttorneyResource {
 
     private final PowerOfAttorneyService powerOfAttorneyService;
 
-    // POST /power-of-attorneys - Creación de un poder notarial.
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PowerOfAttorney create(@Valid @RequestBody CreationPowerOfAttorney creation) {
