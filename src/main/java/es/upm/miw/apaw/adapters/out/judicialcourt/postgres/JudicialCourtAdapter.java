@@ -8,4 +8,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class JudicialCourtAdapter implements JudicialCourtGateway {
+    private final JudicialCourtRepository judicialCourtRepository;
+
+    @Override
+    public JudicialCourt create(JudicialCourt judicialCourt) {
+        return this.judicialCourtRepository.save(new JudicialCourtEntity(judicialCourt)).toDomain();
+    }
 }

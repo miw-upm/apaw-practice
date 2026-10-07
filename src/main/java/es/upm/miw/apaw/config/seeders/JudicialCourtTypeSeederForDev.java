@@ -58,7 +58,7 @@ public class JudicialCourtTypeSeederForDev implements ApplicationRunner {
             .name("Juzgado de lo Penal")
             .description("Juzgado especializado en delitos y procedimientos penales")
             .code("JPN")
-            .jurisdiction("Madrid")
+            .jurisdiction("Barcelona")
             .active(true)
             .build();
 
@@ -68,7 +68,7 @@ public class JudicialCourtTypeSeederForDev implements ApplicationRunner {
             .name("Juzgado de lo Social")
             .description("Juzgado especializado en relaciones laborales y seguridad social")
             .code("JS")
-            .jurisdiction("Madrid")
+            .jurisdiction("Valencia")
             .active(true)
             .build();
 
