@@ -89,11 +89,11 @@ public class CustodyRecordSeederForDev implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) {
+        log.warn("------- Initial Load from JAVA -----------");
         this.seed();
     }
 
     private void seed() {
-        log.warn("------- Initial Load from JAVA -----------");
         List<CustodyRecordEntity> custodyRecords = List.of(RECORD_0, RECORD_1, RECORD_2, RECORD_3, RECORD_4, RECORD_5)
                 .stream()
                 .filter(custodyRecord -> !this.custodyRecordRepository.existsById(custodyRecord.getId()))

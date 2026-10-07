@@ -12,7 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -99,8 +100,16 @@ public class ReservationAdapter implements ReservationGateway {
 
     private Specification<ReservationEntity> active(boolean active) {
         return (root, query, builder) -> {
-            LocalDateTime now = LocalDateTime.now();
-            var isFutureOrPresent = builder.greaterThan(root.get("endTime"), now);
+            LocalDate today = LocalDate.now();
+            LocalTime nowTime = LocalTime.now();
+
+            var isFutureDate = builder.greaterThan(root.get("date"), today);
+            var isTodayAndFutureTime = builder.and(
+                    builder.equal(root.get("date"), today),
+                    builder.greaterThan(root.get("endTime"), nowTime)
+            );
+            var isFutureOrPresent = builder.or(isFutureDate, isTodayAndFutureTime);
+
             return active ? isFutureOrPresent : builder.not(isFutureOrPresent);
         };
     }

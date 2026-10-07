@@ -43,4 +43,21 @@ public class ImmigrationIssue {
             this.estimatedCost = BigDecimal.ZERO;
         }
     }
+
+    public ImmigrationIssue ofSummary() {
+        return ImmigrationIssue.builder()
+                .id(this.id)
+                .subject(this.subject)
+                .clientNationality(this.clientNationality)
+                .clientImmigrationStatus(this.clientImmigrationStatus)
+                .openedAt(this.openedAt)
+                .responseDueDate(this.responseDueDate)
+                .estimatedCost(this.estimatedCost)
+                .userSnapshot(UserSnapshot.builder()
+                        .id(this.userSnapshot.getId())
+                        .mobile(this.userSnapshot.getMobile())
+                        .firstName(this.userSnapshot.getFirstName())
+                        .build())
+                .build();
+    }
 }

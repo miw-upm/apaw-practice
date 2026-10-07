@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,9 +28,11 @@ import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.ImmigrationIssuesSeederForDev.ID_0;
 import static es.upm.miw.apaw.config.seeders.ImmigrationIssuesSeederForDev.ID_1;
+import static es.upm.miw.apaw.config.seeders.ImmigrationIssuesSeederForDev.ISSUE_ID_2;
 import static es.upm.miw.apaw.config.seeders.ImmigrationIssuesSeederForDev.LAW_BASIS_0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -253,6 +256,124 @@ class ImmigrationIssueResourceFT {
                                 LawBasisUsageReport::getLawCode)
                         .contains(tuple("Permiso en vigor", LAW_BASIS_0.getLawCode()),
                                 tuple("Permiso en vigor", "ES-LB-002")));
+    }
+
+    @Test
+    void testFindByClientNationality() {
+        String nationality = "N" + UUID.randomUUID();
+        CreationImmigrationIssue creation = this.creation(List.of(ID_0));
+        creation.setClientNationality(nationality);
+        ImmigrationIssue created = this.create(creation);
+
+        this.get("/immigration-issues", "clientNationality", nationality)
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> assertThat(issues).extracting(ImmigrationIssue::getId)
+                        .contains(created.getId()));
+    }
+
+    @Test
+    void testFindByClientNationalityWithoutMatches() {
+        this.get("/immigration-issues", "clientNationality", "N" + UUID.randomUUID())
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> assertThat(issues).isEmpty());
+    }
+
+    @Test
+    void testFindOverdue() {
+        CreationImmigrationIssue past = this.creation(List.of(ID_0));
+        past.setResponseDueDate(LocalDate.of(2000, 1, 1));
+        ImmigrationIssue overdue = this.create(past);
+
+        this.get("/immigration-issues", "overdue", true)
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> assertThat(issues).extracting(ImmigrationIssue::getId)
+                        .contains(overdue.getId()));
+    }
+
+    @Test
+    void testFindNotOverdue() {
+        CreationImmigrationIssue future = this.creation(List.of(ID_1));
+        future.setResponseDueDate(LocalDate.of(2099, 1, 1));
+        ImmigrationIssue notOverdue = this.create(future);
+
+        this.get("/immigration-issues", "overdue", false)
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> assertThat(issues).extracting(ImmigrationIssue::getId)
+                        .contains(notOverdue.getId()));
+    }
+
+    @Test
+    void testFindByLawNameTraversesTheRelation() {
+        ImmigrationIssue created = this.create(this.creation(List.of(ID_0, ID_1)));
+
+        this.get("/immigration-issues", "lawName", "4/2000")
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> assertThat(issues).extracting(ImmigrationIssue::getId)
+                        .contains(created.getId())
+                        .doesNotContain(ISSUE_ID_2));
+    }
+
+    @Test
+    void testFindByLawNameIsCaseInsensitiveAndPartial() {
+        ImmigrationIssue created = this.create(this.creation(List.of(ID_0)));
+
+        this.get("/immigration-issues", "lawName", "ley org")
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> assertThat(issues).extracting(ImmigrationIssue::getId)
+                        .contains(created.getId()));
+    }
+
+    @Test
+    void testFindByFamilyName() {
+        ImmigrationIssue created = this.create(this.creation(List.of(ID_0)));
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(this.user));
+
+        this.get("/immigration-issues", "familyName", "García López")
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> {
+                    assertThat(issues).extracting(ImmigrationIssue::getId).contains(created.getId());
+                    assertThat(issues).allSatisfy(issue ->
+                            assertThat(issue.getUserSnapshot().getFirstName()).isEqualTo("cliente0"));
+                });
+    }
+
+    @Test
+    void testFindByFamilyNameWithoutMatches() {
+        when(this.userFinder.findByIds(any())).thenReturn(List.of(this.user));
+
+        this.get("/immigration-issues", "familyName", "Nadie")
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> assertThat(issues).isEmpty());
+    }
+
+    @Test
+    void testFindWithoutCriteria() {
+        ImmigrationIssue created = this.create(this.creation(List.of(ID_0)));
+
+        this.get("/immigration-issues")
+                .expectStatus().isOk()
+                .expectBody(ImmigrationIssue[].class)
+                .value(issues -> assertThat(issues).isNotEmpty())
+                .value(issues -> assertThat(issues).extracting(ImmigrationIssue::getId)
+                        .contains(created.getId()));
+    }
+
+    private RestTestClient.ResponseSpec get(String path, Object... queryParams) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath(path);
+        for (int i = 0; i < queryParams.length; i += 2) {
+            builder.queryParam((String) queryParams[i], queryParams[i + 1]);
+        }
+        return this.restTestClient.get()
+                .uri(builder.build().encode().toUri())
+                .exchange();
     }
 
     private CreationImmigrationIssue creation(List<UUID> lawBasisIds) {

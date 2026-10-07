@@ -28,7 +28,7 @@ public class JudicialCourtTypeSeederForDev implements ApplicationRunner {
             .name("Juzgado de Paz")
             .description("Órgano judicial de competencia territorial para asuntos menores y conciliación")
             .code("JPZ")
-            .jurisdiction("Madrid")
+            .jurisdiction("Paz")
             .active(true)
             .build();
 
@@ -38,7 +38,7 @@ public class JudicialCourtTypeSeederForDev implements ApplicationRunner {
             .name("Juzgado de Primera Instancia e Instrucción")
             .description("Juzgado con competencia civil y penal de primera instancia e instrucción")
             .code("JPII")
-            .jurisdiction("Madrid")
+            .jurisdiction("Primera Instancia")
             .active(true)
             .build();
 
@@ -48,7 +48,7 @@ public class JudicialCourtTypeSeederForDev implements ApplicationRunner {
             .name("Juzgado de lo Mercantil")
             .description("Tribunal especializado en asuntos mercantiles y societarios")
             .code("JLM")
-            .jurisdiction("Madrid")
+            .jurisdiction("Mercantil")
             .active(true)
             .build();
 
@@ -58,7 +58,7 @@ public class JudicialCourtTypeSeederForDev implements ApplicationRunner {
             .name("Juzgado de lo Penal")
             .description("Juzgado especializado en delitos y procedimientos penales")
             .code("JPN")
-            .jurisdiction("Madrid")
+            .jurisdiction("Penal")
             .active(true)
             .build();
 
@@ -68,7 +68,7 @@ public class JudicialCourtTypeSeederForDev implements ApplicationRunner {
             .name("Juzgado de lo Social")
             .description("Juzgado especializado en relaciones laborales y seguridad social")
             .code("JS")
-            .jurisdiction("Madrid")
+            .jurisdiction("Social")
             .active(true)
             .build();
 

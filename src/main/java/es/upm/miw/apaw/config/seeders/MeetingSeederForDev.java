@@ -95,7 +95,7 @@ public class MeetingSeederForDev implements ApplicationRunner {
             .description("First review of the documentation provided by the client")
             .meetingStatus(MeetingStatus.SCHEDULED)
             .legalIssues(List.of(ISSUE_0, ISSUE_1))
-            .participants(List.of(user("0000", "600000200", "abogado0"), user("0001", "600000201", "cliente0")))
+            .participants(List.of(user("0000", "600000100", "cliente0"), user("0001", "600000101", "cliente1")))
             .build();
     public static final UUID MEETING_ID_1 = UUID.fromString(MEETING_PREFIX + "0001");
     public static final Meeting MEETING_1 = Meeting.builder()
@@ -108,7 +108,7 @@ public class MeetingSeederForDev implements ApplicationRunner {
             .description("Mediation between the parties before the hearing")
             .meetingStatus(MeetingStatus.SCHEDULED)
             .legalIssues(List.of(ISSUE_2, ISSUE_3))
-            .participants(List.of(user("0002", "600000202", "cliente1")))
+            .participants(List.of(user("0002", "600000102", "cliente2")))
             .build();
     public static final UUID MEETING_ID_2 = UUID.fromString(MEETING_PREFIX + "0002");
     public static final Meeting MEETING_2 = Meeting.builder()
@@ -120,10 +120,10 @@ public class MeetingSeederForDev implements ApplicationRunner {
             .description("Online call to agree on the evidence to be submitted")
             .meetingStatus(MeetingStatus.CANCELLED)
             .legalIssues(List.of(ISSUE_4))
-            .participants(List.of(user("0000", "600000200", "abogado0"), user("0003", "600000203", "perito0")))
+            .participants(List.of(user("0000", "600000100", "cliente0"), user("0003", "600000103", "cliente3")))
             .build();
 
-    private static final String USER_PREFIX = "44444444-5555-6666-7777-88889999";
+    private static final String USER_PREFIX = "aaaaaaaa-bbbb-cccc-dddd-eeeeffff";
 
     private final LegalIssueRepository legalIssueRepository;
     private final MeetingRepository meetingRepository;
