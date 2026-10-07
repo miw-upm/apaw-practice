@@ -1,8 +1,9 @@
 package es.upm.miw.apaw.domain.services.deadlinecalculator;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
-import es.upm.miw.apaw.domain.model.deadlinecalculator.CreationDeadline;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.deadlinecalculator.CreationDeadline;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.Deadline;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineWorkloadReport;
 import es.upm.miw.apaw.domain.ports.out.deadlinecalculator.DeadlineGateway;
@@ -53,12 +54,21 @@ public class DeadlineService {
         Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(userIds).stream()
                 .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
         return reports.stream()
-                .map(report -> new DeadlineWorkloadReport(
-                        report.userId(),
-                        usersById.get(report.userId()),
-                        report.expiredCount(),
-                        report.deadlineCount(),
-                        report.holidayAffectedCount()))
+                .map(report -> this.withUserSnapshot(report, usersById))
                 .toList();
+    }
+
+    private DeadlineWorkloadReport withUserSnapshot(
+            DeadlineWorkloadReport report, Map<UUID, UserSnapshot> usersById) {
+        UserSnapshot userSnapshot = usersById.get(report.userId());
+        if (userSnapshot == null) {
+            throw new NotFoundException("User id not found: " + report.userId());
+        }
+        return new DeadlineWorkloadReport(
+                report.userId(),
+                userSnapshot,
+                report.expiredCount(),
+                report.deadlineCount(),
+                report.holidayAffectedCount());
     }
 }
