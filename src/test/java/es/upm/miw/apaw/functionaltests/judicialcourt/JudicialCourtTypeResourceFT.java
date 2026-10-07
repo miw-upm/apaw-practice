@@ -69,7 +69,7 @@ class JudicialCourtTypeResourceFT {
     @Test
     void testCreateBlankName() {
         this.restTestClient.post().uri(JudicialCourtTypeResource.JUDICIAL_COURT_TYPES)
-                .body(JudicialCourtType.builder().name(" ").code(this.uniqueCode()).jurisdiction("Madrid").build())
+                .body(JudicialCourtType.builder().name(" ").code(this.uniqueCode()).jurisdiction("Penal").build())
                 .exchange()
                 .expectStatus().isBadRequest();
     }
@@ -77,7 +77,7 @@ class JudicialCourtTypeResourceFT {
     @Test
     void testCreateDuplicateName() {
         this.restTestClient.post().uri(JudicialCourtTypeResource.JUDICIAL_COURT_TYPES)
-                .body(JudicialCourtType.builder().name(TYPE_0.getName()).description("Duplicate name").code(this.uniqueCode()).jurisdiction("Madrid").build())
+                .body(JudicialCourtType.builder().name(TYPE_0.getName()).description("Duplicate name").code(this.uniqueCode()).jurisdiction("Paz").build())
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
@@ -85,7 +85,7 @@ class JudicialCourtTypeResourceFT {
     @Test
     void testCreateDuplicateCode() {
         this.restTestClient.post().uri(JudicialCourtTypeResource.JUDICIAL_COURT_TYPES)
-                .body(JudicialCourtType.builder().name("Nuevo tribunal").description("Duplicate code").code(TYPE_0.getCode()).jurisdiction("Madrid").build())
+                .body(JudicialCourtType.builder().name("Nuevo tribunal").description("Duplicate code").code(TYPE_0.getCode()).jurisdiction("Paz").build())
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
@@ -99,7 +99,7 @@ class JudicialCourtTypeResourceFT {
                         .name("Updated type")
                         .description("Updated description")
                         .code(this.uniqueCode())
-                        .jurisdiction("Valencia")
+                        .jurisdiction("Civil")
                         .active(false)
                         .build())
                 .exchange()
@@ -109,7 +109,7 @@ class JudicialCourtTypeResourceFT {
                     assertThat(body.getId()).isEqualTo(judicialCourtType.getId());
                     assertThat(body.getName()).isEqualTo("Updated type");
                     assertThat(body.getDescription()).isEqualTo("Updated description");
-                    assertThat(body.getJurisdiction()).isEqualTo("Valencia");
+                    assertThat(body.getJurisdiction()).isEqualTo("Civil");
                     assertThat(body.getActive()).isFalse();
                 });
     }
@@ -117,7 +117,7 @@ class JudicialCourtTypeResourceFT {
     @Test
     void testUpdateNotFound() {
         this.restTestClient.put().uri(JudicialCourtTypeResource.JUDICIAL_COURT_TYPES + "/" + UUID.randomUUID())
-                .body(JudicialCourtType.builder().name("Missing type").code(this.uniqueCode()).jurisdiction("Madrid").build())
+                .body(JudicialCourtType.builder().name("Missing type").code(this.uniqueCode()).jurisdiction("Penal").build())
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -126,7 +126,7 @@ class JudicialCourtTypeResourceFT {
     void testUpdateDuplicateName() {
         JudicialCourtType judicialCourtType = this.createType();
         this.restTestClient.put().uri(JudicialCourtTypeResource.JUDICIAL_COURT_TYPES + "/" + judicialCourtType.getId())
-                .body(JudicialCourtType.builder().name(TYPE_0.getName()).description("bad").code(this.uniqueCode()).jurisdiction("Madrid").active(true).build())
+                .body(JudicialCourtType.builder().name(TYPE_0.getName()).description("bad").code(this.uniqueCode()).jurisdiction("Paz").active(true).build())
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
@@ -135,7 +135,7 @@ class JudicialCourtTypeResourceFT {
     void testPatch() {
         JudicialCourtType judicialCourtType = this.createType();
         JudicialCourtTypeUpdate update = new JudicialCourtTypeUpdate(
-                "Patched name", "Patched description", null, "Barcelona", false);
+                "Patched name", "Patched description", null, "Mercantil", false);
 
         this.restTestClient.patch().uri(JudicialCourtTypeResource.JUDICIAL_COURT_TYPES + "/" + judicialCourtType.getId())
                 .body(update)
@@ -147,7 +147,7 @@ class JudicialCourtTypeResourceFT {
                     assertThat(body.getName()).isEqualTo("Patched name");
                     assertThat(body.getDescription()).isEqualTo("Patched description");
                     assertThat(body.getCode()).isEqualTo(judicialCourtType.getCode());
-                    assertThat(body.getJurisdiction()).isEqualTo("Barcelona");
+                    assertThat(body.getJurisdiction()).isEqualTo("Mercantil");
                     assertThat(body.getActive()).isFalse();
                 });
     }
@@ -155,7 +155,7 @@ class JudicialCourtTypeResourceFT {
     @Test
     void testPatchNotFound() {
         this.restTestClient.patch().uri(JudicialCourtTypeResource.JUDICIAL_COURT_TYPES + "/" + UUID.randomUUID())
-                .body(new JudicialCourtTypeUpdate("New name", "desc", "CODE", "Madrid", true))
+                .body(new JudicialCourtTypeUpdate("New name", "desc", "CODE", "Penal", true))
                 .exchange()
                 .expectStatus().isNotFound();
     }
@@ -164,7 +164,7 @@ class JudicialCourtTypeResourceFT {
     void testPatchDuplicateName() {
         JudicialCourtType judicialCourtType = this.createType();
         this.restTestClient.patch().uri(JudicialCourtTypeResource.JUDICIAL_COURT_TYPES + "/" + judicialCourtType.getId())
-                .body(new JudicialCourtTypeUpdate(TYPE_0.getName(), "desc", judicialCourtType.getCode(), "Madrid", true))
+                .body(new JudicialCourtTypeUpdate(TYPE_0.getName(), "desc", judicialCourtType.getCode(), "Paz", true))
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CONFLICT);
     }
@@ -188,7 +188,7 @@ class JudicialCourtTypeResourceFT {
                         .name("FT tribunal " + UUID.randomUUID())
                         .description("Generated for FT")
                         .code(this.uniqueCode())
-                        .jurisdiction("Madrid")
+                        .jurisdiction("Paz")
                         .build())
                 .exchange()
                 .expectStatus().isCreated()
