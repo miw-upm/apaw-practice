@@ -38,4 +38,26 @@ public class NonWorkingDay {
             this.recurring = false;
         }
     }
+
+    public void replaceWith(NonWorkingDay nonWorkingDay) {
+        this.date = nonWorkingDay.getDate();
+        this.description = nonWorkingDay.getDescription();
+        this.scopeLevel = nonWorkingDay.getScopeLevel();
+        this.region = nonWorkingDay.getRegion();
+        this.city = nonWorkingDay.getCity();
+        this.recurring = nonWorkingDay.getRecurring() != null ? nonWorkingDay.getRecurring() : false;
+    }
+
+    public boolean hasConsistentScope() {
+        if (this.scopeLevel == null) {
+            return false;
+        }
+        boolean hasRegion = this.region != null && !this.region.isBlank();
+        boolean hasCity = this.city != null && !this.city.isBlank();
+        return switch (this.scopeLevel) {
+            case NATIONAL -> !hasRegion && !hasCity;
+            case REGIONAL -> hasRegion && !hasCity;
+            case LOCAL -> hasRegion && hasCity;
+        };
+    }
 }

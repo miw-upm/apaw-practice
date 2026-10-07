@@ -4,19 +4,30 @@ import es.upm.miw.apaw.adapters.out.meeting.postgres.MeetingRepository;
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.meeting.LegalIssue;
 import es.upm.miw.apaw.domain.model.meeting.LegalIssueResolvedUpdate;
+import es.upm.miw.apaw.domain.model.meeting.MeetingParticipantReport;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.MeetingSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -25,6 +36,8 @@ class LegalIssueServiceIT {
     private LegalIssueService legalIssueService;
     @Autowired
     private MeetingRepository meetingRepository;
+    @MockitoBean
+    private UserFinder userFinder;
 
     @Test
     void testReadSeeder() {
@@ -185,6 +198,46 @@ class LegalIssueServiceIT {
                 .isInstanceOf(ConflictException.class).hasMessageContaining(ID_0.toString());
         assertThat(this.legalIssueService.read(ID_0)).usingRecursiveComparison().isEqualTo(ISSUE_0);
         assertThat(this.meetingRepository.existsByLegalIssuesId(ID_0)).isTrue();
+    }
+
+    @Test
+    void testFindParticipantReportHydratesParticipantsInOneCall() {
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Set<UUID> requestedIds = invocation.getArgument(0);
+            return requestedIds.stream().map(this::hydratedUser).toList();
+        });
+
+        List<MeetingParticipantReport> reports = this.legalIssueService.findParticipantReport();
+
+        UUID userId = MEETING_0.getParticipants().get(0).getId();
+        assertThat(reports)
+                .filteredOn(report -> report.getUserSnapshot().getId().equals(userId))
+                .singleElement()
+                .satisfies(report -> {
+                    assertThat(report.getUserSnapshot().getMobile()).isNotNull();
+                    assertThat(report.getUserSnapshot().getFirstName()).isNotNull();
+                    assertThat(report.getMeetingCount()).isGreaterThanOrEqualTo(2);
+                });
+        assertThat(reports).extracting(MeetingParticipantReport::getLegalIssueCount)
+                .isSortedAccordingTo(Comparator.reverseOrder());
+        verify(this.userFinder, times(1)).findByIds(any());
+        verify(this.userFinder, never()).read(any());
+    }
+
+    @Test
+    void testFindParticipantReportUserNotFound() {
+        when(this.userFinder.findByIds(any())).thenReturn(List.of());
+
+        assertThatThrownBy(() -> this.legalIssueService.findParticipantReport())
+                .isInstanceOf(NotFoundException.class).hasMessageContaining("User id not found");
+    }
+
+    private UserSnapshot hydratedUser(UUID userId) {
+        return UserSnapshot.builder()
+                .id(userId)
+                .mobile("600000999")
+                .firstName("participante")
+                .build();
     }
 
     private LegalIssue newIssue() {

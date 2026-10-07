@@ -13,6 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class HeirAdapter implements HeirGateway {
     private final HeirRepository heirRepository;
+    private final EstateRepository estateRepository;
 
     @Override
     public Heir create(Heir heir) {
@@ -34,6 +35,16 @@ public class HeirAdapter implements HeirGateway {
     @Override
     public Heir update(Heir heir) {
         return this.heirRepository.save(new HeirEntity(heir)).toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.heirRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.estateRepository.existsByHeirsId(id);
     }
 
     @Override

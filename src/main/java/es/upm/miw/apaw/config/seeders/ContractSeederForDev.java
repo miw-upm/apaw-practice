@@ -328,6 +328,165 @@ public class ContractSeederForDev implements ApplicationRunner {
             .userSnapshot(user("0008", "600000108", "cliente8"))
             .build();
 
+    public static final UUID CONTRACT_ID_10 =
+            UUID.fromString(CONTRACT_PREFIX + "0010");
+
+    public static final Contract CONTRACT_10 = Contract.builder()
+            .id(CONTRACT_ID_10)
+            .title("Contrato de servicios de consultoría")
+            .type(ContractType.SERVICE)
+            .startDate(LocalDate.of(2025, 1, 1))
+            .endDate(LocalDate.of(2026, 8, 20))
+            .amount(new BigDecimal("1900.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2025, 1, 1, 10, 0))
+            .clauses(List.of(CLAUSE_3))
+            .userSnapshot(user("0000", "600000100", "cliente0"))
+            .build();
+
+    public static final UUID CONTRACT_ID_11 =
+            UUID.fromString(CONTRACT_PREFIX + "0011");
+
+    public static final Contract CONTRACT_11 = Contract.builder()
+            .id(CONTRACT_ID_11)
+            .title("Contrato de suministro energético")
+            .type(ContractType.COMMERCIAL)
+            .startDate(LocalDate.of(2025, 2, 1))
+            .endDate(LocalDate.of(2026, 9, 15))
+            .amount(new BigDecimal("2700.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2025, 2, 1, 11, 0))
+            .clauses(List.of(CLAUSE_0))
+            .userSnapshot(user("0001", "600000101", "cliente1"))
+            .build();
+
+    public static final UUID CONTRACT_ID_12 =
+            UUID.fromString(CONTRACT_PREFIX + "0012");
+
+    public static final Contract CONTRACT_12 = Contract.builder()
+            .id(CONTRACT_ID_12)
+            .title("Contrato de mantenimiento de instalaciones")
+            .type(ContractType.SERVICE)
+            .startDate(LocalDate.of(2025, 3, 1))
+            .endDate(LocalDate.of(2026, 7, 31))
+            .amount(new BigDecimal("2100.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2025, 3, 1, 9, 0))
+            .clauses(List.of(CLAUSE_7))
+            .userSnapshot(user("0002", "600000102", "cliente2"))
+            .build();
+
+    public static final UUID CONTRACT_ID_13 =
+            UUID.fromString(CONTRACT_PREFIX + "0013");
+
+    public static final Contract CONTRACT_13 = Contract.builder()
+            .id(CONTRACT_ID_13)
+            .title("Contrato de asesoramiento fiscal")
+            .type(ContractType.SERVICE)
+            .startDate(LocalDate.of(2026, 1, 1))
+            .endDate(LocalDate.of(2026, 12, 20))
+            .amount(new BigDecimal("2300.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2026, 1, 1, 10, 0))
+            .clauses(List.of(CLAUSE_3))
+            .userSnapshot(user("0003", "600000103", "cliente3"))
+            .build();
+
+    public static final UUID CONTRACT_ID_14 =
+            UUID.fromString(CONTRACT_PREFIX + "0014");
+
+    public static final Contract CONTRACT_14 = Contract.builder()
+            .id(CONTRACT_ID_14)
+            .title("Contrato de gestión administrativa")
+            .type(ContractType.OTHER)
+            .startDate(LocalDate.of(2025, 4, 1))
+            .endDate(LocalDate.of(2026, 5, 30))
+            .amount(new BigDecimal("1400.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2025, 4, 1, 10, 0))
+            .clauses(List.of(CLAUSE_A))
+            .userSnapshot(user("0004", "600000104", "cliente4"))
+            .build();
+
+    public static final UUID CONTRACT_ID_15 =
+            UUID.fromString(CONTRACT_PREFIX + "0015");
+
+    public static final Contract CONTRACT_15 = Contract.builder()
+            .id(CONTRACT_ID_15)
+            .title("Contrato de soporte técnico")
+            .type(ContractType.SERVICE)
+            .startDate(LocalDate.of(2026, 2, 1))
+            .endDate(LocalDate.of(2027, 2, 28))
+            .amount(new BigDecimal("2600.00"))
+            .automaticRenewal(true)
+            .createdAt(LocalDateTime.of(2026, 2, 1, 11, 0))
+            .clauses(List.of(CLAUSE_2))
+            .userSnapshot(user("0005", "600000105", "cliente5"))
+            .build();
+
+    public static final UUID CONTRACT_ID_16 =
+            UUID.fromString(CONTRACT_PREFIX + "0016");
+
+    public static final Contract CONTRACT_16 = Contract.builder()
+            .id(CONTRACT_ID_16)
+            .title("Contrato de colaboración empresarial")
+            .type(ContractType.COMMERCIAL)
+            .startDate(LocalDate.of(2025, 6, 1))
+            .endDate(null)
+            .amount(new BigDecimal("3500.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2025, 6, 1, 12, 0))
+            .clauses(List.of(CLAUSE_0))
+            .userSnapshot(user("0000", "600000100", "cliente0"))
+            .build();
+
+    public static final UUID CONTRACT_ID_17 =
+            UUID.fromString(CONTRACT_PREFIX + "0017");
+
+    public static final Contract CONTRACT_17 = Contract.builder()
+            .id(CONTRACT_ID_17)
+            .title("Contrato de mantenimiento informático")
+            .type(ContractType.SERVICE)
+            .startDate(LocalDate.of(2026, 1, 15))
+            .endDate(LocalDate.of(2026, 10, 2))
+            .amount(new BigDecimal("1800.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2026, 1, 15, 9, 0))
+            .clauses(List.of(CLAUSE_3))
+            .userSnapshot(user("0001", "600000101", "cliente1"))
+            .build();
+
+    public static final UUID CONTRACT_ID_18 =
+            UUID.fromString(CONTRACT_PREFIX + "0018");
+
+    public static final Contract CONTRACT_18 = Contract.builder()
+            .id(CONTRACT_ID_18)
+            .title("Contrato de asesoramiento empresarial")
+            .type(ContractType.SERVICE)
+            .startDate(LocalDate.of(2026, 3, 1))
+            .endDate(LocalDate.of(2026, 11, 10))
+            .amount(new BigDecimal("2900.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2026, 3, 1, 10, 0))
+            .clauses(List.of(CLAUSE_7))
+            .userSnapshot(user("0003", "600000103", "cliente3"))
+            .build();
+
+    public static final UUID CONTRACT_ID_19 =
+            UUID.fromString(CONTRACT_PREFIX + "0019");
+
+    public static final Contract CONTRACT_19 = Contract.builder()
+            .id(CONTRACT_ID_19)
+            .title("Contrato de servicios profesionales")
+            .type(ContractType.SERVICE)
+            .startDate(LocalDate.of(2025, 5, 1))
+            .endDate(LocalDate.of(2026, 6, 15))
+            .amount(new BigDecimal("2200.00"))
+            .automaticRenewal(false)
+            .createdAt(LocalDateTime.of(2025, 5, 1, 13, 0))
+            .clauses(List.of(CLAUSE_3))
+            .userSnapshot(user("0005", "600000105", "cliente5"))
+            .build();
 
     private final ClauseRepository clauseRepository;
     private final ContractRepository contractRepository;
@@ -369,7 +528,10 @@ public class ContractSeederForDev implements ApplicationRunner {
                         CONTRACT_0, CONTRACT_1, CONTRACT_2,
                         CONTRACT_3, CONTRACT_4, CONTRACT_5,
                         CONTRACT_6, CONTRACT_7, CONTRACT_8,
-                        CONTRACT_9
+                        CONTRACT_9, CONTRACT_10, CONTRACT_11,
+                        CONTRACT_12, CONTRACT_13, CONTRACT_14,
+                        CONTRACT_15, CONTRACT_16, CONTRACT_17,
+                        CONTRACT_18, CONTRACT_19
                 ).stream()
                 .filter(contract -> !this.contractRepository.existsById(contract.getId()))
                 .map(this::toEntity)

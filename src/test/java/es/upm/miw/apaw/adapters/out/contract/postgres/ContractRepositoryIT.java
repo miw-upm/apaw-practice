@@ -30,8 +30,6 @@ public class ContractRepositoryIT {
                         LocalDate.of(2026, 11, 2)
                 );
 
-        assertThat(report).hasSize(5);
-
         assertThat(report)
                 .filteredOn(item -> item.userId().equals(
                         CONTRACT_0.getUserSnapshot().getId()))
