@@ -1,7 +1,6 @@
 package es.upm.miw.apaw.domain.model.judicialcourt;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -39,9 +38,5 @@ public class CreationJudicialCourt {
     @NotNull
     private UUID typeId;
 
-    @NotNull
-    private UUID userId;
-
-    @NotEmpty
     private List<@NotNull UUID> lawyerIds;
 }

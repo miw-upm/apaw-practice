@@ -12,6 +12,11 @@ import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,31 +25,41 @@ public class JudicialCourtService {
     private final JudicialCourtTypeGateway judicialCourtTypeGateway;
     private final UserFinder userFinder;
 
+    @Transactional
     public JudicialCourt create(CreationJudicialCourt creation) {
         if (creation == null) {
             throw new BadRequestException("Judicial court creation cannot be null");
         }
-        if (creation.getUserId() == null) {
-            throw new BadRequestException("Judicial court user id cannot be null");
-        }
         if (creation.getTypeId() == null) {
             throw new BadRequestException("Judicial court type id cannot be null");
         }
-        if (creation.getLawyerIds() == null || creation.getLawyerIds().isEmpty()) {
-            throw new BadRequestException("Judicial court lawyer ids cannot be empty");
+        Set<UUID> userIds = new HashSet<>();
+        if (creation.getLawyerIds() != null) {
+            userIds.addAll(creation.getLawyerIds());
         }
 
-        this.userFinder.read(creation.getUserId());
+        if (!userIds.isEmpty()) {
+            Set<UUID> foundUserIds = this.userFinder.findByIds(userIds).stream()
+                    .map(UserSnapshot::getId)
+                    .collect(java.util.stream.Collectors.toSet());
+            if (!foundUserIds.containsAll(userIds)) {
+                Set<UUID> missingUserIds = new HashSet<>(userIds);
+                missingUserIds.removeAll(foundUserIds);
+                throw new NotFoundException("User ids not found: " + missingUserIds);
+            }
+        }
 
         JudicialCourtType judicialCourtType = this.judicialCourtTypeGateway.read(creation.getTypeId())
                 .orElseThrow(() -> new NotFoundException("Judicial court type id not found: " + creation.getTypeId()));
 
         JudicialCourt judicialCourt = new JudicialCourt();
-        BeanUtils.copyProperties(creation, judicialCourt, "typeId", "userId", "lawyerIds");
+        BeanUtils.copyProperties(creation, judicialCourt, "typeId", "lawyerIds");
         judicialCourt.setType(judicialCourtType);
-        judicialCourt.setLawyers(creation.getLawyerIds().stream()
-                .map(id -> UserSnapshot.builder().id(id).build())
-                .toList());
+        if (creation.getLawyerIds() != null) {
+            judicialCourt.setLawyers(creation.getLawyerIds().stream()
+                    .map(id -> UserSnapshot.builder().id(id).build())
+                    .toList());
+        }
         judicialCourt.doDefault();
         return this.judicialCourtGateway.create(judicialCourt);
     }
