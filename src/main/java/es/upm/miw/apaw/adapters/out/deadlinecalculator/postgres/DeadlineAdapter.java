@@ -1,11 +1,13 @@
 package es.upm.miw.apaw.adapters.out.deadlinecalculator.postgres;
 
 import es.upm.miw.apaw.domain.model.deadlinecalculator.Deadline;
+import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineWorkloadReport;
 import es.upm.miw.apaw.domain.ports.out.deadlinecalculator.DeadlineGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,5 +33,10 @@ public class DeadlineAdapter implements DeadlineGateway {
     @Override
     public boolean existsByTitle(String title) {
         return this.deadlineRepository.existsByTitle(title);
+    }
+
+    @Override
+    public List<DeadlineWorkloadReport> findWorkloadReport(LocalDate today) {
+        return this.deadlineRepository.findWorkloadReport(today);
     }
 }
