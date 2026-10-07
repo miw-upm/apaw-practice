@@ -57,8 +57,12 @@ public class Deadline {
         }
     }
 
+    public boolean hasWorkingDayCount() {
+        return DayCountType.WORKING == this.dayCountType;
+    }
+
     public void doCalculate() {
-        if (DayCountType.CALENDAR == this.dayCountType) {
+        if (!this.hasWorkingDayCount()) {
             this.dueDate = this.notificationDate.plusDays(this.days);
             this.nonWorkingDays = List.of();
             return;

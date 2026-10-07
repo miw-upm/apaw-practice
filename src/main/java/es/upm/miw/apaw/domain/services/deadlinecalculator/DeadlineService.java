@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DeadlineService {
@@ -23,10 +25,11 @@ public class DeadlineService {
         }
         Deadline deadline = new Deadline();
         BeanUtils.copyProperties(creation, deadline);
-        deadline.setNonWorkingDays(this.nonWorkingDayGateway
-                .findApplicable(creation.getRegion(), creation.getCity()));
-        deadline.setUserSnapshot(this.userFinder.read(creation.getUserId()));
         deadline.doDefault();
+        deadline.setNonWorkingDays(deadline.hasWorkingDayCount()
+                ? this.nonWorkingDayGateway.findApplicable(creation.getRegion(), creation.getCity())
+                : List.of());
+        deadline.setUserSnapshot(this.userFinder.read(creation.getUserId()));
         deadline.doCalculate();
         return this.deadlineGateway.create(deadline);
     }
