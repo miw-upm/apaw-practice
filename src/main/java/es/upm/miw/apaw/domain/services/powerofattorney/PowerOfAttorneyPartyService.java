@@ -58,7 +58,6 @@ public class PowerOfAttorneyPartyService {
     }
 
     public void delete(UUID id) {
-        this.findOne(id);
         if (this.powerOfAttorneyGateway.isReferenced(id)) {
             throw new ConflictException("Power of attorney party is referenced by a power of attorney: " + id);
         }
