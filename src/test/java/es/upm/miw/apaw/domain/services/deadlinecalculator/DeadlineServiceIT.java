@@ -10,6 +10,7 @@ import es.upm.miw.apaw.domain.model.deadlinecalculator.CreationDeadline;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.DayCountType;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.Deadline;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineStatus;
+import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineWorkloadReport;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.NonWorkingDay;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.ScopeLevel;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -22,10 +23,15 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.USER_ID_0;
+import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.USER_ID_1;
+import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.USER_ID_2;
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -281,5 +287,65 @@ class DeadlineServiceIT {
                 this.creation("R", LocalDate.of(2035, 1, 11), 2).build());
         assertThat(created.getDueDate()).isEqualTo(LocalDate.of(2035, 1, 15));
         assertThat(created.getNonWorkingDays()).isEmpty();
+    }
+
+    // ---------- informe de carga de trabajo ----------
+
+    private UserSnapshot lawyer(UUID id, String firstName) {
+        return UserSnapshot.builder().id(id).mobile("600000000").firstName(firstName).build();
+    }
+
+    @Test
+    @Transactional
+    void testFindWorkloadReport() {
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(
+                this.lawyer(USER_ID_0, "cliente0"),
+                this.lawyer(USER_ID_1, "cliente1"),
+                this.lawyer(USER_ID_2, "cliente2")));
+
+        List<DeadlineWorkloadReport> report = this.deadlineService.findWorkloadReport();
+
+        assertThat(report).extracting(DeadlineWorkloadReport::userId)
+                .containsSubsequence(USER_ID_0, USER_ID_1, USER_ID_2);
+        assertThat(report).allSatisfy(item -> assertThat(item.userSnapshot()).isNotNull());
+        assertThat(report).filteredOn(item -> item.userId().equals(USER_ID_0))
+                .singleElement()
+                .satisfies(item -> assertThat(item.userSnapshot().getFirstName()).isEqualTo("cliente0"));
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    @Transactional
+    void testFindWorkloadReportWithAnUnknownUser() {
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(this.lawyer(USER_ID_0, "cliente0")));
+
+        assertThatThrownBy(() -> this.deadlineService.findWorkloadReport())
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining("User id not found");
+    }
+
+    @Test
+    @Transactional
+    void testFindWorkloadReportCountsADeadlineWithSeveralHolidaysOnce() {
+        UUID lawyerId = UUID.randomUUID();
+        when(this.userFinder.read(lawyerId)).thenReturn(this.lawyer(lawyerId, "lawyer"));
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(
+                this.lawyer(USER_ID_0, "cliente0"),
+                this.lawyer(USER_ID_1, "cliente1"),
+                this.lawyer(USER_ID_2, "cliente2"),
+                this.lawyer(lawyerId, "lawyer")));
+        this.localHoliday("T", LocalDate.of(2035, 5, 11));
+        this.regionalHoliday("T", LocalDate.of(2035, 5, 11));
+        this.deadlineService.create(this.creation("T", LocalDate.of(2035, 5, 9), 3).userId(lawyerId).build());
+
+        List<DeadlineWorkloadReport> report = this.deadlineService.findWorkloadReport();
+
+        assertThat(report).filteredOn(item -> item.userId().equals(lawyerId))
+                .singleElement()
+                .satisfies(item -> {
+                    assertThat(item.totalDeadlineCount()).isEqualTo(1);
+                    assertThat(item.holidayAffectedDeadlineCount()).isEqualTo(1);
+                    assertThat(item.expiredDeadlineCount()).isZero();
+                });
     }
 }
