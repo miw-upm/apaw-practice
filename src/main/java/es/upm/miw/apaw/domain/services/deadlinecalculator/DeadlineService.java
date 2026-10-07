@@ -9,7 +9,6 @@ import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +17,6 @@ public class DeadlineService {
     private final NonWorkingDayGateway nonWorkingDayGateway;
     private final UserFinder userFinder;
 
-    @Transactional
     public Deadline create(CreationDeadline creation) {
         if (this.deadlineGateway.existsByTitle(creation.getTitle())) {
             throw new ConflictException("Deadline title already exists: " + creation.getTitle());
