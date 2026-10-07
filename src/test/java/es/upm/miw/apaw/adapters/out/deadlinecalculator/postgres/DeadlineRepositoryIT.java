@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.USER_ID_0;
 import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.USER_ID_1;
@@ -61,6 +62,10 @@ class DeadlineRepositoryIT {
     void testFindWorkloadReportBreaksTiesByDeadlineCount() {
         List<DeadlineWorkloadReport> report = this.deadlineRepository.findWorkloadReport(LocalDate.now());
 
+        DeadlineWorkloadReport second = this.rowOf(report, USER_ID_1);
+        DeadlineWorkloadReport third = this.rowOf(report, USER_ID_2);
+        assertThat(second.expiredDeadlineCount()).isEqualTo(third.expiredDeadlineCount());
+        assertThat(second.totalDeadlineCount()).isGreaterThan(third.totalDeadlineCount());
         assertThat(report).extracting(DeadlineWorkloadReport::userId)
                 .containsSubsequence(USER_ID_0, USER_ID_1, USER_ID_2);
     }
@@ -70,5 +75,9 @@ class DeadlineRepositoryIT {
         List<DeadlineWorkloadReport> report = this.deadlineRepository.findWorkloadReport(LocalDate.of(2000, 1, 1));
 
         assertThat(report).extracting(DeadlineWorkloadReport::expiredDeadlineCount).containsOnly(0L);
+    }
+
+    private DeadlineWorkloadReport rowOf(List<DeadlineWorkloadReport> report, UUID userId) {
+        return report.stream().filter(item -> item.userId().equals(userId)).findFirst().orElseThrow();
     }
 }
