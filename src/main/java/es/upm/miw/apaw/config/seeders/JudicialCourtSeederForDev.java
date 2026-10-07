@@ -84,8 +84,8 @@ public class JudicialCourtSeederForDev implements ApplicationRunner {
             .type(TYPE_2)
             .status(JudicialCourtStatus.ACTIVE)
             .lawyers(List.of(
-                    user("0004", "600000104", "cliente4"),
-                    user("0000", "600000100", "cliente0")))
+                    user("0003", "600000103", "cliente3"),
+                    user("0004", "600000104", "cliente4")))
             .build();
 
     public static final UUID ID_3 = UUID.fromString(PREFIX + "0003");
@@ -104,7 +104,8 @@ public class JudicialCourtSeederForDev implements ApplicationRunner {
             .status(JudicialCourtStatus.ACTIVE)
             .lawyers(List.of(
                     user("0001", "600000101", "cliente1"),
-                    user("0002", "600000102", "cliente2")))
+                    user("0003", "600000103", "cliente3"),
+                    user("0004", "600000104", "cliente4")))
             .build();
 
     public static final UUID ID_4 = UUID.fromString(PREFIX + "0004");
