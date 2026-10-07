@@ -40,6 +40,7 @@ public class EvidenceEntity {
     @Column(nullable = false)
     private EvidenceStatus status;
 
+    @Column(nullable = false)
     private LocalDateTime collectionDate;
 
     private String source;

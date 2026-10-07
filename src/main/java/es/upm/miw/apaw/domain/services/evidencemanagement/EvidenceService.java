@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.domain.services.evidencemanagement;
 
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CreationEvidence;
@@ -11,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -20,6 +24,7 @@ public class EvidenceService {
     private final CustodyRecordGateway custodyRecordGateway;
 
     public Evidence create(CreationEvidence creation) {
+        this.assertNoRepeatedCustodyRecordIds(creation.getCustodyRecordIds());
         Evidence evidence = new Evidence();
         BeanUtils.copyProperties(creation, evidence);
         evidence.setCustodyRecords(creation.getCustodyRecordIds().stream()
@@ -36,5 +41,14 @@ public class EvidenceService {
             throw new ConflictException("Custody record is already associated with an evidence: " + id);
         }
         return custodyRecord;
+    }
+
+    private void assertNoRepeatedCustodyRecordIds(List<UUID> ids) {
+        Set<UUID> uniqueIds = new HashSet<>();
+        for (UUID id : ids) {
+            if (!uniqueIds.add(id)) {
+                throw new BadRequestException("Repeated custody record id: " + id);
+            }
+        }
     }
 }

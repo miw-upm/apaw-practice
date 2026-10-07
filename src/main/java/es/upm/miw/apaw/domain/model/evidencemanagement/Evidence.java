@@ -28,6 +28,7 @@ public class Evidence {
 
     private EvidenceStatus status;
 
+    @NonNull
     private LocalDateTime collectionDate;
 
     private String source;
