@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.out.evidencemanagement.postgres;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.evidencemanagement.CustodianActivityReport;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.model.evidencemanagement.EvidenceStatus;
 import es.upm.miw.apaw.domain.model.evidencemanagement.EvidenceType;
@@ -130,5 +131,15 @@ class CustodyRecordAdapterIT {
         CustodyRecord custodyRecord = this.custodyRecordGateway.create(this.newRecord());
         this.custodyRecordGateway.deleteById(custodyRecord.getId());
         assertThat(this.custodyRecordGateway.read(custodyRecord.getId())).isEmpty();
+    }
+
+    @Test
+    void testFindActivityReportReturnsCustodianAsIdOnly() {
+        UUID custodianId = RECORD_0.getCustodian().getId();
+        assertThat(this.custodyRecordGateway.findActivityReport())
+                .filteredOn(report -> report.getCustodian().getId().equals(custodianId))
+                .singleElement().extracting(CustodianActivityReport::getCustodian)
+                .usingRecursiveComparison()
+                .isEqualTo(UserSnapshot.builder().id(custodianId).build());
     }
 }

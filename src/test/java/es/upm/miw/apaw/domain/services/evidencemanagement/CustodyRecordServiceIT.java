@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.evidencemanagement.CustodianActivityReport;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.model.evidencemanagement.EvidenceStatus;
 import es.upm.miw.apaw.domain.model.evidencemanagement.EvidenceType;
@@ -17,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -262,5 +266,53 @@ class CustodyRecordServiceIT {
         assertThat(patched.getLocation()).isEqualTo("Patched location");
         assertThat(patched.getNotes()).isEqualTo("Patched notes");
         assertThat(patched.getCustodian().getId()).isEqualTo(CUSTODIAN_ID_1);
+    }
+
+    @Test
+    void testFindActivityReportHydratesCustodiansWithSingleCall() {
+        UUID custodianId = RECORD_0.getCustodian().getId();
+        this.stubFindByIdsExcept(null);
+        clearInvocations(this.userFinder);
+
+        List<CustodianActivityReport> report = this.custodyRecordService.findActivityReport();
+
+        assertThat(report).filteredOn(item -> item.getCustodian().getId().equals(custodianId))
+                .singleElement().extracting(CustodianActivityReport::getCustodian)
+                .usingRecursiveComparison().isEqualTo(this.newUser(custodianId));
+        assertThat(report).allSatisfy(item -> assertThat(item.getCustodian().getMobile()).isNotNull());
+        verify(this.userFinder, times(1)).findByIds(any());
+        verify(this.userFinder, never()).read(any(UUID.class));
+    }
+
+    @Test
+    void testFindActivityReportCustodianNotFound() {
+        UUID custodianId = RECORD_0.getCustodian().getId();
+        this.stubFindByIdsExcept(custodianId);
+        assertThatThrownBy(() -> this.custodyRecordService.findActivityReport())
+                .isInstanceOf(NotFoundException.class).hasMessageContaining(custodianId.toString());
+    }
+
+    @Test
+    @Transactional
+    void testFindActivityReportWithoutEvidencesDoesNotQueryUsers() {
+        this.evidenceRepository.deleteAll();
+        this.evidenceRepository.flush();
+        clearInvocations(this.userFinder);
+
+        assertThat(this.custodyRecordService.findActivityReport()).isEmpty();
+
+        verify(this.userFinder, never()).findByIds(any());
+    }
+
+    private UserSnapshot newUser(UUID id) {
+        return UserSnapshot.builder().id(id).mobile("600000000").firstName("Ana").familyName("Lopez")
+                .email("ana@example.com").build();
+    }
+
+    private void stubFindByIdsExcept(UUID excludedId) {
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Collection<UUID> ids = invocation.getArgument(0);
+            return ids.stream().filter(id -> !id.equals(excludedId)).map(this::newUser).toList();
+        });
     }
 }

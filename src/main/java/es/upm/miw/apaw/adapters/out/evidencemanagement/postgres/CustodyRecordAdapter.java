@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.out.evidencemanagement.postgres;
 
+import es.upm.miw.apaw.domain.model.evidencemanagement.CustodianActivityReport;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.ports.out.evidencemanagement.CustodyRecordGateway;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,11 @@ public class CustodyRecordAdapter implements CustodyRecordGateway {
                 .stream()
                 .map(CustodyRecordEntity::toDomain)
                 .toList();
+    }
+
+    @Override
+    public List<CustodianActivityReport> findActivityReport() {
+        return this.evidenceRepository.findCustodianActivityReport();
     }
 
 }
