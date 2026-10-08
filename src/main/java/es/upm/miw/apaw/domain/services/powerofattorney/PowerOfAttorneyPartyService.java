@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyPatch;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyReport;
 import es.upm.miw.apaw.domain.ports.out.powerofattorney.PowerOfAttorneyGateway;
 import es.upm.miw.apaw.domain.ports.out.powerofattorney.PowerOfAttorneyPartyGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -83,6 +84,27 @@ public class PowerOfAttorneyPartyService {
             party.setUserSnapshot(user);
         }
         return parties;
+    }
+
+    public List<PowerOfAttorneyPartyReport> findReport() {
+        List<PowerOfAttorneyPartyReport> reports = this.powerOfAttorneyPartyGateway.findReport();
+        if (reports.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = reports.stream()
+                .map(report -> report.getUserSnapshot().getId())
+                .collect(Collectors.toSet());
+        Map<UUID, UserSnapshot> users = this.userFinder.findByIds(userIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        reports.forEach(report -> {
+            UUID userId = report.getUserSnapshot().getId();
+            UserSnapshot user = users.get(userId);
+            if (user == null) {
+                throw new NotFoundException("User id not found: " + userId);
+            }
+            report.setUserSnapshot(user);
+        });
+        return reports;
     }
 
     public void patch(List<PowerOfAttorneyPartyPatch> patches) {

@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.out.powerofattorney.postgres;
 
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyReport;
 import es.upm.miw.apaw.domain.ports.out.powerofattorney.PowerOfAttorneyPartyGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -38,6 +39,11 @@ public class PowerOfAttorneyPartyAdapter implements PowerOfAttorneyPartyGateway 
     @Override
     public void delete(UUID id) {
         this.powerOfAttorneyPartyRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PowerOfAttorneyPartyReport> findReport() {
+        return this.powerOfAttorneyPartyRepository.findReport();
     }
 
     @Override

@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.in.powerofattorney;
 import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyPatch;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyReport;
 import es.upm.miw.apaw.domain.services.powerofattorney.PowerOfAttorneyPartyService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -50,6 +51,11 @@ public class PowerOfAttorneyPartyResource {
     @GetMapping
     public List<PowerOfAttorneyParty> findAll() {
         return this.powerOfAttorneyPartyService.findAll();
+    }
+
+    @GetMapping("/report")
+    public List<PowerOfAttorneyPartyReport> findReport() {
+        return this.powerOfAttorneyPartyService.findReport();
     }
 
     @PatchMapping
