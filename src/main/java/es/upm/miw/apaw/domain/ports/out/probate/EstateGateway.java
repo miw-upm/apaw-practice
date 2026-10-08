@@ -11,7 +11,7 @@ public interface EstateGateway {
 
     boolean existsByFileNumber(String fileNumber);
 
-    List<EstateUsageReport> findUsageReport();
+    List<EstateUsageReport> heirStatusSummary();
 
     List<Estate> find(EstateFindCriteria criteria);
 }

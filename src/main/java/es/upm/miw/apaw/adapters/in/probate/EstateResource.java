@@ -34,8 +34,8 @@ public class EstateResource {
     }
 
     @GetMapping(REPORT)
-    public List<EstateUsageReport> findUsageReport() {
-        return this.estateService.findUsageReport();
+    public List<EstateUsageReport> heirStatusSummary() {
+        return this.estateService.heirStatusSummary();
     }
 
     @GetMapping

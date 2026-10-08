@@ -48,8 +48,8 @@ public class EstateService {
                 .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
     }
 
-    public List<EstateUsageReport> findUsageReport() {
-        return this.estateGateway.findUsageReport();
+    public List<EstateUsageReport> heirStatusSummary() {
+        return this.estateGateway.heirStatusSummary();
     }
 
     public List<Estate> find(EstateFindCriteria criteria) {
