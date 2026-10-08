@@ -31,11 +31,12 @@ public class PowerOfAttorneyService {
             throw new BadRequestException(
                     "Power of attorney grand date cannot be later than expiration date: " + creation.getProtocolNumber());
         }
-        if (creation.getPrincipalId().equals(creation.getAttorneyId())) {
-            throw new BadRequestException("Principal and attorney must be different");
-        }
         PowerOfAttorneyParty principal = this.readParty(creation.getPrincipalId());
         PowerOfAttorneyParty attorney = this.readParty(creation.getAttorneyId());
+        if (principal.getUserSnapshot().getId().equals(attorney.getUserSnapshot().getId())) {
+            throw new BadRequestException("Principal and attorney must be different users");
+        }
+
         PowerOfAttorney powerOfAttorney = new PowerOfAttorney();
         BeanUtils.copyProperties(creation, powerOfAttorney, "principalId", "attorneyId");
         powerOfAttorney.setPrincipal(principal);
