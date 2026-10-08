@@ -307,10 +307,7 @@ class DeadlineServiceIT {
     @Test
     @Transactional
     void testFindWorkloadReport() {
-        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(
-                this.lawyer(USER_ID_0, "600000100", "cliente0"),
-                this.lawyer(USER_ID_1, "600000101", "cliente1"),
-                this.lawyer(USER_ID_2, "600000102", "cliente2")));
+        this.mockSeederLawyers();
 
         List<DeadlineWorkloadReport> report = this.deadlineService.findWorkloadReport();
 
@@ -338,11 +335,7 @@ class DeadlineServiceIT {
     void testFindWorkloadReportCountsADeadlineWithSeveralHolidaysOnce() {
         UUID lawyerId = UUID.randomUUID();
         when(this.userFinder.read(lawyerId)).thenReturn(this.lawyer(lawyerId, "600009999", "lawyer"));
-        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(
-                this.lawyer(USER_ID_0, "600000100", "cliente0"),
-                this.lawyer(USER_ID_1, "600000101", "cliente1"),
-                this.lawyer(USER_ID_2, "600000102", "cliente2"),
-                this.lawyer(lawyerId, "600009999", "lawyer")));
+        this.mockSeederLawyers(this.lawyer(lawyerId, "600009999", "lawyer"));
         this.localHoliday("T", LocalDate.of(2035, 5, 11));
         this.regionalHoliday("T", LocalDate.of(2035, 5, 11));
         this.deadlineService.create(this.creation("T", LocalDate.of(2035, 5, 9), 3).userId(lawyerId).build());
@@ -467,6 +460,18 @@ class DeadlineServiceIT {
         List<Deadline> deadlines = this.find(DeadlineFindCriteria.builder().region("Aragón").build());
 
         assertThat(deadlines).isEmpty();
+    }
+
+    @Test
+    @Transactional
+    void testFindWithAnUnknownUser() {
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(
+                this.lawyer(USER_ID_0, "600000100", "cliente0")));
+        DeadlineFindCriteria criteria = DeadlineFindCriteria.builder().region("Cataluña").build();
+
+        assertThatThrownBy(() -> this.deadlineService.find(criteria))
+                .isInstanceOf(NotFoundException.class)
+                .hasMessageContaining(USER_ID_1.toString());
     }
 
     @Test
