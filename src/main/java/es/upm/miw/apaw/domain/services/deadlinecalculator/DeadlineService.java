@@ -52,8 +52,7 @@ public class DeadlineService {
         Set<UUID> userIds = reports.stream()
                 .map(DeadlineWorkloadReport::userId)
                 .collect(Collectors.toSet());
-        Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(userIds).stream()
-                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        Map<UUID, UserSnapshot> usersById = this.findUsersById(userIds);
         return reports.stream()
                 .map(report -> this.withUserSnapshot(report, usersById))
                 .toList();
@@ -81,8 +80,7 @@ public class DeadlineService {
         Set<UUID> userIds = deadlines.stream()
                 .map(deadline -> deadline.getUserSnapshot().getId())
                 .collect(Collectors.toSet());
-        Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(userIds).stream()
-                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        Map<UUID, UserSnapshot> usersById = this.findUsersById(userIds);
         return deadlines.stream()
                 .map(deadline -> this.withUserSnapshot(deadline, usersById))
                 .filter(deadline -> this.matchesUserMobile(criteria, deadline))
@@ -98,6 +96,11 @@ public class DeadlineService {
         }
         deadline.setUserSnapshot(userSnapshot);
         return deadline;
+    }
+
+    private Map<UUID, UserSnapshot> findUsersById(Set<UUID> userIds) {
+        return this.userFinder.findByIds(userIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
     }
 
     private boolean matchesUserMobile(DeadlineFindCriteria criteria, Deadline deadline) {
