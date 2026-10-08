@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EvidenceSeederForDev implements ApplicationRunner {
     public static final String PREFIX = "cccccccc-dddd-eeee-ffff-aaaabbbb";
-    public static final String CUSTODIAN_PREFIX = "dddddddd-eeee-ffff-aaaa-bbbbcccc";
+    public static final String CUSTODIAN_PREFIX = "aaaaaaaa-bbbb-cccc-dddd-eeeeffff";
     public static final UUID CUSTODIAN_ID_0 = UUID.fromString(CUSTODIAN_PREFIX + "0000");
     public static final UUID CUSTODIAN_ID_1 = UUID.fromString(CUSTODIAN_PREFIX + "0001");
     public static final UUID ID_0 = UUID.fromString(PREFIX + "0000");

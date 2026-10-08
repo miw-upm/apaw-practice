@@ -36,7 +36,7 @@ public class TaskManagementSeederForDev implements ApplicationRunner {
 
     private static final String TASK_PREFIX = "dddddddd-eeee-ffff-aaaa-33334444";
 
-    private static final String USER_PREFIX = "eeeeeeee-ffff-aaaa-bbbb-55556666";
+    private static final String USER_PREFIX = "aaaaaaaa-bbbb-cccc-dddd-eeeeffff";
 
     public static final UUID COMMENT_ID_0 = UUID.fromString(COMMENT_PREFIX + "0000");
     public static final TaskComment COMMENT_0 = TaskComment.builder()
@@ -47,10 +47,10 @@ public class TaskManagementSeederForDev implements ApplicationRunner {
             .attachment(false)
             .type(CommentType.GENERAL)
             .author(user(
-                    "0000",
-                    "Alice",
-                    "Smith",
-                    "alice.smith@example.com"
+                    "0003",
+                    "cliente3",
+                    "Fernández Torres",
+                    "cliente3@example.com"
             ))
             .build();
 
@@ -63,10 +63,10 @@ public class TaskManagementSeederForDev implements ApplicationRunner {
             .attachment(false)
             .type(CommentType.IMPORTANT)
             .author(user(
-                    "0001",
-                    "Bob",
-                    "Johnson",
-                    "bob.johnson@example.com"
+                    "0004",
+                    "cliente4",
+                    "Romero Navarro",
+                    "cliente4@example.com"
             ))
             .build();
 
@@ -79,10 +79,10 @@ public class TaskManagementSeederForDev implements ApplicationRunner {
             .attachment(true)
             .type(CommentType.INTERNAL)
             .author(user(
-                    "0002",
-                    "Carol",
-                    "Williams",
-                    "carol.williams@example.com"
+                    "0005",
+                    "cliente5",
+                    "Moreno Castro",
+                    "cliente5@example.com"
             ))
             .build();
 
@@ -95,10 +95,10 @@ public class TaskManagementSeederForDev implements ApplicationRunner {
             .attachment(false)
             .type(CommentType.GENERAL)
             .author(user(
-                    "0003",
-                    "David",
-                    "Brown",
-                    "david.brown@example.com"
+                    "0005",
+                    "cliente5",
+                    "Moreno Castro",
+                    "cliente5@example.com"
             ))
             .build();
 
@@ -113,10 +113,10 @@ public class TaskManagementSeederForDev implements ApplicationRunner {
             .estimatedHours(new BigDecimal("8.50"))
             .comments(List.of(COMMENT_0, COMMENT_1))
             .owner(user(
-                    "0010",
-                    "Emma",
-                    "Davis",
-                    "emma.davis@example.com"
+                    "0000",
+                    "cliente0",
+                    "García López",
+                    "cliente0@example.com"
             ))
             .build();
 
@@ -131,10 +131,10 @@ public class TaskManagementSeederForDev implements ApplicationRunner {
             .estimatedHours(new BigDecimal("16.00"))
             .comments(List.of(COMMENT_2))
             .owner(user(
-                    "0011",
-                    "Frank",
-                    "Miller",
-                    "frank.miller@example.com"
+                    "0001",
+                    "cliente1",
+                    "Martínez Ruiz",
+                    "cliente1@example.com"
             ))
             .build();
 
@@ -147,10 +147,11 @@ public class TaskManagementSeederForDev implements ApplicationRunner {
             .completion(true)
             .comments(List.of(COMMENT_3))
             .owner(user(
-                    "0012",
-                    "Grace",
-                    "Wilson",
-                    "grace.wilson@example.com"
+                    "0002",
+                    "cliente2",
+                    "Sánchez Pérez",
+                    "cliente2@example.com"
+
             ))
             .build();
 
