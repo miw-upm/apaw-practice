@@ -9,6 +9,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.CreationDeadline;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.DayCountType;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.Deadline;
+import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineFindCriteria;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineStatus;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineWorkloadReport;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.NonWorkingDay;
@@ -23,14 +24,13 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.USER_ID_0;
-import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.USER_ID_1;
-import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.USER_ID_2;
+import static es.upm.miw.apaw.config.seeders.DeadlineCalculatorSeederForDev.*;
 import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -291,17 +291,26 @@ class DeadlineServiceIT {
 
     // ---------- informe de carga de trabajo ----------
 
-    private UserSnapshot lawyer(UUID id, String firstName) {
-        return UserSnapshot.builder().id(id).mobile("600000000").firstName(firstName).build();
+    private UserSnapshot lawyer(UUID id, String mobile, String firstName) {
+        return UserSnapshot.builder().id(id).mobile(mobile).firstName(firstName).build();
+    }
+
+    private void mockSeederLawyers(UserSnapshot... extraLawyers) {
+        List<UserSnapshot> lawyers = new ArrayList<>(List.of(
+                this.lawyer(USER_ID_0, "600000100", "cliente0"),
+                this.lawyer(USER_ID_1, "600000101", "cliente1"),
+                this.lawyer(USER_ID_2, "600000102", "cliente2")));
+        lawyers.addAll(List.of(extraLawyers));
+        when(this.userFinder.findByIds(anySet())).thenReturn(lawyers);
     }
 
     @Test
     @Transactional
     void testFindWorkloadReport() {
         when(this.userFinder.findByIds(anySet())).thenReturn(List.of(
-                this.lawyer(USER_ID_0, "cliente0"),
-                this.lawyer(USER_ID_1, "cliente1"),
-                this.lawyer(USER_ID_2, "cliente2")));
+                this.lawyer(USER_ID_0, "600000100", "cliente0"),
+                this.lawyer(USER_ID_1, "600000101", "cliente1"),
+                this.lawyer(USER_ID_2, "600000102", "cliente2")));
 
         List<DeadlineWorkloadReport> report = this.deadlineService.findWorkloadReport();
 
@@ -317,7 +326,7 @@ class DeadlineServiceIT {
     @Test
     @Transactional
     void testFindWorkloadReportWithAnUnknownUser() {
-        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(this.lawyer(USER_ID_0, "cliente0")));
+        when(this.userFinder.findByIds(anySet())).thenReturn(List.of(this.lawyer(USER_ID_0, "600000100", "cliente0")));
 
         assertThatThrownBy(() -> this.deadlineService.findWorkloadReport())
                 .isInstanceOf(NotFoundException.class)
@@ -328,12 +337,12 @@ class DeadlineServiceIT {
     @Transactional
     void testFindWorkloadReportCountsADeadlineWithSeveralHolidaysOnce() {
         UUID lawyerId = UUID.randomUUID();
-        when(this.userFinder.read(lawyerId)).thenReturn(this.lawyer(lawyerId, "lawyer"));
+        when(this.userFinder.read(lawyerId)).thenReturn(this.lawyer(lawyerId, "600009999", "lawyer"));
         when(this.userFinder.findByIds(anySet())).thenReturn(List.of(
-                this.lawyer(USER_ID_0, "cliente0"),
-                this.lawyer(USER_ID_1, "cliente1"),
-                this.lawyer(USER_ID_2, "cliente2"),
-                this.lawyer(lawyerId, "lawyer")));
+                this.lawyer(USER_ID_0, "600000100", "cliente0"),
+                this.lawyer(USER_ID_1, "600000101", "cliente1"),
+                this.lawyer(USER_ID_2, "600000102", "cliente2"),
+                this.lawyer(lawyerId, "600009999", "lawyer")));
         this.localHoliday("T", LocalDate.of(2035, 5, 11));
         this.regionalHoliday("T", LocalDate.of(2035, 5, 11));
         this.deadlineService.create(this.creation("T", LocalDate.of(2035, 5, 9), 3).userId(lawyerId).build());
@@ -347,5 +356,151 @@ class DeadlineServiceIT {
                     assertThat(item.holidayAffectedDeadlineCount()).isEqualTo(1);
                     assertThat(item.expiredDeadlineCount()).isZero();
                 });
+    }
+
+    // ---------- búsqueda con criterios ----------
+
+    private List<Deadline> find(DeadlineFindCriteria criteria) {
+        this.mockSeederLawyers();
+        return this.deadlineService.find(criteria);
+    }
+
+    @Test
+    @Transactional
+    void testFindByRegion() {
+        List<Deadline> deadlines = this.find(DeadlineFindCriteria.builder().region("Madrid").build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_0, DEADLINE_ID_1, DEADLINE_ID_2, DEADLINE_ID_3,
+                        DEADLINE_ID_4, DEADLINE_ID_8, DEADLINE_ID_9)
+                .doesNotContain(DEADLINE_ID_5, DEADLINE_ID_6, DEADLINE_ID_7);
+    }
+
+    @Test
+    @Transactional
+    void testFindByAnotherRegion() {
+        List<Deadline> deadlines = this.find(DeadlineFindCriteria.builder().region("Cataluña").build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_5, DEADLINE_ID_6, DEADLINE_ID_7)
+                .doesNotContain(DEADLINE_ID_0, DEADLINE_ID_4, DEADLINE_ID_8);
+    }
+
+    @Test
+    @Transactional
+    void testFindByOverdue() {
+        List<Deadline> deadlines = this.find(DeadlineFindCriteria.builder().overdue(true).build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_0, DEADLINE_ID_1, DEADLINE_ID_2, DEADLINE_ID_3,
+                        DEADLINE_ID_5, DEADLINE_ID_6, DEADLINE_ID_8, DEADLINE_ID_9)
+                .doesNotContain(DEADLINE_ID_4, DEADLINE_ID_7);
+    }
+
+    @Test
+    @Transactional
+    void testFindByNotOverdue() {
+        List<Deadline> deadlines = this.find(DeadlineFindCriteria.builder().overdue(false).build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_4, DEADLINE_ID_7)
+                .doesNotContain(DEADLINE_ID_0, DEADLINE_ID_1, DEADLINE_ID_5, DEADLINE_ID_8);
+    }
+
+    @Test
+    @Transactional
+    void testFindByLocalScopeLevel() {
+        List<Deadline> deadlines = this.find(
+                DeadlineFindCriteria.builder().scopeLevel(ScopeLevel.LOCAL).build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_0, DEADLINE_ID_1)
+                .doesNotContain(DEADLINE_ID_5, DEADLINE_ID_2, DEADLINE_ID_4);
+    }
+
+    @Test
+    @Transactional
+    void testFindByRegionalScopeLevel() {
+        List<Deadline> deadlines = this.find(
+                DeadlineFindCriteria.builder().scopeLevel(ScopeLevel.REGIONAL).build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_5)
+                .doesNotContain(DEADLINE_ID_0, DEADLINE_ID_1, DEADLINE_ID_6);
+    }
+
+    @Test
+    @Transactional
+    void testFindByUserMobile() {
+        List<Deadline> deadlines = this.find(
+                DeadlineFindCriteria.builder().userMobile("600000101").build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_5, DEADLINE_ID_6, DEADLINE_ID_7)
+                .doesNotContain(DEADLINE_ID_0, DEADLINE_ID_4, DEADLINE_ID_8);
+    }
+
+    @Test
+    @Transactional
+    void testFindByRegionAndNotOverdue() {
+        List<Deadline> deadlines = this.find(
+                DeadlineFindCriteria.builder().region("Madrid").overdue(false).build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_4)
+                .doesNotContain(DEADLINE_ID_7, DEADLINE_ID_2);
+    }
+
+    @Test
+    @Transactional
+    void testFindWithoutCriteria() {
+        List<Deadline> deadlines = this.find(DeadlineFindCriteria.builder().build());
+
+        assertThat(deadlines).extracting(Deadline::getId)
+                .contains(DEADLINE_ID_0, DEADLINE_ID_1, DEADLINE_ID_2, DEADLINE_ID_3, DEADLINE_ID_4,
+                        DEADLINE_ID_5, DEADLINE_ID_6, DEADLINE_ID_7, DEADLINE_ID_8, DEADLINE_ID_9);
+    }
+
+    @Test
+    @Transactional
+    void testFindWithoutResults() {
+        List<Deadline> deadlines = this.find(DeadlineFindCriteria.builder().region("Aragón").build());
+
+        assertThat(deadlines).isEmpty();
+    }
+
+    @Test
+    @Transactional
+    void testFindDoesNotReturnTheNonWorkingDays() {
+        List<Deadline> deadlines = this.find(DeadlineFindCriteria.builder().region("Cataluña").build());
+
+        assertThat(deadlines).isNotEmpty()
+                .allSatisfy(deadline -> assertThat(deadline.getNonWorkingDays()).isNull());
+    }
+
+    @Test
+    @Transactional
+    void testFindByScopeLevelDoesNotDuplicate() {
+        UUID lawyerId = UUID.randomUUID();
+        when(this.userFinder.read(lawyerId)).thenReturn(this.lawyer(lawyerId, "600009998", "lawyer"));
+        this.localHoliday("U", LocalDate.of(2035, 5, 11));
+        this.localHoliday("U", LocalDate.of(2035, 5, 14));
+        Deadline created = this.deadlineService.create(
+                this.creation("U", LocalDate.of(2035, 5, 9), 3).userId(lawyerId).build());
+        this.mockSeederLawyers(this.lawyer(lawyerId, "600009998", "lawyer"));
+
+        List<Deadline> deadlines = this.deadlineService.find(
+                DeadlineFindCriteria.builder().scopeLevel(ScopeLevel.LOCAL).build());
+
+        assertThat(deadlines).filteredOn(deadline -> deadline.getId().equals(created.getId()))
+                .hasSize(1);
+    }
+
+    @Test
+    @Transactional
+    void testFindReadsTheUsersOnlyOnce() {
+        this.find(DeadlineFindCriteria.builder().region("Madrid").build());
+
+        verify(this.userFinder, times(1)).findByIds(anySet());
     }
 }
