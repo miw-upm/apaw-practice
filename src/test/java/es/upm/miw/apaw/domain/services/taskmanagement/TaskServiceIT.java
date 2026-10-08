@@ -9,6 +9,8 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.taskmanagement.CreationTask;
 import es.upm.miw.apaw.domain.model.taskmanagement.Task;
 import es.upm.miw.apaw.domain.model.taskmanagement.TaskActivityReport;
+import es.upm.miw.apaw.domain.model.taskmanagement.CommentType;
+import es.upm.miw.apaw.domain.model.taskmanagement.TaskFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.Set;
+import java.util.Map;
 
 import static es.upm.miw.apaw.config.seeders.TaskManagementSeederForDev.*;
 import static org.mockito.ArgumentMatchers.anySet;
@@ -221,6 +224,109 @@ class TaskServiceIT {
         verify(this.userFinder, times(1)).findByIds(anySet());
     }
 
+    @Test
+    @Transactional
+    void testFindByPriority() {
+        this.mockFindUsers();
+
+        List<Task> tasks = this.taskService.find(
+                TaskFindCriteria.builder()
+                        .priority(TASK_1.getPriority())
+                        .build()
+        );
+
+        assertThat(tasks).extracting(Task::getId).contains(TASK_ID_1).doesNotContain(TASK_ID_0, TASK_ID_2);
+
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    @Transactional
+    void testFindByOverdue() {
+        this.mockFindUsers();
+
+        List<Task> tasks = this.taskService.find(TaskFindCriteria.builder().overdue(true).build());
+
+        assertThat(tasks).extracting(Task::getId).contains(TASK_ID_0, TASK_ID_1).doesNotContain(TASK_ID_2);
+
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    @Transactional
+    void testFindByType() {
+        this.mockFindUsers();
+
+        List<Task> tasks = this.taskService.find(TaskFindCriteria.builder().type(CommentType.IMPORTANT).build());
+
+        assertThat(tasks).extracting(Task::getId).contains(TASK_ID_0).doesNotContain(TASK_ID_1, TASK_ID_2);
+
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    @Transactional
+    void testFindByOwnerFirstName() {
+        this.mockFindUsers();
+
+        List<Task> tasks = this.taskService.find(
+                TaskFindCriteria.builder()
+                        .ownerFirstName(TASK_0.getOwner().getFirstName())
+                        .build()
+        );
+
+        assertThat(tasks).extracting(Task::getId).contains(TASK_ID_0).doesNotContain(TASK_ID_1, TASK_ID_2);
+
+        assertThat(tasks)
+                .filteredOn(task -> task.getId().equals(TASK_ID_0))
+                .singleElement()
+                .extracting(Task::getOwner)
+                .isEqualTo(TASK_0.getOwner());
+
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    @Transactional
+    void testFindByCombinedCriteria() {
+        this.mockFindUsers();
+
+        List<Task> tasks = this.taskService.find(
+                TaskFindCriteria.builder()
+                        .priority(TASK_0.getPriority())
+                        .overdue(true)
+                        .type(CommentType.IMPORTANT)
+                        .ownerFirstName(TASK_0.getOwner().getFirstName())
+                        .build()
+        );
+
+        assertThat(tasks).extracting(Task::getId).containsExactly(TASK_ID_0);
+
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    @Transactional
+    void testFindAllCriteriaNullSafe() {
+        this.mockFindUsers();
+
+        List<Task> tasks = this.taskService.find(TaskFindCriteria.builder().build());
+
+        assertThat(tasks).extracting(Task::getId).contains(TASK_ID_0, TASK_ID_1, TASK_ID_2);
+
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    @Transactional
+    void testFindEmptyDoesNotCallUserFinder() {
+        List<Task> tasks = this.taskService.find(TaskFindCriteria.builder().priority(Integer.MAX_VALUE).build());
+
+        assertThat(tasks).isEmpty();
+
+        verifyNoInteractions(this.userFinder);
+    }
+
     private UserSnapshot user() {
         return UserSnapshot.builder()
                 .id(UUID.randomUUID())
@@ -256,5 +362,30 @@ class TaskServiceIT {
                 .familyName("User")
                 .email("seeder.user@example.com")
                 .build();
+    }
+
+    private void mockFindUsers() {
+        Map<UUID, UserSnapshot> users = Map.of(
+                TASK_0.getOwner().getId(), TASK_0.getOwner(),
+                TASK_1.getOwner().getId(), TASK_1.getOwner(),
+                TASK_2.getOwner().getId(), TASK_2.getOwner()
+        );
+
+        when(this.userFinder.findByIds(anySet()))
+                .thenAnswer(invocation -> {
+                    Set<UUID> ids = invocation.getArgument(0);
+
+                    return ids.stream()
+                            .map(id -> users.getOrDefault(
+                                    id,
+                                    UserSnapshot.builder()
+                                            .id(id)
+                                            .firstName("Additional")
+                                            .familyName("User")
+                                            .email("additional.user@example.com")
+                                            .build()
+                            ))
+                            .toList();
+                });
     }
 }
