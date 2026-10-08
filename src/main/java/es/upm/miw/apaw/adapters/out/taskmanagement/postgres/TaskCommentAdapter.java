@@ -45,17 +45,14 @@ public class TaskCommentAdapter implements TaskCommentGateway {
     @Override
     public List<TaskComment> findAll() {
         return this.taskCommentRepository
-                .findAll(Sort.by(
-                        Sort.Order.asc("creationDate"),
-                        Sort.Order.asc("id")
-                ))
+                .findAllByOrderByCreationDateDescIdAsc()
                 .stream()
                 .map(TaskCommentEntity::toDomain)
                 .toList();
     }
 
     @Override
-    public boolean isUsed(UUID id) {
+    public boolean isReferenced(UUID id) {
         return this.taskRepository.existsByCommentsId(id);
     }
 }

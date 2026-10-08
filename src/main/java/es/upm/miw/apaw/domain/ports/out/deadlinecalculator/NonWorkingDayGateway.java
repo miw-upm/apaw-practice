@@ -20,4 +20,8 @@ public interface NonWorkingDayGateway {
     NonWorkingDay update(NonWorkingDay nonWorkingDay);
 
     boolean isReferenced(UUID id);
+
+    void delete(UUID id);
+
+    List<NonWorkingDay> findApplicable(String region, String city);
 }

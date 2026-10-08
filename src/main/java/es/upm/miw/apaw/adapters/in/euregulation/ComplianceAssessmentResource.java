@@ -1,12 +1,14 @@
 package es.upm.miw.apaw.adapters.in.euregulation;
 
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentFindCriteria;
 import es.upm.miw.apaw.domain.services.euregulation.ComplianceAssessmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +38,8 @@ public class ComplianceAssessmentResource {
     }
 
     @GetMapping
-    public List<ComplianceAssessment> findAll() {
-        return this.complianceAssessmentService.findAll();
+    public List<ComplianceAssessment> find(@ModelAttribute ComplianceAssessmentFindCriteria criteria) {
+        return this.complianceAssessmentService.find(criteria);
     }
 
     @GetMapping(ID)

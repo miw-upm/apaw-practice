@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.ports.out.judicialcourt.JudicialCourtTypeGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JudicialCourtTypeAdapter implements JudicialCourtTypeGateway {
     private final JudicialCourtTypeRepository judicialCourtTypeRepository;
+    private final JudicialCourtRepository judicialCourtRepository;
 
     @Override
     public JudicialCourtType create(JudicialCourtType judicialCourtType) {
@@ -21,9 +23,33 @@ public class JudicialCourtTypeAdapter implements JudicialCourtTypeGateway {
     }
 
     @Override
+    public List<JudicialCourtType> findAll() {
+        return this.judicialCourtTypeRepository.findAllByOrderByNameAsc().stream()
+                .map(JudicialCourtTypeEntity::toDomain)
+                .toList();
+    }
+
+    @Override
     public Optional<JudicialCourtType> read(UUID id) {
         return this.judicialCourtTypeRepository.findById(id)
                 .map(JudicialCourtTypeEntity::toDomain);
+    }
+
+    @Override
+    public JudicialCourtType update(JudicialCourtType judicialCourtType) {
+        return this.judicialCourtTypeRepository
+                .save(new JudicialCourtTypeEntity(judicialCourtType))
+                .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.judicialCourtTypeRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.judicialCourtRepository.existsByTypeId(id);
     }
 
     @Override

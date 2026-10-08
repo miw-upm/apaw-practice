@@ -17,7 +17,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreationEstate {
+public class EstateCreation {
 
     @NotBlank
     private String fileNumber;

@@ -4,6 +4,7 @@ import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentFindCriteria;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentPatch;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
@@ -15,10 +16,17 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +56,70 @@ public class ComplianceAssessmentService {
 
     public List<ComplianceAssessment> findAll() {
         return this.complianceAssessmentGateway.findAll();
+    }
+
+    public List<ComplianceAssessment> find(ComplianceAssessmentFindCriteria criteria) {
+        ComplianceAssessmentFindCriteria safeCriteria = criteria == null
+                ? new ComplianceAssessmentFindCriteria()
+                : criteria;
+        List<ComplianceAssessment> assessments = this.complianceAssessmentGateway.find(safeCriteria);
+        if (assessments.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = assessments.stream()
+                .map(ComplianceAssessment::getUserSnapshot)
+                .filter(user -> user != null && user.getId() != null)
+                .map(UserSnapshot::getId)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+        Map<UUID, UserSnapshot> usersById = userIds.isEmpty()
+                ? Map.of()
+                : this.findUsersById(userIds);
+        return assessments.stream()
+                .filter(assessment -> this.matchesDaysToNearestDeadline(safeCriteria, assessment))
+                .filter(assessment -> this.matchesUserFirstName(
+                        safeCriteria, usersById.get(this.getUserId(assessment))))
+                .map(assessment -> this.enrichUserSnapshot(assessment, usersById))
+                .toList();
+    }
+
+    private boolean matchesDaysToNearestDeadline(
+            ComplianceAssessmentFindCriteria criteria, ComplianceAssessment assessment) {
+        if (!criteria.hasDaysToNearestDeadline()) {
+            return true;
+        }
+        return assessment.getComplianceDeadline() != null
+                && ChronoUnit.DAYS.between(LocalDate.now(), assessment.getComplianceDeadline())
+                == criteria.getDaysToNearestDeadline();
+    }
+
+    private boolean matchesUserFirstName(ComplianceAssessmentFindCriteria criteria, UserSnapshot user) {
+        return !criteria.hasUserFirstName()
+                || (user != null && user.getFirstName() != null
+                && user.getFirstName().toLowerCase(Locale.ROOT)
+                .contains(criteria.getUserFirstName().toLowerCase(Locale.ROOT)));
+    }
+
+    private ComplianceAssessment enrichUserSnapshot(
+            ComplianceAssessment assessment, Map<UUID, UserSnapshot> usersById) {
+        UserSnapshot user = usersById.get(this.getUserId(assessment));
+        if (user != null) {
+            assessment.setUserSnapshot(user);
+        }
+        return assessment;
+    }
+
+    private UUID getUserId(ComplianceAssessment assessment) {
+        return assessment.getUserSnapshot() == null ? null : assessment.getUserSnapshot().getId();
+    }
+
+    private Map<UUID, UserSnapshot> findUsersById(Set<UUID> userIds) {
+        List<UserSnapshot> users = this.userFinder.findByIds(userIds);
+        if (users == null) {
+            return Map.of();
+        }
+        return users.stream()
+                .filter(user -> user != null && user.getId() != null)
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity(), (first, ignored) -> first));
     }
 
     public List<ComplianceByAreaReport> findComplianceByAreaReport() {
