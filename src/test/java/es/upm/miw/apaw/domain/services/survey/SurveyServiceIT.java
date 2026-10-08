@@ -8,7 +8,9 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.survey.CreationSurvey;
 import es.upm.miw.apaw.domain.model.survey.Survey;
+import es.upm.miw.apaw.domain.model.survey.SurveyFindCriteria;
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
+import es.upm.miw.apaw.domain.model.survey.SurveyQuestionType;
 import es.upm.miw.apaw.domain.model.survey.SurveyUserLanguageReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
@@ -21,8 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static es.upm.miw.apaw.config.seeders.SurveySeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -183,7 +189,112 @@ class SurveyServiceIT {
         });
     }
 
-    private UserSnapshot mockUser() {        UserSnapshot user = UserSnapshot.builder()
+    @Test
+    void testFindByLanguage() {
+        this.mockSeededUsers();
+
+        List<Survey> surveys = this.surveyService.find(SurveyFindCriteria.builder().language("English").build());
+
+        assertThat(surveys).extracting(Survey::getId).contains(SURVEY_ID_0, SURVEY_ID_2)
+                .doesNotContain(SURVEY_ID_1);
+        assertThat(surveys).extracting(Survey::getLanguage).containsOnly("English");
+    }
+
+    @Test
+    void testFindSubmitted() {
+        this.mockSeededUsers();
+
+        List<Survey> surveys = this.surveyService.find(SurveyFindCriteria.builder().submitted(true).build());
+
+        assertThat(surveys).extracting(Survey::getId).contains(SURVEY_ID_0)
+                .doesNotContain(SURVEY_ID_1, SURVEY_ID_2);
+        assertThat(surveys).extracting(Survey::getSubmittedDate).doesNotContainNull();
+    }
+
+    @Test
+    void testFindNotSubmitted() {
+        this.mockSeededUsers();
+
+        List<Survey> surveys = this.surveyService.find(SurveyFindCriteria.builder().submitted(false).build());
+
+        assertThat(surveys).extracting(Survey::getId).contains(SURVEY_ID_1, SURVEY_ID_2)
+                .doesNotContain(SURVEY_ID_0);
+        assertThat(surveys).extracting(Survey::getSubmittedDate).containsOnlyNulls();
+    }
+
+    @Test
+    void testFindBySurveyQuestionType() {
+        this.mockSeededUsers();
+
+        List<Survey> surveys = this.surveyService.find(
+                SurveyFindCriteria.builder().surveyQuestionType(SurveyQuestionType.TEXT).build());
+
+        assertThat(surveys).extracting(Survey::getId).contains(SURVEY_ID_1, SURVEY_ID_2)
+                .doesNotContain(SURVEY_ID_0).doesNotHaveDuplicates();
+    }
+
+    @Test
+    void testFindByUserCityIgnoringCase() {
+        this.mockSeededUsers();
+
+        List<Survey> surveys = this.surveyService.find(SurveyFindCriteria.builder().userCity("madrid").build());
+
+        assertThat(surveys).extracting(Survey::getId).contains(SURVEY_ID_0, SURVEY_ID_2)
+                .doesNotContain(SURVEY_ID_1);
+        assertThat(surveys).extracting(survey -> survey.getUserSnapshot().getId())
+                .doesNotContain(SURVEY_1.getUserSnapshot().getId());
+    }
+
+    @Test
+    void testFindCombinedCriteria() {
+        this.mockSeededUsers();
+        SurveyFindCriteria criteria = SurveyFindCriteria.builder()
+                .language("English").submitted(false).surveyQuestionType(SurveyQuestionType.YES_NO)
+                .userCity("Madrid").build();
+
+        List<Survey> surveys = this.surveyService.find(criteria);
+
+        assertThat(surveys).extracting(Survey::getId).contains(SURVEY_ID_2)
+                .doesNotContain(SURVEY_ID_0, SURVEY_ID_1);
+    }
+
+    @Test
+    void testFindWithoutCriteriaReturnsSummariesWithOneUserCall() {
+        this.mockSeededUsers();
+
+        List<Survey> surveys = this.surveyService.find(new SurveyFindCriteria());
+
+        assertThat(surveys).extracting(Survey::getId).contains(SURVEY_ID_0, SURVEY_ID_1, SURVEY_ID_2);
+        assertThat(surveys).extracting(Survey::getSurveyQuestions).containsOnlyNulls();
+        assertThat(surveys).allSatisfy(survey ->
+                assertThat(survey.getUserSnapshot().getFirstName()).isNotNull());
+        verify(this.userFinder, times(1)).findByIds(any());
+        verify(this.userFinder, never()).read(any());
+    }
+
+    @Test
+    void testFindUserNotFound() {
+        when(this.userFinder.findByIds(any())).thenReturn(List.of());
+
+        assertThatThrownBy(() -> this.surveyService.find(new SurveyFindCriteria()))
+                .isInstanceOf(NotFoundException.class).hasMessageContaining("User id not found");
+    }
+
+    private void mockSeededUsers() {
+        Map<UUID, UserSnapshot> seededUsers = Stream.of(SURVEY_0, SURVEY_1, SURVEY_2)
+                .map(Survey::getUserSnapshot)
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Set<UUID> requestedIds = invocation.getArgument(0);
+            return requestedIds.stream()
+                    .map(id -> seededUsers.getOrDefault(id, UserSnapshot.builder()
+                            .id(id).mobile("600000999").firstName("encuestado").city("Other").build()))
+                    .toList();
+        });
+    }
+
+    private UserSnapshot mockUser() {
+        UserSnapshot user = UserSnapshot.builder()
                 .id(UUID.randomUUID())
                 .mobile("600000999")
                 .firstName("encuestado")

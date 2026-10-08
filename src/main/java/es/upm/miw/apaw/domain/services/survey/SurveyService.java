@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.survey.CreationSurvey;
 import es.upm.miw.apaw.domain.model.survey.Survey;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.survey.SurveyFindCriteria;
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
 import es.upm.miw.apaw.domain.model.survey.SurveyUserLanguageReport;
 import es.upm.miw.apaw.domain.ports.out.survey.SurveyGateway;
@@ -42,8 +43,39 @@ public class SurveyService {
         return this.surveyGateway.create(survey);
     }
 
-    public List<SurveyUserLanguageReport> findUserLanguageReport() {
-        List<SurveyUserLanguageReport> reports = this.surveyGateway.findUserLanguageReport();
+    public List<Survey> find(SurveyFindCriteria criteria) {
+        List<Survey> surveys = this.surveyGateway.find(criteria);
+        if (surveys.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = surveys.stream()
+                .map(survey -> survey.getUserSnapshot().getId())
+                .collect(Collectors.toSet());
+        Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(userIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        return surveys.stream()
+                .map(survey -> this.enrichUserSnapshot(survey, usersById))
+                .filter(survey -> this.matchesUserCity(criteria, survey))
+                .map(Survey::ofSummary)
+                .toList();
+    }
+
+    private Survey enrichUserSnapshot(Survey survey, Map<UUID, UserSnapshot> usersById) {
+        UUID userId = survey.getUserSnapshot().getId();
+        UserSnapshot user = usersById.get(userId);
+        if (user == null) {
+            throw new NotFoundException("User id not found: " + userId);
+        }
+        survey.setUserSnapshot(user);
+        return survey;
+    }
+
+    private boolean matchesUserCity(SurveyFindCriteria criteria, Survey survey) {
+        return !criteria.hasUserCity()
+                || criteria.getUserCity().equalsIgnoreCase(survey.getUserSnapshot().getCity());
+    }
+
+    public List<SurveyUserLanguageReport> findUserLanguageReport() {        List<SurveyUserLanguageReport> reports = this.surveyGateway.findUserLanguageReport();
         if (reports.isEmpty()) {
             return reports;
         }

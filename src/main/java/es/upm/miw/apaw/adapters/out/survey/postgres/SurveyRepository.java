@@ -2,12 +2,14 @@ package es.upm.miw.apaw.adapters.out.survey.postgres;
 
 import es.upm.miw.apaw.domain.model.survey.SurveyUserLanguageReport;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface SurveyRepository extends JpaRepository<SurveyEntity, UUID> {
+public interface SurveyRepository extends JpaRepository<SurveyEntity, UUID>,
+        JpaSpecificationExecutor<SurveyEntity> {
     boolean existsBySurveyQuestionsId(UUID id);
 
     boolean existsByTitle(String title);
