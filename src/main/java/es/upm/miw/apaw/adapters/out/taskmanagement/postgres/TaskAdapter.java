@@ -5,6 +5,8 @@ import es.upm.miw.apaw.domain.ports.out.taskmanagement.TaskGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import es.upm.miw.apaw.domain.model.taskmanagement.CommentType;
+import es.upm.miw.apaw.domain.model.taskmanagement.TaskActivityReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +38,10 @@ public class TaskAdapter implements TaskGateway {
     @Override
     public boolean existsByTitle(String title) {
         return this.taskRepository.existsByTitle(title);
+    }
+
+    @Override
+    public List<TaskActivityReport> findActivityReport() {
+        return this.taskRepository.findActivityReport(CommentType.IMPORTANT);
     }
 }
