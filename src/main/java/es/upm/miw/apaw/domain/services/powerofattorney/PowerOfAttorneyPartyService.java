@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyPatch;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyReport;
 import es.upm.miw.apaw.domain.ports.out.powerofattorney.PowerOfAttorneyGateway;
 import es.upm.miw.apaw.domain.ports.out.powerofattorney.PowerOfAttorneyPartyGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -83,6 +84,14 @@ public class PowerOfAttorneyPartyService {
             party.setUserSnapshot(user);
         }
         return parties;
+    }
+
+    public List<PowerOfAttorneyPartyReport> findReport() {
+        List<PowerOfAttorneyPartyReport> reports = this.powerOfAttorneyPartyGateway.findReport();
+        if (reports.isEmpty()) {
+            return List.of();
+        }
+        return reports;
     }
 
     public void patch(List<PowerOfAttorneyPartyPatch> patches) {
