@@ -65,4 +65,11 @@ public class NonWorkingDayAdapter implements NonWorkingDayGateway {
     public void delete(UUID id) {
         this.nonWorkingDayRepository.deleteById(id);
     }
+
+    @Override
+    public List<NonWorkingDay> findApplicable(String region, String city) {
+        return this.nonWorkingDayRepository.findApplicable(region, city).stream()
+                .map(NonWorkingDayEntity::toDomain)
+                .toList();
+    }
 }

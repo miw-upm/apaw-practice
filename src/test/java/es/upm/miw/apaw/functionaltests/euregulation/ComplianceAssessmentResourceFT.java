@@ -6,6 +6,7 @@ import es.upm.miw.apaw.adapters.in.euregulation.EURegulationResource;
 import es.upm.miw.apaw.config.seeders.ComplianceAssessmentSeederForDev;
 import es.upm.miw.apaw.config.seeders.EURegulationSeederForDev;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.euregulation.ApplicationArea;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceLevel;
 import es.upm.miw.apaw.domain.model.euregulation.EURegulation;
@@ -29,6 +30,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -64,6 +68,12 @@ class ComplianceAssessmentResourceFT {
         when(this.userFinder.read(USER_ID)).thenReturn(user0);
         when(this.userFinder.read(USER_ID_1)).thenReturn(user1);
         when(this.userFinder.findByIds(Set.of(USER_ID, USER_ID_1))).thenReturn(List.of(user0, user1));
+        when(this.userFinder.findByIds(anySet())).thenAnswer(invocation -> {
+            Set<UUID> userIds = invocation.getArgument(0);
+            return List.of(user0, user1).stream()
+                    .filter(user -> userIds.contains(user.getId()))
+                    .toList();
+        });
     }
 
     @Test
@@ -112,6 +122,90 @@ class ComplianceAssessmentResourceFT {
                 .thenComparing(assessment -> assessment.getId().toString()));
         assertThat(assessmentsAgain).extracting(ComplianceAssessment::getId)
                 .containsExactlyElementsOf(assessments.stream().map(ComplianceAssessment::getId).toList());
+    }
+
+    @Test
+    void testFindByAssessmentFieldAndRelatedRegulation() {
+        ComplianceAssessment[] assessments = this.restTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ComplianceAssessmentResource.COMPLIANCE_ASSESSMENTS)
+                        .queryParam("responsibleLawyer", "Laura García")
+                        .queryParam("applicationArea", ApplicationArea.DATA_PROTECTION)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ComplianceAssessment[].class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(assessments).isNotNull()
+                .extracting(ComplianceAssessment::getId)
+                .contains(ComplianceAssessmentSeederForDev.ID_0, ComplianceAssessmentSeederForDev.ID_2)
+                .doesNotContain(ComplianceAssessmentSeederForDev.ID_1,
+                        ComplianceAssessmentSeederForDev.ID_3, ComplianceAssessmentSeederForDev.ID_4);
+    }
+
+    @Test
+    void testFindByDerivedDaysToNearestDeadline() {
+        ComplianceAssessment[] assessments = this.restTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ComplianceAssessmentResource.COMPLIANCE_ASSESSMENTS)
+                        .queryParam("daysToNearestDeadline", 5)
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ComplianceAssessment[].class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(assessments).isNotNull()
+                .extracting(ComplianceAssessment::getId)
+                .contains(ComplianceAssessmentSeederForDev.ID_3)
+                .doesNotContain(ComplianceAssessmentSeederForDev.ID_2,
+                        ComplianceAssessmentSeederForDev.ID_4);
+    }
+
+    @Test
+    void testFindByUserFirstNameUsesOneBatchLookup() {
+        ComplianceAssessment[] assessments = this.restTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ComplianceAssessmentResource.COMPLIANCE_ASSESSMENTS)
+                        .queryParam("userFirstName", "CLIENTE1")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ComplianceAssessment[].class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(assessments).isNotNull()
+                .extracting(ComplianceAssessment::getId)
+                .contains(ComplianceAssessmentSeederForDev.ID_3, ComplianceAssessmentSeederForDev.ID_4)
+                .doesNotContain(ComplianceAssessmentSeederForDev.ID_0,
+                        ComplianceAssessmentSeederForDev.ID_1, ComplianceAssessmentSeederForDev.ID_2);
+        verify(this.userFinder, times(1)).findByIds(Set.of(USER_ID, USER_ID_1));
+    }
+
+    @Test
+    void testFindWithAllCriteriaReturnsOnlyMatchingAssessment() {
+        ComplianceAssessment[] assessments = this.restTestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path(ComplianceAssessmentResource.COMPLIANCE_ASSESSMENTS)
+                        .queryParam("responsibleLawyer", "Miguel Torres")
+                        .queryParam("daysToNearestDeadline", 5)
+                        .queryParam("applicationArea", ApplicationArea.DATA_PROTECTION)
+                        .queryParam("userFirstName", "cliente1")
+                        .build())
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(ComplianceAssessment[].class)
+                .returnResult()
+                .getResponseBody();
+
+        assertThat(assessments).isNotNull()
+                .extracting(ComplianceAssessment::getId)
+                .containsExactly(ComplianceAssessmentSeederForDev.ID_3);
+        verify(this.userFinder, times(1)).findByIds(Set.of(USER_ID_1));
     }
 
     @Test

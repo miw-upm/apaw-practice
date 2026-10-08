@@ -1,9 +1,11 @@
 package es.upm.miw.apaw.adapters.out.powerofattorney.postgres;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorney;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyStatus;
 import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyType;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -56,4 +58,13 @@ public class PowerOfAttorneyEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PowerOfAttorneyStatus status;
+
+    public PowerOfAttorneyEntity(
+            PowerOfAttorney powerOfAttorney,
+            PowerOfAttorneyPartyEntity principal,
+            PowerOfAttorneyPartyEntity attorney) {
+        BeanUtils.copyProperties(powerOfAttorney, this, "principal", "attorney");
+        this.principal = principal;
+        this.attorney = attorney;
+    }
 }

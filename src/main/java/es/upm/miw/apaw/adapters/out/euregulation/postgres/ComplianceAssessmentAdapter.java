@@ -1,10 +1,12 @@
 package es.upm.miw.apaw.adapters.out.euregulation.postgres;
 
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentFindCriteria;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
 import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
 import es.upm.miw.apaw.domain.model.euregulation.RiskExposureReport;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.euregulation.ComplianceAssessmentGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -69,6 +71,15 @@ public class ComplianceAssessmentAdapter implements ComplianceAssessmentGateway 
     @Transactional(readOnly = true)
     public List<ComplianceAssessment> findAll() {
         return this.complianceAssessmentRepository.findAllByOrderByAssessmentDateAscIdAsc().stream()
+                .map(ComplianceAssessmentEntity::toDomain)
+                .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ComplianceAssessment> find(ComplianceAssessmentFindCriteria criteria) {
+        return this.complianceAssessmentRepository.findByCriteria(
+                        criteria.getResponsibleLawyer(), criteria.getApplicationArea()).stream()
                 .map(ComplianceAssessmentEntity::toDomain)
                 .toList();
     }

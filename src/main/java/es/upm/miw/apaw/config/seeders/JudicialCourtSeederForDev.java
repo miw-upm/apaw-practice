@@ -127,6 +127,25 @@ public class JudicialCourtSeederForDev implements ApplicationRunner {
                     user("0004", "600000104", "cliente4")))
             .build();
 
+    public static final UUID ID_5 = UUID.fromString(PREFIX + "0005");
+    public static final JudicialCourt COURT_5 = JudicialCourt.builder()
+            .id(ID_5)
+            .name("Juzgado de lo Contencioso nº 7 de Sevilla")
+            .number(7)
+            .address("Avenida de la República, 30")
+            .city("Sevilla")
+            .postalCode("41001")
+            .phone("954567890")
+            .email(null)
+            .createdAt(LocalDateTime.of(2025, 3, 15, 9, 45))
+            .updatedAt(LocalDateTime.of(2025, 3, 15, 9, 45))
+            .type(TYPE_0)
+            .status(JudicialCourtStatus.ACTIVE)
+            .lawyers(List.of(
+                    user("0000", "600000100", "cliente0"),
+                    user("0002", "600000102", "cliente2")))
+            .build();
+
     private final JudicialCourtRepository judicialCourtRepository;
 
     @Override
@@ -136,7 +155,7 @@ public class JudicialCourtSeederForDev implements ApplicationRunner {
     }
 
     private void seedJudicialCourts() {
-        List<JudicialCourtEntity> judicialCourts = List.of(COURT_0, COURT_1, COURT_2, COURT_3, COURT_4).stream()
+        List<JudicialCourtEntity> judicialCourts = List.of(COURT_0, COURT_1, COURT_2, COURT_3, COURT_4, COURT_5).stream()
                 .filter(court -> !this.judicialCourtRepository.existsById(court.getId()))
                 .map(JudicialCourtEntity::new)
                 .toList();

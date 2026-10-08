@@ -2,6 +2,7 @@ package es.upm.miw.apaw.adapters.out.credentials.postgres;
 
 import es.upm.miw.apaw.domain.model.credentials.Credential;
 import es.upm.miw.apaw.domain.model.credentials.CredentialFindCriteria;
+import es.upm.miw.apaw.domain.model.credentials.CredentialVerificationReport;
 import es.upm.miw.apaw.domain.ports.out.credentials.CredentialGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -45,6 +46,11 @@ public class CredentialAdapter implements CredentialGateway {
         return this.credentialRepository.findAll(specification, Sort.by("number")).stream()
                 .map(CredentialEntity::toSummary)
                 .toList();
+    }
+
+    @Override
+    public List<CredentialVerificationReport> findVerificationReport() {
+        return this.credentialRepository.findCredentialVerificationReport();
     }
 
     private Specification<CredentialEntity> buildSpecification(CredentialFindCriteria criteria) {

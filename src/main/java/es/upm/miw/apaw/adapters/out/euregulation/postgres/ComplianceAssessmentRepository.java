@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.out.euregulation.postgres;
 
+import es.upm.miw.apaw.domain.model.euregulation.ApplicationArea;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
 import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
@@ -7,6 +8,7 @@ import es.upm.miw.apaw.domain.model.euregulation.RiskExposureReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +16,23 @@ import java.util.UUID;
 public interface ComplianceAssessmentRepository extends JpaRepository<ComplianceAssessmentEntity, UUID> {
     @EntityGraph(attributePaths = "euRegulations")
     List<ComplianceAssessmentEntity> findAllByOrderByAssessmentDateAscIdAsc();
+
+    @Query("""
+            select distinct assessment
+            from ComplianceAssessmentEntity assessment
+            where (:responsibleLawyer is null or assessment.responsibleLawyer = :responsibleLawyer)
+                and (:applicationArea is null or exists (
+                    select regulation.id
+                    from EURegulationEntity regulation
+                    join regulation.complianceAssessments linkedAssessment
+                    where linkedAssessment.id = assessment.id
+                        and regulation.applicationArea = :applicationArea
+                ))
+            order by assessment.assessmentDate asc, assessment.id asc
+            """)
+    List<ComplianceAssessmentEntity> findByCriteria(
+            @Param("responsibleLawyer") String responsibleLawyer,
+            @Param("applicationArea") ApplicationArea applicationArea);
 
     @Query("""
             select new es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport(

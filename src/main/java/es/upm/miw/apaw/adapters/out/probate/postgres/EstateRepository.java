@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.out.probate.postgres;
 
-import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
+import es.upm.miw.apaw.domain.model.probate.EstateHeirSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +15,7 @@ public interface EstateRepository extends JpaRepository<EstateEntity, UUID>,
     boolean existsByFileNumber(String fileNumber);
 
     @Query("""
-            select new es.upm.miw.apaw.domain.model.probate.EstateUsageReport(
+            select new es.upm.miw.apaw.domain.model.probate.EstateHeirSummary(
                 heir.heirStatus,
                 count(heir),
                 sum(heir.sharePercentage))
@@ -24,5 +24,5 @@ public interface EstateRepository extends JpaRepository<EstateEntity, UUID>,
             group by heir.heirStatus
             order by count(heir) desc
             """)
-    List<EstateUsageReport> findUsageReport();
+    List<EstateHeirSummary> heirStatusSummary();
 }

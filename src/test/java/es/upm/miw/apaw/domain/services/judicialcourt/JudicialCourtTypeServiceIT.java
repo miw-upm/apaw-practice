@@ -70,7 +70,7 @@ class JudicialCourtTypeServiceIT {
                 .name(TYPE_0.getName())
                 .description("A duplicate name")
                 .code(this.uniqueCode())
-                .jurisdiction("Madrid")
+                .jurisdiction("Paz")
                 .build()))
                 .isInstanceOf(ConflictException.class)
                 .hasMessageContaining(TYPE_0.getName());
@@ -82,7 +82,7 @@ class JudicialCourtTypeServiceIT {
                 .name("Tribunal duplicado")
                 .description("A duplicate code")
                 .code(TYPE_0.getCode())
-                .jurisdiction("Madrid")
+                .jurisdiction("Paz")
                 .build()))
                 .isInstanceOf(ConflictException.class)
                 .hasMessageContaining(TYPE_0.getCode());
@@ -95,7 +95,7 @@ class JudicialCourtTypeServiceIT {
                 .name("Updated Tribunal")
                 .description("Updated description")
                 .code(this.uniqueCode())
-                .jurisdiction("Sevilla")
+                .jurisdiction("Civil")
                 .active(false)
                 .build();
 
@@ -114,14 +114,14 @@ class JudicialCourtTypeServiceIT {
     void testUpdateSameNameAndCodeAllowed() {
         JudicialCourtType original = this.createType();
         original.setDescription("Updated description");
-        original.setJurisdiction("Valencia");
+        original.setJurisdiction("Civil");
         original.setActive(false);
 
         this.judicialCourtTypeService.update(original.getId(), original);
 
         JudicialCourtType updated = this.judicialCourtTypeService.read(original.getId());
         assertThat(updated.getDescription()).isEqualTo("Updated description");
-        assertThat(updated.getJurisdiction()).isEqualTo("Valencia");
+        assertThat(updated.getJurisdiction()).isEqualTo("Civil");
         assertThat(updated.getActive()).isFalse();
     }
 
@@ -140,7 +140,7 @@ class JudicialCourtTypeServiceIT {
                 .name(TYPE_0.getName())
                 .description("Should not be applied")
                 .code(this.uniqueCode())
-                .jurisdiction("Madrid")
+                .jurisdiction("Paz")
                 .active(true)
                 .build()))
                 .isInstanceOf(ConflictException.class)
@@ -155,7 +155,7 @@ class JudicialCourtTypeServiceIT {
                 "Patched Tribunal",
                 "Patched description",
                 null,
-                "Barcelona",
+                "Mercantil",
                 false);
 
         JudicialCourtType patched = this.judicialCourtTypeService.patch(original.getId(), update);
@@ -172,7 +172,7 @@ class JudicialCourtTypeServiceIT {
     void testPatchNotFound() {
         UUID id = UUID.randomUUID();
         assertThatThrownBy(() -> this.judicialCourtTypeService.patch(id,
-                new JudicialCourtTypeUpdate("Missing name", "desc", "CODE", "Madrid", true)))
+                new JudicialCourtTypeUpdate("Missing name", "desc", "CODE", "Penal", true)))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining(id.toString());
     }
@@ -181,7 +181,7 @@ class JudicialCourtTypeServiceIT {
     void testPatchDuplicateCodeChangesNothing() {
         JudicialCourtType original = this.createType();
         assertThatThrownBy(() -> this.judicialCourtTypeService.patch(original.getId(),
-                new JudicialCourtTypeUpdate("Other name", "desc", TYPE_0.getCode(), "Madrid", true)))
+                new JudicialCourtTypeUpdate("Other name", "desc", TYPE_0.getCode(), "Penal", true)))
                 .isInstanceOf(ConflictException.class)
                 .hasMessageContaining(TYPE_0.getCode());
         assertThat(this.judicialCourtTypeService.read(original.getId()).getCode()).isEqualTo(original.getCode());
@@ -227,7 +227,7 @@ class JudicialCourtTypeServiceIT {
                 .name("Servicio tribunal " + UUID.randomUUID())
                 .description("Generated for IT")
                 .code(this.uniqueCode())
-                .jurisdiction("Madrid")
+                .jurisdiction("Paz")
                 .build());
     }
 

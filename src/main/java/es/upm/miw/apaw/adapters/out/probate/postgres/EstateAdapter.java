@@ -3,7 +3,7 @@ package es.upm.miw.apaw.adapters.out.probate.postgres;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.probate.Estate;
 import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
-import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
+import es.upm.miw.apaw.domain.model.probate.EstateHeirSummary;
 import es.upm.miw.apaw.domain.ports.out.probate.EstateGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -39,8 +39,8 @@ public class EstateAdapter implements EstateGateway {
     }
 
     @Override
-    public List<EstateUsageReport> findUsageReport() {
-        return this.estateRepository.findUsageReport();
+    public List<EstateHeirSummary> heirStatusSummary() {
+        return this.estateRepository.heirStatusSummary();
     }
 
     @Override
