@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.out.probate.postgres;
 
-import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
+import es.upm.miw.apaw.domain.model.probate.EstateHeirSummary;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,10 +19,10 @@ class EstateRepositoryIT {
 
     @Test
     void testFindUsageReport() {
-        List<EstateUsageReport> report = this.estateRepository.heirStatusSummary();
+        List<EstateHeirSummary> report = this.estateRepository.heirStatusSummary();
 
         assertThat(report).isNotEmpty();
-        assertThat(report).extracting(EstateUsageReport::getHeirCount)
+        assertThat(report).extracting(EstateHeirSummary::getHeirCount)
                 .isSortedAccordingTo(Comparator.reverseOrder());
     }
 }

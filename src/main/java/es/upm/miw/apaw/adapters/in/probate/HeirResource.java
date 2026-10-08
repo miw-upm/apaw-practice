@@ -51,7 +51,7 @@ public class HeirResource {
     }
 
     @PatchMapping(ID)
-    public Heir patch(@PathVariable UUID id, @RequestBody HeirUpdate update) {
+    public Heir patch(@PathVariable UUID id, @Valid @RequestBody HeirUpdate update) {
         return this.heirService.patch(id, update);
     }
 

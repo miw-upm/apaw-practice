@@ -3,7 +3,7 @@ package es.upm.miw.apaw.adapters.in.probate;
 import es.upm.miw.apaw.domain.model.probate.EstateCreation;
 import es.upm.miw.apaw.domain.model.probate.Estate;
 import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
-import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
+import es.upm.miw.apaw.domain.model.probate.EstateHeirSummary;
 import es.upm.miw.apaw.domain.services.probate.EstateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class EstateResource {
     }
 
     @GetMapping(REPORT)
-    public List<EstateUsageReport> heirStatusSummary() {
+    public List<EstateHeirSummary> heirStatusSummary() {
         return this.estateService.heirStatusSummary();
     }
 

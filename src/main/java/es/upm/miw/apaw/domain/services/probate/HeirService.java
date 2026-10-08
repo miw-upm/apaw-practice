@@ -18,9 +18,7 @@ public class HeirService {
     private final HeirGateway heirGateway;
 
     public Heir create(Heir heir) {
-        if (this.heirGateway.existsByNationalId(heir.getNationalId())) {
-            throw new ConflictException("Heir nationalId already exists: " + heir.getNationalId());
-        }
+        this.assertNationalIdAvailable(heir.getNationalId(), null);
         heir.applyDefaults();
         return this.heirGateway.create(heir);
     }
@@ -36,10 +34,7 @@ public class HeirService {
 
     public Heir update(UUID id, Heir heir) {
         Heir storedHeir = this.read(id);
-        if (!storedHeir.getNationalId().equals(heir.getNationalId())
-                && this.heirGateway.existsByNationalId(heir.getNationalId())) {
-            throw new ConflictException("Heir nationalId already exists: " + heir.getNationalId());
-        }
+        this.assertNationalIdAvailable(heir.getNationalId(), storedHeir);
         storedHeir.setFullName(heir.getFullName());
         storedHeir.setNationalId(heir.getNationalId());
         storedHeir.setBirthDate(heir.getBirthDate());
@@ -51,11 +46,7 @@ public class HeirService {
 
     public Heir patch(UUID id, HeirUpdate update) {
         Heir storedHeir = this.read(id);
-        if (update.nationalId() != null
-                && !storedHeir.getNationalId().equals(update.nationalId())
-                && this.heirGateway.existsByNationalId(update.nationalId())) {
-            throw new ConflictException("Heir nationalId already exists: " + update.nationalId());
-        }
+        this.assertNationalIdAvailable(update.nationalId(), storedHeir);
         Optional.ofNullable(update.fullName()).ifPresent(storedHeir::setFullName);
         Optional.ofNullable(update.nationalId()).ifPresent(storedHeir::setNationalId);
         Optional.ofNullable(update.birthDate()).ifPresent(storedHeir::setBirthDate);
@@ -70,5 +61,14 @@ public class HeirService {
             throw new ConflictException("Heir is referenced by a estate: " + id);
         }
         this.heirGateway.delete(id);
+    }
+
+    private void assertNationalIdAvailable(String nationalId, Heir currentHeir) {
+        if (nationalId == null || (currentHeir != null && nationalId.equals(currentHeir.getNationalId()))) {
+            return;
+        }
+        if (this.heirGateway.existsByNationalId(nationalId)) {
+            throw new ConflictException("Heir nationalId already exists: " + nationalId);
+        }
     }
 }
