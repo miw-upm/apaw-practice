@@ -1,6 +1,6 @@
 package es.upm.miw.apaw.adapters.in.probate;
 
-import es.upm.miw.apaw.domain.model.probate.CreationEstate;
+import es.upm.miw.apaw.domain.model.probate.EstateCreation;
 import es.upm.miw.apaw.domain.model.probate.Estate;
 import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
 import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
@@ -29,7 +29,7 @@ public class EstateResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Estate create(@Valid @RequestBody CreationEstate creation) {
+    public Estate create(@Valid @RequestBody EstateCreation creation) {
         return this.estateService.create(creation);
     }
 
