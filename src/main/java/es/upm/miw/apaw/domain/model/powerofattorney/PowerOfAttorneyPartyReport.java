@@ -13,15 +13,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PowerOfAttorneyPartyReport {
-    private UserSnapshot userSnapshot;
-    private long totalPowerOfAttorneys;
+    private String userId;
+    private long totalPowerOfAttorneysPresent;
     private long principalCount;
     private long attorneyCount;
 
     public PowerOfAttorneyPartyReport(
             UUID userId, long totalPowerOfAttorneys, long principalCount, long attorneyCount) {
-        this.userSnapshot = UserSnapshot.builder().id(userId).build();
-        this.totalPowerOfAttorneys = totalPowerOfAttorneys;
+        String value = userId.toString();
+        this.userId = value.substring(value.lastIndexOf('-') + 1);
+        this.totalPowerOfAttorneysPresent = totalPowerOfAttorneys;
         this.principalCount = principalCount;
         this.attorneyCount = attorneyCount;
     }
