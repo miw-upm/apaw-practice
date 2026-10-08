@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.SurveyQuestionSeederForDev.*;
+import static es.upm.miw.apaw.config.seeders.SurveySeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
