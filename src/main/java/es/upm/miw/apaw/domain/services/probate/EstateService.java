@@ -57,6 +57,14 @@ public class EstateService {
         if (estates.isEmpty()) {
             return List.of();
         }
+        this.hydrateUsers(estates);
+        return estates.stream()
+                .filter(estate -> !criteria.appliesUserMobile()
+                        || criteria.getUserMobile().equals(estate.getUserSnapshot().getMobile()))
+                .toList();
+    }
+
+    private void hydrateUsers(List<Estate> estates) {
         Set<UUID> userIds = estates.stream()
                 .map(estate -> estate.getUserSnapshot().getId())
                 .collect(Collectors.toSet());
@@ -70,9 +78,5 @@ public class EstateService {
             }
             estate.setUserSnapshot(user);
         });
-        return estates.stream()
-                .filter(estate -> !criteria.appliesUserMobile()
-                        || criteria.getUserMobile().equals(estate.getUserSnapshot().getMobile()))
-                .toList();
     }
 }
