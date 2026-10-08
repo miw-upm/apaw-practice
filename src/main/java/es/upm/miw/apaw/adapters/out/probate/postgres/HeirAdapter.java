@@ -43,7 +43,7 @@ public class HeirAdapter implements HeirGateway {
     }
 
     @Override
-    public boolean isReferenced(UUID id) {
+    public boolean isUsedByEstate(UUID id) {
         return this.estateRepository.existsByHeirsId(id);
     }
 

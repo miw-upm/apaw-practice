@@ -66,7 +66,7 @@ public class HeirService {
     }
 
     public void delete(UUID id) {
-        if (this.heirGateway.isReferenced(id)) {
+        if (this.heirGateway.isUsedByEstate(id)) {
             throw new ConflictException("Heir is referenced by a estate: " + id);
         }
         this.heirGateway.delete(id);
