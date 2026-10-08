@@ -1,9 +1,11 @@
 package es.upm.miw.apaw.adapters.in.survey;
 
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
-import es.upm.miw.apaw.domain.model.survey.SurveyQuestionPatch;
+import es.upm.miw.apaw.domain.model.survey.SurveyQuestionTextPatch;
 import es.upm.miw.apaw.domain.services.survey.SurveyQuestionService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -41,9 +43,9 @@ public class SurveyQuestionResource {
         return this.surveyQuestionService.update(id, surveyQuestion);
     }
 
-    @PatchMapping(ID)
-    public SurveyQuestion patch(@PathVariable UUID id, @Valid @RequestBody SurveyQuestionPatch patch) {
-        return this.surveyQuestionService.patch(id, patch);
+    @PatchMapping
+    public void patchText(@RequestBody @NotEmpty List<@NotNull @Valid SurveyQuestionTextPatch> textPatches) {
+        this.surveyQuestionService.patchText(textPatches);
     }
 
     @DeleteMapping(ID)

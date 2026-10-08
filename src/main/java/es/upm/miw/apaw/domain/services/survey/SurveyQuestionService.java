@@ -1,14 +1,18 @@
 package es.upm.miw.apaw.domain.services.survey;
 
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
-import es.upm.miw.apaw.domain.model.survey.SurveyQuestionPatch;
+import es.upm.miw.apaw.domain.model.survey.SurveyQuestionTextPatch;
 import es.upm.miw.apaw.domain.ports.out.survey.SurveyQuestionGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -47,25 +51,25 @@ public class SurveyQuestionService {
         return this.surveyQuestionGateway.findAll();
     }
 
-    public SurveyQuestion patch(UUID id, SurveyQuestionPatch patch) {
-        SurveyQuestion storedSurveyQuestion = this.read(id);
+    @Transactional
+    public void patchText(List<SurveyQuestionTextPatch> textPatches) {
+        this.assertUniqueIds(textPatches);
+        List<SurveyQuestion> surveyQuestions = textPatches.stream()
+                .map(update -> {
+                    SurveyQuestion surveyQuestion = this.read(update.id());
+                    surveyQuestion.setText(update.text());
+                    return surveyQuestion;
+                })
+                .toList();
+        surveyQuestions.forEach(this.surveyQuestionGateway::update);
+    }
 
-        if (patch.text() != null) {
-            storedSurveyQuestion.setText(patch.text());
+    private void assertUniqueIds(List<SurveyQuestionTextPatch> textPatches) {
+        Set<UUID> ids = new HashSet<>();
+        for (SurveyQuestionTextPatch update : textPatches) {
+            if (!ids.add(update.id())) {
+                throw new BadRequestException("Repeated survey question id: " + update.id());
+            }
         }
-        if (patch.surveyQuestionType() != null) {
-            storedSurveyQuestion.setSurveyQuestionType(patch.surveyQuestionType());
-        }
-        if (patch.required() != null) {
-            storedSurveyQuestion.setRequired(patch.required());
-        }
-        if (patch.maxLength() != null) {
-            storedSurveyQuestion.setMaxLength(patch.maxLength());
-        }
-        if (patch.options() != null) {
-            storedSurveyQuestion.setOptions(patch.options());
-        }
-
-        return this.surveyQuestionGateway.update(storedSurveyQuestion);
     }
 }
