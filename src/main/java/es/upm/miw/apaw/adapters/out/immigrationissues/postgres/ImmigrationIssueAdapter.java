@@ -1,12 +1,14 @@
 package es.upm.miw.apaw.adapters.out.immigrationissues.postgres;
 
+import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssue;
 import es.upm.miw.apaw.domain.model.immigrationissues.ImmigrationIssueFindCriteria;
 import es.upm.miw.apaw.domain.model.immigrationissues.LawBasisUsageReport;
 import es.upm.miw.apaw.domain.ports.out.immigrationissues.ImmigrationIssueGateway;
 import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,25 +43,25 @@ public class ImmigrationIssueAdapter implements ImmigrationIssueGateway {
     }
 
     @Override
-    @Transactional
     public List<ImmigrationIssue> find(ImmigrationIssueFindCriteria criteria) {
-        return this.immigrationIssueRepository.findAll(this.buildSpecification(criteria)).stream()
-                .map(ImmigrationIssueEntity::toDomain)
+        return this.immigrationIssueRepository.findAll(this.buildSpecification(criteria), Sort.by("subject"))
+                .stream()
+                .map(this::toDomainWithoutLawBases)
                 .toList();
     }
 
+    private ImmigrationIssue toDomainWithoutLawBases(ImmigrationIssueEntity entity) {
+        ImmigrationIssue immigrationIssue = new ImmigrationIssue();
+        BeanUtils.copyProperties(entity, immigrationIssue, "lawBases", "userId");
+        immigrationIssue.setUserSnapshot(UserSnapshot.builder().id(entity.getUserId()).build());
+        return immigrationIssue;
+    }
+
     private Specification<ImmigrationIssueEntity> buildSpecification(ImmigrationIssueFindCriteria criteria) {
-        Specification<ImmigrationIssueEntity> specification = this.fetchLawBases();
+        Specification<ImmigrationIssueEntity> specification = (root, query, cb) -> cb.conjunction();
         specification = this.addClientNationality(criteria, specification);
         specification = this.addOverdue(criteria, specification);
         return this.addLawName(criteria, specification);
-    }
-
-    private Specification<ImmigrationIssueEntity> fetchLawBases() {
-        return (root, query, cb) -> {
-            root.fetch("lawBases", JoinType.LEFT);
-            return cb.conjunction();
-        };
     }
 
     private Specification<ImmigrationIssueEntity> addClientNationality(
