@@ -1,10 +1,12 @@
 package es.upm.miw.apaw.domain.ports.out.euregulation;
 
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessment;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentFindCriteria;
 import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
 import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
 import es.upm.miw.apaw.domain.model.euregulation.RiskExposureReport;
+import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentFindCriteria;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +26,8 @@ public interface ComplianceAssessmentGateway {
     void delete(UUID id);
 
     List<ComplianceAssessment> findAll();
+
+    List<ComplianceAssessment> find(ComplianceAssessmentFindCriteria criteria);
 
     List<ComplianceByAreaReport> findComplianceByAreaReport();
 
