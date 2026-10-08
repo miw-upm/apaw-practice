@@ -9,6 +9,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.survey.CreationSurvey;
 import es.upm.miw.apaw.domain.model.survey.Survey;
 import es.upm.miw.apaw.domain.model.survey.SurveyQuestion;
+import es.upm.miw.apaw.domain.model.survey.SurveyUserLanguageReport;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,18 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static es.upm.miw.apaw.config.seeders.SurveySeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -104,8 +111,79 @@ class SurveyServiceIT {
         assertThat(this.surveyRepository.existsByTitle(creation.getTitle())).isFalse();
     }
 
-    private UserSnapshot mockUser() {
-        UserSnapshot user = UserSnapshot.builder()
+    @Test
+    void testFindUserLanguageReportHydratesUsersInOneCall() {
+        this.mockHydratedUsers();
+
+        List<SurveyUserLanguageReport> reports = this.surveyService.findUserLanguageReport();
+
+        assertThat(reports)
+                .filteredOn(report -> report.getUserSnapshot().getId().equals(SURVEY_0.getUserSnapshot().getId()))
+                .singleElement()
+                .satisfies(report -> {
+                    assertThat(report.getUserSnapshot().getMobile()).isNotNull();
+                    assertThat(report.getUserSnapshot().getFirstName()).isNotNull();
+                });
+        assertThat(reports).extracting(SurveyUserLanguageReport::getSurveyQuestionCount)
+                .isSortedAccordingTo(Comparator.reverseOrder());
+        verify(this.userFinder, times(1)).findByIds(any());
+        verify(this.userFinder, never()).read(any());
+    }
+
+    @Test
+    void testFindUserLanguageReportGroupsByUserAndLanguage() {
+        this.mockHydratedUsers();
+        UserSnapshot user = this.mockUser();
+        this.surveyService.create(this.creation(user.getId(), ID_0, ID_1));
+        CreationSurvey english = this.creation(user.getId(), ID_2);
+        english.setLanguage("English");
+        this.surveyService.create(english);
+        CreationSurvey otherEnglish = this.creation(user.getId(), ID_0, ID_1);
+        otherEnglish.setLanguage("English");
+        this.surveyService.create(otherEnglish);
+
+        List<SurveyUserLanguageReport> userReports = this.surveyService.findUserLanguageReport().stream()
+                .filter(report -> report.getUserSnapshot().getId().equals(user.getId()))
+                .toList();
+
+        assertThat(userReports).hasSize(2);
+        assertThat(userReports).filteredOn(report -> report.getLanguage().equals("Spanish"))
+                .singleElement()
+                .satisfies(report -> {
+                    assertThat(report.getSurveyCount()).isEqualTo(1);
+                    assertThat(report.getSurveyQuestionCount()).isEqualTo(2);
+                });
+        assertThat(userReports).filteredOn(report -> report.getLanguage().equals("English"))
+                .singleElement()
+                .satisfies(report -> {
+                    assertThat(report.getSurveyCount()).isEqualTo(2);
+                    assertThat(report.getSurveyQuestionCount()).isEqualTo(3);
+                });
+    }
+
+    @Test
+    void testFindUserLanguageReportUserNotReturnedKeepsUserId() {
+        when(this.userFinder.findByIds(any())).thenReturn(List.of());
+
+        List<SurveyUserLanguageReport> reports = this.surveyService.findUserLanguageReport();
+
+        assertThat(reports).isNotEmpty().allSatisfy(report -> {
+            assertThat(report.getUserSnapshot().getId()).isNotNull();
+            assertThat(report.getUserSnapshot().getMobile()).isNull();
+        });
+        verify(this.userFinder, times(1)).findByIds(any());
+    }
+
+    private void mockHydratedUsers() {
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Set<UUID> requestedIds = invocation.getArgument(0);
+            return requestedIds.stream()
+                    .map(id -> UserSnapshot.builder().id(id).mobile("600000999").firstName("encuestado").build())
+                    .toList();
+        });
+    }
+
+    private UserSnapshot mockUser() {        UserSnapshot user = UserSnapshot.builder()
                 .id(UUID.randomUUID())
                 .mobile("600000999")
                 .firstName("encuestado")
