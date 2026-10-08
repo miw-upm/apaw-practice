@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.CreationDeadline;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.Deadline;
+import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineFindCriteria;
 import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineWorkloadReport;
 import es.upm.miw.apaw.domain.ports.out.deadlinecalculator.DeadlineGateway;
 import es.upm.miw.apaw.domain.ports.out.deadlinecalculator.NonWorkingDayGateway;
@@ -70,5 +71,37 @@ public class DeadlineService {
                 report.expiredDeadlineCount(),
                 report.totalDeadlineCount(),
                 report.holidayAffectedDeadlineCount());
+    }
+
+    public List<Deadline> find(DeadlineFindCriteria criteria) {
+        List<Deadline> deadlines = this.deadlineGateway.find(criteria, LocalDate.now());
+        if (deadlines.isEmpty()) {
+            return List.of();
+        }
+        Set<UUID> userIds = deadlines.stream()
+                .map(deadline -> deadline.getUserSnapshot().getId())
+                .collect(Collectors.toSet());
+        Map<UUID, UserSnapshot> usersById = this.userFinder.findByIds(userIds).stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+        return deadlines.stream()
+                .map(deadline -> this.withUserSnapshot(deadline, usersById))
+                .filter(deadline -> this.matchesUserMobile(criteria, deadline))
+                .map(Deadline::ofSummary)
+                .toList();
+    }
+
+    private Deadline withUserSnapshot(Deadline deadline, Map<UUID, UserSnapshot> usersById) {
+        UUID userId = deadline.getUserSnapshot().getId();
+        UserSnapshot userSnapshot = usersById.get(userId);
+        if (userSnapshot == null) {
+            throw new NotFoundException("User id not found: " + userId);
+        }
+        deadline.setUserSnapshot(userSnapshot);
+        return deadline;
+    }
+
+    private boolean matchesUserMobile(DeadlineFindCriteria criteria, Deadline deadline) {
+        return !criteria.hasUserMobile()
+                || criteria.getUserMobile().equals(deadline.getUserSnapshot().getMobile());
     }
 }
