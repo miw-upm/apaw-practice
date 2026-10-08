@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.adapters.out.survey.postgres;
 
 import es.upm.miw.apaw.domain.model.survey.Survey;
+import es.upm.miw.apaw.domain.model.survey.SurveyUserLanguageReport;
 import es.upm.miw.apaw.domain.ports.out.survey.SurveyGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,11 @@ public class SurveyAdapter implements SurveyGateway {
         surveyEntity.setSurveyQuestions(surveyQuestionEntities);
         this.surveyRepository.save(surveyEntity);
         return survey;
+    }
+
+    @Override
+    public List<SurveyUserLanguageReport> findUserLanguageReport() {
+        return this.surveyRepository.findSurveyUserLanguageReport();
     }
 
     @Override
