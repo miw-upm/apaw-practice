@@ -1,7 +1,7 @@
 package es.upm.miw.apaw.domain.services.probate;
 
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.probate.CreationEstate;
+import es.upm.miw.apaw.domain.model.probate.EstateCreation;
 import es.upm.miw.apaw.domain.model.probate.Estate;
 import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
 import es.upm.miw.apaw.domain.model.probate.Heir;
@@ -38,7 +38,7 @@ class EstateServiceIT {
                 .id(userId).mobile("600000100").firstName("cliente0").build();
         when(this.userFinder.read(userId)).thenReturn(user);
 
-        CreationEstate creation = CreationEstate.builder()
+        EstateCreation creation = EstateCreation.builder()
                 .fileNumber("EXP-" + UUID.randomUUID())
                 .deceasedName("Deceased Test")
                 .netValue(new BigDecimal("100000.00"))

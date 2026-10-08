@@ -21,7 +21,7 @@ public class HeirService {
         if (this.heirGateway.existsByNationalId(heir.getNationalId())) {
             throw new ConflictException("Heir nationalId already exists: " + heir.getNationalId());
         }
-        heir.doDefault();
+        heir.applyDefaults();
         return this.heirGateway.create(heir);
     }
 
@@ -66,7 +66,7 @@ public class HeirService {
     }
 
     public void delete(UUID id) {
-        if (this.heirGateway.isReferenced(id)) {
+        if (this.heirGateway.isUsedByEstate(id)) {
             throw new ConflictException("Heir is referenced by a estate: " + id);
         }
         this.heirGateway.delete(id);

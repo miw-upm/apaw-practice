@@ -19,7 +19,7 @@ class EstateRepositoryIT {
 
     @Test
     void testFindUsageReport() {
-        List<EstateUsageReport> report = this.estateRepository.findUsageReport();
+        List<EstateUsageReport> report = this.estateRepository.heirStatusSummary();
 
         assertThat(report).isNotEmpty();
         assertThat(report).extracting(EstateUsageReport::getHeirCount)

@@ -17,7 +17,7 @@ public interface HeirGateway {
 
     void delete(UUID id);
 
-    boolean isReferenced(UUID id);
+    boolean isUsedByEstate(UUID id);
 
     boolean existsByNationalId(String nationalId);
 }

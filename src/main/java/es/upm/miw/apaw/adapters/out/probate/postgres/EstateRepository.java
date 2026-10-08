@@ -24,5 +24,5 @@ public interface EstateRepository extends JpaRepository<EstateEntity, UUID>,
             group by heir.heirStatus
             order by count(heir) desc
             """)
-    List<EstateUsageReport> findUsageReport();
+    List<EstateUsageReport> heirStatusSummary();
 }

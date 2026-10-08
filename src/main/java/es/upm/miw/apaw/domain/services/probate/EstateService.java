@@ -3,7 +3,7 @@ package es.upm.miw.apaw.domain.services.probate;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.probate.CreationEstate;
+import es.upm.miw.apaw.domain.model.probate.EstateCreation;
 import es.upm.miw.apaw.domain.model.probate.Estate;
 import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
 import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
@@ -29,7 +29,7 @@ public class EstateService {
     private final HeirGateway heirGateway;
     private final UserFinder userFinder;
 
-    public Estate create(CreationEstate creation) {
+    public Estate create(EstateCreation creation) {
         if (this.estateGateway.existsByFileNumber(creation.getFileNumber())) {
             throw new ConflictException("Estate fileNumber already exists: " + creation.getFileNumber());
         }
@@ -39,7 +39,7 @@ public class EstateService {
                 .map(this::readHeir)
                 .toList());
         estate.setUserSnapshot(this.userFinder.read(creation.getUserId()));
-        estate.doDefault();
+        estate.applyDefaults();
         return this.estateGateway.create(estate);
     }
 
@@ -48,8 +48,8 @@ public class EstateService {
                 .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
     }
 
-    public List<EstateUsageReport> findUsageReport() {
-        return this.estateGateway.findUsageReport();
+    public List<EstateUsageReport> heirStatusSummary() {
+        return this.estateGateway.heirStatusSummary();
     }
 
     public List<Estate> find(EstateFindCriteria criteria) {

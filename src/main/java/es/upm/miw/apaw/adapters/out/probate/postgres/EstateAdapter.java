@@ -39,8 +39,8 @@ public class EstateAdapter implements EstateGateway {
     }
 
     @Override
-    public List<EstateUsageReport> findUsageReport() {
-        return this.estateRepository.findUsageReport();
+    public List<EstateUsageReport> heirStatusSummary() {
+        return this.estateRepository.heirStatusSummary();
     }
 
     @Override
