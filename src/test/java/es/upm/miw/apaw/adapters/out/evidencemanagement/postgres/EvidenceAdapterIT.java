@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static es.upm.miw.apaw.config.seeders.CustodyRecordSeederForDev.CUSTODIAN_ID_0;
+import static es.upm.miw.apaw.config.seeders.EvidenceSeederForDev.CUSTODIAN_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

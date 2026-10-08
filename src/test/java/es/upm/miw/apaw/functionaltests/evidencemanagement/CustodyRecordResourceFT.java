@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.client.RestTestClient;
 import java.util.Map;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.CustodyRecordSeederForDev.*;
+import static es.upm.miw.apaw.config.seeders.EvidenceSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

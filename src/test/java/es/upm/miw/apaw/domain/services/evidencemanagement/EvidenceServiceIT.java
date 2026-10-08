@@ -23,8 +23,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.CustodyRecordSeederForDev.ID_0;
-import static es.upm.miw.apaw.config.seeders.CustodyRecordSeederForDev.CUSTODIAN_ID_0;
+import static es.upm.miw.apaw.config.seeders.EvidenceSeederForDev.ID_0;
+import static es.upm.miw.apaw.config.seeders.EvidenceSeederForDev.CUSTODIAN_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verifyNoInteractions;
