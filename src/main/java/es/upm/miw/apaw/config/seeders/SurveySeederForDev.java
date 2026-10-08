@@ -72,7 +72,7 @@ public class SurveySeederForDev implements ApplicationRunner {
             .submittedDate(LocalDate.of(2025, 1, 20))
             .language("English")
             .surveyQuestions(List.of(QUESTION_0, QUESTION_2))
-            .userSnapshot(user("0000", "600000200", "encuestado0"))
+            .userSnapshot(user("0000", "600000200", "encuestado0", "Madrid"))
             .build();
 
     public static final UUID SURVEY_ID_1 = UUID.fromString(SURVEY_PREFIX + "0001");
@@ -83,7 +83,7 @@ public class SurveySeederForDev implements ApplicationRunner {
             .createdDate(LocalDate.of(2025, 2, 5))
             .language("Spanish")
             .surveyQuestions(List.of(QUESTION_1))
-            .userSnapshot(user("0001", "600000201", "encuestado1"))
+            .userSnapshot(user("0001", "600000201", "encuestado1", "Sevilla"))
             .build();
 
     public static final UUID SURVEY_ID_2 = UUID.fromString(SURVEY_PREFIX + "0002");
@@ -94,17 +94,18 @@ public class SurveySeederForDev implements ApplicationRunner {
             .createdDate(LocalDate.of(2025, 3, 1))
             .language("English")
             .surveyQuestions(List.of(QUESTION_0, QUESTION_1, QUESTION_2))
-            .userSnapshot(user("0002", "600000202", "encuestado2"))
+            .userSnapshot(user("0002", "600000202", "encuestado2", "Madrid"))
             .build();
 
     private final SurveyQuestionRepository surveyQuestionRepository;
     private final SurveyRepository surveyRepository;
 
-    private static UserSnapshot user(String idSuffix, String mobile, String firstName) {
+    private static UserSnapshot user(String idSuffix, String mobile, String firstName, String city) {
         return UserSnapshot.builder()
                 .id(UUID.fromString(USER_PREFIX + idSuffix))
                 .mobile(mobile)
                 .firstName(firstName)
+                .city(city)
                 .build();
     }
 
