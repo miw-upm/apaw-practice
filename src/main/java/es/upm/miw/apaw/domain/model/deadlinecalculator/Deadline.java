@@ -61,6 +61,27 @@ public class Deadline {
         return DayCountType.WORKING == this.dayCountType;
     }
 
+    public Deadline ofSummary() {
+        return Deadline.builder()
+                .id(this.id)
+                .title(this.title)
+                .courtFileNumber(this.courtFileNumber)
+                .notificationDate(this.notificationDate)
+                .days(this.days)
+                .dayCountType(this.dayCountType)
+                .region(this.region)
+                .city(this.city)
+                .status(this.status)
+                .createdAt(this.createdAt)
+                .dueDate(this.dueDate)
+                .userSnapshot(UserSnapshot.builder()
+                        .id(this.userSnapshot.getId())
+                        .mobile(this.userSnapshot.getMobile())
+                        .firstName(this.userSnapshot.getFirstName())
+                        .build())
+                .build();
+    }
+
     public void doCalculate() {
         if (!this.hasWorkingDayCount()) {
             this.dueDate = this.notificationDate.plusDays(this.days);
