@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static es.upm.miw.apaw.config.seeders.CustodyRecordSeederForDev.*;
+import static es.upm.miw.apaw.config.seeders.EvidenceSeederForDev.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -222,6 +222,7 @@ class CustodyRecordServiceIT {
         this.evidenceRepository.saveAndFlush(EvidenceEntity.builder().id(UUID.randomUUID())
                 .title("Evidence " + UUID.randomUUID()).evidenceType(EvidenceType.PHYSICAL)
                 .status(EvidenceStatus.REGISTERED).confidential(false)
+                .collectionDate(LocalDateTime.of(2025, 1, 1, 8, 0))
                 .custodyRecords(List.of(new CustodyRecordEntity(custodyRecord))).build());
         assertThatThrownBy(() -> this.custodyRecordService.delete(custodyRecord.getId()))
                 .isInstanceOf(ConflictException.class).hasMessageContaining(custodyRecord.getId().toString());

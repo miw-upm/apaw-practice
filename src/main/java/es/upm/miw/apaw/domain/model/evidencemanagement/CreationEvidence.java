@@ -2,9 +2,11 @@ package es.upm.miw.apaw.domain.model.evidencemanagement;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,11 +14,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Evidence {
-
-    @EqualsAndHashCode.Include
-    private UUID id;
+public class CreationEvidence {
 
     @NotBlank
     private String title;
@@ -26,24 +24,15 @@ public class Evidence {
     @NotNull
     private EvidenceType evidenceType;
 
-    private EvidenceStatus status;
-
     @NotNull
+    @PastOrPresent
     private LocalDateTime collectionDate;
 
     private String source;
 
     private Boolean confidential;
 
-    private List<CustodyRecord> custodyRecords;
-
-    public void doDefault() {
-        this.id = UUID.randomUUID();
-        if (this.status == null) {
-            this.status = EvidenceStatus.REGISTERED;
-        }
-        if (this.confidential == null) {
-            this.confidential = false;
-        }
-    }
+    @NotNull
+    @Builder.Default
+    private List<@NotNull UUID> custodyRecordIds = new ArrayList<>();
 }
