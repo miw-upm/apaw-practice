@@ -1,5 +1,6 @@
 package es.upm.miw.apaw.adapters.in.evidencemanagement;
 
+import es.upm.miw.apaw.domain.model.evidencemanagement.CustodianActivityReport;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.services.evidencemanagement.CustodyRecordService;
 import jakarta.validation.Valid;
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class CustodyRecordResource {
     public static final String CUSTODY_RECORDS = "/custody-records";
     public static final String ID = "/{id}";
+    public static final String REPORT = "/report";
 
     private final CustodyRecordService custodyRecordService;
 
@@ -49,5 +51,10 @@ public class CustodyRecordResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
         this.custodyRecordService.delete(id);
+    }
+
+    @GetMapping(REPORT)
+    public List<CustodianActivityReport> findActivityReport() {
+        return this.custodyRecordService.findActivityReport();
     }
 }

@@ -5,6 +5,7 @@ import es.upm.miw.apaw.adapters.in.evidencemanagement.CustodyRecordPatchDto;
 import es.upm.miw.apaw.adapters.in.evidencemanagement.CustodyRecordResource;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.evidencemanagement.CustodianActivityReport;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.client.RestTestClient;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
@@ -226,5 +228,28 @@ class CustodyRecordResourceFT {
                         CUSTODIAN_ID_0))
                 .exchange().expectStatus().isCreated()
                 .expectBody(CustodyRecord.class).returnResult().getResponseBody();
+    }
+
+    @Test
+    void testFindActivityReport() {
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Collection<UUID> ids = invocation.getArgument(0);
+            return ids.stream().map(id -> UserSnapshot.builder().id(id).mobile("600000000")
+                    .firstName("Ana").familyName("Lopez").email("ana@example.com").build()).toList();
+        });
+        UUID custodianId = RECORD_0.getCustodian().getId();
+
+        this.restTestClient.get().uri(CustodyRecordResource.CUSTODY_RECORDS + CustodyRecordResource.REPORT)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(CustodianActivityReport[].class)
+                .value(body -> assertThat(body).filteredOn(item -> item.getCustodian().getId().equals(custodianId))
+                        .singleElement().satisfies(item -> {
+                            assertThat(item.getCustodian().getMobile()).isEqualTo("600000000");
+                            assertThat(item.getCustodian().getFirstName()).isEqualTo("Ana");
+                            assertThat(item.getRecordsCount()).isGreaterThanOrEqualTo(1);
+                            assertThat(item.getEvidencesCount()).isBetween(1L, item.getRecordsCount());
+                            assertThat(item.getTotalDurationMinutes()).isGreaterThanOrEqualTo(0);
+                        }));
     }
 }
