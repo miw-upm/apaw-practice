@@ -3,10 +3,10 @@ package es.upm.miw.apaw.domain.services.probate;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.probate.CreationEstate;
+import es.upm.miw.apaw.domain.model.probate.EstateCreation;
 import es.upm.miw.apaw.domain.model.probate.Estate;
 import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
-import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
+import es.upm.miw.apaw.domain.model.probate.EstateHeirSummary;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.probate.EstateGateway;
 import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
@@ -29,7 +29,7 @@ public class EstateService {
     private final HeirGateway heirGateway;
     private final UserFinder userFinder;
 
-    public Estate create(CreationEstate creation) {
+    public Estate create(EstateCreation creation) {
         if (this.estateGateway.existsByFileNumber(creation.getFileNumber())) {
             throw new ConflictException("Estate fileNumber already exists: " + creation.getFileNumber());
         }
@@ -39,7 +39,7 @@ public class EstateService {
                 .map(this::readHeir)
                 .toList());
         estate.setUserSnapshot(this.userFinder.read(creation.getUserId()));
-        estate.doDefault();
+        estate.applyDefaults();
         return this.estateGateway.create(estate);
     }
 
@@ -48,8 +48,8 @@ public class EstateService {
                 .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
     }
 
-    public List<EstateUsageReport> findUsageReport() {
-        return this.estateGateway.findUsageReport();
+    public List<EstateHeirSummary> heirStatusSummary() {
+        return this.estateGateway.heirStatusSummary();
     }
 
     public List<Estate> find(EstateFindCriteria criteria) {
@@ -57,6 +57,14 @@ public class EstateService {
         if (estates.isEmpty()) {
             return List.of();
         }
+        this.hydrateUsers(estates);
+        return estates.stream()
+                .filter(estate -> !criteria.appliesUserMobile()
+                        || criteria.getUserMobile().equals(estate.getUserSnapshot().getMobile()))
+                .toList();
+    }
+
+    private void hydrateUsers(List<Estate> estates) {
         Set<UUID> userIds = estates.stream()
                 .map(estate -> estate.getUserSnapshot().getId())
                 .collect(Collectors.toSet());
@@ -70,9 +78,5 @@ public class EstateService {
             }
             estate.setUserSnapshot(user);
         });
-        return estates.stream()
-                .filter(estate -> !criteria.appliesUserMobile()
-                        || criteria.getUserMobile().equals(estate.getUserSnapshot().getMobile()))
-                .toList();
     }
 }

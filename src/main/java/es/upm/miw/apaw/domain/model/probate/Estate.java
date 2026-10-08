@@ -39,7 +39,7 @@ public class Estate {
 
     private UserSnapshot userSnapshot;
 
-    public void doDefault() {
+    public void applyDefaults() {
         this.id = UUID.randomUUID();
         this.openedDate = LocalDate.now();
         if (this.lastWill == null) {
