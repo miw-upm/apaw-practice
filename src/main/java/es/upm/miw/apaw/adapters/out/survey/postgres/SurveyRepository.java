@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface SurveyRepository extends JpaRepository<SurveyEntity, UUID> {
     boolean existsBySurveyQuestionsId(UUID id);
+
+    boolean existsByTitle(String title);
 }

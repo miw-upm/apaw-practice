@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.taskmanagement.CreationTask;
 import es.upm.miw.apaw.domain.model.taskmanagement.Task;
 import es.upm.miw.apaw.domain.model.taskmanagement.TaskComment;
+import es.upm.miw.apaw.domain.model.taskmanagement.TaskFindCriteria;
 import es.upm.miw.apaw.domain.ports.out.taskmanagement.TaskCommentGateway;
 import es.upm.miw.apaw.domain.ports.out.taskmanagement.TaskGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -77,5 +78,50 @@ public class TaskService {
         });
 
         return reports;
+    }
+
+    public List<Task> find(TaskFindCriteria criteria) {
+        List<Task> tasks = this.taskGateway.find(criteria);
+
+        if (tasks.isEmpty()) {
+            return List.of();
+        }
+
+        Set<UUID> ownerIds = tasks.stream()
+                .map(task -> task.getOwner().getId())
+                .collect(Collectors.toSet());
+
+        return this.toSummaries(criteria, tasks, this.userFinder.findByIds(ownerIds));
+    }
+
+    private List<Task> toSummaries(TaskFindCriteria criteria, List<Task> tasks, List<UserSnapshot> owners) {
+
+        Map<UUID, UserSnapshot> ownersById = owners.stream()
+                .collect(Collectors.toMap(UserSnapshot::getId, Function.identity()));
+
+        return tasks.stream()
+                .map(task -> this.enrichOwner(task, ownersById))
+                .filter(task -> this.matchesOwnerFirstName(criteria, task))
+                .toList();
+    }
+
+    private Task enrichOwner(Task task, Map<UUID, UserSnapshot> ownersById) {
+
+        UUID ownerId = task.getOwner().getId();
+        UserSnapshot owner = ownersById.get(ownerId);
+
+        if (owner == null) {
+            throw new NotFoundException("Owner id not found: " + ownerId);
+        }
+
+        task.setOwner(owner);
+        return task;
+    }
+
+    private boolean matchesOwnerFirstName(TaskFindCriteria criteria, Task task) {
+
+        return !criteria.hasOwnerFirstName()
+                || criteria.getOwnerFirstName()
+                .equals(task.getOwner().getFirstName());
     }
 }
