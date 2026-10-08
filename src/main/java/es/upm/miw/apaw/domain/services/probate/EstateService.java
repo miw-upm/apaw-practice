@@ -6,7 +6,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.probate.EstateCreation;
 import es.upm.miw.apaw.domain.model.probate.Estate;
 import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
-import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
+import es.upm.miw.apaw.domain.model.probate.EstateHeirSummary;
 import es.upm.miw.apaw.domain.model.probate.Heir;
 import es.upm.miw.apaw.domain.ports.out.probate.EstateGateway;
 import es.upm.miw.apaw.domain.ports.out.probate.HeirGateway;
@@ -48,7 +48,7 @@ public class EstateService {
                 .orElseThrow(() -> new NotFoundException("Heir id not found: " + id));
     }
 
-    public List<EstateUsageReport> heirStatusSummary() {
+    public List<EstateHeirSummary> heirStatusSummary() {
         return this.estateGateway.heirStatusSummary();
     }
 

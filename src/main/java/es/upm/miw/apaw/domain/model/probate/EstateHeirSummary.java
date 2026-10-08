@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EstateUsageReport {
+public class EstateHeirSummary {
     private HeirStatus heirStatus;
     private long heirCount;
     private BigDecimal totalSharePercentage;

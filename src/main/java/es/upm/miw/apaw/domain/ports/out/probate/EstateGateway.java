@@ -2,7 +2,7 @@ package es.upm.miw.apaw.domain.ports.out.probate;
 
 import es.upm.miw.apaw.domain.model.probate.Estate;
 import es.upm.miw.apaw.domain.model.probate.EstateFindCriteria;
-import es.upm.miw.apaw.domain.model.probate.EstateUsageReport;
+import es.upm.miw.apaw.domain.model.probate.EstateHeirSummary;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface EstateGateway {
 
     boolean existsByFileNumber(String fileNumber);
 
-    List<EstateUsageReport> heirStatusSummary();
+    List<EstateHeirSummary> heirStatusSummary();
 
     List<Estate> find(EstateFindCriteria criteria);
 }
