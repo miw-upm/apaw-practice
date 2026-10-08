@@ -8,11 +8,7 @@ import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorneyParty;
-import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyParty;
-import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyPartyPatch;
-import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyStatus;
-import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyType;
+import es.upm.miw.apaw.domain.model.powerofattorney.*;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -274,6 +270,26 @@ class PowerOfAttorneyPartyServiceIT {
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining(ID_2.toString());
     }
+
+    @Test
+    @Transactional
+    void testFindReport() {
+        List<PowerOfAttorneyPartyReport> reports =
+                this.powerOfAttorneyPartyService.findReport();
+
+        assertThat(reports).isNotEmpty();
+        assertThat(reports)
+                .extracting(PowerOfAttorneyPartyReport::getUserId)
+                .contains("eeeeffff0000", "eeeeffff0001");
+        assertThat(reports)
+                .allSatisfy(report -> {
+                    assertThat(report.getUserId()).doesNotContain("-");
+                    assertThat(report.getTotalPowerOfAttorneysPresent()).isPositive();
+                    assertThat(report.getPrincipalCount() + report.getAttorneyCount())
+                            .isGreaterThanOrEqualTo(report.getTotalPowerOfAttorneysPresent());
+                });
+    }
+
 
     private UserSnapshot seededUserOrIdOnly(UUID id) {
         return List.of(PARTY_0, PARTY_1, PARTY_2, PARTY_3, PARTY_4, PARTY_5).stream()
