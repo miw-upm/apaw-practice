@@ -6,7 +6,6 @@ import es.upm.miw.apaw.domain.model.euregulation.ComplianceByAreaReport;
 import es.upm.miw.apaw.domain.model.euregulation.OverdueAssessmentReport;
 import es.upm.miw.apaw.domain.model.euregulation.LawyerProductivityReport;
 import es.upm.miw.apaw.domain.model.euregulation.RiskExposureReport;
-import es.upm.miw.apaw.domain.model.euregulation.ComplianceAssessmentFindCriteria;
 
 import java.util.List;
 import java.util.Optional;
