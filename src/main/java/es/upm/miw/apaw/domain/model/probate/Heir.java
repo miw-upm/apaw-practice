@@ -34,7 +34,7 @@ public class Heir {
 
     private String contactEmail;
 
-    public void doDefault() {
+    public void applyDefaults() {
         this.id = UUID.randomUUID();
         if (this.heirStatus == null) {
             this.heirStatus = HeirStatus.PENDING;

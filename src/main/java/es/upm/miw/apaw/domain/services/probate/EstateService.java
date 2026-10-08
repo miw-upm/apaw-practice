@@ -39,7 +39,7 @@ public class EstateService {
                 .map(this::readHeir)
                 .toList());
         estate.setUserSnapshot(this.userFinder.read(creation.getUserId()));
-        estate.doDefault();
+        estate.applyDefaults();
         return this.estateGateway.create(estate);
     }
 
