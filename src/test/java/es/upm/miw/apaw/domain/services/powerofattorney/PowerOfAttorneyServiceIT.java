@@ -6,24 +6,29 @@ import es.upm.miw.apaw.adapters.out.powerofattorney.postgres.PowerOfAttorneyPart
 import es.upm.miw.apaw.adapters.out.powerofattorney.postgres.PowerOfAttorneyRepository;
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
-import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorney;
-import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorney;
-import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyStatus;
-import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyType;
+import es.upm.miw.apaw.domain.model.UserSnapshot;
+import es.upm.miw.apaw.domain.model.powerofattorney.*;
+import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static es.upm.miw.apaw.config.seeders.PowerOfAttorneyPartySeederForDev.ID_0;
 import static es.upm.miw.apaw.config.seeders.PowerOfAttorneyPartySeederForDev.ID_1;
 import static es.upm.miw.apaw.config.seeders.PowerOfAttorneyPartySeederForDev.ID_2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -37,6 +42,9 @@ class PowerOfAttorneyServiceIT {
 
     @Autowired
     private PowerOfAttorneyPartyRepository powerOfAttorneyPartyRepository;
+
+    @MockitoBean
+    private UserFinder userFinder;
 
     @Test
     @Transactional
@@ -149,5 +157,186 @@ class PowerOfAttorneyServiceIT {
         assertThatThrownBy(() -> this.powerOfAttorneyService.create(creation))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("Principal and attorney must be different users");
+    }
+
+    @Test
+    @Transactional
+    void testFindCriteriaByFullMentalCapacityTrueRequiresBothParties() {
+        PowerOfAttorneyPartyEntity capablePrincipal = this.createParty(35, true);
+        PowerOfAttorneyPartyEntity capableAttorney = this.createParty(40, true);
+        PowerOfAttorneyPartyEntity incapableParty = this.createParty(45, false);
+        PowerOfAttorneyEntity bothCapable = this.createPower(
+                "FIND-CAP-TRUE-" + UUID.randomUUID(), capablePrincipal, capableAttorney, PowerOfAttorneyStatus.ACTIVE);
+        PowerOfAttorneyEntity oneIncapable = this.createPower(
+                "FIND-CAP-MIXED-" + UUID.randomUUID(), capablePrincipal, incapableParty, PowerOfAttorneyStatus.ACTIVE);
+        PowerOfAttorneyEntity bothIncapable = this.createPower(
+                "FIND-CAP-FALSE-" + UUID.randomUUID(), incapableParty, incapableParty, PowerOfAttorneyStatus.ACTIVE);
+        this.stubUsers();
+
+        PowerOfAttorneyFindCriteria criteria = PowerOfAttorneyFindCriteria.builder()
+                .status(PowerOfAttorneyStatus.ACTIVE)
+                .fullMentalCapacity(true)
+                .build();
+
+        List<PowerOfAttorney> result = this.powerOfAttorneyService.find(criteria);
+        List<String> protocols = result.stream().map(PowerOfAttorney::getProtocolNumber).toList();
+
+        assertThat(protocols).contains(bothCapable.getProtocolNumber());
+        assertThat(protocols).doesNotContain(oneIncapable.getProtocolNumber(), bothIncapable.getProtocolNumber());
+    }
+
+    @Test
+    @Transactional
+    void testFindCriteriaByFullMentalCapacityFalseRequiresAtLeastOneIncapableParty() {
+        PowerOfAttorneyPartyEntity capablePrincipal = this.createParty(35, true);
+        PowerOfAttorneyPartyEntity capableAttorney = this.createParty(38, true);
+        PowerOfAttorneyPartyEntity incapablePrincipal = this.createParty(45, false);
+        PowerOfAttorneyPartyEntity incapableAttorney = this.createParty(50, false);
+        PowerOfAttorneyEntity bothCapable = this.createPower(
+                "FIND-CAP-TRUE-" + UUID.randomUUID(), capablePrincipal, capableAttorney, PowerOfAttorneyStatus.REVOKED);
+        PowerOfAttorneyEntity mixed = this.createPower(
+                "FIND-CAP-MIXED-" + UUID.randomUUID(), capablePrincipal, incapablePrincipal, PowerOfAttorneyStatus.REVOKED);
+        PowerOfAttorneyEntity bothIncapable = this.createPower(
+                "FIND-CAP-FALSE-" + UUID.randomUUID(), incapablePrincipal, incapableAttorney, PowerOfAttorneyStatus.REVOKED);
+        this.stubUsers();
+
+        PowerOfAttorneyFindCriteria criteria = PowerOfAttorneyFindCriteria.builder()
+                .status(PowerOfAttorneyStatus.REVOKED)
+                .fullMentalCapacity(false)
+                .build();
+
+        List<String> protocols = this.powerOfAttorneyService.find(criteria).stream()
+                .map(PowerOfAttorney::getProtocolNumber).toList();
+
+        assertThat(protocols).doesNotContain(bothCapable.getProtocolNumber());
+        assertThat(protocols).contains(mixed.getProtocolNumber(), bothIncapable.getProtocolNumber());
+    }
+
+    @Test
+    @Transactional
+    void testFindCriteriaByIdentityMatchesEitherParty() {
+        PowerOfAttorneyPartyEntity principal = this.createParty(35, true);
+        PowerOfAttorneyPartyEntity attorney = this.createParty(40, true);
+        PowerOfAttorneyEntity power = this.createPower(
+                "FIND-IDENTITY-" + UUID.randomUUID(), principal, attorney, PowerOfAttorneyStatus.REVOKED);
+        this.stubUsers();
+
+        PowerOfAttorneyFindCriteria criteria = PowerOfAttorneyFindCriteria.builder()
+                .status(PowerOfAttorneyStatus.REVOKED)
+                .identity("ID-" + attorney.getUserId())
+                .build();
+
+        List<PowerOfAttorney> result = this.powerOfAttorneyService.find(criteria);
+
+        assertThat(result).extracting(PowerOfAttorney::getProtocolNumber).contains(power.getProtocolNumber());
+    }
+
+    @Test
+    @Transactional
+    void testFindCriteriaCombinesIdentityAndLegalPowerWithAndAndFindsUsersOnce() {
+        PowerOfAttorneyPartyEntity legalPrincipal = this.createParty(35, true);
+        PowerOfAttorneyPartyEntity legalAttorney = this.createParty(40, true);
+        PowerOfAttorneyPartyEntity minor = this.createParty(17, true);
+        PowerOfAttorneyEntity legalPower = this.createPower(
+                "FIND-LEGAL-" + UUID.randomUUID(), legalPrincipal, legalAttorney, PowerOfAttorneyStatus.ACTIVE);
+        PowerOfAttorneyEntity illegalPower = this.createPower(
+                "FIND-ILLEGAL-" + UUID.randomUUID(), legalPrincipal, minor, PowerOfAttorneyStatus.ACTIVE);
+        this.stubUsers();
+        clearInvocations(this.userFinder);
+
+        PowerOfAttorneyFindCriteria criteria = PowerOfAttorneyFindCriteria.builder()
+                .status(PowerOfAttorneyStatus.ACTIVE)
+                .identity("ID-" + legalPrincipal.getUserId())
+                .legalPowerOfAttorney(true)
+                .build();
+
+        List<String> protocols = this.powerOfAttorneyService.find(criteria).stream()
+                .map(PowerOfAttorney::getProtocolNumber).toList();
+
+        assertThat(protocols).contains(legalPower.getProtocolNumber());
+        assertThat(protocols).doesNotContain(illegalPower.getProtocolNumber());
+        verify(this.userFinder, times(1)).findByIds(org.mockito.ArgumentMatchers.argThat(userIds ->
+                userIds.containsAll(Set.of(legalPrincipal.getUserId(), legalAttorney.getUserId(), minor.getUserId()))));
+    }
+
+    @Test
+    @Transactional
+    void testFindCriteriaWithNullCriteriaReturnsResultsAndEnrichesUsersOnce() {
+        PowerOfAttorneyPartyEntity principal = this.createParty(35, true);
+        PowerOfAttorneyPartyEntity attorney = this.createParty(40, true);
+        PowerOfAttorneyEntity power = this.createPower(
+                "FIND-NULL-" + UUID.randomUUID(), principal, attorney, PowerOfAttorneyStatus.ACTIVE);
+        this.stubUsers();
+        clearInvocations(this.userFinder);
+
+        List<PowerOfAttorney> result = this.powerOfAttorneyService.find(null);
+
+        assertThat(result).extracting(PowerOfAttorney::getProtocolNumber).contains(power.getProtocolNumber());
+        assertThat(result).allSatisfy(item -> {
+            assertThat(item.getPrincipal().getUserSnapshot().getIdentity()).isNotBlank();
+            assertThat(item.getAttorney().getUserSnapshot().getIdentity()).isNotBlank();
+        });
+        verify(this.userFinder, times(1)).findByIds(anySet());
+    }
+
+    @Test
+    @Transactional
+    void testFindCriteriaByLegalPowerFalseReturnsNonLegalPowers() {
+        PowerOfAttorneyPartyEntity adultPrincipal = this.createParty(35, true);
+        PowerOfAttorneyPartyEntity adultAttorney = this.createParty(40, true);
+        PowerOfAttorneyPartyEntity minor = this.createParty(17, true);
+        PowerOfAttorneyEntity legalPower = this.createPower(
+                "FIND-LEGAL-TRUE-" + UUID.randomUUID(), adultPrincipal, adultAttorney, PowerOfAttorneyStatus.EXPIRED);
+        PowerOfAttorneyEntity nonLegalPower = this.createPower(
+                "FIND-LEGAL-FALSE-" + UUID.randomUUID(), adultPrincipal, minor, PowerOfAttorneyStatus.EXPIRED);
+        this.stubUsers();
+
+        PowerOfAttorneyFindCriteria criteria = PowerOfAttorneyFindCriteria.builder()
+                .status(PowerOfAttorneyStatus.EXPIRED)
+                .legalPowerOfAttorney(false)
+                .build();
+
+        List<String> protocols = this.powerOfAttorneyService.find(criteria).stream()
+                .map(PowerOfAttorney::getProtocolNumber).toList();
+
+        assertThat(protocols).doesNotContain(legalPower.getProtocolNumber());
+        assertThat(protocols).contains(nonLegalPower.getProtocolNumber());
+    }
+
+    private PowerOfAttorneyPartyEntity createParty(int age, boolean fullMentalCapacity) {
+        return this.powerOfAttorneyPartyRepository.saveAndFlush(PowerOfAttorneyPartyEntity.builder()
+                .id(UUID.randomUUID())
+                .age(age)
+                .fullMentalCapacity(fullMentalCapacity)
+                .representationCompany(false)
+                .userId(UUID.randomUUID())
+                .build());
+    }
+
+    private PowerOfAttorneyEntity createPower(String protocolNumber, PowerOfAttorneyPartyEntity principal,
+                                              PowerOfAttorneyPartyEntity attorney, PowerOfAttorneyStatus status) {
+        return this.powerOfAttorneyRepository.saveAndFlush(PowerOfAttorneyEntity.builder()
+                .id(UUID.randomUUID())
+                .protocolNumber(protocolNumber)
+                .grantDate(LocalDate.of(2026, 1, 1))
+                .scope("Test scope")
+                .notaryName("Test notary")
+                .notaryOffice("Test office")
+                .principal(principal)
+                .attorney(attorney)
+                .type(PowerOfAttorneyType.GENERAL)
+                .status(status)
+                .build());
+    }
+
+    private void stubUsers() {
+        when(this.userFinder.findByIds(anySet())).thenAnswer(invocation -> {
+            Set<UUID> ids = invocation.getArgument(0);
+            return ids.stream().map(id -> UserSnapshot.builder()
+                    .id(id)
+                    .identity("ID-" + id)
+                    .firstName("Test user")
+                    .build()).collect(Collectors.toList());
+        });
     }
 }
