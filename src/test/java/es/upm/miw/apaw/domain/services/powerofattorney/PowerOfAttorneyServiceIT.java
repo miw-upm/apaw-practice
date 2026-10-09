@@ -6,14 +6,18 @@ import es.upm.miw.apaw.adapters.out.powerofattorney.postgres.PowerOfAttorneyPart
 import es.upm.miw.apaw.adapters.out.powerofattorney.postgres.PowerOfAttorneyRepository;
 import es.upm.miw.apaw.domain.exceptions.BadRequestException;
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.model.powerofattorney.CreationPowerOfAttorney;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorney;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyStatus;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
-import es.upm.miw.apaw.domain.model.powerofattorney.*;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyFindCriteria;
+import es.upm.miw.apaw.domain.model.powerofattorney.PowerOfAttorneyType;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -22,13 +26,17 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static org.mockito.ArgumentMatchers.anySet;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import static es.upm.miw.apaw.config.seeders.PowerOfAttorneyPartySeederForDev.ID_0;
 import static es.upm.miw.apaw.config.seeders.PowerOfAttorneyPartySeederForDev.ID_1;
 import static es.upm.miw.apaw.config.seeders.PowerOfAttorneyPartySeederForDev.ID_2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anySet;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -158,7 +166,6 @@ class PowerOfAttorneyServiceIT {
                 .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining("Principal and attorney must be different users");
     }
-
     @Test
     @Transactional
     void testFindCriteriaByFullMentalCapacityTrueRequiresBothParties() {
@@ -178,11 +185,13 @@ class PowerOfAttorneyServiceIT {
                 .fullMentalCapacity(true)
                 .build();
 
-        List<PowerOfAttorney> result = this.powerOfAttorneyService.find(criteria);
-        List<String> protocols = result.stream().map(PowerOfAttorney::getProtocolNumber).toList();
+        List<String> protocolNumbers = this.powerOfAttorneyService.find(criteria).stream()
+                .map(PowerOfAttorney::getProtocolNumber)
+                .toList();
 
-        assertThat(protocols).contains(bothCapable.getProtocolNumber());
-        assertThat(protocols).doesNotContain(oneIncapable.getProtocolNumber(), bothIncapable.getProtocolNumber());
+        assertThat(protocolNumbers)
+                .contains(bothCapable.getProtocolNumber())
+                .doesNotContain(oneIncapable.getProtocolNumber(), bothIncapable.getProtocolNumber());
     }
 
     @Test
@@ -205,11 +214,12 @@ class PowerOfAttorneyServiceIT {
                 .fullMentalCapacity(false)
                 .build();
 
-        List<String> protocols = this.powerOfAttorneyService.find(criteria).stream()
+        List<String> protocolNumbers = this.powerOfAttorneyService.find(criteria).stream()
                 .map(PowerOfAttorney::getProtocolNumber).toList();
 
-        assertThat(protocols).doesNotContain(bothCapable.getProtocolNumber());
-        assertThat(protocols).contains(mixed.getProtocolNumber(), bothIncapable.getProtocolNumber());
+        assertThat(protocolNumbers)
+                .contains(mixed.getProtocolNumber(), bothIncapable.getProtocolNumber())
+                .doesNotContain(bothCapable.getProtocolNumber());
     }
 
     @Test
@@ -250,11 +260,12 @@ class PowerOfAttorneyServiceIT {
                 .legalPowerOfAttorney(true)
                 .build();
 
-        List<String> protocols = this.powerOfAttorneyService.find(criteria).stream()
+        List<String> protocolNumbers = this.powerOfAttorneyService.find(criteria).stream()
                 .map(PowerOfAttorney::getProtocolNumber).toList();
 
-        assertThat(protocols).contains(legalPower.getProtocolNumber());
-        assertThat(protocols).doesNotContain(illegalPower.getProtocolNumber());
+        assertThat(protocolNumbers)
+                .contains(legalPower.getProtocolNumber())
+                .doesNotContain(illegalPower.getProtocolNumber());
         verify(this.userFinder, times(1)).findByIds(org.mockito.ArgumentMatchers.argThat(userIds ->
                 userIds.containsAll(Set.of(legalPrincipal.getUserId(), legalAttorney.getUserId(), minor.getUserId()))));
     }
@@ -296,11 +307,13 @@ class PowerOfAttorneyServiceIT {
                 .legalPowerOfAttorney(false)
                 .build();
 
-        List<String> protocols = this.powerOfAttorneyService.find(criteria).stream()
-                .map(PowerOfAttorney::getProtocolNumber).toList();
+        List<String> protocolNumbers = this.powerOfAttorneyService.find(criteria).stream()
+                .map(PowerOfAttorney::getProtocolNumber)
+                .toList();
 
-        assertThat(protocols).doesNotContain(legalPower.getProtocolNumber());
-        assertThat(protocols).contains(nonLegalPower.getProtocolNumber());
+        assertThat(protocolNumbers)
+                .contains(nonLegalPower.getProtocolNumber())
+                .doesNotContain(legalPower.getProtocolNumber());
     }
 
     private PowerOfAttorneyPartyEntity createParty(int age, boolean fullMentalCapacity) {
