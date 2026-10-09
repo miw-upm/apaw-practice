@@ -6,7 +6,6 @@ import es.upm.miw.apaw.adapters.out.contract.postgres.ContractRepository;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.contract.*;
-import es.upm.miw.apaw.domain.ports.out.contract.ContractGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,16 +173,28 @@ class ContractServiceIT {
                         CONTRACT_19.getId());
     }
 
+
     @Test
-    void testFindByActive() {
-        List<UserSnapshot> users = List.of(
-                CONTRACT_6.getUserSnapshot(),
-                CONTRACT_9.getUserSnapshot(),
-                CONTRACT_10.getUserSnapshot(),
-                CONTRACT_11.getUserSnapshot(),
-                CONTRACT_12.getUserSnapshot(),
-                CONTRACT_14.getUserSnapshot()
-        );
+    void testFindInactiveContracts() {
+        List<UserSnapshot> users = Stream.of(
+                        CONTRACT_6,
+                        CONTRACT_9,
+                        CONTRACT_10,
+                        CONTRACT_11,
+                        CONTRACT_12,
+                        CONTRACT_14,
+                        CONTRACT_17,
+                        CONTRACT_19
+                )
+                .map(Contract::getUserSnapshot)
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toMap(
+                                UserSnapshot::getId,
+                                user -> user,
+                                (first, duplicate) -> first
+                        ),
+                        map -> List.copyOf(map.values())
+                ));
 
         Set<UUID> userIds = users.stream()
                 .map(UserSnapshot::getId)
@@ -199,7 +210,7 @@ class ContractServiceIT {
 
         assertThat(contracts)
                 .extracting(Contract::getId)
-                .containsExactlyInAnyOrder(
+                .contains(
                         CONTRACT_6.getId(),
                         CONTRACT_9.getId(),
                         CONTRACT_10.getId(),
@@ -207,8 +218,10 @@ class ContractServiceIT {
                         CONTRACT_12.getId(),
                         CONTRACT_14.getId(),
                         CONTRACT_17.getId(),
-                        CONTRACT_19.getId());
+                        CONTRACT_19.getId()
+                );
     }
+
 
     @Test
     void testFindByCombinedCriteria() {

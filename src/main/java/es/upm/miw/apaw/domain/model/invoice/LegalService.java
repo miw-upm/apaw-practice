@@ -16,8 +16,6 @@ import java.util.UUID;
 public class LegalService {
 
     @EqualsAndHashCode.Include
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @NotNull
     private UUID id;
 
     @NotBlank
@@ -39,8 +37,14 @@ public class LegalService {
 
     public void doDefault() {
         this.id = UUID.randomUUID();
-        this.requiresAppointment = false;
-        this.category = ServiceCategory.CONSULTING;
-        this.legalArea = LegalArea.CIVIL;
+        if (this.requiresAppointment == null) {
+            this.requiresAppointment = false;
+        }
+        if (this.category == null) {
+            this.category = ServiceCategory.CONSULTING;
+        }
+        if (this.legalArea == null) {
+            this.legalArea = LegalArea.CIVIL;
+        }
     }
 }
