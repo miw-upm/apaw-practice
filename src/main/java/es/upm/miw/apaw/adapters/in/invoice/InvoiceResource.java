@@ -3,6 +3,7 @@ package es.upm.miw.apaw.adapters.in.invoice;
 
 import es.upm.miw.apaw.domain.model.invoice.CreationInvoice;
 import es.upm.miw.apaw.domain.model.invoice.Invoice;
+import es.upm.miw.apaw.domain.model.invoice.InvoiceFindCriteria;
 import es.upm.miw.apaw.domain.model.invoice.LegalServiceInvoiceReport;
 import es.upm.miw.apaw.domain.services.invoice.InvoiceService;
 import jakarta.validation.Valid;
@@ -26,6 +27,12 @@ public class InvoiceResource {
     @GetMapping(REPORT)
     public List<LegalServiceInvoiceReport> findLegalServiceInvoiceReport() {
         return this.invoiceService.findLegalServiceInvoiceReport();
+    }
+
+    @GetMapping("/findCriteria")
+    public List<Invoice> findByCriteria(
+            @ModelAttribute InvoiceFindCriteria criteria) {
+        return this.invoiceService.findByCriteria(criteria);
     }
 
     @PostMapping

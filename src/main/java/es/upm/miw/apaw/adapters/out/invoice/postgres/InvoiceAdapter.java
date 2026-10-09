@@ -2,6 +2,7 @@
 package es.upm.miw.apaw.adapters.out.invoice.postgres;
 
 import es.upm.miw.apaw.domain.model.invoice.Invoice;
+import es.upm.miw.apaw.domain.model.invoice.InvoiceFindCriteria;
 import es.upm.miw.apaw.domain.model.invoice.LegalServiceInvoiceReport;
 import es.upm.miw.apaw.domain.ports.out.invoice.InvoiceGateway;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,20 @@ public class InvoiceAdapter implements InvoiceGateway {
     @Override
     public List<LegalServiceInvoiceReport> findLegalServiceInvoiceReport() {
         return this.invoiceRepository.findLegalServiceInvoiceReport();
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Invoice> findByCriteria(InvoiceFindCriteria criteria) {
+        return this.invoiceRepository.findByCriteria(
+                        criteria.getPaid(),
+                        criteria.getIssueYear(),
+                        criteria.getServiceName()
+                )
+                .stream()
+                .map(InvoiceEntity::toDomain)
+                .toList();
     }
 
 }
