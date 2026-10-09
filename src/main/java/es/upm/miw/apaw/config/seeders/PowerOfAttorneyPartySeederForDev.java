@@ -36,6 +36,8 @@ public class PowerOfAttorneyPartySeederForDev implements ApplicationRunner {
     public static final UUID ID_3 = UUID.fromString(PREFIX + "000d");
     public static final UUID ID_4 = UUID.fromString(PREFIX + "000e");
     public static final UUID ID_5 = UUID.fromString(PREFIX + "000f");
+    public static final UUID ID_6 = UUID.fromString(PREFIX + "0010");
+
     public static final UUID POWER_OF_ATTORNEY_ID_0 = UUID.fromString(PREFIX + "0010");
     public static final UUID POWER_OF_ATTORNEY_ID_1 = UUID.fromString(PREFIX + "0011");
     public static final UUID POWER_OF_ATTORNEY_ID_2 = UUID.fromString(PREFIX + "0012");
@@ -45,6 +47,8 @@ public class PowerOfAttorneyPartySeederForDev implements ApplicationRunner {
     public static final UUID POWER_OF_ATTORNEY_ID_6 = UUID.fromString(PREFIX + "0016");
     public static final UUID POWER_OF_ATTORNEY_ID_7 = UUID.fromString(PREFIX + "0017");
     public static final UUID POWER_OF_ATTORNEY_ID_8 = UUID.fromString(PREFIX + "0018");
+    public static final UUID POWER_OF_ATTORNEY_ID_9 = UUID.fromString(PREFIX + "0019");
+    public static final UUID POWER_OF_ATTORNEY_ID_10 = UUID.fromString(PREFIX + "0020");
 
     public static final PowerOfAttorneyParty PARTY_0 = PowerOfAttorneyParty.builder()
             .id(ID_0)
@@ -96,6 +100,15 @@ public class PowerOfAttorneyPartySeederForDev implements ApplicationRunner {
             .companyName("García Legal S.L.")
             .representationCompany(false)
             .userSnapshot(user("0003", "cliente3", "00000003A"))
+            .build();
+
+    public static final PowerOfAttorneyParty PARTY_6 = PowerOfAttorneyParty.builder()
+            .id(ID_6)
+            .age(59)
+            .fullMentalCapacity(true)
+            .companyName("García Legal S.L.")
+            .representationCompany(false)
+            .userSnapshot(user("000e", "Manager1", "00000011B"))
             .build();
 
     public static final PowerOfAttorney POWER_OF_ATTORNEY_0 = PowerOfAttorney.builder()
@@ -242,6 +255,38 @@ public class PowerOfAttorneyPartySeederForDev implements ApplicationRunner {
             .notes("Development seed")
             .build();
 
+    public static final PowerOfAttorney POWER_OF_ATTORNEY_9 = PowerOfAttorney.builder()
+            .id(POWER_OF_ATTORNEY_ID_9)
+            .protocolNumber("DEV-POA-0009")
+            .principal(PARTY_6)
+            .attorney(PARTY_1)
+            .status(PowerOfAttorneyStatus.REVOKED)
+            .type(PowerOfAttorneyType.LITIGATION)
+            .notaryName("Sophia Mitchell")
+            .notaryOffice("Mitchell Notarial Services")
+            .grantDate(LocalDate.of(2025,01,12))
+            .expirationDate(LocalDate.of(2025, 12, 31))
+            .scope("Litigation representation")
+            .limitations("Revoked mandate")
+            .notes("Development seed")
+            .build();
+
+    public static final PowerOfAttorney POWER_OF_ATTORNEY_10 = PowerOfAttorney.builder()
+            .id(POWER_OF_ATTORNEY_ID_10)
+            .protocolNumber("DEV-POA-0010")
+            .principal(PARTY_6)
+            .attorney(PARTY_0)
+            .status(PowerOfAttorneyStatus.ACTIVE)
+            .type(PowerOfAttorneyType.LITIGATION)
+            .notaryName("William Harrison")
+            .notaryOffice("Harrison & Partners Notary Office")
+            .grantDate(LocalDate.of(2026,01,12))
+            .expirationDate(LocalDate.of(2027, 12, 31))
+            .scope("Litigation representation")
+            .limitations("Litigation only")
+            .notes("Development seed")
+            .build();
+
 
     private final PowerOfAttorneyPartyRepository powerOfAttorneyPartyRepository;
     private final PowerOfAttorneyRepository powerOfAttorneyRepository;
@@ -263,7 +308,7 @@ public class PowerOfAttorneyPartySeederForDev implements ApplicationRunner {
 
     private void seedPowerOfAttorneyParties() {
         List<PowerOfAttorneyPartyEntity> parties = List.of(
-                        PARTY_0, PARTY_1, PARTY_2, PARTY_3, PARTY_4, PARTY_5).stream()
+                        PARTY_0, PARTY_1, PARTY_2, PARTY_3, PARTY_4, PARTY_5, PARTY_6).stream()
                 .filter(party -> !this.powerOfAttorneyPartyRepository.existsById(party.getId()))
                 .map(PowerOfAttorneyPartyEntity::new)
                 .toList();
@@ -274,7 +319,7 @@ public class PowerOfAttorneyPartySeederForDev implements ApplicationRunner {
     private void seedPowerOfAttorneys() {
         List<PowerOfAttorneyEntity> powerOfAttorneys = List.of(
                 POWER_OF_ATTORNEY_0, POWER_OF_ATTORNEY_1, POWER_OF_ATTORNEY_2, POWER_OF_ATTORNEY_3, POWER_OF_ATTORNEY_4, POWER_OF_ATTORNEY_5,
-                POWER_OF_ATTORNEY_6, POWER_OF_ATTORNEY_7, POWER_OF_ATTORNEY_8).stream()
+                POWER_OF_ATTORNEY_6, POWER_OF_ATTORNEY_7, POWER_OF_ATTORNEY_8, POWER_OF_ATTORNEY_9, POWER_OF_ATTORNEY_10).stream()
                 .filter(powerOfAttorney -> !this.powerOfAttorneyRepository.existsById(powerOfAttorney.getId()))
                 .map(powerOfAttorney -> new PowerOfAttorneyEntity(
                         powerOfAttorney,

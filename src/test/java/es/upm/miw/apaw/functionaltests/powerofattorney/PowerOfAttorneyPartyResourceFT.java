@@ -47,7 +47,7 @@ class PowerOfAttorneyPartyResourceFT {
         when(this.userFinder.findByIds(any()))
                 .thenAnswer(invocation -> {
                     Set<UUID> ids = invocation.getArgument(0);
-                    return List.of(PARTY_0, PARTY_1, PARTY_2, PARTY_3, PARTY_4, PARTY_5)
+                    return List.of(PARTY_0, PARTY_1, PARTY_2, PARTY_3, PARTY_4, PARTY_5, PARTY_6)
                             .stream()
                             .map(PowerOfAttorneyParty::getUserSnapshot)
                             .filter(user -> ids.contains(user.getId()))
@@ -137,7 +137,7 @@ class PowerOfAttorneyPartyResourceFT {
                 .expectBody(PowerOfAttorneyParty[].class)
                 .value(body -> assertThat(body)
                         .extracting(PowerOfAttorneyParty::getId)
-                        .contains(ID_0, ID_1, ID_2, ID_3, ID_4, ID_5));
+                        .contains(ID_0, ID_1, ID_2, ID_3, ID_4, ID_5, ID_6));
     }
 
     @Test
