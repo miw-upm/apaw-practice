@@ -7,6 +7,8 @@ import es.upm.miw.apaw.domain.ports.out.invoice.LegalServiceGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,6 +26,10 @@ public class LegalServiceService {
         }
 
         return this.legalServiceGateway.create(legalService);
+    }
+
+    public List<LegalService> findAll() {
+        return this.legalServiceGateway.findAll();
     }
 
     public LegalService read(UUID id) {
