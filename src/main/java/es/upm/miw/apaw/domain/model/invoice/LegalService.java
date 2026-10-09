@@ -16,8 +16,6 @@ import java.util.UUID;
 public class LegalService {
 
     @EqualsAndHashCode.Include
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    @NotNull
     private UUID id;
 
     @NotBlank

@@ -72,7 +72,7 @@ public class SurveySeederForDev implements ApplicationRunner {
             .submittedDate(LocalDate.of(2025, 1, 20))
             .language("English")
             .surveyQuestions(List.of(QUESTION_0, QUESTION_2))
-            .userSnapshot(user("0010", "600000120", "Lucía", "Madrid"))
+            .userSnapshot(user("0000", "600000100", "cliente0", "Madrid"))
             .build();
 
     public static final UUID SURVEY_ID_1 = UUID.fromString(SURVEY_PREFIX + "0001");
@@ -83,7 +83,7 @@ public class SurveySeederForDev implements ApplicationRunner {
             .createdDate(LocalDate.of(2025, 2, 5))
             .language("Spanish")
             .surveyQuestions(List.of(QUESTION_1))
-            .userSnapshot(user("0011", "600000121", "Carlos", "Sevilla"))
+            .userSnapshot(user("0001", "600000101", "cliente1", "Sevilla"))
             .build();
 
     public static final UUID SURVEY_ID_2 = UUID.fromString(SURVEY_PREFIX + "0002");
@@ -94,7 +94,7 @@ public class SurveySeederForDev implements ApplicationRunner {
             .createdDate(LocalDate.of(2025, 3, 1))
             .language("English")
             .surveyQuestions(List.of(QUESTION_0, QUESTION_1, QUESTION_2))
-            .userSnapshot(user("0012", "600000122", "Marta", "Madrid"))
+            .userSnapshot(user("0003", "600000103", "cliente3", "Madrid"))
             .build();
 
     private final SurveyQuestionRepository surveyQuestionRepository;
