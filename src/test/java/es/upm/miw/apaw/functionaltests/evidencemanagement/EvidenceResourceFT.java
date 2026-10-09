@@ -54,8 +54,10 @@ class EvidenceResourceFT {
                             .contains(EVIDENCE_ID_0).doesNotContain(EVIDENCE_ID_1, EVIDENCE_ID_2);
                     assertThat(body).filteredOn(evidence -> evidence.getId().equals(EVIDENCE_ID_0))
                             .singleElement().satisfies(evidence -> assertThat(evidence.getCustodyRecords())
-                                    .allSatisfy(custodyRecord -> assertThat(custodyRecord.getCustodian().getFirstName())
-                                            .isEqualTo("Ana")));
+                                    .allSatisfy(custodyRecord -> assertThat(custodyRecord.getCustodian())
+                                            .usingRecursiveComparison().isEqualTo(UserSnapshot.builder()
+                                                    .id(custodyRecord.getCustodian().getId())
+                                                    .mobile("600000000").firstName("Ana").build())));
                 });
     }
 }

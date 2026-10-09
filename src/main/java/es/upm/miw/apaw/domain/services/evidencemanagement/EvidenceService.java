@@ -56,6 +56,7 @@ public class EvidenceService {
                 custodyRecord -> custodyRecord.setCustodian(this.readCustodian(custodiansById, custodyRecord))));
         return evidences.stream()
                 .filter(evidence -> this.matchesCustodianFirstName(criteria, evidence))
+                .map(Evidence::ofSummary)
                 .toList();
     }
 
