@@ -82,7 +82,7 @@ public class DeadlineAdapter implements DeadlineGateway {
     private Deadline toDomainWithoutNonWorkingDays(DeadlineEntity entity) {
         Deadline deadline = new Deadline();
         BeanUtils.copyProperties(entity, deadline, "nonWorkingDays", "userId");
-        deadline.setUserSnapshot(UserSnapshot.builder().id(entity.getUserId()).build());
+        deadline.setLawyer(UserSnapshot.builder().id(entity.getUserId()).build());
         return deadline;
     }
 }

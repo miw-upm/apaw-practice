@@ -39,7 +39,7 @@ public class DeadlineService {
         deadline.setNonWorkingDays(deadline.hasWorkingDayCount()
                 ? this.nonWorkingDayGateway.findApplicable(creation.getRegion(), creation.getCity())
                 : List.of());
-        deadline.setUserSnapshot(this.userFinder.read(creation.getUserId()));
+        deadline.setLawyer(this.userFinder.read(creation.getUserId()));
         deadline.doCalculate();
         return this.deadlineGateway.create(deadline);
     }
@@ -50,23 +50,23 @@ public class DeadlineService {
             return List.of();
         }
         Set<UUID> userIds = reports.stream()
-                .map(DeadlineWorkloadReport::userId)
+                .map(report -> report.lawyer().getId())
                 .collect(Collectors.toSet());
         Map<UUID, UserSnapshot> usersById = this.findUsersById(userIds);
         return reports.stream()
-                .map(report -> this.withUserSnapshot(report, usersById))
+                .map(report -> this.withLawyer(report, usersById))
                 .toList();
     }
 
-    private DeadlineWorkloadReport withUserSnapshot(
+    private DeadlineWorkloadReport withLawyer(
             DeadlineWorkloadReport report, Map<UUID, UserSnapshot> usersById) {
-        UserSnapshot userSnapshot = usersById.get(report.userId());
-        if (userSnapshot == null) {
-            throw new NotFoundException("User id not found: " + report.userId());
+        UUID lawyerId = report.lawyer().getId();
+        UserSnapshot lawyer = usersById.get(lawyerId);
+        if (lawyer == null) {
+            throw new NotFoundException("User id not found: " + lawyerId);
         }
         return new DeadlineWorkloadReport(
-                report.userId(),
-                userSnapshot,
+                lawyer,
                 report.expiredDeadlineCount(),
                 report.totalDeadlineCount(),
                 report.holidayAffectedDeadlineCount());
@@ -78,23 +78,23 @@ public class DeadlineService {
             return List.of();
         }
         Set<UUID> userIds = deadlines.stream()
-                .map(deadline -> deadline.getUserSnapshot().getId())
+                .map(deadline -> deadline.getLawyer().getId())
                 .collect(Collectors.toSet());
         Map<UUID, UserSnapshot> usersById = this.findUsersById(userIds);
         return deadlines.stream()
-                .map(deadline -> this.withUserSnapshot(deadline, usersById))
+                .map(deadline -> this.withLawyer(deadline, usersById))
                 .filter(deadline -> this.matchesUserMobile(criteria, deadline))
                 .map(Deadline::ofSummary)
                 .toList();
     }
 
-    private Deadline withUserSnapshot(Deadline deadline, Map<UUID, UserSnapshot> usersById) {
-        UUID userId = deadline.getUserSnapshot().getId();
-        UserSnapshot userSnapshot = usersById.get(userId);
-        if (userSnapshot == null) {
-            throw new NotFoundException("User id not found: " + userId);
+    private Deadline withLawyer(Deadline deadline, Map<UUID, UserSnapshot> usersById) {
+        UUID lawyerId = deadline.getLawyer().getId();
+        UserSnapshot lawyer = usersById.get(lawyerId);
+        if (lawyer == null) {
+            throw new NotFoundException("User id not found: " + lawyerId);
         }
-        deadline.setUserSnapshot(userSnapshot);
+        deadline.setLawyer(lawyer);
         return deadline;
     }
 
@@ -105,6 +105,6 @@ public class DeadlineService {
 
     private boolean matchesUserMobile(DeadlineFindCriteria criteria, Deadline deadline) {
         return !criteria.hasUserMobile()
-                || criteria.getUserMobile().equals(deadline.getUserSnapshot().getMobile());
+                || criteria.getUserMobile().equals(deadline.getLawyer().getMobile());
     }
 }

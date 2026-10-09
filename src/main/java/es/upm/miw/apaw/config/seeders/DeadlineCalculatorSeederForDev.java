@@ -189,7 +189,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2026, 6, 10, 9, 0))
             .dueDate(LocalDate.of(2026, 6, 25))
             .nonWorkingDays(List.of(NON_WORKING_DAY_10))
-            .userSnapshot(USER_0)
+            .lawyer(USER_0)
             .build();
 
     public static final UUID DEADLINE_ID_1 = UUID.fromString(PREFIX + "1001");
@@ -206,7 +206,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2020, 5, 12, 9, 0))
             .dueDate(LocalDate.of(2020, 5, 20))
             .nonWorkingDays(List.of(NON_WORKING_DAY_11))
-            .userSnapshot(USER_0)
+            .lawyer(USER_0)
             .build();
 
     public static final UUID DEADLINE_ID_2 = UUID.fromString(PREFIX + "1002");
@@ -222,7 +222,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2020, 2, 3, 9, 0))
             .dueDate(LocalDate.of(2020, 2, 6))
             .nonWorkingDays(List.of())
-            .userSnapshot(USER_0)
+            .lawyer(USER_0)
             .build();
 
     /**
@@ -243,7 +243,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2020, 5, 11, 9, 0))
             .dueDate(LocalDate.of(2020, 5, 21))
             .nonWorkingDays(List.of())
-            .userSnapshot(USER_0)
+            .lawyer(USER_0)
             .build();
 
     public static final UUID DEADLINE_ID_4 = UUID.fromString(PREFIX + "1004");
@@ -259,7 +259,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2040, 3, 5, 9, 0))
             .dueDate(LocalDate.of(2040, 3, 12))
             .nonWorkingDays(List.of())
-            .userSnapshot(USER_0)
+            .lawyer(USER_0)
             .build();
 
     public static final UUID DEADLINE_ID_5 = UUID.fromString(PREFIX + "1005");
@@ -276,7 +276,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2020, 9, 8, 9, 0))
             .dueDate(LocalDate.of(2020, 9, 14))
             .nonWorkingDays(List.of(NON_WORKING_DAY_12))
-            .userSnapshot(USER_1)
+            .lawyer(USER_1)
             .build();
 
     public static final UUID DEADLINE_ID_6 = UUID.fromString(PREFIX + "1006");
@@ -292,7 +292,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2020, 4, 1, 9, 0))
             .dueDate(LocalDate.of(2020, 4, 8))
             .nonWorkingDays(List.of())
-            .userSnapshot(USER_1)
+            .lawyer(USER_1)
             .build();
 
     public static final UUID DEADLINE_ID_7 = UUID.fromString(PREFIX + "1007");
@@ -308,7 +308,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2040, 2, 6, 9, 0))
             .dueDate(LocalDate.of(2040, 2, 10))
             .nonWorkingDays(List.of())
-            .userSnapshot(USER_1)
+            .lawyer(USER_1)
             .build();
 
     public static final UUID DEADLINE_ID_8 = UUID.fromString(PREFIX + "1008");
@@ -325,7 +325,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2020, 10, 5, 9, 0))
             .dueDate(LocalDate.of(2020, 10, 9))
             .nonWorkingDays(List.of())
-            .userSnapshot(USER_2)
+            .lawyer(USER_2)
             .build();
 
     /**
@@ -345,7 +345,7 @@ public class DeadlineCalculatorSeederForDev implements ApplicationRunner {
             .createdAt(LocalDateTime.of(2020, 11, 3, 9, 0))
             .dueDate(LocalDate.of(2020, 11, 5))
             .nonWorkingDays(List.of())
-            .userSnapshot(USER_2)
+            .lawyer(USER_2)
             .build();
 
     private static UserSnapshot user(UUID id, String mobile, String firstName) {

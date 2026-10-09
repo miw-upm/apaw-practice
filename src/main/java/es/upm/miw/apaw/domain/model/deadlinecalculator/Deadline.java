@@ -44,7 +44,7 @@ public class Deadline {
 
     private List<NonWorkingDay> nonWorkingDays;
 
-    private UserSnapshot userSnapshot;
+    private UserSnapshot lawyer;
 
     public void doDefault() {
         this.id = UUID.randomUUID();
@@ -74,10 +74,10 @@ public class Deadline {
                 .status(this.status)
                 .createdAt(this.createdAt)
                 .dueDate(this.dueDate)
-                .userSnapshot(UserSnapshot.builder()
-                        .id(this.userSnapshot.getId())
-                        .mobile(this.userSnapshot.getMobile())
-                        .firstName(this.userSnapshot.getFirstName())
+                .lawyer(UserSnapshot.builder()
+                        .id(this.lawyer.getId())
+                        .mobile(this.lawyer.getMobile())
+                        .firstName(this.lawyer.getFirstName())
                         .build())
                 .build();
     }
