@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.invoice.InvoiceFindCriteria;
 
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -39,6 +40,11 @@ public class InvoiceService {
                 .map(this::readLegalService)
                 .toList();
 
+        BigDecimal taxableBase = services.stream()
+                .map(LegalService::getFee)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        invoice.setTaxableBase(taxableBase);
         invoice.setServices(services);
         invoice.setCustomer(this.userFinder.read(creation.getUserId()));
 
