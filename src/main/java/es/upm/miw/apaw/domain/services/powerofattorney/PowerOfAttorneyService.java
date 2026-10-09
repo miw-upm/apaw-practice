@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,8 @@ public class PowerOfAttorneyService {
             throw new ConflictException(
                     "Power of attorney protocol number already exists: " + creation.getProtocolNumber());
         }
-        if (creation.getGrantDate().isAfter(creation.getExpirationDate())){
+        if (creation.getExpirationDate() != null
+                && creation.getGrantDate().isAfter(creation.getExpirationDate())){
             throw new BadRequestException(
                     "Power of attorney grand date cannot be later than expiration date: " + creation.getProtocolNumber());
         }
@@ -57,11 +59,11 @@ public class PowerOfAttorneyService {
     public List<PowerOfAttorney> find(PowerOfAttorneyFindCriteria criteria) {
         PowerOfAttorneyFindCriteria filters = criteria == null ? new PowerOfAttorneyFindCriteria() : criteria;
         List<PowerOfAttorney> powers = this.powerOfAttorneyGateway.find(filters);
-        if (powers.isEmpty() || (!filters.hasIdentity() && !filters.hasLegalPowerOfAttorney())) {
+        if (powers.isEmpty()) {
             return powers;
         }
         Set<UUID> userIds = powers.stream()
-                .flatMap(power -> java.util.stream.Stream.of(
+                .flatMap(power -> Stream.of(
                         power.getPrincipal().getUserSnapshot().getId(),
                         power.getAttorney().getUserSnapshot().getId()))
                 .collect(Collectors.toSet());
@@ -71,6 +73,7 @@ public class PowerOfAttorneyService {
             power.getPrincipal().setUserSnapshot(users.get(power.getPrincipal().getUserSnapshot().getId()));
             power.getAttorney().setUserSnapshot(users.get(power.getAttorney().getUserSnapshot().getId()));
         });
+
         return powers.stream()
                 .filter(power -> !filters.hasIdentity() || this.matchesIdentity(power, filters.getIdentity()))
                 .filter(power -> !filters.hasLegalPowerOfAttorney()

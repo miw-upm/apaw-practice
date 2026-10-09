@@ -39,9 +39,16 @@ public class PowerOfAttorneyAdapter implements PowerOfAttorneyGateway {
                     builder.equal(root.get("status"), criteria.getStatus()));
         }
         if (criteria.hasFullMentalCapacity()) {
-            specification = specification.and((root, query, builder) -> builder.or(
-                    builder.equal(root.join("principal").get("fullMentalCapacity"), criteria.getFullMentalCapacity()),
-                    builder.equal(root.join("attorney").get("fullMentalCapacity"), criteria.getFullMentalCapacity())));
+            if(criteria.getFullMentalCapacity()){
+                specification = specification.and((root, query, builder) -> builder.and(
+                        builder.equal(root.join("principal").get("fullMentalCapacity"), criteria.getFullMentalCapacity()),
+                        builder.equal(root.join("attorney").get("fullMentalCapacity"), criteria.getFullMentalCapacity())));
+            }else{
+                specification = specification.and((root, query, builder) -> builder.or(
+                        builder.equal(root.join("principal").get("fullMentalCapacity"), criteria.getFullMentalCapacity()),
+                        builder.equal(root.join("attorney").get("fullMentalCapacity"), criteria.getFullMentalCapacity())));
+            }
+
         }
         return this.powerOfAttorneyRepository.findAll(specification).stream()
                 .map(this::toDomain)
