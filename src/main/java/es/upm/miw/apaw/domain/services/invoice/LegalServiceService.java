@@ -2,13 +2,19 @@
 package es.upm.miw.apaw.domain.services.invoice;
 
 import es.upm.miw.apaw.domain.exceptions.ConflictException;
+import es.upm.miw.apaw.domain.exceptions.BadRequestException;
+import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.invoice.LegalService;
+import es.upm.miw.apaw.domain.model.invoice.LegalServiceUpdate;
 import es.upm.miw.apaw.domain.ports.out.invoice.LegalServiceGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import es.upm.miw.apaw.domain.exceptions.NotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -55,6 +61,32 @@ public class LegalServiceService {
         storedLegalService.setLegalArea(legalService.getLegalArea());
 
         return this.legalServiceGateway.update(storedLegalService);
+    }
+
+    @Transactional
+    public void updateLegalServices(List<LegalServiceUpdate> updates) {
+        this.assertUniqueIds(updates);
+
+        List<LegalService> legalServices = updates.stream()
+                .map(update -> {
+                    LegalService legalService = this.read(update.id());
+                    legalService.setFee(update.fee());
+                    return legalService;
+                })
+                .toList();
+
+        legalServices.forEach(this.legalServiceGateway::update);
+    }
+
+    private void assertUniqueIds(List<LegalServiceUpdate> updates) {
+        Set<UUID> ids = new HashSet<>();
+
+        for (LegalServiceUpdate update : updates) {
+            if (!ids.add(update.id())) {
+                throw new BadRequestException(
+                        "Repeated legal service id: " + update.id());
+            }
+        }
     }
 
     public void delete(UUID id) {

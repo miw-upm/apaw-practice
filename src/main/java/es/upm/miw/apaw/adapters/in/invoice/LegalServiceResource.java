@@ -2,12 +2,16 @@
 package es.upm.miw.apaw.adapters.in.invoice;
 
 import es.upm.miw.apaw.domain.model.invoice.LegalService;
+import es.upm.miw.apaw.domain.model.invoice.LegalServiceUpdate;
 import es.upm.miw.apaw.domain.services.invoice.LegalServiceService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,6 +52,12 @@ public class LegalServiceResource {
     @PutMapping(ID)
     public LegalService update(@PathVariable UUID id, @Valid @RequestBody LegalService legalService) {
         return this.legalServiceService.update(id, legalService);
+    }
+
+    @PatchMapping
+    public void updateLegalServices(
+            @RequestBody @NotEmpty List<@NotNull @Valid LegalServiceUpdate> updates) {
+        this.legalServiceService.updateLegalServices(updates);
     }
 
     @DeleteMapping(ID)
