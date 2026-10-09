@@ -39,8 +39,14 @@ public class LegalService {
 
     public void doDefault() {
         this.id = UUID.randomUUID();
-        this.requiresAppointment = false;
-        this.category = ServiceCategory.CONSULTING;
-        this.legalArea = LegalArea.CIVIL;
+        if (this.requiresAppointment == null) {
+            this.requiresAppointment = false;
+        }
+        if (this.category == null) {
+            this.category = ServiceCategory.CONSULTING;
+        }
+        if (this.legalArea == null) {
+            this.legalArea = LegalArea.CIVIL;
+        }
     }
 }
