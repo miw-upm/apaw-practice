@@ -9,6 +9,7 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CreationEvidence;
 import es.upm.miw.apaw.domain.model.evidencemanagement.CustodyRecord;
 import es.upm.miw.apaw.domain.model.evidencemanagement.Evidence;
+import es.upm.miw.apaw.domain.model.evidencemanagement.EvidenceFindCriteria;
 import es.upm.miw.apaw.domain.model.evidencemanagement.EvidenceStatus;
 import es.upm.miw.apaw.domain.model.evidencemanagement.EvidenceType;
 import es.upm.miw.apaw.domain.ports.out.evidencemanagement.CustodyRecordGateway;
@@ -18,16 +19,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.Map;
+import java.util.Set;
 
 import static es.upm.miw.apaw.config.seeders.EvidenceSeederForDev.ID_0;
 import static es.upm.miw.apaw.config.seeders.EvidenceSeederForDev.CUSTODIAN_ID_0;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -119,6 +130,84 @@ class EvidenceServiceIT {
         verifyNoInteractions(this.userFinder);
     }
 
+    @Test
+    void testFindHydratesCustodiansWithSingleCall() {
+        UUID firstCustodianId = UUID.randomUUID();
+        UUID secondCustodianId = UUID.randomUUID();
+        String action = "IT action " + UUID.randomUUID();
+        Evidence evidence = this.createEvidence(this.createCustodyRecord(firstCustodianId, action),
+                this.createCustodyRecord(secondCustodianId));
+        this.stubFindByIds(Map.of(firstCustodianId, "Ana", secondCustodianId, "Luis"));
+
+        List<Evidence> evidences = this.evidenceService.find(EvidenceFindCriteria.builder().action(action).build());
+
+        assertThat(evidences).singleElement().satisfies(found -> {
+            assertThat(found.getId()).isEqualTo(evidence.getId());
+            assertThat(found.getCustodyRecords()).extracting(custodyRecord -> custodyRecord.getCustodian().getFirstName())
+                    .containsExactlyInAnyOrder("Ana", "Luis");
+        });
+        verify(this.userFinder, times(1)).findByIds(Set.of(firstCustodianId, secondCustodianId));
+        verifyNoMoreInteractions(this.userFinder);
+    }
+
+    @Test
+    void testFindByCustodianFirstNameMatchesAnyRecordIgnoringCaseAndSpaces() {
+        String firstName = "Custodian " + UUID.randomUUID();
+        UUID matchingCustodianId = UUID.randomUUID();
+        UUID otherCustodianId = UUID.randomUUID();
+        Evidence matching = this.createEvidence(this.createCustodyRecord(matchingCustodianId),
+                this.createCustodyRecord(otherCustodianId));
+        this.createEvidence(this.createCustodyRecord(otherCustodianId));
+        this.stubFindByIds(Map.of(matchingCustodianId, firstName, otherCustodianId, "Other"));
+
+        List<Evidence> evidences = this.evidenceService.find(
+                EvidenceFindCriteria.builder().custodianFirstName("  " + firstName.toUpperCase() + " ").build());
+
+        assertThat(evidences).singleElement().satisfies(found -> {
+            assertThat(found.getId()).isEqualTo(matching.getId());
+            assertThat(found.getCustodyRecords()).extracting(custodyRecord -> custodyRecord.getCustodian().getFirstName())
+                    .containsExactlyInAnyOrder(firstName, "Other");
+        });
+        verify(this.userFinder, times(1)).findByIds(any());
+    }
+
+    @Test
+    void testFindIgnoresBlankCustodianFirstName() {
+        String action = "IT action " + UUID.randomUUID();
+        Evidence evidence = this.createEvidence(this.createCustodyRecord(UUID.randomUUID(), action));
+        this.stubFindByIds(Map.of());
+
+        assertThat(this.evidenceService.find(EvidenceFindCriteria.builder().action(action).custodianFirstName(" ").build()))
+                .extracting(Evidence::getId).containsExactly(evidence.getId());
+    }
+
+    @Test
+    void testFindCustodianNotFound() {
+        UUID custodianId = UUID.randomUUID();
+        String action = "IT action " + UUID.randomUUID();
+        this.createEvidence(this.createCustodyRecord(custodianId, action));
+        when(this.userFinder.findByIds(any())).thenReturn(List.of());
+        EvidenceFindCriteria criteria = EvidenceFindCriteria.builder().action(action).build();
+
+        assertThatThrownBy(() -> this.evidenceService.find(criteria))
+                .isInstanceOf(NotFoundException.class).hasMessageContaining(custodianId.toString());
+    }
+
+    @Test
+    @Transactional
+    void testFindEvidencesWithoutCustodyRecordsDoesNotQueryUsers() {
+        this.evidenceRepository.deleteAll();
+        this.evidenceRepository.flush();
+        Evidence evidence = this.evidenceService.create(this.creation(List.of()));
+
+        assertThat(this.evidenceService.find(new EvidenceFindCriteria())).extracting(Evidence::getId)
+                .containsExactly(evidence.getId());
+        assertThat(this.evidenceService.find(EvidenceFindCriteria.builder().custodianFirstName("Ana").build()))
+                .isEmpty();
+
+        verifyNoInteractions(this.userFinder);
+    }
+
     private void assertNotStored(CreationEvidence creation) {
         assertThat(this.evidenceRepository.findAll()).extracting(EvidenceEntity::getTitle)
                 .doesNotContain(creation.getTitle());
@@ -131,9 +220,30 @@ class EvidenceServiceIT {
     }
 
     private CustodyRecord createCustodyRecord() {
-        CustodyRecord custodyRecord = CustodyRecord.builder().action("IT action " + UUID.randomUUID())
-                .custodian(UserSnapshot.builder().id(CUSTODIAN_ID_0).build()).build();
+        return this.createCustodyRecord(CUSTODIAN_ID_0);
+    }
+
+    private CustodyRecord createCustodyRecord(UUID custodianId) {
+        return this.createCustodyRecord(custodianId, "IT action " + UUID.randomUUID());
+    }
+
+    private CustodyRecord createCustodyRecord(UUID custodianId, String action) {
+        CustodyRecord custodyRecord = CustodyRecord.builder().action(action)
+                .custodian(UserSnapshot.builder().id(custodianId).build()).build();
         custodyRecord.doDefault();
         return this.custodyRecordGateway.create(custodyRecord);
+    }
+
+    private Evidence createEvidence(CustodyRecord... custodyRecords) {
+        return this.evidenceService.create(this.creation(
+                Arrays.stream(custodyRecords).map(CustodyRecord::getId).toList()));
+    }
+
+    private void stubFindByIds(Map<UUID, String> firstNames) {
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Collection<UUID> ids = invocation.getArgument(0);
+            return ids.stream().map(id -> UserSnapshot.builder().id(id)
+                    .firstName(firstNames.getOrDefault(id, "Unknown")).build()).toList();
+        });
     }
 }
