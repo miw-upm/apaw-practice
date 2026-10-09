@@ -28,7 +28,7 @@ class DeadlineRepositoryIT {
 
         assertThat(report).extracting(DeadlineWorkloadReport::expiredDeadlineCount)
                 .isSortedAccordingTo(Comparator.reverseOrder());
-        assertThat(report).filteredOn(item -> item.userId().equals(USER_ID_0))
+        assertThat(report).filteredOn(item -> item.lawyer().getId().equals(USER_ID_0))
                 .singleElement()
                 .satisfies(item -> {
                     assertThat(item.expiredDeadlineCount()).isGreaterThanOrEqualTo(4);
@@ -37,7 +37,7 @@ class DeadlineRepositoryIT {
                     assertThat(item.expiredDeadlineCount()).isLessThanOrEqualTo(item.totalDeadlineCount());
                     assertThat(item.holidayAffectedDeadlineCount()).isLessThanOrEqualTo(item.totalDeadlineCount());
                 });
-        assertThat(report).filteredOn(item -> item.userId().equals(USER_ID_1))
+        assertThat(report).filteredOn(item -> item.lawyer().getId().equals(USER_ID_1))
                 .singleElement()
                 .satisfies(item -> {
                     assertThat(item.expiredDeadlineCount()).isGreaterThanOrEqualTo(2);
@@ -50,7 +50,7 @@ class DeadlineRepositoryIT {
     void testFindWorkloadReportKeepsLawyersWithoutHolidays() {
         List<DeadlineWorkloadReport> report = this.deadlineRepository.findWorkloadReport(LocalDate.now());
 
-        assertThat(report).filteredOn(item -> item.userId().equals(USER_ID_2))
+        assertThat(report).filteredOn(item -> item.lawyer().getId().equals(USER_ID_2))
                 .singleElement()
                 .satisfies(item -> {
                     assertThat(item.totalDeadlineCount()).isGreaterThanOrEqualTo(2);
@@ -66,7 +66,7 @@ class DeadlineRepositoryIT {
         DeadlineWorkloadReport third = this.rowOf(report, USER_ID_2);
         assertThat(second.expiredDeadlineCount()).isEqualTo(third.expiredDeadlineCount());
         assertThat(second.totalDeadlineCount()).isGreaterThan(third.totalDeadlineCount());
-        assertThat(report).extracting(DeadlineWorkloadReport::userId)
+        assertThat(report).extracting(item -> item.lawyer().getId())
                 .containsSubsequence(USER_ID_0, USER_ID_1, USER_ID_2);
     }
 
@@ -78,6 +78,6 @@ class DeadlineRepositoryIT {
     }
 
     private DeadlineWorkloadReport rowOf(List<DeadlineWorkloadReport> report, UUID userId) {
-        return report.stream().filter(item -> item.userId().equals(userId)).findFirst().orElseThrow();
+        return report.stream().filter(item -> item.lawyer().getId().equals(userId)).findFirst().orElseThrow();
     }
 }

@@ -65,11 +65,11 @@ public class DeadlineEntity {
     private UUID userId;
 
     public DeadlineEntity(Deadline deadline) {
-        BeanUtils.copyProperties(deadline, this, "nonWorkingDays", "userSnapshot");
+        BeanUtils.copyProperties(deadline, this, "nonWorkingDays", "lawyer");
         this.nonWorkingDays = deadline.getNonWorkingDays().stream()
                 .map(NonWorkingDayEntity::new)
                 .toList();
-        this.userId = deadline.getUserSnapshot().getId();
+        this.userId = deadline.getLawyer().getId();
     }
 
     public Deadline toDomain() {
@@ -78,7 +78,7 @@ public class DeadlineEntity {
         deadline.setNonWorkingDays(new ArrayList<>(this.nonWorkingDays.stream()
                 .map(NonWorkingDayEntity::toDomain)
                 .toList()));
-        deadline.setUserSnapshot(UserSnapshot.builder().id(this.userId).build());
+        deadline.setLawyer(UserSnapshot.builder().id(this.userId).build());
         return deadline;
     }
 }
