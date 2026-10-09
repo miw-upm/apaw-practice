@@ -36,4 +36,20 @@ public class CustodyRecord {
         this.id = UUID.randomUUID();
         this.recordedAt = LocalDateTime.now();
     }
+
+    public CustodyRecord ofSummary() {
+        return CustodyRecord.builder()
+                .id(this.id)
+                .recordedAt(this.recordedAt)
+                .durationMinutes(this.durationMinutes)
+                .action(this.action)
+                .location(this.location)
+                .notes(this.notes)
+                .custodian(UserSnapshot.builder()
+                        .id(this.custodian.getId())
+                        .mobile(this.custodian.getMobile())
+                        .firstName(this.custodian.getFirstName())
+                        .build())
+                .build();
+    }
 }

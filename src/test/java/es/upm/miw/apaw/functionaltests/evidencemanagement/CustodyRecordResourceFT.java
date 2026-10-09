@@ -55,6 +55,10 @@ class CustodyRecordResourceFT {
                 .email("ana@example.com").build();
     }
 
+    private UserSnapshot newSummary(UUID id) {
+        return UserSnapshot.builder().id(id).mobile("600000000").firstName("Ana").build();
+    }
+
     @Test
     void testRead() {
         this.restTestClient.get().uri(CustodyRecordResource.CUSTODY_RECORDS + "/" + ID_0)
@@ -63,7 +67,7 @@ class CustodyRecordResourceFT {
                 .expectBody(CustodyRecord.class)
                 .value(body -> {
                     assertThat(body).usingRecursiveComparison().ignoringFields("custodian").isEqualTo(RECORD_0);
-                    assertThat(body.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_0));
+                    assertThat(body.getCustodian()).usingRecursiveComparison().isEqualTo(this.newSummary(CUSTODIAN_ID_0));
                 });
     }
 
@@ -85,7 +89,8 @@ class CustodyRecordResourceFT {
                 .expectBody(CustodyRecord[].class)
                 .value(body -> {
                     assertThat(body).extracting(CustodyRecord::getId).containsSubsequence(ID_0, ID_1, ID_2, ID_3, ID_4, ID_5);
-                    assertThat(body).allSatisfy(item -> assertThat(item.getCustodian().getFirstName()).isEqualTo("Ana"));
+                    assertThat(body).allSatisfy(item -> assertThat(item.getCustodian()).usingRecursiveComparison()
+                            .isEqualTo(this.newSummary(item.getCustodian().getId())));
                 });
     }
 

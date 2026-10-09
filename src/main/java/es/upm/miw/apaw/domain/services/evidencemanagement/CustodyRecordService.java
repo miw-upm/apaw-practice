@@ -31,7 +31,8 @@ public class CustodyRecordService {
 
     public CustodyRecord read(UUID id) {
         CustodyRecord custodyRecord = this.readStored(id);
-        return this.withCustodian(custodyRecord, this.resolveCustodian(custodyRecord.getCustodian()));
+        UserSnapshot custodian = this.resolveCustodian(custodyRecord.getCustodian());
+        return this.withCustodian(custodyRecord, custodian).ofSummary();
     }
 
     public CustodyRecord update(UUID id, CustodyRecord custodyRecord) {
@@ -60,9 +61,9 @@ public class CustodyRecordService {
         Map<UUID, UserSnapshot> custodiansById = this.findCustodiansById(custodyRecords.stream()
                 .map(custodyRecord -> custodyRecord.getCustodian().getId())
                 .collect(Collectors.toSet()));
-        custodyRecords.forEach(custodyRecord -> custodyRecord.setCustodian(
-                this.readCustodian(custodiansById, custodyRecord.getCustodian().getId())));
-        return custodyRecords;
+        return custodyRecords.stream()
+                .map(custodyRecord -> this.toSummary(custodyRecord, custodiansById))
+                .toList();
     }
 
     public CustodyRecord patch(UUID id, CustodyRecord custodyRecord) {
@@ -123,5 +124,10 @@ public class CustodyRecordService {
             throw new NotFoundException("User id not found: " + custodianId);
         }
         return custodian;
+    }
+
+    private CustodyRecord toSummary(CustodyRecord custodyRecord, Map<UUID, UserSnapshot> custodiansById) {
+        UserSnapshot custodian = this.readCustodian(custodiansById, custodyRecord.getCustodian().getId());
+        return this.withCustodian(custodyRecord, custodian).ofSummary();
     }
 }

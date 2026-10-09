@@ -95,8 +95,9 @@ class CustodyRecordServiceIT {
         CustodyRecord stored = this.custodyRecordService.read(created.getId());
         assertThat(created.getId()).isNotNull();
         assertThat(stored.getRecordedAt()).isNotNull();
-        assertThat(stored).usingRecursiveComparison().ignoringFields("recordedAt").isEqualTo(created);
+        assertThat(stored).usingRecursiveComparison().ignoringFields("recordedAt", "custodian").isEqualTo(created);
         assertThat(created.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_0));
+        assertThat(stored.getCustodian()).usingRecursiveComparison().isEqualTo(this.newSummary(CUSTODIAN_ID_0));
     }
 
     @Test
@@ -318,7 +319,7 @@ class CustodyRecordServiceIT {
     void testReadHydratesCustodianWithSingleCall() {
         clearInvocations(this.userFinder);
         CustodyRecord custodyRecord = this.custodyRecordService.read(ID_1);
-        assertThat(custodyRecord.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_1));
+        assertThat(custodyRecord.getCustodian()).usingRecursiveComparison().isEqualTo(this.newSummary(CUSTODIAN_ID_1));
         verify(this.userFinder, times(1)).read(CUSTODIAN_ID_1);
     }
 
@@ -326,7 +327,8 @@ class CustodyRecordServiceIT {
     void testFindAllHydratesCustodiansWithSingleCall() {
         clearInvocations(this.userFinder);
         List<CustodyRecord> records = this.custodyRecordService.findAll();
-        assertThat(records).allSatisfy(item -> assertThat(item.getCustodian().getFirstName()).isEqualTo("Ana"));
+        assertThat(records).allSatisfy(item -> assertThat(item.getCustodian()).usingRecursiveComparison()
+                .isEqualTo(this.newSummary(item.getCustodian().getId())));
         verify(this.userFinder, times(1)).findByIds(any());
         verify(this.userFinder, never()).read(any(UUID.class));
     }
@@ -366,6 +368,10 @@ class CustodyRecordServiceIT {
     private void assertHydrated(CustodyRecord actual, CustodyRecord expected) {
         assertThat(actual).usingRecursiveComparison().ignoringFields("custodian").isEqualTo(expected);
         assertThat(actual.getCustodian()).usingRecursiveComparison()
-                .isEqualTo(this.newUser(expected.getCustodian().getId()));
+                .isEqualTo(this.newSummary(expected.getCustodian().getId()));
+    }
+
+    private UserSnapshot newSummary(UUID id) {
+        return UserSnapshot.builder().id(id).mobile("600000000").firstName("Ana").build();
     }
 }
