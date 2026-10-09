@@ -7,6 +7,7 @@ import es.upm.miw.apaw.domain.model.deadlinecalculator.DeadlineWorkloadReport;
 import es.upm.miw.apaw.domain.services.deadlinecalculator.DeadlineService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,7 +40,7 @@ public class DeadlineResource {
     }
 
     @GetMapping
-    public List<Deadline> find(@ModelAttribute DeadlineFindCriteria criteria) {
+    public List<Deadline> find(@ParameterObject @ModelAttribute DeadlineFindCriteria criteria) {
         return this.deadlineService.find(criteria);
     }
 }

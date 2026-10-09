@@ -5,18 +5,18 @@ import es.upm.miw.apaw.domain.model.UserSnapshot;
 import java.util.UUID;
 
 public record DeadlineWorkloadReport(
-        UUID userId,
-        UserSnapshot userSnapshot,
+        UserSnapshot lawyer,
         long expiredDeadlineCount,
         long totalDeadlineCount,
         long holidayAffectedDeadlineCount
 ) {
     public DeadlineWorkloadReport(
-            UUID userId,
+            UUID lawyerId,
             long expiredDeadlineCount,
             long totalDeadlineCount,
             long holidayAffectedDeadlineCount
     ) {
-        this(userId, null, expiredDeadlineCount, totalDeadlineCount, holidayAffectedDeadlineCount);
+        this(UserSnapshot.builder().id(lawyerId).build(),
+                expiredDeadlineCount, totalDeadlineCount, holidayAffectedDeadlineCount);
     }
 }

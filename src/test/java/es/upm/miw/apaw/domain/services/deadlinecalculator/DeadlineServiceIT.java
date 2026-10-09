@@ -102,7 +102,7 @@ class DeadlineServiceIT {
         assertThat(created.getStatus()).isEqualTo(DeadlineStatus.PENDING);
         assertThat(created.getDayCountType()).isEqualTo(DayCountType.WORKING);
         assertThat(created.getDueDate()).isEqualTo(LocalDate.of(2035, 1, 19));
-        assertThat(created.getUserSnapshot()).usingRecursiveComparison().isEqualTo(USER);
+        assertThat(created.getLawyer()).usingRecursiveComparison().isEqualTo(USER);
         assertThat(created.getNonWorkingDays()).extracting(NonWorkingDay::getDate)
                 .containsExactly(LocalDate.of(2035, 1, 15));
         DeadlineEntity entity = this.deadlineRepository.findById(created.getId()).orElseThrow();
@@ -311,12 +311,12 @@ class DeadlineServiceIT {
 
         List<DeadlineWorkloadReport> report = this.deadlineService.findWorkloadReport();
 
-        assertThat(report).extracting(DeadlineWorkloadReport::userId)
+        assertThat(report).extracting(item -> item.lawyer().getId())
                 .containsSubsequence(USER_ID_0, USER_ID_1, USER_ID_2);
-        assertThat(report).allSatisfy(item -> assertThat(item.userSnapshot()).isNotNull());
-        assertThat(report).filteredOn(item -> item.userId().equals(USER_ID_0))
+        assertThat(report).allSatisfy(item -> assertThat(item.lawyer().getMobile()).isNotNull());
+        assertThat(report).filteredOn(item -> item.lawyer().getId().equals(USER_ID_0))
                 .singleElement()
-                .satisfies(item -> assertThat(item.userSnapshot().getFirstName()).isEqualTo("cliente0"));
+                .satisfies(item -> assertThat(item.lawyer().getFirstName()).isEqualTo("cliente0"));
         verify(this.userFinder, times(1)).findByIds(anySet());
     }
 
@@ -342,7 +342,7 @@ class DeadlineServiceIT {
 
         List<DeadlineWorkloadReport> report = this.deadlineService.findWorkloadReport();
 
-        assertThat(report).filteredOn(item -> item.userId().equals(lawyerId))
+        assertThat(report).filteredOn(item -> item.lawyer().getId().equals(lawyerId))
                 .singleElement()
                 .satisfies(item -> {
                     assertThat(item.totalDeadlineCount()).isEqualTo(1);
