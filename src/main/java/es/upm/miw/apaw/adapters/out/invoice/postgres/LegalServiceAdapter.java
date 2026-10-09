@@ -4,6 +4,8 @@ import es.upm.miw.apaw.domain.model.invoice.LegalService;
 import es.upm.miw.apaw.domain.ports.out.invoice.LegalServiceGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,6 +18,12 @@ public class LegalServiceAdapter implements LegalServiceGateway {
         return this.legalServiceRepository
                 .save(new LegalServiceEntity(legalService))
                 .toDomain();
+    }
+
+    @Override
+    public Optional<LegalService> read(UUID id) {
+        return this.legalServiceRepository.findById(id)
+                .map(LegalServiceEntity::toDomain);
     }
 
     @Override
