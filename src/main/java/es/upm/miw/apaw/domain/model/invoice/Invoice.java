@@ -55,8 +55,17 @@ public class Invoice {
         this.issueDate = LocalDate.now();
         this.invoiceNumber = "INV-" + this.issueDate.toString().replace("-", "")
                 + "-" + this.id.toString().substring(0, 8);
-        this.paid = false;
-        this.paymentType = PaymentType.CASH;
-        this.services = new ArrayList<>();
+        if (this.vatRate == null) {
+            this.vatRate = new BigDecimal("0.21");
+        }
+        if (this.paid == null) {
+            this.paid = false;
+        }
+        if (this.paymentType == null) {
+            this.paymentType = PaymentType.CASH;
+        }
+        if (this.services == null) {
+            this.services = new ArrayList<>();
+        }
     }
 }
