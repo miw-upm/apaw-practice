@@ -2,11 +2,13 @@
 package es.upm.miw.apaw.adapters.out.invoice.postgres;
 
 import es.upm.miw.apaw.domain.model.invoice.Invoice;
+import es.upm.miw.apaw.domain.model.invoice.LegalServiceInvoiceReport;
 import es.upm.miw.apaw.domain.ports.out.invoice.InvoiceGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.ArrayList;
 
 @Repository
@@ -32,4 +34,10 @@ public class InvoiceAdapter implements InvoiceGateway {
 
         return invoice;
     }
+
+    @Override
+    public List<LegalServiceInvoiceReport> findLegalServiceInvoiceReport() {
+        return this.invoiceRepository.findLegalServiceInvoiceReport();
+    }
+
 }

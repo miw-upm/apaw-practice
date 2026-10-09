@@ -5,6 +5,7 @@ import es.upm.miw.apaw.domain.exceptions.NotFoundException;
 import es.upm.miw.apaw.domain.model.invoice.CreationInvoice;
 import es.upm.miw.apaw.domain.model.invoice.Invoice;
 import es.upm.miw.apaw.domain.model.invoice.LegalService;
+import es.upm.miw.apaw.domain.model.invoice.LegalServiceInvoiceReport;
 import es.upm.miw.apaw.domain.ports.out.invoice.InvoiceGateway;
 import es.upm.miw.apaw.domain.ports.out.invoice.LegalServiceGateway;
 import es.upm.miw.apaw.domain.ports.out.user.UserFinder;
@@ -39,6 +40,10 @@ public class InvoiceService {
         invoice.doDefault();
 
         return this.invoiceGateway.create(invoice);
+    }
+
+    public List<LegalServiceInvoiceReport> findLegalServiceInvoiceReport() {
+        return this.invoiceGateway.findLegalServiceInvoiceReport();
     }
 
     private LegalService readLegalService(UUID id) {
