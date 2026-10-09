@@ -12,5 +12,9 @@ public interface LegalServiceGateway {
 
     LegalService update(LegalService legalService);
 
+    void delete(UUID id);
+
+    boolean isReferenced(UUID id);
+
     boolean existsByName(String name);
 }

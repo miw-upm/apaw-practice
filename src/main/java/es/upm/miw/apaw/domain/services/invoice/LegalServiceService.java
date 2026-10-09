@@ -50,4 +50,12 @@ public class LegalServiceService {
 
         return this.legalServiceGateway.update(storedLegalService);
     }
+
+    public void delete(UUID id) {
+        if (this.legalServiceGateway.isReferenced(id)) {
+            throw new ConflictException(
+                    "Legal service is referenced by an invoice: " + id);
+        }
+        this.legalServiceGateway.delete(id);
+    }
 }

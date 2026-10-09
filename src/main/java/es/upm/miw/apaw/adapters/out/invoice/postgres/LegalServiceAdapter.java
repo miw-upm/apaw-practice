@@ -12,6 +12,7 @@ import java.util.UUID;
 public class LegalServiceAdapter implements LegalServiceGateway {
 
     private final LegalServiceRepository legalServiceRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @Override
     public LegalService create(LegalService legalService) {
@@ -31,6 +32,16 @@ public class LegalServiceAdapter implements LegalServiceGateway {
         return this.legalServiceRepository
                 .save(new LegalServiceEntity(legalService))
                 .toDomain();
+    }
+
+    @Override
+    public void delete(UUID id) {
+        this.legalServiceRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isReferenced(UUID id) {
+        return this.invoiceRepository.existsByServices_Id(id);
     }
 
     @Override
