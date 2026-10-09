@@ -1,6 +1,7 @@
 package es.upm.miw.apaw.domain.services.evidencemanagement;
 
 import es.upm.miw.apaw.adapters.out.evidencemanagement.postgres.CustodyRecordEntity;
+import es.upm.miw.apaw.adapters.out.evidencemanagement.postgres.CustodyRecordRepository;
 import es.upm.miw.apaw.adapters.out.evidencemanagement.postgres.EvidenceEntity;
 import es.upm.miw.apaw.adapters.out.evidencemanagement.postgres.EvidenceRepository;
 import es.upm.miw.apaw.domain.exceptions.BadGatewayException;
@@ -30,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -44,25 +46,28 @@ class CustodyRecordServiceIT {
     private CustodyRecordService custodyRecordService;
     @Autowired
     private EvidenceRepository evidenceRepository;
+    @Autowired
+    private CustodyRecordRepository custodyRecordRepository;
     @MockitoBean
     private UserFinder userFinder;
 
     @BeforeEach
     void setUp() {
         when(this.userFinder.read(any(UUID.class)))
-                .thenAnswer(invocation -> UserSnapshot.builder().id(invocation.getArgument(0)).build());
+                .thenAnswer(invocation -> this.newUser(invocation.getArgument(0)));
         when(this.userFinder.read(MISSING_CUSTODIAN_ID))
                 .thenThrow(new NotFoundException("Not found on read user by id " + MISSING_CUSTODIAN_ID));
+        this.stubFindByIdsExcept(null);
     }
 
     @Test
     void testReadSeeder() {
-        assertThat(this.custodyRecordService.read(ID_0)).usingRecursiveComparison().isEqualTo(RECORD_0);
+        this.assertHydrated(this.custodyRecordService.read(ID_0), RECORD_0);
     }
 
     @Test
     void testReadSeederWithoutOptionalFields() {
-        assertThat(this.custodyRecordService.read(ID_2)).usingRecursiveComparison().isEqualTo(RECORD_2);
+        this.assertHydrated(this.custodyRecordService.read(ID_2), RECORD_2);
     }
 
     @Test
@@ -91,6 +96,7 @@ class CustodyRecordServiceIT {
         assertThat(created.getId()).isNotNull();
         assertThat(stored.getRecordedAt()).isNotNull();
         assertThat(stored).usingRecursiveComparison().ignoringFields("recordedAt").isEqualTo(created);
+        assertThat(created.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_0));
     }
 
     @Test
@@ -102,7 +108,7 @@ class CustodyRecordServiceIT {
         CustodyRecord created = this.custodyRecordService.create(custodyRecord);
         assertThat(created.getId()).isNotEqualTo(ID_0);
         assertThat(created.getRecordedAt()).isAfter(oldDate);
-        assertThat(this.custodyRecordService.read(ID_0)).usingRecursiveComparison().isEqualTo(RECORD_0);
+        this.assertHydrated(this.custodyRecordService.read(ID_0), RECORD_0);
     }
 
     @Test
@@ -133,7 +139,8 @@ class CustodyRecordServiceIT {
         CustodyRecord original = this.createRecord();
         CustodyRecord replacement = CustodyRecord.builder().action("Updated " + UUID.randomUUID())
                 .custodian(UserSnapshot.builder().id(CUSTODIAN_ID_1).build()).build();
-        this.custodyRecordService.update(original.getId(), replacement);
+        CustodyRecord result = this.custodyRecordService.update(original.getId(), replacement);
+        assertThat(result.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_1));
         CustodyRecord updated = this.custodyRecordService.read(original.getId());
         assertThat(updated.getAction()).isEqualTo(replacement.getAction());
         assertThat(updated.getDurationMinutes()).isNull();
@@ -180,10 +187,11 @@ class CustodyRecordServiceIT {
     @Test
     void testPatchCustodian() {
         CustodyRecord original = this.createRecord();
-        this.custodyRecordService.patch(original.getId(),
+        CustodyRecord patched = this.custodyRecordService.patch(original.getId(),
                 CustodyRecord.builder().custodian(UserSnapshot.builder().id(CUSTODIAN_ID_1).build()).build());
-        assertThat(this.custodyRecordService.read(original.getId()).getCustodian().getId()).isEqualTo(CUSTODIAN_ID_1);
+        assertThat(patched.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_1));
         verify(this.userFinder).read(CUSTODIAN_ID_1);
+        assertThat(this.custodyRecordService.read(original.getId()).getCustodian().getId()).isEqualTo(CUSTODIAN_ID_1);
     }
 
     @Test
@@ -197,11 +205,14 @@ class CustodyRecordServiceIT {
     }
 
     @Test
-    void testPatchWithoutCustodianDoesNotQueryUsers() {
+    void testPatchWithoutCustodianHydratesStoredCustodianWithSingleCall() {
         CustodyRecord original = this.createRecord();
         clearInvocations(this.userFinder);
-        this.custodyRecordService.patch(original.getId(), CustodyRecord.builder().location("Patched").build());
-        verify(this.userFinder, never()).read(any(UUID.class));
+        CustodyRecord patched = this.custodyRecordService.patch(original.getId(),
+                CustodyRecord.builder().location("Patched").build());
+        assertThat(patched.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_0));
+        verify(this.userFinder, times(1)).read(CUSTODIAN_ID_0);
+        verify(this.userFinder, never()).findByIds(any());
     }
 
     @Test
@@ -271,7 +282,6 @@ class CustodyRecordServiceIT {
     @Test
     void testFindActivityReportHydratesCustodiansWithSingleCall() {
         UUID custodianId = RECORD_0.getCustodian().getId();
-        this.stubFindByIdsExcept(null);
         clearInvocations(this.userFinder);
 
         List<CustodianActivityReport> report = this.custodyRecordService.findActivityReport();
@@ -304,15 +314,58 @@ class CustodyRecordServiceIT {
         verify(this.userFinder, never()).findByIds(any());
     }
 
+    @Test
+    void testReadHydratesCustodianWithSingleCall() {
+        clearInvocations(this.userFinder);
+        CustodyRecord custodyRecord = this.custodyRecordService.read(ID_1);
+        assertThat(custodyRecord.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_1));
+        verify(this.userFinder, times(1)).read(CUSTODIAN_ID_1);
+    }
+
+    @Test
+    void testFindAllHydratesCustodiansWithSingleCall() {
+        clearInvocations(this.userFinder);
+        List<CustodyRecord> records = this.custodyRecordService.findAll();
+        assertThat(records).allSatisfy(item -> assertThat(item.getCustodian().getFirstName()).isEqualTo("Ana"));
+        verify(this.userFinder, times(1)).findByIds(any());
+        verify(this.userFinder, never()).read(any(UUID.class));
+    }
+
+    @Test
+    void testFindAllCustodianNotFound() {
+        this.stubFindByIdsExcept(CUSTODIAN_ID_0);
+        assertThatThrownBy(() -> this.custodyRecordService.findAll())
+                .isInstanceOf(NotFoundException.class).hasMessageContaining(CUSTODIAN_ID_0.toString());
+    }
+
+    @Test
+    @Transactional
+    void testFindAllWithoutRecordsDoesNotQueryUsers() {
+        this.evidenceRepository.deleteAll();
+        this.custodyRecordRepository.deleteAll();
+        this.custodyRecordRepository.flush();
+        clearInvocations(this.userFinder);
+
+        assertThat(this.custodyRecordService.findAll()).isEmpty();
+
+        verify(this.userFinder, never()).findByIds(any());
+    }
+
     private UserSnapshot newUser(UUID id) {
         return UserSnapshot.builder().id(id).mobile("600000000").firstName("Ana").familyName("Lopez")
                 .email("ana@example.com").build();
     }
 
     private void stubFindByIdsExcept(UUID excludedId) {
-        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+        doAnswer(invocation -> {
             Collection<UUID> ids = invocation.getArgument(0);
             return ids.stream().filter(id -> !id.equals(excludedId)).map(this::newUser).toList();
-        });
+        }).when(this.userFinder).findByIds(any());
+    }
+
+    private void assertHydrated(CustodyRecord actual, CustodyRecord expected) {
+        assertThat(actual).usingRecursiveComparison().ignoringFields("custodian").isEqualTo(expected);
+        assertThat(actual.getCustodian()).usingRecursiveComparison()
+                .isEqualTo(this.newUser(expected.getCustodian().getId()));
     }
 }

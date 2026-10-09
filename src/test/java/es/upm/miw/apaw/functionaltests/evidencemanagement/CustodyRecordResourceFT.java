@@ -41,9 +41,18 @@ class CustodyRecordResourceFT {
         this.restTestClient = RestTestClient.bindToServer()
                 .baseUrl("http://localhost:" + this.port).build();
         when(this.userFinder.read(any(UUID.class)))
-                .thenAnswer(invocation -> UserSnapshot.builder().id(invocation.getArgument(0)).build());
+                .thenAnswer(invocation -> this.newUser(invocation.getArgument(0)));
         when(this.userFinder.read(MISSING_CUSTODIAN_ID))
                 .thenThrow(new NotFoundException("Not found on read user by id " + MISSING_CUSTODIAN_ID));
+        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
+            Collection<UUID> ids = invocation.getArgument(0);
+            return ids.stream().map(this::newUser).toList();
+        });
+    }
+
+    private UserSnapshot newUser(UUID id) {
+        return UserSnapshot.builder().id(id).mobile("600000000").firstName("Ana").familyName("Lopez")
+                .email("ana@example.com").build();
     }
 
     @Test
@@ -52,7 +61,10 @@ class CustodyRecordResourceFT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(CustodyRecord.class)
-                .value(body -> assertThat(body).usingRecursiveComparison().isEqualTo(RECORD_0));
+                .value(body -> {
+                    assertThat(body).usingRecursiveComparison().ignoringFields("custodian").isEqualTo(RECORD_0);
+                    assertThat(body.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_0));
+                });
     }
 
     @Test
@@ -71,8 +83,10 @@ class CustodyRecordResourceFT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(CustodyRecord[].class)
-                .value(body -> assertThat(body).extracting(CustodyRecord::getId)
-                        .containsSubsequence(ID_0, ID_1, ID_2, ID_3, ID_4, ID_5));
+                .value(body -> {
+                    assertThat(body).extracting(CustodyRecord::getId).containsSubsequence(ID_0, ID_1, ID_2, ID_3, ID_4, ID_5);
+                    assertThat(body).allSatisfy(item -> assertThat(item.getCustodian().getFirstName()).isEqualTo("Ana"));
+                });
     }
 
     @Test
@@ -87,7 +101,7 @@ class CustodyRecordResourceFT {
                     assertThat(body.getRecordedAt()).isNotNull();
                     assertThat(body.getAction()).isEqualTo("TRANSFERRED");
                     assertThat(body.getDurationMinutes()).isEqualTo(30);
-                    assertThat(body.getCustodian().getId()).isEqualTo(CUSTODIAN_ID_0);
+                    assertThat(body.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_0));
                 });
     }
 
@@ -129,7 +143,7 @@ class CustodyRecordResourceFT {
                     assertThat(body.getDurationMinutes()).isNull();
                     assertThat(body.getLocation()).isNull();
                     assertThat(body.getNotes()).isNull();
-                    assertThat(body.getCustodian().getId()).isEqualTo(CUSTODIAN_ID_1);
+                    assertThat(body.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_1));
                 });
     }
 
@@ -173,7 +187,7 @@ class CustodyRecordResourceFT {
                     assertThat(body.getAction()).isEqualTo(custodyRecord.getAction());
                     assertThat(body.getDurationMinutes()).isEqualTo(custodyRecord.getDurationMinutes());
                     assertThat(body.getLocation()).isEqualTo(custodyRecord.getLocation());
-                    assertThat(body.getCustodian().getId()).isEqualTo(CUSTODIAN_ID_0);
+                    assertThat(body.getCustodian()).usingRecursiveComparison().isEqualTo(this.newUser(CUSTODIAN_ID_0));
                 });
     }
 
@@ -232,11 +246,6 @@ class CustodyRecordResourceFT {
 
     @Test
     void testFindActivityReport() {
-        when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
-            Collection<UUID> ids = invocation.getArgument(0);
-            return ids.stream().map(id -> UserSnapshot.builder().id(id).mobile("600000000")
-                    .firstName("Ana").familyName("Lopez").email("ana@example.com").build()).toList();
-        });
         UUID custodianId = RECORD_0.getCustodian().getId();
 
         this.restTestClient.get().uri(CustodyRecordResource.CUSTODY_RECORDS + CustodyRecordResource.REPORT)
