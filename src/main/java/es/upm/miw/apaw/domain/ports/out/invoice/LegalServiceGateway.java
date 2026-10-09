@@ -10,5 +10,7 @@ public interface LegalServiceGateway {
 
     Optional<LegalService> read(UUID id);
 
+    LegalService update(LegalService legalService);
+
     boolean existsByName(String name);
 }

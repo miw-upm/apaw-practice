@@ -31,4 +31,23 @@ public class LegalServiceService {
                 .orElseThrow(() ->
                         new NotFoundException("Legal service id not found: " + id));
     }
+
+    public LegalService update(UUID id, LegalService legalService) {
+        LegalService storedLegalService = this.read(id);
+
+        if (!storedLegalService.getName().equals(legalService.getName())
+                && this.legalServiceGateway.existsByName(legalService.getName())) {
+            throw new ConflictException(
+                    "Legal service name already exists: " + legalService.getName());
+        }
+
+        storedLegalService.setName(legalService.getName());
+        storedLegalService.setDescription(legalService.getDescription());
+        storedLegalService.setFee(legalService.getFee());
+        storedLegalService.setRequiresAppointment(legalService.getRequiresAppointment());
+        storedLegalService.setCategory(legalService.getCategory());
+        storedLegalService.setLegalArea(legalService.getLegalArea());
+
+        return this.legalServiceGateway.update(storedLegalService);
+    }
 }

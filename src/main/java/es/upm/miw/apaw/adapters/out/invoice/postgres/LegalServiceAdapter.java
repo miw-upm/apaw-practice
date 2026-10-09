@@ -27,6 +27,13 @@ public class LegalServiceAdapter implements LegalServiceGateway {
     }
 
     @Override
+    public LegalService update(LegalService legalService) {
+        return this.legalServiceRepository
+                .save(new LegalServiceEntity(legalService))
+                .toDomain();
+    }
+
+    @Override
     public boolean existsByName(String name) {
         return this.legalServiceRepository.existsByName(name);
     }
