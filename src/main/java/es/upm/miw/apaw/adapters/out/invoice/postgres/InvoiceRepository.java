@@ -4,13 +4,16 @@ package es.upm.miw.apaw.adapters.out.invoice.postgres;
 import es.upm.miw.apaw.domain.model.invoice.InvoiceFindCriteria;
 import es.upm.miw.apaw.domain.model.invoice.LegalServiceInvoiceReport;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface InvoiceRepository extends JpaRepository<InvoiceEntity, UUID> {
+public interface InvoiceRepository extends
+        JpaRepository<InvoiceEntity, UUID>,
+        JpaSpecificationExecutor<InvoiceEntity> {
 
     boolean existsByServices_Id(UUID id);
 
