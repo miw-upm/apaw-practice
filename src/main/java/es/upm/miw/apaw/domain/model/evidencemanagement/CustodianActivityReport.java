@@ -22,4 +22,17 @@ public class CustodianActivityReport {
                                    long totalDurationMinutes) {
         this(UserSnapshot.builder().id(custodianId).build(), recordsCount, evidencesCount, totalDurationMinutes);
     }
+
+    public CustodianActivityReport ofSummary() {
+        return CustodianActivityReport.builder()
+                .custodian(UserSnapshot.builder()
+                        .id(this.custodian.getId())
+                        .mobile(this.custodian.getMobile())
+                        .firstName(this.custodian.getFirstName())
+                        .build())
+                .recordsCount(this.recordsCount)
+                .evidencesCount(this.evidencesCount)
+                .totalDurationMinutes(this.totalDurationMinutes)
+                .build();
+    }
 }

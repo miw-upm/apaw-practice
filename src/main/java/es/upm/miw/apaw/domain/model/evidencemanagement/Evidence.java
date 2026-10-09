@@ -46,4 +46,18 @@ public class Evidence {
             this.confidential = false;
         }
     }
+
+    public Evidence ofSummary() {
+        return Evidence.builder()
+                .id(this.id)
+                .title(this.title)
+                .description(this.description)
+                .evidenceType(this.evidenceType)
+                .status(this.status)
+                .collectionDate(this.collectionDate)
+                .source(this.source)
+                .confidential(this.confidential)
+                .custodyRecords(this.custodyRecords.stream().map(CustodyRecord::ofSummary).toList())
+                .build();
+    }
 }

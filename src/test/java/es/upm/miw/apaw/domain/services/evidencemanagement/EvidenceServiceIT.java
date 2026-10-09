@@ -145,6 +145,10 @@ class EvidenceServiceIT {
             assertThat(found.getId()).isEqualTo(evidence.getId());
             assertThat(found.getCustodyRecords()).extracting(custodyRecord -> custodyRecord.getCustodian().getFirstName())
                     .containsExactlyInAnyOrder("Ana", "Luis");
+            assertThat(found.getCustodyRecords()).allSatisfy(custodyRecord -> {
+                assertThat(custodyRecord.getCustodian().getMobile()).isEqualTo("600000000");
+                assertThat(custodyRecord.getCustodian().getFamilyName()).isNull();
+            });
         });
         verify(this.userFinder, times(1)).findByIds(Set.of(firstCustodianId, secondCustodianId));
         verifyNoMoreInteractions(this.userFinder);
@@ -242,8 +246,8 @@ class EvidenceServiceIT {
     private void stubFindByIds(Map<UUID, String> firstNames) {
         when(this.userFinder.findByIds(any())).thenAnswer(invocation -> {
             Collection<UUID> ids = invocation.getArgument(0);
-            return ids.stream().map(id -> UserSnapshot.builder().id(id)
-                    .firstName(firstNames.getOrDefault(id, "Unknown")).build()).toList();
+            return ids.stream().map(id -> UserSnapshot.builder().id(id).mobile("600000000")
+                    .firstName(firstNames.getOrDefault(id, "Unknown")).familyName("Lopez").build()).toList();
         });
     }
 }
