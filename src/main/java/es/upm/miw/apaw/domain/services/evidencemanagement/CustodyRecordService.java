@@ -94,9 +94,15 @@ public class CustodyRecordService {
         Map<UUID, UserSnapshot> custodiansById = this.findCustodiansById(reports.stream()
                 .map(report -> report.getCustodian().getId())
                 .collect(Collectors.toSet()));
-        reports.forEach(report -> report.setCustodian(
-                this.readCustodian(custodiansById, report.getCustodian().getId())));
-        return reports;
+        return reports.stream()
+                .map(report -> this.toSummary(report, custodiansById))
+                .toList();
+    }
+
+    private CustodianActivityReport toSummary(
+            CustodianActivityReport report, Map<UUID, UserSnapshot> custodiansById) {
+        report.setCustodian(this.readCustodian(custodiansById, report.getCustodian().getId()));
+        return report.ofSummary();
     }
 
     private CustodyRecord readStored(UUID id) {

@@ -259,8 +259,7 @@ class CustodyRecordResourceFT {
                 .expectBody(CustodianActivityReport[].class)
                 .value(body -> assertThat(body).filteredOn(item -> item.getCustodian().getId().equals(custodianId))
                         .singleElement().satisfies(item -> {
-                            assertThat(item.getCustodian().getMobile()).isEqualTo("600000000");
-                            assertThat(item.getCustodian().getFirstName()).isEqualTo("Ana");
+                            assertThat(item.getCustodian()).usingRecursiveComparison().isEqualTo(this.newSummary(custodianId));
                             assertThat(item.getRecordsCount()).isGreaterThanOrEqualTo(1);
                             assertThat(item.getEvidencesCount()).isBetween(1L, item.getRecordsCount());
                             assertThat(item.getTotalDurationMinutes()).isGreaterThanOrEqualTo(0);

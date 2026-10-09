@@ -289,8 +289,9 @@ class CustodyRecordServiceIT {
 
         assertThat(report).filteredOn(item -> item.getCustodian().getId().equals(custodianId))
                 .singleElement().extracting(CustodianActivityReport::getCustodian)
-                .usingRecursiveComparison().isEqualTo(this.newUser(custodianId));
-        assertThat(report).allSatisfy(item -> assertThat(item.getCustodian().getMobile()).isNotNull());
+                .usingRecursiveComparison().isEqualTo(this.newSummary(custodianId));
+        assertThat(report).allSatisfy(item -> assertThat(item.getCustodian()).usingRecursiveComparison()
+                .isEqualTo(this.newSummary(item.getCustodian().getId())));
         verify(this.userFinder, times(1)).findByIds(any());
         verify(this.userFinder, never()).read(any(UUID.class));
     }
