@@ -20,11 +20,6 @@ public class EvidenceFindCriteria {
 
     private String custodianFirstName;
 
-    public boolean isAll() {
-        return !this.hasConfidential() && !this.hasLongCustody()
-                && !this.hasAction() && !this.hasCustodianFirstName();
-    }
-
     public boolean hasConfidential() {
         return this.confidential != null;
     }
